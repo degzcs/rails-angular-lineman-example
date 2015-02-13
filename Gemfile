@@ -28,6 +28,10 @@ gem 'spring',        group: :development
 
 gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
+#heroku
+ruby "2.2.0"
+gem 'rails_12factor', group: :production
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
