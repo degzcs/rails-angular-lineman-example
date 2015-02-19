@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   post 'login' => 'application#login'
-  post 'logout' => 'application#login'
+  post 'logout' => 'application#logout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
