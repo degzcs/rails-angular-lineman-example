@@ -37,7 +37,7 @@ module.exports = function(lineman) {
         host: 'localhost',
         port: 3000,
       }
-    }
+    },
 
     // Sass
     //

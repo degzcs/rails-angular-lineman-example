@@ -26,11 +26,11 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
-gem 'rails-lineman', github: 'degzcs/rails-lineman', ref: 'a5e039f020657f9773051475885d3cf3dfea3b9d'
+gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
 #heroku
-ruby "2.2.0"
-gem 'rails_12factor', group: :production
+ruby "2.1.3"
+# gem 'rails_12factor', group: :production
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -43,4 +43,31 @@ gem 'rails_12factor', group: :production
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+group :development do
+  gem 'quiet_assets'
+
+  # Capistrano
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-rbenv', '~> 2.0'
+  gem 'capistrano-rails', '~> 1.1.1'
+  gem 'capistrano-bundler'
+  gem 'capistrano-postgresql', '~> 3.0'
+  gem 'capistrano-passenger'
+  gem 'capistrano3-nginx', '~> 2.0'
+end
+
+group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'rspec-rails'
+  gem 'rubocop'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
+end
 
