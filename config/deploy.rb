@@ -9,6 +9,12 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
+set :nodenv_type, :user # or :system, depends on your nodenv setup
+set :nodenv_node, '0.10.32'
+set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:nodenv_node)} #{fetch(:nodenv_path)}/bin/nodenv exec"
+set :nodenv_map_bins, %w{node npm lineman}
+set :nodenv_roles, :all # default value
+
 # set :stages, %w[staging production]
 # set :default_stage, 'staging'
 
@@ -38,7 +44,7 @@ set :deploy_to, '/home/deploy/code/trazoro'
 # set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+# set :default_env, { path: "$HOME/.nodenv/bin:$PATH" }
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
@@ -58,17 +64,19 @@ namespace :deploy do
 
     on roles(fetch(:passenger_roles)), in: fetch(:passenger_restart_runner), wait: fetch(:passenger_restart_wait), limit: fetch(:passenger_restart_limit) do
   		execute :touch, release_path.join('tmp/restart.txt')
-	end
+	  end
   end
 
-  after :publishing, :restart
+  after :publishing, 'nginx:restart'
 
-  after :restart, :clear_cache do
+  after :restart, :deploy_frontend do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+      within "#{current_path}/frontend" do
+        execute :npm, 'install'
+        execute :lineman, "build"
+        execute  "mv #{current_path}/frontend/dist/* #{current_path}/public"
+      end
     end
   end
 
