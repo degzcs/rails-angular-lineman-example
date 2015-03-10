@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
+ruby "2.1.3"
+
 gem 'rails', '4.1.9'
 
+# DB
 gem 'pg'
+gem 'bcrypt'
 
 gem 'sass-rails', '~> 4.0.3'
 
@@ -22,11 +26,16 @@ gem 'spring',        group: :development
 
 gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
-#heroku
-ruby "2.1.3"
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+ # API
+ gem 'jwt'
+ gem 'httparty'
+ gem 'grape', '0.8.0'#github: 'intridea/grape'
+ gem 'grape-entity', '~> 0.4.0'
+ gem 'rack-contrib', '~> 1.1.0'
+ gem 'grape-swagger', '~> 0.7.2'
+ gem 'grape-swagger-rails',  '~> 0.0.10'
+ gem "hashie_rails"
 
 group :development do
   gem 'quiet_assets'
