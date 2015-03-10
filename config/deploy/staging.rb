@@ -16,7 +16,7 @@ set :branch, 'staging'
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '104.211.32.220', user: 'deploy', roles: %w{web app}, my_property: :my_value
+server '104.211.32.220', user: 'deploy', roles: %w{web app db}, my_property: :my_value
 
 
 # Custom SSH Options
