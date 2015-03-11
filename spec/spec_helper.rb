@@ -1,13 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
-require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'database_cleaner'
 require 'faker'
 require 'active_attr/rspec'
-require 'sidekiq/testing'
+# require 'sidekiq/testing'
+require 'shoulda/matchers'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -84,25 +84,25 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   # Include devise test helpers in controller specs
-  config.include Devise::TestHelpers, :type => :controller
+#  config.include Devise::TestHelpers, :type => :controller
 
  # Capybara
   config.include Capybara::DSL
 
-  # Sidekiq
-  config.before(:each) do | example |
-    # Clears out the jobs for tests using the fake testing
-    Sidekiq::Worker.clear_all
+  # # Sidekiq
+  # config.before(:each) do | example |
+  #   # Clears out the jobs for tests using the fake testing
+  #   Sidekiq::Worker.clear_all
 
-    if example.metadata[:sidekiq] == :fake
-      Sidekiq::Testing.fake!
-    elsif example.metadata[:sidekiq] == :inline
-      Sidekiq::Testing.inline!
-    elsif example.metadata[:type] == :feature
-      Sidekiq::Testing.inline!
-    else
-      Sidekiq::Testing.fake!
-    end
-  end
+  #   if example.metadata[:sidekiq] == :fake
+  #     Sidekiq::Testing.fake!
+  #   elsif example.metadata[:sidekiq] == :inline
+  #     Sidekiq::Testing.inline!
+  #   elsif example.metadata[:type] == :feature
+  #     Sidekiq::Testing.inline!
+  #   else
+  #     Sidekiq::Testing.fake!
+  #   end
+  # end
 
 end
