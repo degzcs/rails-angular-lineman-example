@@ -6,11 +6,25 @@ describe  User do
 
     it { expect(user.email).not_to be_nil }
     it { expect(user.password).not_to be_nil }
+    it { expect(user.password_digest).not_to be_nil }
     it { expect(user.first_name).not_to be_nil }
     it { expect(user.last_name).not_to be_nil }
     it { expect(user.document_number).not_to be_nil }
     it { expect(user.document_expedition_date).not_to be_nil }
     it { expect(user.phone_number).not_to be_nil }
+  end
+
+  context 'create user' do
+
+    it 'should create a user' do
+      user = build(:user, password: 'super_password', password_confirmation: 'super_password')
+      expect(user.save).to be true
+    end 
+
+    it 'should not create a user because their password is incorrect' do
+      user = build(:user, password: 'nomatch', password_confirmation: 'paila')
+      expect(user.save).to be false
+    end 
   end
 
   context '#instance methods' do 
