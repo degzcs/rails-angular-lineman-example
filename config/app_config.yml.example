@@ -1,0 +1,20 @@
+defaults: &defaults
+  key: 
+
+development:
+  <<: *defaults
+  access_token: ''
+
+test:
+  <<: *defaults
+  domain: test.host
+  access_token: ''
+
+staging:
+  <<: *defaults
+  access_token: ''
+
+production:
+  <<: *defaults
+  domain: example.com
+  access_token: ''

@@ -5,6 +5,7 @@ log/*.log
 tmp/**/*
 config/database.yml
 config/newrelic.yml
+config/app_config.yml
 TODO.local.txt
 .~lock*
 vendor/bundle
