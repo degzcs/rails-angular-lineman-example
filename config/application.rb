@@ -22,5 +22,10 @@ module RailsAngularLinemanExample
 
     config.rails_lineman.lineman_project_location = "frontend"
     config.rails_lineman.deployment_method = :copy_files_to_public_folder
+
+    # Grape
+    # Auto-load API and its subdirectories
+    config.paths.add File.join('app', 'api'), :glob => File.join('**', '*.rb')
+    config.autoload_paths = Dir[File.join(Rails.root, 'app', 'api', '*')]
   end
 end

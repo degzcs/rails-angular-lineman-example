@@ -89,20 +89,7 @@ RSpec.configure do |config|
  # Capybara
   config.include Capybara::DSL
 
-  # # Sidekiq
-  # config.before(:each) do | example |
-  #   # Clears out the jobs for tests using the fake testing
-  #   Sidekiq::Worker.clear_all
-
-  #   if example.metadata[:sidekiq] == :fake
-  #     Sidekiq::Testing.fake!
-  #   elsif example.metadata[:sidekiq] == :inline
-  #     Sidekiq::Testing.inline!
-  #   elsif example.metadata[:type] == :feature
-  #     Sidekiq::Testing.inline!
-  #   else
-  #     Sidekiq::Testing.fake!
-  #   end
-  # end
+  # API
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: /spec\/api/ }
 
 end
