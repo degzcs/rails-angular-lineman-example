@@ -7,6 +7,7 @@ gem 'rails', '4.1.9'
 # DB
 gem 'pg'
 gem 'bcrypt'
+gem 'active_attr'
 
 gem 'sass-rails', '~> 4.0.3'
 
@@ -62,7 +63,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'launchy'
+  gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
-  gem 'selenium-webdriver'
 end
 
