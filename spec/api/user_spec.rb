@@ -10,7 +10,8 @@ describe 'Auth', :type => :request do
 
       context 'GET' do
         it 'show the user info' do
-          expected_response = {"id"=>1,
+          expected_response = {
+            "id"=>1,
            "first_name"=>@user.first_name,
            "last_name"=>@user.last_name,
            "email"=>"elcho.esquillas@fake.com",
@@ -22,6 +23,25 @@ describe 'Auth', :type => :request do
           expect(JSON.parse(response.body)).to eq expected_response
         end
 
+      end
+      context 'UPDATE' do
+        it 'should update user info' do 
+          expected_response = {
+           "id"=>1,
+           "first_name"=>"Armando",
+           "last_name"=>"Casas",
+           "email"=>"armando.casas@fake.com",
+          }
+
+          new_values ={
+           "first_name"=>"Armando",
+           "last_name"=>"Casas",
+           "email"=>"armando.casas@fake.com",
+          }
+          put '/api/v1/users/', {user: new_values},{ "Authorization" => "Barer #{@token}" }
+          expect(response.status).to eq 200
+          expect(JSON.parse(response.body)).to include expected_response
+        end
       end
     end
   end

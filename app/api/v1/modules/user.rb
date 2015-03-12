@@ -67,7 +67,7 @@ module V1
             [404, "Entry not found"],
           ] do
               current_user.update(params[:user])
-             present current_user, with: V1::Entities::User
+              present current_user, with: V1::Entities::User
         end
       end
     end
