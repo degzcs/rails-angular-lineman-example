@@ -27,7 +27,7 @@ module V1
               ### Example successful response
 
                   {
-                    "id": "121213215465sadfsadfa54654asd",
+                    "id": "1",
                     "name": "Lourdez Astre",
                     "first_name": "Lourdez",
                     "last_name": "Astre",
@@ -49,7 +49,7 @@ module V1
               ### Example successful response
 
                   {
-                    "id": "121213215465sadfsadfa54654asd",
+                    "id": "1",
                     "name": "Lourdez Astre",
                     "first_name": "Lourdez",
                     "last_name": "Astre",
