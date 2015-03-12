@@ -1,0 +1,12 @@
+!!!
+%html{"ng-app" => "app"}
+  %head
+    %base{"href" => "/"}
+    %title= "TrazOro"
+    %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
+  %body
+    .row
+      .large-12
+        %h1 TrazOro Initial Page
+        #view{"ng-view" => ""}
+    %script{"src" => "/js/app.js", "type" => "text/javascript"}

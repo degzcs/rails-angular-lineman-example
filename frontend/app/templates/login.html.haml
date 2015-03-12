@@ -1,0 +1,12 @@
+#login.row
+  .large-6.large-offset-3
+    %form{"ng-submit" => "login()"}
+      %fieldset.radius
+        .row
+          .large-6.columns
+            %input{"name" => "username", "ng-model" => "credentials.username", "placeholder" => "username", "required" => "", "type" => "text"}
+          .large-6.columns
+            %input{"name" => "password", "ng-model" => "credentials.password", "placeholder" => "password", "required" => "", "type" => "password"}
+        .row
+          .large-12.columns
+            %button#log-in.button.large.expand.radius{"type" => "submit"} Log In

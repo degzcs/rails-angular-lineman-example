@@ -30,4 +30,4 @@ config/database.drone.yml
 frontend/node_modules
 
 frontend/dist
-frontend/generated
+frontend/generated/*

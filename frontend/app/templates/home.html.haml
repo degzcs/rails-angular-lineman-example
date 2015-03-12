@@ -1,0 +1,12 @@
+#home.row
+  .large-6.large-offset-3
+    %h2 Welcome to the  page!
+    .alert-box 
+    %ul.small-block-grid-2
+      %li
+        %img.th{"message" => "Im the first house.", "shows-message-when-hovered" => "", "src" => "img/demo1.jpg"}/
+      %li
+        %img.th{"message" => "Im the second house.", "shows-message-when-hovered" => "", "src" => "img/demo2.jpg"}/
+    .row
+      .large-12.columns
+        %button.button.large.expand.radius{"ng-click" => "logout()"} Log Out
