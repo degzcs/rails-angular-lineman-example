@@ -8,9 +8,8 @@ describe 'Auth', :type => :request do
       end
 
       context 'POST' do
-        it 'verifies that response has the elements number specified in per_page param' do
-          binding.pry
-          post '/api/v1/auth/login', %Q{email= "#{@user.email}"&password=super_password}
+        it 'logs a user in the app' do
+          get '/api/v1/auth/login', %Q{email=#{@user.email}&password=super_password}
           expect(response.status).to eq 200
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end

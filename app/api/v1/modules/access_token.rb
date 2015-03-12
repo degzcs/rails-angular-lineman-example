@@ -10,7 +10,7 @@ module V1
             entity: V1::Entities::AccessToken,
             notes: <<-NOTE
               ### Description
-              It creates a new login the user and returns its current representation with a JWT. \n
+              It login the user and returns its current representation with a JWT. \n
 
               ### Example successful response
 
@@ -24,7 +24,7 @@ module V1
           requires :email, type: String
           requires :password, type: String
         end
-        post 'login' do
+        get 'login' do
           user = ::User.where(email: params[:email]).last
           user.authenticate(params[:password])
 
