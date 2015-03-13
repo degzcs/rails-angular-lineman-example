@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+FactoryGirl.create :user, email: 'diego@trazoro.com', password: '123456', password_confirmation: '123456'
+FactoryGirl.create :user, email: 'jesus@trazoro.com', password: '123456', password_confirmation: '123456'
+FactoryGirl.create :user, email: 'camilo@trazoro.com', password: '123456', password_confirmation: '123456'
+FactoryGirl.create :user, email: 'javier@trazoro.com', password: '123456', password_confirmation: '123456'
+FactoryGirl.create :user, email: 'leandro@trazoro.com', password: '123456', password_confirmation: '123456'
+FactoryGirl.create :user, email: 'esteban@trazoro.com', password: '123456', password_confirmation: '123456'
