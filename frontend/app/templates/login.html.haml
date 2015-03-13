@@ -1,3 +1,20 @@
+%div{:layout => "column"}
+  %md-content.md-padding
+    %form{:name => "projectForm"}
+      %md-content.md-padding
+        %md-input-container{"md-no-float" => ""}
+          %md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_person_24px.svg"}
+          %input{"ng-model" => "user.name", :placeholder => "Name", :type => "text"}
+        %md-input-container{"md-no-float" => ""}
+          %md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_phone_24px.svg"}
+          %input{"ng-model" => "user.phone", :placeholder => "Phone Number", :type => "text"}
+        %md-input-container{"md-no-float" => ""}
+          %md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_email_24px.svg"}
+          %input{"ng-model" => "user.email", :placeholder => "Email", :type => "email"}
+        %md-input-container{"md-no-float" => ""}
+          %md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_place_24px.svg"}
+          %input{"ng-model" => "user.address", :placeholder => "Address", :type => "text"}
+
 #login.row
   .large-6.large-offset-3
     %form{"ng-submit" => "login()"}
