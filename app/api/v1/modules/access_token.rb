@@ -24,7 +24,7 @@ module V1
           requires :email, type: String
           requires :password, type: String
         end
-        get 'login' do
+        post 'login' do
           user = ::User.where(email: params[:email]).last
           user.authenticate(params[:password])
 

@@ -9,8 +9,8 @@ describe 'Auth', :type => :request do
 
       context 'POST' do
         it 'logs a user in the app' do
-          get '/api/v1/auth/login', %Q{email=#{@user.email}&password=super_password}
-          expect(response.status).to eq 200
+          post '/api/v1/auth/login', %Q{email=#{@user.email}&password=super_password}
+          expect(response.status).to eq 201
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end
 
