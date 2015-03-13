@@ -21,7 +21,7 @@ module.exports = (lineman) ->
       pages:
         files:[
           '<%= files.pages.source %>',
-          'app/pages/*.html'
+          'app/pages/*.haml',
         ]
         tasks: [
           'haml'
@@ -61,4 +61,4 @@ module.exports = (lineman) ->
         dest: 'generated/pages/'
         ext: '.html'
       } ]
-    pages: dist: files: '../public/index.html': 'app/templates/homepage.*'
+    # pages: dist: files: '../public/index.html': 'app/templates/homepage.*'

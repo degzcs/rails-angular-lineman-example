@@ -1,0 +1,1 @@
+angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth) ->

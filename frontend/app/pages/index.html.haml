@@ -6,7 +6,17 @@
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
     .row
+      / {{user}}
+    .row 
+      .large-6.large-offset-3
+        %ul.nav.navbar-nav.pull-right
+          %li{"ng-if" => "!isAuthenticated()"}
+            %a{"ui-sref" => "login"} Login
+          %li{"ng-if" => "isAuthenticated()"}
+            %a{"ui-sref" => "logout"} Logout
+
+    .row
       .large-12
         %h1 TrazOro Initial Page
-        #view{"ng-view" => ""}
+    .fadeZoom{"ui-view" => ""}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}

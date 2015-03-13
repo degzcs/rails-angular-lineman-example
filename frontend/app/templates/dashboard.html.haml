@@ -1,0 +1,18 @@
+#home.row
+  .large-6.large-offset-3
+    %h2 Dashboard
+    .alert-box 
+    %ul.small-block-grid-2
+      %li
+        %img.th{"message" => "Im the first house.", "shows-message-when-hovered" => "", "src" => "img/demo1.jpg"}
+      %li
+        %img.th{"message" => "Im the second house.", "shows-message-when-hovered" => "", "src" => "img/demo2.jpg"}
+    .row
+      .test
+        {{isAuthenticated()}}
+      %ul
+        %li
+          %a{"ui-sref" => "home"} Home
+        %li{"ng-if" => "!isAuthenticated()"}
+          %a{"ui-sref" => "logout"} Logout
+    .fadeZoom{"ui-view" => ""}
