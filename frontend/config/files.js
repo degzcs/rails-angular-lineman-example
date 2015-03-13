@@ -8,6 +8,7 @@
 module.exports = function(lineman) {
   //Override file patterns here
   return {
+    pages: {source: 'generated/pages/**/*.*'},
     js: {
       vendor: [
         "vendor/js/angular.js",

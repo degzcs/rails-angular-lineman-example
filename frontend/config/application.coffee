@@ -3,34 +3,13 @@
 #
 
 module.exports = (lineman) ->
-  {
-  	# Server
-    server:
-      pushState: false
-      apiProxy:
-        enabled: true
-        host: 'localhost'
-        port: 3000
- 	# Sass
- 	# enableSass: true
+	# NgTemplate config
+  	ngtemplates: app:
+      options: base: 'generated/templates'
+      src: 'generated/templates/**/*.html'
+      dest: '<%= files.ngtemplates.dest %>'
 
-    # Asset Fingerprints
-    enableAssetFingerprint: true
-
-    # Haml
-    # remove pages generation, now it is handle
-    removeTasks: 
-    	dist: lineman.config.application.removeTasks.dist.concat('pages:dist')
-    	common: lineman.config.application.removeTasks.common.concat('pages:dev')
-    
-    # ngTemplates config
-    # ngtemplates: app:
-    #   options: base: 'generated/templates'
-    #   src: 'generated/templates/**/*.html'
-    #   dest: '<%= files.ngtemplates.dest %>'
-
-    # Watcher config
-    # check if the templates and pages have been changed in order to render again
+    #Whtcher config
     watch:
       ngtemplates:
         files: 'app/templates/**/*.haml'
@@ -46,5 +25,40 @@ module.exports = (lineman) ->
         ]
         tasks: [
           'haml'
+          'pages:dev'
         ]
-  }
+    # Server config
+    server:
+      pushState: false
+      apiProxy:
+        enabled: true
+        host: 'localhost'
+        port: 3000
+    # Sass config
+    enableSass: false
+    sass: options: bundleExec: false
+    concat_sourcemap:
+      js: src: [
+        '<%= files.js.vendor %>'
+        '<%= files.coffee.generated %>'
+        '<%= files.js.app %>'
+        '<%= files.ngtemplates.dest %>'
+      ]
+      css: src: [
+        '<%= files.less.generated %>'
+        '<%= files.sass.generatedVendor %>'
+        '<%= files.css.vendor %>'
+        '<%= files.sass.generatedApp %>'
+        '<%= files.css.app %>'
+      ]
+    # Haml config
+    haml:
+      options: language: 'coffee'
+      pages: files: [ {
+        expand: true
+        cwd: 'app/pages'
+        src: [ '**/*.haml' ]
+        dest: 'generated/pages/'
+        ext: '.html'
+      } ]
+    pages: dist: files: '../public/index.html': 'app/templates/homepage.*'
