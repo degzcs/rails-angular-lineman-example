@@ -4,19 +4,33 @@
     %base{"href" => "/"}
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
-  %body
-    .row
-      / {{user}}
-    .row 
-      .large-6.large-offset-3
-        %ul.nav.navbar-nav.pull-right
-          %li{"ng-if" => "!isAuthenticated()"}
-            %a{"ui-sref" => "login"} Login
-          %li{"ng-if" => "isAuthenticated()"}
-            %a{"ui-sref" => "logout"} Logout
+  %body{ "ng-controller" => "LeftCtrl" }
+    %div{:layout => "column"}
+      %section{:flex => "", :layout => "row"}
+        %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')"}
+          %md-toolbar.md-theme-indigo
+            %h1.md-toolbar-tools Trazoro
+          %md-content.md-padding
+            %p
+              This is the sidebar
+        %md-content{:flex => ""}
+          %md-toolbar
+            %h2.md-toolbar-tools
+              %md-button.md-primary{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
+                Toggle left
+              %span Toolbar
+          %md-content.md-padding
+            .row
+              / {{user}}
+            .row 
+              .large-6.large-offset-3
+                %ul.nav.navbar-nav.pull-right
+                  %li{"ng-if" => "!isAuthenticated()"}
+                    %a{"ui-sref" => "login"} Login
+                  %li{"ng-if" => "isAuthenticated()"}
+                    %a{"ui-sref" => "logout"} Logout
 
-    .row
-      .large-12
-        %h1 TrazOro Initial Page
-    .fadeZoom{"ui-view" => ""}
+            .row
+            
+            .fadeZoom{"ui-view" => ""}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}

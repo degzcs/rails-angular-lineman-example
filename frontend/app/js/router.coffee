@@ -1,7 +1,7 @@
 angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
 
   $stateProvider.state("home",
-    url: "/"
+    url: "/home"
     templateUrl: "home.html"
     controller: "HomeCtrl"
   ).state("login",
