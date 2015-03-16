@@ -5,6 +5,7 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body{ "ng-controller" => "LeftCtrl" }
+
     %div{:layout => "column"}
       %section{:flex => "", :layout => "row"}
         %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')"}
@@ -21,16 +22,18 @@
               %span Toolbar
           %md-content.md-padding
             .row
-              / {{user}}
-            .row 
+              // {{user}}
+            .row
               .large-6.large-offset-3
                 %ul.nav.navbar-nav.pull-right
                   %li{"ng-if" => "!isAuthenticated()"}
                     %a{"ui-sref" => "login"} Login
                   %li{"ng-if" => "isAuthenticated()"}
                     %a{"ui-sref" => "logout"} Logout
+                  %li
+                    %a{"ui-sref" => "scanner"} Scanner Test
 
             .row
-            
+
             .fadeZoom{"ui-view" => ""}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}

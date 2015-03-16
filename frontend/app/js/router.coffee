@@ -13,7 +13,11 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     url: "/logout"
     template: null
     controller: "LogoutCtrl"
-  ).state "dashboard",
+  ).state("scanner",
+    url: "/scanner",
+    templateUrl: "scanner.html"
+  ).
+  state "dashboard",
     url: "/dashboard"
     templateUrl: "dashboard.html"
     controller: "DashboardCtrl" 
