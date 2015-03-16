@@ -27,6 +27,9 @@ gem 'spring',        group: :development
 
 gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
+gem 'activeadmin', github: 'activeadmin'
+gem 'devise'
+
 
  # API
  gem 'jwt'
