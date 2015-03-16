@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311042317) do
+ActiveRecord::Schema.define(version: 20150316195913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "rucoms", primary_key: "idrucom", force: true do |t|
+    t.text     "record"
+    t.text     "name"
+    t.text     "status"
+    t.text     "mineral"
+    t.text     "location"
+    t.text     "subcontract_number"
+    t.text     "mining_permit"
+    t.datetime "updated_at",         default: "now()"
+  end
 
   create_table "users", force: true do |t|
     t.string   "first_name"
