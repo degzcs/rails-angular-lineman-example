@@ -21,6 +21,7 @@ set :nodenv_roles, :all # default value
 # dirs we want symlinked to the shared folder
 # during deployment
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_files, %w{config/database.yml config/app_config.yml}
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deploy/code/trazoro'
