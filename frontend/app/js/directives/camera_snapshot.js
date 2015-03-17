@@ -4,10 +4,7 @@ angular.module('app')
             restrict: 'EA',
             require: '^camera',
             scope: true,
-            template: '<div style="width:600px; display:inline-block;"><button class="md-raised md-primary md-button md-default-theme" ng-click="takeSnapshot()">Tomar Imagen</button></div>'+
-            '<div style="display:inline-block;"><md-button class="md-raised md-primary md-button md-default-theme"  ng-click="addScanFile()">Agregar al Documento</md-button>'+
-            '<br/><br/><br/>' +
-            '<button class="md-raised md-primary md-button md-default-theme"  ng-click="comeBack()"> Finalizar Scan </button>',
+            templateUrl: 'camera_snapshot.html',
             link: function(scope, ele, attrs, CameraController) {
                 scope.takeSnapshot = function() {
                     CameraController.takeSnapshot()
