@@ -23,7 +23,7 @@ angular.module('app')
                     return d.promise;
                 };
             },
-            template: '<div class="camera" style="width:1200px"><video class="camera" autoplay="" style="display:inline-block;width:500px;height: 300px;"/><canvas style="margin-left:60px;"></canvas><div ng-transclude></div></div>',
+            templateUrl: 'camera.html',
             link: function(scope, ele, attrs) {
                 var w = attrs.width || 500,
                     h = attrs.height || 300;
