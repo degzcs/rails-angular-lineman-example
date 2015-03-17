@@ -9,5 +9,5 @@
 # updated_at Datetime
 
 class Rucom < ActiveRecord::Base
-	validate_presence_of: idrucom
+	validates_presence_of :idrucom
 end
