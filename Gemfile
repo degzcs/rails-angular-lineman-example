@@ -29,6 +29,7 @@ gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
+gem 'factory_girl_rails'
 
 
  # API
@@ -56,7 +57,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
