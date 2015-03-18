@@ -2,7 +2,7 @@
   %md-card.md-card-login{"flex-gt-md"=>"50","flex-sm"=>"80","flex-md"=>"60"}
     %md-content.md-padding
       %h3 Login 
-      %form{}
+      %form{:name => "loginForm", "ng-submit"=> "login()"}
         %md-content.md-padding
           %md-input-container{"md-no-float" => ""}
             %input{"ng-model" => "email", :placeholder => "Email", :type => "email", "required"=>""}
@@ -12,6 +12,6 @@
             /%md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_phone_24px.svg"}
             %input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
             
-          %md-button{"ng-disabled"=>"loginForm.$invalid","ng-click"=>"login()"}
+          %md-button.login-button{"ng-disabled"=>"loginForm.$invalid"}
             Log in
 
