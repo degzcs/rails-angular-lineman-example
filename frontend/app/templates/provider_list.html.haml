@@ -1,0 +1,38 @@
+%div{:layout => "column", "ng-controller" => "AppCtrl"}
+  .main-fab
+    %md-button.md-fab.md-accent +
+  %md-toolbar.md-tall{:layout => "column"}
+    %span{:flex => "flex"}
+    .md-toolbar-tools
+      .fill-height{:flex => "flex", :layout => "row"}
+        .md-toolbar-item.md-breadcrumb{"ng-hide" => "toggleSearch"}
+          %span Angular Material Table
+        %span{:flex => "flex", "ng-hide" => "toggleSearch"}
+        %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
+          %input{"ng-model" => "search", :type => "text"}/
+        .md-toolbar-item.md-tools{:layout => "row"}
+          %a.md-button.md-default-theme{:href => "href", "ng-click" => "toggleSearch = !toggleSearch"}
+            %i.ion-android-search
+  %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
+    %md-table{:content => "content", :count => "count", "custom-class" => "custom", :filters => "search", :headers => "headers", :sortable => "sortable", :thumbs => "thumbs"}
+/ md-table jade template
+#md-table-template{"ng-hide" => "true"}
+  %table.md-table{"md-colresize" => "md-colresize"}
+    %thead
+      %tr.md-table-headers-row
+        %th.md-table-header{"ng-repeat" => "h in headers"}
+          %a{:href => "#", "ng-click" => "reverse=!reverse;order(h.field,reverse)", "ng-if" => "handleSort(h.field)"}
+            {{h.name}}
+            %i.ion-android-arrow-dropup{"ng-show" => "reverse &amp;&amp; h.field == predicate"}
+            %i.ion-android-arrow-dropdown{"ng-show" => "!reverse &amp;&amp; h.field == predicate"}
+          %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
+        %th.md-table-header
+    %tbody
+      %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"}
+        %td
+          .md-table-thumbs{"ng-if" => "h.field == thumbs", "ng-repeat" => "h in headers"}
+            %div{:style => "background-image:url({{c.thumb}})"}
+        %td.md-table-content{"ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs", "ng-repeat" => "h in headers"} {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
+        %td.md-table-td-more
+          %md-button{"aria-label" => "Info"}
+            %i.ion-android-more-vertical
