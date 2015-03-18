@@ -16,6 +16,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   ).state("scanner",
     url: "/scanner",
     templateUrl: "scanner.html"
+  ).state("listarinventarios",
+    url: "/listarinventarios",
+    templateUrl: "inventarios/listar_inventarios.html"
   ).
   state "dashboard",
     url: "/dashboard"
