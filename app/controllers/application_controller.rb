@@ -4,11 +4,11 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def login
-    render json: { message: 'logging in!' }
+    render json: {message: 'logging in!'}
   end
 
   def logout
-    render json:{ message: 'logging out!'}
+    render json:{message: 'logging out!'}
   end
 
 end

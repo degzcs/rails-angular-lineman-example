@@ -1,32 +1,17 @@
-%h3 Login 
-%div{:layout => "column"}
-  %md-content.md-padding
-    %form{:name => "projectForm"}
-      %md-content.md-padding
-        %md-input-container{"md-no-float" => ""}
-          %md-icon{"md-svg-icon"=>"communication:email"}
-          %input{"ng-model" => "user.name", :placeholder => "Name", :type => "text", required=>""}
-        %md-input-container{"md-no-float" => ""}
-          /%md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_phone_24px.svg"}
-          %input{"ng-model" => "user.phone", :placeholder => "Phone Number", :type => "text"}
-        %md-input-container{"md-no-float" => ""}
-          /%md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_email_24px.svg"}
-          %input{"ng-model" => "user.email", :placeholder => "Email", :type => "email"}
-        %md-input-container{"md-no-float" => ""}
-          /%md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_place_24px.svg"}
-          %input{"ng-model" => "user.address", :placeholder => "Address", :type => "text"}
-        %md-input-container{"md-no-float" => ""}
-          %input{:type => "submit"} Enviar
+%div{"layout"=>"row","layout-align"=> "center"}
+  %md-card.md-card-login{"flex-gt-md"=>"50","flex-sm"=>"80","flex-md"=>"60"}
+    %md-content.md-padding
+      %h3 Login 
+      %form{:name => "loginForm", "ng-submit"=> "login()"}
+        %md-content.md-padding
+          %md-input-container{"md-no-float" => ""}
+            %input{"ng-model" => "email", :placeholder => "Email", :type => "email", "required"=>""}
+            %div{"ng-messages" => "loginForm.$error", "ng-show" => "loginForm.$dirty"}
+              %div{"ng-message" => "required"} This is required!
+          %md-input-container{"md-no-float" => ""}
+            /%md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_phone_24px.svg"}
+            %input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
+            
+          %md-button.login-button{"ng-disabled"=>"loginForm.$invalid"}
+            Log in
 
-#login.row
-  .large-6.large-offset-3
-    %form{"ng-submit" => "login()"}
-      %fieldset.radius
-        .row
-          .large-6.columns
-            %input{'autofocus' => "", 'name' => "email", "ng-model" => "email", 'placeholder' => "Email", 'required' => "", 'type' => "text"}
-          .large-6.columns
-            %input{'name' => "password", "ng-model" => "password", 'placeholder' => "Password", 'required' => "", 'type' => "password"}
-        .row
-          .large-12.columns
-            %button#log-in.button.large.expand.radius{"ng-disabled" => "loginForm.$invalid", 'type' => "submit"} Log In
