@@ -12,6 +12,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     controller: "LoginCtrl"
     ncyBreadcrumb: 
       label: 'Login'
+      skip: true
   )
   .state("logout",
     url: "/logout"
@@ -37,11 +38,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     url: "/dashboard"
     templateUrl: "dashboard.html"
     controller: "DashboardCtrl" 
+    ncyBreadcrumb: 
+      label: 'Dashboard'
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
         unless $auth.isAuthenticated()
-          $location.path "/home"
+          $location.path "/login"
         else
           deferred.resolve()
         deferred.promise

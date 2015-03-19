@@ -4,7 +4,6 @@ angular.module('app').controller 'LoginCtrl', ($scope, $alert, $auth,$mdDialog) 
     $auth.login(
       email: $scope.email
       password: $scope.password).then(->
-      
       $mdDialog.show $mdDialog.alert()
         .title('You have successfully logged in')
         .content('Welcome!')

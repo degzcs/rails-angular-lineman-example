@@ -1,13 +1,15 @@
-angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $log, $state) ->
+angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $auth) ->
 
   #  Here just add the sidebar navigation options with their state
   $scope.options = [
-    {name: "Login" , state: "login"}
     {name: "Home" , state: "home"}
+    {name: "Dashboard", state: "dashboard"}
     {name: "Scanner Test" , state: "scanner"}
     {name: "Providers" , state: "providerList"}
     {name: "Inventory", state: "inventoryList"}
   ]
+  $scope.isAuthenticated = ->
+    return $auth.isAuthenticated()
 
   $scope.close = ->
     $mdSidenav('left').close().then ->

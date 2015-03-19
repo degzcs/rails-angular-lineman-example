@@ -17,10 +17,13 @@
       /--------------------------------------- Content -------------------------------/
       %md-content{:flex => ""}
         %md-toolbar
-          %h2.md-toolbar-tools
+          %span.md-toolbar-tools{layout: "row"}
             %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
               %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
-            %div{"ncy-breadcrumb"=>""} 
+            %div{"ncy-breadcrumb"=>"",flex:80}
+            %div{flex:"10","layout-align"=>"end"}
+              %md-button{"ui-sref" => "login","ng-if" => "!isAuthenticated()"} Log in
+              %md-button{"ui-sref" => "logout","ng-if" => "isAuthenticated()"} Log out
         %md-content.md-padding
           .fadeZoom{"ui-view" => ""}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}v

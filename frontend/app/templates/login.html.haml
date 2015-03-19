@@ -1,16 +1,15 @@
 %div{"layout"=>"row","layout-align"=> "center"}
   %md-card.md-card-login{"flex-gt-md"=>"50","flex-sm"=>"80","flex-md"=>"60"}
+    %md-toolbar.md-tall
+      %h2.md-toolbar-tools.md-toolbar-tools-bottom
+        %span  
     %md-content.md-padding
-      %h3 Login 
-      %form{:name => "loginForm", "ng-submit"=> "login()"}
+      %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
         %md-content.md-padding
           %md-input-container.md-default-theme{"md-no-float" => ""}
-            %input{"ng-model" => "email", :placeholder => "Email", :type => "email", "required"=>""}
-            %div{"ng-messages" => "loginForm.$error", "ng-show" => "loginForm.$dirty"}
-              %div{"ng-message" => "required"} This is required!
+            %input{"ng-model" => "email", :placeholder => "Email", :type => "email"}
           %md-input-container.md-default-theme{"md-no-float" => ""}
-            /%md-icon{"md-svg-src" => "/demo-partials/input/demoIcons/icons/ic_phone_24px.svg"}
             %input.md-input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
-          %md-button.login-button.md-raised.md-primary.md-button.md-default-theme{"ng-disabled"=>"loginForm.$invalid"}
+          %md-button.login-button.md-raised.md-default-theme
             Log in
 
