@@ -1,4 +1,4 @@
-angular.module('app').directive('trNavButton',function ($state,$log,$location) {
+angular.module('app').directive('trNavButton',function ($state) {
   return {
     restrict: 'E',
     templateUrl: 'directives/tr-nav-button.html',

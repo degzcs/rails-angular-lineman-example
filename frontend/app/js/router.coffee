@@ -4,10 +4,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     url: "/home"
     templateUrl: "home.html"
     controller: "HomeCtrl"
+    ncyBreadcrumb: 
+      label: 'Home page'
   ).state("login",
     url: "/login"
     templateUrl: "login.html"
     controller: "LoginCtrl"
+    ncyBreadcrumb: 
+      label: 'Login'
   )
   .state("logout",
     url: "/logout"
@@ -16,12 +20,18 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   ).state("scanner",
     url: "/scanner",
     templateUrl: "scanner.html"
+    ncyBreadcrumb: 
+      label: 'PDF scanner'
   ).state("providerList",
     url: "/provider/all",
     templateUrl: "provider_list.html"
+    ncyBreadcrumb: 
+      label: 'Providers'
   ).state("inventoryList",
     url: "/inventoryList",
     templateUrl: "inventory/list_inventory.html"
+    ncyBreadcrumb: 
+      label: 'Inventory'
   ).
   state "dashboard",
     url: "/dashboard"

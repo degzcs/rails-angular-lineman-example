@@ -12,7 +12,7 @@
           %h1.md-toolbar-tools Trazoro
         %md-content
           %div.sidebar-options{:layout => "column"}
-            %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state"}
+            %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
             %a.md-button{"href" => "#", "onclick"=> "FunctionCob()"} Generate PDF File
       /--------------------------------------- Content -------------------------------/
       %md-content{:flex => ""}
@@ -20,7 +20,7 @@
           %h2.md-toolbar-tools
             %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
               %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
-            %span Toolbar
+            %div{"ncy-breadcrumb"=>""} 
         %md-content.md-padding
           .fadeZoom{"ui-view" => ""}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}v

@@ -1,4 +1,4 @@
-angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $log) ->
+angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $log, $state) ->
 
   #  Here just add the sidebar navigation options with their state
   $scope.options = [
@@ -6,6 +6,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     {name: "Home" , state: "home"}
     {name: "Scanner Test" , state: "scanner"}
     {name: "Providers" , state: "providerList"}
+    {name: "Inventory", state: "inventoryList"}
   ]
 
   $scope.close = ->
@@ -13,6 +14,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
       $log.debug 'close LEFT is done'
       return
     return
+
   $scope.toggleLeft = ->
     $mdSidenav('left').toggle().then ->
       $log.debug 'toggle LEFT is done'
