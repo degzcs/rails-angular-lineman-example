@@ -10,12 +10,12 @@ angular.module('app').directive('mdColresize', function ($timeout) {
         });},100);
       });
     }
-  }
+  };
 });
 
 angular.module('app').filter('startFrom',function (){
   return function (input,start) {
     start = +start;
     return input.slice(start);
-  }
+  };
 });

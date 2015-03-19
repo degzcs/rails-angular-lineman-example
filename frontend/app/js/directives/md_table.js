@@ -15,8 +15,8 @@ angular.module('app').directive('mdTable', function () {
       $scope.tablePage = 0;
       $scope.nbOfPages = function () {
         return Math.ceil($scope.content.length / $scope.count);
-      },
-      	$scope.handleSort = function (field) {
+      };
+      $scope.handleSort = function (field) {
           if ($scope.sortable.indexOf(field) > -1) { return true; } else { return false; }
       };
       $scope.order = function(predicate, reverse) {
@@ -32,5 +32,5 @@ angular.module('app').directive('mdTable', function () {
       };
     },
     template: angular.element(document.querySelector('#md-table-template')).html()
-  }
+  };
 });
