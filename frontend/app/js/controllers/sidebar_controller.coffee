@@ -1,9 +1,11 @@
 angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $log) ->
+
+  #  Here just add the sidebar navigation options with their state
   $scope.options = [
-    {name: "Login" , url: "login"}
-    {name: "Home" , url: "home"}
-    {name: "Scanner Test" , url: "scanner"}
-    {name: "Providers" , url: "providerList"}
+    {name: "Login" , state: "login"}
+    {name: "Home" , state: "home"}
+    {name: "Scanner Test" , state: "scanner"}
+    {name: "Providers" , state: "providerList"}
   ]
 
   $scope.close = ->

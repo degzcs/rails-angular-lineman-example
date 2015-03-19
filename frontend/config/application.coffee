@@ -35,7 +35,7 @@ module.exports = (lineman) ->
         host: 'localhost'
         port: 3000
     # Sass config
-    enableSass: false
+    enableSass: true
     sass: options: bundleExec: false
     concat_sourcemap:
       js: src: [
