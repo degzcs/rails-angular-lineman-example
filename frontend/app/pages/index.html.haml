@@ -13,31 +13,14 @@
         %md-content
           %div{:layout => "column"}
             %tr-sidebar-button{"ng-repeat"=> "option in options", name: "option.name" , url:"option.url"}
+            %a.md-button{"href" => "#", "onclick"=> "FunctionCob()"} Generate PDF File
       /--------------------------------------- Content -------------------------------/
       %md-content{:flex => ""}
         %md-toolbar
           %h2.md-toolbar-tools
-            %md-button.md-primary{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
-              Toggle left
+            %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
+              %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
             %span Toolbar
         %md-content.md-padding
-          .row
-            // {{user}}
-          .row
-            .large-6.large-offset-3
-              %ul.nav.navbar-nav.pull-right
-                %li{"ng-if" => "!isAuthenticated()"}
-                  %a{"ui-sref" => "login"} Login
-                %li{"ng-if" => "isAuthenticated()"}
-                  %a{"ui-sref" => "logout"} Logout
-                %li
-                  %a{"ui-sref" => "scanner"} Scanner Test
-                %li
-                  %a{"ui-sref" => "providerList"} List Providers  
-                %li
-                  %a{"href" => "#", "onclick"=> "FunctionCob()"} Generate PDF File
-
-            .row
-
-            .fadeZoom{"ui-view" => ""}
-    %script{"src" => "/js/app.js", "type" => "text/javascript"}
+          .fadeZoom{"ui-view" => ""}
+    %script{"src" => "/js/app.js", "type" => "text/javascript"}v
