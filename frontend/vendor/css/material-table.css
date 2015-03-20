@@ -112,10 +112,9 @@ i {
   color: grey;
 }
 
-/*
-md-input-container.md-default-theme .md-input {
+
+input#search-prov{
   color: white;
   border-color: white;
   margin-top: 24px;
 }
-*/
