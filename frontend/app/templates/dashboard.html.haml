@@ -1,15 +1,48 @@
 %md-content.dashboard
   %div{layout: "row"}
-    %md-card.credit-card
-      %md-subheader.md-primary.credit-card-title
-        %span Credit Information
+
+    %md-card.credit-card{flex:"30"}
+      %md-subheader.md-primary
+        %span Remaining Credit
       %md-divider{inset: ""}
       %md-item
-        %md-item-content.credit-card-item
-          .md-tile-content 
-            %span Remaining credit: ......... $0.0
+        %md-item-content
+          .md-tile-content.credit-value
+            %span $0.0
             %br
             %md-button.md-raised.md-primary.bt-buy-credits Buy Credits
+    %md-card.user-card{flex:"full"}
+      %md-subheader.md-primary
+        %span User Information
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content
+          .md-tile-content 
+            %span Name:
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content
+          .md-tile-content 
+            %span Company:
+
+  %h3 Options
+  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
+    %md-button.md-raised.md-primary{"aria-label" => "Eat cake"}
+      %span Comprar
+    %md-button.md-raised{"aria-label" => "Use Android"}
+      %span Inventario
+  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
+    %md-button.md-raised.md-warn{"aria-label" => "Comment"}
+      %span Proovedores
+    %md-button.md-raised.md-hue-1.md-accent{"aria-label" => "Profile"}
+      %span Reportes
+
+
+
+        
+            
+            
+
 
 
     
