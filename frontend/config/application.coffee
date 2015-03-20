@@ -61,4 +61,7 @@ module.exports = (lineman) ->
         dest: 'generated/pages/'
         ext: '.html'
       } ]
+    webfonts:
+      files:
+        "vendor/fonts/": "vendor/fonts/**/*.*"
     # pages: dist: files: '../public/index.html': 'app/templates/homepage.*'
