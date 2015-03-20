@@ -19,7 +19,12 @@ module.exports = function(lineman) {
         "app/js/**/*.js"
       ]
     },
-
+    webfonts: {
+      files: {
+        "vendor/fonts/": "vendor/fonts/*.*"
+      },
+      "root": "fonts"
+    },
     less: {
       compile: {
         options: {
