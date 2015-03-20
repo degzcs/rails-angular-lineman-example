@@ -6,9 +6,9 @@
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
     %div{:layout => "row"}
-      %div{"ui-view"=>"sidebar"}
+      %div.sidebar{"ui-view"=>"sidebar"}
       /--------------------------------------- Content -------------------------------/
-      %md-content{:flex => ""}
+      %div.content{:flex => ""}
         %md-toolbar
           %span.md-toolbar-tools{layout: "row"}
             %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
@@ -17,6 +17,5 @@
             %div{flex:"10","layout-align"=>"end", "ng-controller"=> "AuthCtrl"}
               %md-button{"ui-sref" => "login","ng-if" => "!isAuthenticated()"} Log in
               %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
-        %md-content.md-padding
-          %div{"ui-view" => "content"}
+        %div{"ui-view" => "content"}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}v

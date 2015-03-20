@@ -1,3 +1,8 @@
+button, select, html, textarea, input {
+  font-family: sans-serif;
+}
+
+
 h1,h2,h3,h4,h5 {
   text-align: center;
 }
@@ -28,4 +33,19 @@ tr-nav-button .md-button.active{
 .md-button.login-button {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.credit-card .credit-card-title{
+  text-align: center;
+  font-size: 15px;
+}
+
+.credit-card .credit-card-item{
+  font-size: 15px;
+}
+
+.bt-buy-credits{
+  width: 100%;
+  margin-top: 10px;
+  text-transform: none;
 }

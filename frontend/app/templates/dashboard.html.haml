@@ -1,18 +1,15 @@
-#home.row
-  .large-6.large-offset-3
-    %h2 Dashboard
-    .alert-box 
-    %ul.small-block-grid-2
-      %li
-        %img.th{"message" => "Im the first house.", "shows-message-when-hovered" => "", "src" => "img/demo1.jpg"}
-      %li
-        %img.th{"message" => "Im the second house.", "shows-message-when-hovered" => "", "src" => "img/demo2.jpg"}
-    .row
-      .test
-        {{isAuthenticated()}}
-      %ul
-        %li
-          %a{"ui-sref" => "home"} Home
-        %li{"ng-if" => "!isAuthenticated()"}
-          %a{"ui-sref" => "logout"} Logout
-    .fadeZoom{"ui-view" => ""}
+%md-content.dashboard
+  %div{layout: "row"}
+    %md-card.credit-card
+      %md-subheader.md-primary.credit-card-title
+        %span Credit Information
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content.credit-card-item
+          .md-tile-content 
+            %span Remaining credit: ......... $0.0
+            %br
+            %md-button.md-raised.md-primary.bt-buy-credits Buy Credits
+
+
+    
