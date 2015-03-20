@@ -31,7 +31,7 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
 gem 'factory_girl_rails'
 gem 'faker'
-
+gem 'sass'
 
  # API
  gem 'jwt'
