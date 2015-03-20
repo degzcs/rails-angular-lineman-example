@@ -1,5 +1,16 @@
-angular.module('app').controller 'LoginCtrl', ($scope, $alert, $auth,$mdDialog) ->
+angular.module('app').controller 'AuthCtrl', ($scope, $alert, $auth,$mdDialog) ->
 
+  $scope.logout = ->
+    if !$auth.isAuthenticated()
+      return
+    $auth.logout().then ->
+      $mdDialog.show $mdDialog.alert()
+        .title('You have been logged out')
+        .content('Bye!')
+        .ok('Got it!')
+        duration: 3
+      return
+      
   $scope.login = ->
     $auth.login(
       email: $scope.email
@@ -19,4 +30,6 @@ angular.module('app').controller 'LoginCtrl', ($scope, $alert, $auth,$mdDialog) 
         .ok('Got it!')
       return
     return
+  $scope.isAuthenticated = ->
+    return $auth.isAuthenticated()
   return

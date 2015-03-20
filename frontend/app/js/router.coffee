@@ -2,44 +2,96 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   $stateProvider.state("home",
     url: "/home"
-    templateUrl: "home.html"
-    controller: "HomeCtrl"
     ncyBreadcrumb: 
       label: 'Home page'
+      skip: true
+    views:
+      'content':
+        templateUrl: "home.html"
+        controller: "HomeCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        if $auth.isAuthenticated()
+          $location.path "/dashboard"
+        else
+          deferred.resolve()
+        deferred.promise
   ).state("login",
     url: "/login"
-    templateUrl: "login.html"
-    controller: "LoginCtrl"
     ncyBreadcrumb: 
       label: 'Login'
       skip: true
-  )
-  .state("logout",
-    url: "/logout"
-    template: null
-    controller: "LogoutCtrl"
+    views:
+      'content':
+        templateUrl: "login.html"
+        controller: "AuthCtrl"
   ).state("scanner",
     url: "/scanner",
-    templateUrl: "scanner.html"
     ncyBreadcrumb: 
       label: 'PDF scanner'
+    views:
+      'content':
+        templateUrl: "scanner.html"
+      'sidebar':
+        templateUrl: "sidebar.html"
+        controller: "SidebarCtrl" 
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
   ).state("providerList",
     url: "/provider/all",
-    templateUrl: "provider_list.html"
     ncyBreadcrumb: 
       label: 'Providers'
+    views:
+      'content':
+        templateUrl: "provider_list.html"
+      'sidebar':
+        templateUrl: "sidebar.html"
+        controller: "SidebarCtrl" 
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
   ).state("inventoryList",
     url: "/inventoryList",
-    templateUrl: "inventory/list_inventory.html"
     ncyBreadcrumb: 
       label: 'Inventory'
+    views:
+      'content':
+        templateUrl: "inventory/list_inventory.html"
+      'sidebar':
+        templateUrl: "sidebar.html"
+        controller: "SidebarCtrl" 
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
   ).
   state "dashboard",
     url: "/dashboard"
-    templateUrl: "dashboard.html"
-    controller: "DashboardCtrl" 
     ncyBreadcrumb: 
       label: 'Dashboard'
+    views:
+      'content':
+        templateUrl: "dashboard.html"
+        controller: "DashboardCtrl" 
+      'sidebar':
+        templateUrl: "sidebar.html"
+        controller: "SidebarCtrl" 
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
