@@ -35,7 +35,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         templateUrl: "scanner.html"
       'sidebar':
         templateUrl: "sidebar.html"
-        controller: "SidebarCtrl" 
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -53,7 +53,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         templateUrl: "provider_list.html"
       'sidebar':
         templateUrl: "sidebar.html"
-        controller: "SidebarCtrl" 
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -63,7 +63,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   ).state("inventoryList",
-    url: "/inventoryList",
+    url: "/inventory/all",
     ncyBreadcrumb: 
       label: 'Inventory'
     views:
@@ -71,7 +71,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         templateUrl: "inventory/list_inventory.html"
       'sidebar':
         templateUrl: "sidebar.html"
-        controller: "SidebarCtrl" 
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -80,8 +80,25 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         else
           deferred.resolve()
         deferred.promise
-  ).
-  state "dashboard",
+  ).state("inventoryLiquidate",
+  url: "/inventory/liquidate",
+  ncyBreadcrumb:
+    label: 'Inventory'
+  views:
+    'content':
+      templateUrl: "inventory/liquidate_inventory.html"
+    'sidebar':
+      templateUrl: "sidebar.html"
+      controller: "SidebarCtrl"
+  resolve:
+    authenticated: ($q, $location, $auth) ->
+      deferred = $q.defer()
+      unless $auth.isAuthenticated()
+        $location.path "/login"
+      else
+        deferred.resolve()
+      deferred.promise
+  ).state "dashboard",
     url: "/dashboard"
     ncyBreadcrumb: 
       label: 'Dashboard'

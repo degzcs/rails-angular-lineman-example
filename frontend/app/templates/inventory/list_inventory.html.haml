@@ -1,0 +1,67 @@
+%div{"ng-controller" => "InventoryController"}
+  %md-content
+    %div{:layout => "row", "layout-align" => "center center"}
+      %h1 Inventario
+  %md-content.list-content
+    %md-list
+      %md-item
+        %md-item-content{"layout-align" => "center center", "layout-margin" => ""}
+          %div{:flex => ""}
+            %md-checkbox{"ng-click" => "selectAll(lista)","ng-model" => "selectaall"}
+          %div{:flex => ""}
+            %h3 Fecha
+          %div{:flex => ""}
+            %h3 Hora
+          %div{:flex => ""}
+            %h3 Quien
+          %div{:flex => ""}
+            %h3 Cuántos
+          %div{:flex => ""}
+            %h3 Ley
+          %div{:flex => ""}
+            %h3 Valor
+  %md-content.list-content
+    %md-list
+      %md-item{"ng-repeat" => "item in lista"}
+        %md-item-content{"layout-align" => "center center", "layout-margin" => ""}
+          %div{:flex => ""}
+            %md-checkbox{"ng-click" => "selectItem(item)", "ng-model" => "item.selected"}
+          %div{:flex => ""}
+            %h5 {{item.fecha}}
+          %div{:flex => ""}
+            %h5 {{item.hora}}
+          %div{:flex => ""}
+            %h5 {{item.quien}}
+          %div{:flex => ""}
+            %h5 {{item.cuantos}}
+          %div{:flex => ""}
+            %h5 {{item.ley}}
+          %div{:flex => ""}
+            %h5 {{item.valor}}
+  %br
+  %br
+  %br
+  %md-content
+    %md-input-container
+      %div{:layout => "row"}
+        %div{:flex => "20"}
+          %label Gramos finos seleccionados
+        %div{:flex => "20"}
+          %input{"md-maxlength" => "5", :required => "", :type => "text", :ng-model => "gramosFinales" }
+    %br
+    %br
+    %md-input-container
+      %div{:layout => "row"}
+        %div{:flex => "20"}
+          %input{"md-maxlength" => "5", :required => "", :type => "text", :ng-model => "gramosFinales" }
+        %div{:flex => "20"}
+          %md-button.md-raised.md-primary.md-button.md-default-theme{:ui-sref => "inventoryLiquidate"} Liquidar
+
+  $scope.checkboxModel = {
+    value1 : true,
+    value2 : 'YES'
+    };
+    }]);
+</script>
+<form name="myForm" ng-controller="ExampleController">
+  Value1: <input type="checkbox" ng-model="checkboxModel.value1"> <br/>
