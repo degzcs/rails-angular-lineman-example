@@ -1,3 +1,7 @@
+#  DATABASE YML EXAMPLE, !!!
+#  You have to run this command:
+#  cp config/database.yml.example config/database.yml
+
 default: &default
   adapter: postgresql
   encoding: unicode
