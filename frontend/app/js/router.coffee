@@ -20,10 +20,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     url: "/provider/all",
     templateUrl: "provider_list.html"
   ).state("inventoryList",
-    url: "/inventoryList",
+    url: "/inventory/all",
     templateUrl: "inventory/list_inventory.html"
-  ).
-  state "dashboard",
+  ).state "dashboard",
     url: "/dashboard"
     templateUrl: "dashboard.html"
     controller: "DashboardCtrl" 
