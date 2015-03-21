@@ -5,22 +5,17 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
-    %div{:layout => "row", "ng-controller" => "SidebarCtrl"}
-      /--------------------------------------- Side Bar -------------------------------/
-      %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')" }
-        %md-toolbar.md-theme-indigo
-          %h1.md-toolbar-tools Trazoro
-        %md-content
-          %div.sidebar-options{:layout => "column"}
-            %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state"}
-            %a.md-button{"href" => "#", "onclick"=> "FunctionCob()"} Generate PDF File
+    %div{:layout => "row"}
+      %div.sidebar{"ui-view"=>"sidebar"}
       /--------------------------------------- Content -------------------------------/
-      %md-content{:flex => ""}
+      %div.content{:flex => ""}
         %md-toolbar
-          %h2.md-toolbar-tools
+          %span.md-toolbar-tools{layout: "row"}
             %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
               %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
-            %span Toolbar
-        %md-content.md-padding
-          .fadeZoom{"ui-view" => ""}
+            %div{"ncy-breadcrumb"=>"",flex:80}
+            %div{flex:"10","layout-align"=>"end", "ng-controller"=> "AuthCtrl"}
+              %md-button{"ui-sref" => "login","ng-if" => "!isAuthenticated()"} Log in
+              %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
+        %div{"ui-view" => "content"}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}v

@@ -1,0 +1,7 @@
+/--------------------------------------- Side Bar -------------------------------/
+%md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')" }
+  %md-toolbar.md-theme-indigo
+    %h1.md-toolbar-tools Trazoro
+  %md-content.sidebar-options{:layout => "column"}
+    %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
+    /%a.md-button{"href" => "#", "onclick"=> "FunctionCob()"} Generate PDF File

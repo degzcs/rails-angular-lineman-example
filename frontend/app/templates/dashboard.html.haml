@@ -1,18 +1,48 @@
-#home.row
-  .large-6.large-offset-3
-    %h2 Dashboard
-    .alert-box 
-    %ul.small-block-grid-2
-      %li
-        %img.th{"message" => "Im the first house.", "shows-message-when-hovered" => "", "src" => "img/demo1.jpg"}
-      %li
-        %img.th{"message" => "Im the second house.", "shows-message-when-hovered" => "", "src" => "img/demo2.jpg"}
-    .row
-      .test
-        {{isAuthenticated()}}
-      %ul
-        %li
-          %a{"ui-sref" => "home"} Home
-        %li{"ng-if" => "!isAuthenticated()"}
-          %a{"ui-sref" => "logout"} Logout
-    .fadeZoom{"ui-view" => ""}
+%md-content.dashboard
+  %div{layout: "row"}
+
+    %md-card.credit-card{flex:"30"}
+      %md-subheader.md-primary
+        %span Remaining Credit
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content
+          .md-tile-content.credit-value
+            %span $0.0
+            %br
+            %md-button.md-raised.md-primary.bt-buy-credits Buy Credits
+    %md-card.user-card{flex:"full"}
+      %md-subheader.md-primary
+        %span User Information
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content
+          .md-tile-content 
+            %span Name:
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content
+          .md-tile-content 
+            %span Company:
+
+  %h3 Options
+  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
+    %md-button.md-raised.md-primary{"aria-label" => "Eat cake"}
+      %span Comprar
+    %md-button.md-raised{"aria-label" => "Use Android"}
+      %span Inventario
+  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
+    %md-button.md-raised.md-warn{"aria-label" => "Comment"}
+      %span Proovedores
+    %md-button.md-raised.md-hue-1.md-accent{"aria-label" => "Profile"}
+      %span Reportes
+
+
+
+        
+            
+            
+
+
+
+    

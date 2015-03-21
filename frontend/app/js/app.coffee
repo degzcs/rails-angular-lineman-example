@@ -5,6 +5,7 @@ angular.module("app", [
   "mgcrea.ngStrap"
   "satellizer"
   "ngMaterial"
+  'ncy-angular-breadcrumb'
 ]).run ($rootScope) ->
 
   # adds some basic utilities to the $rootScope for debugging purposes
