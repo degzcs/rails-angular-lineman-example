@@ -1,5 +1,5 @@
 %md-content
-  %div{:layout => "column", "ng-controller" => "AppCtrl"}
+  %div{:layout => "column", "ng-controller" => "ProviderCtrl"}
     .main-fab
       %md-button.md-fab.md-accent +
     %md-toolbar.md-tall{:layout => "column"}
@@ -10,7 +10,9 @@
             %span Providers
           %span{:flex => "flex", "ng-hide" => "toggleSearch"}
           %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
-            %input#search-prov{"ng-model" => "search", :type => "text"}
+            %input#search-prov-name{"ng-model" => "search.name", :type => "text", :placeholder => "Name"}
+          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
+            %input#search-prov-id{"ng-model" => "search.id", :type => "text", :placeholder => "ID"}
           .md-toolbar-item.md-tools{:layout => "row"}
             %a.md-button.md-default-theme{:href => "#/provider/all", "ng-click" => "toggleSearch = !toggleSearch"}
               %i.ion-android-search
@@ -22,7 +24,7 @@
       %thead
         %tr.md-table-headers-row
           %th.md-table-header{"ng-repeat" => "h in headers"}
-            %a{:href => "#", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
+            %a{:href => "#/provider/all", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
               {{h.name}}
               %i.ion-android-arrow-dropup{"ng-show" => "reverse && h.field == predicate"}
               %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
@@ -40,21 +42,21 @@
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
         Rows per page :
-          %a{:href => "#", "ng-click" => "goToPage(0); count=5"} 5
+          %a{:href => "#/provider/all", "ng-click" => "goToPage(0); count=5"} 5
           ,
-          %a{:href => "#", "ng-click" => "goToPage(0); count=10"} 10
+          %a{:href => "#/provider/all", "ng-click" => "goToPage(0); count=10"} 10
           ,
-          %a{:href => "#", "ng-click" => "goToPage(0); count=25"} 25
+          %a{:href => "#/provider/all", "ng-click" => "goToPage(0); count=25"} 25
           ,
-          %a{:href => "#", "ng-click" => "goToPage(0); count=50"} 50
+          %a{:href => "#/provider/all", "ng-click" => "goToPage(0); count=50"} 50
           ,
-          %a{:href => "#", "ng-click" => "goToPage(0); count=100"} 100
+          %a{:href => "#/provider/all", "ng-click" => "goToPage(0); count=100"} 100
           (current is {{count}})
       %span{:flex => "flex"}
       %span{"ng-show" => "nbOfPages() > 1"}
         %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "tablePage=tablePage-1", "aria-label" => "Previous Page"}
           %i.ion-chevron-left{:style => "font-size:16px;"}
-        %a{:href => "#", "ng-repeat" => "i in getNumber(nbOfPages()) track by $index"}
+        %a{:href => "#/provider/all", "ng-repeat" => "i in getNumber(nbOfPages()) track by $index"}
           %md-button.md-primary.md-hue-2.md-table-footer-item{"ng-click" => "goToPage($index)"}
             %span{"ng-class" => "{ 'md-table-active-page': tablePage==$index}"} {{$index+1}}
         %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==nbOfPages()-1", "ng-click" => "tablePage=tablePage+1", "aria-label" => "Next Page"}

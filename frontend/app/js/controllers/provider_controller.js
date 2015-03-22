@@ -1,4 +1,4 @@
-angular.module('app').controller('AppCtrl', ['$scope', function($scope){
+angular.module('app').controller('ProviderCtrl', ['$scope', function($scope){
   $scope.toggleSearch = false;   
   $scope.headers = [
     {
@@ -146,3 +146,11 @@ angular.module('app').controller('AppCtrl', ['$scope', function($scope){
   $scope.thumbs = 'thumb';
   $scope.count = 5;
 }]);
+
+angular.module('app').filter('startFrom',function (){
+  return function(input, start) {
+    if (!input || !input.length) { return; }
+      start = +start; //parse to int
+      return input.slice(start);
+  };
+});
