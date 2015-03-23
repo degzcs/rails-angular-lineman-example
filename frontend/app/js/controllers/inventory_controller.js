@@ -11,7 +11,6 @@ angular.module('app').controller('InventoryController',  ['$scope', function($sc
             inventario.ley="100"+i;
             inventario.valor="100"+i;
             lista.push(inventario);
-            console.log("lista "+i +lista);
         }
         return lista;
     };
@@ -32,10 +31,8 @@ angular.module('app').controller('InventoryController',  ['$scope', function($sc
     $scope.selectItem=function(item){
         console.log("selecciona item"  + item.selected);
     };
-
-    $scope.gramosFinales="";
     $scope.lista= $scope.inventarioList();
+    $scope.gramosFinales="";
 
-
-
+    //////////////////////////////////////
 }]);
