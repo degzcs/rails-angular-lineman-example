@@ -13,6 +13,9 @@
 ###
 
 module.exports = drawRoutes: (app) ->
+  #
+  # Auth
+  #
   app.post '/api/v1/auth/login', (req, res) ->
     res.json {
       access_token: 'super_save_token',
@@ -26,7 +29,12 @@ module.exports = drawRoutes: (app) ->
   app.post '/logout', (req, res) ->
     res.json message: 'logging out!'
 
-  # possible route to call the inventory (it is inventory or inventories ?)
+  #
+  #  Inventory
+  #
+
+  # GET
+  # it is a possible route for the inventory (it is inventory or inventories ?)
   app.get '/api/v1/inventory', (req, res) ->
     list = []
     i = 0
@@ -51,6 +59,22 @@ module.exports = drawRoutes: (app) ->
 
     res.json {
       list: list,
+      access_token: 'super_save_token'
+    }
+
+  #
+  # Transporter
+  #
+
+  # POST
+  # Create a transoporter
+  app.post '/api/v1/transporter', (req, res) ->
+    res.json {
+      name: 'Pepito',
+      document_number: '123456789',
+      phone: '+57300214587',
+      address: 'calle falsa # 12 -3',
+      email: 'pepito@fake.com',
       access_token: 'super_save_token'
     }
 
