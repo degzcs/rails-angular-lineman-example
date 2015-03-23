@@ -68,7 +68,7 @@ module.exports = drawRoutes: (app) ->
 
   # POST
   # Create a transoporter
-  app.post '/api/v1/transporter', (req, res) ->
+  app.post '/api/v1/transporters', (req, res) ->
     res.json {
       name: 'Pepito',
       document_number: '123456789',
