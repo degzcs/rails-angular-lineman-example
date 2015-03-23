@@ -44,13 +44,31 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         else
           deferred.resolve()
         deferred.promise
+  ).state("providerEdition",
+    url: "/provider",
+    ncyBreadcrumb: 
+      label: 'Provider'
+    views:
+      'content':
+        templateUrl: "provider/provider_edition.html"
+      'sidebar':
+        templateUrl: "sidebar.html"
+        controller: "SidebarCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
   ).state("providerList",
     url: "/provider/all",
     ncyBreadcrumb: 
       label: 'Providers'
     views:
       'content':
-        templateUrl: "provider_list.html"
+        templateUrl: "provider/provider_list.html"
       'sidebar':
         templateUrl: "sidebar.html"
         controller: "SidebarCtrl"

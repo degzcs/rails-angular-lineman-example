@@ -112,10 +112,22 @@ i {
   color: grey;
 }
 
-/*
-md-input-container.md-default-theme .md-input {
-  color: white;
-  border-color: white;
-  margin-top: 24px;
+input#search-prov-name {
+  color: white !important;
+  border-color: white !important;
+  margin-top: 24px !important;
 }
-*/
+
+input#search-prov-id {
+  color: white !important;
+  border-color: white !important;
+  margin-top: 24px !important;
+}
+
+#search-prov-name + div.md-placeholder { 
+  color:rgba(255,255,255,0.7) !important; 
+}
+
+#search-prov-id + div.md-placeholder { 
+  color:rgba(255,255,255,0.7) !important; 
+}
