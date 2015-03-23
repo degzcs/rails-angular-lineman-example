@@ -145,6 +145,20 @@ angular.module('app').controller('ProviderCtrl', ['$scope', function($scope){
   $scope.sortable = ['name', 'id', 'mineral', 'id_rucom', 'rucom_status', 'last_transaction'];
   $scope.thumbs = 'thumb';
   $scope.count = 5;
+
+  // $scope.user = {
+  //   title: 'Developer',
+  //   email: 'ipsum@lorem.com',
+  //   firstName: '',
+  //   lastName: '' ,
+  //   company: 'Google' ,
+  //   address: '1600 Amphitheatre Pkwy' ,
+  //   city: 'Mountain View' ,
+  //   state: 'CA' ,
+  //   biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
+  //   postalCode : '94043'
+  // };
+
 }]);
 
 angular.module('app').filter('startFrom',function (){
@@ -153,4 +167,39 @@ angular.module('app').filter('startFrom',function (){
       start = +start; //parse to int
       return input.slice(start);
   };
+});
+
+angular.module('app').controller('ProviderEditionCtrl', function($timeout, $scope) {
+  $scope.provider = {
+    id_rucom: 'RUCOM-201403014943',
+    prov_type: $scope.provType,
+    type: 'Persona Natural',
+    name: 'Leandro Ordóñez',
+    id: '1023939222',
+    phone_nb: '314 757 9454',
+    address: 'Cra 1 # 2N - 3, Urbanizacion A, Popayan, Colombia',
+    email: 'leandro.ordonez.ante@gmail.com',
+    city: 'Popayán',
+    state: 'CAUCA',
+    postalCode : '94043'
+  };
+
+  $scope.loadProvType = function() {
+    // Use timeout to simulate a 650ms request.
+    $scope.provTypes = [];
+    return $timeout(function() {
+      $scope.provTypes = [
+        { id: 1, name: 'Comercializador' },
+        { id: 2, name: 'Titular Minero' },
+        { id: 3, name: 'Barequero' },
+        { id: 4, name: 'Subcontrato de Op.' },        
+      ];
+    }, 650);
+  };
+})
+.config( function($mdThemingProvider){
+  // Configure a dark theme with primary foreground yellow
+  $mdThemingProvider.theme('docs-dark', 'default')
+      .primaryPalette('yellow')
+      .dark();
 });

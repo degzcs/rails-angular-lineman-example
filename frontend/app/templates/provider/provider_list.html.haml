@@ -1,7 +1,8 @@
 %md-content
   %div{:layout => "column", "ng-controller" => "ProviderCtrl"}
     .main-fab
-      %md-button.md-fab.md-accent +
+      %a{"ui-sref" => "providerEdition"}
+        %md-button.md-fab.md-accent{"aria-label" => "New", :md-ripple-size => "partial"} +
     %md-toolbar.md-tall{:layout => "column"}
       %span{:flex => "flex"}
       .md-toolbar-tools
@@ -20,7 +21,7 @@
       %md-table{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count"}
   / md-table jade template
   #md-table-template{"ng-hide" => "true"}
-    %table.md-table{"md-colresize" => "md-colresize"}
+    %table.md-table
       %thead
         %tr.md-table-headers-row
           %th.md-table-header{"ng-repeat" => "h in headers"}
@@ -37,8 +38,9 @@
               %div{:style => "background-image:url({{c.thumb}})"}
           %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs"} {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
           %td.md-table-td-more
-            %md-button{"aria-label" => "Info"}
-              %i.ion-android-more-vertical
+            %a{"ui-sref" => "providerEdition"}
+              %md-button{"aria-label" => "Edit"}
+                %i.ion-android-create
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
         Rows per page :
