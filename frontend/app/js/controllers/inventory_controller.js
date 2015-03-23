@@ -1,41 +1,34 @@
-angular.module('app').controller('InventoryController',  ['$scope', function($scope) {
-    $scope.inventarioList=function(){
-        var lista=[];
-        for(i=0;i<10;i++){
-            var inventario={fecha:'', hora:'', quien:'', cuantos:'', ley:'', valor:''};
-            inventario.selected= false;
-            inventario.fecha="10/20/2014"+i;
-            inventario.hora="10:20"+i;
-            inventario.quien="Carlos R"+i;
-            inventario.cuantos=i;
-            inventario.ley="100"+i;
-            inventario.valor="100"+i;
-            lista.push(inventario);
-            console.log("lista "+i +lista);
-        }
-        return lista;
-    };
-    $scope.selectaall=false;
-    $scope.selectAll=function(inventarioList){
-        if($scope.selectaall){
-            for(i=0;i<inventarioList.length;i++){
-                inventarioList[i].selected=false;
-            }
-        }else{
-            for(i=0;i<inventarioList.length;i++) {
-                inventarioList[i].selected = true;
+angular.module('app').controller('InventoryController',  function($scope, InventoryService) {
+
+    // get the list value from server response ans setup the list
+    InventoryService.query(function(res) {
+                   $scope.list = res.list;
+                }, function(error) {
+                  // Error handler code
+                });
+
+    $scope.select_all=false;
+
+    // updates all checkboxes in the inventory list
+    // @params inventoryList [Array]
+    $scope.selectAll=function(inventoryList){
+        for(i=0;i<inventoryList.length;i++){
+            if($scope.select_all){
+                    inventoryList[i].selected=false;
+            }else{
+                    inventoryList[i].selected = true;
             }
         }
-        console.log("sel"+$scope.selectaall);
-        console.log("selecciona todo" + inventarioList.length);
+        console.log("select all value "+ $scope.select_all);
+        console.log("rows selected number" + inventoryList.length);
     };
+
+    // selects a single item in the inventory list
+    // @params item [Object]
     $scope.selectItem=function(item){
         console.log("selecciona item"  + item.selected);
     };
 
-    $scope.gramosFinales="";
-    $scope.lista= $scope.inventarioList();
+    $scope.finalGrams="";
 
-
-
-}]);
+});
