@@ -86,7 +86,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Inventory'
     views:
       'content':
-        templateUrl: "inventory/list_inventory.html"
+        templateUrl: "partials/inventory/list_inventory.html"
       'sidebar':
         templateUrl: "sidebar.html"
         controller: "SidebarCtrl"
@@ -104,7 +104,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     label: 'Inventory'
   views:
     'content':
-      templateUrl: "inventory/liquidate_inventory.html"
+      templateUrl: "partials/inventory/liquidate_inventory.html"
     'sidebar':
       templateUrl: "sidebar.html"
       controller: "SidebarCtrl"
@@ -116,7 +116,27 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       else
         deferred.resolve()
       deferred.promise
-  ).state "dashboard",
+  )
+  .state("tranporters",
+  url: "/tranporters",
+  ncyBreadcrumb:
+    label: 'Tranporter'
+  views:
+    'content':
+      templateUrl: "partials/transporter/create.html"
+    'sidebar':
+      templateUrl: "sidebar.html"
+      controller: "SidebarCtrl"
+  resolve:
+    authenticated: ($q, $location, $auth) ->
+      deferred = $q.defer()
+      unless $auth.isAuthenticated()
+        $location.path "/login"
+      else
+        deferred.resolve()
+      deferred.promise
+  )
+  .state "dashboard",
     url: "/dashboard"
     ncyBreadcrumb: 
       label: 'Dashboard'
