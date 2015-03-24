@@ -31,6 +31,7 @@ angular.module('app').directive('mdTable', function () {
         $scope.tablePage = page;
       };
     },
-    template: angular.element(document.querySelector('#md-table-template')).html()
+    //template: angular.element(document.querySelector('#md-table-template')).html()
+    templateUrl: 'directives/md-table.html'
   };
 });
