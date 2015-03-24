@@ -1,5 +1,7 @@
 angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
 
+  #TODO: apply some 'universal resolve' approach to avoid boilerplate code here
+  # see this link: http://spin.atomicobject.com/2014/10/04/javascript-angularjs-resolve-routes/
   $stateProvider.state("home",
     url: "/home"
     ncyBreadcrumb: 
@@ -86,7 +88,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Inventory'
     views:
       'content':
-        templateUrl: "partials/inventory/list_inventory.html"
+        templateUrl: "partials/inventory/list.html"
       'sidebar':
         templateUrl: "sidebar.html"
         controller: "SidebarCtrl"
@@ -104,7 +106,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     label: 'Inventory'
   views:
     'content':
-      templateUrl: "partials/inventory/liquidate_inventory.html"
+      templateUrl: "partials/inventory/liquidate.html"
     'sidebar':
       templateUrl: "sidebar.html"
       controller: "SidebarCtrl"
@@ -117,13 +119,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.resolve()
       deferred.promise
   )
-  .state("tranporters",
-  url: "/tranporters",
+  # Transporters routes
+  .state("newTransporter",
+  url: "/tranporter",
   ncyBreadcrumb:
     label: 'Tranporter'
   views:
     'content':
-      templateUrl: "partials/transporter/create.html"
+      templateUrl: "partials/transporter/new.html"
     'sidebar':
       templateUrl: "sidebar.html"
       controller: "SidebarCtrl"

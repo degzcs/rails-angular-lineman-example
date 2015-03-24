@@ -6,6 +6,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
   #  {name: "Scanner Test" , state: "scanner"}
     {name: "Providers" , state: "providerList"}
     {name: "Inventory", state: "inventoryList"}
+    {name: "Transporter", state: "newTransporter"}
   ]
   
   $scope.close = ->
