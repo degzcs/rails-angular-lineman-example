@@ -1,0 +1,67 @@
+%div{:layout => "column", "ng-controller" => "DetailInventoryController"}
+  %md-toolbar.md-primary
+    %h1.md-toolbar-tools
+      Detalles Inventario
+  %h3{:style => "text-align:left;"} Datos Proveedor
+  %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+    %md-input-container{:style => "width:80%"}
+      %label Nombre
+      %input{:disabled => "true", "ng-model" => "provider.name"}
+    %md-input-container
+      %label ID RUCOM
+      %input{:disabled => "true","ng-model" => "provider.id_rucom"}
+  %md-content.md-padding
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label ID
+        %input{:disabled => "true","ng-model" => "provider.id"}
+      %md-input-container{:flex => ""}
+        %label Tipo
+        %input{:disabled => "true","ng-model" => "provider.type"}
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Teléfono
+        %input{:disabled => "true","ng-model" => "provider.phone_nb", :placeholder => "(3XX) XXX XXXXX"}
+      %md-input-container{:flex => ""}
+        %label Email
+        %input{:disabled => "true","ng-model" => "provider.email", :type => "email"}
+    %md-input-container
+      %label Dirección
+      %input{:disabled => "true","ng-model" => "provider.address", :placeholder => "CLL/CR X XX - XX"}
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Ciudad
+        %input{:disabled => "true","ng-model" => "provider.city"}
+      %md-input-container{:flex => ""}
+        %label Estado
+        %input{:disabled => "true","ng-model" => "provider.state"}
+      %md-input-container{:flex => ""}
+        %label Código Postal
+        %input{:disabled => "true","ng-model" => "provider.postalCode"}
+
+  %h3{:style => "text-align:left;"} Peso Comprado
+  %md-content.md-padding
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Castellanos
+        %input{:disabled => "true","ng-model" => "compra.castellanos"}
+      %md-input-container{:flex => ""}
+        %label Tomines
+        %input{:disabled => "true","ng-model" => "compra.tomines"}
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Reales
+        %input{:disabled => "true","ng-model" => "compra.reales"}
+      %md-input-container{:flex => ""}
+        %label Granos
+        %input{:disabled => "true","ng-model" => "compra.granos"}
+    %md-input-container
+      %label Total
+      %input{:disabled => "true","ng-model" => "compra.total"}
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Ley
+        %input{:disabled => "true","ng-model" => "compra.ley"}
+      %md-input-container{:flex => ""}
+        %label Precio Gramo Fin
+        %input{:disabled => "true","ng-model" => "compra.precioGramo"}

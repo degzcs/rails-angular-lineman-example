@@ -1,0 +1,34 @@
+%md-content
+  %div{:layout => "column", "ng-controller" => "InventoryController"}
+    .main-fab
+    %md-toolbar.md-tall{:layout => "column"}
+      %span{:flex => "flex"}
+      .md-toolbar-tools
+        .fill-height{:layout => "row", :flex => "flex"}
+          .md-toolbar-item.md-breadcrumb{"ng-hide" => "toggleSearch"}
+            %span Inventory
+          %span{:flex => "flex", "ng-hide" => "toggleSearch"}
+          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
+            %input#search-prov-name{"ng-model" => "search.quien", :type => "text", :placeholder => "Quien"}
+          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
+            %input#search-prov-id{"ng-model" => "search.date", :type => "text", :placeholder => "Fecha"}
+          .md-toolbar-item.md-tools{:layout => "row"}
+            %a.md-button.md-default-theme{:href => "#/inventory/all", "ng-click" => "toggleSearch = !toggleSearch"}
+              %i.ion-android-search
+    %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
+      %md-table-inventory{:headers => "headers", :content => "list", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count","grams" => "grams", :selectall => "selectall"}
+    %br
+    %md-input-container
+      %div{"layout" => "row"}
+        %div{"flex" => "20"}
+          %label Gramos finos seleccionados
+        %div{"flex" => "20"}
+          %input{"ng-model" => "grams.value" }
+    %br
+    %br
+    %md-input-container
+      %div{"layout" => "row"}
+        %div{"flex" => "20"}
+          %input{"md-maxlength" => "5", "required" => "", "type" => "text", "ng-model" => "grams.value" }
+        %div{"flex" => "20"}
+          %md-button.md-raised.md-primary.md-button.md-default-theme{"ui-sref" => "inventoryLiquidate"} Liquidar

@@ -1,0 +1,21 @@
+%md-content
+  %div{:layout => "column", "ng-controller" => "ProviderCtrl"}
+    .main-fab
+      %a{"ui-sref" => "providerEdition"}
+        %md-button.md-fab.md-accent{"aria-label" => "New", :md-ripple-size => "partial"} +
+    %md-toolbar.md-tall{:layout => "column"}
+      %span{:flex => "flex"}
+      .md-toolbar-tools
+        .fill-height{:layout => "row", :flex => "flex"}
+          .md-toolbar-item.md-breadcrumb{"ng-hide" => "toggleSearch"}
+            %span Providers
+          %span{:flex => "flex", "ng-hide" => "toggleSearch"}
+          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
+            %input#search-prov-name{"ng-model" => "search.name", :type => "text", :placeholder => "Name"}
+          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
+            %input#search-prov-id{"ng-model" => "search.id", :type => "text", :placeholder => "ID"}
+          .md-toolbar-item.md-tools{:layout => "row"}
+            %a.md-button.md-default-theme{:href => "#/provider/all", "ng-click" => "toggleSearch = !toggleSearch"}
+              %i.ion-android-search
+    %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
+      %md-table{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count"}
