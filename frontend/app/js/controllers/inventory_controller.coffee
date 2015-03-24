@@ -1,34 +1,54 @@
 angular.module('app').controller 'InventoryController', ($scope, InventoryService) ->
 
+
+  $scope.toggleSearch = false
+  $scope.headers = [
+    {
+      name:'',
+      field:'thumbs'
+    },{
+      name: 'Fecha',
+      field: 'date'
+    },{
+      name:'Hora',
+      field: 'hour'
+    },{
+      name: 'Quien',
+      field: 'quien'
+    },{
+      name: 'Cuantos',
+      field: 'cuantos'
+    },{
+      name: 'Ley',
+      field: 'law'
+    },{
+      name: 'Valor',
+      field: 'value'
+    }
+  ]
+
   # get the list value from server response ans setup the list
   InventoryService.query ((res) ->
     $scope.list = res.list
+    $scope.count = res.list.length
   ), (error) ->
     # Error handler code
 
+  $scope.custom = {date: 'bold', hour:'grey', quien: 'grey', cuantos: 'grey', law:'grey', value: 'grey'}
+  $scope.sortable = ['date', 'hour', 'quien', 'cuantos', 'law', 'value']
+  $scope.thumbs = 'thumb';
+  #$scope.count= $scope.list.length;
+
   # define scope values
-  $scope.select_all = false
-  $scope.finalGrams = ''
+  $scope.selectall = false
+  $scope.grams ={value: 0}
 
   #
   # Functions
   #
 
-  # updates all checkboxes in the inventory list
-  # @params inventoryList [Array]
-  $scope.selectAll = (inventoryList) ->
-    i = 0
-    while i < inventoryList.length
-      if $scope.select_all
-        inventoryList[i].selected = false
-      else
-        inventoryList[i].selected = true
-      i++
-    console.log 'select all value ' + $scope.select_all
-    console.log 'rows selected number' + inventoryList.length
-
-  # selects a single item in the inventory list
+  # show detail of the inventory item
   # @params item [Object]
-  $scope.selectItem = (item) ->
+  $scope.show = (item) ->
     console.log 'selecciona item' + item.selected
-
+    InventoryServic.setItem(item);

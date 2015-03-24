@@ -46,7 +46,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   ).state("providerEdition",
     url: "/provider",
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'Provider'
     views:
       'content':
@@ -64,7 +64,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   ).state("providerList",
     url: "/provider/all",
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'Providers'
     views:
       'content':
@@ -116,6 +116,24 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       else
         deferred.resolve()
       deferred.promise
+  ).state("inventoryDetail",
+    url: "/inventory/detail",
+    ncyBreadcrumb:
+      label: 'Detail'
+    views:
+      'content':
+        templateUrl: "inventory/detail_inventory.html"
+      'sidebar':
+        templateUrl: "sidebar.html"
+        controller: "SidebarCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
   ).state "dashboard",
     url: "/dashboard"
     ncyBreadcrumb: 

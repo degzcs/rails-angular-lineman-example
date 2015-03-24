@@ -10,3 +10,6 @@
 .listTransporter{
     text-align: center;
 }
+.md-button.fill-button {
+    width: 100%;
+}
