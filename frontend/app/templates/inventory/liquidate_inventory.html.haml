@@ -1,4 +1,99 @@
-%div{"ng-controller" => "InventoryController"}
-  %md-content
-    %div
-      %h1 Liquidar
+%md-grid-list{"md-cols" => "1", "md-gutter" => "5px", "md-row-height" => "2.7:1"}
+  %md-grid-tile.md-default-theme{"md-rowspan" => "1"}
+    %md-grid-tile-header{"layout-align" => "center center"}
+      %h2 Lingotear
+    .sectionLiquidar{"ng-controller" => "LiquidateController"}
+      %md-content
+        %md-input-container
+          %div{:layout => "row", "layout-align" => "left"}
+            %div
+              %md-radio-group{:layout => "row", "ng-change" => "lingotear(1,lingotes,optionLingote)", "ng-model" => "optionLingote"}
+                %md-radio-button{"ng-repeat" => "d in optionsLingote", "ng-value" => "d.value"}
+                  {{ d.label }}
+        %div{:layout => "row", "ng-show" => "showOptions(optionLingote)"}
+          %md-input-container
+            %div{:layout => "row", "layout-align" => "left"}
+              %div{:flex => "20"}
+                %label{:for => "numLingotes"}
+                  Cantidad
+              %div{:flex => "20"}
+                %input#numLingotes{"ng-model" => "numLingotes", :style => "max-width:80%;", :type => "number"}
+              %div{:flex => "20"}
+                %md-button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "lingotear(numLingotes,lingotes,optionLingote)"}
+                  Dividir por igual
+        %div{:layout => "row", "layout-align" => "center center"}
+          %div{:flex => "40"}
+            %md-list
+              %md-item
+                %md-item-content
+                  %div{:flex => ""}
+                    %h3{:style => "text-align:left;"} Peso
+                  %div{:flex => ""}
+                    %h3{:style => "text-align:left;"} Ley
+                %md-item
+                  %md-list
+        %div{:layout => "row", "layout-align" => "center center"}
+          %div{:flex => "40"}
+            %md-list
+              %md-item{"ng-repeat" => "lingote in lingotes"}
+                %md-item-content
+                  %div{:flex => ""}
+                    %md-input-container{:style => "max-width:25%"}
+                      %input{"ng-model" => "lingote.peso"}
+                  %div{:flex => ""}
+                    %md-input-container{:style => "max-width:25%"}
+                      %input{"ng-model" => "lingote.ley"}
+  %md-grid-tile.md-default-theme{"md-rowspan" => "1"}
+    %md-grid-tile-header{"layout-align" => "center center"}
+      %h2 Seleccionar Comprador
+    %div{"ng-controller" => "LiquidateController"}
+      %md-content
+        %md-input-container
+          %div{:layout => "row", "layout-align" => "center"}
+            %div{:flex => "30"}
+              <label for"idComprador">Selección comprador:
+            %div{:flex => "30"}
+              %input#idComprador{:required => "true", :type => "number"}
+            %div{:flex => "30"}
+              %md-button.md-raised.md-primary.md-button.md-default-theme
+                Verificar existencia
+        %br
+        %md-input-container
+          %div{:layout => "row", "layout-align" => "center"}
+            %div{:flex => "30"}
+              <label for"idTransportador">Selección transportador:
+            %div{:flex => "30"}
+              %input#idTransportador{:required => "true", :type => "number"}
+            %div{:flex => "30"}
+              %md-button.md-raised.md-primary.md-button.md-default-theme
+                Verificar existencia
+        %md-list
+          %md-item
+            %md-item-content
+              %div{:flex => "25"}
+                %h4 Medio
+              %div{:flex => "25"}
+                %h4 Empresa
+              %div{:flex => "25"}
+                %h4 Código transporte
+              %div{:flex => "25"}
+                %h4 Fecha
+            %md-item
+              %md-item
+                %md-item-content
+                  %div{:flex => "25"}
+                    %md-select{"ng-model" => "transporte.medio", :placeholder => "Medio de transporte"}
+                      %md-option{"ng-repeat" => "opt in medios", "ng-value" => "opt"} {{ opt }}
+                  %md-input-container
+                    %div{:flex => "25"}
+                      %input.listTransporter{"ng-model" => "transporte.empresa", :required => "true", :type => "text"}
+                  %md-input-container
+                    %div{:flex => "25"}
+                      %input.listTransporter{"ng-model" => "transporte.codigo", :required => "true", :type => "text"}
+                  %md-input-container
+                    %div{:flex => "25"}
+                      %input.listTransporter{"ng-model" => "transporte.fecha", :required => "true", :type => "text"}
+                %md-item
+                  %md-list
+                    %md-button.md-raised.md-primary.md-button.md-accent.md-hue-2{:style => "float:right"}
+                      Previsualizar factura
