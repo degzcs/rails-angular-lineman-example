@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthCtrl', ($scope, $alert, $auth,$mdDialog) ->
+angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDialog) ->
 
   $scope.logout = ->
     if !$auth.isAuthenticated()

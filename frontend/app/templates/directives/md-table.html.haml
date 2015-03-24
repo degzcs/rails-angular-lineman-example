@@ -15,7 +15,7 @@
           %div{:style => "background-image:url({{c.thumb}})"}
       %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs"} {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
       %td.md-table-td-more
-        %a{"ui-sref" => "providerEdition"}
+        %a{"ui-sref" => "edit_provider"}
           %md-button{"aria-label" => "Edit"}
             %i.ion-android-create
 .md-table-footer{:layout => "row"}

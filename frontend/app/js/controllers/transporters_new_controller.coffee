@@ -1,4 +1,4 @@
-angular.module('app').controller 'TransporterCtrl', ($scope, TransporterService) ->
+angular.module('app').controller 'TransportersNewCtrl', ($scope, TransporterService) ->
 	#
 	#  Model
 	#

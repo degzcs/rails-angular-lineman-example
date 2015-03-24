@@ -1,4 +1,4 @@
-angular.module('app').controller('DetailInventoryController',  ['$scope', function($scope) {
+angular.module('app').controller('BatchesShowCtrl',  ['$scope', function($scope) {
 
     //properties for liquidate_inventory.html
 

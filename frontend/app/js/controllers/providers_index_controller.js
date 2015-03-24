@@ -1,4 +1,4 @@
-angular.module('app').controller('ProviderCtrl', ['$scope', function($scope){
+angular.module('app').controller('ProvidersIndexCtrl', ['$scope', function($scope){
   $scope.toggleSearch = false;   
   $scope.headers = [
     {

@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryController', ($scope, InventoryService) ->
+angular.module('app').controller 'BatchesIndexCtrl', ($scope, InventoryService) ->
 
 
   $scope.toggleSearch = false

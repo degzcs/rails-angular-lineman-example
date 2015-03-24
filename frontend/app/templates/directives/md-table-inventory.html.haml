@@ -14,7 +14,7 @@
     %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"}
       %td.
         %md-checkbox{"ng-click" => "selectItem(c,grams)", "ng-model" => "c.selected"}
-      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ui-sref" => "inventoryDetail"} {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
+      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ui-sref" => "show_batch"} {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
 .md-table-footer{:layout => "row"}
   %span.md-table-count-info
     Rows per page :

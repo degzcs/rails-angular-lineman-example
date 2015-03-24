@@ -11,11 +11,12 @@
       %div.content{:flex => ""}
         %md-toolbar
           %span.md-toolbar-tools{layout: "row"}
-            %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
-              %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
+            .sidebar-options{"ng-controller"=>"SidebarCtrl"}
+              %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
+                %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
             %div{"ncy-breadcrumb"=>"",flex:80}
-            %div{flex:"10","layout-align"=>"end", "ng-controller"=> "AuthCtrl"}
-              %md-button{"ui-sref" => "login","ng-if" => "!isAuthenticated()"} Log in
+            %div{flex:"10","layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
+              %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
               %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
         %div{"ui-view" => "content"}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}

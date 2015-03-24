@@ -1,5 +1,5 @@
 %md-content
-  %div{:layout => "column", "ng-controller" => "InventoryController"}
+  %div{:layout => "column"}
     .main-fab
     %md-toolbar.md-tall{:layout => "column"}
       %span{:flex => "flex"}
@@ -31,4 +31,4 @@
         %div{"flex" => "20"}
           %input{"md-maxlength" => "5", "required" => "", "type" => "text", "ng-model" => "grams.value" }
         %div{"flex" => "20"}
-          %md-button.md-raised.md-primary.md-button.md-default-theme{"ui-sref" => "inventoryLiquidate"} Liquidar
+          %md-button.md-raised.md-primary.md-button.md-default-theme{"ui-sref" => "liquidate_batches"} Liquidar
