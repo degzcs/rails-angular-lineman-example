@@ -5,10 +5,10 @@ angular.module('app').controller 'AuthCtrl', ($scope, $alert, $auth,$mdDialog) -
       return
     $auth.logout().then ->
       $mdDialog.show $mdDialog.alert()
-        .title('You have been logged out')
-        .content('Bye!')
-        .ok('Got it!')
-        duration: 3
+        .title('Logout')
+        .content('Adios!')
+        .ok('Adios!!')
+        duration: 2
       return
       
   $scope.login = ->
@@ -16,18 +16,18 @@ angular.module('app').controller 'AuthCtrl', ($scope, $alert, $auth,$mdDialog) -
       email: $scope.email
       password: $scope.password).then(->
       $mdDialog.show $mdDialog.alert()
-        .title('You have successfully logged in')
-        .content('Welcome!')
-        .ok('Got it!')
-        duration: 3
+        .title('Login')
+        .content('Bienvenido!')
+        .ok('hecho!')
+        duration: 2
       return
       
     ).catch (response) ->
       $mdDialog.show $mdDialog.alert()
-        .title('Bad Email or password')
-        .content('Do you have an account?')
+        .title('Datos incorrectos!')
+        .content('La informacion ingresada es incorrecta, verifique nuevamente su nomber de usuario y password')
         .ariaLabel('Password notification')
-        .ok('Got it!')
+        .ok('trate nuevamente!')
       return
     return
   $scope.isAuthenticated = ->
