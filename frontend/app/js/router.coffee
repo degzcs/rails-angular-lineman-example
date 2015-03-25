@@ -109,6 +109,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/providers/edit.html"
         controller: "ProvidersIndexCtrl"
+
       'sidebar':
         templateUrl: "partials/sidebar.html"
         controller: "SidebarCtrl"
