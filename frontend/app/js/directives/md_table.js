@@ -8,11 +8,13 @@ angular.module('app').directive('mdTable', function () {
       filters: '=',
       customClass: '=customClass',
       thumbs:'=', 
-      count: '=' 
+      count: '=',
+      currentProvider: '='
     },
-    controller: function ($scope,$filter,$window) {
+    controller: function ($scope, $filter, $location, $window, $state, providerService) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
+      $scope.currentPath = $location.path().substring(1);
       $scope.nbOfPages = function () {
         return Math.ceil($scope.content.length / $scope.count);
       };
@@ -29,6 +31,12 @@ angular.module('app').directive('mdTable', function () {
       };
       $scope.goToPage = function (page) {
         $scope.tablePage = page;
+      };
+      $scope.setCurrentProv = function (provider) {
+        providerService.setCurrentProv(provider);
+        //$scope.currentProvider = provider;
+        console.log('Setting current Provider: ' + JSON.stringify($scope.currentProvider));
+        $state.go("edit_provider", {providerId: provider.id});
       };
     },
     //template: angular.element(document.querySelector('#md-table-template')).html()

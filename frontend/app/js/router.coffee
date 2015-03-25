@@ -12,7 +12,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       skip: true
     views:
       'content':
-        templateUrl: "pages/home.html"
+        templateUrl: "partials/home.html"
         controller: "HomeCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
@@ -30,7 +30,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'PDF scanner'
     views:
       'content':
-        templateUrl: "pages/scanner.html"
+        templateUrl: "partials/scanner.html"
       'sidebar':
         templateUrl: "partials/partials/sidebar.html"
         controller: "SidebarCtrl"
@@ -50,7 +50,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Dashboard'
     views:
       'content':
-        templateUrl: "pages/dashboard.html"
+        templateUrl: "partials/dashboard.html"
         controller: "DashboardCtrl" 
       'sidebar':
         templateUrl: "partials/sidebar.html"
@@ -74,7 +74,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       skip: true
     views:
       'content':
-        templateUrl: "pages/sessions/new.html"
+        templateUrl: "partials/sessions/new.html"
         controller: "SessionsNewCtrl"
   )
 
@@ -86,7 +86,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Providers'
     views:
       'content':
-        templateUrl: "pages/providers/index.html"
+        templateUrl: "partials/providers/index.html"
         controller: "ProvidersIndexCtrl"
       'sidebar':
         templateUrl: "partials/sidebar.html"
@@ -102,13 +102,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
   .state("edit_provider",
-    url: "/provider",
+    url: "/provider/:providerId",
     ncyBreadcrumb:
       label: 'Provider'
     views:
       'content':
-        templateUrl: "pages/providers/edit.html"
-        controller: "ProvidersEditCtrl"
+        templateUrl: "partials/providers/edit.html"
+        controller: "ProvidersIndexCtrl"
       'sidebar':
         templateUrl: "partials/sidebar.html"
         controller: "SidebarCtrl"
@@ -130,7 +130,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Inventory'
     views:
       'content':
-        templateUrl: "pages/batches/index.html"
+        templateUrl: "partials/batches/index.html"
         controller: "BatchesIndexCtrl"
       'sidebar':
         templateUrl: "partials/sidebar.html"
@@ -151,7 +151,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Detail'
     views:
       'content':
-        templateUrl: "pages/batches/show.html"
+        templateUrl: "partials/batches/show.html"
         controller: "BatchesShowCtrl"
       'sidebar':
         templateUrl: "partials/sidebar.html"
@@ -172,7 +172,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Inventory'
     views:
       'content':
-        templateUrl: "pages/batches/liquidate.html"
+        templateUrl: "partials/batches/liquidate.html"
         controller: "BatchesLiquidateCtrl"
       'sidebar':
         templateUrl: "partials/sidebar.html"
@@ -196,7 +196,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       label: 'Tranporter'
     views:
       'content':
-        templateUrl: "pages/transporters/new.html"
+        templateUrl: "partials/transporters/new.html"
         controller: "TransportersNewCtrl"
       'sidebar':
         templateUrl: "partials/sidebar.html"

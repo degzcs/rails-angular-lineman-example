@@ -15,8 +15,7 @@
           %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
             %input#search-prov-id{"ng-model" => "search.id", :type => "text", :placeholder => "ID"}
           .md-toolbar-item.md-tools{:layout => "row"}
-            %a.md-button.md-default-theme{"ng-click" => "toggleSearch = !toggleSearch"}
+            %a.md-button.md-default-theme{:href => "#/provider", "ng-click" => "toggleSearch = !toggleSearch"}
               %i.ion-android-search
     %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
-      %md-table{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count"}
-      
+      %md-table{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count", :currentProvider => "currentProvider"}
