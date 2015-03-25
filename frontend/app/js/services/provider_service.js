@@ -7,15 +7,16 @@ angular.module('app').factory('providerService', function($resource) {
         currentProvider = provider;
     };
 
-    var retreiveProviders = $resource('/api/v1/provider', {}, {
+    var retrieveProviders = $resource('/api/v1/provider/:providerId', {}, {
       query: {
         method: 'GET',
+        params:{providerId:''},
         isArray: false
       }
     });
 
     // var getProviders = function() {
-    //     retreiveProviders.query((function(res) {
+    //     retrieveProviders.query((function(res) {
     //       return providers = res.list;
     //     }), function(error) {});
     //     //return providers;
@@ -29,6 +30,6 @@ angular.module('app').factory('providerService', function($resource) {
         getCurrentProv: getCurrentProv,
         // getProviders:  getProviders,
         setCurrentProv: setCurrentProv,
-        retreiveProviders: retreiveProviders
+        retrieveProviders: retrieveProviders
     };
 });

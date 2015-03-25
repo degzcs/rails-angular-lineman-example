@@ -75,7 +75,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   #  --- Providers Routes ---- #
   
   .state("providers",
-    url: "/providers",
+    url: "/provider",
     ncyBreadcrumb:
       label: 'Providers'
     views:
@@ -99,7 +99,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/providers/edit.html"
-        controller: "ProvidersIndexCtrl"
+        controller: "ProvidersEditCtrl"
 
     resolve:
       authenticated: ($q, $location, $auth) ->

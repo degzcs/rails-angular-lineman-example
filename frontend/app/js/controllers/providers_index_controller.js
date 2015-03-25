@@ -25,7 +25,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerServi
     }
   ];
   
-  providerService.retreiveProviders.query((function(res) {
+  providerService.retrieveProviders.query((function(res) {
     return $scope.content = res.list;
   }), function(error) {});
   

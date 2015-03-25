@@ -16,7 +16,7 @@ angular.module('app').directive('mdTable', function () {
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
       $scope.nbOfPages = function () {
-        return Math.ceil($scope.content.length / $scope.count);
+        return $scope.content ? Math.ceil(($scope.content.length) / $scope.count) : 0;
       };
       $scope.handleSort = function (field) {
           if ($scope.sortable.indexOf(field) > -1) { return true; } else { return false; }
