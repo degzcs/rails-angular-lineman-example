@@ -31,9 +31,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/scanner.html"
-      'sidebar':
-        templateUrl: "partials/partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -52,9 +49,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/dashboard.html"
         controller: "DashboardCtrl" 
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl" 
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -88,9 +82,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/providers/index.html"
         controller: "ProvidersIndexCtrl"
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -110,9 +101,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         templateUrl: "partials/providers/edit.html"
         controller: "ProvidersIndexCtrl"
 
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -133,9 +121,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/batches/index.html"
         controller: "BatchesIndexCtrl"
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -154,9 +139,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/batches/show.html"
         controller: "BatchesShowCtrl"
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -175,9 +157,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/batches/liquidate.html"
         controller: "BatchesLiquidateCtrl"
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -199,9 +178,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/transporters/new.html"
         controller: "TransportersNewCtrl"
-      'sidebar':
-        templateUrl: "partials/sidebar.html"
-        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

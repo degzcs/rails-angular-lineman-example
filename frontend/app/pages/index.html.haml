@@ -5,8 +5,12 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
-    %div{:layout => "row"}
-      %div.sidebar{"ui-view"=>"sidebar"}
+    %div{:layout => "row","ng-controller"=>"SidebarCtrl"}
+      %md-sidenav.md-sidenav-left.md-whiteframe-z2.sidebar{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')", "ng-if"=> "allowSidebar()"}
+        %md-toolbar.md-theme-indigo
+          %h1.md-toolbar-tools Trazoro
+        %md-content.sidebar-options{:layout => "column"}
+          %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
       /--------------------------------------- Content -------------------------------/
       %div.content{:flex => ""}
         %md-toolbar
@@ -18,5 +22,5 @@
             %div{flex:"10","layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
               %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
               %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
-        %div{"ui-view" => "content"}
+        %md-content.md-padding{"ui-view" => "content"}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}
