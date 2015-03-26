@@ -2,49 +2,64 @@
   %md-toolbar.md-primary
     %h1.md-toolbar-tools
       Provider edition form
-  %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-    %md-input-container{:flex => "50"}
-      %label Name
-      %input{"ng-model" => "currentProvider.name"}
-    %md-input-container{:flex => "25"}
-      %label ID RUCOM
-      %input{"ng-model" => "currentProvider.id_rucom"}
-      %md-tooltip{"md-direction" => "right"} 
-        %span.ion-android-checkmark-circle &nbsp;Verificado
-  %md-content.md-padding
-    %form{:name => "providerForm"}
-      %div{:layout => "", "layout-sm" => "column"}
+  %md-tabs{"md-selected" => "data.selectedIndex"}
+    %md-tab#tab1{"aria-controls" => "tab1-content"}
+      Basic info
+    %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "data.secondLocked"}
+      {{ data.secondLabel }}
+      
+  %ng-switch.tabpanel-container{:on => "data.selectedIndex"}
+    #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
+      %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+        %md-input-container{:flex => "50"}
+          %label Name
+          %input{"ng-model" => "currentProvider.name"}
         %md-input-container{:flex => "25"}
-          %label ID
-          %input{"ng-model" => "currentProvider.id"}
-        %md-input-container{:flex => "40"}
-          %label Type
-          %input{"ng-model" => "currentProvider.type"}
-        %md-select{:flex => "35", "ng-model" => "currentProvider.prov_type", :placeholder => "Provider type"}
-          %md-option{:value => "1"} Comercializador
-          %md-option{:value => "2"} Titular
-          %md-option{:value => "3"} Solicitante Legalización De Minería
-          %md-option{:value => "4"} Beneficiario Área Reserva Especial
-          %md-option{:value => "5"} Consumidor
-          %md-option{:value => "6"} Barequero
-          %md-option{:value => "7"} Subcontrato de formalización
-      %div{:layout => "", "layout-sm" => "column"}
-        %md-input-container{:flex => ""}
-          %label Phone Number
-          %input{"ng-model" => "currentProvider.phone_nb", :placeholder => "(3XX) XXX XXXXX"}
-        %md-input-container{:flex => ""}
-          %label Email
-          %input{"ng-model" => "currentProvider.email", :type => "email"}
-      %md-input-container
-        %label Address
-        %input{"ng-model" => "currentProvider.address", :placeholder => "CLL/CR X XX - XX"}
-      %div{:layout => "", "layout-sm" => "column"}
-        %md-input-container{:flex => ""}
-          %label City
-          %input{"ng-model" => "currentProvider.city"}
-        %md-input-container{:flex => ""}
-          %label State
-          %input{"ng-model" => "currentProvider.state"}
-        %md-input-container{:flex => ""}
-          %label Postal Code
-          %input{"ng-model" => "currentProvider.postalCode"}
+          %label ID RUCOM
+          %input{"ng-model" => "currentProvider.id_rucom"}
+          %md-tooltip{"md-direction" => "right"} 
+            %span.ion-android-checkmark-circle &nbsp;Verificado
+      %md-content.md-padding
+        %form{:name => "providerForm"}
+          %div{:layout => "", "layout-sm" => "column"}
+            %md-input-container{:flex => "25"}
+              %label ID
+              %input{"ng-model" => "currentProvider.id"}
+            %md-input-container{:flex => "40"}
+              %label Type
+              %input{"ng-model" => "currentProvider.type"}
+            %md-select{:flex => "35", "ng-model" => "currentProvider.prov_type", :placeholder => "Provider type"}
+              %md-option{:value => "1"} Comercializador
+              %md-option{:value => "2"} Titular
+              %md-option{:value => "3"} Solicitante Legalización De Minería
+              %md-option{:value => "4"} Beneficiario Área Reserva Especial
+              %md-option{:value => "5"} Consumidor
+              %md-option{:value => "6"} Barequero
+              %md-option{:value => "7"} Subcontrato de formalización
+          %div{:layout => "", "layout-sm" => "column"}
+            %md-input-container{:flex => ""}
+              %label Phone Number
+              %input{"ng-model" => "currentProvider.phone_nb", :placeholder => "(3XX) XXX XXXXX"}
+            %md-input-container{:flex => ""}
+              %label Email
+              %input{"ng-model" => "currentProvider.email", :type => "email"}
+          %md-input-container
+            %label Address
+            %input{"ng-model" => "currentProvider.address", :placeholder => "CLL/CR X XX - XX"}
+          %div{:layout => "", "layout-sm" => "column"}
+            %md-input-container{:flex => ""}
+              %label City
+              %input{"ng-model" => "currentProvider.city"}
+            %md-input-container{:flex => ""}
+              %label State
+              %input{"ng-model" => "currentProvider.state"}
+            %md-input-container{:flex => ""}
+              %label Postal Code
+              %input{"ng-model" => "currentProvider.postalCode"}
+    #tab2-content{"aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
+      %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+        View for {{ data.secondLabel }}
+
+
+
+      

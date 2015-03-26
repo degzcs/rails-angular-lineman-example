@@ -32,7 +32,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerServi
   $scope.custom = {name: 'bold', id:'grey', mineral: 'grey', id_rucom: 'grey', rucom_status:'grey', last_transaction_date: 'grey'};
   $scope.sortable = ['name', 'id', 'mineral', 'id_rucom', 'rucom_status', 'last_transaction_date'];
   $scope.thumbs = 'thumb';
-  $scope.count = 5;
+  $scope.count = 4;
   $scope.currentProvider = providerService.getCurrentProv();
   
 }]);

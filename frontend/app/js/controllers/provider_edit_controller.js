@@ -8,12 +8,17 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       console.log('Current provider: ' + data.provider.id);
     });
   }
-}]);
 
-angular.module('app').filter('startFrom',function (){
-  return function(input, start) {
-    if (!input || !input.length) { return; }
-      start = +start; //parse to int
-      return input.slice(start);
+  $scope.data = {
+    selectedIndex : 0,
+    secondLocked : false,
+    secondLabel : "Complementary info"
   };
-});
+  $scope.next = function() {
+    $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 1) ;
+  };
+  $scope.previous = function() {
+    $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+  };
+
+}]);
