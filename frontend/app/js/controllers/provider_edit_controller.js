@@ -9,16 +9,17 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     });
   }
 
-  $scope.data = {
+  $scope.formTabControl = {
     selectedIndex : 0,
-    secondLocked : false,
+    secondUnlocked : true,
+    firstLabel : "Basic info",
     secondLabel : "Complementary info"
   };
   $scope.next = function() {
-    $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 1) ;
+    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
   };
   $scope.previous = function() {
-    $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+    $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
   };
 
 }]);
