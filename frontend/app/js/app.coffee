@@ -40,3 +40,8 @@ angular.module("app", [
     .iconSet('toggle', 'img/icons/sets/toggle-icons.svg', 24)
     .defaultIconSet 'img/icons/sets/core-icons.svg', 24
   return
+
+.config ($mdThemingProvider) ->
+    $mdThemingProvider.theme('docs-dark', 'default')
+      .primaryPalette('blue')
+      .dark();

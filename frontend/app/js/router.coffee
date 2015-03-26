@@ -187,7 +187,82 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
+
+  #  --- Purchase Routes ---- #
+
+  .state("new_purchase",
+    url: "/purchases/new",
+    ncyBreadcrumb:
+      label: 'Nueva Compra'
+    views:
+      'content':
+        templateUrl: "partials/purchases/new.html"
+        controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_purchase.step1",
+    url: "/step1",
+    ncyBreadcrumb:
+      label: 'Datos Vendedor'
+    views:
+      'content':
+        templateUrl: "partials/purchases/step1.html"
+        controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
   
+  .state("new_purchase.step2",
+    url: "/step2",
+    ncyBreadcrumb:
+      label: 'Pesaje y compra'
+    views:
+      'content':
+        templateUrl: "partials/purchases/step2.html"
+        controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_purchase.step3",
+    url: "/step3",
+    ncyBreadcrumb:
+      label: 'Formulario de Factura'
+    views:
+      'content':
+        templateUrl: "partials/purchases/step3.html"
+        controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  
+
   $urlRouterProvider.otherwise "/home"
 
   # Satellizer config

@@ -24,6 +24,9 @@ tr-nav-button .md-button{
 tr-nav-button .md-button.active{
   color: #03a9f4;
 }
+.padding{
+  padding: 10px;
+}
 
 //----- Dashboard Styles-----//
 
@@ -66,4 +69,40 @@ tr-nav-button .md-button.active{
     margin: 20px;
     padding: 20px;
   }
+}
+
+//----- Breadcrumb Styles-----//
+
+.breadcrumb{
+    list-style-type: none;
+    padding-left: 10px;
+    li{
+      display: inline-block;
+      background-image: url("/img/ic_keyboard_arrow_right_white.png");
+      background-repeat: no-repeat;
+      padding-right: 35px;  /* width of the image plus a little extra padding */
+      background-position: 100% -7px;
+    }
+    li:last-child{
+      background-image: none;
+      color: #bababa;
+    }
+}
+
+//----- Purchase Styles-----//
+
+md-card.seller{
+  .md-subheader{
+    margin-bottom: 10px;
+  }
+}
+.seller-photo{
+  border: 1px solid #eee;
+  width: 250px;
+  height: 250px;
+  margin-right: 5px;
+}
+
+.origin-certificate{
+  margin-top: 10px;
 }
