@@ -1,9 +1,17 @@
-# string :document_number
-# string :type
-# string :first_name
-# string :last_name
-# string :phone_number
-# string :address
+# == Schema Information
+#
+# Table name: providers
+#
+#  id              :integer          not null, primary key
+#  document_number :string(255)
+#  type            :string(255)
+#  first_name      :string(255)
+#  last_name       :string(255)
+#  phone_number    :string(255)
+#  address         :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
 
 class Provider < ActiveRecord::Base
   has_one :company_info
