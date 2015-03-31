@@ -16,4 +16,12 @@ class Provider < ActiveRecord::Base
   def is_company?
     self.company_info != nil
   end
+
+  validates :document_number, presence: true
+  validates :type, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :phone_number, presence: true
+  validates :address, presence: true
+
 end
