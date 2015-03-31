@@ -21,7 +21,6 @@ describe Rucom  do
   
   context "test factory" do
     let(:rucom) {build(:rucom)}
-    it {expect(rucom.id).not_to be_nil }
     it {expect(rucom.rucom_record).not_to be_nil }
     it {expect(rucom.name).not_to be_nil}
     it {expect(rucom.status).not_to be_nil}
