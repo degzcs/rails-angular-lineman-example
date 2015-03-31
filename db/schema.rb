@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20150331030357) do
     t.text     "subcontract_number"
     t.text     "mining_permit"
     t.datetime "updated_at",         default: "now()"
+    t.string   "provider_type"
+    t.string   "num_rucom"
   end
 
   create_table "users", force: true do |t|
