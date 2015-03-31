@@ -111,6 +111,25 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
+  .state("create_provider",
+    url: "/create_provider/",
+    ncyBreadcrumb:
+      label: 'Provider'
+    views:
+      'content':
+        templateUrl: "partials/providers/create.html"
+        controller: "ProvidersCreateCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   #  --- Batches Routes ---- #
 
   .state( "batches",
