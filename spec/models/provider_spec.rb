@@ -18,6 +18,10 @@ describe Provider do
       expect(build(:provider)).to be_valid
     end
 
+    it "should not allow to create a provider without a rucom" do
+      expect(build(:provider, rucom: nil)).not_to be_valid
+    end
+
     it "should not allow to create a provider without document_number" do
       provider = build(:provider, document_number: nil)
       expect(provider).not_to be_valid

@@ -15,7 +15,7 @@
 
 class Provider < ActiveRecord::Base
   has_one :company_info
-
+  has_one :rucom
   #
   # Instance Methods
   #

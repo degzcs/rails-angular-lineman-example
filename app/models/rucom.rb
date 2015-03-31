@@ -2,7 +2,7 @@
 #
 # Table name: rucoms
 #
-#  idrucom            :integer          not null, primary key
+#  id                 :integer          not null, primary key
 #  rucom_record       :text
 #  name               :text
 #  status             :text
@@ -16,5 +16,6 @@
 #
 
 class Rucom < ActiveRecord::Base
+  belongs_to :provider
 	validates_presence_of :idrucom
 end
