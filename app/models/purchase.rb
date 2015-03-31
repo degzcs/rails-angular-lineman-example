@@ -14,5 +14,11 @@
 #
 
 class Purchase < ActiveRecord::Base
+  #
+  # Associations
+  #
+
+  belongs_to :user
+  # belongs_to :provider
   mount_uploader :origin_certificate_file, AttachmentUploader
 end

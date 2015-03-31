@@ -18,6 +18,7 @@ class API < Grape::API
     end
   end
 
+  mount V1::Modules::Purchase
   mount V1::Modules::User
   mount V1::Modules::AccessToken
 

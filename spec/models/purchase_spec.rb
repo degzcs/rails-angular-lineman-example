@@ -29,7 +29,6 @@ it 'has a valid factory' do
     expect(purchase.save).to be true
     expect(purchase.origin_certificate_file.file.file).not_to eq nil
     purchase.origin_certificate_file.enable_processing = false
-    binding.pry
     purchase.origin_certificate_file.remove!
   end
 end
