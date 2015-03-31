@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317215700) do
+ActiveRecord::Schema.define(version: 20150331030357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,32 @@ ActiveRecord::Schema.define(version: 20150317215700) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "company_infos", force: true do |t|
+    t.string   "nit_number"
+    t.string   "name"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "legal_representative"
+    t.string   "id_type_legal_rep"
+    t.string   "email"
+    t.string   "phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "provider_id"
+  end
+
+  create_table "providers", force: true do |t|
+    t.string   "document_number"
+    t.string   "type"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "rucoms", primary_key: "idrucom", force: true do |t|
     t.text     "rucom_record"
