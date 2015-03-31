@@ -4,30 +4,17 @@ angular.module('app')
             restrict: 'EA',
             replace: true,
             transclude: true,
-            scope: {},
-            controller: function($scope, $q, $timeout) {
-                this.takeSnapshot = function() {
-                    var canvas  = document.querySelector('canvas'),
-                        ctx     = canvas.getContext('2d'),
-                        videoElement = document.querySelector('video'),
-                        d       = $q.defer();
+            scope: {
+                w1: '=', //widht of the streaming 
+                h1: '=', //height of the streaming 
+                w2: '=', //width image snapshot
+                h2: '=', //height image snapshot
 
-                    canvas.width = $scope.w;
-                    canvas.height = $scope.h;
-                    //  console.log("timeout " +$timeout);
-                    $timeout(function() {
-                        ctx.fillRect(0, 0, $scope.w, $scope.h);
-                        ctx.drawImage(videoElement, 0, 0, $scope.w, $scope.h);
-                        d.resolve(canvas.toDataURL());
-                    }, 0);
-                    return d.promise;
-                };
             },
-            templateUrl: 'camera.html',
+            controller: 'CameraController',
+            templateUrl: 'directives/camera.html',
             link: function(scope, ele, attrs) {
-                var w = attrs.width || 500,
-                    h = attrs.height || 300;
-
+                
                 if (!CameraService.hasUserMedia) {
                     return;
                 }
@@ -49,19 +36,21 @@ angular.module('app')
                 var onFailure = function(err) {
                     console.error(err);
                 };
+
+
+
                 // Make the request for the media
                 navigator.getUserMedia({
                     video: {
                         mandatory: {
-                            maxHeight: h,
-                            maxWidth: w
+                            maxHeight: scope.h1,
+                            maxWidth: scope.w1,
+                            minWidth: scope.w1,
+                            minHeight: scope.h1
                         }
                     },
                     audio: false
                 }, onSuccess, onFailure);
-
-                scope.w = w;
-                scope.h = h;
 
             }
         };
