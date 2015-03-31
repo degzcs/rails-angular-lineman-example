@@ -33,6 +33,9 @@ gem 'factory_girl_rails'
 gem 'faker'
 gem 'sass'
 
+# upload files
+gem 'carrierwave'
+
  # API
  gem 'jwt'
  gem 'httparty'
