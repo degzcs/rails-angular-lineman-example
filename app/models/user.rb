@@ -14,6 +14,7 @@
 #  password_digest          :string(255)
 #
 
+
 class User < ActiveRecord::Base
 
 	#

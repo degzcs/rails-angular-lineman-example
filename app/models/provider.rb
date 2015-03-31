@@ -26,7 +26,6 @@ class Provider < ActiveRecord::Base
   end
 
   validates :document_number, presence: true
-  validates :type, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :phone_number, presence: true

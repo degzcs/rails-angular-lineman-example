@@ -2,7 +2,7 @@ module V1
   module Modules
     class Purchase <  Grape::API
 
-     before_validation do
+      before_validation do
         authenticate!
       end
 

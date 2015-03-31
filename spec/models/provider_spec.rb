@@ -4,7 +4,6 @@ describe Provider do
   context "test factory" do
     let(:provider) {build(:provider)}
     it {expect(provider.document_number).not_to be_nil }
-    it {expect(provider.type).not_to be_nil }
     it {expect(provider.first_name).not_to be_nil}
     it {expect(provider.last_name).not_to be_nil}
     it {expect(provider.phone_number).not_to be_nil}
@@ -27,11 +26,6 @@ describe Provider do
       expect(provider).not_to be_valid
     end
     
-    it "should not allow to create a provider without type" do
-      provider = build(:provider, type: nil)
-      expect(provider).not_to be_valid
-    end
-
     it "should not allow to create a provider without first_name" do
       provider = build(:provider, first_name: nil)
       expect(provider).not_to be_valid
