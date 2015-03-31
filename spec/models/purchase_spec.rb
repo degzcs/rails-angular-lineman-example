@@ -15,6 +15,21 @@
 
 require 'spec_helper'
 
-RSpec.describe Purchase, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Purchase, type: :model do
+
+  let(:purchase){ build :purchase}
+
+it 'has a valid factory' do
+    should be_valid
+  end
+
+  it 'should save one origin certificate file' do
+    file_path = "#{Rails.root}/spec/support/test_images/image.png"
+    File.open(file_path){|f| purchase.origin_certificate_file = f}
+    expect(purchase.save).to be true
+    expect(purchase.origin_certificate_file.file.file).not_to eq nil
+    purchase.origin_certificate_file.enable_processing = false
+    binding.pry
+    purchase.origin_certificate_file.remove!
+  end
 end

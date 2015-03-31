@@ -8,6 +8,7 @@ require 'faker'
 require 'active_attr/rspec'
 # require 'sidekiq/testing'
 require 'shoulda/matchers'
+require 'carrierwave/test/matchers'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -88,6 +89,9 @@ RSpec.configure do |config|
 
  # Capybara
   config.include Capybara::DSL
+
+  # CarrierWave
+  config. include CarrierWave::Test::Matchers
 
   # API
   config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: /spec\/api/ }

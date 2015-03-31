@@ -14,4 +14,5 @@
 #
 
 class Purchase < ActiveRecord::Base
+  mount_uploader :origin_certificate_file, AttachmentUploader
 end
