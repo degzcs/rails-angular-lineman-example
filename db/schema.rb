@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331024810) do
+ActiveRecord::Schema.define(version: 20150331030357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,32 @@ ActiveRecord::Schema.define(version: 20150331024810) do
     t.integer  "gold_batch_id"
     t.float    "amount"
     t.string   "origin_certificate_file"
+     t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "company_infos", force: true do |t|
+    t.string   "nit_number"
+    t.string   "name"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "legal_representative"
+    t.string   "id_type_legal_rep"
+    t.string   "email"
+    t.string   "phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "provider_id"
+  end
+
+  create_table "providers", force: true do |t|
+    t.string   "document_number"
+    t.string   "type"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
