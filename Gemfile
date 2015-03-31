@@ -4,6 +4,9 @@ ruby "2.1.3"
 
 gem 'rails', '4.1.9'
 
+#generate pdf files
+gem 'prawn','1.0.0.rc2'
+
 # DB
 gem 'pg'
 gem 'bcrypt'
