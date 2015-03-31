@@ -56,6 +56,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.7)
+    annotate (2.6.8)
+      activerecord (>= 3.2, <= 4.3)
+      rake (~> 10.4)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
@@ -340,6 +343,7 @@ PLATFORMS
 DEPENDENCIES
   active_attr
   activeadmin!
+  annotate
   bcrypt
   capistrano (~> 3.1)
   capistrano-bundler

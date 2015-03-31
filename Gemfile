@@ -48,7 +48,7 @@ gem 'carrierwave'
 
 group :development do
   gem 'quiet_assets'
-
+  gem 'annotate'
   # Capistrano
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rbenv', '~> 2.0'
