@@ -31,5 +31,6 @@ class Provider < ActiveRecord::Base
   validates :last_name, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
+  validates :rucom , presence: true
 
 end

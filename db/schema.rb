@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331203836) do
+ActiveRecord::Schema.define(version: 20150331211526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20150331203836) do
   end
 
   create_table "rucoms", force: true do |t|
+    t.integer  "idrucom",            default: "nextval('rucoms_idrucom_seq'::regclass)", null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"

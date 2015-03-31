@@ -18,7 +18,6 @@
 
 FactoryGirl.define do
   factory :rucom do
-    id {Faker::Code.ean}
     rucom_record "A rucom record "
     name {Faker::Name.name}
     status {"active"}
