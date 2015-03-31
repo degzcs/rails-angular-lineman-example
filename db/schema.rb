@@ -49,17 +49,6 @@ ActiveRecord::Schema.define(version: 20150331030357) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "purchases", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "provider_id"
-    t.string   "origin_certificate_sequence"
-    t.integer  "gold_batch_id"
-    t.float    "amount"
-    t.string   "origin_certificate_file"
-     t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "company_infos", force: true do |t|
     t.string   "nit_number"
     t.string   "name"
@@ -82,6 +71,17 @@ ActiveRecord::Schema.define(version: 20150331030357) do
     t.string   "last_name"
     t.string   "phone_number"
     t.string   "address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchases", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "provider_id"
+    t.string   "origin_certificate_sequence"
+    t.integer  "gold_batch_id"
+    t.float    "amount"
+    t.string   "origin_certificate_file"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

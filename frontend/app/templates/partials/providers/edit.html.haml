@@ -9,20 +9,25 @@
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-        .md-tile-left{:flex => "10"}
-          %img.face{:alt => "", "ng-src" => "{{currentProvider.thumb}}"}
-        %md-input-container{:flex => "45"}
-          %label Name
-          %input{"ng-model" => "currentProvider.name"}
-        %md-input-container{:flex => "25"}
-          %label ID RUCOM
-          %input{"ng-model" => "currentProvider.id_rucom"}
-          %md-tooltip{"md-direction" => "right", "md-visible" => "formTabControl.secondUnlocked"} 
-            %span.ion-android-checkmark-circle &nbsp;Verificado
-      %md-content.md-padding
-        %form{:name => "providerForm"}
+    %form{:name => "providerForm"}
+      #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
+        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+          .md-tile-left{:flex => "10"}
+            %img.face{:alt => "", "ng-src" => "{{currentProvider.thumb}}"}
+          %md-input-container{:flex => "45"}
+            %label Name
+            %input{"ng-model" => "currentProvider.name"}
+          %md-input-container{"ng-if" => "currentProvider.num_rucom !== ''", :flex => "25"}
+            %label RUCOM Number
+            %input{"ng-model" => "currentProvider.num_rucom"}
+            %md-tooltip{"ng-if" => "currentProvider.num_rucom !== ''", "md-direction" => "right", "md-visible" => "formTabControl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado
+          %md-input-container{"ng-if" => "currentProvider.rucom_record !== ''", :flex => "25"}
+            %label RUCOM Record
+            %input{"ng-model" => "currentProvider.rucom_record"}
+            %md-tooltip{"ng-if" => "currentProvider.rucom_record !== ''", "md-direction" => "right", "md-visible" => "formTabControl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado
+        %md-content.md-padding
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => "25"}
               %label ID
@@ -38,6 +43,7 @@
               %md-option{:value => "5"} Consumidor
               %md-option{:value => "6"} Barequero
               %md-option{:value => "7"} Subcontrato de formalización
+              %md-option{:value => "8"} Planta de Beneficio
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => ""}
               %label Phone Number
@@ -63,11 +69,10 @@
               (RUCOM válido:)
               %md-checkbox{"aria-label" => "Disabled", "ng-model" => "formTabControl.secondUnlocked"}
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
-    #tab2-content{"aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-        View for {{ formTabControl.secondLabel }}
-      %md-content.md-padding
-        %form{:name => "providerForm"}
+      #tab2-content{"aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
+        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+          View for {{ formTabControl.secondLabel }}
+        %md-content.md-padding
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => "25"}
               %label ID
@@ -83,6 +88,7 @@
               %md-option{:value => "5"} Consumidor
               %md-option{:value => "6"} Barequero
               %md-option{:value => "7"} Subcontrato de formalización
+              %md-option{:value => "8"} Planta de Beneficio
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => ""}
               %label Phone Number
