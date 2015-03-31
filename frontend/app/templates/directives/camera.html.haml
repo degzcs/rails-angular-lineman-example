@@ -1,4 +1,16 @@
-.camera{:style => "width:1200px"}
-  %video.camera{:autoplay => "", :style => "display:inline-block;width:500px;height: 300px;"}
-  %canvas{:style => "margin-left:60px;"}
+%div{:layout => "column"}
+  %div.camera{:layout => "row", :layout-align => "center center"}
+    %video.camera{:autoplay => ""}
+  %br
+  %div{:layout => "row"}  
+    %div{:flex => "65",:layout => "row", :layout-align => "center center"}
+      %div{:flex => "20"}
+        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()"} Scan
+      %div{:flex => "20"}
+        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "addScanFile()"} Agregar al Documento
+    %div{:flex => "25"} 
+      %button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "comeBack()"} Finalizar Scan
+  %br
+  %div{:layout => "row", :layout-align => "center center"}
+    %canvas{}
   %div{"ng-transclude" => ""}
