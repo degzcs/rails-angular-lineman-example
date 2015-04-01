@@ -112,7 +112,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
   .state("create_provider",
-    url: "/create_provider/",
+    url: "/new/provider",
     ncyBreadcrumb:
       label: 'Provider'
     views:

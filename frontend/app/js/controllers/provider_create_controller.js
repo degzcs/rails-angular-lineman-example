@@ -1,9 +1,11 @@
-angular.module('app').controller('ProvidersCreateCtrl', ['$scope', '$stateParams', 'providerService', function($scope, $stateParams, providerService){
+angular.module('app').controller('ProvidersCreateCtrl', ['$scope', function($scope){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
   $scope.newProvider = {        
-    firstName: '',
-    lastName: '' ,
-    id_rucom: '',
+    firstName: 'Javier',
+    lastName: 'Suarez' ,  
+    num_rucom: '',
+    rucom_record: '1234',
+    type: '1',
     company: 'Google' ,
     address: '1600 Amphitheatre Pkwy' ,
     city: 'Mountain View' ,
@@ -12,16 +14,34 @@ angular.module('app').controller('ProvidersCreateCtrl', ['$scope', '$stateParams
     postalCode : '94043'
   };  
 
-  $scope.data = {
-    selectedIndex : 0,
-    secondLocked : false,
-    secondLabel : "Complementary info"
+  $scope.newCompany = {
+    nit_number: '1234567890',
+    name: 'TBBC',
+    address: 'Torres del Parque',
+    city: 'Popayán',
+    state: 'Cauca',
+    country: 'Colombia',
+    legal_representative: 'Leandro Ordoñez',
+    type: 'Persona Juridica',
+    id_number: '1061234567',
+    email: 'lord@tbbc.com',
+    phone: '0987654321',
+    rucom_record: '98765423457',
+    num_rucom: '',
   };
+
+  $scope.formCreateTabCtrl = {
+    selectedIndex : 0,
+    secondUnlocked : true,
+    firstLabel : "Provider info",
+    secondLabel : "Company info"
+  };
+
   $scope.next = function() {
-    $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 1) ;
+    $scope.formCreateTabCtrl.selectedIndex = Math.min($scope.formCreateTabCtrl.selectedIndex + 1, 1);
   };
   $scope.previous = function() {
-    $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+    $scope.formCreateTabCtrl.selectedIndex = Math.max($scope.formCreateTabCtrl.selectedIndex - 1, 0);
   };
 
 }]);
