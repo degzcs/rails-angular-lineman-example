@@ -1,5 +1,36 @@
-require 'rails_helper'
+# == Schema Information
+#
+# Table name: rucoms
+#
+#  id                 :string          not null, primary key
+#  rucom_record       :text
+#  name               :text
+#  status             :text
+#  mineral            :text
+#  location           :text
+#  subcontract_number :text
+#  mining_permit      :text
+#  updated_at         :datetime         default(2015-03-31 06:22:05 UTC)
+#  provider_type      :string(255)
+#  num_rucom          :string(255)
+#
 
-RSpec.describe Rucom, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+require 'spec_helper'
+
+describe Rucom  do
+  
+  context "test factory" do
+    let(:rucom) {build(:rucom)}
+    it {expect(rucom.rucom_record).not_to be_nil }
+    it {expect(rucom.name).not_to be_nil}
+    it {expect(rucom.status).not_to be_nil}
+    it {expect(rucom.mineral).not_to be_nil}
+    it {expect(rucom.location).not_to be_nil }
+    it {expect(rucom.subcontract_number).not_to be_nil}
+    it {expect(rucom.mining_permit).not_to be_nil}
+    it {expect(rucom.updated_at).not_to be_nil}
+    it {expect(rucom.provider_type).not_to be_nil }
+    it {expect(rucom.num_rucom).not_to be_nil}
+  end
+
 end

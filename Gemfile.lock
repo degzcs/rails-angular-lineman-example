@@ -56,6 +56,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.7)
+    annotate (2.6.8)
+      activerecord (>= 3.2, <= 4.3)
+      rake (~> 10.4)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
@@ -102,6 +105,11 @@ GEM
     capybara-webkit (1.4.1)
       capybara (>= 2.3.0, < 2.5.0)
       json
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -326,6 +334,7 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.3)
       rack (>= 1.0)
+    will_paginate (3.0.7)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -335,6 +344,7 @@ PLATFORMS
 DEPENDENCIES
   active_attr
   activeadmin!
+  annotate
   bcrypt
   capistrano (~> 3.1)
   capistrano-bundler
@@ -346,6 +356,7 @@ DEPENDENCIES
   capistrano3-nginx (~> 2.0)
   capybara
   capybara-webkit
+  carrierwave
   coffee-rails (~> 4.0.0)
   database_cleaner
   devise
@@ -377,3 +388,4 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+  will_paginate (~> 3.0.6)

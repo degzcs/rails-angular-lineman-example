@@ -1,20 +1,34 @@
-# first_name Varchar (45)
-# last_name Varchar (45)
-# email Varchar (45)
-# document_number Varchar (45)
-# document_expedition_date Time 
-# phone_number Varchar (45)
-# password Varchar (45)
+# == Schema Information
+#
+# Table name: users
+#
+#  id                       :integer          not null, primary key
+#  first_name               :string(255)
+#  last_name                :string(255)
+#  email                    :string(255)
+#  document_number          :string(255)
+#  document_expedition_date :date
+#  phone_number             :string(255)
+#  created_at               :datetime
+#  updated_at               :datetime
+#  password_digest          :string(255)
+#
+
 
 class User < ActiveRecord::Base
 
+	#
+	# Associations
+	#
+
+	has_many :purchases
 	has_secure_password
 
 	#
 	# Instance Methods
 	#
-	
-	# @return [String] whith the JWT to send the client 
+
+	# @return [String] whith the JWT to send the client
 	def create_token
 		payload = {
 			user_id: self.id.to_s,
@@ -36,5 +50,4 @@ class User < ActiveRecord::Base
 		false
 		end
 	end
-
 end

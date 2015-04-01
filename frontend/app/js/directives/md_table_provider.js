@@ -1,4 +1,4 @@
-angular.module('app').directive('mdTable', function () {
+angular.module('app').directive('mdTableProvider', function () {
   return {
     restrict: 'E',
     scope: { 
@@ -40,6 +40,6 @@ angular.module('app').directive('mdTable', function () {
       };
     },
     //template: angular.element(document.querySelector('#md-table-template')).html()
-    templateUrl: 'directives/md-table.html'
+    templateUrl: 'directives/md-table-provider.html'
   };
 });

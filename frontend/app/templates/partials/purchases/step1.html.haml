@@ -6,13 +6,15 @@
           %span.md-subheader-content
             %span.ng-scope Info Vendedor
         %div{layout: "column", "layout-align"=>"center center"}
-          %div{"layout" => "row"}  
+          %div{"layout" => "row"}
             %div.seller-photo
             %md-button.md-raised Tomar Foto
-  
+
       %section.origin-certificate
         %md-content.md-padding.md-docs-dark-theme{"layout-align"=>"center",:layout => "row", "layout-sm" => "column", "md-theme" => "docs-dark", :style => "font-size:1.2em"}
           %md-input-container.md-docs-dark-theme.md-input-has-value
             %label{:for => "input_01U"} Certificado de origen
             %input#input_01U.ng-pristine.ng-untouched.ng-valid.md-input{"aria-invalid" => "false", "ng-model" => "user.title", :tabindex => "0"}
-          %md-button.md-primary Generar
+            .buttons
+              %md-button.md-raised{"ng-file-select" => "", "ng-model" => "purchaseData.origin_certificate_file"} Upload file
+              %label {{origin_certificate_file}}

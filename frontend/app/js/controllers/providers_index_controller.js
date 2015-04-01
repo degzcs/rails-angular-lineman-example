@@ -3,25 +3,36 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerServi
   $scope.headers = [
     {
       name:'',
-      field:'thumb'
+      field:'thumb',
+      alternateField: 'thumb'
     },{
       name: 'Name', 
-      field: 'name'
+      field: 'name',
+      alternateField: 'name'
     },{
       name:'Id', 
-      field: 'id'
+      field: 'id',
+      alternateField: 'id'
     },{
       name: 'Mineral', 
-      field: 'mineral'
+      field: 'mineral',
+      alternateField: 'mineral'
     },{
-      name: 'Id RUCOM', 
-      field: 'id_rucom'
+      name: 'RUCOM Number', 
+      field: 'num_rucom',
+      alternateField: 'rucom_record'
     },{
       name: 'RUCOM Status', 
-      field: 'rucom_status'
+      field: 'rucom_status',
+      alternateField: 'rucom_status'
+    },{
+      name: 'Provider Type', 
+      field: 'provider_type',
+      alternateField: 'provider_type'
     },{
       name: 'Last Transaction', 
-      field: 'last_transaction_date'
+      field: 'last_transaction_date',
+      alternateField: 'last_transaction_date'
     }
   ];
   
@@ -29,8 +40,8 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerServi
     return $scope.content = res.list;
   }), function(error) {});
   
-  $scope.custom = {name: 'bold', id:'grey', mineral: 'grey', id_rucom: 'grey', rucom_status:'grey', last_transaction_date: 'grey'};
-  $scope.sortable = ['name', 'id', 'mineral', 'id_rucom', 'rucom_status', 'last_transaction_date'];
+  $scope.custom = {name: 'bold', id:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
+  $scope.sortable = ['name', 'id', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
   $scope.thumbs = 'thumb';
   $scope.count = 4;
   $scope.currentProvider = providerService.getCurrentProv();

@@ -32,6 +32,10 @@ gem 'devise'
 gem 'factory_girl_rails'
 gem 'faker'
 gem 'sass'
+gem 'will_paginate', '~> 3.0.6'
+
+# upload files
+gem 'carrierwave'
 
  # API
  gem 'jwt'
@@ -45,7 +49,7 @@ gem 'sass'
 
 group :development do
   gem 'quiet_assets'
-
+  gem 'annotate'
   # Capistrano
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rbenv', '~> 2.0'
