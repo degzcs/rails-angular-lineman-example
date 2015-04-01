@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20150407060102) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2015-04-04 15:57:55'
+    t.datetime "updated_at",         default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
   end
