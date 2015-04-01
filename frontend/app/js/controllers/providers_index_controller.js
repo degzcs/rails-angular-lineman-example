@@ -1,4 +1,4 @@
-angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerService' ,function($scope,providerService){
+angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderService' ,function($scope, ProviderService){
   $scope.toggleSearch = false;   
   $scope.headers = [
     {
@@ -36,7 +36,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerServi
     }
   ];
   
-  providerService.retrieveProviders.query((function(res) {
+  ProviderService.retrieveProviders.query((function(res) {
     return $scope.content = res.list;
   }), function(error) {});
   
@@ -44,7 +44,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'providerServi
   $scope.sortable = ['name', 'id', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
   $scope.thumbs = 'thumb';
   $scope.count = 4;
-  $scope.currentProvider = providerService.getCurrentProv();
+  $scope.currentProvider = ProviderService.getCurrentProv();
   
 }]);
 

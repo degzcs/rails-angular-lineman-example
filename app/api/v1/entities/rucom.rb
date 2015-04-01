@@ -21,7 +21,6 @@ module V1
       expose :location, documentation: { type: "text", desc: "location", example: "..." }
       expose :subcontract_number, documentation: { type: "text", desc: "subcontract number", example: "..." }
       expose :mining_permit, documentation: { type: "text", desc: "mining permit", example: "..." }
-      expose :updated_at, documentation: { type: "datetime", desc: "updated at", example: "..." }
       expose :provider_type, documentation: { type: "string", desc: "provider type", example: "..." }
       expose :num_rucom, documentation: { type: "string", desc: "num rucom", example: "..." }
     end
