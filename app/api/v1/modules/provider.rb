@@ -16,14 +16,10 @@ module V1
           optional :per_page, type: Integer
         end
 
-        params :auth do
-          requires :access_token, type: String, desc: 'Auth token', documentation: { example: '837f6b854fc7802c2800302e' }
+        params :id do
+          requires :id, type: Integer, desc: 'User ID'
         end
 
-        params :id do
-          requires :id, type: String, desc: 'User ID', regexp: /^[[:xdigit:]]{24}$/
-        end
-      
       end
 
       resource :providers do
@@ -34,7 +30,6 @@ module V1
           NOTES
         }
         params do
-          #use :auth
           use :pagination
         end
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
@@ -43,6 +38,78 @@ module V1
           per_page = params[:per_page] || 10
           providers = ::Provider.paginate(:page => page, :per_page => per_page)
           present providers, with: V1::Entities::Provider
+        end
+        desc 'returns one existent provider by :id', {
+          entity: V1::Entities::Provider,
+          notes: <<-NOTES
+            Returns one existent provider by :id
+          NOTES
+        }
+        params do
+          use :id
+        end
+        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          provider = ::Provider.find(params[:id])
+          present provider, with: V1::Entities::Provider
+        end
+        # POST
+        desc 'creates a new provider', {
+            entity: V1::Entities::Provider,
+            notes: <<-NOTE
+              ### Description
+              It creates a new provider record and returns its current representation.
+            NOTE
+          }
+        params do
+          requires :rucom_id, type: Integer
+          requires :provider, type: Hash
+          optional :company_info , type: Hash
+        end
+        post '/', http_codes: [
+          [200, "Successful"],
+          [400, "Invalid parameter in entry"],
+          [401, "Unauthorized"],
+          [404, "Entry not found"],
+        ]  do
+          content_type "text/json"
+          rucom = ::Rucom.find(params[:rucom_id])
+          provider_params = params[:provider]
+          provider_params[:rucom] = rucom
+          provider = ::Provider.new(params[:provider])
+          provider.build_company_info(params[:company_info]) if params[:company_info]
+          if provider.save
+            present provider, with: V1::Entities::Provider
+          else
+            error!(entry.errors, 400)
+          end
+        end
+        # PUT
+        desc 'updates a provider', {
+            entity: V1::Entities::Provider,
+            notes: <<-NOTE
+              ### Description
+              It updates a new provider record and returns its current representation
+            NOTE
+          }
+        params do
+          requires :id
+          requires :provider, type: Hash
+        end
+        put '/', http_codes: [
+          [200, "Successful"],
+          [400, "Invalid parameter in entry"],
+          [401, "Unauthorized"],
+          [404, "Entry not found"],
+        ]  do
+          content_type "text/json"
+          provider = ::Provider.find(params[:id])
+          provider.update_attributes(params[:provider])
+          if provider.save
+            present provider, with: V1::Entities::Provider
+          else
+            error!(entry.errors, 400)
+          end
         end
       end
     end

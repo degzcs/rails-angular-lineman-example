@@ -17,5 +17,4 @@
 
 class Rucom < ActiveRecord::Base
   belongs_to :provider
-	validates_presence_of :idrucom
 end

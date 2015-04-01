@@ -19,11 +19,7 @@ describe CompanyInfo  do
     it "should create a new company_info for a provider" do
       expect(build(:company_info, provider_id: provider.id )).to be_valid
     end
-
-    it "should not allow to create a company_info without a provider" do
-      expect(build(:company_info, provider_id: nil)).not_to be_valid
-    end
-
+    
     it "should not allow to create a company_info without nit_number" do
       company_info = build(:company_info, provider_id: provider.id, nit_number: nil)
       expect(company_info).not_to be_valid

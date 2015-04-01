@@ -9,6 +9,5 @@ FactoryGirl.define do
     id_type_legal_rep { Faker::Number.number(10)}
     email {Faker::Internet.email}
     phone_number {Faker::PhoneNumber.phone_number}
-    provider_id {"id"}
   end
 end

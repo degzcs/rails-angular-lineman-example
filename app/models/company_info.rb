@@ -29,5 +29,4 @@ class CompanyInfo < ActiveRecord::Base
   validates :id_type_legal_rep, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true
-  validates :provider_id, presence: true
 end
