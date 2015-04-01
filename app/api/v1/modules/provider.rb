@@ -62,7 +62,6 @@ module V1
             NOTE
           }
         params do
-          requires :rucom_id, type: Integer
           requires :provider, type: Hash
           optional :company_info , type: Hash
         end
@@ -73,9 +72,7 @@ module V1
           [404, "Entry not found"],
         ]  do
           content_type "text/json"
-          rucom = ::Rucom.find(params[:rucom_id])
           provider_params = params[:provider]
-          provider_params[:rucom] = rucom
           provider = ::Provider.new(params[:provider])
           provider.build_company_info(params[:company_info]) if params[:company_info]
           if provider.save
@@ -95,6 +92,7 @@ module V1
         params do
           requires :id
           requires :provider, type: Hash
+          optional :company_info, type: Hash
         end
         put '/', http_codes: [
           [200, "Successful"],
@@ -104,7 +102,11 @@ module V1
         ]  do
           content_type "text/json"
           provider = ::Provider.find(params[:id])
+
+          provider_params = params[:provider]
+          provider.company_info.update_attributes(params[:company_info]) if params[:company_info]
           provider.update_attributes(params[:provider])
+
           if provider.save
             present provider, with: V1::Entities::Provider
           else

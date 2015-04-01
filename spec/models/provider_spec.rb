@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: providers
+#
+#  id              :integer          not null, primary key
+#  document_number :string(255)
+#  first_name      :string(255)
+#  last_name       :string(255)
+#  phone_number    :string(255)
+#  address         :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  rucom_id        :integer
+#
+
 require 'spec_helper'
 
 describe Provider do
@@ -17,8 +32,8 @@ describe Provider do
       expect(build(:provider)).to be_valid
     end
 
-    it "should not allow to create a provider without a rucom" do
-      expect(build(:provider, rucom: nil)).not_to be_valid
+    it "should not allow to create a provider without a rucom id" do
+      expect(build(:provider, rucom_id: nil)).not_to be_valid
     end
 
     it "should not allow to create a provider without document_number" do
@@ -54,6 +69,13 @@ describe Provider do
       it "should return false if the provider has no company_info" do
         provider = build(:provider, company_info: nil)
         expect(provider.is_company?).to be false
+      end
+    end
+    context "rucom" do
+      it "should return the rucom of the provider" do
+        rucom = create(:rucom)
+        provider = build(:provider, rucom_id: rucom.id)
+        expect(provider.rucom).to eq(rucom)
       end
     end
   end

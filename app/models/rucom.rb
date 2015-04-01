@@ -16,5 +16,6 @@
 #
 
 class Rucom < ActiveRecord::Base
-  belongs_to :provider
+
+
 end

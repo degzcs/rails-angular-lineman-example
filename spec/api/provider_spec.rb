@@ -6,7 +6,8 @@ describe 'Provider', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        FactoryGirl.create_list(:provider, 20,company_info: nil)
+
+        FactoryGirl.create_list(:provider, 20,{company_info: nil, rucom_id: FactoryGirl.create(:rucom).id})
       end
 
       context 'GET' do
@@ -52,7 +53,8 @@ describe 'Provider', :type => :request do
       context 'POST' do
         context "without company_info" do
           it 'returns a representation of the new provider created and code 201' do
-            provider = build(:provider)
+            rucom = create(:rucom)
+            provider = build( :provider,rucom_id: rucom.id)
 
             new_values = {
               document_number: provider.document_number,
@@ -60,6 +62,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
+              rucom_id: rucom.id
             }
             
             expected_rucom = {
@@ -77,7 +80,7 @@ describe 'Provider', :type => :request do
               rucom: expected_rucom.stringify_keys
             }
 
-            post '/api/v1/providers', {provider: new_values, rucom_id: provider.rucom.id}, { "Authorization" => "Barer #{@token}" }
+            post '/api/v1/providers', {provider: new_values}, { "Authorization" => "Barer #{@token}" }
 
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
@@ -85,7 +88,8 @@ describe 'Provider', :type => :request do
         end
         context "with company info" do
           it 'returns a representation of the new provider with his company_info created and code 201' do
-            provider = build(:provider)
+            rucom = create(:rucom)
+            provider = build( :provider,rucom_id: rucom.id)
 
             new_values = {
               document_number: provider.document_number,
@@ -93,6 +97,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
+              rucom_id: rucom.id
             }
 
             new_company_info_values = {
@@ -130,8 +135,8 @@ describe 'Provider', :type => :request do
               company_info: expected_company_info.stringify_keys
             }
 
-            post '/api/v1/providers', {provider: new_values, company_info: new_company_info_values, 
-                                        rucom_id: provider.rucom.id}, { "Authorization" => "Barer #{@token}" }
+            post '/api/v1/providers', {provider: new_values, company_info: new_company_info_values},
+                                      { "Authorization" => "Barer #{@token}" }
 
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
@@ -140,14 +145,22 @@ describe 'Provider', :type => :request do
       end
       context 'PUT' do
         it 'returns a representation of the updated provider and code 200' do
-          provider = create(:provider,company_info: nil)
+          rucom = create(:rucom)
+          provider = create(:provider,rucom_id: rucom.id)
+
 
           new_first_name = "A diferent first name"
           new_document_number = "1345676788"
+
+          new_nit_number = "A direferent nit"
           
           new_values = {
             document_number: new_document_number,
             first_name: new_first_name ,
+          }
+
+          new_company_info_values ={
+            nit_number: new_nit_number
           }
 
           expected_rucom = {
@@ -156,16 +169,23 @@ describe 'Provider', :type => :request do
             num_rucom: provider.rucom.num_rucom
           }
 
+          expected_company_info = {
+            id: provider.company_info.id,
+            nit_number: new_nit_number,
+            name: provider.company_info.name,
+          }
+
           expected_response = {
             document_number: new_document_number,
             first_name: new_first_name,
             last_name: provider.last_name,
             phone_number: provider.phone_number,
             address: provider.address,
-            rucom: expected_rucom.stringify_keys
+            rucom: expected_rucom.stringify_keys,
+            company_info: expected_company_info.stringify_keys
           }
 
-          put '/api/v1/providers', {id: provider.id, provider: new_values}, { "Authorization" => "Barer #{@token}" }
+          put '/api/v1/providers', {id: provider.id, provider: new_values, company_info: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
 
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
