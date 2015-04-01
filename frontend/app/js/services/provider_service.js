@@ -1,4 +1,4 @@
-angular.module('app').factory('providerService', function($resource) {
+angular.module('app').factory('ProviderService', function($resource) {
 
     var currentProvider = {};
     var providers = [];
@@ -7,11 +7,11 @@ angular.module('app').factory('providerService', function($resource) {
         currentProvider = provider;
     };
 
-    var retrieveProviders = $resource('/api/v1/provider/:providerId', {}, {
+    var retrieveProviders = $resource('/api/v1/providers/:providerId', {}, {
       query: {
         method: 'GET',
         params:{providerId:''},
-        isArray: false
+        isArray: true
       }
     });
 

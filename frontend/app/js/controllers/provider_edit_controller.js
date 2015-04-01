@@ -1,16 +1,16 @@
-angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'providerService', 'rucomService', function($scope, $stateParams, providerService, rucomService){
+angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', 'RucomService', function($scope, $stateParams, ProviderService, RucomService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
   $scope.currentProvider = {};
   if ($stateParams.providerId) {
-    providerService.retrieveProviders.get({providerId: $stateParams.providerId}, function(data) {
+    ProviderService.retrieveProviders.get({providerId: $stateParams.providerId}, function(data) {
       $scope.currentProvider = data.provider;
-      providerService.setCurrentProv(data.provider);
+      ProviderService.setCurrentProv(data.provider);
       console.log('Current provider: ' + data.provider.id);
     });
   }
 
   $scope.matchingRucoms = [];
-  rucomService.retrieveRucoms.get({rucom_attr: 'ARE_PLU-08141'}, function(data) {
+  RucomService.retrieveRucoms.get({rucom_attr: 'ARE_PLU-08141'}, function(data) {
     $scope.matchingRucoms = data.result;
     console.log('Matching rucom registries: ' + JSON.stringify(data.result));
   });

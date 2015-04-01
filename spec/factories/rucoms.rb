@@ -18,7 +18,8 @@
 
 FactoryGirl.define do
   factory :rucom do
-    rucom_record "A rucom record "
+    idrucom "ABC&123"
+    rucom_record "RUCOM_REC00002"
     name {Faker::Name.name}
     status {"active"}
     mineral {"A mineral"}

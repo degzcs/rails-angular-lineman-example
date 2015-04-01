@@ -11,7 +11,7 @@ angular.module('app').directive('mdTableProvider', function () {
       count: '=',
       currentProvider: '='
     },
-    controller: function ($scope, $filter, $location, $window, $state, providerService) {
+    controller: function ($scope, $filter, $location, $window, $state, ProviderService) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
@@ -33,7 +33,7 @@ angular.module('app').directive('mdTableProvider', function () {
         $scope.tablePage = page;
       };
       $scope.setCurrentProv = function (provider) {
-        providerService.setCurrentProv(provider);
+        ProviderService.setCurrentProv(provider);
         //$scope.currentProvider = provider;
         console.log('Setting current Provider: ' + JSON.stringify($scope.currentProvider));
         $state.go("edit_provider", {providerId: provider.id});

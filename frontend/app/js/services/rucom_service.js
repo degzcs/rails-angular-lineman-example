@@ -1,6 +1,6 @@
-angular.module('app').factory('rucomService', function($resource) {
+angular.module('app').factory('RucomService', function($resource) {
 
-    var getRucom = $resource('/api/v1/rucom/:id', {}, {
+    var getRucom = $resource('/api/v1/rucoms/:id', {}, {
       query: {
         method: 'GET',
         params:{id:''},
@@ -8,7 +8,7 @@ angular.module('app').factory('rucomService', function($resource) {
       }
     });
 
-    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucom', rucom_attr: '@rucom_attr'}, {
+    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucoms', rucom_query: '@rucom_query'}, {
       query: {
         method: 'GET',
         isArray: false
