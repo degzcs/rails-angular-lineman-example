@@ -28,7 +28,9 @@ describe 'Provider', :type => :request do
             expected_rucom = {
               id: provider.rucom.id,
               status: provider.rucom.status,
-              num_rucom: provider.rucom.num_rucom
+              num_rucom: provider.rucom.num_rucom,
+              rucom_record: provider.rucom.rucom_record,
+              provider_type: provider.rucom.provider_type,
             }
 
             expected_response = {
@@ -68,7 +70,9 @@ describe 'Provider', :type => :request do
             expected_rucom = {
               id: provider.rucom.id,
               status: provider.rucom.status,
-              num_rucom: provider.rucom.num_rucom
+              num_rucom: provider.rucom.num_rucom,
+              rucom_record: provider.rucom.rucom_record,
+              provider_type: provider.rucom.provider_type,
             }
 
             expected_response = {
@@ -116,7 +120,9 @@ describe 'Provider', :type => :request do
             expected_rucom = {
               id: provider.rucom.id,
               status: provider.rucom.status,
-              num_rucom: provider.rucom.num_rucom
+              num_rucom: provider.rucom.num_rucom,
+              rucom_record: provider.rucom.rucom_record,
+              provider_type: provider.rucom.provider_type,
             }
 
             expected_company_info = {
@@ -166,7 +172,9 @@ describe 'Provider', :type => :request do
           expected_rucom = {
             id: provider.rucom.id,
             status: provider.rucom.status,
-            num_rucom: provider.rucom.num_rucom
+            num_rucom: provider.rucom.num_rucom,
+            rucom_record: provider.rucom.rucom_record,
+            provider_type: provider.rucom.provider_type,
           }
 
           expected_company_info = {

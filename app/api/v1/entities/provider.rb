@@ -17,6 +17,12 @@ module V1
         expose :num_rucom, documentation: { type: "string", desc: "num_rucom", example: "Rucom213" } do |provider, options|
           provider.rucom.num_rucom
         end
+        expose :rucom_record, documentation: { type: "string", desc: "rucom_record", example: "Rucom record" } do |provider, options|
+          provider.rucom.rucom_record
+        end
+        expose :provider_type, documentation: { type: "string", desc: "provider_type", example: "1233" } do |provider, options|
+          provider.rucom.provider_type
+        end
       end
       expose :company_info , :unless => Proc.new {|p| p.company_info.nil?} do
         expose :id, documentation: { type: "integer", desc: "Id of the Company info", example: "4" } do |provider, options|
