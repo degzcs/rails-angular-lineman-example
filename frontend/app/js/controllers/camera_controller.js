@@ -1,4 +1,12 @@
 angular.module('app').controller('CameraController',  ['$scope','$q','$timeout','CameraService', function($scope,$q, $timeout,CameraService) {
+                
+                $scope.optionsSource=CameraService.getMediaSources();
+                $scope.optionSelected='';
+                $scope.changeCamera=function(option){
+                    dimensions={w1:$scope.w1,h1:$scope.h1};
+                    CameraService.playVideo(dimensions,option);
+                    console.log($scope.optionSelected);
+                };
                 $scope.takeSnapshot = function() {
                     var canvas  = document.querySelector('canvas'),
                         ctx     = canvas.getContext('2d'),
@@ -7,7 +15,6 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
 
                     canvas.width = $scope.w2;
                     canvas.height = $scope.h2;
-                    //  console.log("timeout " +$timeout);
                     $timeout(function() {
                         ctx.fillRect(0, 0, $scope.w2, $scope.h2);
                         ctx.drawImage(videoElement, 0, 0, $scope.w2, $scope.h2);
@@ -15,7 +22,6 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     }, 0);
                     d.promise.then(function(image) {
                             $scope.image=image;
-                            //Hacer algo con la imagen tomada
                         });
                 };
                 $scope.addScanFile=function(){

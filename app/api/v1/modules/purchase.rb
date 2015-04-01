@@ -43,7 +43,7 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-              purchase = ::Purchase.new(params[:purchase])
+              purchase = ::Purchase.new(params[:purchase].merge( user_id: current_user.id))
               purchase.save
               present purchase, with: V1::Entities::Purchase
         end

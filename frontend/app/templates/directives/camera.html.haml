@@ -1,15 +1,19 @@
 %div{:layout => "column"}
+  %div{:layout => "row", :layout-align => "center center"}
+    %div{:flex => "20"}  
+      %md-select{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
+        %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
   %div.camera{:layout => "row", :layout-align => "center center"}
     %video.camera{:autoplay => ""}
   %br
   %div{:layout => "row"}  
     %div{:flex => "65",:layout => "row", :layout-align => "center center"}
       %div{:flex => "20"}
-        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()"} Scan
+        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()"} Capturar
       %div{:flex => "20"}
         %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "addScanFile()"} Agregar al Documento
     %div{:flex => "25"} 
-      %button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "comeBack()"} Finalizar Scan
+      %button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "comeBack()"} Finalizar
   %br
   %div{:layout => "row", :layout-align => "center center"}
     %canvas{}
