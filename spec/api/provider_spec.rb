@@ -31,6 +31,7 @@ describe 'Provider', :type => :request do
               num_rucom: provider.rucom.num_rucom,
               rucom_record: provider.rucom.rucom_record,
               provider_type: provider.rucom.provider_type,
+              mineral: provider.rucom.mineral
             }
 
             expected_response = {
@@ -73,6 +74,7 @@ describe 'Provider', :type => :request do
               num_rucom: provider.rucom.num_rucom,
               rucom_record: provider.rucom.rucom_record,
               provider_type: provider.rucom.provider_type,
+              mineral: provider.rucom.mineral
             }
 
             expected_response = {
@@ -123,6 +125,7 @@ describe 'Provider', :type => :request do
               num_rucom: provider.rucom.num_rucom,
               rucom_record: provider.rucom.rucom_record,
               provider_type: provider.rucom.provider_type,
+              mineral: provider.rucom.mineral
             }
 
             expected_company_info = {
@@ -175,6 +178,7 @@ describe 'Provider', :type => :request do
             num_rucom: provider.rucom.num_rucom,
             rucom_record: provider.rucom.rucom_record,
             provider_type: provider.rucom.provider_type,
+            mineral: provider.rucom.mineral
           }
 
           expected_company_info = {
