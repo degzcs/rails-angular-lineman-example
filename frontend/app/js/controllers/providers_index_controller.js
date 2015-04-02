@@ -6,13 +6,17 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       field:'thumb',
       alternateField: 'thumb'
     },{
-      name: 'Name', 
-      field: 'name',
-      alternateField: 'name'
+      name: 'First Name', 
+      field: 'first_name',
+      alternateField: 'first_name'
+    },{
+      name: 'Last Name', 
+      field: 'last_name',
+      alternateField: 'last_name'
     },{
       name:'Id', 
-      field: 'id',
-      alternateField: 'id'
+      field: 'document_number',
+      alternateField: 'document_number'
     },{
       name: 'Mineral', 
       field: 'mineral',
@@ -37,11 +41,28 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
   ];
   
   ProviderService.retrieveProviders.query((function(providers) {
-    return $scope.content = providers;
+    var content = [];
+    for (var i=0; i<providers.length; i++) {
+      var prov = {
+        id: providers[i].id,
+        document_number: providers[i].document_number,
+        first_name: providers[i].first_name,
+        last_name: providers[i].last_name,
+        address: providers[i].address,
+        phone_number: providers[i].phone_number,
+        num_rucom: providers[i].rucom.num_rucom,
+        rucom_record: providers[i].rucom.rucom_record,
+        provider_type: providers[i].rucom.provider_type,
+        rucom_status: providers[i].rucom.status,
+        mineral: providers[i].rucom.mineral
+      };
+      content.push(prov);
+    }
+    return $scope.content = content;
   }), function(error) {});
   
-  $scope.custom = {name: 'bold', id:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
-  $scope.sortable = ['name', 'id', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
+  $scope.custom = {first_name: 'bold', last_name: 'bold', id:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
+  $scope.sortable = ['first_name', 'first_name', 'id', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
   $scope.thumbs = 'thumb';
   $scope.count = 4;
   $scope.currentProvider = ProviderService.getCurrentProv();
