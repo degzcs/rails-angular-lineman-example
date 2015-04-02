@@ -11,6 +11,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  rucom_id        :integer
+#  email           :string(255)
 #
 
 class Provider < ActiveRecord::Base
@@ -36,5 +37,6 @@ class Provider < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :address, presence: true
   validates :rucom_id , presence: true
+  validates :email, presence: true
 
 end

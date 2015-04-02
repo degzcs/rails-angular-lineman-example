@@ -7,6 +7,7 @@ module V1
       expose :last_name, documentation: { type: "string", desc: "Lastname", example: "Perez" }
       expose :phone_number, documentation: { type: "string", desc: "Phone number", example: "83333333" }
       expose :address, documentation: { type: "string", desc: "Address", example: "Calle falsa n#4233" }
+      expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
       expose :rucom do 
         expose :id, documentation: { type: "integer", desc: "Id of the Rucom", example: "4" } do |provider, options|
           provider.rucom.id

@@ -8,6 +8,7 @@
 #  last_name       :string(255)
 #  phone_number    :string(255)
 #  address         :string(255)
+#  email         :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
 #  rucom_id        :integer
@@ -20,6 +21,7 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     phone_number { Faker::Name.first_name }
     address { Faker::Address.street_address}
+    email {Faker::Internet.email}
     company_info {FactoryGirl.build(:company_info)}
     rucom_id {Random.rand(1...100)}
   end
