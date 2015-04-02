@@ -53,13 +53,19 @@
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => ""}
               %label State
-              %input{"ng-model" => "currentProvider.city"}
+              %input{:required => "true", :name => "state", "ng-model" => "currentProvider.state"}
+              %div{"ng-messages" => "providereditionForm.state.$error"}
+                %div{"ng-message" => "required"} This is required
             %md-input-container{:flex => ""}
               %label City
-              %input{"ng-model" => "currentProvider.state"}
+              %input{:required => "true", :name => "city", "ng-model" => "currentProvider.city"}
+              %div{"ng-messages" => "providereditionForm.city.$error"}
+                %div{"ng-message" => "required"} This is required
             %md-input-container{:flex => ""}
               %label Population Center
-              %input{"ng-model" => "currentProvider.postalCode"}
+              %input{:required => "true", :name => "pop_center", "ng-model" => "currentProvider.pop_center"}
+              %div{"ng-messages" => "providereditionForm.pop_center.$error"}
+                %div{"ng-message" => "required"} This is required
           %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{:flex => ""}
               (RUCOM válido:)
