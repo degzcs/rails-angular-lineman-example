@@ -8,12 +8,7 @@ angular.module('app').factory('RucomService', function($resource) {
       }
     });
 
-    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucoms', rucom_query: '@rucom_query'}, {
-      query: {
-        method: 'GET',
-        isArray: false
-      }
-    });    
+    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucoms', rucom_query: '@rucom_query'});    
 
     return {
         getRucom: getRucom,

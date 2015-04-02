@@ -36,8 +36,8 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
     }
   ];
   
-  ProviderService.retrieveProviders.query((function(res) {
-    return $scope.content = res.list;
+  ProviderService.retrieveProviders.query((function(providers) {
+    return $scope.content = providers;
   }), function(error) {});
   
   $scope.custom = {name: 'bold', id:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};

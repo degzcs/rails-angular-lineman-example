@@ -2,17 +2,17 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
   $scope.currentProvider = {};
   if ($stateParams.providerId) {
-    ProviderService.retrieveProviders.get({providerId: $stateParams.providerId}, function(data) {
-      $scope.currentProvider = data.provider;
-      ProviderService.setCurrentProv(data.provider);
-      console.log('Current provider: ' + data.provider.id);
+    ProviderService.retrieveProviderById.get({providerId: $stateParams.providerId}, function(provider) {
+      $scope.currentProvider = provider;
+      ProviderService.setCurrentProv(provider);
+      console.log('Current provider: ' + provider.id);
     });
   }
 
   $scope.matchingRucoms = [];
-  RucomService.retrieveRucoms.get({rucom_attr: 'ARE_PLU-08141'}, function(data) {
-    $scope.matchingRucoms = data.result;
-    console.log('Matching rucom registries: ' + JSON.stringify(data.result));
+  RucomService.retrieveRucoms.query({rucom_query: 'ARE_PLU-08141'}, function(rucoms) {
+    $scope.matchingRucoms = rucoms;
+    console.log('Matching rucom registries: ' + JSON.stringify(rucoms));
   });
 
   $scope.formTabControl = {
