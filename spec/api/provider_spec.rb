@@ -70,7 +70,7 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               rucom_id: rucom.id,
-              photo_file: @file
+              photo_file: @file,
               email: provider.email,
             }
             
