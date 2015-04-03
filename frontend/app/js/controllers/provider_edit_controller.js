@@ -21,6 +21,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     firstLabel : "Basic info",
     secondLabel : "Complementary info"
   };
+  
   $scope.next = function() {
     $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
   };

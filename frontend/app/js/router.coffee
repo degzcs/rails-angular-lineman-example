@@ -114,7 +114,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("create_provider",
     url: "/new/provider",
     ncyBreadcrumb:
-      label: 'Provider'
+      label: 'Providers'
     views:
       'content':
         templateUrl: "partials/providers/create.html"
@@ -129,7 +129,27 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
-
+    .state('create_provider.type_1', {
+      url: "/type_a",
+      ncyBreadcrumb:
+        label: 'New'
+      templateUrl: "partials/providers/type_a.html",
+      controller: "ProvidersCreateCtrl"
+    })
+    .state('create_provider.type_2', {
+      url: "/type_b",
+      ncyBreadcrumb:
+        label: 'New'
+      templateUrl: "partials/providers/type_b.html",
+      controller: "ProvidersCreateCtrl"
+    })
+    .state('create_provider.type_3', {
+      url: "/type_c",
+      ncyBreadcrumb:
+        label: 'New'
+      templateUrl: "partials/providers/type_c.html",
+      controller: "ProvidersCreateCtrl"
+    })
   #  --- Batches Routes ---- #
 
   .state( "batches",
