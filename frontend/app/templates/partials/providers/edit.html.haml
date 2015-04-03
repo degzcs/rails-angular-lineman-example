@@ -33,7 +33,7 @@
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => "20"}
               %label Phone Number
-              %input{:required => "true", :name => "phone_number", "ng-model" => "currentProvider.phone_number", :placeholder => "(3XX) XXX XXXXX"}
+              %input{:required => "true", :name => "phone_number", "ng-model" => "currentProvider.phone_number", :placeholder => "(555) 555 5555"}
               %div{"ng-messages" => "providereditionForm.phone_number.$error"}
                 %div{"ng-message" => "required"} This is required
             %md-input-container{:flex => "30"}
@@ -44,16 +44,16 @@
                 %div{"ng-message" => "email"} Enter a valid email
             %md-input-container{:flex => "50"}
               %label Address
-              %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR X XX - XX"}
+              %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR 1 2 - 34"}
               %div{"ng-messages" => "providereditionForm.address.$error"}
                 %div{"ng-message" => "required"} This is required
           %br          
           %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
-            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "noCache", "md-search-text" => "searchState", "md-search-text-change" => "searchTextChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
               %span{"md-highlight-text" => "searchState"} {{state.name}}
-            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "noCache", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
               %span{"md-highlight-text" => "searchCity"} {{city.name}}
-            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "noCache", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
               %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
           %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{:flex => ""}

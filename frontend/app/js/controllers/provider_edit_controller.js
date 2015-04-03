@@ -73,28 +73,55 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   };
 
   $scope.selectedStateChange = function(state) {
-    console.log('State changed to ' + JSON.stringify(state));
-    LocationService.getCitiesFromState.query({stateId: state.id}, function(cities) {
-      $scope.cities = cities;
-      console.log('Cities from ' + state.name + ': ' + JSON.stringify(cities));
-    });
-    $scope.cityDisabled = false;
+    if(state){
+      console.log('State changed to ' + JSON.stringify(state));
+      LocationService.getCitiesFromState.query({stateId: state.id}, function(cities) {
+        $scope.cities = cities;
+        console.log('Cities from ' + state.name + ': ' + JSON.stringify(cities));
+      });
+      $scope.cityDisabled = false;
+    } else {
+      console.log('State changed to none');
+      flushFields('state');
+    }
   };
 
   $scope.selectedCityChange = function(city) {
-    console.log('City changed to ' + JSON.stringify(city));
-    LocationService.getPopulationCentersFromCity.query({cityId: city.id}, function(population_centers) {
-      $scope.population_centers = population_centers;
-      console.log('Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers));
-    });
-    $scope.populationCenterDisabled = false;
+    if(city){
+      console.log('City changed to ' + JSON.stringify(city));
+      LocationService.getPopulationCentersFromCity.query({cityId: city.id}, function(population_centers) {
+        $scope.population_centers = population_centers;
+        console.log('Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers));
+      });
+      $scope.populationCenterDisabled = false;
+    } else {
+      console.log('City changed to none');
+    }
   };
 
   $scope.selectedPopulationCenterChange = function(population_center) {
-    console.log('Population Center changed to ' + JSON.stringify(population_center));
+    if(population_center){
+      console.log('Population Center changed to ' + JSON.stringify(population_center));
+    } else {
+      console.log('Population Center changed to none');
+    }
   };
 
-  $scope.searchTextChange = function(text) {
+  $scope.searchTextStateChange = function(text) {
+    console.log('Text changed to ' + text);
+    if (text==='') {
+      flushFields('state');
+    }
+  };
+
+  $scope.searchTextCityChange = function(text) {
+    console.log('Text changed to ' + text);
+    if (text==='') {
+      flushFields('city');
+    }
+  };
+
+  $scope.searchTextPopulationCenterChange = function(text) {
     console.log('Text changed to ' + text);
   };
 
@@ -104,6 +131,32 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       return (state.name.toLowerCase().indexOf(lowercaseQuery) === 0);
     };
   }
+
+  function flushFields(level) {
+    $scope.population_centers = [];
+    $scope.selectedPopulationCenter = null;
+    $scope.searchPopulationCenter = null;
+    $scope.populationCenterDisabled = true;
+    switch(level) {
+      case 'state':
+        $scope.cities = [];
+        $scope.selectedState = null;
+        $scope.selectedCity = null;
+        $scope.searchState = null;
+        $scope.searchCity = null;
+        $scope.cityDisabled = true;
+        break;
+      case 'city':
+        $scope.searchCity = null;
+        $scope.selectedCity = null;
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+  // end Autocomplete management
 
   $scope.formTabControl = {
     selectedIndex : 0,

@@ -51,6 +51,7 @@ module V1
             #rucoms = rucoms.paginate(:page => page, :per_page => per_page)
           else
             rucoms = ::Rucom.paginate(:page => page, :per_page => per_page)
+            header 'total_pages', rucoms.total_pages.to_s
           end
           present rucoms, with: V1::Entities::Rucom
         end

@@ -63,6 +63,7 @@ module V1
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           providers = ::Provider.paginate(:page => page, :per_page => per_page)
+          header 'total_pages', providers.total_pages.to_s
           present providers, with: V1::Entities::Provider
         end
         desc 'returns one existent provider by :id', {
