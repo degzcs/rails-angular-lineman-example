@@ -18,15 +18,15 @@
 
 FactoryGirl.define do
   factory :rucom do
-    idrucom "ABC&123"
-    rucom_record "RUCOM_REC00002"
+    idrucom {Faker::Code.ean}
+    rucom_record {Faker::Code.ean}
     name {Faker::Name.name}
     status {"active"}
-    mineral {"A mineral"}
+    mineral {"ORO"}
     location {Faker::Address.city}
     subcontract_number {Faker::Company.ein}
-    mining_permit {"A mining permit"}
-    provider_type {"Berequerou"}
+    mining_permit {Faker::Code.ean}
+    provider_type {"Barequero"}
     num_rucom {Faker::Code.ean}
   end
 

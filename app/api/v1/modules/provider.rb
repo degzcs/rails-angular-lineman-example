@@ -42,6 +42,7 @@ module V1
             optional  :last_name, type: String, desc: 'last_name', documentation: { example: 'Rock' }
             optional  :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
             optional  :address , type: String, desc: 'address', documentation: { example: 'Rock' }
+            optional  :email , type: String, desc: 'email', documentation: { example: 'Rock' }
           end
         end
 

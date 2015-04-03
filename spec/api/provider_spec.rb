@@ -43,6 +43,7 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               photo_file: {"url"=>provider.photo_file.url},
+              email: provider.email,
               rucom: expected_rucom.stringify_keys
             }
 
@@ -70,6 +71,7 @@ describe 'Provider', :type => :request do
               address: provider.address,
               rucom_id: rucom.id,
               photo_file: @file
+              email: provider.email,
             }
             
             expected_rucom = {
@@ -88,6 +90,7 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               photo_file: {"url"=>"/Users/latharstudios/code/trazoro/spec/uploads/provider/photo_file/21/image.png"},
+              email: provider.email,
               rucom: expected_rucom.stringify_keys
             }
 
@@ -114,6 +117,7 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               photo_file: @file,
+              email: provider.email,
               rucom_id: rucom.id
             }
 
@@ -152,6 +156,7 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               photo_file: {"url"=>"/Users/latharstudios/code/trazoro/spec/uploads/provider/photo_file/22/image.png"},
+              email: provider.email,
               rucom: expected_rucom.stringify_keys,
               company_info: expected_company_info.stringify_keys
             }
@@ -206,6 +211,7 @@ describe 'Provider', :type => :request do
             phone_number: provider.phone_number,
             address: provider.address,
             photo_file: {"url"=>provider.photo_file.url},
+            email: provider.email,
             rucom: expected_rucom.stringify_keys,
             company_info: expected_company_info.stringify_keys
           }

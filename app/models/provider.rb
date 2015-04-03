@@ -1,21 +1,3 @@
-# == Schema Information
-#
-# Table name: providers
-#
-#  id                         :integer          not null, primary key
-#  document_number            :string(255)
-#  first_name                 :string(255)
-#  last_name                  :string(255)
-#  phone_number               :string(255)
-#  address                    :string(255)
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  rucom_id                   :integer
-#  identification_number_file :string(255)
-#  rut_file                   :string(255)
-#  mining_register_file       :string(255)
-#  photo_file                 :string(255)
-#
 
 class Provider < ActiveRecord::Base
   has_one :company_info
@@ -43,5 +25,6 @@ class Provider < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :address, presence: true
   validates :rucom_id , presence: true
+  validates :email, presence: true
 
 end

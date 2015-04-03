@@ -14,7 +14,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       field: 'last_name',
       alternateField: 'last_name'
     },{
-      name:'Id', 
+      name:'ID Number', 
       field: 'document_number',
       alternateField: 'document_number'
     },{
@@ -49,6 +49,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
         first_name: providers[i].first_name,
         last_name: providers[i].last_name,
         address: providers[i].address,
+        email: providers[i].email,
         phone_number: providers[i].phone_number,
         num_rucom: providers[i].rucom.num_rucom,
         rucom_record: providers[i].rucom.rucom_record,
@@ -61,8 +62,8 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
     return $scope.content = content;
   }), function(error) {});
   
-  $scope.custom = {first_name: 'bold', last_name: 'bold', id:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
-  $scope.sortable = ['first_name', 'first_name', 'id', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
+  $scope.custom = {first_name: 'bold', last_name: 'bold', document_number:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
+  $scope.sortable = ['first_name', 'last_name', 'document_number', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
   $scope.thumbs = 'thumb';
   $scope.count = 4;
   $scope.currentProvider = ProviderService.getCurrentProv();
