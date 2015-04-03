@@ -19,7 +19,7 @@ FactoryGirl.define do
     name { Faker::Address.city }
 	longitude { Faker::Address.longitude }
 	latitude { Faker::Address.latitude }
-	type { Faker::Hacker.abbreviation }
+	population_center_type { Faker::Hacker.abbreviation }
 	city_id {Random.rand(1...100)}
 	population_center_code { Faker::Number.number(6) } 
 	city_code { Faker::Number.number(6) }

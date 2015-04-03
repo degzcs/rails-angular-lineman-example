@@ -45,8 +45,23 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          provider = ::State.find(params[:id])
-          present provider, with: V1::Entities::State
+          state = ::State.find(params[:id])
+          present state, with: V1::Entities::State
+        end
+        desc 'returns all cities from a state', {
+          entity: V1::Entities::State,
+          notes: <<-NOTES
+            Returns one existent states by :id
+          NOTES
+        }
+        params do
+          use :id
+        end
+        get '/:id/cities', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          state = ::State.find(params[:id])
+          cities = state.cities
+          present cities, with: V1::Entities::City
         end
       end
     end
