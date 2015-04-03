@@ -29,7 +29,7 @@ angular.module('app').factory('CameraService', function($window) {
         return files[files.length-1];
       }
       return '';
-    }
+    };
 //Method to get media sources
     var getMediaSources=function(){
         $options=[];
