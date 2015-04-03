@@ -1,7 +1,4 @@
 %div{:layout => "column"}
-  %md-toolbar.md-primary
-    %h1.md-toolbar-tools
-      Provider edition form
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
       {{ formTabControl.firstLabel }}
@@ -50,22 +47,14 @@
               %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR X XX - XX"}
               %div{"ng-messages" => "providereditionForm.address.$error"}
                 %div{"ng-message" => "required"} This is required
-          %div{:layout => "", "layout-sm" => "column"}
-            %md-input-container{:flex => ""}
-              %label State
-              %input{:required => "true", :name => "state", "ng-model" => "currentProvider.state"}
-              %div{"ng-messages" => "providereditionForm.state.$error"}
-                %div{"ng-message" => "required"} This is required
-            %md-input-container{:flex => ""}
-              %label City
-              %input{:required => "true", :name => "city", "ng-model" => "currentProvider.city"}
-              %div{"ng-messages" => "providereditionForm.city.$error"}
-                %div{"ng-message" => "required"} This is required
-            %md-input-container{:flex => ""}
-              %label Population Center
-              %input{:required => "true", :name => "pop_center", "ng-model" => "currentProvider.pop_center"}
-              %div{"ng-messages" => "providereditionForm.pop_center.$error"}
-                %div{"ng-message" => "required"} This is required
+          %br          
+          %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "noCache", "md-search-text" => "searchState", "md-search-text-change" => "searchTextChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
+              %span{"md-highlight-text" => "searchState"} {{state.name}}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "noCache", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
+              %span{"md-highlight-text" => "searchCity"} {{city.name}}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "noCache", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
+              %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
           %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{:flex => ""}
               (RUCOM válido:)
