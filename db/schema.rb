@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402173133) do
+ActiveRecord::Schema.define(version: 20150402234417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20150402173133) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "cities", force: true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "state_code", null: false
+    t.string   "city_code",  null: false
+  end
+
+  add_index "cities", ["state_id"], name: "index_cities_on_state_id", using: :btree
+
   create_table "company_infos", force: true do |t|
     t.string   "nit_number"
     t.string   "name"
@@ -63,6 +74,20 @@ ActiveRecord::Schema.define(version: 20150402173133) do
     t.datetime "updated_at"
     t.integer  "provider_id"
   end
+
+  create_table "population_centers", force: true do |t|
+    t.string   "name"
+    t.decimal  "longitude"
+    t.decimal  "latitude"
+    t.string   "type"
+    t.integer  "city_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "population_center_code", null: false
+    t.string   "city_code",              null: false
+  end
+
+  add_index "population_centers", ["city_id"], name: "index_population_centers_on_city_id", using: :btree
 
   create_table "providers", force: true do |t|
     t.string   "document_number"
@@ -99,6 +124,13 @@ ActiveRecord::Schema.define(version: 20150402173133) do
     t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
+  end
+
+  create_table "states", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "state_code", null: false
   end
 
   create_table "users", force: true do |t|

@@ -17,3 +17,11 @@ rucoms = FactoryGirl.create_list(:rucom, 20)
 rucoms.each do|rucom|
 	FactoryGirl.create(:provider,rucom_id: rucom.id)
 end
+
+states = FactoryGirl.create_list(:state, 10)
+states.each do|state|
+	cities = FactoryGirl.create_list(:city, 5, state_id: state.id, state_code: state.state_code)
+	cities.each do|city|
+		FactoryGirl.create_list(:population_center, 5, city_id: city.id, city_code: city.city_code)
+	end
+end
