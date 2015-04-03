@@ -1,22 +1,10 @@
-# == Schema Information
-#
-# Table name: providers
-#
-#  id              :integer          not null, primary key
-#  document_number :string(255)
-#  first_name      :string(255)
-#  last_name       :string(255)
-#  phone_number    :string(255)
-#  address         :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  rucom_id        :integer
-#  email           :string(255)
-#
 
 class Provider < ActiveRecord::Base
   has_one :company_info
- 
+  mount_uploader :identification_number_file, AttachmentUploader
+  mount_uploader :rut_file, AttachmentUploader
+  mount_uploader :mining_register_file, AttachmentUploader
+  mount_uploader :photo_file, AttachmentUploader
   #
   # Instance Methods
   #
