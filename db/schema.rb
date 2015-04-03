@@ -98,11 +98,11 @@ ActiveRecord::Schema.define(version: 20150403145536) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
+    t.string   "email"
     t.string   "identification_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
-    t.string   "email"
   end
 
   create_table "purchases", force: true do |t|
