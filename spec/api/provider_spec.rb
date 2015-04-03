@@ -6,8 +6,9 @@ describe 'Provider', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-
         FactoryGirl.create_list(:provider, 20,{company_info: nil, rucom_id: FactoryGirl.create(:rucom).id})
+           file_path = "#{Rails.root}/spec/support/test_images/image.png"
+        @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
       end
 
       context 'GET' do
@@ -18,7 +19,7 @@ describe 'Provider', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be per_page
         end
-  
+        
         context '/:id' do
 
           it 'gets provider by id' do 
@@ -41,6 +42,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
+              photo_file: {"url"=>provider.photo_file.url},
               rucom: expected_rucom.stringify_keys
             }
 
@@ -48,14 +50,15 @@ describe 'Provider', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to match expected_response.stringify_keys
           end
-
         end
-
       end
 
       context 'POST' do
         context "without company_info" do
           it 'returns a representation of the new provider created and code 201' do
+              file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+
             rucom = create(:rucom)
             provider = build( :provider,rucom_id: rucom.id)
 
@@ -65,7 +68,8 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              rucom_id: rucom.id
+              rucom_id: rucom.id,
+              photo_file: @file
             }
             
             expected_rucom = {
@@ -83,6 +87,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
+              photo_file: {"url"=>"/Users/latharstudios/code/trazoro/spec/uploads/provider/photo_file/21/image.png"},
               rucom: expected_rucom.stringify_keys
             }
 
@@ -94,8 +99,13 @@ describe 'Provider', :type => :request do
         end
         context "with company info" do
           it 'returns a representation of the new provider with his company_info created and code 201' do
+            
+              file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+
             rucom = create(:rucom)
             provider = build( :provider,rucom_id: rucom.id)
+
 
             new_values = {
               document_number: provider.document_number,
@@ -103,6 +113,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
+              photo_file: @file,
               rucom_id: rucom.id
             }
 
@@ -140,6 +151,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
+              photo_file: {"url"=>"/Users/latharstudios/code/trazoro/spec/uploads/provider/photo_file/22/image.png"},
               rucom: expected_rucom.stringify_keys,
               company_info: expected_company_info.stringify_keys
             }
@@ -193,6 +205,7 @@ describe 'Provider', :type => :request do
             last_name: provider.last_name,
             phone_number: provider.phone_number,
             address: provider.address,
+            photo_file: {"url"=>provider.photo_file.url},
             rucom: expected_rucom.stringify_keys,
             company_info: expected_company_info.stringify_keys
           }

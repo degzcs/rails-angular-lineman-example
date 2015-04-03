@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401190653) do
+ActiveRecord::Schema.define(version: 20150402053711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,10 @@ ActiveRecord::Schema.define(version: 20150401190653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
+    t.string   "identification_number_file"
+    t.string   "rut_file"
+    t.string   "mining_register_file"
+    t.string   "photo_file"
   end
 
   create_table "purchases", force: true do |t|
@@ -87,7 +91,7 @@ ActiveRecord::Schema.define(version: 20150401190653) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                   null: false
+    t.integer  "idrucom",            default: "nextval('rucoms_idrucom_seq'::regclass)", null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -95,7 +99,7 @@ ActiveRecord::Schema.define(version: 20150401190653) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: "now()"
+    t.datetime "updated_at",         default: '2015-03-31 06:22:05'
     t.string   "provider_type"
     t.string   "num_rucom"
   end
