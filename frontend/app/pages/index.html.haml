@@ -5,30 +5,30 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
-      %div.content{:flex => ""}
+    .main-container{"flex" => ""}
       //---------------------------------------Header -  Navigation Bar ---------------------------------////
-        .nav-bar
-          %md-toolbar
-            %md-toolbar-tools{"layout" => "row"}
-              .white-space{"flex" => 25}
-              .logo{"flex" => 50}
-                %h1.md-toolbar-tools
-                  Trazoro
-              .sidebar-options{"ng-controller"=>"SidebarCtrl"}
-                %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
-                  %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
-              /.breadcrumb{"ncy-breadcrumb"=>"","flex" => 50}
-              .session-buttons{"flex" =>50,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
-                %md-button.md-toolbar-tools{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
-                %md-button.md-toolbar-tools{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
-              .white-space{"flex" => 25}
+      .nav-bar
+        %md-toolbar
+          %md-toolbar-tools{"layout" => "row"}
+            .sidebar-options{"flex" => 10, "ng-controller"=>"SidebarCtrl"}
+              %md-toolbar-tools
+                %md-button{"ng-click" => "toggleLeft()"}
+                  %md-icon{"md-svg-icon"=>"action:reorder"}
+            .breadcrumb{"flex" => 75, "hide-sm" => ""}
+              .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
+            .session-buttons{"flex" =>15,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
+              %md-toolbar-tools
+                %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
+                %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
       //------------------------------------------------ Content  ------------------------------------------------////
-        .container{:layout => "row"}
-          // NOTE: I think this sidebar is not necessary and can be removed eventually
-          .sidebar{"flex" =>10, "ng-controller"=>"SidebarCtrl"}
-            %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')", "ng-if"=> "allowSidebar()"}
-              %md-content.sidebar-options{:layout => "column"}
-                %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
-          .content{"flex" =>90}
-            %md-content.md-padding.trazoro-card.md-whiteframe-z2{"ui-view" => "content"}
-    %script{"src" => "/js/app.js", "type" => "text/javascript"}
+      .container{"layout" => "row"}
+        .sidebar{"flex" =>0, "ng-controller"=>"SidebarCtrl"}
+          %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left"}
+            %md-content.logo
+              %h1.md-toolbar-tools
+                Trazoro
+            %md-content.sidebar-options{"layout" => "column"}
+              %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
+        .content{"flex" =>100}
+          %md-content.md-padding.trazoro-card.md-whiteframe-z2{"ui-view" => "content"}
+  %script{"src" => "/js/app.js", "type" => "text/javascript"}
