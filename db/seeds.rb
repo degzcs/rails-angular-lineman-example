@@ -14,8 +14,9 @@ FactoryGirl.create :user, email: 'leandro@trazoro.com', password: '123456', pass
 FactoryGirl.create :user, email: 'esteban@trazoro.com', password: '123456', password_confirmation: '123456'
 
 rucoms = FactoryGirl.create_list(:rucom, 20)
+population_center = FactoryGirl.create(:population_center)
 rucoms.each do|rucom|
-	FactoryGirl.create(:provider,rucom_id: rucom.id)
+	FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
 end
 
 states = FactoryGirl.create_list(:state, 10)

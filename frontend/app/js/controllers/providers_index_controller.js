@@ -3,8 +3,8 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
   $scope.headers = [
     {
       name:'',
-      field:'thumb',
-      alternateField: 'thumb'
+      field:'photo_file',
+      alternateField: 'photo_file'
     },{
       name: 'First Name', 
       field: 'first_name',
@@ -51,6 +51,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
         address: providers[i].address,
         email: providers[i].email,
         phone_number: providers[i].phone_number,
+        photo_file: providers[i].photo_file.url || ('http://robohash.org/' + providers[i].id),
         num_rucom: providers[i].rucom.num_rucom,
         rucom_record: providers[i].rucom.rucom_record,
         provider_type: providers[i].rucom.provider_type,
@@ -64,7 +65,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
   
   $scope.custom = {first_name: 'bold', last_name: 'bold', document_number:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
   $scope.sortable = ['first_name', 'last_name', 'document_number', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
-  $scope.thumbs = 'thumb';
+  $scope.thumbs = 'photo_file';
   $scope.count = 4;
   $scope.currentProvider = ProviderService.getCurrentProv();
   

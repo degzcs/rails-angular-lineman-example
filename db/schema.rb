@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402234417) do
+ActiveRecord::Schema.define(version: 20150403221901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20150402234417) do
     t.string   "name"
     t.decimal  "longitude"
     t.decimal  "latitude"
-    t.string   "type"
+    t.string   "population_center_type"
     t.integer  "city_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -98,12 +98,15 @@ ActiveRecord::Schema.define(version: 20150402234417) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
+    t.string   "email"
     t.string   "identification_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
-    t.string   "email"
+    t.integer  "population_center_id"
   end
+
+  add_index "providers", ["population_center_id"], name: "index_providers_on_population_center_id", using: :btree
 
   create_table "purchases", force: true do |t|
     t.integer  "user_id"

@@ -95,7 +95,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("edit_provider",
     url: "/provider/:providerId",
     ncyBreadcrumb:
-      label: 'Provider'
+      label: 'Provider Edition'
     views:
       'content':
         templateUrl: "partials/providers/edit.html"

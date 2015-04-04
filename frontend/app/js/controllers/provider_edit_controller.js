@@ -1,4 +1,4 @@
-angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', 'RucomService', function($scope, $stateParams, ProviderService, RucomService){
+angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', 'RucomService', 'LocationService', function($scope, $stateParams, ProviderService, RucomService, LocationService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
   $scope.currentProvider = {};
   $scope.rucomIDField = {
@@ -15,7 +15,9 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         address: provider.address,
         email: provider.email,
         phone_number: provider.phone_number,
-        pic: provider.pic || 'https://lh4.googleusercontent.com/-t-90NQEuSh0/AAAAAAAAAAI/AAAAAAAAAAA/iuscVShbLTY/s64-c-k/photo.jpg',
+        photo_file: {
+          url: provider.photo_file.url || ('http://robohash.org/' + provider.id)
+        },
         rucom: {
           num_rucom: provider.rucom.num_rucom,
           rucom_record: provider.rucom.rucom_record,
@@ -37,11 +39,124 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     });
   }
 
-  $scope.matchingRucoms = [];
-  RucomService.retrieveRucoms.query({rucom_query: 'ARE_PLU-08141'}, function(rucoms) {
-    $scope.matchingRucoms = rucoms;
-    console.log('Matching rucom registries: ' + JSON.stringify(rucoms));
+  // Autocomplete for State, City and Population Center fields
+
+  $scope.states = [];
+  LocationService.getStates.query({}, function(states) {
+    $scope.states = states;
+    console.log('States: ' + JSON.stringify(states));
   });
+  $scope.cities = [];
+  $scope.population_centers = [];
+  $scope.selectedState = null;
+  $scope.selectedCity = null;
+  $scope.selectedPopulationCenter = null;
+  $scope.searchState = null;
+  $scope.searchCity = null;
+  $scope.searchPopulationCenter = null;
+  $scope.cityDisabled = true;
+  $scope.populationCenterDisabled = true;
+
+  $scope.stateSearch = function(query) {
+    var results = query ? $scope.states.filter( createFilterFor(query) ) : [];
+    return results;
+  };
+
+  $scope.citySearch = function(query) {
+    var results = query ? $scope.cities.filter( createFilterFor(query) ) : [];
+    return results;
+  };
+
+  $scope.populationCenterSearch = function(query) {
+    var results = query ? $scope.population_centers.filter( createFilterFor(query) ) : [];
+    return results;
+  };
+
+  $scope.selectedStateChange = function(state) {
+    if(state){
+      console.log('State changed to ' + JSON.stringify(state));
+      LocationService.getCitiesFromState.query({stateId: state.id}, function(cities) {
+        $scope.cities = cities;
+        console.log('Cities from ' + state.name + ': ' + JSON.stringify(cities));
+      });
+      $scope.cityDisabled = false;
+    } else {
+      console.log('State changed to none');
+      flushFields('state');
+    }
+  };
+
+  $scope.selectedCityChange = function(city) {
+    if(city){
+      console.log('City changed to ' + JSON.stringify(city));
+      LocationService.getPopulationCentersFromCity.query({cityId: city.id}, function(population_centers) {
+        $scope.population_centers = population_centers;
+        console.log('Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers));
+      });
+      $scope.populationCenterDisabled = false;
+    } else {
+      console.log('City changed to none');
+    }
+  };
+
+  $scope.selectedPopulationCenterChange = function(population_center) {
+    if(population_center){
+      console.log('Population Center changed to ' + JSON.stringify(population_center));
+    } else {
+      console.log('Population Center changed to none');
+    }
+  };
+
+  $scope.searchTextStateChange = function(text) {
+    console.log('Text changed to ' + text);
+    if (text==='') {
+      flushFields('state');
+    }
+  };
+
+  $scope.searchTextCityChange = function(text) {
+    console.log('Text changed to ' + text);
+    if (text==='') {
+      flushFields('city');
+    }
+  };
+
+  $scope.searchTextPopulationCenterChange = function(text) {
+    console.log('Text changed to ' + text);
+  };
+
+  function createFilterFor(query) {
+    var lowercaseQuery = angular.lowercase(query);
+    return function filterFn(state) {
+      return (state.name.toLowerCase().indexOf(lowercaseQuery) === 0);
+    };
+  }
+
+  function flushFields(level) {
+    $scope.population_centers = [];
+    $scope.selectedPopulationCenter = null;
+    $scope.searchPopulationCenter = null;
+    $scope.populationCenterDisabled = true;
+    switch(level) {
+      case 'state':
+        $scope.cities = [];
+        $scope.selectedState = null;
+        $scope.selectedCity = null;
+        $scope.searchState = null;
+        $scope.searchCity = null;
+        $scope.cityDisabled = true;
+        break;
+      case 'city':
+        $scope.searchCity = null;
+        $scope.selectedCity = null;
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+  // end Autocomplete management
 
   $scope.formTabControl = {
     selectedIndex : 0,
@@ -49,9 +164,29 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     firstLabel : "Basic info",
     secondLabel : "Complementary info"
   };
+
+  // $scope.matchingRucoms = [];
+  // RucomService.retrieveRucoms.query({rucom_query: 'ARE_PLU-08141'}, function(rucoms) {
+  //   $scope.matchingRucoms = rucoms;
+  //   console.log('Matching rucom registries: ' + JSON.stringify(rucoms));
+  // });
+  // LocationService.getStates.query({}, function(states) {
+  //   $scope.states = states;
+  //   console.log('States: ' + JSON.stringify(states));
+  // });
+  // LocationService.getCitiesFromState.query({stateId: '61'}, function(cities) {
+  //   $scope.cities = cities;
+  //   console.log('Cities from Delaware: ' + JSON.stringify(cities));
+  // });
+  // LocationService.getPopulationCentersFromCity.query({cityId: '625'}, function(population_centers) {
+  //   $scope.population_centers = population_centers;
+  //   console.log('Population Centers from Duncanhaven: ' + JSON.stringify(population_centers));
+  // });
+
   $scope.next = function() {
     $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
   };
+
   $scope.previous = function() {
     $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
   };

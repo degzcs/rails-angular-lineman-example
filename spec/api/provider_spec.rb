@@ -6,7 +6,7 @@ describe 'Provider', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        FactoryGirl.create_list(:provider, 20,{company_info: nil, rucom_id: FactoryGirl.create(:rucom).id})
+        FactoryGirl.create_list(:provider, 20,{company_info: nil, rucom_id: FactoryGirl.create(:rucom).id, population_center_id: FactoryGirl.create(:population_center).id})
            file_path = "#{Rails.root}/spec/support/test_images/image.png"
         @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
       end
@@ -35,6 +35,12 @@ describe 'Provider', :type => :request do
               mineral: provider.rucom.mineral
             }
 
+            expected_population_center = {
+              id: provider.population_center.id,
+              name: provider.population_center.name,
+              population_center_code: provider.population_center.population_center_code
+            }
+
             expected_response = {
               id: provider.id,
               document_number: provider.document_number,
@@ -44,7 +50,8 @@ describe 'Provider', :type => :request do
               address: provider.address,
               photo_file: {"url"=>provider.photo_file.url},
               email: provider.email,
-              rucom: expected_rucom.stringify_keys
+              rucom: expected_rucom.stringify_keys,
+              population_center: expected_population_center.stringify_keys
             }
 
             get "/api/v1/providers/#{provider.id}",{},{ "Authorization" => "Barer #{@token}" }
@@ -61,7 +68,8 @@ describe 'Provider', :type => :request do
             @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom = create(:rucom)
-            provider = build( :provider,rucom_id: rucom.id)
+            population_center = create(:population_center)
+            provider = build( :provider,rucom_id: rucom.id, population_center_id: population_center.id)
 
             new_values = {
               document_number: provider.document_number,
@@ -70,9 +78,10 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               rucom_id: rucom.id,
+              population_center_id: population_center.id,
               photo_file: @file,
-              email: provider.email,
-            }
+              email: provider.email
+            }           
             
             expected_rucom = {
               id: provider.rucom.id,
@@ -83,6 +92,12 @@ describe 'Provider', :type => :request do
               mineral: provider.rucom.mineral
             }
 
+            expected_population_center = {
+              id: provider.population_center.id,
+              name: provider.population_center.name,
+              population_center_code: provider.population_center.population_center_code
+            }
+
             expected_response = {
               document_number: provider.document_number,
               first_name: provider.first_name,
@@ -91,7 +106,8 @@ describe 'Provider', :type => :request do
               address: provider.address,
               photo_file: {"url"=>"#{Rails.root}/spec/uploads/provider/photo_file/21/image.png"},
               email: provider.email,
-              rucom: expected_rucom.stringify_keys
+              rucom: expected_rucom.stringify_keys,
+              population_center: expected_population_center.stringify_keys
             }
 
             post '/api/v1/providers', {provider: new_values}, { "Authorization" => "Barer #{@token}" }
@@ -107,8 +123,8 @@ describe 'Provider', :type => :request do
             @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom = create(:rucom)
-            provider = build( :provider,rucom_id: rucom.id)
-
+            population_center = create(:population_center)
+            provider = build( :provider,rucom_id: rucom.id, population_center_id: population_center.id)
 
             new_values = {
               document_number: provider.document_number,
@@ -118,7 +134,8 @@ describe 'Provider', :type => :request do
               address: provider.address,
               photo_file: @file,
               email: provider.email,
-              rucom_id: rucom.id
+              rucom_id: rucom.id,
+              population_center_id: population_center.id,
             }
 
             new_company_info_values = {
@@ -143,6 +160,12 @@ describe 'Provider', :type => :request do
               mineral: provider.rucom.mineral
             }
 
+            expected_population_center = {
+              id: provider.population_center.id,
+              name: provider.population_center.name,
+              population_center_code: provider.population_center.population_center_code              
+            }
+
             expected_company_info = {
               id: 123,
               nit_number: provider.company_info.nit_number,
@@ -158,7 +181,8 @@ describe 'Provider', :type => :request do
               photo_file: {"url"=>"#{Rails.root}/spec/uploads/provider/photo_file/22/image.png"},
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
-              company_info: expected_company_info.stringify_keys
+              company_info: expected_company_info.stringify_keys,
+              population_center: expected_population_center.stringify_keys
             }
 
             post '/api/v1/providers', {provider: new_values, company_info: new_company_info_values},
@@ -171,8 +195,9 @@ describe 'Provider', :type => :request do
       end
       context 'PUT' do
         it 'returns a representation of the updated provider and code 200' do
-          rucom = create(:rucom)
-          provider = create(:provider,rucom_id: rucom.id)
+          rucom = create(:rucom)         
+          population_center = create(:population_center)
+          provider = create( :provider,rucom_id: rucom.id, population_center_id: population_center.id)
 
 
           new_first_name = "A diferent first name"
@@ -204,6 +229,12 @@ describe 'Provider', :type => :request do
             name: provider.company_info.name,
           }
 
+          expected_population_center = {
+            id: provider.population_center.id,
+            name: provider.population_center.name,
+            population_center_code: provider.population_center.population_center_code
+          }
+
           expected_response = {
             document_number: new_document_number,
             first_name: new_first_name,
@@ -213,7 +244,8 @@ describe 'Provider', :type => :request do
             photo_file: {"url"=>provider.photo_file.url},
             email: provider.email,
             rucom: expected_rucom.stringify_keys,
-            company_info: expected_company_info.stringify_keys
+            company_info: expected_company_info.stringify_keys,
+            population_center: expected_population_center.stringify_keys
           }
 
           put '/api/v1/providers', {id: provider.id, provider: new_values, company_info: new_company_info_values}, { "Authorization" => "Barer #{@token}" }

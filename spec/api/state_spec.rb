@@ -36,6 +36,21 @@ describe 'State', :type => :request do
 
         end
 
+        context '/:id/cities' do
+
+          it 'gets all cities from a state' do 
+            state = create(:state)
+            cities = create_list(:city, 10, state_id: state.id, state_code: state.state_code)
+
+            expected_response = cities
+
+            get "/api/v1/states/#{state.id}/cities",{},{ "Authorization" => "Barer #{@token}" }
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body).count).to be 10
+          end
+
+        end
+
       end
 
     end

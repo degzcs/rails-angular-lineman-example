@@ -1,0 +1,17 @@
+.md-tile-left.cam {
+    margin:0px;
+}
+.md-button.cam{
+	display:block;
+	height:56px;
+	padding:16px;
+}
+img.face.cam{
+	width: 57px;
+	heigth:57px;
+	margin: 0px;
+	z-index:-5;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+} 

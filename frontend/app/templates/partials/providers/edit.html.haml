@@ -1,7 +1,4 @@
 %div{:layout => "column"}
-  %md-toolbar.md-primary
-    %h1.md-toolbar-tools
-      Provider edition form
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
       {{ formTabControl.firstLabel }}
@@ -13,7 +10,7 @@
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left{:flex => "10"}
-            %img.face{:alt => "", "ng-src" => "{{currentProvider.pic}}"}
+            %img.face{:alt => "", "ng-src" => "{{currentProvider.photo_file.url}}"}
           %md-input-container{:flex => "25"}
             %label First Name
             %input{:readonly => "true", "ng-model" => "currentProvider.first_name"}
@@ -36,7 +33,7 @@
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => "20"}
               %label Phone Number
-              %input{:required => "true", :name => "phone_number", "ng-model" => "currentProvider.phone_number", :placeholder => "(3XX) XXX XXXXX"}
+              %input{:required => "true", :name => "phone_number", "ng-model" => "currentProvider.phone_number", :placeholder => "(555) 555 5555"}
               %div{"ng-messages" => "providereditionForm.phone_number.$error"}
                 %div{"ng-message" => "required"} This is required
             %md-input-container{:flex => "30"}
@@ -47,25 +44,17 @@
                 %div{"ng-message" => "email"} Enter a valid email
             %md-input-container{:flex => "50"}
               %label Address
-              %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR X XX - XX"}
+              %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR 1 2 - 34"}
               %div{"ng-messages" => "providereditionForm.address.$error"}
                 %div{"ng-message" => "required"} This is required
-          %div{:layout => "", "layout-sm" => "column"}
-            %md-input-container{:flex => ""}
-              %label State
-              %input{:required => "true", :name => "state", "ng-model" => "currentProvider.state"}
-              %div{"ng-messages" => "providereditionForm.state.$error"}
-                %div{"ng-message" => "required"} This is required
-            %md-input-container{:flex => ""}
-              %label City
-              %input{:required => "true", :name => "city", "ng-model" => "currentProvider.city"}
-              %div{"ng-messages" => "providereditionForm.city.$error"}
-                %div{"ng-message" => "required"} This is required
-            %md-input-container{:flex => ""}
-              %label Population Center
-              %input{:required => "true", :name => "pop_center", "ng-model" => "currentProvider.pop_center"}
-              %div{"ng-messages" => "providereditionForm.pop_center.$error"}
-                %div{"ng-message" => "required"} This is required
+          %br          
+          %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
+              %span{"md-highlight-text" => "searchState"} {{state.name}}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
+              %span{"md-highlight-text" => "searchCity"} {{city.name}}
+            %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
+              %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
           %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{:flex => ""}
               (RUCOM válido:)

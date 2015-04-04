@@ -15,13 +15,20 @@ angular.module('app').factory('CameraService', function($window) {
 //mehtod to add scan files
     var addScanFile = function($datarUrl){
         files.push($datarUrl);
-        //  console.log(files);
+        console.log(files);
         //  return files;
     };
 //Method to get the scanned files
     var getScanFiles=function(){
-        console.log(files);
+        console.log("files"+files);
         return files;
+    };
+//Method to get the last scan file
+    var getLastScanFile=function(){
+      if(files.length>0){
+        return files[files.length-1];
+      }
+      return '';
     };
 //Method to get media sources
     var getMediaSources=function(){
@@ -83,6 +90,7 @@ angular.module('app').factory('CameraService', function($window) {
         getUserMedia: getUserMedia,
         getMediaSources: getMediaSources,
         playVideo: playVideo,
+        getLastScanFile: getLastScanFile,
         getScanFiles: getScanFiles
 
     };

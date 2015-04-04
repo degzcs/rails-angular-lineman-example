@@ -7,6 +7,7 @@ FactoryGirl.define do
     address { Faker::Address.street_address}
     email {Faker::Internet.email}
     company_info {FactoryGirl.build(:company_info)}
+    population_center_id {Random.rand(1...100)}
     rucom_id {Random.rand(1...100)}
     photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'image.png'),"image/jpeg") }
   end

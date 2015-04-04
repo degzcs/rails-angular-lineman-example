@@ -19,6 +19,11 @@ class Provider < ActiveRecord::Base
     Rucom.find(self.rucom_id)
   end
 
+  # @return the population_center of the provider 
+  def population_center
+    PopulationCenter.find(self.population_center_id)
+  end
+
   validates :document_number, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -26,5 +31,6 @@ class Provider < ActiveRecord::Base
   validates :address, presence: true
   validates :rucom_id , presence: true
   validates :email, presence: true
+  validates :population_center_id, presence: true
 
 end

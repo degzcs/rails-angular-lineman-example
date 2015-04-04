@@ -24,6 +24,8 @@ class API < Grape::API
   mount V1::Modules::Provider
   mount V1::Modules::Rucom
   mount V1::Modules::State
+  mount V1::Modules::City
+  mount V1::Modules::PopulationCenter
 
   # Adds the swagger documentation to your
   # api. You only need this once, not in

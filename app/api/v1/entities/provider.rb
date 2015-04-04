@@ -29,6 +29,17 @@ module V1
           provider.rucom.mineral
         end
       end
+      expose :population_center do 
+        expose :id, documentation: { type: "integer", desc: "Id of the population center", example: "4" } do |provider, options|
+          provider.population_center.id
+        end
+        expose :name, documentation: { type: "string", desc: "name of the population center", example: "Medellin" } do |provider, options|
+          provider.population_center.name
+        end
+        expose :population_center_code, documentation: { type: "text", desc: "Population center code", example: "05001000" } do |provider, options|
+          provider.population_center.population_center_code
+        end
+      end
       expose :company_info , :unless => Proc.new {|p| p.company_info.nil?} do
         expose :id, documentation: { type: "integer", desc: "Id of the Company info", example: "4" } do |provider, options|
           provider.company_info.id

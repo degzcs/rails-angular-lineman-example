@@ -37,6 +37,7 @@ module V1
         params :provider do
           requires :provider, type: Hash do
             optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
+            optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
             optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
             optional  :first_name, type: String, desc: 'first_name', documentation: { example: 'Rock' }
             optional  :last_name, type: String, desc: 'last_name', documentation: { example: 'Rock' }
@@ -63,6 +64,7 @@ module V1
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           providers = ::Provider.paginate(:page => page, :per_page => per_page)
+          header 'total_pages', providers.total_pages.to_s
           present providers, with: V1::Entities::Provider
         end
         desc 'returns one existent provider by :id', {

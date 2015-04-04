@@ -9,6 +9,7 @@ describe Provider do
     it {expect(provider.phone_number).not_to be_nil}
     it {expect(provider.address).not_to be_nil }
     it {expect(provider.company_info).not_to be_nil}
+    it {expect(provider.population_center_id).not_to be_nil}
     it {expect(provider.email).not_to be_nil}
   end
 
@@ -41,6 +42,10 @@ describe Provider do
     end
     it "should not allow to create a provider without address" do
       provider = build(:provider, address: nil)
+      expect(provider).not_to be_valid
+    end
+    it "should not allow to create a provider without population center" do
+      provider = build(:provider, population_center_id: nil)
       expect(provider).not_to be_valid
     end
     it "should not allow to create a provider without email" do
