@@ -1,6 +1,6 @@
 angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', 'RucomService', 'LocationService', function($scope, $stateParams, ProviderService, RucomService, LocationService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
-  $scope.currentProvider = {};
+  $scope.currentProvider = null;
   $scope.rucomIDField = {
     label: 'RUCOM Number',
     field: 'num_rucom'
@@ -24,6 +24,11 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
           provider_type: provider.rucom.provider_type,
           rucom_status: provider.rucom.status,
           mineral: provider.rucom.mineral
+        },
+        population_center: {
+          id: provider.population_center.id,
+          name: provider.population_center.name,
+          population_center_code: provider.population_center.name,
         }
       };
       $scope.currentProvider = prov;
@@ -36,6 +41,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         $scope.rucomIDField.field = 'rucom_record';
       }
       console.log('Current provider: ' + prov.id);
+      $scope.loadProviderLocation($scope.currentProvider);
     });
   }
 
@@ -56,6 +62,42 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.searchPopulationCenter = null;
   $scope.cityDisabled = true;
   $scope.populationCenterDisabled = true;
+
+  $scope.loadProviderLocation = function (provider) {
+    if(provider) {
+      LocationService.getPopulationCenterById.get({populationCenterId: provider.population_center.id}, function(populationCenter) {
+        $scope.selectedPopulationCenter = populationCenter;
+        $scope.searchPopulationCenter = populationCenter.name;
+        $scope.populationCenterDisabled = false;
+        console.log('Current Population Center: ' + JSON.stringify(populationCenter));
+        
+        currentCity = null;
+        LocationService.getCityById.get({cityId: populationCenter.city_id}, function(city) {
+          currentCity = city;
+          $scope.selectedCity = currentCity;
+          $scope.searchCity = currentCity.name;
+          $scope.cityDisabled = false;
+          console.log('currentCity: ' + JSON.stringify(city));
+          LocationService.getPopulationCentersFromCity.query({cityId: currentCity.id}, function(population_centers) {
+            $scope.population_centers = population_centers;
+            console.log('Population Centers from ' + currentCity.name + ': ' + JSON.stringify(population_centers));
+          });
+
+          currentState = null;
+          LocationService.getStateById.get({stateId: currentCity.state_id}, function(state) {
+            currentState = state;
+            $scope.selectedState = currentState;
+            $scope.searchState = currentState.name;
+            console.log('currentState: ' + JSON.stringify(state));
+            LocationService.getCitiesFromState.query({stateId: currentState.id}, function(cities) {
+              $scope.cities = cities;
+              console.log('Cities from ' + currentState.name + ': ' + JSON.stringify(cities));
+            });
+          });
+        });
+      });
+    }
+  };
 
   $scope.stateSearch = function(query) {
     var results = query ? $scope.states.filter( createFilterFor(query) ) : [];
@@ -161,8 +203,8 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.formTabControl = {
     selectedIndex : 0,
     secondUnlocked : true,
-    firstLabel : "Basic info",
-    secondLabel : "Complementary info"
+    firstLabel : "Basic Info",
+    secondLabel : "Company Info"
   };
 
   // $scope.matchingRucoms = [];
