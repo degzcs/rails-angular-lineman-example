@@ -106,8 +106,9 @@ module V1
           if provider.save
             present provider, with: V1::Entities::Provider
           else
-            error!(entry.errors, 400)
+            error!(provider.errors.inspect, 400)
           end
+          Rails.logger.info(provider.errors.inspect)
         end
         # PUT
         desc 'updates a provider', {

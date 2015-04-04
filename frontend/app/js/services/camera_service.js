@@ -1,5 +1,6 @@
 angular.module('app').factory('CameraService', function($window) {
 
+    var images= [];
     var files= [];
     var hasUserMedia = function() {
         return !!getUserMedia();
@@ -14,14 +15,21 @@ angular.module('app').factory('CameraService', function($window) {
     };
 //mehtod to add scan files
     var addScanFile = function($datarUrl){
-        files.push($datarUrl);
+        images.push($datarUrl);
+        files.push(dataURItoFile($datarUrl,'file'+files.length+'.png'));
         console.log(files);
-        //  return files;
     };
 //Method to get the scanned files
     var getScanFiles=function(){
         console.log("files"+files);
         return files;
+    };
+//Method to get the last scan image
+    var getLastScanImage=function(){
+      if(images.length>0){
+        return images[images.length-1];
+      }
+      return '';
     };
 //Method to get the last scan file
     var getLastScanFile=function(){
@@ -84,6 +92,31 @@ angular.module('app').factory('CameraService', function($window) {
     
     navigator.getUserMedia(constraints, onSuccess, onFailure);
 };
+// convert base64/URLEncoded data component to File
+var dataURItoFile=function dataURItoFile(dataURI,fileName) {
+    var byteString;
+    var myfile='';
+    if (dataURI.split(',')[0].indexOf('base64') >= 0){
+        byteString = atob(dataURI.split(',')[1]);
+    }
+    else{
+        byteString = unescape(dataURI.split(',')[1]);
+    }
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    myfile=new Blob([ia], {type:mimeString});
+    myfile.lastModifiedDate = new Date();
+    myfile.name = fileName;
+    return myfile;
+};
+
     return {
         hasUserMedia: hasUserMedia(),
         addScanFile:  addScanFile,
@@ -91,6 +124,7 @@ angular.module('app').factory('CameraService', function($window) {
         getMediaSources: getMediaSources,
         playVideo: playVideo,
         getLastScanFile: getLastScanFile,
+        getLastScanImage: getLastScanImage,
         getScanFiles: getScanFiles
 
     };
