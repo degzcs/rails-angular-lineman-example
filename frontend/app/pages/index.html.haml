@@ -5,22 +5,30 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
-    %div{:layout => "row","ng-controller"=>"SidebarCtrl"}
-      %md-sidenav.md-sidenav-left.md-whiteframe-z2.sidebar{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')", "ng-if"=> "allowSidebar()"}
-        %md-toolbar.md-theme-indigo
-          %h1.md-toolbar-tools Trazoro
-        %md-content.sidebar-options{:layout => "column"}
-          %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
-      /--------------------------------------- Content -------------------------------/
       %div.content{:flex => ""}
-        %md-toolbar
-          %span.md-toolbar-tools{layout: "row"}
-            .sidebar-options{"ng-controller"=>"SidebarCtrl"}
-              %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
-                %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
-            %div{"ncy-breadcrumb"=>"",flex:80}
-            %div{flex:"10","layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
-              %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
-              %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
-        %md-content.md-padding.grey-background{"ui-view" => "content"}
+      //---------------------------------------Header -  Navigation Bar ---------------------------------////
+        .nav-bar
+          %md-toolbar
+            %md-toolbar-tools{"layout" => "row"}
+              .white-space{"flex" => 25}
+              .logo{"flex" => 50}
+                %h1.md-toolbar-tools
+                  Trazoro
+              .sidebar-options{"ng-controller"=>"SidebarCtrl"}
+                %md-button{"hide-gt-md" => "", "ng-click" => "toggleLeft()"}
+                  %md-icon{"md-svg-icon"=>"action:reorder" ,"style"=>"color: #FFF;"  }
+              /.breadcrumb{"ncy-breadcrumb"=>"","flex" => 50}
+              .session-buttons{"flex" =>50,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
+                %md-button.md-toolbar-tools{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
+                %md-button.md-toolbar-tools{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
+              .white-space{"flex" => 25}
+      //------------------------------------------------ Content  ------------------------------------------------////
+        .container{:layout => "row"}
+          // NOTE: I think this sidebar is not necessary and can be removed eventually
+          .sidebar{"flex" =>10, "ng-controller"=>"SidebarCtrl"}
+            %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left", "md-is-locked-open" => "$mdMedia('gt-md')", "ng-if"=> "allowSidebar()"}
+              %md-content.sidebar-options{:layout => "column"}
+                %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
+          .content{"flex" =>90}
+            %md-content.md-padding.trazoro-card.md-whiteframe-z2{"ui-view" => "content"}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}
