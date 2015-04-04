@@ -89,7 +89,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: {"url"=>"/Users/latharstudios/code/trazoro/spec/uploads/provider/photo_file/21/image.png"},
+              photo_file: {"url"=>"#{Rails.root}/spec/uploads/provider/photo_file/21/image.png"},
               email: provider.email,
               rucom: expected_rucom.stringify_keys
             }
@@ -155,7 +155,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: {"url"=>"/Users/latharstudios/code/trazoro/spec/uploads/provider/photo_file/22/image.png"},
+              photo_file: {"url"=>"#{Rails.root}/spec/uploads/provider/photo_file/22/image.png"},
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               company_info: expected_company_info.stringify_keys
