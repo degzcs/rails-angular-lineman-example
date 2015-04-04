@@ -40,7 +40,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
     }
   ];
   
-  ProviderService.retrieveProviders.query((function(providers) {
+  ProviderService.retrieveProviders.query((function(providers, getResponseHeaders) {
     var content = [];
     for (var i=0; i<providers.length; i++) {
       var prov = {
@@ -60,6 +60,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       };
       content.push(prov);
     }
+    console.log(getResponseHeaders());
     return $scope.content = content;
   }), function(error) {});
   

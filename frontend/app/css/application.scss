@@ -1,0 +1,30 @@
+h1,h2,h3,h4,h5 {
+  text-align: center;
+}
+
+.md-card-login .login-button{
+  width: 100%;
+}
+
+.padding{
+  padding: 10px;
+}
+
+.main-container{
+  background-color: #E7E7E7;
+}
+
+.main-content{
+  margin: 20px 0 40px 0;
+}
+
+@media only screen and (min-width : 960px) {
+  .container {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+
+.margined{
+  margin: 5px;
+}

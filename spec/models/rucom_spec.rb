@@ -2,7 +2,8 @@
 #
 # Table name: rucoms
 #
-#  id                 :string          not null, primary key
+#  id                 :integer          not null, primary key
+#  idrucom            :string(90)       not null
 #  rucom_record       :text
 #  name               :text
 #  status             :text
@@ -10,7 +11,7 @@
 #  location           :text
 #  subcontract_number :text
 #  mining_permit      :text
-#  updated_at         :datetime         default(2015-03-31 06:22:05 UTC)
+#  updated_at         :datetime         default(2015-04-04 15:57:55 UTC)
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
 #

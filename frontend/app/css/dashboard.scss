@@ -1,0 +1,42 @@
+//----- Dashboard Styles-----//
+
+.md-button.login-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.credit-card .md-subheader{
+  text-align: center;
+  font-size: 16px;
+}
+
+.credit-card md-item{
+  font-size: 15px;
+}
+
+.credit-card .credit-value{
+  text-align: center;
+}
+
+.user-card .md-subheader{
+  text-align: left;
+  font-size: 16px;
+}
+
+.user-card md-item{
+  font-size: 15px!important;
+}
+
+.bt-buy-credits{
+  width: 100%;
+  margin-top: 15px;
+  text-transform: none;
+}
+
+.dashboard-buttons{
+  .md-button{
+    width: 200px;
+    margin: 20px;
+    padding: 20px;
+  }
+}

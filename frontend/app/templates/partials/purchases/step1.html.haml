@@ -1,20 +1,36 @@
 %md-content
-  %md-card.seller
-    %md-content.md-default-theme
+  .seller.md-padding
+    %md-content
       %section.seller
-        %h2.md-primary.md-subheader.md-default-theme{"sticky-prev-state" => "active", "sticky-state" => "next"}
-          %span.md-subheader-content
-            %span.ng-scope Info Vendedor
-        %div{layout: "column", "layout-align"=>"center center"}
-          %div{"layout" => "row"}
-            %div.seller-photo
-            %md-button.md-raised Tomar Foto
-
+        %h2{'sticky-prev-state' => 'active', 'sticky-state' => 'next'}
+          Informacion de Proveedor
+        .purchase-form
+          .row{'layout' => 'row', 'layout-align'=>'center center'}
+            .select-provider{'flex' => 50}
+              %md-select{'placeholder' => 'Seleccione un porveedor', 'ng-model' => 'provider_id'}
+                %md-option{'value'=> 'provider_id'}
+                  Proveedor numero 1
+            .take-photo{'flex' => 50}
+              .row{'layout' => 'row'}
+                .photo{'flex' => 60}
+                  ////// photo
+                .button-action{'flex' => 30}
+                  %md-button.md-raised.margined
+                    Tomar Foto
+                  %md-button.md-raised.margined
+                    Borrar
       %section.origin-certificate
-        %md-content.md-padding.md-docs-dark-theme{"layout-align"=>"center",:layout => "row", "layout-sm" => "column", "md-theme" => "docs-dark", :style => "font-size:1.2em"}
-          %md-input-container.md-docs-dark-theme.md-input-has-value
-            %label{:for => "input_01U"} Certificado de origen
-            %input#input_01U.ng-pristine.ng-untouched.ng-valid.md-input{"aria-invalid" => "false", "ng-model" => "user.title", :tabindex => "0"}
-            .buttons
-              %md-button.md-raised{"ng-file-select" => "", "ng-model" => "purchaseData.origin_certificate_file"} Upload file
-              %label {{origin_certificate_file}}
+        .row{'layout' => 'row', 'layout-align'=>'center center'}
+          .oc-number{'flex' => 50}
+            %md-input-container.md-input-has-value
+              %label{'for' => 'input_01U'} Numero de Certificado de origen
+              %input#input_01U.ng-pristine.ng-untouched.ng-valid.md-input{'aria-invalid' => 'false', 'ng-model' => 'user.title', 'tabindex' => '0'}
+          .upload-oc{'flex' => 50}
+            .row{'layout' => 'row'}
+              .name{'flex' => 60}
+                uploaded file name
+              .button-action{'flex' => 30}
+                %md-button.md-raised.margined{'ng-file-select' => '', 'ng-model' => 'purchaseData.origin_certificate_file'} Upload file
+                %label {{origin_certificate_file}}
+                %md-button.md-raised.margined
+                  Borrar

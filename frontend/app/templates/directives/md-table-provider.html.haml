@@ -1,4 +1,4 @@
-%table.md-table-provider
+%table.md-table
   %thead
     %tr.md-table-headers-row
       %th.md-table-header{"ng-repeat" => "h in headers"}
@@ -9,11 +9,11 @@
         %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
       %th.md-table-header
   %tbody
-    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"}
+    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count", "ng-click" => "setCurrentProv(c)"}
       %td
         .md-table-thumbs{"ng-repeat" => "h in headers", "ng-if" => "h.field == thumbs"}
           %div{:style => "background-image:url({{c.photo_file}})"}
-      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs"} 
+      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs"}         
         %pre {{h.field.indexOf('date') > 0 ? (c[h.field] | date) : (c[h.field] !== '' ? c[h.field] : c[h.alternateField])}}
       %td.md-table-td-more
         %a{"ng-click" => "setCurrentProv(c)"}
