@@ -1,0 +1,33 @@
+h1,h2,h3,h4,h5 {
+  text-align: center;
+}
+
+.md-card-login .login-button{
+  width: 100%;
+}
+
+.sidebar-options{
+  margin-top: 5px;
+}
+
+tr-nav-button .md-button{
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  text-align: left;
+  text-transform: capitalize;
+  font-weight: 350;
+  border-radius: 0px!important;
+}
+
+tr-nav-button .md-button.active{
+  color: #03a9f4;
+}
+.padding{
+  padding: 10px;
+}
+
+md-content.md-default-theme.grey-background{
+  background-color: #E7E7E7;
+}

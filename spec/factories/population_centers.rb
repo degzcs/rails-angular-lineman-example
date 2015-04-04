@@ -6,7 +6,7 @@
 #  name                   :string(255)
 #  longitude              :decimal(, )
 #  latitude               :decimal(, )
-#  type                   :string(255)
+#  population_center_type :string(255)
 #  city_id                :integer
 #  created_at             :datetime
 #  updated_at             :datetime

@@ -19,7 +19,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService) ->
   #
 
   # It sends the information when the file is selected
-  # TO DO: call PurchaseService create function when is clicked the create purchase button
+  # TO DO: call PurchaseService's create function when is clicked the create purchase button
   $scope.$watch 'purchaseData.origin_certificate_file', ->
     PurchaseService.create $scope.purchaseData
 

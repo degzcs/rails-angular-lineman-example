@@ -13,6 +13,7 @@
 #  updated_at                  :datetime
 #
 
+#TODO: change column name from amount to price
 class Purchase < ActiveRecord::Base
   #
   # Associations

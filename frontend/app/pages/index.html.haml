@@ -22,5 +22,5 @@
             %div{flex:"10","layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
               %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
               %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
-        %md-content.md-padding{"ui-view" => "content"}
+        %md-content.md-padding.grey-background{"ui-view" => "content"}
     %script{"src" => "/js/app.js", "type" => "text/javascript"}
