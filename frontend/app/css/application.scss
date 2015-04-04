@@ -10,7 +10,18 @@ h1,h2,h3,h4,h5 {
   padding: 10px;
 }
 
-md-content.md-default-theme.trazoro-card{
-  //background-color: #E7E7E7;
-  z-index: 50;
+.main-container{
+  background-color: #E7E7E7;
+}
+
+.main-content{
+  margin: 20px 0 40px 0;
+}
+
+@media only screen and (min-width : 960px) {
+  .container {
+    // width: 70%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
 }

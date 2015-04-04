@@ -10,13 +10,13 @@
       .nav-bar
         %md-toolbar
           %md-toolbar-tools{"layout" => "row"}
-            .sidebar-options{"flex" => 10, "ng-controller"=>"SidebarCtrl"}
+            .sidebar-options{"flex" => 5, "ng-controller"=>"SidebarCtrl"}
               %md-toolbar-tools
                 %md-button{"ng-click" => "toggleLeft()"}
                   %md-icon{"md-svg-icon"=>"action:reorder"}
-            .breadcrumb{"flex" => 75, "hide-sm" => ""}
+            .breadcrumb{"flex" => 80, "hide-sm" => ""}
               .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
-            .session-buttons{"flex" =>15,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
+            .session-buttons{"flex" =>10,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
               %md-toolbar-tools
                 %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
                 %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
@@ -29,6 +29,6 @@
                 Trazoro
             %md-content.sidebar-options{"layout" => "column"}
               %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
-        .content{"flex" =>100}
-          %md-content.md-padding.trazoro-card.md-whiteframe-z2{"ui-view" => "content"}
+        .main-content{"flex" =>100}
+          %md-content.md-padding.trazoro-card.md-whiteframe-z4{"ui-view" => "content"}
   %script{"src" => "/js/app.js", "type" => "text/javascript"}
