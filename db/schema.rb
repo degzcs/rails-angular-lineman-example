@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403145536) do
+ActiveRecord::Schema.define(version: 20150403221901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,7 +103,10 @@ ActiveRecord::Schema.define(version: 20150403145536) do
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
+    t.integer  "population_center_id"
   end
+
+  add_index "providers", ["population_center_id"], name: "index_providers_on_population_center_id", using: :btree
 
   create_table "purchases", force: true do |t|
     t.integer  "user_id"
