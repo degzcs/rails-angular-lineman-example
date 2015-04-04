@@ -51,7 +51,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
         address: providers[i].address,
         email: providers[i].email,
         phone_number: providers[i].phone_number,
-        photo_file: providers[i].photo_file.url || ('http://robohash.org/' + providers[i].id),
+        photo_file: providers[i].photo_file || ('http://robohash.org/' + providers[i].id),
         num_rucom: providers[i].rucom.num_rucom,
         rucom_record: providers[i].rucom.rucom_record,
         provider_type: providers[i].rucom.provider_type,
