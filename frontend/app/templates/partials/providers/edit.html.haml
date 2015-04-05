@@ -6,7 +6,7 @@
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providereditionForm"}
+    %form{:name => "providerEditionForm", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left{:flex => "10"}
@@ -37,18 +37,18 @@
             %md-input-container{:flex => "20"}
               %label Phone Number
               %input{:required => "true", :name => "phone_number", "ng-model" => "currentProvider.phone_number", :placeholder => "(555) 555 5555"}
-              %div{"ng-messages" => "providereditionForm.phone_number.$error"}
+              %div{"ng-messages" => "providerEditionForm.phone_number.$error"}
                 %div{"ng-message" => "required"} This is required
             %md-input-container{:flex => "30"}
               %label E-mail
               %input{:required => "true", :type => "email", :name => "email", "ng-model" => "currentProvider.email", :placeholder => "mail@example.com"}
-              %div{"ng-messages" => "providereditionForm.email.$error"}
+              %div{"ng-messages" => "providerEditionForm.email.$error"}
                 %div{"ng-message" => "required"} This is required
                 %div{"ng-message" => "email"} Enter a valid email
             %md-input-container{:flex => "50"}
               %label Address
               %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR 1 2 - 34"}
-              %div{"ng-messages" => "providereditionForm.address.$error"}
+              %div{"ng-messages" => "providerEditionForm.address.$error"}
                 %div{"ng-message" => "required"} This is required
           %br          
           %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
@@ -59,8 +59,11 @@
             %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
               %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
           %br
-          %div{:layout => "", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
-            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
+          %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
+            %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
+              %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
+              %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
+              %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
       #tab2-content{"ng-if" => "currentProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           %md-input-container{:flex => ""}
@@ -84,13 +87,18 @@
             %md-input-container{:flex => ""}
               %label Phone Number
               %input{:required => "true", :name => "company_phone_number", "ng-model" => "currentProvider.company_info.phone_number", :placeholder => "(555) 555 5555"}
-              %div{"ng-messages" => "providereditionForm.company_phone_number.$error"}
+              %div{"ng-messages" => "providerEditionForm.company_phone_number.$error"}
                 %div{"ng-message" => "required"} This is required
             %md-input-container{:flex => ""}
               %label E-mail
               %input{:required => "true", :type => "email", :name => "company_email", "ng-model" => "currentProvider.company_info.email", :placeholder => "mail@example.com"}
-              %div{"ng-messages" => "providereditionForm.company_email.$error"}
+              %div{"ng-messages" => "providerEditionForm.company_email.$error"}
                 %div{"ng-message" => "required"} This is required
                 %div{"ng-message" => "email"} Enter a valid email
-          %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
+          %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+            %div{:layout => "row", :flex => "", "layout-align" => "start center"}
+              %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
+            %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+              %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
+              %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
+              
