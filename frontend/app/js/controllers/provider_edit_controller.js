@@ -15,9 +15,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         address: provider.address,
         email: provider.email,
         phone_number: provider.phone_number,
-        photo_file: {
-          url: provider.photo_file.url || ('http://robohash.org/' + provider.id)
-        },
+        photo_file: provider.photo_file || ('http://robohash.org/' + provider.id),
         rucom: {
           num_rucom: provider.rucom.num_rucom,
           rucom_record: provider.rucom.rucom_record,

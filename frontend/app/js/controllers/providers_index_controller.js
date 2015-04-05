@@ -63,7 +63,6 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       content.push(prov);
     }
     $scope.pages = parseInt(headers().total_pages);
-    console.log($scope.pages);
     return $scope.content = content;
   }), function(error) {});
   
