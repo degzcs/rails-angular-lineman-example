@@ -1,5 +1,5 @@
 angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderService' ,function($scope, ProviderService){
-  $scope.toggleSearch = false;   
+  $scope.toggleSearch = false; 
   $scope.headers = [
     {
       name:'',
@@ -39,8 +39,10 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       alternateField: 'last_transaction_date'
     }
   ];
-  
-  ProviderService.retrieveProviders.query((function(providers, getResponseHeaders) {
+
+  $scope.count = 4;
+  $scope.pages = 0;
+  ProviderService.retrieveProviders.query({per_page: $scope.count, page: 1}, (function(providers, headers) {
     var content = [];
     for (var i=0; i<providers.length; i++) {
       var prov = {
@@ -60,22 +62,21 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       };
       content.push(prov);
     }
-    console.log(getResponseHeaders());
+    $scope.pages = parseInt(headers().total_pages);
     return $scope.content = content;
   }), function(error) {});
   
   $scope.custom = {first_name: 'bold', last_name: 'bold', document_number:'grey', mineral: 'grey', num_rucom: 'grey', rucom_status:'grey', provider_type: 'grey', last_transaction_date: 'grey'};
   $scope.sortable = ['first_name', 'last_name', 'document_number', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
   $scope.thumbs = 'photo_file';
-  $scope.count = 4;
   $scope.currentProvider = ProviderService.getCurrentProv();
   
 }]);
 
-angular.module('app').filter('startFrom',function (){
-  return function(input, start) {
-    if (!input || !input.length) { return; }
-      start = +start; //parse to int
-      return input.slice(start);
-  };
-});
+// angular.module('app').filter('startFrom',function (){
+//   return function(input, start) {
+//     if (!input || !input.length) { return; }
+//       start = +start; //parse to int
+//       return input.slice(start);
+//   };
+// });
