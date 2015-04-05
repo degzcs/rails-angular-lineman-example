@@ -7,17 +7,17 @@
       {{ formCreateTabCtrl.firstLabel }}
     %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "!formCreateTabCtrl.secondUnlocked"}
       {{ formCreateTabCtrl.secondLabel }}
-      
+
   %ng-switch.tabpanel-container{:on => "formCreateTabCtrl.selectedIndex"}
     %form{:name => "providerForm"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
             %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} +
-              %img.face.cam{:ng-src => "{{photo}}"}  
+              %img.face.cam{:ng-src => "{{photo}}"}
               %md-tooltip{"md-visible" => "demo.showTooltip"}
                 Photo
-                %span.ion-android-checkmark-circle 
+                %span.ion-android-checkmark-circle
           %md-input-container{:flex => "25"}
             %label First name
             %input{"ng-model" => "newProvider.firstName"}
@@ -27,12 +27,12 @@
           %md-input-container{"ng-if" => "newProvider.num_rucom !== ''", :flex => "25"}
             %label RUCOM Number
             %input{"ng-model" => "newProvider.num_rucom"}
-            %md-tooltip{"ng-if" => "newProvider.num_rucom !== ''", "md-direction" => "right", "md-visible" => "formCreateTabCtrl.secondUnlocked"} 
+            %md-tooltip{"ng-if" => "newProvider.num_rucom !== ''", "md-direction" => "right", "md-visible" => "formCreateTabCtrl.secondUnlocked"}
               %span.ion-android-checkmark-circle &nbsp;Verificado
           %md-input-container{"ng-if" => "newProvider.rucom_record !== ''", :flex => "25"}
             %label RUCOM Record
             %input{"ng-model" => "newProvider.rucom_record"}
-            %md-tooltip{"ng-if" => "newProvider.rucom_record !== ''", "md-direction" => "right", "md-visible" => "formCreateTabCtrl.secondUnlocked"} 
+            %md-tooltip{"ng-if" => "newProvider.rucom_record !== ''", "md-direction" => "right", "md-visible" => "formCreateTabCtrl.secondUnlocked"}
               %span.ion-android-checkmark-circle &nbsp;Verificado
         %md-content.md-padding
           %div{:layout => "", "layout-sm" => "column"}
@@ -41,7 +41,7 @@
               %md-option{:value => "2"} Persona Jurídica
             %md-input-container{:flex => ""}
               %label ID
-              %input{"ng-model" => "newProvider.id"}            
+              %input{"ng-model" => "newProvider.id"}
             %md-select{:flex => "", "ng-model" => "newProvider.prov_type", :placeholder => "Provider type"}
               %md-option{:value => "1"} Comercializador
               %md-option{:value => "2"} Titular
@@ -72,11 +72,11 @@
               %label Postal Code
               %input{"ng-model" => "newProvider.postalCode"}
           %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{:flex => ""}              
+            %div{:flex => ""}
               %md-checkbox{"aria-label" => "Disabled", "ng-model" => "formCreateTabCtrl.secondUnlocked", "placeholder" => "hola"} Do you belong to a company?
             %md-button{"ng-disabled" => "!formCreateTabCtrl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
       #tab2-content{"aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
-        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}          
+        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
         %md-content.md-padding
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => "30"}
@@ -88,14 +88,14 @@
             %md-input-container{"ng-if" => "newCompany.num_rucom !== ''", :flex => "25"}
               %label RUCOM Number
               %input{"ng-model" => "newCompany.num_rucom"}
-              %md-tooltip{"ng-if" => "newCompany.num_rucom !== ''", "md-direction" => "right"} 
+              %md-tooltip{"ng-if" => "newCompany.num_rucom !== ''", "md-direction" => "right"}
                 %span.ion-android-checkmark-circle &nbsp;Verificado
             %md-input-container{"ng-if" => "newCompany.rucom_record !== ''", :flex => "25"}
               %label RUCOM Record
               %input{"ng-model" => "newCompany.rucom_record"}
-              %md-tooltip{"ng-if" => "newCompany.rucom_record !== ''", "md-direction" => "right"} 
+              %md-tooltip{"ng-if" => "newCompany.rucom_record !== ''", "md-direction" => "right"}
                 %span.ion-android-checkmark-circle &nbsp;Verificado
-        
+
           %div{:layout => "", "layout-sm" => "column"}
             %md-input-container{:flex => "40"}
               %label Legal representative
@@ -105,7 +105,7 @@
               %md-option{:value => "2"} Persona Jurídica
             %md-input-container{:flex => "20"}
               %label ID
-              %input{"ng-model" => "newCompany.id"}            
+              %input{"ng-model" => "newCompany.id"}
             %md-select{:flex => "20", "ng-model" => "newCompany.prov_type", :placeholder => "Provider type"}
               %md-option{:value => "1"} Comercializador
               %md-option{:value => "2"} Titular

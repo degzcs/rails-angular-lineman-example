@@ -1,7 +1,10 @@
 .container
-  %h1 Compra
+%div{:layout => "column"}
+  %md-toolbar.md-primary
+    %h1.md-toolbar-tools
+      Compra
   %div{"ui-view"=>"content"}
 
   .wizard-buttons{layout: "row"}
-    %md-button{flex: "50", "ui-sref"=>"new_purchase.step1"} Anterior
-    %md-button{flex: "50", "ui-sref"=>"new_purchase.step2"} Siguiente
+    %md-button{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => "saveState()"} Anterior
+    %md-button{flex: "50", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Siguiente

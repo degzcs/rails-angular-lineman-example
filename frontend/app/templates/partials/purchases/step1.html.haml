@@ -1,41 +1,45 @@
-%md-content
-  .seller.md-padding
-    %md-content
-      .purchase-form
-      %section
-        .seller
-          %h3{'sticky-prev-state' => 'active', 'sticky-state' => 'next'}
-            Informacion de Proveedor
-          .row{'layout' => 'row'}
-            .select-provider{'flex' => ''}
-              %md-select{'placeholder' => 'Seleccione un porveedor', 'ng-model' => 'provider_id'}
-                %md-option{'value'=> 'provider_id'}
-                  Proveedor numero 1
-            .taked-photo{'layout' => 'row', 'layout-align'=>'end center'}
-              .photo
-                ////// photo
-          .row{'layout' => 'row'}
-            .create-provider{'flex' => ''}
-              %md-button.md-raised.md-primary.margined
-                Crear proveedor
-            .take-photo{'layout' => 'row', 'layout-align'=>'end center'}
-              %md-button.md-raised.md-primary.margined
-                Tomar Foto
-              / %md-button.md-raised.margined
-              /   Borrar
-      %section
-        .origin-certificate
-          %h3{'sticky-prev-state' => 'active', 'sticky-state' => 'next'}
-            Certificado de Origen
-          .row{'layout' => 'row'}
-            .oc-number{'flex' => 50}
-              %md-input-container.md-input-has-value
-                %label{'for' => 'input_01U'} Numero de Certificado de origen
-                %input#input_01U.ng-pristine.ng-untouched.ng-valid.md-input{'aria-invalid' => 'false', 'ng-model' => 'user.title', 'tabindex' => '0'}
-            .oc-name{'layout' => 'row', 'layout-align'=>'end center'}
-              %span {{origin_certificate_file}}
-          .row{'layout' => 'row', 'layout-align'=>'end center'}
-            .upload-oc
-              .button-action.md-padding
-                %md-button.md-raised.md-primary.margined{'ng-file-select' => '', 'ng-model' => 'purchaseData.origin_certificate_file'}
-                  Upload file
+//---------------------- Provider and Origin Certificate TAB ---------------------------------------
+%form{:name => "purchase-form"}
+  %section
+    .seller
+      %md-subheader
+        %span Datos del Provider
+      .row{'layout' => 'row'}
+        %md-item-content
+        .main-fab
+          %a{"ui-sref" => "create_provider"}
+            %md-button.md-fab.md-accent{"aria-label" => "New", 'md-ripple-size' => "partial"} +
+      .row{'layout' => 'row'}
+        .select-provider{'flex' => ''}
+          // TODO: query to the endpoint for all provider ids and names (maybe use Graper Transformer)
+          %md-select{'placeholder' => 'Seleccione un proveedor', 'ng-model' => 'purchase.model.provider_id'}
+            %md-option{'value'=> '0'} Proveedor numero 0
+            %md-option{'value'=> '1'} Proveedor numero 1
+            %md-option{'value'=> '3'} Proveedor numero 2
+
+        .photo{'flex' => ''}
+          %a{'ng-href' => "#scanner"}
+            %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
+              %img.face1.cam{'ng-src' => "{{purchase.model.provider_photo_file}}"}
+              %md-tooltip{"md-visible" => "demo.showTooltip"}
+                Agregar Foto
+                %span.ion-android-checkmark-circle
+  %md-divider.margined
+  %section
+    .origin-certificate
+      %h3{'sticky-prev-state' => 'active', 'sticky-state' => 'next'}
+        Certificado de Origen
+      .row{'layout' => 'row'}
+        .oc-number{'flex' => 50}
+          %md-input-container.md-input-has-value
+            %label Numero Certificado de Origen
+            %input{"ng-model" => "purchase.model.origin_certificate_sequence"}
+        .oc-name{'layout' => 'row', 'layout-align'=>'end center'}
+          %span
+            {{purchase.model.origin_certificate_file[0].name}}
+      .row{'layout' => 'row', 'layout-align'=>'end center'}
+        .upload-oc
+          .button-action.md-padding
+            %md-button.md-raised.md-primary.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
+              Upload file
+
