@@ -16,7 +16,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
     };
 
     var create = function(provider) {
-      var file, i, _results;
+      var file,  _results;
       if (provider.photo_file) {
         _results = [];
           file = provider.photo_file;
@@ -37,11 +37,66 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
             fileFormDataName: 'provider[photo_file]'
           })
           .progress(progress).success(success);
-
-          _results.push(i++);
+        }else{
+         return $resource('/api/v1/providers/',
+          {},{
+              save: {
+                  method: 'POST',
+                  params:{
+                  "provider[first_name]":provider.first_Name,
+                  "provider[document_number]":provider.document_number,
+                  "provider[last_name]":provider.last_Name,
+                  "provider[phone_number]":provider.phone_number,
+                  "provider[address]":provider.address,
+                  "provider[rucom_id]":provider.rucom_id,
+                  "provider[email]":provider.email,
+                  "provider[population_center_id]":provider.population_center_id
+                  }
+              }
+            });
         }
-        return _results;
-      
+  };
+  //Can call edit like so:
+  //$resource = ProviderService.edit($scope.currentProvider);
+  //  if($resource){
+   //   $resource .update({ id:$scope.currentProvider.id }, $scope.currentProvider);
+   // }
+      var edit = function(provider) {
+      var file, i, _results;
+      if(provider.files && provider.files.length){
+        i = 0;
+        while(i < provider.files.length){
+          file = provider.files[i];
+          $upload.upload({
+            url: '/api/v1/providers/',
+            method: 'PUT',
+            fields: {
+                  "provider[phone_number]":provider.phone_number,
+                  "provider[address]":provider.address,
+                  "provider[email]":provider.email,
+                  "provider[population_center_id]":provider.population_center.id
+            },
+            file: file,
+            fileFormDataName: 'provider[files]'
+          })
+          .progress(progress).success(success);
+          i++;
+        }
+      }else{
+
+        return $resource('/api/v1/providers/:id',
+        {id:'@id'},{
+            'update': {
+                method: 'PUT',
+                params:{
+                  "provider[phone_number]":provider.phone_number,
+                  "provider[address]":provider.address,
+                  "provider[email]":provider.email,
+                  "provider[population_center_id]":provider.population_center.id
+                }
+              }
+          });
+      }
     };
     var progress= function(evt) {
             var progressPercentage;
@@ -58,6 +113,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         setCurrentProv: setCurrentProv,
         retrieveProviders: retrieveProviders,
         create : create,
+        edit : edit,
         retrieveProviderById: retrieveProviderById
     };
 });

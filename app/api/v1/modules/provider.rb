@@ -123,7 +123,7 @@ module V1
           use :provider
           use :company_info
         end
-        put '/', http_codes: [
+        put '/:id', http_codes: [
           [200, "Successful"],
           [400, "Invalid parameter in entry"],
           [401, "Unauthorized"],
@@ -138,7 +138,7 @@ module V1
           if provider.save
             present provider, with: V1::Entities::Provider
           else
-            error!(entry.errors, 400)
+            error!(provider.errors, 400)
           end
         end
       end

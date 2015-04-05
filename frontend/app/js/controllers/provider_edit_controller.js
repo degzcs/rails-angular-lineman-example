@@ -227,6 +227,11 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
 
   $scope.next = function() {
     $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
+    //PUT Request:
+    $resource = ProviderService.edit($scope.currentProvider);
+    if($resource){
+      $resource .update({ id:$scope.currentProvider.id }, $scope.currentProvider);
+    }
   };
 
   $scope.previous = function() {
