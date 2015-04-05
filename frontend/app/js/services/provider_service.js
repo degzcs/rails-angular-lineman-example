@@ -7,7 +7,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         currentProvider = provider;
     };
 
-    var retrieveProviders = $resource('/api/v1/providers.json', {});
+    var retrieveProviders = $resource('/api/v1/providers.json', {per_page: '@per_page', page: '@page'});
 
     var retrieveProviderById = $resource('/api/v1/providers/:providerId.json', {providerId:'@providerId'});
 

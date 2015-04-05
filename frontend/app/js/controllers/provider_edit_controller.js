@@ -138,6 +138,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       $scope.populationCenterDisabled = false;
     } else {
       console.log('City changed to none');
+      flushFields('city');
     }
   };
 
