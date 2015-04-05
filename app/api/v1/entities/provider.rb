@@ -46,11 +46,23 @@ module V1
         expose :id, documentation: { type: "integer", desc: "Id of the Company info", example: "4" } do |provider, options|
           provider.company_info.id
         end
-        expose :nit_number, documentation: { type: "integer", desc: "nit number of the company ", example: "44356634634-2" } do |provider, options|
+        expose :nit_number, documentation: { type: "string", desc: "nit number of the company", example: "44356634634-2" } do |provider, options|
           provider.company_info.nit_number
         end
-        expose :name, documentation: { type: "integer", desc: "name of the company ", example: "Texaco" } do |provider, options|
+        expose :name, documentation: { type: "string", desc: "name of the company", example: "Texaco" } do |provider, options|
           provider.company_info.name
+        end
+        expose :legal_representative, documentation: { type: "string", desc: "company's legal representative name", example: "Michael Porter" } do |provider, options|
+          provider.company_info.legal_representative
+        end
+        expose :id_type_legal_rep, documentation: { type: "string", desc: "type of id documentation: CC, CE, NIT, RUT", example: "44356634634-2" } do |provider, options|
+          provider.company_info.id_type_legal_rep
+        end
+        expose :email, documentation: { type: "string", desc: "company's email", example: "mail@example.org" } do |provider, options|
+          provider.company_info.email
+        end
+        expose :phone_number, documentation: { type: "string", desc: "company's phone number", example: "555 555 5555" } do |provider, options|
+          provider.company_info.phone_number
         end
       end
     end
