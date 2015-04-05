@@ -53,7 +53,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
       if(sessionStorage.purchaseService)
         service.model = angular.fromJson(sessionStorage.purchaseService)
       else
-      sessionStorage.restorestate = 'false'
+        sessionStorage.restorestate = 'false'
 
   #
   # Listeners

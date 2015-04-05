@@ -1,12 +1,25 @@
 //----- Purchase Styles-----//
 
-// md-card.seller{
-//   .md-subheader{
-//     margin-bottom: 10px;
-//   }
-// }
+md-card.seller{
+  .md-subheader{
+    margin-bottom: 10px;
+  }
+}
 .seller{
   .photo{
+      position: relative;
+      z-index: 20;
+      font-size: 30px;
+    .md-fab{
+      position: absolute;
+      left: 0;
+      transform: scale(.88,.88);
+    }
+    .face.cam{
+      position: relative;
+      height: 140px;
+      width: 140px;
+    }
   }
 
   .origin-certificate{
@@ -19,4 +32,11 @@
 }
 .wizard-buttons{
   margin-top: 50px;
+}
+.purchase-container{
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1040px;
+  position: relative;
+  width: 100%;
 }

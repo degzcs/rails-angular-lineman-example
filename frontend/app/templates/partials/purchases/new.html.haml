@@ -1,9 +1,9 @@
-.container
 %div{:layout => "column"}
   %md-toolbar.md-primary
     %h1.md-toolbar-tools
       Compra
-  %div{"ui-view"=>"content"}
+  .purchase-container
+    %div{"ui-view"=>"content"}
 
   .wizard-buttons{layout: "row"}
     %md-button{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => "saveState()"} Anterior
