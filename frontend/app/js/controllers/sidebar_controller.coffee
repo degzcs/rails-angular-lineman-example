@@ -9,7 +9,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     {name: "Compras", state: "new_purchase.step1"}
   ]
 
-  
+
   $scope.allowSidebar= ->
       unless $state.current.name == "home" || $state.current.name == "new_session"
         return true
@@ -18,13 +18,13 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
 
   $scope.close = ->
     $mdSidenav('left').close().then ->
-      $log.debug 'close LEFT is done'
+      # $log.debug 'close LEFT is done'
       return
     return
 
   $scope.toggleLeft = ->
     $mdSidenav('left').toggle().then ->
-      $log.debug 'toggle LEFT is done'
+      # $log.debug 'toggle LEFT is done'
       return
     return
 

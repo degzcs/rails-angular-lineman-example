@@ -1,1 +1,64 @@
-%h1 step 2
+//---------------------- Purchase TAB ---------------------------------------
+%form{:name => "purchase-form"}
+  %section
+    .seller
+      %md-subheader
+        %span Pesos
+      .row{'layout' => 'row'}
+        .select-measure-type{'flex' => 50}
+          // TODO: query for gold measure types to some X service
+          %md-select{'placeholder' => 'Seleccione un tipo de medida', 'ng-model' => 'purchase.golg.measure_type'}
+            %md-option{'value'=> '0'} Castellanos
+            %md-option{'value'=> '1'} Gramos
+            %md-option{'value'=> '3'} Othos
+        .gold-amount{'flex' => 50}
+          %md-input-container
+            %label Cantidad de Oro (segun el tipo de medida seleccionado)
+            %input{"ng-model" => "purchase.gold.amount"}
+      .row{'layout' => 'row'}
+        .convertion-section{'flex' => '100'}
+          %table
+            %thead
+              %tr.md-table-headers-row
+                %th.md-table-header
+                  Medida
+                %th.md-table-header
+                  Cantidad
+                %th.md-table-header
+                  Precion por Unidad
+            %tbody
+              %tr
+                %td
+                  %span Gramos
+                %td
+                  %span {{purchase.gold.amount}}
+                %td
+                  %span {{purchase.gold.amount}}
+              %tr
+                %td
+                  %span Castellanos
+                %td
+                  %span {{purchase.gold.amount}}
+                %td
+                  %span {{purchase.gold.amount}}
+              %tr
+                %td
+                  %span Otho
+                %td
+                  %span {{purchase.gold.amount}}
+                %td
+                  %span {{purchase.gold.amount}}
+      .row{'layout' => 'row'}
+        .select-law{'flex' => 50}
+          // TODO: query for laws to some X service
+          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.golg.law'}
+            %md-option{'value'=> '0'} Law 1
+            %md-option{'value'=> '1'} Law 2
+            %md-option{'value'=> '3'} Law 3
+      .row{'layout' => 'row'}
+        .price{'flex' => '80'}
+          ${{purchase.gold.calculated_price}}
+      .button-actions{'flex' => '20'}
+        %md-button{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previzualizar
+
+

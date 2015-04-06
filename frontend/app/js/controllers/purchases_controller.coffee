@@ -1,25 +1,28 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, CameraService) ->
   #
   # Instances
   #
-  $scope.purchaseData = {}
-
-  #
-  # Model
-  #
-  $scope.purchaseData.amount = '1000'
-  $scope.purchaseData.gold_batch_id = '1'
-  $scope.purchaseData.provider_id = '1'
-  $scope.purchaseData.origin_certificate_sequence = '123456789'
-  $scope.purchaseData.origin_certificate_file = ''
-
+  $scope.purchase = PurchaseService
+  # $scope.purchase.model = PurchaseService.restoreState
 
   #
   # Fuctions
   #
+  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+
+  $scope.saveState= ->
+    console.log('saving purchase state on sessionStore ... ')
+    $scope.purchase.saveState()
+    $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+
+  # $scope.formCreateTabCtrl = {
+  #   selectedIndex : 0,
+  #   secondUnlocked : true,
+  #   firstLabel : "Provedor y Certificado de Origen",
+  #   secondLabel : "Pesaje y Compra"
+  # };
 
   # It sends the information when the file is selected
-  # TO DO: call PurchaseService's create function when is clicked the create purchase button
-  $scope.$watch 'purchaseData.origin_certificate_file', ->
-    PurchaseService.create $scope.purchaseData
+  $scope.create = (data) ->
+    PurchaseService.create $scope.purchase
 

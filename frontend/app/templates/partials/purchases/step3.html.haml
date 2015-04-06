@@ -1,1 +1,84 @@
-%h1 step 3
+%section
+  .provider-nfo
+    %md-subheader
+      %p Datos del Proveedor
+    .row{'layout' => 'row'}
+      %md-item-content
+      / .main-fab
+      /   %a{"ui-sref" => "create_provider"}
+      /     %md-button.md-fab.md-accent{"aria-label" => "New", 'md-ripple-size' => "partial"} +
+    .row{'layout' => 'row'}
+      .photo
+        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
+        %a{'ng-href' => "#scanner"}
+      .rucom{'flex' => ''}
+        %p Numero Rucom
+        %p {{purchase.providerInfo.rucom_number}}
+      .document-number{'flex' => ''}
+        %p Numero de Cedula
+        %p {{purchase.providerInfo.document_number}}
+      .phone-number{'flex' => ''}
+        %p Numero de Celular
+        %p {{purchase.providerInfo.phone_number}}
+      .address{'flex' => ''}
+        %p Direccion
+        %p {{purchase.providerInfo.address}}
+      .email{'flex' => ''}
+        %p Correo Electronico
+        %p {{purchase.providerInfo.email}}
+
+%section
+  %md-subheader
+    %p Datos de la Compra
+  .purchase-info
+    .row{'layout' => 'row'}
+      .oc-number{'flex' => ''}
+        %p
+          Numero de Certificado de Origen
+        %p
+          {{purchase.model.origin_certificate_sequence}}
+  .gold-info
+    .row{'layout' => 'row'}
+      .convertion-section{'flex' => '100'}
+        %table
+          %thead
+            %tr.md-table-headers-row
+              %th.md-table-header
+                Medida
+              %th.md-table-header
+                Cantidad
+              %th.md-table-header
+                Precion por Unidad
+          %tbody
+            %tr
+              %td
+                %p Gramos
+              %td
+                %p {{purchase.gold.amount}}
+              %td
+                %p {{purchase.gold.amount}}
+            %tr
+              %td
+                %p Castellanos
+              %td
+                %p {{purchase.gold.amount}}
+              %td
+                %p {{purchase.gold.amount}}
+            %tr
+              %td
+                %p Otho
+              %td
+                %p {{purchase.gold.amount}}
+              %td
+                %p {{purchase.gold.amount}}
+    .row{'layout' => 'row'}
+      .select-law{'flex' => ''}
+        {{purchase.gold.law}}
+    .row{'layout' => 'row'}
+      .price{'flex' => ''}
+        ${{purchase.gold.calculated_price}}
+
+
+
+
+

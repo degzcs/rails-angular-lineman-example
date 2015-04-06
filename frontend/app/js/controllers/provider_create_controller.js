@@ -1,8 +1,8 @@
 angular.module('app').controller('ProvidersCreateCtrl', ['$scope','CameraService', 'ProviderService', function($scope,CameraService, ProviderService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
-  $scope.newProvider = {        
+  $scope.newProvider = {
     firstName: 'Javier',
-    lastName: 'Suarez' ,  
+    lastName: 'Suarez' ,
     num_rucom: '',
     rucom_record: '1234',
     type: '1',
@@ -14,7 +14,7 @@ angular.module('app').controller('ProvidersCreateCtrl', ['$scope','CameraService
     postalCode : '94043',
     photo_file: ''
   };
-   $scope.provider = {        
+   $scope.provider = {
     first_Name : 'Kmilo',
     document_number : '2163636556',
     last_Name : 'Kmjj',
@@ -24,10 +24,10 @@ angular.module('app').controller('ProvidersCreateCtrl', ['$scope','CameraService
     email : 'corine@breitenberg.name',
     population_center_id : '1', //Must Exist
     photo_file: ''
-  };  
+  };
   $scope.photo=CameraService.getLastScanImage();
   if($scope.photo){
-    $scope.provider.photo_file=CameraService.getLastScanFile();  
+    $scope.provider.photo_file=CameraService.getLastScanFile();
   }
   /*
   if($scope.photo){
@@ -61,13 +61,13 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
 
   $scope.next = function() {
     $scope.formCreateTabCtrl.selectedIndex = Math.min($scope.formCreateTabCtrl.selectedIndex + 1, 1);
-    ProviderService.create($scope.provider); 
+    ProviderService.create($scope.provider);
   };
   $scope.previous = function() {
     $scope.formCreateTabCtrl.selectedIndex = Math.max($scope.formCreateTabCtrl.selectedIndex - 1, 0);
   };
   $scope.create = function(){
-    ProviderService.create($scope.provider); 
+    ProviderService.create($scope.provider);
   };
 
 }]);

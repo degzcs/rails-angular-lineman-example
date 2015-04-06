@@ -44,7 +44,10 @@ module V1
             [404, "Entry not found"],
           ] do
               purchase = ::Purchase.new(params[:purchase].merge( user_id: current_user.id))
-              purchase.save
+              # purchase.save
+              puts '===================='
+              puts params
+              puts '===================='
               present purchase, with: V1::Entities::Purchase
         end
       end
