@@ -28,6 +28,7 @@ describe  User do
     it { expect(user.document_number).not_to be_nil }
     it { expect(user.document_expedition_date).not_to be_nil }
     it { expect(user.phone_number).not_to be_nil }
+    it { expect(user.available_credits).not_to be_nil }
   end
 
   context 'create user' do
@@ -41,6 +42,11 @@ describe  User do
       user = build(:user, password: 'nomatch', password_confirmation: 'paila')
       expect(user.save).to be false
     end 
+
+    it "should create a user with 0 available credits by default" do
+      user = create(:user)
+      expect(user.available_credits).to eq(0.0)
+    end
   end
 
   context '#instance methods' do 

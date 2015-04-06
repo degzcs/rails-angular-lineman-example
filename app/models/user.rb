@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 
 	has_many :purchases
 	has_secure_password
+	after_initialize :init
 
 	#
 	# Instance Methods
@@ -50,4 +51,11 @@ class User < ActiveRecord::Base
 		false
 		end
 	end
+
+	protected
+
+		def init
+	    self.available_credits  ||= 0.0           #will set the default value only if it's nil
+	  end
+
 end
