@@ -3,7 +3,7 @@
   %section
     .seller
       %md-subheader
-        %span Datos del Provider
+        %span Datos del Proveedor
       .row{'layout' => 'row'}
         %md-item-content
         / .main-fab
@@ -27,14 +27,14 @@
   %md-divider.margined
   %section
     .origin-certificate
-      %h3{'sticky-prev-state' => 'active', 'sticky-state' => 'next'}
-        Certificado de Origen
+      %md-subheader
+        %span Certificado de Origen
       .row{'layout' => 'row'}
         .oc-number{'flex' => 50}
           %md-input-container.md-input-has-value
             %label Numero Certificado de Origen
             %input{"ng-model" => "purchase.model.origin_certificate_sequence"}
-        .oc-name{'layout' => 'row', 'layout-align'=>'end center'}
+        .oc-number{'layout' => 'row', 'layout-align'=>'end center'}
           %span
             {{purchase.model.origin_certificate_file[0].name}}
       .row{'layout' => 'row', 'layout-align'=>'end center'}

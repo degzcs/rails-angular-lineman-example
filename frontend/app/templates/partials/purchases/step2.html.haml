@@ -56,7 +56,9 @@
             %md-option{'value'=> '1'} Law 2
             %md-option{'value'=> '3'} Law 3
       .row{'layout' => 'row'}
-        .price
+        .price{'flex' => '80'}
           ${{purchase.gold.calculated_price}}
+      .button-actions{'flex' => '20'}
+        %md-button{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previzualizar
 
 
