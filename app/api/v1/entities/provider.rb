@@ -55,8 +55,11 @@ module V1
         expose :legal_representative, documentation: { type: "string", desc: "company's legal representative name", example: "Michael Porter" } do |provider, options|
           provider.company_info.legal_representative
         end
-        expose :id_type_legal_rep, documentation: { type: "string", desc: "type of id documentation: CC, CE, NIT, RUT", example: "44356634634-2" } do |provider, options|
+        expose :id_type_legal_rep, documentation: { type: "string", desc: "type of id documentation: CC, CE, NIT, RUT", example: "CC" } do |provider, options|
           provider.company_info.id_type_legal_rep
+        end
+        expose :id_number_legal_rep, documentation: { type: "string", desc: "id number of the legal representative", example: "44356634634-2" } do |provider, options|
+          provider.company_info.id_number_legal_rep
         end
         expose :email, documentation: { type: "string", desc: "company's email", example: "mail@example.org" } do |provider, options|
           provider.company_info.email

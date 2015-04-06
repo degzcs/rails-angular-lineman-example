@@ -15,6 +15,7 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  provider_id          :integer
+#  id_number_legal_rep  :string(255)
 #
 
 require 'spec_helper'
@@ -29,6 +30,7 @@ describe CompanyInfo  do
     it {expect(company_info.country).not_to be_nil}
     it {expect(company_info.legal_representative).not_to be_nil}
     it {expect(company_info.id_type_legal_rep).not_to be_nil}
+    it {expect(company_info.id_number_legal_rep).not_to be_nil}
     it {expect(company_info.email).not_to be_nil }
     it {expect(company_info.phone_number).not_to be_nil}
   end
@@ -67,6 +69,10 @@ describe CompanyInfo  do
     end
     it "should not allow to create a company_info without id_type_legal_rep" do
      company_info = build(:company_info, provider_id: provider.id, id_type_legal_rep: nil)
+      expect(company_info).not_to be_valid
+    end
+    it "should not allow to create a company_info without id_number_legal_rep" do
+     company_info = build(:company_info, provider_id: provider.id, id_number_legal_rep: nil)
       expect(company_info).not_to be_valid
     end
     it "should not allow to create a company_info without email" do

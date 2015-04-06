@@ -15,6 +15,7 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  provider_id          :integer
+#  id_number_legal_rep  :string(255)
 #
 
 FactoryGirl.define do
@@ -26,6 +27,7 @@ FactoryGirl.define do
     country {Faker::Address.country}
     legal_representative {Faker::Name.name}
     id_type_legal_rep { Faker::Hacker.abbreviation }
+    id_number_legal_rep { Faker::Number.number(10) }
     email {Faker::Internet.email}
     phone_number {Faker::PhoneNumber.phone_number}
   end

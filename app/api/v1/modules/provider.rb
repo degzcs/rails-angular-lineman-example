@@ -29,6 +29,7 @@ module V1
             optional  :country , type: String, desc: 'country', documentation: { example: 'Rock' }
             optional  :legal_representative, type: String, desc: 'legal_representative', documentation: { example: 'Rock' }
             optional  :id_type_legal_rep, type: String, desc: 'id_type_legal_rep', documentation: { example: 'Rock' }
+            optional  :id_number_legal_rep, type: String, desc: 'id_number_legal_rep', documentation: { example: 'Rock' }
             optional  :email, type: String, desc: 'email', documentation: { example: 'Rock' }
             optional  :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
           end

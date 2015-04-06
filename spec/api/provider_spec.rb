@@ -147,6 +147,7 @@ describe 'Provider', :type => :request do
               country: provider.company_info.country,
               legal_representative: provider.company_info.legal_representative,
               id_type_legal_rep: provider.company_info.id_type_legal_rep,
+              id_number_legal_rep: provider.company_info.id_number_legal_rep,
               email: provider.company_info.email,
               phone_number: provider.company_info.phone_number
             }
@@ -172,6 +173,7 @@ describe 'Provider', :type => :request do
               name: provider.company_info.name,
               legal_representative: provider.company_info.legal_representative,
               id_type_legal_rep: provider.company_info.id_type_legal_rep,
+              id_number_legal_rep: provider.company_info.id_number_legal_rep,
               email: provider.company_info.email,
               phone_number: provider.company_info.phone_number
             }
@@ -233,6 +235,7 @@ describe 'Provider', :type => :request do
             name: provider.company_info.name,
             legal_representative: provider.company_info.legal_representative,
             id_type_legal_rep: provider.company_info.id_type_legal_rep,
+            id_number_legal_rep: provider.company_info.id_number_legal_rep,
             email: provider.company_info.email,
             phone_number: provider.company_info.phone_number
           }

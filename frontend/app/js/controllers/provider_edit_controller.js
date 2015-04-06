@@ -64,7 +64,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       if (oldVal && newVal !== oldVal) {
         $scope.saveBtnEnabled = true;
       }
-  }, true);
+  }, true); // objectEquality = true
   // $scope.$watch(function(scope) {
   //     return scope.currentProvider.address;
   //   }, 
