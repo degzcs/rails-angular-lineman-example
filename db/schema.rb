@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406205854) do
+ActiveRecord::Schema.define(version: 20150406220122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,22 @@ ActiveRecord::Schema.define(version: 20150406205854) do
     t.integer  "provider_id"
     t.string   "id_number_legal_rep"
   end
+
+  create_table "credit_billings", force: true do |t|
+    t.integer  "user_id"
+    t.string   "unit"
+    t.float    "per_unit_value"
+    t.float    "iva_value"
+    t.float    "discount"
+    t.float    "total_amount"
+    t.boolean  "payment_flag"
+    t.datetime "payment_date"
+    t.float    "discount_percentage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
 
   create_table "population_centers", force: true do |t|
     t.string   "name"
