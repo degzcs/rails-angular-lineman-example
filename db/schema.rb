@@ -99,11 +99,11 @@ ActiveRecord::Schema.define(version: 20150406005756) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
-    t.string   "email"
     t.string   "identification_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
+    t.string   "email"
     t.integer  "population_center_id"
   end
 
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20150406005756) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                   null: false
+    t.string   "idrucom",            limit: 90,                                 null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 20150406005756) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: "now()"
+    t.datetime "updated_at",                    default: '2015-04-04 15:57:55'
     t.string   "provider_type"
     t.string   "num_rucom"
   end

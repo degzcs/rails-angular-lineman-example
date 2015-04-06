@@ -9,13 +9,17 @@ md-card.seller{
   .photo{
       position: relative;
       z-index: 20;
-      font-size: 30px;
     .md-fab{
       position: absolute;
       left: 0;
       transform: scale(.88,.88);
     }
-    .face.cam{
+    img.face.cam{
+      line-height: 130px; /* Equals height of image */
+      vertical-align: middle; /* Aligning vertically */
+      color: white; /* Better contrast than blue on black */
+      background: #ccc;
+      text-align: center;
       position: relative;
       height: 140px;
       width: 140px;
