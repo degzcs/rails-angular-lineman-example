@@ -70,11 +70,20 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
           $upload.upload({
             url: '/api/v1/providers/',
             method: 'PUT',
-            fields: {
-                  "provider[phone_number]":provider.phone_number,
-                  "provider[address]":provider.address,
-                  "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center.id
+            fields: provider.company_info ? {
+              "provider[phone_number]":provider.phone_number,
+              "provider[address]":provider.address,
+              "provider[email]":provider.email,
+              "provider[population_center_id]":provider.population_center.id
+            }  
+            :
+            {
+              "provider[phone_number]":provider.phone_number,
+              "provider[address]":provider.address,
+              "provider[email]":provider.email,
+              "provider[population_center_id]":provider.population_center.id,
+              "company_info[email]":provider.company_info.email,
+              "company_info[phone_number]":provider.company_info.phone_number
             },
             file: file,
             fileFormDataName: 'provider[files]'
@@ -88,11 +97,20 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         {id:'@id'},{
             'update': {
                 method: 'PUT',
-                params:{
+                params: provider.company_info ? {
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
                   "provider[email]":provider.email,
                   "provider[population_center_id]":provider.population_center.id
+                }  
+                :
+                {
+                  "provider[phone_number]":provider.phone_number,
+                  "provider[address]":provider.address,
+                  "provider[email]":provider.email,
+                  "provider[population_center_id]":provider.population_center.id,
+                  "company_info[email]":provider.company_info.email,
+                  "company_info[phone_number]":provider.company_info.phone_number
                 }
               }
           });
