@@ -256,7 +256,7 @@ describe 'Provider', :type => :request do
             population_center: expected_population_center.stringify_keys
           }
 
-          put '/api/v1/providers', {id: provider.id, provider: new_values, company_info: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
+          put "/api/v1/providers/#{provider.id}", {id: provider.id, provider: new_values, company_info: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
 
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
