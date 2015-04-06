@@ -31,7 +31,7 @@ module.exports = (lineman) ->
     server:
       pushState: false
       apiProxy:
-        enabled: true
+        enabled: false
         host: 'localhost'
         port: 3000
     # Sass config

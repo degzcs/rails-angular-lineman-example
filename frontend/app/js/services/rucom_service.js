@@ -1,9 +1,19 @@
 angular.module('app').factory('RucomService', function($resource) {
 
-    var getRucom = $resource('/api/v1/rucoms/:id', {}, {
+    var currentRucom = {};        
+
+    var setCurrentRucom = function(rucom) {
+        currentRucom = rucom;
+    };
+
+    var getCurrentRucom = function() {
+        return currentRucom;
+    };
+
+    var getRucom = $resource('/api/v1/rucom/:rucomId', {}, {
       query: {
         method: 'GET',
-        params:{id:''},
+        params:{rucomId:''},
         isArray: false
       }
     });
@@ -16,6 +26,8 @@ angular.module('app').factory('RucomService', function($resource) {
     });    
 
     return {
+        getCurrentRucom: getCurrentRucom,        
+        setCurrentRucom: setCurrentRucom,
         getRucom: getRucom,
         retrieveRucoms: retrieveRucoms
     };

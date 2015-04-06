@@ -1,0 +1,15 @@
+%md-content
+  %form{:name => "rucomForm"}
+  %div{:layout => "column"}
+    %md-toolbar{:layout => "column"}      
+      .md-toolbar-tools
+        .fill-height{:layout => "row", :flex => "flex"}          
+          %md-input-container{:flex => "flex", :style => "padding-left:48px;"}
+            %input#search-prov-name{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Rucom"}
+          %md-input-container{:flex => "flex", :style => "padding-left:48px;"}
+            %input#search-prov-id{"ng-model" => "search.name", :type => "text", :placeholder => "Name"}
+          .md-toolbar-item.md-tools{:layout => "row"}
+            %a.md-button.md-default-theme{"ng-click" => "search_rucom(searchRucom.rucom_record)"}
+              %i.ion-android-search
+    %md-content{:flex => "flex", :layout => "column", "ng-click" => ""}
+      %md-table-rucom{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :count => "count"}

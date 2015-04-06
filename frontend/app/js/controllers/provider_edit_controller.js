@@ -1,4 +1,4 @@
-angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', 'RucomService', function($scope, $stateParams, ProviderService, RucomService){
+angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', function($scope, $stateParams, ProviderService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
   $scope.currentProvider = {};
   if ($stateParams.providerId) {
@@ -8,12 +8,6 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       console.log('Current provider: ' + data.provider.id);
     });
   }
-
-  $scope.matchingRucoms = [];
-  RucomService.retrieveRucoms.get({rucom_attr: 'ARE_PLU-08141'}, function(data) {
-    $scope.matchingRucoms = data.result;
-    console.log('Matching rucom registries: ' + JSON.stringify(data.result));
-  });
 
   $scope.formTabControl = {
     selectedIndex : 0,

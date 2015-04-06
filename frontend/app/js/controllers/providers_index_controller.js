@@ -35,8 +35,8 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       alternateField: 'last_transaction_date'
     }
   ];
-  
-  ProviderService.retrieveProviders.query((function(res) {
+  //Cambiar get por query antes de subir...
+  ProviderService.retrieveProviders.get((function(res) {
     return $scope.content = res.list;
   }), function(error) {});
   

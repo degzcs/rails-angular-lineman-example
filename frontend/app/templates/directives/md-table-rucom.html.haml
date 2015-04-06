@@ -1,0 +1,39 @@
+%table.md-table-rucom
+  %thead
+    %tr.md-table-headers-row
+      %th.md-table-header{"ng-repeat" => "h in headers"}
+        %a{"ng-href" => "#/{{currentPath}}", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
+          {{h.name}}
+          %i.ion-android-arrow-dropup{"ng-show" => "reverse && h.field == predicate"}
+          %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
+        %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
+      %th.md-table-header
+  %tbody
+    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"} 
+      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]"} {{h.field.indexOf('date') > 0 ? (c[h.field] | date) : (c[h.field] !== '' ? c[h.field] : c[h.alternateField])}}
+      %td.md-table-td-more
+        %a{"ng-click" => "setCurrentRucom(c)"}
+          %md-button{"aria-label" => "Edit"}
+            %i.ion-android-add-circle
+.md-table-footer{:layout => "row"}
+  %span.md-table-count-info
+    Rows per page :
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=5"} 5
+      ,
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=10"} 10
+      ,
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=25"} 25
+      ,
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=50"} 50
+      ,
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=100"} 100
+      (current is {{count}})
+  %span{:flex => "flex"}
+  %span{"ng-show" => "nbOfPages() > 1"}
+    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "tablePage=tablePage-1", "aria-label" => "Previous Page"}
+      %i.ion-chevron-left{:style => "font-size:12px;"}
+    %a{"ng-href" => "#/{{currentPath}}", "ng-repeat" => "i in getNumber(nbOfPages()) track by $index"}
+      %md-button.md-primary.md-hue-2.md-table-footer-item{"ng-click" => "goToPage($index)"}
+        %span{"ng-class" => "{ 'md-table-active-page': tablePage==$index}"} {{$index+1}}
+    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==nbOfPages()-1", "ng-click" => "tablePage=tablePage+1", "aria-label" => "Next Page"}
+      %i.ion-chevron-right{:style => "font-size:12px;"}

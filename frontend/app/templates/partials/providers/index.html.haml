@@ -1,14 +1,14 @@
 %md-content
   %div{:layout => "column"}
     .main-fab
-      %a{"ui-sref" => "create_provider"}
+      %a{"ui-sref" => "search_rucom"}
         %md-button.md-fab.md-accent{"aria-label" => "New", :md-ripple-size => "partial"} +
     %md-toolbar.md-tall{:layout => "column"}
       %span{:flex => "flex"}
       .md-toolbar-tools
         .fill-height{:layout => "row", :flex => "flex"}
           .md-toolbar-item.md-breadcrumb{"ng-hide" => "toggleSearch"}
-            %span Providers
+            %span Providers!!
           %span{:flex => "flex", "ng-hide" => "toggleSearch"}
           %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
             %input#search-prov-name{"ng-model" => "search.name", :type => "text", :placeholder => "Name"}

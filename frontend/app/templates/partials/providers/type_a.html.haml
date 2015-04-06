@@ -6,7 +6,7 @@
       {{ formCreateTabCtrl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formCreateTabCtrl.selectedIndex"}
-    %form{:name => "providerForm"}
+    %form{:name => "providerForm", "novalidate" => "true"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding        
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
@@ -17,40 +17,56 @@
                 %span.ion-android-checkmark-circle 
           %md-input-container{:flex => "25"}
             %label First name
-            %input{"ng-model" => "newProvider.firstName"}
+            %input{"ng-model" => "currentRucom.name"}
           %md-input-container{:flex => ""}
             %label Last name
-            %input{"ng-model" => "newProvider.lastName"}                            
+            %input{"ng-model" => "currentRucom.lastName"}                            
           %md-input-container{:flex => ""}          
             %label ID
-            %input{:name => "id", "ng-model" => "newProvider.id", :required => ""}
+            %input{:name => "id", "ng-model" => "currentRucom.id", :required => ""}
               %div{"ng-messages" => "providerForm.id.$error"}
-                %div{"ng-message" => "required"} This is required.          
+                %div{"ng-message" => "required"} This is required.                    
         %div{:layout => "", "layout-sm" => "column"}
-          %md-input-container{:flex => ""}
-            %label RUCOM Number
-            %input{"ng-model" => "newProvider.num_rucom", :required => ""}
-              %div{"ng-messages" => "providerForm.id.$error"}
-                %div{"ng-message" => "required"} This is required.
-            %md-tooltip{"ng-if" => "validateRucom(newProvider.num_rucom)", "md-direction" => "right", "md-visible" => "formCreateTabCtrl.secondUnlocked"} 
+          %md-input-container{"ng-if" => "currentRucom.num_rucom !== ''", :flex => "15"}
+            %label RUCOM number            
+            %input{"ng-model" => "currentRucom.num_rucom", "ng-readonly" => "true"}
+            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "left", "md-visible" => "formCreateTabCtrl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado   
+          %md-input-container{"ng-if" => "currentRucom.rucom_record !== ''", :flex => "15"}
+            %label RUCOM record
+            %input{"ng-model" => "currentRucom.rucom_record", "ng-readonly" => "true"}
+            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "left", "md-visible" => "formCreateTabCtrl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado   
+          %md-input-container{"ng-if" => "currentRucom.subcontract_number !== ''", :flex => "15"}
+            %label Subcontract number
+            %input{"ng-model" => "currentRucom.subcontract_number", "ng-readonly" => "true"}
+            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "left", "md-visible" => "formCreateTabCtrl.secondUnlocked"} 
               %span.ion-android-checkmark-circle &nbsp;Verificado                                     
           %md-input-container{:flex => ""}
-            %label Phone Number
-            %input{"ng-model" => "newProvider.phone_nb", :placeholder => "(3XX) XXX XXXXX"}
+            %label Provider type
+            %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
           %md-input-container{:flex => ""}
-            %label Email
-            %input{"ng-model" => "newProvider.email", :type => "email"}          
+            %label Status
+            %input{:name => "status", "ng-model" => "currentRucom.status", "ng-readonly" => "true",  :required => ""}
+              %div{"ng-messages" => "providerForm.status.$error"}
+                %div{"ng-message" => "required"} This is required. 
+          %md-input-container{:flex => "17"}
+            %label Phone Number
+            %input{"ng-model" => "currentRucom.phone_nb", :placeholder => "(3XX) XXX XXXXX"}          
         %md-content.md-padding            
         %div{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
+            %label Email
+            %input{"ng-model" => "currentRucom.email", :type => "email"}          
+          %md-input-container{:flex => ""}
             %label Address
-            %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR X XX - XX"}
+            %input{"ng-model" => "currentRucom.address", :placeholder => "CLL/CR X XX - XX"}
           %md-input-container{:flex => ""}
             %label City
-            %input{"ng-model" => "newProvider.city"}
+            %input{"ng-model" => "currentRucom.city"}
           %md-input-container{:flex => ""}
             %label State
-            %input{"ng-model" => "newProvider.state"}
+            %input{"ng-model" => "currentRucom.state"}
         %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{:flex => ""}              
           %md-button{:class => "md-raised md-primary", "ng-click" => ""} Cancel

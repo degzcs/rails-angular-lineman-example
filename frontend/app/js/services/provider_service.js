@@ -7,7 +7,7 @@ angular.module('app').factory('ProviderService', function($resource) {
         currentProvider = provider;
     };
 
-    var retrieveProviders = $resource('/api/v1/providers/:providerId', {}, {
+    var retrieveProviders = $resource('/api/v1/provider/:providerId', {}, {
       query: {
         method: 'GET',
         params:{providerId:''},

@@ -1,2 +1,11 @@
-%h1.md-toolbar-tools
-      TIPO C
+/Grupo de lista de selección de tipo de proveedor
+%md-select{:flex => "40", "ng-model" => "newProvider.providerTypes", :placeholder => "Provider type", "ng-change" => "selection(newProvider.providerTypes)", :style => "padding-left:88px;"}
+  %md-optgroup{:label => "Tipo A"}
+    %md-option{"ng-repeat" => "type in providerTypes | filter: {type: '1' }", "ng-value" => "type.name", "ui-sref" => "create_provider.type_{{ type.type }}"} {{ type.name }} 
+  %md-optgroup{:label => "Tipo B"}
+    %md-option{"ng-repeat" => "type in providerTypes | filter: {type: '2' }", "ng-value" => "type.name", "ui-sref" => "create_provider.type_{{ type.type }}"} {{ type.name }}     
+  %md-optgroup{:label => "Tipo C"}
+    %md-option{"ng-repeat" => "type in providerTypes | filter: {type: '3' }", "ng-value" => "type.name", "ui-sref" => "create_provider.type_{{ type.type }}"} {{ type.name }} 
+//%p.md-caption {{ newProvider.providerTypes }}                
+%md-content.md-padding            
+%ui-viewC
