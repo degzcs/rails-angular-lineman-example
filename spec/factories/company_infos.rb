@@ -25,7 +25,7 @@ FactoryGirl.define do
     state {Faker::Address.state}
     country {Faker::Address.country}
     legal_representative {Faker::Name.name}
-    id_type_legal_rep { Faker::Number.number(10)}
+    id_type_legal_rep { Faker::Hacker.abbreviation }
     email {Faker::Internet.email}
     phone_number {Faker::PhoneNumber.phone_number}
   end

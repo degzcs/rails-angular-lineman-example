@@ -170,6 +170,10 @@ describe 'Provider', :type => :request do
               id: 123,
               nit_number: provider.company_info.nit_number,
               name: provider.company_info.name,
+              legal_representative: provider.company_info.legal_representative,
+              id_type_legal_rep: provider.company_info.id_type_legal_rep,
+              email: provider.company_info.email,
+              phone_number: provider.company_info.phone_number
             }
 
             expected_response = {
@@ -227,6 +231,10 @@ describe 'Provider', :type => :request do
             id: provider.company_info.id,
             nit_number: new_nit_number,
             name: provider.company_info.name,
+            legal_representative: provider.company_info.legal_representative,
+            id_type_legal_rep: provider.company_info.id_type_legal_rep,
+            email: provider.company_info.email,
+            phone_number: provider.company_info.phone_number
           }
 
           expected_population_center = {

@@ -1,6 +1,8 @@
-angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', 'ProviderService', 'RucomService', 'LocationService', function($scope, $stateParams, ProviderService, RucomService, LocationService){
+angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', '$window', 'ProviderService', 'RucomService', 'LocationService', function($scope, $stateParams, $window, ProviderService, RucomService, LocationService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
   $scope.currentProvider = null;
+  $scope.companyInfo = null;
+  $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
     label: 'RUCOM Number',
     field: 'num_rucom'
@@ -26,9 +28,21 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         population_center: {
           id: provider.population_center.id,
           name: provider.population_center.name,
-          population_center_code: provider.population_center.name,
+          population_center_code: provider.population_center.population_center_code,
         }
       };
+      if (provider.company_info) {
+        prov.company_info = {
+          id: provider.company_info.id,
+          nit_number: provider.company_info.nit_number,
+          name: provider.company_info.name,
+          legal_representative: provider.company_info.legal_representative,
+          id_type_legal_rep: provider.company_info.id_type_legal_rep,
+          id_number_legal_rep: provider.company_info.id_number_legal_rep,
+          email: provider.company_info.email,
+          phone_number: provider.company_info.phone_number
+        };
+      }
       $scope.currentProvider = prov;
       ProviderService.setCurrentProv(prov);
       if(prov.num_rucom) {
@@ -42,6 +56,51 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       $scope.loadProviderLocation($scope.currentProvider);
     });
   }
+
+  // Watchers for listen to changes in editable fields
+
+  $scope.$watch('currentProvider', 
+    function(newVal, oldVal) {
+      if (oldVal && newVal !== oldVal) {
+        $scope.saveBtnEnabled = true;
+      }
+  }, true);
+  // $scope.$watch(function(scope) {
+  //     return scope.currentProvider.address;
+  //   }, 
+  //   function(newVal, oldVal) {
+  //     if (oldVal && newVal !== oldVal) {
+  //       $scope.saveBtnEnabled = true;
+  //     }
+  // });
+
+  // $scope.$watch(function(scope) {
+  //     return scope.currentProvider.email;
+  //   }, 
+  //   function(newVal, oldVal) {
+  //     if (oldVal && newVal !== oldVal) {
+  //       $scope.saveBtnEnabled = true;
+  //     }
+  // });
+
+  // $scope.$watch(function(scope) {
+  //     return scope.currentProvider.phone_number;
+  //   }, 
+  //   function(newVal, oldVal) {
+  //     if (oldVal && newVal !== oldVal) {
+  //       $scope.saveBtnEnabled = true;
+  //     }
+  // });
+
+  // $scope.$watch(function(scope) {
+  //   return scope.currentProvider.population_center;
+  // }, 
+  // function(newVal, oldVal) {
+  //   if (oldVal && newVal !== oldVal) {
+  //     $scope.saveBtnEnabled = true;
+  //   }
+  // });
+  // end Watchers
 
   // Autocomplete for State, City and Population Center fields
 
@@ -143,6 +202,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.selectedPopulationCenterChange = function(population_center) {
     if(population_center){
       console.log('Population Center changed to ' + JSON.stringify(population_center));
+      $scope.currentProvider.population_center.id = population_center.id;
     } else {
       console.log('Population Center changed to none');
     }
@@ -206,6 +266,27 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     secondLabel : "Company Info"
   };
 
+  $scope.save = function() {
+    //PUT Request:
+    $resource = ProviderService.edit($scope.currentProvider);
+    if($resource){
+      $resource.update({ id:$scope.currentProvider.id }, $scope.currentProvider);
+    }
+    $window.history.back();
+  };
+
+  $scope.back = function() {
+    $window.history.back();
+  };
+
+  $scope.next = function() {
+    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
+  };
+
+  $scope.previous = function() {
+    $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
+  };
+
   // $scope.matchingRucoms = [];
   // RucomService.retrieveRucoms.query({rucom_query: 'ARE_PLU-08141'}, function(rucoms) {
   //   $scope.matchingRucoms = rucoms;
@@ -223,18 +304,5 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   //   $scope.population_centers = population_centers;
   //   console.log('Population Centers from Duncanhaven: ' + JSON.stringify(population_centers));
   // });
-
-  $scope.next = function() {
-    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
-    //PUT Request:
-    $resource = ProviderService.edit($scope.currentProvider);
-    if($resource){
-      $resource .update({ id:$scope.currentProvider.id }, $scope.currentProvider);
-    }
-  };
-
-  $scope.previous = function() {
-    $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
-  };
 
 }]);
