@@ -61,6 +61,7 @@ module V1
 
 
           #test data
+=begin
            values = { certificate_number: '1292924838434',
                       trader: { rucom: '110043843848393' ,
                                 name: 'mineros de boyaca' ,
@@ -156,6 +157,225 @@ module V1
 
 
            date = Date.today
+=end
+
+        # values certificado origen casas compraventa
+
+          # purchaser --> identification_type
+          #nit
+          #cedula de ciudadania
+          #cedula de extranjeria
+          #rut
+
+          #invoices --> date
+            # 2015-04-06
+
+          #test data
+=begin
+           values = { certificate_number: '1292924838434',
+                      city: 'popayan',
+                      house: { name: 'mineros de boyaca' ,
+                               identification_type: 'rut',
+                               identification_number: '129292294030302'
+                             },
+                      purchaser:{ name: 'compradores oro ltda',
+                                  identification_type: 'rut',
+                                  identification_number: '1018458483',
+                                  rucom: '10139348989',
+                                  cp: '1393902020202'
+                                },
+                      invoices: [{
+                                     number: '1101010101010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1102010101010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010104010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010101060101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010101010801',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010101010191',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010101010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010101010101',
+                                     date: Date.today.to_datetime,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010161010121',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101410102010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010101022220101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '1101010102010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                 },
+                                 {
+                                     number: '11010134322010101',
+                                     date: Date.today.to_date,
+                                     description: 'descripccion del documento',
+                                     quantity: '500mg'
+                                }
+                      ]
+                    }
+           date = Date.today
+=end
+
+        # values reporte de compra trazoro
+
+        # purchase --> type
+          #castellanos
+          #tamines
+          #reales
+          #granos
+
+        #test data
+        values = { provider: { rucom: '1010101949482',
+                               identification_type: 'rut',
+                               name: 'Esteban Ceron',
+                               email: 'restebance@trazoro.com',
+                               identification_number: '129292294030302',
+                               phone: '10303039503',
+                               address: 'Carrera 9N #67N - 156'
+                             },
+                   purchases: [ { type: 'castellanos',
+                                 quantity: 20,
+                                 unit_value: 2500000
+                               },
+                               {
+                                 type: 'tamines',
+                                 quantity: 200,
+                                 unit_value: 2000000
+                               },
+                               {
+                                 type: 'reales',
+                                 quantity: 5000,
+                                 unit_value: 2000000
+                               },
+                               {
+                                type: 'granos',
+                                quantity: 600000,
+                                unit_value: 404003030303
+                               }
+                               ],
+                   total: 20202020202,
+                   law: 1000,
+                   weight: 1000000,
+                   code: '11jddj29292929292'
+                  }
+        date = Date.today
 
         # generate pdf
           pdf = ::PdfFile.new(values , date)
