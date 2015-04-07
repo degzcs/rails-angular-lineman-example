@@ -7,7 +7,7 @@
       .row{'layout' => 'row'}
         .select-measure-type{'flex' => 50}
           // TODO: query for gold measure types to some X service
-          %md-select{'placeholder' => 'Seleccione un tipo de medida', 'ng-model' => 'purchase.golg.measure_type'}
+          %md-select{'placeholder' => 'Seleccione un tipo de medida', 'ng-model' => 'purchase.gold.measure_type'}
             %md-option{'value'=> '0'} Castellanos
             %md-option{'value'=> '1'} Gramos
             %md-option{'value'=> '3'} Othos
@@ -25,15 +25,15 @@
                 %th.md-table-header
                   Cantidad
                 %th.md-table-header
-                  Precion por Unidad
+                  Precio por Unidad
             %tbody
               %tr
                 %td
-                  %span Gramos
+                  %span Castellano(s)
                 %td
-                  %span {{purchase.gold.amount}}
+                  %span {{purchase.gold.amount.castellanos}}
                 %td
-                  %span {{purchase.gold.amount}}
+                  %span {{purchase.gold.amount.}}
               %tr
                 %td
                   %span Castellanos
@@ -60,5 +60,9 @@
           ${{purchase.gold.calculated_price}}
       .button-actions{'flex' => '20'}
         %md-button{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previzualizar
+  .wizard-buttons{layout: "row"}
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Anterior
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Siguiente
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previsualizar
 
 

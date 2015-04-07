@@ -43,4 +43,6 @@
             %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
               %md-icon{"md-svg-icon"=>"file:file_upload"}
               Subir Certificado
-
+  .wizard-buttons{layout: "row"}
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Anterior
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Siguiente
