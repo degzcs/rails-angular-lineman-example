@@ -32,7 +32,7 @@
                   %span {{goldBatch.castellanoUnitPrice  | number:2}}
               %tr
                 %td
-                  %span Onzas
+                  %span Onza(s)
                 %td
                   %md-input-container
                     %label
@@ -41,7 +41,7 @@
                   %span {{goldBatch.ozUnitPrice | number:2}}
               %tr
                 %td
-                  %span Tomines
+                  %span Tomine(s)
                 %td
                   %md-input-container
                     %label
@@ -50,7 +50,7 @@
                   %span {{goldBatch.tominUnitPrice | number:2}}
               %tr
                 %td
-                  %span Riales
+                  %span Rial(es)
                 %td
                   %md-input-container
                     %label
@@ -76,7 +76,7 @@
             $ {{ (castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams)*gramUnitPrice | number:2}}
   .wizard-buttons{layout: "row"}
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Anterior
-    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Siguiente
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "create()"} PDF
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previsualizar
 
 

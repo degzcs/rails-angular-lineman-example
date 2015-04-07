@@ -28,7 +28,9 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
             fields:
               "purchase[price]": purchase.amount,
               "purchase[provider_id]": purchase.provider_id
-              "purchase[gold_batch]": gold_batch
+              "gold_batch[parent_batches]": gold_batch.parent_batches
+              "gold_batch[grams]": gold_batch.grams
+              "gold_batch[inventory_id]": gold_batch.inventory_id
               "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             file: file
             fileFormDataName: 'purchase[origin_certificate_file]')

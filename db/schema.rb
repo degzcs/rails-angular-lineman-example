@@ -89,6 +89,9 @@ ActiveRecord::Schema.define(version: 20150407060102) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
+
   create_table "gold_batches", force: true do |t|
     t.text     "parent_batches"
     t.float    "grams"
@@ -97,8 +100,6 @@ ActiveRecord::Schema.define(version: 20150407060102) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
 
   create_table "population_centers", force: true do |t|
     t.string   "name"
@@ -145,7 +146,7 @@ ActiveRecord::Schema.define(version: 20150407060102) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                   null: false
+    t.string   "idrucom",            limit: 90,                                 null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -153,7 +154,7 @@ ActiveRecord::Schema.define(version: 20150407060102) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: "now()"
+    t.datetime "updated_at",                    default: '2015-04-04 15:57:55'
     t.string   "provider_type"
     t.string   "num_rucom"
   end

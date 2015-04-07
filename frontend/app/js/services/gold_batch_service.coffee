@@ -13,7 +13,7 @@ angular.module('app').factory('GoldBatchService', ($rootScope, MeasureConverterS
       ozs: 0
       tomines: 0
       riales: 0
-      inventory_id: ''
+      inventory_id: '1'
 
     #
     # Save and restore model temporal states

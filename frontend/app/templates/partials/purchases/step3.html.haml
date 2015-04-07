@@ -8,9 +8,8 @@
       /   %a{"ui-sref" => "create_provider"}
       /     %md-button.md-fab.md-accent{"aria-label" => "New", 'md-ripple-size' => "partial"} +
     .row{'layout' => 'row'}
-      .photo
+      .photo3
         %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
-        %a{'ng-href' => "#scanner"}
       .rucom{'flex' => ''}
         %p Numero Rucom
         %p {{purchase.providerInfo.rucom_number}}
@@ -39,7 +38,7 @@
           {{purchase.model.origin_certificate_sequence}}
   .gold-info
     .row{'layout' => 'row'}
-      .convertion-section{'flex' => '100'}
+      .convertion-section{'flex' => '70'}
         %table
           %thead
             %tr.md-table-headers-row
@@ -48,37 +47,55 @@
               %th.md-table-header
                 Cantidad
               %th.md-table-header
-                Precion por Unidad
+                Precio por Unidad
           %tbody
             %tr
               %td
-                %p Gramos
+                %span Castellano(s)
               %td
-                %p {{purchase.gold.amount}}
+                %md-input-container
+                  {{goldBatch.model.castellanos}}
               %td
-                %p {{purchase.gold.amount}}
+                %span {{goldBatch.castellanoUnitPrice  | number:2}}
             %tr
               %td
-                %p Castellanos
+                %span Onza(s)
               %td
-                %p {{purchase.gold.amount}}
+                %md-input-container
+                {{goldBatch.model.ozs}}
               %td
-                %p {{purchase.gold.amount}}
+                %span {{goldBatch.ozUnitPrice | number:2}}
             %tr
               %td
-                %p Otho
+                %span Tomine(s)
               %td
-                %p {{purchase.gold.amount}}
+                %md-input-container
+                  {{goldBatch.model.tomines}}
               %td
-                %p {{purchase.gold.amount}}
+                %span {{goldBatch.tominUnitPrice | number:2}}
+            %tr
+              %td
+                %span Rial(es)
+              %td
+                %md-input-container
+                  {{goldBatch.model.riales}}
+              %td
+                %span {{goldBatch.rialUnitPrice | number:2}}
+      .selected-law{'flex' => '30'}
+        // TODO: query for laws to some X service
+        24 quilates
     .row{'layout' => 'row'}
-      .select-law{'flex' => ''}
-        {{purchase.gold.law}}
-    .row{'layout' => 'row'}
-      .price{'flex' => ''}
-        ${{purchase.gold.calculated_price}}
-
-
+      .grams{'flex' => '40'}
+        %md-input-container
+          %label Cantidad en Gramos
+          {{ castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams | number:2}}
+      .grams{'flex' => '40'}
+        %md-input-container
+          %label Precio
+          $ {{ (castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams)*gramUnitPrice | number:2}}
+  .wizard-buttons{layout: "row"}
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Anterior
+    %md-button{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} PDF
 
 
 
