@@ -32,7 +32,7 @@
       .row{'layout' => 'row'}
         .oc-number{'flex' => 50}
           %md-input-container.md-input-has-value
-            %label Numero Certificado de Origen
+            %label Numero Certificado de Origen {{purchase.model.origin_certificate_sequence}}
             %input{"ng-model" => "purchase.model.origin_certificate_sequence"}
         .oc-number{'layout' => 'row', 'layout-align'=>'end center'}
           %span

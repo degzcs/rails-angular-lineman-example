@@ -3,14 +3,14 @@
   %section
     .seller
       %md-subheader
-        %span Pesos
+        %span Ingresar Pesos
       .row{'layout' => 'row'}
         .gold-amount{'flex' => ''}
           %md-input-container
-            %label Cantidad de Oro (segun el tipo de medida seleccionado)
-            %input{"ng-model" => "goldBatch.model.grams"}
+            %span Valor de un gramo peso colombiano (COP)
+            %span ${{gramUnitPrice}}
       .row{'layout' => 'row'}
-        .convertion-section{'flex' => '50'}
+        .convertion-section{'flex' => '70'}
           %table
             %thead
               %tr.md-table-headers-row
@@ -26,10 +26,10 @@
                   %span Castellano(s)
                 %td
                   %md-input-container
-                    %label {{goldBatch.model.castellanos}}
+                    %label
                     %input{"ng-model" => "goldBatch.model.castellanos"}
                 %td
-                  %span {{goldBatch.castellanoUnitPrice}}
+                  %span {{goldBatch.castellanoUnitPrice  | number:2}}
               %tr
                 %td
                   %span Onzas
@@ -38,7 +38,7 @@
                     %label
                     %input{"ng-model" => "goldBatch.model.ozs"}
                 %td
-                  %span {{goldBatch.ozUnitPrice}}
+                  %span {{goldBatch.ozUnitPrice | number:2}}
               %tr
                 %td
                   %span Tomines
@@ -47,7 +47,7 @@
                     %label
                     %input{"ng-model" => "goldBatch.model.tomines"}
                 %td
-                  %span {{goldBatch.tominUnitPrice}}
+                  %span {{goldBatch.tominUnitPrice | number:2}}
               %tr
                 %td
                   %span Riales
@@ -56,20 +56,24 @@
                     %label
                     %input{"ng-model" => "goldBatch.model.riales"}
                 %td
-                  %span {{goldBatch.rialUnitPrice}}
-        .select-law{'flex' => '50'}
+                  %span {{goldBatch.rialUnitPrice | number:2}}
+        .select-law{'flex' => '30'}
           // TODO: query for laws to some X service
           %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.golg.law'}
-            %md-option{'value'=> '0'} Law 1
-            %md-option{'value'=> '1'} Law 2
-            %md-option{'value'=> '3'} Law 3
+            %md-option{'value'=> '0'} 24 quilates
+            %md-option{'value'=> '1'} 22 quilates
+            %md-option{'value'=> '3'} 21 quilates
+            %md-option{'value'=> '4'} 18 quilates
+            %md-option{'value'=> '5'} 14 quilates
       .row{'layout' => 'row'}
-        .price{'flex' => '80'}
+        .grams{'flex' => '40'}
           %md-input-container
-            %label
-            $ {{totalGrams}}
-      .button-actions{'flex' => '20'}
-        %md-button{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previzualizar
+            %label Cantidad en Gramos
+            {{ castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams | number:2}}
+        .grams{'flex' => '40'}
+          %md-input-container
+            %label Precio
+            $ {{ (castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams)*gramUnitPrice | number:2}}
   .wizard-buttons{layout: "row"}
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Anterior
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Siguiente

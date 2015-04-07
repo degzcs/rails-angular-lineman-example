@@ -29,7 +29,7 @@ angular.module('app').factory('GoldBatchService', ($rootScope, MeasureConverterS
     #
     # Measue Unit Price (COP)
     #
-    @gramUnitPrice= '1000' # TODO= put this value in some of tables in the DB
+    @gramUnitPrice= '98525.64' # TODO= put this value in some of tables in the DB
 
     @castellanoUnitPrice= MeasureConverterService.castellanosUnitPriceFrom(@gramUnitPrice)
 
@@ -39,27 +39,6 @@ angular.module('app').factory('GoldBatchService', ($rootScope, MeasureConverterS
 
     @rialUnitPrice= MeasureConverterService.rialesUnitPriceFrom(@gramUnitPrice)
 
-    #
-    # Convertions
-    #
-    @castellanosToGrams= MeasureConverterService.castellanosToGrams(@model.castellanos)
-
-    @ozsToGrams= MeasureConverterService.ozsToGrams(@model.ozs)
-
-    @tominesToGrams= MeasureConverterService.tominesToGrams(@model.tomines)
-
-    @rialesToGrams= MeasureConverterService.rialesToGrams(@model.riales)
-
-    #
-    # Calculate Partial prices for each measure introduced
-    #
-    @priceBasedOnCastellanos= @gramUnitPrice*@castellanosToGrams
-
-    @priceBasedOnOzs= @gramUnitPrice*@ozsToGrams
-
-    @priceBasedOnTomines= @gramUnitPrice*@tominesToGrams
-
-    @priceBasedOnRials= @gramUnitPrice*@rialesToGrams
 
   )
   #
