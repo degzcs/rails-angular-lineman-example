@@ -6,4 +6,8 @@ RSpec.describe GoldBatch, type: :model do
   it 'has a valid factory' do
       should be_valid
   end
+
+  context 'validations' do
+    it {have_many :purchases}
+  end
 end

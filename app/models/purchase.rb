@@ -14,6 +14,7 @@
 #
 
 #TODO: change column name from amount to price
+#TODO: extract origin_certicated* fields to a single table and make the association
 class Purchase < ActiveRecord::Base
   #
   # Associations
@@ -21,5 +22,10 @@ class Purchase < ActiveRecord::Base
 
   belongs_to :user
   # belongs_to :provider
+  belongs_to :gold_batch
+
+  #
+  # Fields
+  #
   mount_uploader :origin_certificate_file, AttachmentUploader
 end

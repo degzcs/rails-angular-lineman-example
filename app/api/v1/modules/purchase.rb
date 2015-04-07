@@ -43,11 +43,10 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-              purchase = ::Purchase.new(params[:purchase].merge( user_id: current_user.id))
-              # purchase.save
-              puts '===================='
-              puts params
-              puts '===================='
+
+              purchase = current_user.purchases.build(params[:purchase])
+              purchase.build_gold_batch(params[:gold_batch])
+              purchase.save
               present purchase, with: V1::Entities::Purchase
         end
       end
