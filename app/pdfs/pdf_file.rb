@@ -1,13 +1,29 @@
 class PdfFile < Prawn::Document
 
-  def initialize(values , date)
+  def initialize(values , date , type)
     super()
-    #generate_certificate_b_c(values , date)
+
+    case type
+
+      when 'purchase_report'
+        generate_purchase_report(values,date)
+      when 'b_c_certificate'
+        generate_certificate_b_c(values , date)
+      when 'e_m_certificate'
+        generate_certificate_e_m(values , date )
+      when 'c_c_certificate'
+        generate_multiple_certificates_c_c(values,date)
+      when 'p_b_certificate'
+        generate_multiple_certificates_p_b(values,date)
+      else
+    end
+
+
+
     #generate_multiple_certificates_p_b(values,date)
-    #generate_multiple_certificates_c_c(values,date)
-    #generate_certificate_c_c
-    #generate_certificate_e_m(values , date )
-     generate_purchase_report(values,date)
+
+
+
   end
 
   # Generar certificado para barequeros y chatarreros
