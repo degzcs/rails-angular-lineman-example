@@ -2,10 +2,87 @@ module V1
   module Modules
     class File <  Grape::API
 
+      #before_validation do
+      #  authenticate!
+      #end
+
+      helpers do
+
+        # params to generate a purchase report
+=begin
+        # purchase --> type
+          #castellanos
+          #tamines
+          #reales
+          #granos
+        # hash
+        values = { provider: { rucom: '1010101949482',
+                               identification_type: 'rut',
+                               name: 'Esteban Ceron',
+                               email: 'restebance@trazoro.com',
+                               identification_number: '129292294030302',
+                               phone: '10303039503',
+                               address: 'Carrera 9N #67N - 156'
+        },
+                   purchases: [ { type: 'castellanos',
+                                  quantity: 20,
+                                  unit_value: 2500000
+                                },
+                                {
+                                    type: 'tamines',
+                                    quantity: 200,
+                                    unit_value: 2000000
+                                },
+                                {
+                                    type: 'reales',
+                                    quantity: 5000,
+                                    unit_value: 2000000
+                                },
+                                {
+                                    type: 'granos',
+                                    quantity: 600000,
+                                    unit_value: 404003030303
+                                }
+                   ],
+                   total: 20202020202,
+                   law: 1000,
+                   weight: 1000000,
+                   code: '11jddj29292929292'
+        }
+=end
+
+ #       params :purchase_data do
+ #         optional :purchase, type: Hash , desc: 'rucom_number' , documentation: {example: 'Rock'}
+=begin
+          optional :purchase, type: Hash do
+            optional :provider, type: Hash do
+              optional :rucom , type: String , desc: 'rucom_number' , documentation: {example: 'Rock'}
+              optional :identification_type , type: String , desc: 'identification_type' , documentation: {example: 'Rock'}
+              optional :name , type: String , desc: 'provider name' , documentation: {example: 'Rock'}
+              optional :email , type: String , desc: 'provider email' , documentation: {example: 'Rock'}
+              optional :identification_number , type: String , desc: 'provider identification number' , documentation: {example: 'Rock'}
+              optional :phone , type: String , desc: 'provider phone' , documentation: {example: 'Rock'}
+              optional :address , type: String , desc: 'provider address' , documentation: {example: 'Rock'}
+            end
+            optional :purchases , type: Array , desc: 'purchases' , documentation: {example: 'Rock'}
+            optional :total , type: Integer , desc: 'purchase total' , documentation:{example: 'Rock'}
+            optional :law , type: Integer , desc: 'purchase law' , documentation:{example: 'Rock'}
+            optional :weight , type: Integer , desc: 'mineral weight' , documentation: {example: 'Rock'}
+            optional :code , type: String , desc:'purchase code' , documentation: {example: 'Rock'}
+          end
+=end
+          #end
+        end
+
+
+
       content_type :pdf , 'application/pdf'
       format :pdf
 
-      get 'download_file' do
+      resource :files do
+
+=begin
+        get 'download_file' do
 
         #values certificado de origen barequero chatarrero
 
@@ -61,7 +138,7 @@ module V1
 
 
           #test data
-=begin
+
            values = { certificate_number: '1292924838434',
                       trader: { rucom: '110043843848393' ,
                                 name: 'mineros de boyaca' ,
@@ -157,7 +234,7 @@ module V1
 
 
            date = Date.today
-=end
+
 
         # values certificado origen casas compraventa
 
@@ -171,7 +248,7 @@ module V1
             # 2015-04-06
 
           #test data
-=begin
+
            values = { certificate_number: '1292924838434',
                       city: 'popayan',
                       house: { name: 'mineros de boyaca' ,
@@ -331,15 +408,11 @@ module V1
                       ]
                     }
            date = Date.today
-=end
+
 
         # values reporte de compra trazoro
 
-        # purchase --> type
-          #castellanos
-          #tamines
-          #reales
-          #granos
+
 
         #test data
         values = { provider: { rucom: '1010101949482',
@@ -383,6 +456,23 @@ module V1
           header['Content-Disposition'] = "attachment; filename=hola.pdf"
           env['api.format'] = :pdf
           body pdf.render
+      end
+=end
+
+      params do
+        requires :purchase ,type: Hash
+      end
+
+      get 'download_purchase_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        values = params[:purchase]
+        date = Date.today
+        pdf = ::PdfFile.new(values , date)
+        #puts pdf.render
+        header['Content-Disposition'] = "attachment; filename=hola.pdf"
+        env['api.format'] = :pdf
+        body pdf.render
+      end
+
       end
 
     end
