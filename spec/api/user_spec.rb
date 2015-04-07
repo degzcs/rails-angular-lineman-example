@@ -15,7 +15,8 @@ describe 'Auth', :type => :request do
            "first_name"=>@user.first_name,
            "last_name"=>@user.last_name,
            "email"=>"elcho.esquillas@fake.com",
-           "access_token"=> @token
+           "access_token"=> @token,
+           "available_credits"=> @user.available_credits
           }
 
           get '/api/v1/users/me', {},{ "Authorization" => "Barer #{@token}" }
@@ -31,6 +32,7 @@ describe 'Auth', :type => :request do
            "first_name"=>"Armando",
            "last_name"=>"Casas",
            "email"=>"armando.casas@fake.com",
+           "available_credits"=> @user.available_credits
           }
 
           new_values ={

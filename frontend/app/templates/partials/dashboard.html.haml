@@ -4,15 +4,27 @@
       %md-subheader.md-primary
         %span User Information
       %md-divider{inset: ""}
-      %md-item
-        %md-item-content
-          .md-tile-content
-            %span Name:
+      %div{layout: "row", "layout-sm" => "column"}
+        %md-item{flex: "50"}
+          %md-item-content
+            .md-tile-content
+              %span
+                %strong Name: 
+                {{currentUser.first_name}} {{currentUser.last_name}}
+        %md-item{flex: "50"}
+          %md-item-content
+            .md-tile-content
+              %span
+                %strong Email: 
+                {{currentUser.email}}
+
       %md-divider{inset: ""}
       %md-item
         %md-item-content
           .md-tile-content
-            %span Company:
+            %span 
+              %strong
+                Company:
     %md-card.credit-card{flex:"30", "flex-sm"=>"100"}
       %md-subheader.md-primary
         %span Remaining Credit
@@ -20,7 +32,7 @@
       %md-item
         %md-item-content
           .md-tile-content.credit-value
-            %span $0.0
+            %span ${{currentUser.available_credits}}
             %br
             %md-button.md-raised.md-primary.bt-buy-credits Buy Credits
 

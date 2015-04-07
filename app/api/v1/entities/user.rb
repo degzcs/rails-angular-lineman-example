@@ -8,6 +8,7 @@ module V1
       expose :access_token, documentation: { type: "string", desc: "email", example: "lourdezastre@test.com" } do |user, options|
         user.create_token
       end
+      expose :available_credits , documentation: { type: "float", desc: "Available credits", example: 0.0 }
     end
   end
 end
