@@ -19,8 +19,8 @@ describe Purchase, type: :model do
 
   let(:purchase){ build :purchase}
 
-it 'has a valid factory' do
-    should be_valid
+  it 'has a valid factory' do
+      should be_valid
   end
 
   it 'should save one origin certificate file' do

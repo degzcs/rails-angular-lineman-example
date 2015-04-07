@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406220122) do
+ActiveRecord::Schema.define(version: 20150407060102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,14 @@ ActiveRecord::Schema.define(version: 20150406220122) do
     t.boolean  "payment_flag"
     t.datetime "payment_date"
     t.float    "discount_percentage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  create_table "gold_batches", force: true do |t|
+    t.text     "parent_batches"
+    t.float    "grams"
+    t.integer  "grade"
+    t.integer  "inventory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
