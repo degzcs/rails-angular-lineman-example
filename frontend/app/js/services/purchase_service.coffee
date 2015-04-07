@@ -9,7 +9,6 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
     #
     model:
       price: ''
-      gold_batch_id: ''
       provider_photo_file: ''
       provider_id: ''
       origin_certificate_sequence: ''
@@ -18,7 +17,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
     #
     # HTTP resquests
     #
-    create: (purchase) ->
+    create: (purchase, gold_batch) ->
       if purchase.origin_certificate_file and purchase.origin_certificate_file.length
         i = 0
         while i < purchase.origin_certificate_file.length
@@ -29,7 +28,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
             fields:
               "purchase[price]": purchase.amount,
               "purchase[provider_id]": purchase.provider_id
-              "purchase[gold_batch_id]": purchase.gold_batch_id
+              "purchase[gold_batch]": gold_batch
               "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             file: file
             fileFormDataName: 'purchase[origin_certificate_file]')

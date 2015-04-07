@@ -5,18 +5,12 @@
       %md-subheader
         %span Pesos
       .row{'layout' => 'row'}
-        .select-measure-type{'flex' => 50}
-          // TODO: query for gold measure types to some X service
-          %md-select{'placeholder' => 'Seleccione un tipo de medida', 'ng-model' => 'purchase.gold.measure_type'}
-            %md-option{'value'=> '0'} Castellanos
-            %md-option{'value'=> '1'} Gramos
-            %md-option{'value'=> '3'} Othos
-        .gold-amount{'flex' => 50}
+        .gold-amount{'flex' => ''}
           %md-input-container
             %label Cantidad de Oro (segun el tipo de medida seleccionado)
-            %input{"ng-model" => "purchase.gold.amount"}
+            %input{"ng-model" => "goldBatch.model.grams"}
       .row{'layout' => 'row'}
-        .convertion-section{'flex' => '100'}
+        .convertion-section{'flex' => '50'}
           %table
             %thead
               %tr.md-table-headers-row
@@ -31,25 +25,39 @@
                 %td
                   %span Castellano(s)
                 %td
-                  %span {{purchase.gold.amount.castellanos}}
+                  %md-input-container
+                    %label {{goldBatch.model.castellanos}}
+                    %input{"ng-model" => "goldBatch.model.castellanos"}
                 %td
-                  %span {{purchase.gold.amount.}}
+                  %span {{goldBatch.castellanoUnitPrice}}
               %tr
                 %td
-                  %span Castellanos
+                  %span Onzas
                 %td
-                  %span {{purchase.gold.amount}}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.ozs"}
                 %td
-                  %span {{purchase.gold.amount}}
+                  %span {{goldBatch.ozUnitPrice}}
               %tr
                 %td
-                  %span Otho
+                  %span Tomines
                 %td
-                  %span {{purchase.gold.amount}}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.tomines"}
                 %td
-                  %span {{purchase.gold.amount}}
-      .row{'layout' => 'row'}
-        .select-law{'flex' => 50}
+                  %span {{goldBatch.tominUnitPrice}}
+              %tr
+                %td
+                  %span Riales
+                %td
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.riales"}
+                %td
+                  %span {{goldBatch.rialUnitPrice}}
+        .select-law{'flex' => '50'}
           // TODO: query for laws to some X service
           %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.golg.law'}
             %md-option{'value'=> '0'} Law 1
@@ -57,7 +65,9 @@
             %md-option{'value'=> '3'} Law 3
       .row{'layout' => 'row'}
         .price{'flex' => '80'}
-          ${{purchase.gold.calculated_price}}
+          %md-input-container
+            %label
+            $ {{totalGrams}}
       .button-actions{'flex' => '20'}
         %md-button{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previzualizar
   .wizard-buttons{layout: "row"}

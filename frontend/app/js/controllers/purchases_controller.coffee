@@ -1,14 +1,28 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, CameraService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService) ->
   #
   # Instances
   #
   $scope.purchase = PurchaseService
+  $scope.goldBatch = GoldBatchService
   # $scope.purchase.model = PurchaseService.restoreState
+  window.scope = $scope
+  $scope.totalGrams = 0
 
   #
   # Fuctions
   #
   $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+
+  #Total Grams
+  # $scope.$watch 'goldBatch.model.castellanos', ->
+  #   console.log 'whatching...'
+
+  $scope.$apply= ->
+    $scope.totalGrams = $scope.goldBatch.castellanosToGrams +  $scope.goldBatch.ozsToGrams + $scope.goldBatch.tominesToGrams + $scope.goldBatch.rialesToGrams
+
+  #Total Price
+  $scope.totalPrice= ->
+    $scope.goldBatch.priceBasedOnCastellanos + $scope.goldBatch.priceBasedOnOzs +$scope.goldBatch.priceBasedOnTomines +$scope.goldBatch.priceBasedOnRials
 
   $scope.saveState= ->
     console.log('saving purchase state on sessionStore ... ')
@@ -22,7 +36,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Came
   #   secondLabel : "Pesaje y Compra"
   # };
 
-  # It sends the information when the file is selected
+  # Create a new purschase in the server
   $scope.create = (data) ->
-    PurchaseService.create $scope.purchase
+    PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
