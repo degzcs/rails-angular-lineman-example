@@ -32,10 +32,24 @@ angular.module('app').directive('mdTableRucom', function () {
         $scope.tablePage = page;
       };
       $scope.setCurrentRucom = function (rucom) {
-        RucomService.setCurrentRucom(rucom);
-        //$scope.currentProvider = provider;
+        RucomService.setCurrentRucom(rucom);        
+        console.log(rucom.provider_type);
+        var type = $scope.setProviderType(rucom.provider_type);
         console.log('1. Setting current Rucom: ' + rucom.idrucom);        
-        $state.go("create_provider", {rucomId: rucom.idrucom});
+        $state.go(type, {rucomId: rucom.idrucom});
+      };
+
+      $scope.setProviderType = function (provider_type){
+        if (provider_type === 'Comercializador' || provider_type === 'Barequero' || provider_type === 'Consumidor'){
+          console.log("Type A");
+          return "type_1";
+        } else if (provider_type === 'Solicitante Legalización De Minería' || provider_type === 'Titular' || provider_type === 'Beneficiario Área Reserva Especial' || provider_type === 'Subcontrato de formalización'){
+          console.log("Type B");
+          return "type_2";
+        } else if (provider_type === 'Planta de Beneficio'){
+          console.log("Type C");
+          return "type_3";
+        }
       };
     },
     //template: angular.element(document.querySelector('#md-table-template')).html()

@@ -4,11 +4,10 @@
       {{ formCreateTabCtrl.firstLabel }}
     %md-tab{"ng-disabled" => "true"}
       {{ formCreateTabCtrl.secondLabel }}
-      
+     
   %ng-switch.tabpanel-container{:on => "formCreateTabCtrl.selectedIndex"}
     %form{:name => "providerForm", "novalidate" => "true"}
-      #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
-        %md-content.md-padding        
+      #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}        
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left{:flex => "10"}
             %md-button.md-fab.md-accent{"aria-label" => "Photo", :md-ripple-size => "partial"} + 

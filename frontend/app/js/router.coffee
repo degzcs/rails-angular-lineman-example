@@ -130,45 +130,64 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  .state("create_provider",
-    url: "/rucoms/:rucomId",
-    ncyBreadcrumb:
-      label: 'Rucoms'
-    views:
-      'content':
-        templateUrl: "partials/providers/type_a.html"
-        controller: "ProvidersRucomCtrl"
+    .state("type_1",
+      url: "/type_1/rucom/:rucomId",
+      ncyBreadcrumb:
+        label: 'New provider'
+      views:
+        'content':
+          templateUrl: "partials/providers/type_a.html"
+          controller: "ProvidersRucomCtrl"
 
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-    .state('create_provider.type_1', {
-      url: "/rucom/:rucomId",
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
+
+    .state("type_2",
+      url: "/type_2/rucom/:rucomId",
       ncyBreadcrumb:
-        label: 'New'
-      templateUrl: "partials/providers/type_a.html",
-      controller: "ProvidersRucomCtrl"
-    })
-    .state('create_provider.type_2', {
-      url: "",
+        label: 'New provider'
+      views:
+        'content':
+          templateUrl: "partials/providers/type_b.html"
+          controller: "ProvidersRucomCtrl"
+
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
+
+    .state("type_3",
+      url: "/type_3/rucom/:rucomId",
       ncyBreadcrumb:
-        label: 'New'
-      templateUrl: "partials/providers/type_b.html",
-      controller: "ProvidersRucomCtrl"
-    })
-    .state('create_provider.type_3', {
-      url: "",
-      ncyBreadcrumb:
-        label: 'New'
-      templateUrl: "partials/providers/type_c.html",
-      controller: "ProvidersRucomCtrl"
-    })
+        label: 'New provider'
+      views:
+        'content':
+          templateUrl: "partials/providers/type_c.html"
+          controller: "ProvidersRucomCtrl"
+
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
+
+
   #  --- Batches Routes ---- #
 
   .state( "batches",

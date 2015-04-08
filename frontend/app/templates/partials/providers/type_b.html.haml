@@ -1,0 +1,108 @@
+%div{:layout => "column"}
+  %md-toolbar{:style => "background-color: rgba(0, 0, 0, 0.0980392);"}
+    %h1.md-toolbar-tools{:style => "color: rgba(82, 87, 87, 0.6);"}
+      Provider creation form
+  %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
+    %md-tab#tab1{"aria-controls" => "tab1-content"}
+      {{ formTabControl.firstLabel }}
+    %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "!newCompany.status"}    
+      {{ formTabControl.secondLabel }}
+      
+  %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
+    %form{:name => "providerForm"}
+      #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
+        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+          .md-tile-left{:flex => "10"}
+            %md-button.md-fab.md-accent{"aria-label" => "Photo", :md-ripple-size => "partial"} +                             
+              %md-tooltip{"md-visible" => "demo.showTooltip"}
+                Photo
+                %span.ion-android-checkmark-circle 
+          %md-input-container{:flex => ""}
+            %label First name
+            %input{"ng-model" => "newProvider.name"}
+          %md-input-container{:flex => ""}
+            %label Last name
+            %input{"ng-model" => "newProvider.lastName"}
+          / %md-select{:flex => "25", "ng-model" => "newProvider.id_type_legal_rep", :placeholder => "ID type", "ng-change" => "selection(newProvider.id_type_legal_rep)"}
+          /   %md-option{"ng-repeat" => "type in id_type_legal_rep", "ng-value" => "type.name"} {{ type.name }}
+          %md-input-container{:flex => ""}          
+            %label Document number
+            %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
+              %div{"ng-messages" => "providerForm.document_number.$error"}
+                %div{"ng-message" => "required"} This is required.                        
+        %md-content.md-padding            
+        %div{:layout => "", "layout-sm" => "column"}
+          %md-input-container{:flex => "11"}
+            %label Phone Number
+            %input{:name: => "phone", "ng-model" => "newProvider.phone_nb", :placeholder => "(3XX) XXX XXXXX", :required => ""}
+              %div{"ng-messages" => "providerForm.phone.$error"}
+                %div{"ng-message" => "required"} This is required. 
+          %md-input-container{:flex => ""}
+            %label Email
+            %input{"ng-model" => "newProvider.email", :type => "email"}          
+          %md-input-container{:flex => ""}
+            %label Address
+            %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR X XX - XX"}
+          %md-input-container{:flex => ""}
+            %label City
+            %input{"ng-model" => "newProvider.city"}
+          %md-input-container{:flex => ""}
+            %label State
+            %input{"ng-model" => "newProvider.state"}
+        %md-content.md-padding 
+        %div{:layout => "", "layout-sm" => "column", "ng-if" => "!newCompany.status"}
+          %md-input-container{"ng-if" => "newProvider.num_rucom !== ''", :flex => "15"}
+            %label RUCOM number            
+            %input{"ng-model" => "newProvider.num_rucom", "ng-readonly" => "true"}
+            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "Top", "md-visible" => "formTabControl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado   
+          %md-input-container{"ng-if" => "newProvider.rucom_record !== ''", :flex => "15"}
+            %label RUCOM record
+            %input{"ng-model" => "newProvider.rucom_record", "ng-readonly" => "true"}
+            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "Top", "md-visible" => "formTabControl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado   
+          %md-input-container{"ng-if" => "newProvider.subcontract_number !== ''", :flex => "15"}
+            %label Subcontract number
+            %input{"ng-model" => "newProvider.subcontract_number", "ng-readonly" => "true"}
+            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "Top", "md-visible" => "formTabControl.secondUnlocked"} 
+              %span.ion-android-checkmark-circle &nbsp;Verificado                                     
+          %md-input-container{:flex => ""}
+            %label Provider type
+            %input{"ng-model" => "newProvider.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
+          %md-input-container{:flex => ""}
+            %label Mineral
+            %input{"ng-model" => "newProvider.mineral", "ng-readonly" => "true"}          
+          %md-input-container{:flex => ""}
+            %label Status
+            %input{:name => "status", "ng-model" => "newProvider.status", "ng-readonly" => "false",  :required => ""}
+              %div{"ng-messages" => "providerForm.status.$error"}
+                %div{"ng-message" => "required"} This is required.        
+        %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+          %div{:flex => ""}
+            %md-input-container{:flex => ""}
+              %md-checkbox{"aria-label" => "Disabled", "ng-model" => "newCompany.status", "ng-click" => "isCompany()"} It is a company?             
+          %md-button{:class => "md-raised md-waste", "ng-click" => ""} Cancel
+          &nbsp;          
+          %md-button{"ng-disabled" => "!formValidateRucom.rucomValidated", :class => "md-raised md-accent", "ng-click" => "next()"} Next
+      #tab2-content{"aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
+        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+        %md-content.md-padding
+          %div{:layout => "", "layout-sm" => "column"}
+            %md-input-container{:flex => "25"}
+              %label NIT
+              %input{"ng-model" => "newCompany.nit_number"}
+            %md-input-container{:flex => ""}
+              %label Name
+              %input{"ng-model" => "newCompany.name"}
+            %md-input-container{:flex => ""}
+              %label legal representative
+              %input{"ng-model" => "newCompany.legal_representative"}
+          %div{:layout => "", "layout-sm" => "column"}
+            %md-input-container{:flex => ""}
+              %label Phone Number
+              %input{"ng-model" => "newCompany.phone_nb", :placeholder => "(3XX) XXX XXXXX"}
+            %md-input-container{:flex => ""}
+              %label Email
+              %input{"ng-model" => "newCompany.email", :type => "email"}            
+          %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}            
+            %md-button{"ng-disabled" => "formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
