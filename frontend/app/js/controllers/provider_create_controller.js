@@ -1,19 +1,19 @@
-angular.module('app').controller('ProvidersCreateCtrl', ['$scope','CameraService', 'ProviderService', function($scope,CameraService, ProviderService){
+angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', 'CameraService', 'RucomService', function($scope, $stateParams, CameraService, RucomService){
   //$scope.currentProvider = providerService.getCurrentProv() ? ;
-  $scope.newProvider = {
-    firstName: 'Javier',
-    lastName: 'Suarez' ,
-    num_rucom: '',
-    rucom_record: '1234',
-    type: '1',
-    company: 'Google' ,
-    address: '1600 Amphitheatre Pkwy' ,
-    city: 'Mountain View' ,
-    state: 'CA' ,
-    biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
-    postalCode : '94043',
-    photo_file: ''
-  };
+  // $scope.newProvider = {
+  //   firstName: 'Javier',
+  //   lastName: 'Suarez' ,
+  //   num_rucom: '',
+  //   rucom_record: '1234',
+  //   type: '1',
+  //   company: 'Google' ,
+  //   address: '1600 Amphitheatre Pkwy' ,
+  //   city: 'Mountain View' ,
+  //   state: 'CA' ,
+  //   biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
+  //   postalCode : '94043',
+  //   photo_file: ''
+  // };
    $scope.provider = {
     first_Name : 'Kmilo',
     document_number : '2163636556',
@@ -35,8 +35,6 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
   }
   */
   //$scope.provider.photo_file=$scope.photo?CameraService.dataURItoFile($scope.photo,'photo_provider'):[];
-
-.controller('ProvidersRucomCtrl', ['$scope',  '$stateParams', 'RucomService', function($scope, $stateParams, RucomService){
   
   $scope.newCompany = {
     nit_number: '1234567890',
@@ -60,7 +58,8 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
   $scope.newProvider = {};  
   if ($stateParams.rucomId) {   
     console.log("$stateParams.rucomId: " + $stateParams.rucomId);     
-    RucomService.getRucom.get({rucomId: $stateParams.rucomId}, function(data) {
+    RucomService.getRucom.get({id: $stateParams.rucomId}, function(data) {
+      console.log("data.rucom");
       console.log(data.rucom);
       $scope.newProvider = data.rucom;
       $scope.newCompany.mineral = data.mineral;

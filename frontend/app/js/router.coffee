@@ -131,7 +131,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
     .state("type_1",
-      url: "/type_1/rucom/:rucomId",
+      url: "/type_1/rucoms/:rucomId",
       ncyBreadcrumb:
         label: 'New provider'
       views:
@@ -150,7 +150,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     )
 
     .state("type_2",
-      url: "/type_2/rucom/:rucomId",
+      url: "/type_2/rucoms/:rucomId",
       ncyBreadcrumb:
         label: 'New provider'
       views:
@@ -169,7 +169,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     )
 
     .state("type_3",
-      url: "/type_3/rucom/:rucomId",
+      url: "/type_3/rucoms/:rucomId",
       ncyBreadcrumb:
         label: 'New provider'
       views:

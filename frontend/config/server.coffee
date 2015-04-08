@@ -2363,7 +2363,7 @@ module.exports = drawRoutes: (app) ->
   
   # GET
   # endpoint for retrieving providers by ID
-  app.get '/api/v1/rucom/:rucomId', (req, res) ->
+  app.get '/api/v1/rucoms/:rucomId', (req, res) ->
     console.log 'retrieving rucom ' + req.params.rucomId + ' from the fake server ...'
     rucom = {}
     for r of rucoms_reg
