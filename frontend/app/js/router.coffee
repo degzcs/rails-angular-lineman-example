@@ -114,7 +114,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("search_rucom",
     url: "/rucoms/:rucomId",
     ncyBreadcrumb:
-      label: 'Rucoms'
+      label: 'Search provider by rucom'
     views:
       'content':
         templateUrl: "partials/providers/search_rucom.html"
