@@ -60,11 +60,11 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
     console.log("$stateParams.rucomId: " + $stateParams.rucomId);     
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(data) {
       console.log("data.rucom");
-      console.log(data.rucom);
-      $scope.newProvider = data.rucom;
+      console.log(data);
+      $scope.newProvider = data;
       $scope.newCompany.mineral = data.mineral;
-      RucomService.setCurrentRucom(data.rucom);
-      console.log('Current rucom: ' + data.rucom.idrucom);
+      RucomService.setCurrentRucom(data);
+      console.log('Current rucom: ' + data);
     });
   }
 
@@ -103,7 +103,7 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
   };
 
   $scope.validateRucom = function(){    
-    if (typeof $scope.newProvider.document_number !== "undefined" && ($scope.newProvider.status === 'Certificado' || $scope.newProvider.status === 'Certificado, En eval de ren requerido')) {
+    if (typeof $scope.newProvider.id !== "undefined" && ($scope.newProvider.status === 'active' || $scope.newProvider.status === 'Certificado, En eval de ren requerido')) {
       console.log("match");
       $scope.formValidateRucom.rucomValidated = true;
       $scope.formTabControl.secondUnlocked = false;

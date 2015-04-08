@@ -49,11 +49,11 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', 'RucomService' ,f
   $scope.search_rucom = function(query) {
     console.log(query);    
     //$scope.query = 'ARE_PLU-08141';
-    RucomService.retrieveRucoms.get({rucom_attr: query}, function(data) {
+    RucomService.retrieveRucoms.query({rucom_query: query}, function(data) {
   //RucomService.retrieveRucoms.get(function(data) {
-    console.log('Matching rucom registries: ' + JSON.stringify(data.result));
+    console.log('Matching rucom registries: ' + JSON.stringify(data));
     $scope.query = '';  
-    $scope.content = data.result;    
+    $scope.content = data;    
     return true;
     });
   };  

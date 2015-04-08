@@ -35,8 +35,8 @@ angular.module('app').directive('mdTableRucom', function () {
         RucomService.setCurrentRucom(rucom);        
         console.log(rucom.provider_type);
         var type = $scope.setProviderType(rucom.provider_type);
-        console.log('1. Setting current Rucom: ' + rucom.idrucom);        
-        $state.go(type, {rucomId: rucom.idrucom});
+        console.log('1. Setting current Rucom: ' + rucom.id);        
+        $state.go(type, {rucomId: rucom.id});
       };
 
       $scope.setProviderType = function (provider_type){
