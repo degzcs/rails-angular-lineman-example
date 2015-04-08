@@ -27,6 +27,7 @@ class API < Grape::API
   mount V1::Modules::City
   mount V1::Modules::PopulationCenter
   mount V1::Modules::CreditBilling
+  mount V1::Modules::File
 
   # Adds the swagger documentation to your
   # api. You only need this once, not in
