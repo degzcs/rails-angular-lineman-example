@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService) ->
   #
   # Instances
   #
@@ -59,8 +59,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
     $scope.goldBatch.saveState()
 
-
   # Create a new purschase in the server
   $scope.create = (data) ->
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
+
+  $scope.createPDF =  (purchase, provider, goldBatch)->
+    PdfService.createPurchaseInvoice(purchase, provider, goldBatch)
 
