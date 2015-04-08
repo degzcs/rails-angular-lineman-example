@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService) ->
   #
   # Instances
   #
@@ -7,7 +7,35 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # $scope.purchase.model = PurchaseService.restoreState
   $scope.totalGrams = '0'
   $scope.gramUnitPrice = $scope.goldBatch.gramUnitPrice
+  $scope.providers  = []
 
+  #Set $scope.providers
+  ProviderService.retrieveProviders.query {
+    per_page: 100
+    page: 1
+  }, ((providers, headers) ->
+    i = 0
+    while i < providers.length
+      prov =
+        id: providers[i].id
+        document_number: providers[i].document_number
+        first_name: providers[i].first_name
+        last_name: providers[i].last_name
+        address: providers[i].address
+        email: providers[i].email
+        phone_number: providers[i].phone_number
+        photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
+        num_rucom: providers[i].rucom.num_rucom
+        rucom_record: providers[i].rucom.rucom_record
+        provider_type: providers[i].rucom.provider_type
+        rucom_status: providers[i].rucom.status
+        mineral: providers[i].rucom.mineral
+        name: providers[i].first_name + ' '+ providers[i].last_name
+      $scope.providers.push prov
+      i++
+  ), (error) ->
+
+  window.m = $scope.purchase.model
   #
   # Fuctions
   #
@@ -26,12 +54,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.purchase.saveState()
     $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
-  # $scope.formCreateTabCtrl = {
-  #   selectedIndex : 0,
-  #   secondUnlocked : true,
-  #   firstLabel : "Provedor y Certificado de Origen",
-  #   secondLabel : "Pesaje y Compra"
-  # };
 
   # Create a new purschase in the server
   $scope.create = (data) ->

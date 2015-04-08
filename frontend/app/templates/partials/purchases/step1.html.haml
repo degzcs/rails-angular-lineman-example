@@ -12,10 +12,9 @@
       .row{'layout' => 'row'}
         .select-provider{'flex' => ''}
           // TODO: query to the endpoint for all provider ids and names (maybe use Graper Transformer)
-          %md-select{'placeholder' => 'Seleccione un proveedor', 'ng-model' => 'purchase.model.provider_id'}
-            %md-option{'value'=> '0'} Proveedor numero 0
-            %md-option{'value'=> '1'} Proveedor numero 1
-            %md-option{'value'=> '3'} Proveedor numero 2
+          %md-select{"md-on-open" => "providers", "ng-model" => "purchase.model.provider", :style => "min-width: 200px;"}
+            %md-select-label {{ purchase.model.provider ? purchase.model.provider.name : 'Seleccione un Proveedor' }}
+            %md-option{"ng-repeat" => "provider in providers", "ng-value" => "provider"} {{provider.name}}
 
         .photo{'flex' => ''}
           %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}

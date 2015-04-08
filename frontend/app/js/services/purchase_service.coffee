@@ -10,7 +10,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
     model:
       price: ''
       provider_photo_file: ''
-      provider_id: ''
+      provider: ''
       origin_certificate_sequence: ''
       origin_certificate_file: ''
 
