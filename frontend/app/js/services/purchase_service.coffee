@@ -26,8 +26,8 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
             url: '/api/v1/purchases/'
             method: 'POST'
             fields:
-              "purchase[price]": purchase.amount,
-              "purchase[provider_id]": purchase.provider_id
+              "purchase[price]": purchase.price,
+              "purchase[provider_id]": purchase.provider.id
               "gold_batch[parent_batches]": gold_batch.parent_batches
               "gold_batch[grams]": gold_batch.grams
               "gold_batch[inventory_id]": gold_batch.inventory_id

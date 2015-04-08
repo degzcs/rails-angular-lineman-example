@@ -28,7 +28,7 @@ module V1
                      "user_id"=>1,
                      "provider_id"=>1,
                      "gold_batch_id" => 1,
-                     "amount" => 1.5,
+                     "price" => 1.5,
                      "origin_certificate_file" => "image.png",
                      "origin_certificate_sequence"=>"123456789",
                   }
