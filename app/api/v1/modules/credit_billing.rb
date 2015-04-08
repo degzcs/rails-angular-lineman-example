@@ -40,14 +40,7 @@ module V1
         params :credit_billing do
           requires :credit_billing, type: Hash do
             requires  :user_id, type: Integer, desc: 'unit', documentation: { example: '...' }
-            requires  :total_amount, type: Float, desc: 'total_amount', documentation: { example: '...' }
-            optional  :unit, type: String, desc: 'unit', documentation: { example: '...' }
-            optional  :per_unit_value, type: Float, desc: 'per_unit_value', documentation: { example: '...' }
-            optional  :iva_value, type: Float, desc: 'iva_value', documentation: { example: '...' }
-            optional  :discount, type: Float, desc: 'discount', documentation: { example: '...' }
-            optional  :payment_flag, type: Boolean, desc: 'payment_flag', documentation: { example: '...' }
-            optional  :payment_date , type: String, desc: 'payment_date', documentation: { example: '...' }
-            optional  :discount_percentage , type: Float, desc: 'discount_percentage', documentation: { example: '...' }
+            requires  :unit, type: String, desc: 'unit', documentation: { example: '...' }
           end
         end
 
@@ -104,8 +97,6 @@ module V1
         ]  do
           content_type "text/json"
           credit_billing = ::CreditBilling.new(params[:credit_billing])
-          binding.pry 
-          puts ""
           if credit_billing.save
             present credit_billing, with: V1::Entities::CreditBilling
           else

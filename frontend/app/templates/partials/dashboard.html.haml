@@ -34,7 +34,8 @@
           .md-tile-content.credit-value
             %span ${{currentUser.available_credits}}
             %br
-            %md-button.md-raised.md-primary.bt-buy-credits Buy Credits
+            %md-button.md-raised.md-primary.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
+              Buy Credits
 
   %h3 Options
   %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}

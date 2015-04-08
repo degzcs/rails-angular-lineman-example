@@ -4,11 +4,8 @@
 #
 #  id                  :integer          not null, primary key
 #  user_id             :integer
-#  unit                :string(255)
+#  unit                :integer
 #  per_unit_value      :float
-#  iva_value           :float
-#  discount            :float
-#  total_amount        :float
 #  payment_flag        :boolean
 #  payment_date        :datetime
 #  discount_percentage :float
@@ -23,15 +20,23 @@ class CreditBilling < ActiveRecord::Base
   validates :user_id, presence: true
   validates :unit, presence: true
   validates :per_unit_value, presence: true
-  validates :iva_value, presence: true
-  validates :total_amount, presence: true
   #validates :payment_flag, presence: true
+
+  def total_amount 
+    total = self.unit * self.per_unit_value
+  end
+
+  def iva_value
+    self.total_amount * 0.16
+  end
+
+  def discount 
+    (self.total_amount * self.discount_percentage/100) if self.discount_percentage
+  end
 
   protected 
     def init
-      self.unit ||= 1  
-      self.per_unit_value ||= 1000  
-      self.iva_value ||= 16  
+      self.per_unit_value = 1000  
       self.payment_flag = false
     end
 end

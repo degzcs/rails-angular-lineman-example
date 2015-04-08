@@ -78,12 +78,9 @@ ActiveRecord::Schema.define(version: 20150407060102) do
 
   create_table "credit_billings", force: true do |t|
     t.integer  "user_id"
-    t.string   "unit"
+    t.integer  "unit"
     t.float    "per_unit_value"
-    t.float    "iva_value"
-    t.float    "discount"
-    t.float    "total_amount"
-    t.boolean  "payment_flag"
+    t.boolean  "payment_flag",        default: false
     t.datetime "payment_date"
     t.float    "discount_percentage"
     t.datetime "created_at"

@@ -4,11 +4,8 @@
 #
 #  id                  :integer          not null, primary key
 #  user_id             :integer
-#  unit                :string(255)
+#  unit                :integer
 #  per_unit_value      :float
-#  iva_value           :float
-#  discount            :float
-#  total_amount        :float
 #  payment_flag        :boolean
 #  payment_date        :datetime
 #  discount_percentage :float
@@ -18,11 +15,8 @@
 
 FactoryGirl.define do
   factory :credit_billing do
-    unit "MyString"
-    per_unit_value 1
-    iva_value 16
-    discount 1.5
-    total_amount 200000
+    unit 200
+    per_unit_value 1000
     payment_flag true
     payment_date Time.now
     discount_percentage 1.3
