@@ -18,7 +18,27 @@ angular.module("app", [
     alert thing
     return
 
-  return
+  # Restore the state of models, e.g. purchase.model on PurchaseService
+  $rootScope.$on '$routeChangeStart', (event, next, current) ->
+    if sessionStorage.restorestate == 'true'
+      $rootScope.$broadcast 'restorePurchaseState'
+      #let everything know we need to restore state
+      sessionStorage.restorestate = false
+
+  # Restore the state of models when is reloade the page, e.g. purchase.model on PurchaseService
+  window.onload = (e)->
+    if sessionStorage.restorestate == 'true'
+      console.log('restoring models...')
+      $rootScope.$broadcast 'restorePurchaseState'
+      $rootScope.$broadcast 'restoreGoldeBatchState'
+      #let everything know we need to restore state
+      # sessionStorage.restorestate = false
+
+  # Save the state of models, e.g. purchase.model on PurchaseService
+  # let everthing know that we need to save state now.
+  window.onbeforeunload = (event) ->
+    $console.log('saving state ...')
+    $rootScope.$broadcast 'savePurchaseState'
 
 .config ($mdIconProvider) ->
   $mdIconProvider

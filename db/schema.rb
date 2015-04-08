@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401190653) do
+ActiveRecord::Schema.define(version: 20150407060102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20150401190653) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "cities", force: true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "state_code", null: false
+    t.string   "city_code",  null: false
+  end
+
+  add_index "cities", ["state_id"], name: "index_cities_on_state_id", using: :btree
+
   create_table "company_infos", force: true do |t|
     t.string   "nit_number"
     t.string   "name"
@@ -62,7 +73,47 @@ ActiveRecord::Schema.define(version: 20150401190653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "provider_id"
+    t.string   "id_number_legal_rep"
   end
+
+  create_table "credit_billings", force: true do |t|
+    t.integer  "user_id"
+    t.string   "unit"
+    t.float    "per_unit_value"
+    t.float    "iva_value"
+    t.float    "discount"
+    t.float    "total_amount"
+    t.boolean  "payment_flag"
+    t.datetime "payment_date"
+    t.float    "discount_percentage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
+
+  create_table "gold_batches", force: true do |t|
+    t.text     "parent_batches"
+    t.float    "grams"
+    t.integer  "grade"
+    t.integer  "inventory_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "population_centers", force: true do |t|
+    t.string   "name"
+    t.decimal  "longitude"
+    t.decimal  "latitude"
+    t.string   "population_center_type"
+    t.integer  "city_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "population_center_code", null: false
+    t.string   "city_code",              null: false
+  end
+
+  add_index "population_centers", ["city_id"], name: "index_population_centers_on_city_id", using: :btree
 
   create_table "providers", force: true do |t|
     t.string   "document_number"
@@ -73,7 +124,15 @@ ActiveRecord::Schema.define(version: 20150401190653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
+    t.string   "identification_number_file"
+    t.string   "rut_file"
+    t.string   "mining_register_file"
+    t.string   "photo_file"
+    t.string   "email"
+    t.integer  "population_center_id"
   end
+
+  add_index "providers", ["population_center_id"], name: "index_providers_on_population_center_id", using: :btree
 
   create_table "purchases", force: true do |t|
     t.integer  "user_id"
@@ -87,7 +146,7 @@ ActiveRecord::Schema.define(version: 20150401190653) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.integer  "idrucom",            default: "nextval('rucoms_idrucom_seq'::regclass)", null: false
+    t.string   "idrucom",            limit: 90,                                 null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -95,9 +154,16 @@ ActiveRecord::Schema.define(version: 20150401190653) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",         default: '2015-03-31 06:22:05'
+    t.datetime "updated_at",                    default: '2015-04-04 15:57:55'
     t.string   "provider_type"
     t.string   "num_rucom"
+  end
+
+  create_table "states", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "state_code", null: false
   end
 
   create_table "users", force: true do |t|
@@ -110,6 +176,7 @@ ActiveRecord::Schema.define(version: 20150401190653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
+    t.float    "available_credits"
   end
 
 end

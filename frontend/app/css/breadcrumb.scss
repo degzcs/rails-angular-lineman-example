@@ -1,0 +1,17 @@
+//----- Breadcrumb Styles-----//
+
+.breadcrumb{
+    list-style-type: none;
+    padding-left: 10px;
+    li{
+      display: inline-block;
+      background-image: url("/img/ic_keyboard_arrow_right_white.png");
+      background-repeat: no-repeat;
+      padding-right: 35px;  /* width of the image plus a little extra padding */
+      background-position: 100% -7px;
+    }
+    li:last-child{
+      background-image: none;
+      color: #bababa;
+    }
+}

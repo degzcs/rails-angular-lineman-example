@@ -1,5 +1,30 @@
 %md-content.dashboard
   %div{layout: "row", "layout-sm" => "column"}
+    %md-card.user-card{flex:"full"}
+      %md-subheader.md-primary
+        %span User Information
+      %md-divider{inset: ""}
+      %div{layout: "row", "layout-sm" => "column"}
+        %md-item{flex: "50"}
+          %md-item-content
+            .md-tile-content
+              %span
+                %strong Name: 
+                {{currentUser.first_name}} {{currentUser.last_name}}
+        %md-item{flex: "50"}
+          %md-item-content
+            .md-tile-content
+              %span
+                %strong Email: 
+                {{currentUser.email}}
+
+      %md-divider{inset: ""}
+      %md-item
+        %md-item-content
+          .md-tile-content
+            %span 
+              %strong
+                Company:
     %md-card.credit-card{flex:"30", "flex-sm"=>"100"}
       %md-subheader.md-primary
         %span Remaining Credit
@@ -7,22 +32,10 @@
       %md-item
         %md-item-content
           .md-tile-content.credit-value
-            %span $0.0
+            %span ${{currentUser.available_credits}}
             %br
-            %md-button.md-raised.md-primary.bt-buy-credits Buy Credits
-    %md-card.user-card{flex:"full"}
-      %md-subheader.md-primary
-        %span User Information
-      %md-divider{inset: ""}
-      %md-item
-        %md-item-content
-          .md-tile-content 
-            %span Name:
-      %md-divider{inset: ""}
-      %md-item
-        %md-item-content
-          .md-tile-content 
-            %span Company:
+            %md-button.md-raised.md-primary.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
+              Buy Credits
 
   %h3 Options
   %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
@@ -32,16 +45,6 @@
       %span Inventario
   %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
     %md-button.md-raised.md-warn{"aria-label" => "Comment"}
-      %span Proovedores
+      %span Provedores
     %md-button.md-raised.md-hue-1.md-accent{"aria-label" => "Profile"}
       %span Reportes
-
-
-
-        
-            
-            
-
-
-
-    

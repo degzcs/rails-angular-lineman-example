@@ -1,0 +1,11 @@
+%md-dialog
+  %md-content.sticky-container
+    %md-subheader.md-sticky-no-effect.md-toolbar.md-primary Por favor Seleccione los creditos que desea comprar
+    .dialog-content
+      %form{:name => "creditBillingForm","ng-submit"=> "submitCreditBilling()"}
+        %md-content.md-padding
+          %md-input-container.md-default-theme{"md-no-float" => ""}
+            %input{"ng-model" => "unit", :placeholder => "cantidad", :type => "number"}
+          %md-button.login-button.md-raised.md-default-theme
+            Comprar
+

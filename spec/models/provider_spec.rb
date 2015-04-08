@@ -2,15 +2,21 @@
 #
 # Table name: providers
 #
-#  id              :integer          not null, primary key
-#  document_number :string(255)
-#  first_name      :string(255)
-#  last_name       :string(255)
-#  phone_number    :string(255)
-#  address         :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  rucom_id        :integer
+#  id                         :integer          not null, primary key
+#  document_number            :string(255)
+#  first_name                 :string(255)
+#  last_name                  :string(255)
+#  phone_number               :string(255)
+#  address                    :string(255)
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  rucom_id                   :integer
+#  identification_number_file :string(255)
+#  rut_file                   :string(255)
+#  mining_register_file       :string(255)
+#  photo_file                 :string(255)
+#  email                      :string(255)
+#  population_center_id       :integer
 #
 
 require 'spec_helper'
@@ -24,6 +30,8 @@ describe Provider do
     it {expect(provider.phone_number).not_to be_nil}
     it {expect(provider.address).not_to be_nil }
     it {expect(provider.company_info).not_to be_nil}
+    it {expect(provider.population_center_id).not_to be_nil}
+    it {expect(provider.email).not_to be_nil}
   end
 
   context "test creation" do
@@ -55,6 +63,14 @@ describe Provider do
     end
     it "should not allow to create a provider without address" do
       provider = build(:provider, address: nil)
+      expect(provider).not_to be_valid
+    end
+    it "should not allow to create a provider without population center" do
+      provider = build(:provider, population_center_id: nil)
+      expect(provider).not_to be_valid
+    end
+    it "should not allow to create a provider without email" do
+      provider = build(:provider, email: nil)
       expect(provider).not_to be_valid
     end
   end

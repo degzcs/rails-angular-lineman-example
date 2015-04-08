@@ -15,6 +15,7 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  provider_id          :integer
+#  id_number_legal_rep  :string(255)
 #
 
 class CompanyInfo < ActiveRecord::Base
@@ -27,6 +28,7 @@ class CompanyInfo < ActiveRecord::Base
   validates :country, presence: true
   validates :legal_representative, presence: true
   validates :id_type_legal_rep, presence: true
+  validates :id_number_legal_rep, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true
 end

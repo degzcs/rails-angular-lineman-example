@@ -1,0 +1,49 @@
+//----- Purchase Styles-----//
+
+md-card.seller{
+  .md-subheader{
+    margin-bottom: 10px;
+  }
+}
+.seller{
+  .photo{
+      position: relative;
+      z-index: 20;
+    .md-fab{
+      position: absolute;
+      left: 0;
+      transform: scale(.88,.88);
+    }
+
+    img.face.cam{
+      line-height: 130px; /* Equals height of image */
+      vertical-align: middle; /* Aligning vertically */
+      color: white; /* Better contrast than blue on black */
+      background: #ccc;
+      text-align: center;
+      position: relative;
+      height: 140px;
+      width: 140px;
+      border:none;
+      outline: none;
+    }
+  }
+
+  .origin-certificate{
+    margin-top: 10px;
+  }
+
+  section{
+    margin: 100px 0;
+  }
+}
+.wizard-buttons{
+  margin-top: 50px;
+}
+.purchase-container{
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1040px;
+  position: relative;
+  width: 100%;
+}

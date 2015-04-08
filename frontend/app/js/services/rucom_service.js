@@ -9,21 +9,10 @@ angular.module('app').factory('RucomService', function($resource) {
     var getCurrentRucom = function() {
         return currentRucom;
     };
+   
+    var getRucom = $resource('/api/v1/rucoms/:id', {rucomId: '@rucomId'});
 
-    var getRucom = $resource('/api/v1/rucom/:rucomId', {}, {
-      query: {
-        method: 'GET',
-        params:{rucomId:''},
-        isArray: false
-      }
-    });
-
-    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucoms', rucom_query: '@rucom_query'}, {
-      query: {
-        method: 'GET',
-        isArray: false
-      }
-    });    
+    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucoms', rucom_query: '@rucom_query'});    
 
     return {
         getCurrentRucom: getCurrentRucom,        

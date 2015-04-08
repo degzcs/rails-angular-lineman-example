@@ -51,6 +51,7 @@ module V1
             #rucoms = rucoms.paginate(:page => page, :per_page => per_page)
           else
             rucoms = ::Rucom.paginate(:page => page, :per_page => per_page)
+            header 'total_pages', rucoms.total_pages.to_s
           end
           present rucoms, with: V1::Entities::Rucom
         end
@@ -65,8 +66,8 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          provider = ::Rucom.find(params[:id])
-          present provider, with: V1::Entities::Rucom
+          rucom = ::Rucom.find(params[:id])
+          present rucom, with: V1::Entities::Rucom
         end
       end
     end

@@ -7,7 +7,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   $stateProvider.state( "home",
     url: "/home"
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'Home page'
       skip: true
     views:
@@ -26,7 +26,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   .state("scanner",
     url: "/scanner",
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'PDF scanner'
     views:
       'content':
@@ -43,12 +43,12 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   .state "dashboard",
     url: "/dashboard"
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'Dashboard'
     views:
       'content':
         templateUrl: "partials/dashboard.html"
-        controller: "DashboardCtrl" 
+        controller: "DashboardCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -63,7 +63,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   .state("new_session",
     url: "/login"
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'Login'
       skip: true
     views:
@@ -73,7 +73,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
   #  --- Providers Routes ---- #
-  
+
   .state("providers",
     url: "/provider",
     ncyBreadcrumb:
@@ -95,7 +95,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("edit_provider",
     url: "/provider/:providerId",
     ncyBreadcrumb:
-      label: 'Provider'
+      label: 'Provider Edition'
     views:
       'content':
         templateUrl: "partials/providers/edit.html"
@@ -192,7 +192,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   .state( "batches",
     url: "/inventory/all",
-    ncyBreadcrumb: 
+    ncyBreadcrumb:
       label: 'Inventory'
     views:
       'content':
@@ -288,7 +288,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("new_purchase.step1",
     url: "/step1",
     ncyBreadcrumb:
-      label: 'Datos Vendedor'
+      label: 'Provedor y Certificado de Origen'
     views:
       'content':
         templateUrl: "partials/purchases/step1.html"
@@ -302,11 +302,11 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
-  
+
   .state("new_purchase.step2",
     url: "/step2",
     ncyBreadcrumb:
-      label: 'Pesaje y compra'
+      label: 'Pesaje y Compra'
     views:
       'content':
         templateUrl: "partials/purchases/step2.html"
@@ -324,7 +324,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("new_purchase.step3",
     url: "/step3",
     ncyBreadcrumb:
-      label: 'Formulario de Factura'
+      label: 'Previsualizar Factura'
     views:
       'content':
         templateUrl: "partials/purchases/step3.html"
@@ -338,7 +338,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
-  
+
 
   $urlRouterProvider.otherwise "/home"
 

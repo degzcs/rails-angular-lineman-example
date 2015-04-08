@@ -1,0 +1,19 @@
+tr-nav-button .md-button{
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  text-align: left;
+  text-transform: none;
+  font-weight: 350;
+  border-radius: 0px!important;
+}
+
+tr-nav-button .md-button.active{
+  color: #03a9f4;
+}
+.nav-bar{
+  .sidebar-options, .session-buttons{
+    margin: 10px 0 0px 10px;
+  }
+}
