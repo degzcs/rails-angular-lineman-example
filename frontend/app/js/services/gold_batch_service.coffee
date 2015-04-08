@@ -9,6 +9,7 @@ angular.module('app').factory('GoldBatchService', ($rootScope, MeasureConverterS
     @model=
       parent_batches: ''
       grams: 0
+      law: ''
       castellanos: 0
       ozs: 0
       tomines: 0

@@ -57,6 +57,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     console.log('saving purchase state on sessionStore ... ')
     $scope.purchase.saveState()
     $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+    $scope.goldBatch.saveState()
 
 
   # Create a new purschase in the server
