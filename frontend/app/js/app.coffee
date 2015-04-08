@@ -30,7 +30,7 @@ angular.module("app", [
     if sessionStorage.restorestate == 'true'
       console.log('restoring models...')
       $rootScope.$broadcast 'restorePurchaseState'
-      $rootScope.$broadcast 'restoreGoldeBatchState'
+      $rootScope.$broadcast 'restoreGoldBatchState'
       #let everything know we need to restore state
       # sessionStorage.restorestate = false
 

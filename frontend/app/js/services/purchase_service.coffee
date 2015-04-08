@@ -30,6 +30,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
               "purchase[provider_id]": purchase.provider.id
               "gold_batch[parent_batches]": gold_batch.parent_batches
               "gold_batch[grams]": gold_batch.grams
+              "gold_batch[grade]": gold_batch.law # Which is the real name?
               "gold_batch[inventory_id]": gold_batch.inventory_id
               "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             file: file

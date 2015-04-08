@@ -7,10 +7,11 @@
       .row{'layout' => 'row'}
         .gold-amount{'flex' => ''}
           %md-input-container
-            %span Valor de un gramo peso colombiano (COP)
-            %span ${{gramUnitPrice}}
+            %h5 Valor de un gramo peso colombiano (COP)
+            %span $ {{ goldBatch.gramUnitPrice }}
       .row{'layout' => 'row'}
-        .convertion-section{'flex' => '70'}
+        .convertion-section{'flex' => '50'}
+          %h5 Medidas
           %table
             %thead
               %tr.md-table-headers-row
@@ -23,7 +24,7 @@
             %tbody
               %tr
                 %td
-                  %span Castellano(s)
+                  %p Castellano(s)
                 %td
                   %md-input-container
                     %label
@@ -32,7 +33,7 @@
                   %span {{goldBatch.castellanoUnitPrice  | number:2}}
               %tr
                 %td
-                  %span Onza(s)
+                  %p Onza(s)
                 %td
                   %md-input-container
                     %label
@@ -41,7 +42,7 @@
                   %span {{goldBatch.ozUnitPrice | number:2}}
               %tr
                 %td
-                  %span Tomine(s)
+                  %p Tomine(s)
                 %td
                   %md-input-container
                     %label
@@ -50,33 +51,33 @@
                   %span {{goldBatch.tominUnitPrice | number:2}}
               %tr
                 %td
-                  %span Rial(es)
+                  %p Rial(es)
                 %td
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.riales"}
                 %td
                   %span {{goldBatch.rialUnitPrice | number:2}}
-        .select-law{'flex' => '30'}
+        .select-law{'flex' => '20'}
           // TODO: query for laws to some X service
-          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.gold.law'}
-            %md-option{'value'=> '0'} 24 quilates
-            %md-option{'value'=> '1'} 22 quilates
-            %md-option{'value'=> '3'} 21 quilates
-            %md-option{'value'=> '4'} 18 quilates
-            %md-option{'value'=> '5'} 14 quilates
-      .row{'layout' => 'row'}
-        .grams{'flex' => '40'}
+          %h5 Ley
+          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'goldBatch.model.law'}
+            %md-option{'value'=> '24 quilates'} 24 quilates
+            %md-option{'value'=> '22 quilates'} 22 quilates
+            %md-option{'value'=> '21 quilates'} 21 quilates
+            %md-option{'value'=> '18 quilates'} 18 quilates
+            %md-option{'value'=> '14 quilates'} 14 quilates
+        .grams{'flex' => '10'}
           %md-input-container
-            %label Cantidad en Gramos
+            %h5 Cantidad en Gramos
             {{ goldBatch.model.grams | number:2}}
-        .grams{'flex' => '40'}
+        .grams{'flex' => '20'}
           %md-input-container
-            %label Precio
+            %h5 Precio
             $ {{ purchase.model.price | number:2}}
   .wizard-buttons{layout: "row"}
-    %md-button{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Anterior
-    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "create()"} PDF
-    %md-button{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previsualizar
+    %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Datos Proveedor Y Certificado de Compra
+    %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previsualizar
+
 
 

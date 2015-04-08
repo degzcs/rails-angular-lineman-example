@@ -8,22 +8,22 @@
       /   %a{"ui-sref" => "create_provider"}
       /     %md-button.md-fab.md-accent{"aria-label" => "New", 'md-ripple-size' => "partial"} +
     .row{'layout' => 'row'}
-      .photo3
+      .photo{'flex' => ''}
         %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
       .rucom{'flex' => ''}
-        %p Numero Rucom
+        %h5 Numero Rucom
         %p {{purchase.model.provider.rucom_record}}
       .document-number{'flex' => ''}
-        %p Numero de Cedula
+        %h5 Numero de Cedula
         %p {{purchase.model.provider.document_number}}
       .phone-number{'flex' => ''}
-        %p Numero de Celular
+        %h5 Numero de Celular
         %p {{purchase.model.provider.phone_number}}
       .address{'flex' => ''}
-        %p Direccion
+        %h5 Direccion
         %p {{purchase.model.provider.address}}
       .email{'flex' => ''}
-        %p Correo Electronico
+        %h5 Correo Electronico
         %p {{purchase.model.provider.email}}
 
 %section
@@ -32,13 +32,14 @@
   .purchase-info
     .row{'layout' => 'row'}
       .oc-number{'flex' => ''}
-        %p
+        %h5
           Numero de Certificado de Origen
         %p
           {{purchase.model.origin_certificate_sequence}}
   .gold-info
     .row{'layout' => 'row'}
-      .convertion-section{'flex' => '70'}
+      .convertion-section{'flex' => '50'}
+        %h5 Medidas
         %table
           %thead
             %tr.md-table-headers-row
@@ -81,21 +82,23 @@
                   {{goldBatch.model.riales}}
               %td
                 %span {{goldBatch.rialUnitPrice | number:2}}
-      .selected-law{'flex' => '30'}
+      .selected-law{'flex' => '10'}
         // TODO: query for laws to some X service
-        24 quilates
-    .row{'layout' => 'row'}
-      .grams{'flex' => '40'}
         %md-input-container
-          %label Cantidad en Gramos
-          {{ goldBatch.model.grams | number:2}}
-      .grams{'flex' => '40'}
+          %h5 Ley
+          %p {{goldBatch.model.law}}
+      .grams{'flex' => '20'}
         %md-input-container
-          %label Precio
-          $ {{ purchase.model.price | number:2}}
+          %h5 Cantidad en Gramos
+          %p {{ goldBatch.model.grams | number:2}}
+      .grams{'flex' => '20'}
+        %md-input-container
+          %h5 Precio
+          %p $ {{ purchase.model.price | number:2}}
   .wizard-buttons{layout: "row"}
-    %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Anterior
-    %md-button{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} PDF
+    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Pesos
+    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, provider.model, goldBatch.model)"} Exportar a PDF
+    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => "create()"} Guardar
 
 
 
