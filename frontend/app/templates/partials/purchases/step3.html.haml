@@ -12,19 +12,19 @@
         %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
       .rucom{'flex' => ''}
         %p Numero Rucom
-        %p {{purchase.providerInfo.rucom_number}}
+        %p {{purchase.model.provider.rucom_record}}
       .document-number{'flex' => ''}
         %p Numero de Cedula
-        %p {{purchase.providerInfo.document_number}}
+        %p {{purchase.model.provider.document_number}}
       .phone-number{'flex' => ''}
         %p Numero de Celular
-        %p {{purchase.providerInfo.phone_number}}
+        %p {{purchase.model.provider.phone_number}}
       .address{'flex' => ''}
         %p Direccion
-        %p {{purchase.providerInfo.address}}
+        %p {{purchase.model.provider.address}}
       .email{'flex' => ''}
         %p Correo Electronico
-        %p {{purchase.providerInfo.email}}
+        %p {{purchase.model.provider.email}}
 
 %section
   %md-subheader
@@ -88,11 +88,11 @@
       .grams{'flex' => '40'}
         %md-input-container
           %label Cantidad en Gramos
-          {{ castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams | number:2}}
+          {{ goldBatch.model.grams | number:2}}
       .grams{'flex' => '40'}
         %md-input-container
           %label Precio
-          $ {{ (castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams)*gramUnitPrice | number:2}}
+          $ {{ purchase.model.price | number:2}}
   .wizard-buttons{layout: "row"}
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Anterior
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} PDF

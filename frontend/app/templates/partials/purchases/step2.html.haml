@@ -59,7 +59,7 @@
                   %span {{goldBatch.rialUnitPrice | number:2}}
         .select-law{'flex' => '30'}
           // TODO: query for laws to some X service
-          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.golg.law'}
+          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.gold.law'}
             %md-option{'value'=> '0'} 24 quilates
             %md-option{'value'=> '1'} 22 quilates
             %md-option{'value'=> '3'} 21 quilates
@@ -69,11 +69,11 @@
         .grams{'flex' => '40'}
           %md-input-container
             %label Cantidad en Gramos
-            {{ castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams | number:2}}
+            {{ goldBatch.model.grams | number:2}}
         .grams{'flex' => '40'}
           %md-input-container
             %label Precio
-            $ {{ (castellanosToGrams +  ozsToGrams + tominesToGrams + rialesToGrams)*gramUnitPrice | number:2}}
+            $ {{ purchase.model.price | number:2}}
   .wizard-buttons{layout: "row"}
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Anterior
     %md-button{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => "create()"} PDF

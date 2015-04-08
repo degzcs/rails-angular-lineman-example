@@ -2,11 +2,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   # Instances
   #
+  # $scope.purchase.model = PurchaseService.restoreState
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
-  # $scope.purchase.model = PurchaseService.restoreState
-  $scope.totalGrams = '0'
-  $scope.gramUnitPrice = $scope.goldBatch.gramUnitPrice
+  $scope.totalGrams = 0
   $scope.providers  = []
 
   #Set $scope.providers
@@ -41,12 +40,17 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
-  # Watch Measures
+  # Watch and setup measures and total price
   $scope.$watch '[goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales]', ->
+
+    #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
     $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
+    $scope.goldBatch.model.grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams
+    #Price
+    $scope.purchase.model.price = $scope.goldBatch.model.grams * $scope.goldBatch.gramUnitPrice
 
 
   $scope.saveState= ->
