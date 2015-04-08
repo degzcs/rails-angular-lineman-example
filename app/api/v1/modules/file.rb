@@ -5,16 +5,12 @@ module V1
       #before_validation do
       #  authenticate!
       #end
-
+=begin
       helpers do
 
         # params to generate a purchase report
-
-
- #       params :purchase_data do
- #         optional :purchase, type: Hash , desc: 'rucom_number' , documentation: {example: 'Rock'}
-=begin
-          optional :purchase, type: Hash do
+        params :purchase_data do
+          optional :purchase, type: Hash , desc: 'purchase_report_params' , documentation: {example: 'Rock'} do
             optional :provider, type: Hash do
               optional :rucom , type: String , desc: 'rucom_number' , documentation: {example: 'Rock'}
               optional :identification_type , type: String , desc: 'identification_type' , documentation: {example: 'Rock'}
@@ -30,75 +26,111 @@ module V1
             optional :weight , type: Integer , desc: 'mineral weight' , documentation: {example: 'Rock'}
             optional :code , type: String , desc:'purchase code' , documentation: {example: 'Rock'}
           end
-=end
-          #end
+
         end
 
+        params :e_m_report do
+          optional :e_m_data , type: Hash , desc: 'e_m_certificate' , documentation: {example: 'Rock'} do
+            optional :certificate_number , type: String , desc: 'consecutive certificate number' , documentation: {example: 'Rock'}
+            optional :mining_operator , type: Hash , desc: 'mining operator' , documentation: {example: 'Rock'} do
+              optional :type , type: String , desc: 'type of mining operator' , documentation:{example: 'Rock'}
+              optional :code , type: String , desc: 'code' , documentation:{example: 'Rock'}
+              optional :name , type: String , desc: 'name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'identification number' , documentation:{example: 'Rock'}
+            end
+            optional :mineral , type: Hash, desc: 'mineral' , documentation: {example: 'Rock'} do
+              optional :state , type: String , desc: 'state (Cauca)' , documentation:{example: 'Rock'}
+              optional :city , type: String , desc: 'city (popayán)' , documentation:{example: 'Rock'}
+              optional :mineral , type: String , desc: 'mineral (oro)' , documentation:{example: 'Rock'}
+              optional :quantity , type: Integer , desc: 'mineral quantity' , documentation:{example: 'Rock'}
+              optional :unit , type: String  , desc: 'mineral quantity unit' , documentation:{example: 'Rock'}
+            end
+            optional :purchaser , type: Hash, desc: 'mineral' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'purchaser identification type' , documentation:{example: 'Rock'}
+              optional :purchaser_type , type: String , desc: 'purchaser type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'purchaser identification number' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'purchaser rucom' , documentation:{example: 'Rock'}
+            end
+          end
+        end
+
+        params :p_b_report do
+          optional :p_b_data , type: Hash , desc: 'p_b_certificate' , documentation: {example: 'Rock'} do
+            optional :certificate_number , type: String , desc: 'consecutive certificate number' , documentation: {example: 'Rock'}
+            optional :trader , type: Hash, desc: 'trader' , documentation: {example: 'Rock'} do
+              optional :rucom , type: String , desc: 'trader rucom' , documentation:{example: 'Rock'}
+              optional :name , type: String , desc: 'trader name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'trader identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'trader identification number' , documentation:{example: 'Rock'}
+            end
+            optional :purchaser , type: Hash , desc: 'purchaser' , documentation:{example: 'Rock'} do
+              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'purchaser rucom' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'purchaser identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'purchaser identification number' , documentation:{example: 'Rock'}
+            end
+            optional :mineral , type: Hash , desc: 'mineral' , documentation:{example: 'Rock'} do
+              optional :quantity , type: String , desc: 'mineral quantity' , documentation:{example: 'Rock'}
+            end
+            optional :mining_operator , type: Array , desc: 'mining operator' , documentation: {example: "[{ type: 'titular', certificate_code: '110043843848393', name: 'mineros de boyaca', identification_type: 'rut', identification_number: '129292294030302', mineral: 'Oro', quantity: '200', unit:'mg'}]"}
+          end
+        end
+
+        params :c_c_report do
+          optional :c_c_data , type: Hash , desc: 'c_c_certificate', documentation: {example: 'Rock'} do
+            optional :certificate_number , type: String , desc: 'consecutive certificate number' , documentation: {example: 'Rock'}
+            optional :city , type: String , desc: 'city' , documentation: {example: 'Rock'}
+            optional :house , type: Hash, desc: 'house' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'house name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'house identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'house identification number' , documentation:{example: 'Rock'}
+            end
+            optional :purchaser , type: Hash, desc: 'purchaser' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'purchaser identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'purchaser identification number' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'purchaser rucom' , documentation:{example: 'Rock'}
+              optional :cp , type: String , desc: 'purchaser cp' , documentation:{example: 'Rock'}
+            end
+            optional :invoices , type: Array , desc: 'invoices' , documentation: {example: "[{ number: '1101010101010101', date: Date.today.to_date, description: 'descripccion del documento', quantity: '500mg'}]"}
+          end
+        end
+
+        params :b_c_report do
+          optional :b_c_data , type: Hash , desc: 'b_c_certificate' , documentation: {example: 'Rock'} do
+            optional :city , type: String , desc: 'city' , documentation: {example: 'Rock'}
+            optional :producer , type: Hash, desc: 'producer' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'producer name' , documentation:{example: 'Rock'}
+              optional :document_number , type: String , desc: 'producer document number' , documentation:{example: 'Rock'}
+              optional :city , type: String , desc: 'producer city' , documentation:{example: 'Rock'}
+              optional :state , type: String , desc: 'producer state' , documentation:{example: 'Rock'}
+              optional :producer_type , type: String , desc: 'producer type' , documentation:{example: 'Rock'}
+            end
+            optional :mineral , type: Hash, desc: 'mineral' , documentation: {example: 'Rock'} do
+              optional :mineral , type: String , desc: 'mineral name' , documentation:{example: 'Rock'}
+              optional :quantity , type: String , desc: 'mineral quantity' , documentation:{example: 'Rock'}
+              optional :unit , type: String , desc: 'mineral quantity unit' , documentation:{example: 'Rock'}
+            end
+            optional :purchaser , type: Hash, desc: 'purchaser' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'identification number' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'rucom' , documentation:{example: 'Rock'}
+            end
+          end
+        end
+
+
+      end
+=end
 
 
       content_type :pdf , 'application/pdf'
       format :pdf
 
       resource :files do
-
-=begin
-        get 'download_file' do
-
-
-
-
-
-
-
-
-        # values reporte de compra trazoro
-
-
-
-        #test data
-        values = { provider: { rucom: '1010101949482',
-                               identification_type: 'rut',
-                               name: 'Esteban Ceron',
-                               email: 'restebance@trazoro.com',
-                               identification_number: '129292294030302',
-                               phone: '10303039503',
-                               address: 'Carrera 9N #67N - 156'
-                             },
-                   purchases: [ { type: 'castellanos',
-                                 quantity: 20,
-                                 unit_value: 2500000
-                               },
-                               {
-                                 type: 'tamines',
-                                 quantity: 200,
-                                 unit_value: 2000000
-                               },
-                               {
-                                 type: 'reales',
-                                 quantity: 5000,
-                                 unit_value: 2000000
-                               },
-                               {
-                                type: 'granos',
-                                quantity: 600000,
-                                unit_value: 404003030303
-                               }
-                               ],
-                   total: 20202020202,
-                   law: 1000,
-                   weight: 1000000,
-                   code: '11jddj29292929292'
-                  }
-        date = Date.today
-
-        # generate pdf
-          pdf = ::PdfFile.new(values , date)
-          #puts pdf.render
-          header['Content-Disposition'] = "attachment; filename=hola.pdf"
-          env['api.format'] = :pdf
-          body pdf.render
-      end
-=end
 
         get 'download_e_m_certificate' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
