@@ -573,15 +573,15 @@ module V1
                                                                  quantity: 0,
                                                                  unit_value: 2500000
                                                                 },
-                                             tamines: {
+                                             tomines: {
                                                                  quantity: 200,
                                                                  unit_value: 2000000
                                                              },
-                                             reales: {
+                                             riales: {
                                                          quantity: 5000,
                                                          unit_value: 2000000
                                                          },
-                                             granos: {
+                                             ozs: {
                                                            quantity: 600000,
                                                            unit_value: 404003030303
                                                            },
@@ -590,12 +590,13 @@ module V1
                                             price: 20202020202,
                                             law: 1000,
                                             grams: 1000000,
+                                            fine_grams: 123546,
                                             code: '11jddj29292929292'
                                           }
                }
 
-
-           #values = params[:purchase]
+           values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
+            # binding.pry
            date = Date.today
            pdf = ::PdfFile.new(values , date , 'purchase_report')
            puts ' creating purchase report ... '

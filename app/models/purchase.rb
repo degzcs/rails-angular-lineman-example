@@ -7,10 +7,10 @@
 #  provider_id                 :integer
 #  origin_certificate_sequence :string(255)
 #  gold_batch_id               :integer
-#  amount                      :float
 #  origin_certificate_file     :string(255)
 #  created_at                  :datetime
 #  updated_at                  :datetime
+#  price                       :float
 #
 
 #TODO: change column name from amount to price
@@ -28,4 +28,9 @@ class Purchase < ActiveRecord::Base
   # Fields
   #
   mount_uploader :origin_certificate_file, AttachmentUploader
+
+  # This is the uniq code assigned to this purchase
+  def reference
+    Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
+  end
 end

@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+  menu priority: 3, label: 'Usuarios'
 
   permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :password
 

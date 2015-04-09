@@ -12,8 +12,8 @@
 #  created_at               :datetime
 #  updated_at               :datetime
 #  password_digest          :string(255)
+#  available_credits        :float
 #
-
 
 class User < ActiveRecord::Base
 
