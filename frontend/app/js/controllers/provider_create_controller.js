@@ -1,72 +1,36 @@
-angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', 'CameraService', 'RucomService', function($scope, $stateParams, CameraService, RucomService){
-  //$scope.currentProvider = providerService.getCurrentProv() ? ;
-  // $scope.newProvider = {
-  //   firstName: 'Javier',
-  //   lastName: 'Suarez' ,
-  //   num_rucom: '',
-  //   rucom_record: '1234',
-  //   type: '1',
-  //   company: 'Google' ,
-  //   address: '1600 Amphitheatre Pkwy' ,
-  //   city: 'Mountain View' ,
-  //   state: 'CA' ,
-  //   biography: 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
-  //   postalCode : '94043',
-  //   photo_file: ''
-  // };
-   $scope.provider = {
-    first_Name : 'Kmilo',
-    document_number : '2163636556',
-    last_Name : 'Kmjj',
-    phone_number : '1-685-855-9776 x684',
-    address : '21205 Baumbach Island"',
-    rucom_id : '20', //Must Exist
-    email : 'corine@breitenberg.name',
-    population_center_id : '1', //Must Exist
-    photo_file: ''
-  };
+angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', 'CameraService', 'RucomService', 'ProviderService', function($scope, $stateParams, CameraService, RucomService, ProviderService){
+  
+  $scope.newProvider = {};  
+  $scope.populationCenter = {};
+  $scope.currentRucom = {};
+  var prov = {};
+
+  if ($stateParams.rucomId) {    
+    RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {      
+      console.log(rucom); 
+      RucomService.setCurrentRucom(rucom);
+      $scope.currentRucom = {
+        num_rucom: rucom.num_rucom,
+        rucom_record: rucom.rucom_record,
+        provider_type: rucom.provider_type,
+        subcontract_number: rucom.subcontract_number,
+        rucom_status: rucom.status,
+        mineral: rucom.mineral
+      };
+      console.log('Current rucom: ');
+      console.log(rucom);
+    });
+  }
+
   $scope.photo=CameraService.getLastScanImage();
   if($scope.photo){
     $scope.provider.photo_file=CameraService.getLastScanFile();
   }
-  /*
-  if($scope.photo){
-$scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_provider'));
-  }
-  */
-  //$scope.provider.photo_file=$scope.photo?CameraService.dataURItoFile($scope.photo,'photo_provider'):[];
-  
-  $scope.newCompany = {
-    nit_number: '1234567890',
-    name: 'TBBC',
-    address: 'Torres del Parque',
-    population_center: '1',
-    legal_representative: 'Leandro Ordoñez',
-    id_type_legal_rep: '1',
-    id_number_legal_rep: '1061234567',
-    email: 'lord@tbbc.com',
-    phone_number: '0987654321',
-    mineral: '',
-    status: false   
-  };
 
   $scope.id_type_legal_rep = [    
     { type: 3, name: 'CC' },
     { type: 2, name: 'Cédula de extranjería' }
   ];
-
-  $scope.newProvider = {};  
-  if ($stateParams.rucomId) {   
-    console.log("$stateParams.rucomId: " + $stateParams.rucomId);     
-    RucomService.getRucom.get({id: $stateParams.rucomId}, function(data) {
-      console.log("data.rucom");
-      console.log(data);
-      $scope.newProvider = data;
-      $scope.newCompany.mineral = data.mineral;
-      RucomService.setCurrentRucom(data);
-      console.log('Current rucom: ' + data);
-    });
-  }
 
   $scope.formTabControl = {
     selectedIndex : 0,
@@ -91,6 +55,54 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
     }
   };
 
+  $scope.save = function() {
+    console.log("click!");
+    if($stateParams.rucomId){      
+      console.log("$stateParams.rucomId: " + $stateParams.rucomId); 
+      RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
+      var prov = {
+        // id: provider.id,
+        document_number: $scope.newProvider.document_number,
+        first_name: $scope.newProvider.first_name,
+        last_name: $scope.newProvider.last_name,        
+        email: $scope.newProvider.email,
+        address: $scope.newProvider.address,
+        city: $scope.newProvider.city,
+        state: $scope.newProvider.state,
+        phone_number: $scope.newProvider.phone_number,
+        photo_file: $scope.newProvider.photo_file || ('http://robohash.org/'),
+        rucom: {
+          num_rucom: rucom.num_rucom,
+          rucom_record: rucom.rucom_record,
+          provider_type: rucom.provider_type,
+          rucom_status: rucom.status,
+          mineral: rucom.mineral
+        },
+        population_center: {
+          // id: provider.population_center.id,
+          name: $scope.populationCenter.name,
+          population_center_code: $scope.populationCenter.population_center_code,
+        }
+      };
+      if ($scope.newProvider.company_info) {
+        prov.company_info = {
+          // id: provider.company_info.id,
+          nit_number: $scope.companyInfo.nit_number,
+          name: $scope.companyInfo.company_info.name,
+          legal_representative: $scope.companyInfo.legal_representative,
+          id_type_legal_rep: $scope.companyInfo.id_type_legal_rep,
+          id_number_legal_rep: $scope.companyInfo.id_number_legal_rep,
+          email: $scope.companyInfo.email,
+          phone_number: $scope.companyInfo.phone_number
+        };
+      }
+      ProviderService.setCurrentProv(prov);
+      console.log('provider:' + prov);
+      console.log(prov);
+      });
+    }        
+  };
+
   $scope.next = function() {
     if($scope.formValidateRucom.rucomValidated){
       $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1);
@@ -102,43 +114,22 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
     $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);    
   };
 
-  $scope.validateRucom = function(){    
-    if (typeof $scope.newProvider.id !== "undefined" && ($scope.newProvider.status === 'active' || $scope.newProvider.status === 'Certificado, En eval de ren requerido')) {
-      console.log("match");
-      $scope.formValidateRucom.rucomValidated = true;
-      $scope.formTabControl.secondUnlocked = false;
-      return true;
-    } else{
-      console.log("no match");
-      $scope.formValidateRucom.rucomValidated = false;
-      $scope.formTabControl.secondUnlocked = true;
-      return false;
-    }    
-  };
+  // $scope.validateRucom = function(){    
+  //   if (typeof $scope.newProvider.id !== "undefined" && ($scope.newProvider.status === 'active' || $scope.newProvider.status === 'Certificado, En eval de ren requerido')) {
+  //     console.log("match");
+  //     $scope.formValidateRucom.rucomValidated = true;
+  //     $scope.formTabControl.secondUnlocked = false;
+  //     return true;
+  //   } else{
+  //     console.log("no match");
+  //     $scope.formValidateRucom.rucomValidated = false;
+  //     $scope.formTabControl.secondUnlocked = true;
+  //     return false;
+  //   }    
+  // };
+
   $scope.create = function(){
     ProviderService.create($scope.provider);
   };
-
-  // $scope.providerTypes = [
-  //   { type: 1, name: 'Comercializador' },
-  //   { type: 2, name: 'Titular' },
-  //   { type: 3, name: 'Solicitante Legalización De Minería' },    
-  //   { type: 2, name: 'Beneficiario Área Reserva Especial' },
-  //   { type: 1, name: 'Consumidor' },
-  //   { type: 1, name: 'Barequero' },
-  //   { type: 2, name: 'Subcontrato de formalización' },
-  //   { type: 3, name: 'Planta de Beneficio' }    
-  // ];
-
-  // $scope.statusType = [
-  //   { type: 1, name: 'Certificado' },
-  //   { type: 2, name: 'Rechazado' },
-  //   { type: 3, name: 'En trámite, pendiente de evaluación' },    
-  //   { type: 4, name: 'Certificado, En eval de ren requerido' }    
-  // ];
-
-
-
-
 
 }]);
