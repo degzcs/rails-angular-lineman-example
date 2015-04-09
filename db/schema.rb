@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20150409072033) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "total_amount",        default: 0.0,   null: false
+    t.float    "discount",            default: 0.0,   null: false
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree

@@ -16,7 +16,20 @@
 ActiveAdmin.register CreditBilling do
   menu priority: 5, label: 'Facturacion de Usuarios'
 
-  actions :index, :show , :edit , :update
+
+  member_action :send_billing do
+    credit_billing = CreditBilling.find(params[:id])
+    CreditBillingMailer.credit_billing_email(credit_billing).deliver
+    redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente" 
+  end
+  
+  member_action :new_billing do
+    @credit_billing = CreditBilling.find(params[:id])
+    @user = @credit_billing.user
+  end
+
+  actions :index , :edit , :update , :lock , :billing
+
   permit_params :payment_flag, :payment_date, :discount_percentage
 
   index do
@@ -30,11 +43,11 @@ ActiveAdmin.register CreditBilling do
       credit.payment_flag? ? status_tag( "Pagado", :ok ) : status_tag( "Sin Pago" )
     end
     column "Fecha de pago",:payment_date 
-    column("TOTAL", :total_amount) do |credit|
-      credit.total_amount - credit.discount
-    end
+    column("TOTAL", :total_amount)
     
-    actions
+    actions defaults: true do |credit_billing|
+      link_to 'Facturar' , new_billing_admin_credit_billing_path(credit_billing.id)
+    end
   end
 
   filter :user_email ,:as => :string
@@ -47,9 +60,9 @@ ActiveAdmin.register CreditBilling do
 
   form do |f|
     f.inputs "Detalles de Factura" do
-      f.input :payment_flag ,label: "Factura Pagada"
-      f.input :payment_date , as: :datepicker, datepicker_options: { max_date: "D" }
-      f.input :discount_percentage
+      f.input :discount_percentage, label: "% Descuento"
+      f.input :payment_flag ,label: "Marcar como pagada"
+      f.input :payment_date , as: :datepicker, datepicker_options: { max_date: "D" }, label: "Fecha de pago"
     end
     f.actions
   end

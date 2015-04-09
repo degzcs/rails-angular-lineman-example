@@ -54,9 +54,9 @@ describe 'Credit Billing', :type => :request do
             expected_response = {
               unit: 200,
               per_unit_value: 1000.0,
-              iva_value: 0.0,
+              iva_value: 200 * 1000.0 * 0.16,
               discount: 0.0,
-              total_amount: 0.0,
+              total_amount: 200 * 1000.0,
               payment_flag: false,
               payment_date: nil,
               discount_percentage: 0.0
