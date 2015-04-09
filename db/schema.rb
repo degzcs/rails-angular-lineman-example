@@ -78,12 +78,9 @@ ActiveRecord::Schema.define(version: 20150408044007) do
 
   create_table "credit_billings", force: true do |t|
     t.integer  "user_id"
-    t.string   "unit"
+    t.integer  "unit"
     t.float    "per_unit_value"
-    t.float    "iva_value"
-    t.float    "discount"
-    t.float    "total_amount"
-    t.boolean  "payment_flag"
+    t.boolean  "payment_flag",        default: false
     t.datetime "payment_date"
     t.float    "discount_percentage"
     t.datetime "created_at"
@@ -146,7 +143,7 @@ ActiveRecord::Schema.define(version: 20150408044007) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                                 null: false
+    t.string   "idrucom",            limit: 90,                   null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -154,7 +151,7 @@ ActiveRecord::Schema.define(version: 20150408044007) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2015-04-08 03:40:49'
+    t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
   end
