@@ -19,6 +19,15 @@ angular.module('app').factory('CameraService', function($window) {
         files.push(dataURItoFile($datarUrl,'file'+files.length+'.png'));
         console.log(files);
     };
+//Method to remove scan files
+    var removeScanFile= function(){
+        if(images && images.length>0){
+           images.splice(images.length-1,1);     
+        }
+        if(files && files.length>0){
+           files.splice(files.length-1,1);     
+        }
+    };  
 //Method to get the scanned files
     var getScanFiles=function(){
         console.log("files"+files);
@@ -120,6 +129,7 @@ var dataURItoFile=function dataURItoFile(dataURI,fileName) {
     return {
         hasUserMedia: hasUserMedia(),
         addScanFile:  addScanFile,
+        removeScanFile: removeScanFile,
         getUserMedia: getUserMedia,
         getMediaSources: getMediaSources,
         playVideo: playVideo,

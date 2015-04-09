@@ -4,8 +4,11 @@
 #
 #  id                  :integer          not null, primary key
 #  user_id             :integer
-#  unit                :integer
+#  unit                :string(255)
 #  per_unit_value      :float
+#  iva_value           :float
+#  discount            :float
+#  total_amount        :float
 #  payment_flag        :boolean
 #  payment_date        :datetime
 #  discount_percentage :float
