@@ -98,7 +98,7 @@
   / %object{:data => "{{pdfContent}}", :type => "application/pdf"}
   .wizard-buttons{layout: "row"}
     %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Pesos
-    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, provider.model, goldBatch.model)"} Exportar a PDF
+    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
     %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => "create()"} Guardar
 
 

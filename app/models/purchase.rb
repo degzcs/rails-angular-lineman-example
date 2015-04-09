@@ -28,4 +28,9 @@ class Purchase < ActiveRecord::Base
   # Fields
   #
   mount_uploader :origin_certificate_file, AttachmentUploader
+
+  # This is the uniq code assigned to this purchase
+  def reference
+    Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
+  end
 end
