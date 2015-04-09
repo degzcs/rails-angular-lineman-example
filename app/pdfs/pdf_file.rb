@@ -403,39 +403,42 @@ class PdfFile < Prawn::Document
     move_down 22
     text_box "#{values[:provider][:email]}", :at => [300,cursor], :width => 150
 
-    values[:purchases].each do |purchase|
-      case purchase[:type]
-        when 'castellanos'
-          move_cursor_to 410
-          text_box "#{purchase[:quantity]}" , :at => [280 , cursor] , :width => 100
-          text_box "#{purchase[:unit_value]}", :at => [400 , cursor], :width => 100
-        when 'tamines'
-          move_cursor_to 386
-          text_box "#{purchase[:quantity]}" , :at => [280 , cursor] , :width => 100
-          text_box "#{purchase[:unit_value]}", :at => [400 , cursor], :width => 100
-        when 'reales'
-          move_cursor_to 365
-          text_box "#{purchase[:quantity]}" , :at => [280 , cursor] , :width => 100
-          text_box "#{purchase[:unit_value]}", :at => [400 , cursor], :width => 100
-        when 'granos'
-          move_cursor_to 345
-          text_box "#{purchase[:quantity]}" , :at => [280 , cursor] , :width => 100
-          text_box "#{purchase[:unit_value]}", :at => [400 , cursor], :width => 100
-        else
-      end
+
+    if values[:gold_batch][:castellanos][:quantity] != 0
+      move_cursor_to 410
+      text_box "#{values[:gold_batch][:castellanos][:quantity]}" , :at => [280 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:castellanos][:unit_value]}", :at => [400 , cursor], :width => 100
+    end
+
+    if values[:gold_batch][:tamines][:quantity] != 0
+      move_cursor_to 386
+      text_box "#{values[:gold_batch][:tamines][:quantity]}" , :at => [280 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:tamines][:unit_value]}", :at => [400 , cursor], :width => 100
+    end
+
+    if values[:gold_batch][:reales][:quantity] != 0
+      move_cursor_to 365
+      text_box "#{values[:gold_batch][:reales][:quantity]}" , :at => [280 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:reales][:unit_value]}", :at => [400 , cursor], :width => 100
+    end
+
+    if values[:gold_batch][:granos][:quantity] != 0
+      move_cursor_to 345
+      text_box "#{values[:gold_batch][:granos][:quantity]}" , :at => [280 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:granos][:unit_value]}", :at => [400 , cursor], :width => 100
     end
 
     move_cursor_to 320
-    text_box "#{values[:total]}" , :at => [180 , cursor] , :width => 150
+    text_box "#{values[:purchase][:price]}" , :at => [180 , cursor] , :width => 150
 
     move_down 60
-    text_box "#{values[:law]}" , :at => [240 , cursor] , :width => 150
+    text_box "#{values[:purchase][:law]}" , :at => [240 , cursor] , :width => 150
 
     move_down 60
-    text_box "#{values[:weight]}" , :at => [230 , cursor] , :width => 150
+    text_box "#{values[:purchase][:grams]}" , :at => [230 , cursor] , :width => 150
 
     move_cursor_to 105
-    text_box "#{values[:code]}" , :at => [70 , cursor] , :width => 150
+    text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
 
   end
 

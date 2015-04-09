@@ -19,7 +19,7 @@ FactoryGirl.define do
     provider_id 1
     origin_certificate_sequence {Faker::Code.isbn}
     gold_batch_id 1
-    amount 1.5
+    price 1.5
     origin_certificate_file {"MyString"}
   end
 

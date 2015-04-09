@@ -2,9 +2,9 @@ module V1
   module Modules
     class File <  Grape::API
 
-      before_validation do
-       authenticate!
-      end
+     # before_validation do
+     #  authenticate!
+     # end
 =begin
       helpers do
 
@@ -560,49 +560,49 @@ module V1
           #granos
           # hash
 
-          # values = { provider: { rucom: '1010101949482',
-          #                                      identification_type: 'rut',
-          #                                      name: 'Esteban Ceron',
-          #                                      email: 'restebance@trazoro.com',
-          #                                      identification_number: '129292294030302',
-          #                                      phone: '10303039503',
-          #                                      address: 'Carrera 9N #67N - 156'
-          #                                },
-          #                gold_batch: {
-          #                                   castellanos:{
-          #                                                       quantity: 20,
-          #                                                       unit_value: 2500000
-          #                                                      },
-          #                                   tamines: {
-          #                                                       quantity: 200,
-          #                                                       unit_value: 2000000
-          #                                                   },
-          #                                   reales: {
-          #                                               quantity: 5000,
-          #                                               unit_value: 2000000
-          #                                               },
-          #                                   granos: {
-          #                                                 quantity: 600000,
-          #                                                 unit_value: 404003030303
-          #                                                 },
-          #                                  },
-          #                 purchase:{
-          #                                  price: 20202020202,
-          #                                  law: 1000,
-          #                                  grams: 1000000,
-          #                                  code: '11jddj29292929292'
-          #                                }
-          #     }
+           values = { provider: { rucom: '1010101949482',
+                                                identification_type: 'rut',
+                                                name: 'Esteban Ceron',
+                                                email: 'restebance@trazoro.com',
+                                                identification_number: '129292294030302',
+                                                phone: '10303039503',
+                                                address: 'Carrera 9N #67N - 156'
+                                          },
+                          gold_batch: {
+                                             castellanos:{
+                                                                 quantity: 0,
+                                                                 unit_value: 2500000
+                                                                },
+                                             tamines: {
+                                                                 quantity: 200,
+                                                                 unit_value: 2000000
+                                                             },
+                                             reales: {
+                                                         quantity: 5000,
+                                                         unit_value: 2000000
+                                                         },
+                                             granos: {
+                                                           quantity: 600000,
+                                                           unit_value: 404003030303
+                                                           },
+                                            },
+                           purchase:{
+                                            price: 20202020202,
+                                            law: 1000,
+                                            grams: 1000000,
+                                            code: '11jddj29292929292'
+                                          }
+               }
 
 
-          #values = params[:purchase]
-          # date = Date.today
-          # pdf = ::PdfFile.new(values , date , 'purchase_report')
-          # #puts pdf.render
-          # header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
-          # env['api.format'] = :pdf
-          # body pdf.render
-          render json: {test: 'teste'}
+           #values = params[:purchase]
+           date = Date.today
+           pdf = ::PdfFile.new(values , date , 'purchase_report')
+           puts ' creating purchase report ... '
+           header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
+           env['api.format'] = :pdf
+           body pdf.render
+          #render json: {test: 'teste'}
         end
 
       end
