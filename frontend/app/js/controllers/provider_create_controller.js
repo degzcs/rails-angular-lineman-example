@@ -25,10 +25,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     population_center_id : '1', //Must Exist
     photo_file: ''
   };
-  $scope.photo=CameraService.getLastScanImage();
-  if($scope.photo){
-    $scope.provider.photo_file=CameraService.getLastScanFile();
-  }
+ 
   /*
   if($scope.photo){
 $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_provider'));
@@ -68,7 +65,12 @@ $scope.provider.photo_file.push(CameraService.dataURItoFile($scope.photo,'photo_
     });
   }
 
-  $scope.formTabControl = {
+ $scope.photo=CameraService.getLastScanImage();
+  if($scope.photo){
+    $scope.newProvider.photo_file=CameraService.getLastScanFile();
+  }  
+  
+$scope.formTabControl = {
     selectedIndex : 0,
     secondUnlocked : true,
     firstLabel : "Provider info",

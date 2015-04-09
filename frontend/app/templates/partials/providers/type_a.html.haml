@@ -9,11 +9,12 @@
     %form{:name => "providerForm", "novalidate" => "true"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}        
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-          .md-tile-left{:flex => "10"}
-            %md-button.md-fab.md-accent{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} + 
-              %md-tooltip{"md-visible" => "demo.showTooltip"}
-                Photo
-                %span.ion-android-checkmark-circle 
+          .md-tile-left.cam{:flex => "10"}
+            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} +
+              %img.face.cam{:ng-src => "{{photo}}"}  
+                %md-tooltip{"md-visible" => "demo.showTooltip"}
+                  Photo
+                  %span.ion-android-checkmark-circle
           %md-input-container{:flex => "25"}
             %label First name
             %input{"ng-model" => "newProvider.name"}

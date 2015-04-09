@@ -46,6 +46,9 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                 };
                 $scope.comeBack=function(){
                     //console.log("all the files "+ CameraService.getScanFiles());
+                    if($scope.isForCamera === 'Photo'){
+                        $scope.addScanFile();
+                    }
                     window.history.back();
                 };
                 $scope.showConfirmAdd = function(ev) {
