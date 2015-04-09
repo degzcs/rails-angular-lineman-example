@@ -18,7 +18,7 @@ angular.module('app')
                     return;
                 }
                 dimensions={w1:scope.w1,h1:scope.h1};
-                CameraService.playVideo(dimensions);
+                //CameraService.playVideo(dimensions);
 
             }
         };
