@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408044007) do
+ActiveRecord::Schema.define(version: 20150409072033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,9 +82,10 @@ ActiveRecord::Schema.define(version: 20150408044007) do
     t.float    "per_unit_value"
     t.boolean  "payment_flag",        default: false
     t.datetime "payment_date"
-    t.float    "discount_percentage"
+    t.float    "discount_percentage", default: 0.0,   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "total_amount",        default: 0.0,   null: false
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
@@ -121,11 +122,11 @@ ActiveRecord::Schema.define(version: 20150408044007) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
-    t.string   "email"
     t.string   "identification_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
+    t.string   "email"
     t.integer  "population_center_id"
   end
 
@@ -151,7 +152,7 @@ ActiveRecord::Schema.define(version: 20150408044007) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2015-04-04 15:57:55'
+    t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
   end
