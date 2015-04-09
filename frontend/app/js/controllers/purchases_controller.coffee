@@ -64,5 +64,5 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
   $scope.createPDF =  (purchase, provider, goldBatch)->
-    PdfService.createPurchaseInvoice(purchase, provider, goldBatch)
+    $scope.pdfContent = PdfService.createPurchaseInvoice(purchase, provider, goldBatch)
 

@@ -598,7 +598,7 @@ module V1
            #values = params[:purchase]
            date = Date.today
            pdf = ::PdfFile.new(values , date , 'purchase_report')
-           puts pdf.render
+           puts ' creating purchase report ... '
            header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
            env['api.format'] = :pdf
            body pdf.render
