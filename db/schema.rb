@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409072033) do
+ActiveRecord::Schema.define(version: 20150409223128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,19 @@ ActiveRecord::Schema.define(version: 20150409072033) do
     t.string   "id_number_legal_rep"
   end
 
+  create_table "couriers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "company_name"
+    t.string   "address"
+    t.string   "nit_company_number"
+    t.string   "id_document_type"
+    t.string   "id_document_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "credit_billings", force: true do |t|
     t.integer  "user_id"
     t.integer  "unit"
@@ -86,7 +99,6 @@ ActiveRecord::Schema.define(version: 20150409072033) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "total_amount",        default: 0.0,   null: false
-    t.float    "discount",            default: 0.0,   null: false
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree

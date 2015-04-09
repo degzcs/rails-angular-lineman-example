@@ -4,16 +4,14 @@
 #
 #  id                  :integer          not null, primary key
 #  user_id             :integer
-#  unit                :string(255)
+#  unit                :integer
 #  per_unit_value      :float
-#  iva_value           :float
-#  discount            :float
-#  total_amount        :float
-#  payment_flag        :boolean
+#  payment_flag        :boolean          default(FALSE)
 #  payment_date        :datetime
-#  discount_percentage :float
+#  discount_percentage :float            default(0.0), not null
 #  created_at          :datetime
 #  updated_at          :datetime
+#  total_amount        :float            default(0.0), not null
 #
 
 require 'spec_helper'
