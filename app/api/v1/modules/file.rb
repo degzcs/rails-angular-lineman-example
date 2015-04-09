@@ -547,7 +547,7 @@ module V1
 
 
 
-        get 'download_purchase_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_purchase_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
             #requires :purchase ,type: Hash
