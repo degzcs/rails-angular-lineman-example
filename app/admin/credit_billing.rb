@@ -16,6 +16,18 @@
 ActiveAdmin.register CreditBilling do
   menu priority: 5, label: 'Facturacion de Usuarios'
 
+  member_action :update_payment, method: :patch do
+    @credit_billing = CreditBilling.find(params[:id])
+    @user = @credit_billing.user
+    available_credits = @user.available_credits
+
+    @credit_billing.update(params.require(:credit_billing).permit(:payment_flag, :payment_date, :discount_percentage))
+    @user.available_credits = available_credits + @credit_billing.unit 
+    @user.save!
+
+    redirect_to admin_credit_billings_path, notice: "La factura fue marcada como pagada satisfactoriamente" 
+  end
+
   member_action :mark do
     @credit_billing = CreditBilling.find(params[:id])
   end

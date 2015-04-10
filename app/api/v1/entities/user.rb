@@ -5,6 +5,7 @@ module V1
       expose :first_name, documentation: { type: "string", desc: " First user name", example: "Lourdez" }
       expose :last_name, documentation: { type: "string", desc: "Last user name", example: "Astre" }
       expose :email, documentation: { type: "string", desc: "email", example: "lourdezastre@test.com" }
+      expose :document_number, documentation: { type: "string", desc: "email", example: "lourdezastre@test.com" }
       expose :access_token, documentation: { type: "string", desc: "email", example: "lourdezastre@test.com" } do |user, options|
         user.create_token
       end

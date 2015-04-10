@@ -1,4 +1,4 @@
-<%= form_for @credit_billing, url: admin_credit_billing_path do |f| %>
+<%= form_for @credit_billing, :url => update_payment_admin_credit_billing_path ,:action => :put do |f| %>
   <h2>Ingrese la fecha en la que el usuario pago esta factura</h2>
   <%= f.date_field :payment_date , required: "" %>
   <%= f.hidden_field :payment_flag, :value => true%>
