@@ -5,17 +5,6 @@
       %md-subheader
         %span Datos del Proveedor
       .row{'layout' => 'row'}
-        %md-item-content
-        / .main-fab
-        /   %a{"ui-sref" => "create_provider"}
-        /     %md-button.md-fab.md-accent{"aria-label" => "New", 'md-ripple-size' => "partial"} +
-      .row{'layout' => 'row'}
-        .select-provider{'flex' => ''}
-          // TODO: query to the endpoint for all provider ids and names (maybe use Graper Transformer)
-          %md-select{"md-on-open" => "providers", "ng-model" => "purchase.model.provider", :style => "min-width: 200px;"}
-            %md-select-label {{ purchase.model.provider ? purchase.model.provider.name : 'Seleccione un Proveedor' }}
-            %md-option{"ng-repeat" => "provider in providers", "ng-value" => "provider"} {{provider.name}}
-
         .photo{'flex' => ''}
           %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
           %a{'ng-href' => "#scanner"}
@@ -23,6 +12,21 @@
               %md-tooltip{"md-visible" => "demo.showTooltip"}
                 Agregar Foto
                 %span.ion-android-checkmark-circle
+
+        .select-provider{'flex' => ''}
+          {{purchase.model.provider}}
+          %md-content{"class"=>"md-padding autocomplete", "layout"=>"column"}
+            %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
+              %md-autocomplete{"md-selected-item"=>"selectedProvider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
+                %span{"md-highlight-text" => "searchText"} {{provider.name}}
+
+        .create-provider{'flex' => ''}
+          %a{'ng-href' => "#provider"}
+            %md-button.md-fab.md-accent{} +
+              %md-tooltip{"md-visible" => "demo.showTooltip"}
+                Crear Proveedor
+                %span.ion-android-checkmark-circle
+
   %md-divider.margined
   %section
     .origin-certificate

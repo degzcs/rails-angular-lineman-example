@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService, $timeout, $q) ->
   #
   # Instances
   #
@@ -6,9 +6,33 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
-  $scope.providers  = []
 
-  #Set $scope.providers
+  $scope.allProviders  = []
+  $scope.selectedProvider = null
+  $scope.searchText = null
+  # window.s = $scope
+  #
+  # Fuctions
+  #
+
+  #
+  # Search one specific provider into the allProviders array
+  # @return [Array] with the matched options with the query
+  $scope.searchProvider = (query)->
+    console.log 'query: ' + query
+    results = if query then $scope.allProviders.filter(createFilterFor(query)) else []
+    results
+
+  #
+  # Create filter function for a query string, just filte by document number field
+  #@returns [Function] with the provider
+  createFilterFor = (query) ->
+    lowercaseQuery = angular.lowercase(query)
+    (provider) ->
+      provider.document_number.indexOf(lowercaseQuery) != -1
+
+  #
+  # all providers
   ProviderService.retrieveProviders.query {
     per_page: 100
     page: 1
@@ -30,14 +54,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-      $scope.providers.push prov
+      $scope.allProviders.push prov
       i++
   ), (error) ->
 
-  # window.m = $scope.purchase.model
-  #
-  # Fuctions
-  #
+  # Set the last picture that was took
   $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
   # Watch and setup measures and total price
@@ -53,17 +74,21 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     #Price
     $scope.purchase.model.price = $scope.goldBatch.model.totalGrams * $scope.goldBatch.gramUnitPrice
 
-
+  #
+  # Save the values in SessionStorage
   $scope.saveState= ->
     console.log('saving purchase state on sessionStore ... ')
     $scope.purchase.saveState()
     $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
     $scope.goldBatch.saveState()
 
+  #
   # Create a new purschase in the server
   $scope.create = (data) ->
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
+  #
+  #  Send a predefined values to create a Purchase in PDF format
   $scope.createPDF =  (purchase, provider, goldBatch)->
     goldBatchForPDF=
       castellanos: {quantity: $scope.goldBatch.model.castellanos, unit_value:  $scope.goldBatch.castellanoUnitPrice}
