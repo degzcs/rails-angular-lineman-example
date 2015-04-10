@@ -2,7 +2,6 @@
 #
 # Table name: rucoms
 #
-#  id                 :integer          not null, primary key
 #  idrucom            :string(90)       not null
 #  rucom_record       :text
 #  name               :text
@@ -11,9 +10,10 @@
 #  location           :text
 #  subcontract_number :text
 #  mining_permit      :text
-#  updated_at         :datetime         default(2015-04-04 15:57:55 UTC)
+#  updated_at         :datetime
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
+#  id                 :integer          not null, primary key
 #
 
 require 'spec_helper'
