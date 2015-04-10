@@ -12,6 +12,7 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  total_amount        :float            default(0.0), not null
+#  discount            :float            default(0.0), not null
 #
 
 require 'spec_helper'

@@ -1,10 +1,14 @@
 angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, CurrentUser, CreditBilling, $mdDialog, $log) ->
-  #Get the current user logged!
+  
+  # Get the current user logged!
+  
   $scope.newCreditBilling = {}
   $scope.unit = null
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
 
+  
+  # Shows a form that allows to the user choose an amount of credits
   $scope.showCreditBillingForm = (ev) ->
     $mdDialog.show(
       controller: "DashboardCtrl"
@@ -17,6 +21,7 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
       return
     return
 
+  # Ask if the ammount chosen was correct and prevents an empty value 
   $scope.confirmCreditBilling = ->
     if($scope.unit != null)
       confirm = $mdDialog.confirm()
@@ -28,14 +33,13 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
         $scope.submitCreditBilling()
         return
       ), ->
-        $scope.alert = 'You decided to keep your debt.'
+        $scope.alert = 'None value chosen.'
         return
 
     else
       $scope.infoAlert('Hubo un problema',"No selecciono una cantidad de creditos")
     
-
-
+  # Submit the credit billing and if it gets saved shows a dialog alert
   $scope.submitCreditBilling = ->
 
     $scope.newCreditBilling = {
@@ -48,6 +52,8 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
     ).error (data, status, headers, config) ->
       $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud')
 
+
+  #Dialgo alert helper
   $scope.infoAlert = (title,content)->
     $mdDialog.show $mdDialog.alert()
       .title(title)
@@ -55,4 +61,3 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
       .ok('hecho!')
       duration: 2
     return
-

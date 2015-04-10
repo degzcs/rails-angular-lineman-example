@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: credit_billings
-#
-#  id                  :integer          not null, primary key
-#  user_id             :integer
-#  unit                :string(255)
-#  per_unit_value      :float
-#  iva_value           :float
-#  discount            :float
-#  total_amount        :float
-#  payment_flag        :boolean
-#  payment_date        :datetime
-#  discount_percentage :float
-#  created_at          :datetime
-#  updated_at          :datetime
-#
 module V1
   module Modules
     class CreditBilling <  Grape::API
