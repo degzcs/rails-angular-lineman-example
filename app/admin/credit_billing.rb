@@ -16,6 +16,13 @@
 ActiveAdmin.register CreditBilling do
   menu priority: 5, label: 'Facturacion de Usuarios'
 
+  member_action :mark do
+    @credit_billing = CreditBilling.find(params[:id])
+  end
+
+  member_action :edit_discount do
+    @credit_billing = CreditBilling.find(params[:id])
+  end
 
   member_action :send_billing do
     credit_billing = CreditBilling.find(params[:id])
@@ -44,10 +51,17 @@ ActiveAdmin.register CreditBilling do
     end
     column "Fecha de pago",:payment_date 
     column("TOTAL", :total_amount)
-    
-    actions defaults: true do |credit_billing|
-      link_to 'Facturar' , new_billing_admin_credit_billing_path(credit_billing.id)
+
+    actions defaults: false, dropdown: true do |credit_billing|
+      if credit_billing.payment_flag
+        item 'Factura pagada!'
+      else
+        item "Descuento", edit_discount_admin_credit_billing_path(credit_billing.id)
+        item "Facturar" , new_billing_admin_credit_billing_path(credit_billing.id) 
+        item 'Marcar como pagado' , mark_admin_credit_billing_path(credit_billing.id) 
+      end
     end
+
   end
 
   filter :user_email ,:as => :string

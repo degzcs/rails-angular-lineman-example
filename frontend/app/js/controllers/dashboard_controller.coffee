@@ -1,7 +1,7 @@
 angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, CurrentUser, CreditBilling, $mdDialog, $log) ->
   #Get the current user logged!
   $scope.newCreditBilling = {}
-
+  $scope.unit = null
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
 
@@ -17,6 +17,25 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
       return
     return
 
+  $scope.confirmCreditBilling = ->
+    if($scope.unit != null)
+      confirm = $mdDialog.confirm()
+        .title('Confirmacion solicitud de creditos')
+        .content("Esta seguro de comprar #{$scope.unit} por un total de #{$scope.unit*1000} pesos")
+        .ariaLabel('Lucky day').ok('Solicitar Factura').cancel('Cancelar')
+        
+      $mdDialog.show(confirm).then (->
+        $scope.submitCreditBilling()
+        return
+      ), ->
+        $scope.alert = 'You decided to keep your debt.'
+        return
+
+    else
+      $scope.infoAlert('Hubo un problema',"No selecciono una cantidad de creditos")
+    
+
+
   $scope.submitCreditBilling = ->
 
     $scope.newCreditBilling = {
@@ -25,16 +44,15 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
     }
 
     CreditBilling.create($scope.newCreditBilling).success((data) ->
-      $mdDialog.show $mdDialog.alert()
-        .title('Felicitaciones!')
-        .content('Sus creditos han sido solicitados satisfactoriamente, en momentos sera enviado el recibo de consignacion a su correo electronico')
-        .ok('hecho!')
-        duration: 2
-      return
+      $scope.infoAlert('Felicitaciones!', 'Sus creditos han sido solicitados satisfactoriamente, en momentos sera enviado el recibo de consignacion a su correo electronico')
     ).error (data, status, headers, config) ->
-      $mdDialog.show $mdDialog.alert()
-        .title('EEROR')
-        .content('No se pudo realizar la solicitud')
-        .ok('hecho!')
-        duration: 2
-      return
+      $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud')
+
+  $scope.infoAlert = (title,content)->
+    $mdDialog.show $mdDialog.alert()
+      .title(title)
+      .content(content)
+      .ok('hecho!')
+      duration: 2
+    return
+
