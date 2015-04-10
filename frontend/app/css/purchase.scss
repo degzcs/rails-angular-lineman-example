@@ -5,6 +5,14 @@ md-card.seller{
     margin-bottom: 10px;
   }
 }
+.create-provider{
+    .md-fab{
+      position: absolute;
+      top: 0;
+      // right: 10px;
+      transform: scale(.88,.88);
+    }
+}
 .row{
   .photo{
       position: relative;
@@ -49,6 +57,9 @@ md-card.seller{
   max-width: 1040px;
   position: relative;
   width: 100%;
+.md-table-td-more {
+   padding: 5px;
+}
 }
 
 /////

@@ -3,18 +3,28 @@
 %section
   .seller
     %md-subheader
-      %span Datos del Proveedor
-%md-content{"class"=>"md-padding autocomplete", "layout"=>"row"}
-  .select-provider{'flex' => ''}
-    %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
-      %md-autocomplete{"md-selected-item"=>"selectedProvider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
-        %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
-  .create-provider{'flex' => ''}
-    %a{'ng-href' => "#provider"}
-      %md-button.md-fab.md-accent{} +
-        %md-tooltip{"md-visible" => "demo.showTooltip"}
-          Crear Proveedor
-          %span.ion-android-checkmark-circle
+      %span Datos del Proveedor y Certificado de Origen
+//----------------------Provider Column
+%md-content{"class"=>"md-padding autocomplete", "layout"=>"row", "layout-sm" => "column"}
+  %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
+    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"row"}
+      .select-provider{'flex' => 80}
+        %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
+          %md-autocomplete{"md-selected-item"=>"selectedProvider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
+            %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+      .create-provider{'flex' =>20}
+        %a{'ng-href' => "#provider"}
+          %md-button.md-fab.md-accent{} +
+            %md-tooltip{"md-visible" => "demo.showTooltip"}
+              Crear Proveedor
+              %span.ion-android-checkmark-circle
+    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
+      %span
+        Nombre : {{selectedProvider.name}}
+      %span
+        CC : {{selectedProvider.document_number}}
+
+  //------------------Photo and Certificate Column
   %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center center"}
     .row
       .photo{'flex' => ''}
@@ -26,9 +36,6 @@
               %span.ion-android-checkmark-circle
 
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"end center"}
-      .origin-certificate{'flex' => ''}
-        %md-subheader
-          %span Certificado de Origen
       .oc-number{'flex' => ''}
         %md-input-container.md-input-has-value
           %label Numero Certificado de Origen
