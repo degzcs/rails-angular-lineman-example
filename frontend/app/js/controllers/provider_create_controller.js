@@ -104,7 +104,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   $scope.photo=CameraService.getLastScanImage();
   if($scope.photo){
-    $scope.provider.photo_file=CameraService.getLastScanFile();
+    $scope.newProvider.photo_file=CameraService.getLastScanFile();
   }
 
   LocationService.getStates.query({}, function(states) {
