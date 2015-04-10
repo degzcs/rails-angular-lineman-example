@@ -1,0 +1,19 @@
+Datos de Factura Trazoro
+===============================================
+ 
+Datos de usuario,
+
+Nombre: <%= "#{@user.firstname @user.lastname}" %>.
+Numero de Documento: <%= @user.document_number%>.
+
+Datos de Factura,
+
+Creditos Solicitados: <%=@credit_billing.unit%>.
+Valor Credito         <%=@credit_billing.per_unit_value%>
+Descuento:            <%=@credit_billing.discount%>.
+                      ------------------------------
+TOTAL:                 <%=@credit_billing.total_amount%>
+ 
+
+INFORMACION SOBRE COMO CONSIGNAR
+......
