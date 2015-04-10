@@ -34,23 +34,24 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       i++
   ), (error) ->
 
-  window.m = $scope.purchase.model
+  # window.m = $scope.purchase.model
   #
   # Fuctions
   #
   $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
   # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales]', ->
+  $scope.$watch '[goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
     $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
-    $scope.goldBatch.model.grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams
+    $scope.grams = $scope.goldBatch.model.grams
+    $scope.goldBatch.model.totalGrams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
     #Price
-    $scope.purchase.model.price = $scope.goldBatch.model.grams * $scope.goldBatch.gramUnitPrice
+    $scope.purchase.model.price = $scope.goldBatch.model.totalGrams * $scope.goldBatch.gramUnitPrice
 
 
   $scope.saveState= ->
@@ -69,7 +70,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       tomines: {quantity: $scope.goldBatch.model.tomines, unit_value:  $scope.goldBatch.tominUnitPrice}
       riales: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.rialUnitPrice}
       ozs: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.ozUnitPrice}
-      # gramos: {quantity: $scope.goldBatch.model.gramos, $cope....} # TODO
+      gramos: {quantity: $scope.goldBatch.model.grams, unit_value:  $scope.goldBatch.gramUnitPrice}
     provider = purchase.provider
     purchase.provider=[]
 

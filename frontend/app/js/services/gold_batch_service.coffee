@@ -9,12 +9,12 @@ angular.module('app').factory('GoldBatchService', ($rootScope, MeasureConverterS
     @model=
       parent_batches: ''
       grams: 0
-      law : ''
       castellanos: 0
       ozs: 0
       tomines: 0
       riales: 0
       inventory_id: '1'
+      totalGrams: 0
 
     #
     # Save and restore model temporal states
