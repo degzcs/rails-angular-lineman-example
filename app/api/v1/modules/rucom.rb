@@ -17,9 +17,6 @@ module V1
         end
 
         params :rucom_query do
-          # optional :num_rucom, type: String
-          # optional :rucom_record, type: String
-          # optional :sub_num, type: String
           optional :rucom_query, type: String
         end
 
