@@ -55,11 +55,11 @@ describe 'Credit Billing', :type => :request do
               unit: 200,
               per_unit_value: 1000.0,
               iva_value: 200 * 1000.0 * 0.16,
-              discount: nil,
-              total_amount: 200 * 1000.0 ,
+              discount: 0.0,
+              total_amount: 200 * 1000.0,
               payment_flag: false,
               payment_date: nil,
-              discount_percentage: nil
+              discount_percentage: 0.0
             }
 
             post '/api/v1/credit_billings', {credit_billing: new_values}, { "Authorization" => "Barer #{@token}" }

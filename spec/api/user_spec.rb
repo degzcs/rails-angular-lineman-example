@@ -16,7 +16,8 @@ describe 'Auth', :type => :request do
            "last_name"=>@user.last_name,
            "email"=>"elcho.esquillas@fake.com",
            "access_token"=> @token,
-           "available_credits"=> @user.available_credits
+           "available_credits"=> @user.available_credits,
+           "document_number"=>@user.document_number
           }
 
           get '/api/v1/users/me', {},{ "Authorization" => "Barer #{@token}" }

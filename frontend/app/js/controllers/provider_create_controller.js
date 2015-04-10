@@ -4,7 +4,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   $scope.populationCenter = {};
   $scope.currentRucom = {};
   $scope.companyInfo = null;
-  $scope.newProvider.company_info = true;
+  $scope.newProvider.company_info = false;
     $scope.rucomIDField = {
     label: 'RUCOM Number',
     field: 'num_rucom'
@@ -123,6 +123,11 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     firstLabel : "Provider info",
     secondLabel : "Company info"
   };
+
+ $scope.photo=CameraService.getLastScanImage();
+  if($scope.photo){
+    $scope.newProvider.photo_file=CameraService.getLastScanFile();
+  }  
 
   $scope.formValidateRucom = {    
     rucomValidated : false,    

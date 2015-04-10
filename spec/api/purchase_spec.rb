@@ -17,7 +17,7 @@ describe 'Purchase', :type => :request do
            "user_id"=>1,
            "provider_id"=>1,
            "gold_batch_id" => 1,
-           "amount" => 1.5,
+           "price" => 1.5,
            "origin_certificate_file" => {'url' => "#{Rails.root}/spec/uploads/purchase/origin_certificate_file/1/image.png"},
            "origin_certificate_sequence"=>"123456789",
           }
@@ -35,7 +35,7 @@ describe 'Purchase', :type => :request do
            "user_id"=>1,
            "provider_id"=>1,
            "gold_batch_id" => new_gold_batch_values["id"],
-           "amount" => 1.5,
+           "price" => 1.5,
            "origin_certificate_file" => @file,
            "origin_certificate_sequence"=>"123456789",
           }

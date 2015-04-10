@@ -6,37 +6,38 @@
 #  user_id             :integer
 #  unit                :integer
 #  per_unit_value      :float
-#  payment_flag        :boolean
+#  payment_flag        :boolean          default(FALSE)
 #  payment_date        :datetime
-#  discount_percentage :float
+#  discount_percentage :float            default(0.0), not null
 #  created_at          :datetime
 #  updated_at          :datetime
+#  total_amount        :float            default(0.0), not null
 #
 
 class CreditBilling < ActiveRecord::Base
   belongs_to :user
   after_initialize :init
+  before_save :calculate_total
 
   validates :user_id, presence: true
   validates :unit, presence: true
   validates :per_unit_value, presence: true
+  validates :discount_percentage, presence: { message: "El porcentaje de descuento debe ser un valor entre 0 y 100" },  :inclusion => 0..100
   #validates :payment_flag, presence: true
 
-  def total_amount 
-    total = self.unit * self.per_unit_value
-  end
 
   def iva_value
     self.total_amount * 0.16
   end
 
-  def discount 
-    (self.total_amount * self.discount_percentage/100) if self.discount_percentage
-  end
-
   protected 
     def init
       self.per_unit_value = 1000  
-      self.payment_flag = false
+    end
+    def calculate_total
+      subtotal = self.unit * self.per_unit_value
+      discount = subtotal * self.discount_percentage/100
+      self.discount = discount
+      self.total_amount = subtotal - discount
     end
 end

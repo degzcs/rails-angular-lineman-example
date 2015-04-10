@@ -13,7 +13,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
       provider: ''
       origin_certificate_sequence: ''
       origin_certificate_file: ''
-
+      law: ''
     #
     # HTTP resquests
     #

@@ -1,20 +1,29 @@
-%div{:layout => "column"}
-  %div{:layout => "row", :layout-align => "center center"}
-    %div{:flex => "20"}  
-      %md-select{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
-        %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
-  %div.camera{:layout => "row", :layout-align => "center center"}
-    %video.camera{:autoplay => ""}
-  %br
-  %div{:layout => "row"}  
-    %div{:flex => "65",:layout => "row", :layout-align => "center center"}
-      %div{:flex => "20"}
+%div{:layout => "row"}
+  %div{:layout => "column"}  
+    %br
+    %div{:layout => "row", :layout-align => "center center",:layout-margin =>""}
+      %div{:flex => "50"}
         %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()"} Capturar
-      %div{:flex => "20"}
-        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "addScanFile()"} Agregar al Documento
-    %div{:flex => "25"} 
+      %div{:flex => "30",:ng-hide => "isForCamera === 'Photo'",:layout-margin =>""}
+        %md-button.md-raised.md-primary.md-default-theme.md-primary{"aria-label" => "Photo", :md-ripple-size => "partial","ng-click" => "showConfirmAdd($event)"} 
+          %span.ion-android-add
+        %md-button.md-raised.md-primary.md-default-theme.md-primary{"aria-label" => "Photo", :md-ripple-size => "partial","ng-click" => "showConfirmRemove($event)"}
+          %span..ion-android-delete
+    %div{:layout => "row", :layout-align => "center center",:ng-hide => "isForCamera === 'Photo'"}
+      {{number}} pages    
+    %div{:layout => "row", :layout-align => "center center",:layout-margin =>""}
+      %canvas{}
+    %div{:layout => "row", :layout-align => "center center",:layout-margin =>""}
       %button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "comeBack()"} Finalizar
-  %br
-  %div{:layout => "row", :layout-align => "center center"}
-    %canvas{}
-  %div{"ng-transclude" => ""}
+  %div{:layout => "column",:flex => "60"}
+    %div{:layout => "row", :layout-align => "center center"}
+      %div{:flex => "25"}  
+        %md-select{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
+          %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
+      %div{:flex => "25"}    
+        %md-checkbox{:ng-model => "isForCamera",:ng-true-value => "'Photo'", :ng-false-value => "'Documents'",:ng-click => "changeParameter(options.value)"}
+          {{isForCamera}}    
+    %div.camera{:layout => "row", :layout-align => "center center"}
+      %video.camera{:autoplay => ""}
+    %br
+    %div{"ng-transclude" => ""}

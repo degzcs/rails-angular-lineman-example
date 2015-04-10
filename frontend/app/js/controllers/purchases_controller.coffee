@@ -64,5 +64,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
   $scope.createPDF =  (purchase, provider, goldBatch)->
-    PdfService.createPurchaseInvoice(purchase, provider, goldBatch)
+    goldBatchForPDF=
+      castellanos: {quantity: $scope.goldBatch.model.castellanos, unit_value:  $scope.goldBatch.castellanoUnitPrice}
+      tomines: {quantity: $scope.goldBatch.model.tomines, unit_value:  $scope.goldBatch.tominUnitPrice}
+      riales: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.rialUnitPrice}
+      ozs: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.ozUnitPrice}
+      # gramos: {quantity: $scope.goldBatch.model.gramos, $cope....} # TODO
+    provider = purchase.provider
+    purchase.provider=[]
+
+    $scope.pdfContent = PdfService.createPurchaseInvoice(purchase, provider, goldBatchForPDF)
 

@@ -2,19 +2,20 @@
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
       {{ formTabControl.firstLabel }}
-    %md-tab#tab2{"ng-if" => "newProvider.company_info", "aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
+    %md-tab#tab2{"ng-if" => "!newProvider.company_info", "aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
     %form{:name => "providerCreateForm", "novalidate" => "true"}
-      #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}        
+      #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-          .md-tile-left{:flex => "10"}
-            %md-button.md-fab.md-accent{"aria-label" => "Photo", "ng-model" => "newProvider.photo_file", :md-ripple-size => "partial"} + 
-              %md-tooltip{"md-visible" => "demo.showTooltip"}
-                Photo
-                %span.ion-android-checkmark-circle 
-          %md-input-container{:flex => ""}
+          .md-tile-left.cam{:flex => "10"}
+            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} +
+              %img.face.cam{:ng-src => "{{photo}}"}  
+                %md-tooltip{"md-visible" => "demo.showTooltip"}
+                  Photo
+                  %span.ion-android-checkmark-circle
+          %md-input-container{:flex => "25"}
             %label First name
             %input{"ng-model" => "newProvider.first_name"}
           %md-input-container{:flex => ""}
@@ -63,7 +64,7 @@
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
             %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
-    #tab2-content{"ng-if" => "newProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
+    #tab2-content{"ng-if" => "!newProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
       %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
         %md-input-container{:flex => ""}
           %label Company Name

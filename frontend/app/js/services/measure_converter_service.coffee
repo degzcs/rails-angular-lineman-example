@@ -10,7 +10,7 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # @return [Float]
     #
     castellanosToGrams: (catellanos)->
-      catellanos/4.6
+      catellanos*4.6
 
     #
     # Convert from Ounces to Grams
@@ -19,7 +19,7 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # @return [Float]
     #
     ozsToGrams: (ozs)->
-      ozs/31.1035
+      ozs*31.1035
 
     #
     # Convert from Tomines to Grams
@@ -28,7 +28,7 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # @return [Float]
     #
     tominesToGrams: (tomines)->
-      (tomines*8)/4.6
+      (tomines*4.6)/8
 
     #
     # Convert from Riales to Grams
@@ -37,7 +37,7 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # @return [Float]
     #
     rialesToGrams: (riales)->
-      (riales*16)/4.6
+      (riales*4.6)/16
 
     #
     # Get the Unit price for castellanos from the gram unit price
