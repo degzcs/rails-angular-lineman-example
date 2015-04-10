@@ -28,10 +28,12 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {      
       console.log(rucom); 
       RucomService.setCurrentRucom(rucom);
+      $scope.newProvider.first_name = rucom.name;
       $scope.currentRucom = {
         id: rucom.id,
         num_rucom: rucom.num_rucom,
         rucom_record: rucom.rucom_record,
+        name: rucom.name,
         provider_type: rucom.provider_type,
         subcontract_number: rucom.subcontract_number,
         rucom_status: rucom.status,
