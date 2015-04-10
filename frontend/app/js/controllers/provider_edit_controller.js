@@ -254,7 +254,6 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       default:
         break;
     }
-    
   }
 
   // end Autocomplete management

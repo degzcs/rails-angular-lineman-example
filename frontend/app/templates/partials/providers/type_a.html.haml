@@ -1,12 +1,12 @@
-%div{:layout => "column"}  
+%div{:layout => "column"}
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
       {{ formTabControl.firstLabel }}
-    %md-tab{"ng-disabled" => "true"}
+    %md-tab#tab2{"ng-if" => "newProvider.company_info", "aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
       {{ formTabControl.secondLabel }}
-     
+      
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providerForm", "novalidate" => "true"}
+    %form{:name => "providerCreateForm", "novalidate" => "true"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}        
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left{:flex => "10"}
@@ -14,33 +14,23 @@
               %md-tooltip{"md-visible" => "demo.showTooltip"}
                 Photo
                 %span.ion-android-checkmark-circle 
-          %md-input-container{:flex => "25"}
+          %md-input-container{:flex => ""}
             %label First name
             %input{"ng-model" => "newProvider.first_name"}
           %md-input-container{:flex => ""}
             %label Last name
             %input{"ng-model" => "newProvider.last_name"}                            
-          %md-input-container{:flex => ""}          
+          %md-input-container{:flex => "15"}          
             %label Document number
             %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
               %div{"ng-messages" => "providerForm.document_number.$error"}
-                %div{"ng-message" => "required"} This is required.                    
+                %div{"ng-message" => "required"} This is required.
+          %md-input-container{:flex => "15"}
+            %label {{rucomIDField.label}}
+            %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
+            %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+              %span.ion-android-checkmark-circle &nbsp;válido
         %div{:layout => "", "layout-sm" => "column"}
-          %md-input-container{"ng-if" => "newProvider.num_rucom !== ''", :flex => "15"}
-            %label RUCOM number            
-            %input{"ng-model" => "currentRucom.num_rucom", "ng-readonly" => "true"}
-            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "left", "md-visible" => "formTabControl.secondUnlocked"} 
-              %span.ion-android-checkmark-circle &nbsp;Verificado   
-          %md-input-container{"ng-if" => "newProvider.rucom_record !== ''", :flex => "15"}
-            %label RUCOM record
-            %input{"ng-model" => "currentRucom.rucom_record", "ng-readonly" => "true"}
-            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "left", "md-visible" => "formTabControl.secondUnlocked"} 
-              %span.ion-android-checkmark-circle &nbsp;Verificado   
-          %md-input-container{"ng-if" => "currentRucom.subcontract_number !== ''", :flex => "15"}
-            %label Subcontract number
-            %input{"ng-model" => "newProvider.subcontract_number", "ng-readonly" => "true"}
-            %md-tooltip{"ng-if" => "validateRucom()", "md-direction" => "left", "md-visible" => "formTabControl.secondUnlocked"} 
-              %span.ion-android-checkmark-circle &nbsp;Verificado                                     
           %md-input-container{:flex => ""}
             %label Provider type
             %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
@@ -51,28 +41,62 @@
                 %div{"ng-message" => "required"} This is required. 
           %md-input-container{:flex => "17"}
             %label Phone Number
-            %input{"ng-model" => "newProvider.phone_number", :placeholder => "(3XX) XXX XXXXX"}          
-        %md-content.md-padding            
-        %div{:layout => "", "layout-sm" => "column"}
+            %input{"ng-model" => "newProvider.phone_number", :placeholder => "(3XX) XXX XXXXX"}
           %md-input-container{:flex => ""}
             %label Email
-            %input{"ng-model" => "newProvider.email", :type => "email"}          
-          %md-input-container{:flex => ""}
+            %input{"ng-model" => "newProvider.email", :type => "email"}           
+        %md-content.md-padding            
+        %br          
+        %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+          %md-input-container{:flex => "25"}
             %label Address
             %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR X XX - XX"}
+          %md-autocomplete{:required => "true", :flex => "20", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
+            %span{"md-highlight-text" => "searchState"} {{state.name}}
+          %md-autocomplete{:required => "true", :flex => "20", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
+            %span{"md-highlight-text" => "searchCity"} {{city.name}}
+          %md-autocomplete{:required => "true", :flex => "20", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
+            %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
+        %br
+        %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
+          %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
+            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
+            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
+            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
+    #tab2-content{"ng-if" => "newProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
+      %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
+        %md-input-container{:flex => ""}
+          %label Company Name
+          %input{:readonly => "true", "ng-model" => "newProvider.company_info.name"}
+        %md-input-container{:flex => ""}
+          %label NIT
+          %input{:readonly => "true", "ng-model" => "newProvider.company_info.nit_number"}
+      %md-content.md-padding
+        %div{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
-            %label City
-            %input{"ng-model" => "newProvider.city"}
+            %label Legal Representative
+            %input{:readonly => "true", "ng-model" => "newProvider.company_info.legal_representative"}
           %md-input-container{:flex => ""}
-            %label State
-            %input{"ng-model" => "newProvider.state"}
-        %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-          %div{:flex => ""}              
-          %md-button{:class => "md-raised md-primary", "ng-click" => ""} Cancel
-          &nbsp;
-          %md-button{:class => "md-raised md-primary md-accent", "ng-click" => "save()"} Save 
-      #tab2-content{"aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
-        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}          
-        %md-content.md-padding
-          %div{:layout => "", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+            %label Legal Representative ID
+            %input{:readonly => "true", "ng-model" => "newProvider.company_info.id_number_legal_rep"}
+          %md-input-container
+            %label Legal Rep. ID Type
+            %input{:readonly => "true", "ng-model" => "newProvider.company_info.id_type_legal_rep"}
+        %div{:layout => "", "layout-sm" => "column"}
+          %md-input-container{:flex => ""}
+            %label Phone Number
+            %input{:required => "true", :name => "company_phone_number", "ng-model" => "newProvider.company_info.phone_number", :placeholder => "(555) 555 5555"}
+            %div{"ng-messages" => "providerEditionForm.company_phone_number.$error"}
+              %div{"ng-message" => "required"} This is required
+          %md-input-container{:flex => ""}
+            %label E-mail
+            %input{:required => "true", :type => "email", :name => "company_email", "ng-model" => "newProvider.company_info.email", :placeholder => "mail@example.com"}
+            %div{"ng-messages" => "providerCreateForm.company_email.$error"}
+              %div{"ng-message" => "required"} This is required
+              %div{"ng-message" => "email"} Enter a valid email
+        %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+          %div{:layout => "row", :flex => "", "layout-align" => "start center"}
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
+          %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
+            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
