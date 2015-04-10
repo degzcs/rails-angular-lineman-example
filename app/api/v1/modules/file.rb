@@ -158,22 +158,23 @@ module V1
 
 
           #test data
-          values = { certificate_number: '1292924838434',
+          #ready , no borrar
+          values = { certificate_number: '1292924838434101010101010101',
                      mining_operator: {type: 'subcontrato',
-                                       code: '110043843848393' ,
-                                       name: 'mineros de boyaca' ,
-                                       identification_type: 'rut' ,
-                                       identification_number: '129292294030302'},
-                     mineral: { state: 'cauca' ,
-                                city: 'popayan' ,
-                                mineral: 'Oro' ,
-                                quantity: 25000 ,
-                                unit: 'mg' } ,
-                     purchaser:{ name: 'compradores oro ltda' ,
-                                 identification_type: 'nit',
+                                       code: '110043843848393 1919191919191919191919191' ,
+                                       name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
+                                       identification_type: 'cedula de ciudadania' ,
+                                       identification_number: '129292294030302 129292294030302 129292294030302'},
+                     mineral: { state: 'cauca cauca cauca cauca cauca cauca cauca' ,
+                                city: 'popayan popayan popayan popayan popayan popayan' ,
+                                mineral: 'Oro Oro Oro Oro Oro Oro Oro Oro Oro Oro Oro' ,
+                                quantity: 2500000000000000000000000000000000000000 ,
+                                unit: 'miligramos tamines castellanos miligramos tamines' } ,
+                     purchaser:{ name: 'compradores oro ltda compradores oro ltda' ,
+                                 identification_type: 'rut',
                                  purchaser_type: 'consumidor' ,
-                                 identification_number: '1018458483' ,
-                                 rucom: '10139348989'}
+                                 identification_number: '1018458483 1018458483 1018458483 1018458483' ,
+                                 rucom: '10139348989 10139348989 10139348989'}
                     }
 
           date = Date.today
@@ -209,26 +210,26 @@ module V1
 
 
           #test data
-
-          values = { certificate_number: '1292924838434',
-                     trader: { rucom: '110043843848393' ,
-                               name: 'mineros de boyaca' ,
+          # ready no borrar
+          values = { certificate_number: '1292924838434 1010101383 1010101010101',
+                     trader: { rucom: '110043843848393 118181818181 1010101010101' ,
+                               name: 'mineros de boyaca mineros de boyaca' ,
                                identification_type: 'cedula de extranjeria',
-                               identification_number: '129292294030302'},
-                     purchaser:{ name: 'compradores oro ltda',
+                               identification_number: '129292294030302 818118172171'},
+                     purchaser:{ name: 'compradores oro ltda compradores oro ltda',
                                  identification_type: 'cedula de extranjeria',
-                                 identification_number: '1018458483',
-                                 rucom: '10139348989'},
-                     mineral: { quantity: '200 mg'},
+                                 identification_number: '1018458483 1818117171',
+                                 rucom: '10139348989 17171718181'},
+                     mineral: { quantity: '200 mg 200 mg 200 mg 200 mg'},
                      mining_operator: [{
                                            type: 'titular',
-                                           certificate_code: '110043843848393',
-                                           name: 'mineros de boyaca',
+                                           certificate_code: '110043843848393 1919191',
+                                           name: 'mineros de boyaca mineros boyaca',
                                            identification_type: 'rut',
-                                           identification_number: '129292294030302',
-                                           mineral: 'Oro',
-                                           quantity: '200',
-                                           unit:'mg'},
+                                           identification_number: '129292294030302 22828282',
+                                           mineral: 'Oro Oro Oro Oro',
+                                           quantity: '200 200 2000',
+                                           unit:'mg mg mg mg'},
                                        {
                                            type: 'beneficiario',
                                            certificate_code: '110043843848393-2',
@@ -330,24 +331,24 @@ module V1
           # 2015-04-06
 
           #test data
-
-          values = { certificate_number: '1292924838434',
-                     city: 'popayan',
-                     house: { name: 'mineros de boyaca' ,
-                              identification_type: 'rut',
-                              identification_number: '129292294030302'
+          # ready , no borrar
+          values = { certificate_number: '1292924838434 928282824747474',
+                     city: 'popayan popayan popayan popayan',
+                     house: { name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
+                              identification_type: 'cedula de ciudadania',
+                              identification_number: '12929229403030222828282828282828282828'
                      },
-                     purchaser:{ name: 'compradores oro ltda',
-                                 identification_type: 'rut',
-                                 identification_number: '1018458483',
-                                 rucom: '10139348989',
-                                 cp: '1393902020202'
+                     purchaser:{ name: 'compradores oro ltda compradores oro ltda compradores oro ltda',
+                                 identification_type: 'nit',
+                                 identification_number: '1018458483 1018458483 1018458483 1018458483',
+                                 rucom: '10139348989 10139348989 10139348989',
+                                 cp: '1393902020202 1393902020202 1393902020202'
                      },
                      invoices: [{
-                                    number: '1101010101010101',
+                                    number: '1101010101010101 1101010101010101',
                                     date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
+                                    description: 'descripccion del documento descripccion del',
+                                    quantity: '500mg 500mg 500mg 500mg'
                                 },
                                 {
                                     number: '1102010101010101',
@@ -515,22 +516,22 @@ module V1
 
           # purchaser_entity --> identification_type
           # cedula de ciudadania
-          # cedula de extrangeria
+          # cedula de extranjeria
           # nit
           # rut
           # test data
-
+          # ready
           values = { city: 'Popayan',
                      producer:{ name: 'Francisco Fuentes',
                                 document_number: '1061742777',
-                                city: 'piendamo',
-                                state: 'cauca',
-                                producer_type: 'chatarrero' },
+                                city: 'Piendamo',
+                                state: 'Cauca',
+                                producer_type: 'barequero' },
                      mineral:{ mineral: 'Oro',
                                quantity: 200 ,
                                unit: 'mg'} ,
                      purchaser:{ name: 'compradores oro ltda',
-                                 identification_type: 'rut',
+                                 identification_type: 'cedula de extranjeria',
                                  identification_number: '1018458483',
                                  rucom: '10139348989'}
                      }
