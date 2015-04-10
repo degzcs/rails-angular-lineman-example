@@ -80,6 +80,8 @@ module V1
         ]  do
           content_type "text/json"
           credit_billing = ::CreditBilling.new(params[:credit_billing])
+          #m
+          credit_billing.discount = 0.0
           if credit_billing.save
             present credit_billing, with: V1::Entities::CreditBilling
           else
