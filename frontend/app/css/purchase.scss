@@ -5,13 +5,13 @@ md-card.seller{
     margin-bottom: 10px;
   }
 }
-.seller{
+.row{
   .photo{
       position: relative;
       z-index: 20;
     .md-fab{
       position: absolute;
-      left: 0;
+      top: 0;
       transform: scale(.88,.88);
     }
 

@@ -1,50 +1,45 @@
 //---------------------- Provider and Origin Certificate TAB ---------------------------------------
 %form{:name => "purchase-form"}
-  %section
-    .seller
-      %md-subheader
-        %span Datos del Proveedor
-      .row{'layout' => 'row'}
-        .photo{'flex' => ''}
-          %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
-          %a{'ng-href' => "#scanner"}
-            %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
-              %md-tooltip{"md-visible" => "demo.showTooltip"}
-                Agregar Foto
-                %span.ion-android-checkmark-circle
+%section
+  .seller
+    %md-subheader
+      %span Datos del Proveedor
+%md-content{"class"=>"md-padding autocomplete", "layout"=>"row"}
+  .select-provider{'flex' => ''}
+    %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
+      %md-autocomplete{"md-selected-item"=>"selectedProvider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
+        %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+  .create-provider{'flex' => ''}
+    %a{'ng-href' => "#provider"}
+      %md-button.md-fab.md-accent{} +
+        %md-tooltip{"md-visible" => "demo.showTooltip"}
+          Crear Proveedor
+          %span.ion-android-checkmark-circle
+  %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center center"}
+    .row
+      .photo{'flex' => ''}
+        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
+        %a{'ng-href' => "#scanner"}
+          %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
+            %md-tooltip{"md-visible" => "demo.showTooltip"}
+              Agregar Foto
+              %span.ion-android-checkmark-circle
 
-        .select-provider{'flex' => ''}
-          {{purchase.model.provider}}
-          %md-content{"class"=>"md-padding autocomplete", "layout"=>"column"}
-            %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
-              %md-autocomplete{"md-selected-item"=>"selectedProvider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
-                %span{"md-highlight-text" => "searchText"} {{provider.name}}
-
-        .create-provider{'flex' => ''}
-          %a{'ng-href' => "#provider"}
-            %md-button.md-fab.md-accent{} +
-              %md-tooltip{"md-visible" => "demo.showTooltip"}
-                Crear Proveedor
-                %span.ion-android-checkmark-circle
-
-  %md-divider.margined
-  %section
-    .origin-certificate
-      %md-subheader
-        %span Certificado de Origen
-      .row{'layout' => 'row'}
-        .oc-number{'flex' => 50}
-          %md-input-container.md-input-has-value
-            %label Numero Certificado de Origen
-            %input{"ng-model" => "purchase.model.origin_certificate_sequence"}
-        .oc-number{'layout' => 'row', 'layout-align'=>'end center'}
-          %span
-            {{purchase.model.origin_certificate_file[0].name}}
-      .row{'layout' => 'row', 'layout-align'=>'end center'}
-        .upload-oc
-          .button-action.md-padding
-            %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
-              %md-icon{"md-svg-icon"=>"file:file_upload"}
-              Subir Certificado
-  .wizard-buttons{layout: "row"}
-    %md-button.md-primary.md-hue-2{flex: "100", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Ingresar Pesos
+    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"end center"}
+      .origin-certificate{'flex' => ''}
+        %md-subheader
+          %span Certificado de Origen
+      .oc-number{'flex' => ''}
+        %md-input-container.md-input-has-value
+          %label Numero Certificado de Origen
+          %input{"ng-model" => "purchase.model.origin_certificate_sequence"}
+      .oc-number{'flex' => ''}
+        %span
+          {{purchase.model.origin_certificate_file[0].name}}
+      .upload-oc{'flex' => ''}
+        .button-action.md-padding
+          %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
+            %md-icon{"md-svg-icon"=>"file:file_upload"}
+            Subir Certificado
+      .wizard-buttons{'flex' => ''}
+        %md-button.md-primary.md-hue-2{flex: "100", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Ingresar Pesos
