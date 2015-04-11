@@ -41,6 +41,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       prov =
         id: providers[i].id
         document_number: providers[i].document_number
+        company_name: 'company name test'
+        nit: 'NIT number'
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
