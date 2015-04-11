@@ -2,12 +2,13 @@
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
       {{ formTabControl.firstLabel }}
-    %md-tab#tab2{"ng-if" => "!newProvider.company_info", "aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
+    %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "!newProvider.has_company"}
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
     %form{:name => "providerCreateForm", "novalidate" => "true"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
+        %md-content.md-padding
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
             %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} +
@@ -24,7 +25,7 @@
           %md-input-container{:flex => "15"}          
             %label Document number
             %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
-              %div{"ng-messages" => "providerForm.document_number.$error"}
+              %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                 %div{"ng-message" => "required"} This is required.
           %md-input-container{:flex => "15"}
             %label {{rucomIDField.label}}
@@ -38,7 +39,7 @@
           %md-input-container{:flex => ""}
             %label Status
             %input{:name => "status", "ng-model" => "currentRucom.rucom_status", "ng-readonly" => "true",  :required => ""}
-              %div{"ng-messages" => "providerForm.status.$error"}
+              %div{"ng-messages" => "providerCreateForm.status.$error"}
                 %div{"ng-message" => "required"} This is required. 
           %md-input-container{:flex => "17"}
             %label Phone Number
@@ -60,29 +61,39 @@
             %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
         %br
         %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
+          %div{:flex => ""}
+            %md-input-container{:flex => ""}
+              %md-checkbox{"aria-label" => "Disabled", "ng-model" => "newProvider.has_company", "ng-change" => "check()"} It is a company?    
           %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
             %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
-            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
-    #tab2-content{"ng-if" => "!newProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
+            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", "ng-if" => "newProvider.has_company", :class => "md-raised md-primary", "ng-click" => "next()"} Next
+    #tab2-content{"ng-if" => "newProvider.has_company", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
       %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
         %md-input-container{:flex => ""}
           %label Company Name
-          %input{:readonly => "true", "ng-model" => "newProvider.company_info.name"}
+          %input{:readonly => "true", "ng-model" => "newProvider.company_info.name", :required => ""}
+            %div{"ng-messages" => "providerCreateForm.nit_number.$error"}
+              %div{"ng-message" => "required"} This is required. 
         %md-input-container{:flex => ""}
           %label NIT
-          %input{:readonly => "true", "ng-model" => "newProvider.company_info.nit_number"}
+          %input{:name => "nit_number", "ng-model" => "newProvider.company_info.nit_number", :required => ""}
+            %div{"ng-messages" => "providerCreateForm.nit_number.$error"}
+              %div{"ng-message" => "required"} This is required. 
       %md-content.md-padding
         %div{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
             %label Legal Representative
-            %input{:readonly => "true", "ng-model" => "newProvider.company_info.legal_representative"}
+            %input{:name => "legal_representative", "ng-model" => "newProvider.company_info.legal_representative", :required => ""}
+            %div{"ng-messages" => "providerCreateForm.legal_representative.$error"}
+              %div{"ng-message" => "required"} This is required.
+          %md-select.layout-padding{:flex => "15", "ng-model" => "newProvider.company_info.id_type_legal_rep", :placeholder => "Legal Rep. ID Type"}
+            %md-option{"ng-repeat" => "type in idTypeLegalRep", "ng-value" => "type.name"} {{ type.name }}
           %md-input-container{:flex => ""}
             %label Legal Representative ID
-            %input{:readonly => "true", "ng-model" => "newProvider.company_info.id_number_legal_rep"}
-          %md-input-container
-            %label Legal Rep. ID Type
-            %input{:readonly => "true", "ng-model" => "newProvider.company_info.id_type_legal_rep"}
+            %input{:name => "id_number_legal_rep", "ng-model" => "newProvider.company_info.id_number_legal_rep", :required => ""}
+            %div{"ng-messages" => "providerCreateForm.id_number_legal_rep.$error"}
+              %div{"ng-message" => "required"} This is required.          
         %div{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
             %label Phone Number
@@ -101,3 +112,4 @@
           %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
             %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
+
