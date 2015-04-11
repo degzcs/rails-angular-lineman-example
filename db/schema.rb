@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20150409223128) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                   null: false
+    t.string   "idrucom",            limit: 90,                                 null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 20150409223128) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: "now()"
+    t.datetime "updated_at",                    default: '2015-04-10 01:25:41'
     t.string   "provider_type"
     t.string   "num_rucom"
   end
