@@ -8,7 +8,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.totalGrams = 0
 
   $scope.allProviders  = []
-  $scope.selectedProvider = null
+  # $scope.selectedProvider = null
   $scope.searchText = null
   window.s = $scope
   #

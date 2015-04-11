@@ -42,7 +42,7 @@ ActiveAdmin.register CreditBilling do
     @user = @credit_billing.user
   end
 
-  actions :index , :edit , :update , :lock , :billing , :destroy
+  actions :index , :edit , :update , :lock , :billing
 
   permit_params :payment_flag, :payment_date, :discount_percentage
 
@@ -59,7 +59,7 @@ ActiveAdmin.register CreditBilling do
     column "Fecha de pago",:payment_date 
     column("TOTAL", :total_amount)
 
-    actions defaults: true, dropdown: true do |credit_billing|
+    actions defaults: false, dropdown: true do |credit_billing|
       if credit_billing.payment_flag
         item 'Factura pagada!'
       else
