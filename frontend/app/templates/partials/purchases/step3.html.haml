@@ -1,4 +1,4 @@
-%section
+%md-content{"class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center center"}
   .provider-nfo
     %md-subheader
       %p Datos del Proveedor
@@ -8,94 +8,107 @@
       /   %a{"ui-sref" => "create_provider"}
       /     %md-button.md-fab.md-accent{"aria-label" => "New", 'md-ripple-size' => "partial"} +
     .row{'layout' => 'row'}
-      .photo{'flex' => ''}
+      .photo{'flex' => '15'}
         %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
-      .rucom{'flex' => ''}
+      .rucom{'flex' => '15'}
         %h5 Numero Rucom
         %p {{purchase.model.provider.rucom_record}}
-      .document-number{'flex' => ''}
+      .document-number{'flex' => '15'}
         %h5 Numero de Cedula
         %p {{purchase.model.provider.document_number}}
-      .phone-number{'flex' => ''}
+      .phone-number{'flex' => '15'}
         %h5 Numero de Celular
         %p {{purchase.model.provider.phone_number}}
-      .address{'flex' => ''}
+      .address{'flex' => '15'}
         %h5 Direccion
         %p {{purchase.model.provider.address}}
-      .email{'flex' => ''}
+      .email{'flex' => '15'}
         %h5 Correo Electronico
         %p {{purchase.model.provider.email}}
 
-%section
-  %md-subheader
-    %p Datos de la Compra
-  .purchase-info
+%md-content{"class"=>"md-padding autocomplete", "layout"=>"row"}
+%md-subheader
+  %p Datos de la Compra
+%md-content{"class"=>"md-padding autocomplete", "layout"=>"row"}
+  .purchase-info{'flex' => ''}
     .row{'layout' => 'row'}
       .oc-number{'flex' => ''}
         %h5
           Numero de Certificado de Origen
         %p
           {{purchase.model.origin_certificate_sequence}}
+  .select-law{'flex' => ''}
+    // TODO: query for laws to some X service
+    %h5
+      Ley
+    %p
+      {{purchase.model.law}}
+%md-content{"class"=>"md-padding autocomplete", "layout"=>"column"}
   .gold-info
-    .row{'layout' => 'row'}
-      .convertion-section{'flex' => '50'}
-        %h5 Medidas
-        %table
-          %thead
-            %tr.md-table-headers-row
-              %th.md-table-header
-                Medida
-              %th.md-table-header
-                Cantidad
-              %th.md-table-header
-                Precio por Unidad
-          %tbody
-            %tr
-              %td
-                %span Castellano(s)
-              %td
-                %md-input-container
-                  {{goldBatch.model.castellanos}}
-              %td
-                %span {{goldBatch.castellanoUnitPrice  | number:2}}
-            %tr
-              %td
-                %span Onza(s)
-              %td
-                %md-input-container
-                {{goldBatch.model.ozs}}
-              %td
-                %span {{goldBatch.ozUnitPrice | number:2}}
-            %tr
-              %td
-                %span Tomine(s)
-              %td
-                %md-input-container
-                  {{goldBatch.model.tomines}}
-              %td
-                %span {{goldBatch.tominUnitPrice | number:2}}
-            %tr
-              %td
-                %span Rial(es)
-              %td
-                %md-input-container
-                  {{goldBatch.model.riales}}
-              %td
-                %span {{goldBatch.rialUnitPrice | number:2}}
-      .selected-law{'flex' => '10'}
-        // TODO: query for laws to some X service
-        %md-input-container
-          %h5 Ley
-          %p {{goldBatch.model.law}}
-      .grams{'flex' => '20'}
-        %md-input-container
-          %h5 Cantidad en Gramos
-          %p {{ goldBatch.model.grams | number:2}}
-      .grams{'flex' => '20'}
-        %md-input-container
-          %h5 Precio
-          %p $ {{ purchase.model.price | number:2}}
-  / %object{:data => "{{pdfContent}}", :type => "application/pdf"}
+    .row{:layout => "", "layout-sm" => "column"}
+    .convertion-section{'flex' => ''}
+      %h5 Medidas
+      %table.md-table
+        %thead
+          %tr.md-table-headers-row
+            %th.md-table-header
+              Medida
+            %th.md-table-header
+              Cantidad
+            %th.md-table-header
+              Precio por Unidad
+            %th.md-table-header
+              Total gramos
+            %th.md-table-header
+              Precio Total
+        %tbody
+          %tr
+            %td.md-table-td-more
+              %p Gramo(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.grams}}
+            %td.md-table-td-more
+              %md-input-container
+                $ {{ goldBatch.gramUnitPrice | number:2}}
+            %td.md-table-td-more
+              %md-input-container
+                {{ goldBatch.model.totalGrams | number:2}}
+            %td.md-table-td-more
+              %md-input-container
+                $ {{ purchase.model.price | number:2}}
+          %tr
+            %td.md-table-td-more
+              Castellano(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.castellanos}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.castellanoUnitPrice  | number:2}}
+          %tr
+            %td.md-table-td-more
+              Onza(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.ozs}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.ozUnitPrice | number:2}}
+          %tr
+            %td.md-table-td-more
+              Tomine(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.tomines}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.tominUnitPrice | number:2}}
+          %tr
+            %td.md-table-td-more
+              Rial(es)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.riales}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.rialUnitPrice | number:2}}
   .wizard-buttons{layout: "row"}
     %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Pesos
     %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF

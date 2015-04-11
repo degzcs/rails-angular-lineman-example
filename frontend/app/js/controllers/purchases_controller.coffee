@@ -8,7 +8,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.totalGrams = 0
 
   $scope.allProviders  = []
-  # $scope.selectedProvider = null
   $scope.searchText = null
   window.s = $scope
   #
@@ -62,7 +61,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
   # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
+  $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -70,9 +69,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
     $scope.grams = $scope.goldBatch.model.grams
-    $scope.goldBatch.model.totalGrams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+    # cover grams to fineGrams
+    $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.purchase.model.law)
     #Price
-    $scope.purchase.model.price = $scope.goldBatch.model.totalGrams * $scope.goldBatch.gramUnitPrice
+    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.goldBatch.gramUnitPrice
 
   #
   # Save the values in SessionStorage
@@ -88,7 +89,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
   #
-  #  Send a predefined values to create a Purchase in PDF format
+  #  Send calculated values to create a Purchase Renport in PDF format
   $scope.createPDF =  (purchase, provider, goldBatch)->
     goldBatchForPDF=
       castellanos: {quantity: $scope.goldBatch.model.castellanos, unit_value:  $scope.goldBatch.castellanoUnitPrice}

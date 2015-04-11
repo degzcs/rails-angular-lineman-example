@@ -62,6 +62,7 @@ angular.module('app').factory 'MeasureConverterService', ()->
     #
     tominesUnitPriceFrom: (gramUnitPrice)->
       (4.6*gramUnitPrice)/8
+
     #
     # Get the Unit price for riales from the gram unit price
     # @params gramUnitPrice [Integer]
@@ -70,6 +71,11 @@ angular.module('app').factory 'MeasureConverterService', ()->
     rialesUnitPriceFrom: (gramUnitPrice)->
       (4.6*gramUnitPrice)/16
 
+    #
+    # Fine-Grams to Real-Grams
+    #
+    gramsToFineGrams: (grams, law)->
+      (grams*law)/999
 
   #
   # Return

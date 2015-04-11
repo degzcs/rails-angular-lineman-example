@@ -6,14 +6,10 @@
         %span Ingresar Pesos
       .row{:layout => "", "layout-sm" => "column"}
         .select-law{'flex' => ''}
-          // TODO: query for laws to some X service
           %h5 Ley
-          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'purchase.model.law'}
-            %md-option{'value'=> '100'} 100
-            %md-option{'value'=> '200'} 200
-            %md-option{'value'=> '300'} 300
-            %md-option{'value'=> '400'} 400
-            %md-option{'value'=> '500'} 500
+          %md-input-container
+            %label Digite el numero de ley
+            %input{ "type" => "number", "string-to-number"=>"", "min"=> "0" , "max"=>"999" ,'ng-model' => 'purchase.model.law', "required"=>""}
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
           %h5 Medidas
@@ -29,21 +25,26 @@
                 %th.md-table-header
                   Total gramos
                 %th.md-table-header
+                  Total gramos finos
+                %th.md-table-header
                   Precio Total
             %tbody
               %tr
                 %td.md-table-td-more
-                  %p Gramo(s)
+                  %p Gramo
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.grams"}
-                %td.md-table-td-more
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more.gram-unit
                   %md-input-container
                     $ {{ goldBatch.gramUnitPrice | number:2}}
-                %td.md-table-td-more
+                %td.md-table-td-more.total-grams
                   %md-input-container
-                    {{ goldBatch.model.totalGrams | number:2}}
+                    {{ goldBatch.model.total_grams | number:2}}
+                %td.md-table-td-more.total-fine-grams
+                  %md-input-container
+                    {{ goldBatch.model.total_fine_grams | number:3}}
                 %td.md-table-td-more
                   %md-input-container
                     $ {{ purchase.model.price | number:2}}
@@ -53,8 +54,8 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.castellanos"}
-                %td.md-table-td-more{colspan: 3}
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.castellanoUnitPrice  | number:2}}
               %tr
                 %td.md-table-td-more
@@ -62,8 +63,8 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.ozs"}
-                %td.md-table-td-more{colspan: 3}
+                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.ozUnitPrice | number:2}}
               %tr
                 %td.md-table-td-more
@@ -71,8 +72,8 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.tomines"}
-                %td.md-table-td-more{colspan: 3}
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.tominUnitPrice | number:2}}
               %tr
                 %td.md-table-td-more
@@ -80,8 +81,8 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.riales"}
-                %td.md-table-td-more{colspan: 3}
+                    %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.rialUnitPrice | number:2}}
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete"}
     %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Datos Proveedor Y Certificado de Compra

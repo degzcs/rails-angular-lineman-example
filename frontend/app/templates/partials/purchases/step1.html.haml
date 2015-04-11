@@ -10,7 +10,7 @@
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"row"}
       .select-provider{'flex' => 80}
         %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
-          %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
+          %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
             %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
       .create-provider{'flex' =>20}
         %a{'ng-href' => "#provider"}
