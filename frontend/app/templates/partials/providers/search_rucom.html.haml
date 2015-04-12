@@ -10,10 +10,10 @@
               %span.ion-android-checkmark-circle
           %md-input-container{:flex => "flex", :style => "padding-left:25px;"}
             %label Rucom number
-            %input#search-prov-name{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Type the rucom number"}
+            %input#search-prov-id{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Type the rucom number"}
           %md-input-container{:flex => "flex", :style => "padding-left:50px; padding-right:30px;"}
             %label Provider name
-            %input#search-prov-id{"ng-model" => "search.name", :type => "text", :placeholder => "Type the provider name to refine your search"}
+            %input#search-prov-name{"ng-model" => "search.name", :type => "text", :placeholder => "Type the provider name to refine your search"}
           .md-toolbar-item.md-tools{:layout => "row"}
             %a.md-button.md-default-theme{"ng-click" => "search_rucom(searchRucom.rucom_record)"}
               %i.ion-android-search
