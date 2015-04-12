@@ -52,15 +52,6 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
         id: '',
         name: '',
         population_center_code: ''
-      },
-      company_info: {
-       name: '',
-       nit_number: '',        
-       legal_representative: '',
-       id_type_legal_rep: '',
-       id_number_legal_rep: '',
-       email: '',
-       phone_number: ''             
       }
     };    
 
@@ -169,9 +160,9 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     $resource = ProviderService.create($scope.newProvider);
     if($resource){
       $resource.save($scope.newProvider);
-      $scope.infoAlert('Courier', 'Successful registration');
+      $scope.infoAlert('Provider', 'Successful registration');
     } else{
-      $scope.infoAlert('Courier', 'Something went wrong');
+      $scope.infoAlert('Provider', 'Something went wrong');
     }
   };
 

@@ -26,12 +26,13 @@ angular.module('app').directive('mdTableRucom', function () {
       };
       $scope.order($scope.sortable[0],false);
       $scope.getNumber = function (num) {
-      			    return new Array(num);
+      	return new Array(num);
       };
       $scope.goToPage = function (page) {
         $scope.tablePage = page;
       };
       $scope.setCurrentRucom = function (rucom) {
+        console.log('setCurrentRucom' + JSON.stringify(rucom));
         RucomService.setCurrentRucom(rucom);        
         console.log(rucom.provider_type);
         var type = $scope.setProviderType(rucom.provider_type);

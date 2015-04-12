@@ -12,7 +12,7 @@ angular.module('app').factory('RucomService', function($resource) {
    
     var getRucom = $resource('/api/v1/rucoms/:id', {rucomId: '@rucomId'});
 
-    var retrieveRucoms = $resource('/api/v1/:resource', {resource: 'rucoms', rucom_query: '@rucom_query'});    
+    var retrieveRucoms = $resource('/api/v1/rucoms.json', {per_page: '@per_page', page: '@page'});    
 
     return {
         getCurrentRucom: getCurrentRucom,        
