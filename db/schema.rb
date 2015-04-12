@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409223128) do
+ActiveRecord::Schema.define(version: 20150412214440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(version: 20150409223128) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "total_amount",        default: 0.0,   null: false
-    t.float    "discount",            default: 0.0,   null: false
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
@@ -136,11 +135,11 @@ ActiveRecord::Schema.define(version: 20150409223128) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
+    t.string   "email"
     t.string   "identification_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
-    t.string   "email"
     t.integer  "population_center_id"
   end
 
@@ -155,10 +154,11 @@ ActiveRecord::Schema.define(version: 20150409223128) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "price"
+    t.string   "seller_picture"
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                                 null: false
+    t.string   "idrucom",            limit: 90,                   null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 20150409223128) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2015-04-10 01:25:41'
+    t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
   end

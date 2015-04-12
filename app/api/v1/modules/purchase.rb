@@ -43,10 +43,10 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-
+              # binding.pry
               purchase = current_user.purchases.build(params[:purchase])
               purchase.build_gold_batch(params[:gold_batch])
-              purchase.save
+              purchase.save!
               present purchase, with: V1::Entities::Purchase
               Rails.logger.info(purchase.errors.inspect)
         end

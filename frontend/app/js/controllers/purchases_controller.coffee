@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService, $timeout, $q) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService, $timeout, $q, $mdDialog) ->
   #
   # Instances
   #
@@ -9,7 +9,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.allProviders  = []
   $scope.searchText = null
-  window.s = $scope
+  $scope.message
+  # window.s = $scope
   #
   # Fuctions
   #
@@ -66,7 +67,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   if($scope.photo and CameraService.getTypeFile() == 1)
     $scope.purchase.model.provider_photo_file=$scope.photo
-    CameraService.clearData(); 
+    CameraService.clearData();
 
   if($scope.file and CameraService.getTypeFile() == 2)
     $scope.purchase.model.origin_certificate_file=$scope.file
@@ -99,8 +100,28 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.saveState()
 
   #
+  # confirm Dialog
+  $scope.showConfirm = (ev) ->
+    # Appending dialog to document.body to cover sidenav in docs app
+    confirm = $mdDialog.confirm()
+                      .title('Desea realizar la compra?')
+                      .content('Va a ser generado una compra del lote de oro segun el anterior reporte. Esta usted de acuerdo?')
+                      .ariaLabel('Lucky day')
+                      .ok('Si, deseo comprar')
+                      .cancel('No, cancelar compra')
+                      .targetEvent(ev)
+    $mdDialog.show(confirm).then (->
+      $scope.create()
+      $scope.message = 'Su compra a sido registrada con exito'
+      return
+    ), ->
+      console.log 'canceled'
+      $scope.message = 'La compra ha sido cancelada'
+      return
+
+  #
   # Create a new purschase in the server
-  $scope.create = (data) ->
+  $scope.create =  ->
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
   #

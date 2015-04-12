@@ -6,7 +6,7 @@
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providerSearchForm", "novalidate" => "true"}
+    %form{:name => "providerCreateForm", "ng-submit" => "createProvider()", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
@@ -20,7 +20,12 @@
             %input{"ng-model" => "newProvider.first_name"}
           %md-input-container{:flex => ""}
             %label Last name
-            %input{"ng-model" => "newProvider.last_name"}                            
+            %input{"ng-model" => "newProvider.last_name"}
+          %md-input-container{:flex => "15"}          
+            %label Document number
+            %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
+              %div{"ng-messages" => "providerCreateForm.document_number.$error"}
+                %div{"ng-message" => "required"} This is required.          
           %md-input-container{:flex => ""}
             %label {{rucomIDField.label}}
             %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
@@ -50,7 +55,8 @@
           %md-input-container{:flex => ""}
             %label Address
             %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR 1 22 - 33"}           
-        %md-content.md-padding{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+        %br
+        %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
           %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
             %span{"md-highlight-text" => "searchState"} {{state.name}}
           %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
@@ -72,5 +78,6 @@
           %div{:layout => "row", :flex => "15", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
             %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-              %md-button{"ng-disabled" => "!providerSearchForm.$valid", :class => "md-raised md-accent", "ng-click" => "save()"} Save            
+              %md-button{"ng-disabled" => "!providerSearchForm.$valid", :class => "md-raised md-accent", "ng-click" => "save()"} Save
 
+ 

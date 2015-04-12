@@ -1,4 +1,4 @@
-angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', '$window', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($scope, $stateParams, $window, CameraService, RucomService, ProviderService, LocationService){
+angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($scope, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
   
   $scope.newProvider = {};  
   $scope.populationCenter = {};
@@ -6,6 +6,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   $scope.companyInfo = {};
   $scope.companyName = "";
   $scope.newProvider.has_company = false;
+  $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
     label: 'RUCOM Number',
     field: 'num_rucom'
@@ -25,26 +26,6 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   var prov = {};
 
-  // if ($stateParams.rucomId) {    
-  //   RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {      
-  //     console.log(rucom); 
-  //     RucomService.setCurrentRucom(rucom);      
-  //     $scope.currentRucom = {
-  //       id: rucom.id,
-  //       num_rucom: rucom.num_rucom,
-  //       rucom_record: rucom.rucom_record,
-  //       name: rucom.name,
-  //       provider_type: rucom.provider_type,
-  //       subcontract_number: rucom.subcontract_number,
-  //       rucom_status: rucom.status,
-  //       mineral: rucom.mineral
-  //     };
-  //     console.log('Current rucom: ');
-  //     console.log(rucom);
-  //   });
-  // }
-
-  
   if($stateParams.rucomId){      
     console.log("$stateParams.rucomId: " + $stateParams.rucomId); 
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
@@ -71,15 +52,6 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
         id: '',
         name: '',
         population_center_code: ''
-      },
-      company_info: {
-       name: '',
-       nit_number: '',        
-       legal_representative: '',
-       id_type_legal_rep: '',
-       id_number_legal_rep: '',
-       email: '',
-       phone_number: ''             
       },
       identification_number_file: '',
       mining_register_file: '',
@@ -131,7 +103,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   $scope.idTypeLegalRep = [    
     { type: 1, name: 'CC' },
-    { type: 2, name: 'Cédula de extranjería' }
+    { type: 2, name: 'CE' }
   ];
 
   $scope.formTabControl = {
@@ -150,27 +122,16 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     rucomValidated : false,    
   };
 
-  $scope.check = function(){
-    console.log($scope.newProvider.has_company);
-    console.log('companyName: ' + $scope.companyName);
-    console.log('first_name: ' + $scope.newProvider.first_name);
-    if($scope.newProvider.has_company && $scope.newProvider.first_name !== $scope.companyName){
-      console.log("1");
+  $scope.check = function(){    
+    if($scope.newProvider.has_company && $scope.newProvider.first_name !== $scope.companyName){      
       $scope.newProvider.company_info.name = $scope.companyName;       
-    }else if($scope.newProvider.has_company && $scope.newProvider.first_name === $scope.companyName){
-      console.log("2");
+    }else if($scope.newProvider.has_company && $scope.newProvider.first_name === $scope.companyName){    
       $scope.newProvider.first_name = "";
       $scope.newProvider.company_info.name = $scope.companyName;
-    } if(!$scope.newProvider.has_company && $scope.newProvider.first_name === ''){
-      console.log("3");
+    } if(!$scope.newProvider.has_company && $scope.newProvider.first_name === ''){      console.log("3");
       $scope.newProvider.first_name = $scope.companyName;       
       $scope.newProvider.company_info.name = "";
     }
-  };
-
-  $scope.save = function() {
-    console.log($scope.newProvider);
-    $window.history.back();
   };
 
   $scope.back = function() {
@@ -196,6 +157,24 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
      return (state.name.toLowerCase().indexOf(lowercaseQuery) === 0);
    };
   }  
+
+  $scope.createProvider = function(){
+    console.log(JSON.stringify($scope.newProvider));
+    $resource = ProviderService.create($scope.newProvider);
+    if($resource){
+      $resource.save($scope.newProvider);
+      $scope.infoAlert('Provider', 'Successful registration');
+    } else{
+      $scope.infoAlert('Provider', 'Something went wrong');
+    }
+  };
+
+  $scope.infoAlert = function(title, content) {
+   $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'))
+   .finally(function() {
+      $window.history.back();
+    });
+  };
 
   // Watchers for listen to changes in editable fields
   $scope.$watch('newProvider', 

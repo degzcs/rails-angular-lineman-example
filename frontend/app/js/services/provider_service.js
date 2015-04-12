@@ -24,14 +24,14 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
             url: '/api/v1/providers/',
             method: 'POST',
             fields: {
-                  "provider[first_name]":provider.first_Name,
+                  "provider[first_name]":provider.first_name,
                   "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_Name,
+                  "provider[last_name]":provider.last_name,
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom_id,
+                  "provider[rucom_id]":provider.rucom.id,
                   "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center_id
+                  "provider[population_center_id]":provider.population_center.id
             },
             file: file,
             fileFormDataName: 'provider[photo_file]'
@@ -43,14 +43,14 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
               save: {
                   method: 'POST',
                   params:{
-                  "provider[first_name]":provider.first_Name,
+                  "provider[first_name]":provider.first_name,
                   "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_Name,
+                  "provider[last_name]":provider.last_name,
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom_id,
+                  "provider[rucom_id]":provider.rucom.id,
                   "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center_id
+                  "provider[population_center_id]":provider.population_center.id
                   }
               }
             });

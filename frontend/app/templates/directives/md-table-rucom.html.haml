@@ -19,22 +19,22 @@
 .md-table-footer{:layout => "row"}
   %span.md-table-count-info
     Rows per page :
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=5"} 5
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=5; goToPage(0);"} 5
       ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=10"} 10
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=10; goToPage(0);"} 10
       ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=25"} 25
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=25; goToPage(0);"} 25
       ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=50"} 50
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=50; goToPage(0);"} 50
       ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "goToPage(0); count=100"} 100
+      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=100; goToPage(0);"} 100
       (current is {{count}})
   %span{:flex => "flex"}
   %span{"ng-show" => "nbOfPages() > 1"}
-    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "tablePage=tablePage-1", "aria-label" => "Previous Page"}
+    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "goToPage(tablePage-1)", "aria-label" => "Previous Page"}
       %i.ion-chevron-left{:style => "font-size:12px;"}
     %a{"ng-href" => "#/{{currentPath}}", "ng-repeat" => "i in getNumber(nbOfPages()) track by $index"}
       %md-button.md-primary.md-hue-2.md-table-footer-item{"ng-click" => "goToPage($index)"}
         %span{"ng-class" => "{ 'md-table-active-page': tablePage==$index}"} {{$index+1}}
-    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==nbOfPages()-1", "ng-click" => "tablePage=tablePage+1", "aria-label" => "Next Page"}
-      %i.ion-chevron-right{:style => "font-size:12px;"}
+    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==nbOfPages()-1", "ng-click" => "goToPage(tablePage+1)", "aria-label" => "Next Page"}
+      %i.ion-chevron-right{:style => "font-size:16px;"}
