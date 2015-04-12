@@ -8,7 +8,6 @@
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
     %form{:name => "providerSearchForm", "novalidate" => "true"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
-        %md-content.md-padding
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
             %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} +
@@ -32,32 +31,26 @@
             %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
             %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
               %span.ion-android-checkmark-circle &nbsp;válido
-        %div{:layout => "", "layout-sm" => "column"}
+        %md-content.md-padding{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
             %label Provider type
             %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
-          %md-input-container{:flex => ""}
-            %label Status
-            %input{:name => "status", "ng-model" => "currentRucom.rucom_status", "ng-readonly" => "true",  :required => ""}
-              %div{"ng-messages" => "providerSearchForm.status.$error"}
-                %div{"ng-message" => "required"} This is required. 
-          %md-input-container{:flex => "17"}
+          %md-input-container{:flex => "15"}
             %label Phone Number
-            %input{"ng-model" => "newProvider.phone_number", :placeholder => "(3XX) XXX XXXXX"}
+            %input{"ng-model" => "newProvider.phone_number", :placeholder => "(555) 555 5555"}
           %md-input-container{:flex => ""}
             %label Email
-            %input{"ng-model" => "newProvider.email", :type => "email"}           
-        %md-content.md-padding            
-        %br          
-        %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+            %input{"ng-model" => "newProvider.email", :type => "email"}
+        %md-content.md-padding
           %md-input-container{:flex => "25"}
             %label Address
-            %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR X XX - XX"}
-          %md-autocomplete{:required => "true", :flex => "20", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
+            %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR 1 22 - 33"}           
+        %md-content.md-padding{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
             %span{"md-highlight-text" => "searchState"} {{state.name}}
-          %md-autocomplete{:required => "true", :flex => "20", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
+          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
             %span{"md-highlight-text" => "searchCity"} {{city.name}}
-          %md-autocomplete{:required => "true", :flex => "20", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
+          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
             %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
         %br
         %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
