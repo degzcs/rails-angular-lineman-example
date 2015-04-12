@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService, $timeout, $q) ->
   #
   # Instances
   #
@@ -6,9 +6,32 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
-  $scope.providers  = []
 
-  #Set $scope.providers
+  $scope.allProviders  = []
+  $scope.searchText = null
+  window.s = $scope
+  #
+  # Fuctions
+  #
+
+  #
+  # Search one specific provider into the allProviders array
+  # @return [Array] with the matched options with the query
+  $scope.searchProvider = (query)->
+    console.log 'query: ' + query
+    results = if query then $scope.allProviders.filter(createFilterFor(query)) else []
+    results
+
+  #
+  # Create filter function for a query string, just filte by document number field
+  #@returns [Function] with the provider
+  createFilterFor = (query) ->
+    lowercaseQuery = angular.lowercase(query)
+    (provider) ->
+      provider.document_number.indexOf(lowercaseQuery) != -1
+
+  #
+  # all providers
   ProviderService.retrieveProviders.query {
     per_page: 100
     page: 1
@@ -18,6 +41,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       prov =
         id: providers[i].id
         document_number: providers[i].document_number
+        company_name: 'company name test'
+        nit: 'NIT number'
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
@@ -30,46 +55,50 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-      $scope.providers.push prov
+      $scope.allProviders.push prov
       i++
   ), (error) ->
 
-  window.m = $scope.purchase.model
-  #
-  # Fuctions
-  #
+  # Set the last picture that was took
   $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
   # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales]', ->
+  $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
     $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
-    $scope.goldBatch.model.grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams
+    $scope.grams = $scope.goldBatch.model.grams
+    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+    # cover grams to fineGrams
+    $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.purchase.model.law)
     #Price
-    $scope.purchase.model.price = $scope.goldBatch.model.grams * $scope.goldBatch.gramUnitPrice
+    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.goldBatch.gramUnitPrice
 
-
+  #
+  # Save the values in SessionStorage
   $scope.saveState= ->
     console.log('saving purchase state on sessionStore ... ')
     $scope.purchase.saveState()
     $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
     $scope.goldBatch.saveState()
 
+  #
   # Create a new purschase in the server
   $scope.create = (data) ->
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 
+  #
+  #  Send calculated values to create a Purchase Renport in PDF format
   $scope.createPDF =  (purchase, provider, goldBatch)->
     goldBatchForPDF=
       castellanos: {quantity: $scope.goldBatch.model.castellanos, unit_value:  $scope.goldBatch.castellanoUnitPrice}
       tomines: {quantity: $scope.goldBatch.model.tomines, unit_value:  $scope.goldBatch.tominUnitPrice}
       riales: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.rialUnitPrice}
       ozs: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.ozUnitPrice}
-      # gramos: {quantity: $scope.goldBatch.model.gramos, $cope....} # TODO
+      gramos: {quantity: $scope.goldBatch.model.grams, unit_value:  $scope.goldBatch.gramUnitPrice}
     provider = purchase.provider
     purchase.provider=[]
 

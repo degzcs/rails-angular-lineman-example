@@ -1,21 +1,13 @@
-# == Schema Information
-#
-# Table name: credit_billings
-#
-#  id                  :integer          not null, primary key
-#  user_id             :integer
-#  unit                :integer
-#  per_unit_value      :float
-#  payment_flag        :boolean
-#  payment_date        :datetime
-#  discount_percentage :float
-#  created_at          :datetime
-#  updated_at          :datetime
-#
-
 ActiveAdmin.register CreditBilling do
+
   menu priority: 5, label: 'Facturacion de Usuarios'
 
+  # Member actions , This methods create new actions under the admin credit billing controller
+  # every action has a route od /admin/credit_bilings/:id/<Action> and it will render a template
+  # under the dir app/views/admin/credit_billings/<action>
+
+  
+  # updates a credit billing with payment_flag to true, and add a new available_credit value to the user
   member_action :update_payment, method: :patch do
     @credit_billing = CreditBilling.find(params[:id])
     @user = @credit_billing.user
@@ -24,24 +16,27 @@ ActiveAdmin.register CreditBilling do
     @credit_billing.update(params.require(:credit_billing).permit(:payment_flag, :payment_date, :discount_percentage))
     @user.available_credits = available_credits + @credit_billing.unit 
     @user.save!
-
     redirect_to admin_credit_billings_path, notice: "La factura fue marcada como pagada satisfactoriamente" 
   end
 
+  # renders a template where the admin can select the date when the credit billing was payed
   member_action :mark do
     @credit_billing = CreditBilling.find(params[:id])
   end
 
+  # renders a template where the user can select a discount percentage value
   member_action :edit_discount do
     @credit_billing = CreditBilling.find(params[:id])
   end
 
+  # sends an email to the user with the information about the credit billing
   member_action :send_billing do
     credit_billing = CreditBilling.find(params[:id])
     CreditBillingMailer.credit_billing_email(credit_billing).deliver
     redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente" 
   end
   
+  # renders a template with info that will be sended to the user about the credit billing
   member_action :new_billing do
     @credit_billing = CreditBilling.find(params[:id])
     @user = @credit_billing.user

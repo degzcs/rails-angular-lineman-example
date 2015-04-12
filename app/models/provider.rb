@@ -21,11 +21,17 @@
 
 # TODO: change  column name from identification_number_file to tableIdentification_document_file
 class Provider < ActiveRecord::Base
+
+  #
+  # Associations
+  #
+
   has_one :company_info
   mount_uploader :identification_number_file, AttachmentUploader
   mount_uploader :rut_file, AttachmentUploader
   mount_uploader :mining_register_file, AttachmentUploader
   mount_uploader :photo_file, AttachmentUploader
+  
   #
   # Instance Methods
   #

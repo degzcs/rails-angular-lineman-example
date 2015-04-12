@@ -70,7 +70,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
           $upload.upload({
             url: '/api/v1/providers/',
             method: 'PUT',
-            fields: provider.company_info ? {
+            fields: !provider.company_info ? {
               "provider[phone_number]":provider.phone_number,
               "provider[address]":provider.address,
               "provider[email]":provider.email,
@@ -97,7 +97,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         {id:'@id'},{
             'update': {
                 method: 'PUT',
-                params: provider.company_info ? {
+                params: !provider.company_info ? {
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
                   "provider[email]":provider.email,

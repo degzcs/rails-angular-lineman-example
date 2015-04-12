@@ -3,9 +3,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   $scope.newProvider = {};  
   $scope.populationCenter = {};
   $scope.currentRucom = {};
-  $scope.companyInfo = null;
-  $scope.newProvider.company_info = false;
-    $scope.rucomIDField = {
+  $scope.companyInfo = {};
+  $scope.companyName = "";
+  $scope.newProvider.has_company = false;
+  $scope.rucomIDField = {
     label: 'RUCOM Number',
     field: 'num_rucom'
   };
@@ -24,31 +25,33 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   var prov = {};
 
-  if ($stateParams.rucomId) {    
-    RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {      
-      console.log(rucom); 
-      RucomService.setCurrentRucom(rucom);
-      $scope.currentRucom = {
-        id: rucom.id,
-        num_rucom: rucom.num_rucom,
-        rucom_record: rucom.rucom_record,
-        provider_type: rucom.provider_type,
-        subcontract_number: rucom.subcontract_number,
-        rucom_status: rucom.status,
-        mineral: rucom.mineral
-      };
-      console.log('Current rucom: ');
-      console.log(rucom);
-    });
-  }
+  // if ($stateParams.rucomId) {    
+  //   RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {      
+  //     console.log(rucom); 
+  //     RucomService.setCurrentRucom(rucom);      
+  //     $scope.currentRucom = {
+  //       id: rucom.id,
+  //       num_rucom: rucom.num_rucom,
+  //       rucom_record: rucom.rucom_record,
+  //       name: rucom.name,
+  //       provider_type: rucom.provider_type,
+  //       subcontract_number: rucom.subcontract_number,
+  //       rucom_status: rucom.status,
+  //       mineral: rucom.mineral
+  //     };
+  //     console.log('Current rucom: ');
+  //     console.log(rucom);
+  //   });
+  // }
+
   
   if($stateParams.rucomId){      
     console.log("$stateParams.rucomId: " + $stateParams.rucomId); 
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
-    var prov = {
-      // id: provider.id,
+    $scope.companyName = rucom.name;        
+    var prov = {    
       document_number: $scope.newProvider.document_number,
-      first_name: $scope.newProvider.first_name,
+      first_name: rucom.name,
       last_name: $scope.newProvider.last_name,        
       email: $scope.newProvider.email,
       address: $scope.newProvider.address,
@@ -67,24 +70,35 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
       population_center: {
         id: '',
         name: '',
-        population_center: '',
         population_center_code: ''
+      },
+      company_info: {
+       name: '',
+       nit_number: '',        
+       legal_representative: '',
+       id_type_legal_rep: '',
+       id_number_legal_rep: '',
+       email: '',
+       phone_number: ''             
       }
-    };
-    if ($scope.newProvider.company_info) {
+    };    
+
+    if($scope.newProvider.has_company) {      
+      prov.first_name = $scope.newProvider.first_name;           
       prov.company_info = {
-        // id: provider.company_info.id,
-        nit_number: $scope.companyInfo.nit_number,
-        name: $scope.companyInfo.company_info.name,
-        legal_representative: $scope.companyInfo.legal_representative,
-        id_type_legal_rep: $scope.companyInfo.id_type_legal_rep,
-        id_number_legal_rep: $scope.companyInfo.id_number_legal_rep,
-        email: $scope.companyInfo.email,
-        phone_number: $scope.companyInfo.phone_number
+       name: $scope.companyName,
+       nit_number: $scope.newProvider.company_info.nit_number,        
+       legal_representative: $scope.newProvider.company_info.legal_representative,
+       id_type_legal_rep: $scope.newProvider.company_info.id_type_legal_rep,
+       id_number_legal_rep: $scope.newProvider.company_info.id_number_legal_rep,
+       email: $scope.newProvider.company_info.email,
+       phone_number: $scope.newProvider.company_info.phone_number              
       };
-    }
+      $scope.newProvider.company_info.name = prov.company_info.name;
+    } 
 
     $scope.newProvider = prov;
+    $scope.currentRucom = prov.rucom;
     ProviderService.setCurrentProv(prov);
 
     if(prov.num_rucom) {
@@ -112,8 +126,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     console.log('States: ' + JSON.stringify(states));
   });
 
-  $scope.id_type_legal_rep = [    
-    { type: 3, name: 'CC' },
+  $scope.idTypeLegalRep = [    
+    { type: 1, name: 'CC' },
     { type: 2, name: 'Cédula de extranjería' }
   ];
 
@@ -133,15 +147,21 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     rucomValidated : false,    
   };
 
-  $scope.isCompany = function() { 
-    if(!$scope.newCompany.status){
-      $scope.newCompany.name = $scope.newProvider.name;
-      $scope.newProvider.name = '';
-      console.log("isCompany: " + $scope.newCompany.name);            
-    }else if($scope.newProvider.name === '' && $scope.newCompany.status) {
-      $scope.newProvider.name = $scope.newCompany.name;
-      $scope.newCompany.name = '';
-      console.log("isCompany: " + $scope.newCompany.name);
+  $scope.check = function(){
+    console.log($scope.newProvider.has_company);
+    console.log('companyName: ' + $scope.companyName);
+    console.log('first_name: ' + $scope.newProvider.first_name);
+    if($scope.newProvider.has_company && $scope.newProvider.first_name !== $scope.companyName){
+      console.log("1");
+      $scope.newProvider.company_info.name = $scope.companyName;       
+    }else if($scope.newProvider.has_company && $scope.newProvider.first_name === $scope.companyName){
+      console.log("2");
+      $scope.newProvider.first_name = "";
+      $scope.newProvider.company_info.name = $scope.companyName;
+    } if(!$scope.newProvider.has_company && $scope.newProvider.first_name === ''){
+      console.log("3");
+      $scope.newProvider.first_name = $scope.companyName;       
+      $scope.newProvider.company_info.name = "";
     }
   };
 
@@ -155,7 +175,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   };
 
   $scope.next = function() {
-    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
+    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;      
     console.log("type: " + $scope.newProvider);            
   };
   

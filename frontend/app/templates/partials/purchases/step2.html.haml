@@ -1,18 +1,19 @@
 //---------------------- Purchase TAB ---------------------------------------
 %form{:name => "purchase-form"}
-  %section
+  %section{"class"=>"md-padding autocomplete"}
     .seller
       %md-subheader
         %span Ingresar Pesos
-      .row{'layout' => 'row'}
-        .gold-amount{'flex' => ''}
+      .row{:layout => "", "layout-sm" => "column"}
+        .select-law{'flex' => ''}
+          %h5 Ley
           %md-input-container
-            %h5 Valor de un gramo peso colombiano (COP)
-            %span $ {{ goldBatch.gramUnitPrice }}
-      .row{'layout' => 'row'}
-        .convertion-section{'flex' => '50'}
+            %label Digite el numero de ley
+            %input{ "type" => "number", "string-to-number"=>"", "min"=> "0" , "max"=>"999" ,'ng-model' => 'purchase.model.law', "required"=>""}
+      .row{:layout => "", "layout-sm" => "column"}
+        .convertion-section{'flex' => ''}
           %h5 Medidas
-          %table
+          %table.md-table
             %thead
               %tr.md-table-headers-row
                 %th.md-table-header
@@ -21,61 +22,69 @@
                   Cantidad
                 %th.md-table-header
                   Precio por Unidad
+                %th.md-table-header
+                  Total gramos
+                %th.md-table-header
+                  Total gramos finos
+                %th.md-table-header
+                  Precio Total
             %tbody
               %tr
-                %td
-                  %p Castellano(s)
-                %td
+                %td.md-table-td-more
+                  %p Gramo
+                %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.castellanos"}
-                %td
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more.gram-unit
+                  %md-input-container
+                    $ {{ goldBatch.gramUnitPrice | number:2}}
+                %td.md-table-td-more.total-grams
+                  %md-input-container
+                    {{ goldBatch.model.total_grams | number:2}}
+                %td.md-table-td-more.total-fine-grams
+                  %md-input-container
+                    {{ goldBatch.model.total_fine_grams | number:3}}
+                %td.md-table-td-more
+                  %md-input-container
+                    $ {{ purchase.model.price | number:2}}
+              %tr
+                %td.md-table-td-more
+                  Castellano(s)
+                %td.md-table-td-more
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.castellanoUnitPrice  | number:2}}
               %tr
-                %td
-                  %p Onza(s)
-                %td
+                %td.md-table-td-more
+                  Onza(s)
+                %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.ozs"}
-                %td
+                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.ozUnitPrice | number:2}}
               %tr
-                %td
-                  %p Tomine(s)
-                %td
+                %td.md-table-td-more
+                  Tomine(s)
+                %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.tomines"}
-                %td
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.tominUnitPrice | number:2}}
               %tr
-                %td
-                  %p Rial(es)
-                %td
+                %td.md-table-td-more
+                  Rial(es)
+                %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.riales"}
-                %td
+                    %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>"", "required"=>""}
+                %td.md-table-td-more{colspan: 4}
                   %span {{goldBatch.rialUnitPrice | number:2}}
-        .select-law{'flex' => '20'}
-          // TODO: query for laws to some X service
-          %h5 Ley
-          %md-select{'placeholder' => 'Seleccione un el tipo de ley', 'ng-model' => 'goldBatch.model.law'}
-            %md-option{'value'=> '24 quilates'} 24 quilates
-            %md-option{'value'=> '22 quilates'} 22 quilates
-            %md-option{'value'=> '21 quilates'} 21 quilates
-            %md-option{'value'=> '18 quilates'} 18 quilates
-            %md-option{'value'=> '14 quilates'} 14 quilates
-        .grams{'flex' => '10'}
-          %md-input-container
-            %h5 Cantidad en Gramos
-            {{ goldBatch.model.grams | number:2}}
-        .grams{'flex' => '20'}
-          %md-input-container
-            %h5 Precio
-            $ {{ purchase.model.price | number:2}}
-  .wizard-buttons{layout: "row"}
+  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete"}
     %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Datos Proveedor Y Certificado de Compra
     %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Previsualizar
 

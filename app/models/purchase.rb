@@ -13,7 +13,6 @@
 #  price                       :float
 #
 
-#TODO: change column name from amount to price
 #TODO: extract origin_certicated* fields to a single table and make the association
 class Purchase < ActiveRecord::Base
   #
@@ -30,7 +29,7 @@ class Purchase < ActiveRecord::Base
   mount_uploader :origin_certificate_file, AttachmentUploader
 
   # This is the uniq code assigned to this purchase
-  def reference
+  def reference_code
     Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
   end
 end

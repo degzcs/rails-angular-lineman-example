@@ -4,7 +4,7 @@
       {{ formTabControl.firstLabel }}
     %md-tab#tab2{"ng-if" => "currentProvider.company_info", "aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
       {{ formTabControl.secondLabel }}
-      
+
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
     %form{:name => "providerEditionForm", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
@@ -20,7 +20,7 @@
           %md-input-container{:flex => "30"}
             %label {{rucomIDField.label}}
             %input{:readonly => "true", "ng-model" => "currentProvider.rucom[rucomIDField.field]"}
-            %md-tooltip{"md-direction" => "right", "md-visible" => "true"} 
+            %md-tooltip{"md-direction" => "right", "md-visible" => "true"}
               %span.ion-android-checkmark-circle &nbsp;válido
         %md-content.md-padding
           %div{:layout => "", "layout-sm" => "column"}
@@ -50,7 +50,7 @@
               %input{:required => "true", :name => "address", "ng-model" => "currentProvider.address", :placeholder => "CLL/CR 1 2 - 34"}
               %div{"ng-messages" => "providerEditionForm.address.$error"}
                 %div{"ng-message" => "required"} This is required
-          %br          
+          %br
           %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
             %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
               %span{"md-highlight-text" => "searchState"} {{state.name}}
@@ -101,4 +101,4 @@
             %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
               %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
-              
+
