@@ -85,7 +85,7 @@
     %md-content{"flex"=> "20", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
       .image.row
         .photo
-          %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
+          %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
 
 %md-content{"class"=>"", "layout"=>"row"}
   %h4
@@ -176,7 +176,6 @@
           %span {{goldBatch.rialUnitPrice | number:2}}
 .wizard-buttons{"class"=>"", "layout"=>"row"}
   %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} volver a Pesos
-  /%md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
   %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "showConfirm($event)"} Realizar la Compra
 
 

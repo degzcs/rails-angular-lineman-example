@@ -66,7 +66,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.file=CameraService.getJoinedFile()
 
   if($scope.photo and CameraService.getTypeFile() == 1)
-    $scope.purchase.model.provider_photo_file=$scope.photo
+    $scope.purchase.model.seller_picture=$scope.photo
     CameraService.clearData();
 
   if($scope.file and CameraService.getTypeFile() == 2)

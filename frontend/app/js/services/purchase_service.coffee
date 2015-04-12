@@ -9,7 +9,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
     #
     model:
       price: 0
-      provider_photo_file: ''
+      seller_picture: ''
       provider: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
@@ -31,7 +31,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
               "purchase[provider_id]": purchase.provider.id
               "gold_batch[parent_batches]": gold_batch.parent_batches
               "gold_batch[grams]": gold_batch.total_fine_grams
-              "gold_batch[grade]": gold_batch.grade # Which is the real name?
+              "gold_batch[grade]": gold_batch.grade # < -- What is this?
               "gold_batch[inventory_id]": gold_batch.inventory_id
               "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             file: file
