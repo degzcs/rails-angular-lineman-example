@@ -3,8 +3,8 @@ angular.module('app').factory('CameraService', function($window) {
     var images= [];
     var files= [];
     var pdf = new jsPDF();
-    var marginLeft=150;
-    var marginRight=150;
+    var width=150;
+    var height=150;
     var y=0;
     var typeFile=0;
     var hasUserMedia = function() {
@@ -54,7 +54,7 @@ angular.module('app').factory('CameraService', function($window) {
         marginLeft=150;
         marginRight=150;
         y=0;
-    }
+    };
 //Method to get the last scan file
     var getLastScanFile=function(){
       if(files.length>0){
@@ -72,7 +72,7 @@ angular.module('app').factory('CameraService', function($window) {
             pdf.addPage();
             pdf.setPage(y);
         } 
-        pdf.addImage(images[i],"png",30,5,marginLeft,marginRight);
+        pdf.addImage(images[i],"png",30,5,width,height);
         }
         var blob= pdf.blob('file.pdf');
         blob.lastModifiedDate = new Date();

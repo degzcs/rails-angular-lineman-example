@@ -60,7 +60,20 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   ), (error) ->
 
   # Set the last picture that was took
-  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+  $scope.photo=CameraService.getLastScanImage()
+  # Set the last certificate file that was took
+  $scope.file=CameraService.getJoinedFile()
+
+  if($scope.photo and CameraService.getTypeFile() == 1)
+    $scope.purchase.model.provider_photo_file=$scope.photo
+    CameraService.clearData(); 
+
+  if($scope.file and CameraService.getTypeFile() == 2)
+    $scope.purchase.model.origin_certificate_file=$scope.file
+    CameraService.clearData();
+
+  $scope.scanner = (type) ->
+    CameraService.setTypeFile(type)
 
   # Watch and setup measures and total price
   $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
@@ -82,7 +95,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.saveState= ->
     console.log('saving purchase state on sessionStore ... ')
     $scope.purchase.saveState()
-    $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+  #  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
     $scope.goldBatch.saveState()
 
   #

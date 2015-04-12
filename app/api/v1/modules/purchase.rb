@@ -48,6 +48,7 @@ module V1
               purchase.build_gold_batch(params[:gold_batch])
               purchase.save
               present purchase, with: V1::Entities::Purchase
+              Rails.logger.info(purchase.errors.inspect)
         end
       end
     end
