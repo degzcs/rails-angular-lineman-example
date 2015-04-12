@@ -2,6 +2,11 @@ angular.module('app').factory('CameraService', function($window) {
 
     var images= [];
     var files= [];
+    var pdf = new jsPDF();
+    var marginLeft=150;
+    var marginRight=150;
+    var y=0;
+    var typeFile=0;
     var hasUserMedia = function() {
         return !!getUserMedia();
     };
@@ -36,16 +41,51 @@ angular.module('app').factory('CameraService', function($window) {
 //Method to get the last scan image
     var getLastScanImage=function(){
       if(images.length>0){
-        return images[images.length-1];
+        var retorno=images[images.length-1];
+        return retorno;
       }
       return '';
     };
+//Clear data
+    var clearData=function(){
+        images= [];
+        files= [];
+        pdf = new jsPDF();
+        marginLeft=150;
+        marginRight=150;
+        y=0;
+    }
 //Method to get the last scan file
     var getLastScanFile=function(){
       if(files.length>0){
-        return files[files.length-1];
+        var retorno=files[files.length-1];
+        return retorno;
       }
       return '';
+    };
+//Method to get the last file in pdf joining all the images
+     var getJoinedFile=function(){
+      filesarray=[];
+      if(images && images.length>0){
+       for(var i=0;i<images.length;i++){
+         if(i>0){
+            pdf.addPage();
+            pdf.setPage(y);
+        } 
+        pdf.addImage(images[i],"png",30,5,marginLeft,marginRight);
+        }
+        var blob= pdf.blob('file.pdf');
+        blob.lastModifiedDate = new Date();
+        blob.name = 'file.pdf';
+        filesarray.push(blob);
+        return filesarray;
+        }
+    };
+    var getTypeFile=function(){
+        return typeFile;
+    };
+     var setTypeFile=function(type){
+        typeFile=type;
     };
 //Method to get media sources
     var getMediaSources=function(){
@@ -133,8 +173,12 @@ var dataURItoFile=function dataURItoFile(dataURI,fileName) {
         getUserMedia: getUserMedia,
         getMediaSources: getMediaSources,
         playVideo: playVideo,
+        getJoinedFile: getJoinedFile,
         getLastScanFile: getLastScanFile,
         getLastScanImage: getLastScanImage,
+        getTypeFile: getTypeFile,
+        setTypeFile: setTypeFile,
+        clearData: clearData,
         getScanFiles: getScanFiles
 
     };
