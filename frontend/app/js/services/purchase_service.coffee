@@ -30,8 +30,8 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
               "purchase[price]": purchase.price,
               "purchase[provider_id]": purchase.provider.id
               "gold_batch[parent_batches]": gold_batch.parent_batches
-              "gold_batch[grams]": gold_batch.totalGrams
-              "gold_batch[grade]": gold_batch.law # Which is the real name?
+              "gold_batch[grams]": gold_batch.total_fine_grams
+              "gold_batch[grade]": gold_batch.grade # Which is the real name?
               "gold_batch[inventory_id]": gold_batch.inventory_id
               "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             file: file
@@ -43,7 +43,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
           )
 
           .success (data, status, headers, config) ->
-              console.log 'file ' + config.file.name + 'uploaded. Response: ' + data
+              console.log 'file ' + config.file.name + ' uploaded. Response: ' + data
           i++
 
     #
