@@ -29,12 +29,11 @@
     .row
       .photo{'flex' => ''}
         %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
-        %a{'ng-href' => "#scanner"}
+        %a{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
           %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
             %md-tooltip{"md-visible" => "demo.showTooltip"}
               Agregar Foto
               %span.ion-android-checkmark-circle
-
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"end center"}
       .oc-number{'flex' => ''}
         %md-input-container.md-input-has-value
@@ -48,5 +47,10 @@
           %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
             %md-icon{"md-svg-icon"=>"file:file_upload"}
             Subir Certificado
+      .md-tile-left.cam{:flex => "10"}
+        %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
+          %md-tooltip{"md-visible" => "demo.showTooltip"}
+            Certificado de origen
+            %span.ion-android-checkmark-circle
       .wizard-buttons{'flex' => ''}
         %md-button.md-primary.md-hue-2{flex: "100", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Ingresar Pesos

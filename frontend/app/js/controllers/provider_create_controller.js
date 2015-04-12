@@ -30,7 +30,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     console.log("$stateParams.rucomId: " + $stateParams.rucomId); 
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
     $scope.companyName = rucom.name;        
-    var prov = {    
+    var prov = {  
       document_number: $scope.newProvider.document_number,
       first_name: rucom.name,
       last_name: $scope.newProvider.last_name,        
@@ -52,7 +52,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
         id: '',
         name: '',
         population_center_code: ''
-      }
+      },
+      identification_number_file: '',
+      mining_register_file: '',
+      rut_file: ''
     };    
 
     if($scope.newProvider.has_company) {      

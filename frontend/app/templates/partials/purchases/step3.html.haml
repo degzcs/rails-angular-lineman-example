@@ -169,6 +169,7 @@
             %span {{goldBatch.model.riales}}
         %td.md-table-td-more{colspan: 3}
           %span {{goldBatch.rialUnitPrice | number:2}}
+%md-content{"class"=>"", "layout"=>"row"}
   .wizard-buttons{layout: "row"}
     %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Pesos
     %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF

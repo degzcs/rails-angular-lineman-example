@@ -15,7 +15,8 @@ angular.module('app').directive('mdTableRucom', function () {
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
       $scope.nbOfPages = function () {
-        return $scope.content ? Math.ceil(($scope.content.length) / $scope.count) : 0;
+        // return $scope.content ? Math.ceil(($scope.content.length) / $scope.count) : 0;
+        return $scope.pages || 0;
       };
       $scope.handleSort = function (field) {
           if ($scope.sortable.indexOf(field) > -1) { return true; } else { return false; }
@@ -30,6 +31,23 @@ angular.module('app').directive('mdTableRucom', function () {
       };
       $scope.goToPage = function (page) {
         $scope.tablePage = page;
+        RucomService.retrieveRucoms.query({per_page: $scope.count, page: (pag+1)}, (function(rucoms, headers) {
+          var content = [];
+          for (var i=0; i<rucoms.length; i++) {
+            var rucom = {
+              id: rucoms[i].id,
+              name: rucoms[i].name,
+              num_rucom: rucoms[i].num_rucom,
+              rucom_record: rucoms[i].rucom_record,
+              provider_type: rucoms[i].provider_type,
+              status: rucoms[i].status,
+              mineral: rucoms[i].mineral          
+            };
+            content.push(rucom);
+          }
+          $scope.pages = parseInt(headers().total_pages);
+          return $scope.content = content;
+        }), function(error) {});
       };
       $scope.setCurrentRucom = function (rucom) {
         console.log('setCurrentRucom' + JSON.stringify(rucom));

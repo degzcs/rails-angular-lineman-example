@@ -4,6 +4,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                 $scope.optionSelected='';
                 $scope.isForCamera='Photo';
                 $scope.number=0;
+                $scope.image1='';
                 $scope.changeCamera=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
                     CameraService.playVideo(dimensions,option);
@@ -19,8 +20,17 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                         ctx     = canvas.getContext('2d'),
                         videoElement = document.querySelector('video'),
                         d       = $q.defer();
-
-                    canvas.width = $scope.w2;
+                        vari=720;
+                    canvas.width = vari;
+                    canvas.height = vari;
+                    $timeout(function() {
+                        ctx.fillRect(0, 0, vari, vari);
+                        ctx.drawImage(videoElement, 0, 0, vari, vari);
+                        d.resolve(canvas.toDataURL());
+                    }, 0);
+                    d.promise.then(function(image) {
+                            $scope.image1=image;
+                            canvas.width = $scope.w2;
                     canvas.height = $scope.h2;
                     $timeout(function() {
                         ctx.fillRect(0, 0, $scope.w2, $scope.h2);
@@ -30,11 +40,15 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     d.promise.then(function(image) {
                             $scope.image=image;
                         });
+                        });
+
+                    
                 };
                 $scope.addScanFile=function(){
                     if($scope.image) {
-                        CameraService.addScanFile($scope.image);
+                        CameraService.addScanFile($scope.image1);
                         $scope.number++;
+                        console.log("image added "+ $scope.image1);
                         console.log("image added "+ $scope.image);
                     }
                 };
