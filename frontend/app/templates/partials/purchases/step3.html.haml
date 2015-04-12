@@ -120,20 +120,26 @@
         %th.md-table-header
           Total gramos
         %th.md-table-header
+          Total gramos finos
+        %th.md-table-header
           Precio Total
     %tbody
       %tr
         %td.md-table-td-more
-          %p Gramo(s)
+          Gramo
         %td.md-table-td-more
           %md-input-container
-            %span {{goldBatch.model.grams}}
+            %label
+            {{goldBatch.model.grams}}
         %td.md-table-td-more
           %md-input-container
             $ {{ goldBatch.gramUnitPrice | number:2}}
-        %td.md-table-td-more
+        %td.md-table-td-more.total-grams
           %md-input-container
-            {{ goldBatch.model.totalGrams | number:2}}
+            {{ goldBatch.model.total_grams | number:2}}
+        %td.md-table-td-more.total-fine-grams
+          %md-input-container
+            {{ goldBatch.model.total_fine_grams | number:3}}
         %td.md-table-td-more
           %md-input-container
             $ {{ purchase.model.price | number:2}}
@@ -143,7 +149,7 @@
         %td.md-table-td-more
           %md-input-container
             %span {{goldBatch.model.castellanos}}
-        %td.md-table-td-more{colspan: 3}
+        %td.md-table-td-more{colspan: 4}
           %span {{goldBatch.castellanoUnitPrice  | number:2}}
       %tr
         %td.md-table-td-more
@@ -151,7 +157,7 @@
         %td.md-table-td-more
           %md-input-container
             %span {{goldBatch.model.ozs}}
-        %td.md-table-td-more{colspan: 3}
+        %td.md-table-td-more{colspan: 4}
           %span {{goldBatch.ozUnitPrice | number:2}}
       %tr
         %td.md-table-td-more
@@ -159,7 +165,7 @@
         %td.md-table-td-more
           %md-input-container
             %span {{goldBatch.model.tomines}}
-        %td.md-table-td-more{colspan: 3}
+        %td.md-table-td-more{colspan: 4}
           %span {{goldBatch.tominUnitPrice | number:2}}
       %tr
         %td.md-table-td-more
@@ -167,12 +173,12 @@
         %td.md-table-td-more
           %md-input-container
             %span {{goldBatch.model.riales}}
-        %td.md-table-td-more{colspan: 3}
+        %td.md-table-td-more{colspan: 4}
           %span {{goldBatch.rialUnitPrice | number:2}}
-  .wizard-buttons{layout: "row"}
-    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Pesos
-    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
-    %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => "create()"} Guardar
+.wizard-buttons{layout: "row"}
+  %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} Pesos
+  %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step3", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
+  %md-button.md-primary.md-hue-2{flex: "33", "ui-sref"=>"new_purchase.step1", "ng-click" => "create()"} Guardar
 
 
 
