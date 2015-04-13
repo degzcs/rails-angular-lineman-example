@@ -561,34 +561,47 @@ module V1
           #granos
           # hash
 
-           values = { provider: { rucom: '1010101949482',
-                                                identification_type: 'rut',
+           values = { provider: {               type: 'Sociedad anonima',
+                                                nit: '19191914jfjfjfjf',
                                                 name: 'Esteban Ceron',
-                                                email: 'restebance@trazoro.com',
                                                 identification_number: '129292294030302',
-                                                phone: '10303039503',
-                                                address: 'Carrera 9N #67N - 156'
+                                                rucom: '1010101949482',
+                                                address: 'Carrera 9N #67N - 156',
+                                                phone: '10303039503'
                                           },
-                          gold_batch: {
+                      purchaser:{
+                                                type: 'Sociedad anonima',
+                                                nit: '19191914jfjfjfjf',
+                                                rucom: '1010101949482',
+                                                name: 'Esteban Ceron',
+                                                office: 'sede principal',
+                                                identification_number: '129292294030302',
+
+                                                address: 'Carrera 9N #67N - 156',
+                                                phone: '10303039503'
+                      },
+
+                      gold_batch: {
                                              castellanos:{
-                                                                 quantity: 0,
-                                                                 unit_value: 2500000
+                                                                 quantity: 200,
+                                                                 grams: 2500000
                                                                 },
                                              tomines: {
                                                                  quantity: 200,
-                                                                 unit_value: 2000000
+                                                                 grams: 2000000
                                                              },
                                              riales: {
                                                          quantity: 5000,
-                                                         unit_value: 2000000
+                                                         grams: 2000000
                                                          },
                                              ozs: {
                                                            quantity: 600000,
-                                                           unit_value: 404003030303
+                                                           grams: 404003030303
                                                            },
                                             },
-                           purchase:{
+                      purchase:{
                                             price: 20202020202,
+                                            price_per_gram: 2020220 ,
                                             law: 1000,
                                             grams: 1000000,
                                             fine_grams: 123546,
@@ -598,7 +611,7 @@ module V1
 
            values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
             # binding.pry
-           date = Date.today
+           date = Time.now
            pdf = ::PdfFile.new(values , date , 'purchase_report')
            puts ' creating purchase report ... '
            header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"

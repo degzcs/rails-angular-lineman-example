@@ -28,7 +28,7 @@
   %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center center"}
     .row
       .photo{'flex' => ''}
-        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
+        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
         %a{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
           %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
             %md-tooltip{"md-visible" => "demo.showTooltip"}
