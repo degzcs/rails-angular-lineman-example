@@ -65,41 +65,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         $scope.saveBtnEnabled = true;
       }
   }, true); // objectEquality = true
-  // $scope.$watch(function(scope) {
-  //     return scope.currentProvider.address;
-  //   }, 
-  //   function(newVal, oldVal) {
-  //     if (oldVal && newVal !== oldVal) {
-  //       $scope.saveBtnEnabled = true;
-  //     }
-  // });
-
-  // $scope.$watch(function(scope) {
-  //     return scope.currentProvider.email;
-  //   }, 
-  //   function(newVal, oldVal) {
-  //     if (oldVal && newVal !== oldVal) {
-  //       $scope.saveBtnEnabled = true;
-  //     }
-  // });
-
-  // $scope.$watch(function(scope) {
-  //     return scope.currentProvider.phone_number;
-  //   }, 
-  //   function(newVal, oldVal) {
-  //     if (oldVal && newVal !== oldVal) {
-  //       $scope.saveBtnEnabled = true;
-  //     }
-  // });
-
-  // $scope.$watch(function(scope) {
-  //   return scope.currentProvider.population_center;
-  // }, 
-  // function(newVal, oldVal) {
-  //   if (oldVal && newVal !== oldVal) {
-  //     $scope.saveBtnEnabled = true;
-  //   }
-  // });
+    
   // end Watchers
 
   // Autocomplete for State, City and Population Center fields

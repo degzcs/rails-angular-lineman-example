@@ -9,8 +9,9 @@
         %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
       %th.md-table-header
   %tbody
-    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | limitTo: count"} 
-      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]"} {{h.field.indexOf('date') > 0 ? (c[h.field] | date) : (c[h.field] !== '' ? c[h.field] : c[h.alternateField])}}
+    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"} 
+      %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]"}
+        %pre {{c[h.field] !== null ? c[h.field] : c[h.alternateField]}}
       %td.md-table-td-more
         %a{"ng-click" => "setCurrentRucom(c)"}
           %md-button{"aria-label" => "Edit"}
