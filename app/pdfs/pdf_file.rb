@@ -377,49 +377,68 @@ class PdfFile < Prawn::Document
   # Generar certificado de compra
 
   def generate_purchase_report(values,date)
-    file = File.open(File.join(Rails.root, 'vendor','pdfs','reporte_de_compra_trazoro.pdf'))
+    file = File.open(File.join(Rails.root, 'vendor','pdfs','reporte_de_compra.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header
-    move_down 90
-    text_box "#{date.day}", :at => [40,cursor] , :width => 40
-    text_box "#{date.month}", :at => [85,cursor] , :width => 40
-    text_box "#{date.year}" , :at => [125,cursor], :width => 40
+    move_down 60
+    text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
+    move_down 5
+    text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
+    move_down 13
+    text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80
 
     #provider
+    move_cursor_to 666
+    text_box "#{values[:provider][:type]}", :at => [400,cursor], :width => 150
+    move_down 16
+    text_box "#{values[:provider][:nit]}", :at => [400,cursor], :width => 150
+    move_down 20
+    text_box "#{values[:provider][:name]}", :at => [400,cursor], :width => 150
+    move_down 19
+    text_box "#{values[:provider][:identification_number]}", :at => [400,cursor], :width => 150
+    move_down 18
+    text_box "#{values[:provider][:rucom]}", :at => [400,cursor], :width => 150
+    move_down 18
+    text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150
+    move_down 18
+    text_box "#{values[:provider][:phone]}", :at => [400,cursor], :width => 150
+    #purchaser
+    move_cursor_to 666
+    text_box "#{values[:purchaser][:type]}", :at => [130,cursor], :width => 150
+    move_down 16
+    text_box "#{values[:purchaser][:nit]}", :at => [130,cursor], :width => 150
+    move_down 20
+    text_box "#{values[:purchaser][:rucom]}", :at => [130,cursor], :width => 150
+    move_down 19
+    text_box "#{values[:purchaser][:name]}", :at => [130,cursor], :width => 150
+    move_down 18
+    text_box "#{values[:purchaser][:office]}", :at => [130,cursor], :width => 150
+    move_down 18
+    text_box "#{values[:purchaser][:address]}", :at => [130,cursor], :width => 150
+    move_down 18
+    text_box "#{values[:purchaser][:phone]}", :at => [130,cursor], :width => 150
 
-    move_down 55
-    text_box "#{values[:provider][:rucom]}", :at => [300,cursor], :width => 150
-    move_down 22
-    text_box "#{values[:provider][:identification_type]}", :at => [300,cursor], :width => 150
-    move_down 22
-    text_box "#{values[:provider][:name]}", :at => [300,cursor], :width => 150
-    move_down 22
-    text_box "#{values[:provider][:identification_number]}", :at => [300,cursor], :width => 150
-    move_down 22
-    text_box "#{values[:provider][:phone]}", :at => [300,cursor], :width => 150
-    move_down 22
-    text_box "#{values[:provider][:address]}", :at => [300,cursor], :width => 150
-    move_down 22
-    text_box "#{values[:provider][:email]}", :at => [300,cursor], :width => 150
+
+
 
 
     if values[:gold_batch][:castellanos][:quantity] != 0
-      move_cursor_to 410
-      text_box "#{values[:gold_batch][:castellanos][:quantity]}" , :at => [280 , cursor] , :width => 100
-      text_box "#{values[:gold_batch][:castellanos][:unit_value]}", :at => [400 , cursor], :width => 100
+      move_cursor_to 485
+      text_box "#{values[:gold_batch][:castellanos][:quantity]}" , :at => [355 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:castellanos][:grams]} grs", :at => [480 , cursor], :width => 100
     end
 
     if values[:gold_batch][:tomines][:quantity] != 0
-      move_cursor_to 386
-      text_box "#{values[:gold_batch][:tomines][:quantity]}" , :at => [280 , cursor] , :width => 100
-      text_box "#{values[:gold_batch][:tomines][:unit_value]}", :at => [400 , cursor], :width => 100
+      move_cursor_to 466
+      text_box "#{values[:gold_batch][:tomines][:quantity]}" , :at => [355 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:tomines][:grams]} grs", :at => [480 , cursor], :width => 100
     end
 
     if values[:gold_batch][:riales][:quantity] != 0
-      move_cursor_to 365
-      text_box "#{values[:gold_batch][:riales][:quantity]}" , :at => [280 , cursor] , :width => 100
-      text_box "#{values[:gold_batch][:riales][:unit_value]}", :at => [400 , cursor], :width => 100
+      move_cursor_to 448
+      text_box "#{values[:gold_batch][:riales][:quantity]}" , :at => [355 , cursor] , :width => 100
+      text_box "#{values[:gold_batch][:riales][:grams]} grs", :at => [480 , cursor], :width => 100
     end
 
     # if values[:gold_batch][:granos][:quantity] != 0
@@ -428,15 +447,19 @@ class PdfFile < Prawn::Document
     #   text_box "#{values[:gold_batch][:granos][:unit_value]}", :at => [400 , cursor], :width => 100
     # end
 
-    move_cursor_to 320
-    text_box "#{values[:purchase][:price]}" , :at => [180 , cursor] , :width => 150
+    move_cursor_to 412
+    text_box "#{values[:purchase][:grams]} grs" , :at => [300 , cursor] , :width => 150
+    move_down 18
+    text_box "#{values[:purchase][:law]}" , :at => [300 , cursor] , :width => 150
 
-    move_down 60
-    text_box "#{values[:purchase][:law]}" , :at => [240 , cursor] , :width => 150
+    move_cursor_to 375
+    text_box "#{values[:purchase][:fine_grams]} grs" , :at => [300 , cursor] , :width => 150
+    move_down 18
+    text_box "#{values[:purchase][:price]} pesos" , :at => [300 , cursor] , :width => 150
+    move_down 18
+    text_box "#{values[:purchase][:price_per_gram]} pesos" , :at => [300 , cursor] , :width => 150
 
-    move_down 60
-    text_box "#{values[:purchase][:grams]}" , :at => [230 , cursor] , :width => 150
-
+    # 
     move_cursor_to 105
     text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
 
