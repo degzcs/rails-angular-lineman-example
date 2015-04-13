@@ -1,6 +1,6 @@
 angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($scope, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
   
-  $scope.newProvider = {};  
+  $scope.newProvider = ProviderService.getCurrentProv();
   $scope.populationCenter = {};
   $scope.currentRucom = {};
   $scope.companyInfo = {};
@@ -159,6 +159,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   };
 
   $scope.back = function() {
+    ProviderService.setCurrentProv({});
     $window.history.back();
   };
 
@@ -186,6 +187,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     console.log($scope.newProvider);
     $resource = ProviderService.create($scope.newProvider);
     $scope.infoAlert('Provider', 'Successful registration');
+    ProviderService.setCurrentProv({});
     // if($resource){
     //   $resource.save($scope.newProvider);
     //   $scope.infoAlert('Provider', 'Successful registration');
@@ -203,11 +205,12 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   // Watchers for listen to changes in editable fields
   $scope.$watch('newProvider', 
-    function(newVal, oldVal) {
-      if (oldVal && newVal !== oldVal) {
-        $scope.saveBtnEnabled = true;
-      }
-  }, true);
+   function(newVal, oldVal) {
+     if (oldVal && newVal !== oldVal) {
+       $scope.saveBtnEnabled = true;
+     }
+     ProviderService.setCurrentProv($scope.newProvider);
+ }, true);
 
   $scope.stateSearch = function(query) {
     var results = query ? $scope.states.filter( createFilterFor(query) ) : [];

@@ -23,9 +23,9 @@ class CompanyInfo < ActiveRecord::Base
 
   validates :nit_number, presence: true
   validates :name, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
-  validates :country, presence: true
+  #validates :city, presence: true
+  #validates :state, presence: true
+  #validates :country, presence: true
   validates :legal_representative, presence: true
   validates :id_type_legal_rep, presence: true
   validates :id_number_legal_rep, presence: true

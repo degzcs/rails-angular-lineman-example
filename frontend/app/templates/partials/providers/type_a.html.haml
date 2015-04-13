@@ -10,7 +10,7 @@
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
-            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial", "ng-href" => "#scanner",,"ng-click" =>"scanner(1)"} +
+            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial", "ng-href" => "#scanner", "ng-click" =>"scanner(1)"} +
               %img.face.cam{:ng-src => "{{newProvider.photo_file}}"}  
                 %md-tooltip{"md-visible" => "demo.showTooltip"}
                   Photo
@@ -42,8 +42,7 @@
               .md-tile-left.cam{:flex => "10"} 
                 %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
                   %md-tooltip{"md-visible" => "demo.showTooltip"}
-                    scan
-                    %span.ion-android-checkmark-circle
+                    Scan
         %md-content.md-padding{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
             %label Provider type
@@ -75,7 +74,6 @@
                   %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"} +
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
                       Mining Record
-                      %span.ion-android-checkmark-circle
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
                     %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
@@ -88,8 +86,7 @@
                 .md-tile-left.cam{:flex => "10"} 
                   %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"} +
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      RUT file
-                      %span.ion-android-checkmark-circle
+                      RUT file                      
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
                     %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}

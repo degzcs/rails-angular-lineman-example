@@ -25,10 +25,10 @@ describe CompanyInfo  do
     let(:company_info) {build(:company_info)}
     it {expect(company_info.nit_number).not_to be_nil }
     it {expect(company_info.name).not_to be_nil }
-    it {expect(company_info.city).not_to be_nil}
-    it {expect(company_info.state).not_to be_nil}
-    it {expect(company_info.country).not_to be_nil}
-    it {expect(company_info.legal_representative).not_to be_nil}
+    # it {expect(company_info.city).not_to be_nil}
+    # it {expect(company_info.state).not_to be_nil}
+    # it {expect(company_info.country).not_to be_nil}
+    # it {expect(company_info.legal_representative).not_to be_nil}
     it {expect(company_info.id_type_legal_rep).not_to be_nil}
     it {expect(company_info.id_number_legal_rep).not_to be_nil}
     it {expect(company_info.email).not_to be_nil }
@@ -51,18 +51,18 @@ describe CompanyInfo  do
       expect(company_info).not_to be_valid
     end
 
-    it "should not allow to create a company_info without city" do
-      company_info = build(:company_info, provider_id: provider.id, city: nil)
-      expect(company_info).not_to be_valid
-    end
-    it "should not allow to create a company_info without state" do
-      company_info = build(:company_info, provider_id: provider.id, state: nil)
-      expect(company_info).not_to be_valid
-    end
-    it "should not allow to create a company_info without country" do
-      company_info = build(:company_info, provider_id: provider.id, country: nil)
-      expect(company_info).not_to be_valid
-    end
+    # it "should not allow to create a company_info without city" do
+    #   company_info = build(:company_info, provider_id: provider.id, city: nil)
+    #   expect(company_info).not_to be_valid
+    # end
+    # it "should not allow to create a company_info without state" do
+    #   company_info = build(:company_info, provider_id: provider.id, state: nil)
+    #   expect(company_info).not_to be_valid
+    # end
+    # it "should not allow to create a company_info without country" do
+    #   company_info = build(:company_info, provider_id: provider.id, country: nil)
+    #   expect(company_info).not_to be_valid
+    # end
     it "should not allow to create a company_info without legal_representative" do
      company_info = build(:company_info, provider_id: provider.id, legal_representative: nil)
       expect(company_info).not_to be_valid

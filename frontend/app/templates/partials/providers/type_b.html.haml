@@ -6,12 +6,12 @@
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providerCreateForm", "ng-submit" => "createProvider()", "novalidate" => "novalidate"}
+    %form{:name => "providerCreateForm", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
-            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial",:ng-href => "#scanner"} +
-              %img.face.cam{:ng-src => "{{photo}}"}  
+            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial", "ng-href" => "#scanner", "ng-click" =>"scanner(1)"} +
+              %img.face.cam{:ng-src => "{{newProvider.photo_file}}"}  
                 %md-tooltip{"md-visible" => "demo.showTooltip"}
                   Photo
                   %span.ion-android-checkmark-circle
@@ -20,7 +20,7 @@
             %input{"ng-model" => "newProvider.first_name"}
           %md-input-container{:flex => ""}
             %label Last name
-            %input{"ng-model" => "newProvider.last_name"}                            
+            %input{"ng-model" => "newProvider.last_name"}
           %md-input-container{:flex => ""}
             %label {{rucomIDField.label}}
             %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
@@ -33,9 +33,16 @@
                 %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} This is required.
             %div
-              %md-button.md-raised{:style => "margin-top:16px", "ui-sref" => "scanner"}
-                %md-icon{"md-svg-icon"=>"file:file_upload"}
-              %md-tooltip{"md-direction" => "bottom"} Scan
+              %span
+                {{newProvider.identification_number_file[0].name}}
+              .upload-oc{'flex' => ''}
+                .button-action.md-padding
+                  %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
+                    %md-icon{"md-svg-icon"=>"file:file_upload"}
+              .md-tile-left.cam{:flex => "10"} 
+                %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
+                  %md-tooltip{"md-visible" => "demo.showTooltip"}
+                    Scan
         %md-content.md-padding{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
             %label Provider type
@@ -60,20 +67,39 @@
             %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
         %br
         %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-          %div{:layout => "row", :flex => "35", "layout-align" => "space-between center"}
-            %md-button.md-raised{"ui-sref" => "scanner"}
-              %md-icon{"md-svg-icon"=>"file:file_upload"} 
-              Mining Record
-              %md-tooltip{"md-direction" => "top"} Scan
-            %md-button.md-raised{"ui-sref" => "scanner"}
-              %md-icon{"md-svg-icon"=>"file:file_upload"} 
-              RUT
-              %md-tooltip{"md-direction" => "top"} Scan
+          %div{:layout => "row", :flex => "50", "layout-align" => "space-between center"}
+            %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
+              %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+                .md-tile-left.cam{:flex => "10"} 
+                  %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"} +
+                    %md-tooltip{"md-visible" => "demo.showTooltip"}
+                      Mining Record
+                .upload-oc{'flex' => ''}
+                  .button-action.md-padding
+                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
+                      %md-icon{"md-svg-icon"=>"file:file_upload"}  
+                      Mining register
+              %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+                %span
+                  {{newProvider.mining_register_file[0].name}}
+              %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+                .md-tile-left.cam{:flex => "10"} 
+                  %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"} +
+                    %md-tooltip{"md-visible" => "demo.showTooltip"}
+                      RUT file
+                .upload-oc{'flex' => ''}
+                  .button-action.md-padding
+                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
+                      %md-icon{"md-svg-icon"=>"file:file_upload"} 
+                      RUT file
+              %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
+                %span
+                  {{newProvider.rut_file[0].name}}
             %md-input-container{:style => "margin-top:26px"}
               %md-checkbox{"aria-label" => "Disabled", "ng-model" => "newProvider.has_company", "ng-change" => "check()"} It is a company?
           %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", :type => "submit"} Save
+            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider()"} Save
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", "ng-if" => "newProvider.has_company", :class => "md-raised md-primary", "ng-click" => "next()"} Next
     #tab2-content{"ng-if" => "newProvider.has_company", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
       %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
@@ -118,5 +144,5 @@
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
           %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", :type => "submit"} Save
+            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider()"} Save
 

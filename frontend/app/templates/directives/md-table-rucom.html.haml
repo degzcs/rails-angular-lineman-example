@@ -9,7 +9,7 @@
         %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
       %th.md-table-header
   %tbody
-    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"} 
+    %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count", "ng-click" => "setCurrentRucom(c)"} 
       %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]"}
         %pre {{c[h.field] !== null ? c[h.field] : c[h.alternateField]}}
       %td.md-table-td-more
