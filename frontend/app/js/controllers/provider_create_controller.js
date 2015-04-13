@@ -53,6 +53,15 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
         name: '',
         population_center_code: ''
       },
+      company_info: {
+        name: '',
+        nit_number: '',        
+        legal_representative: '',
+        id_type_legal_rep: '',
+        id_number_legal_rep: '',
+        email: '',
+        phone_number: ''             
+      },
       identification_number_file: '',
       mining_register_file: '',
       rut_file: ''
@@ -128,7 +137,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     }else if($scope.newProvider.has_company && $scope.newProvider.first_name === $scope.companyName){    
       $scope.newProvider.first_name = "";
       $scope.newProvider.company_info.name = $scope.companyName;
-    } if(!$scope.newProvider.has_company && $scope.newProvider.first_name === ''){      console.log("3");
+    } if(!$scope.newProvider.has_company && $scope.newProvider.first_name === ''){
       $scope.newProvider.first_name = $scope.companyName;       
       $scope.newProvider.company_info.name = "";
     }
@@ -159,7 +168,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   }  
 
   $scope.createProvider = function(){
-    console.log(JSON.stringify($scope.newProvider));
+    // console.log(JSON.stringify($scope.newProvider));
+    console.log($scope.newProvider);
     $resource = ProviderService.create($scope.newProvider);
     if($resource){
       $resource.save($scope.newProvider);

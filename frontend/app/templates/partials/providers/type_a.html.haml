@@ -20,12 +20,7 @@
             %input{"ng-model" => "newProvider.first_name"}
           %md-input-container{:flex => ""}
             %label Last name
-            %input{"ng-model" => "newProvider.last_name"}
-          %md-input-container{:flex => "15"}          
-            %label Document number
-            %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
-              %div{"ng-messages" => "providerCreateForm.document_number.$error"}
-                %div{"ng-message" => "required"} This is required.          
+            %input{"ng-model" => "newProvider.last_name"}         
           %md-input-container{:flex => ""}
             %label {{rucomIDField.label}}
             %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
@@ -35,7 +30,7 @@
             %md-input-container
               %label ID document number
               %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
-                %div{"ng-messages" => "providerSearchForm.document_number.$error"}
+                %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} This is required.
             %div
               %md-button.md-raised{:style => "margin-top:16px", "ui-sref" => "scanner"}
@@ -78,6 +73,6 @@
           %div{:layout => "row", :flex => "15", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
             %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-              %md-button{"ng-disabled" => "!providerSearchForm.$valid", :class => "md-raised md-accent", "ng-click" => "save()"} Save
+              %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "save()"} Save
 
  
