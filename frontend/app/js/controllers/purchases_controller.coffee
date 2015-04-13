@@ -10,7 +10,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.allProviders  = []
   $scope.searchText = null
   $scope.message
-  # window.s = $scope
+  window.s = $scope
   #
   # Fuctions
   #
