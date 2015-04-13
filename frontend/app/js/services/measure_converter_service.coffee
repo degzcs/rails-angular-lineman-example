@@ -72,6 +72,14 @@ angular.module('app').factory 'MeasureConverterService', ()->
       (4.6*fineGramUnitPrice)/16
 
     #
+    # Get the Unit price per gram from the fine gram unit price
+    # @params fineGramUnitPrice [Integer]
+    # @return [Integer]
+    #
+    gramsUnitPriceFrom: (fineGramUnitPrice)->
+      '??'
+
+    #
     # Fine-Grams to Real-Grams
     #
     gramsToFineGrams: (grams, law)->

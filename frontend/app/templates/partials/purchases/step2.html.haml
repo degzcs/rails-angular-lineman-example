@@ -28,8 +28,6 @@
                 %th.md-table-header
                   Cantidad
                 %th.md-table-header
-                  Precio por Unidad
-                %th.md-table-header
                   Total gramos
                 %th.md-table-header
                   Total gramos finos
@@ -43,9 +41,6 @@
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "required"=>""}
-                %td.md-table-td-more.gram-unit
-                  %md-input-container
-                    $ {{ purchase.model.fine_gram_unit_price | number:2}}
                 %td.md-table-td-more.total-grams
                   %md-input-container
                     {{ goldBatch.model.total_grams | number:2}}
@@ -58,43 +53,31 @@
               %tr
                 %td.md-table-td-more
                   Castellano(s)
-                %td.md-table-td-more
+                %td.md-table-td-more{colspan: 5}
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "required"=>""}
-                %td.md-table-td-more{colspan: 4}
-                  %span
-                    $ {{castellanoUnitPrice  | number:2}}
               %tr
                 %td.md-table-td-more
                   Onza(s)
-                %td.md-table-td-more
+                %td.md-table-td-more{colspan: 5}
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>"", "required"=>""}
-                %td.md-table-td-more{colspan: 4}
-                  %span
-                    $ {{ozUnitPrice | number:2}}
               %tr
                 %td.md-table-td-more
                   Tomine(s)
-                %td.md-table-td-more
+                %td.md-table-td-more{colspan: 5}
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "required"=>""}
-                %td.md-table-td-more{colspan: 4}
-                  %span
-                    $ {{tominUnitPrice | number:2}}
               %tr
                 %td.md-table-td-more
                   Rial(es)
-                %td.md-table-td-more
+                %td.md-table-td-more{colspan: 5}
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>"", "required"=>""}
-                %td.md-table-td-more{colspan: 4}
-                  %span
-                    $ {{rialUnitPrice | number:2}}
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete"}
     %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver a Datos Proveedor Y Certificado de Compra
     %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Reporte de la Compra

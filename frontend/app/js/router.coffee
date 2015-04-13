@@ -345,7 +345,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/purchases/show.html"
-        controller: "PurchasesCtrl"
+        controller: "PurchasesShowCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService, $timeout, $q, $mdDialog) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser) ->
   #
   # Instances
   #
@@ -6,6 +6,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
+  CurrentUser.get().success (data) ->
+    $scope.current_user = data
 
   $scope.allProviders  = []
   $scope.searchText = null
@@ -80,11 +82,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price]', ->
 
     # Measue Unit Price (COP)
-    #
-    $scope.castellanoUnitPrice= MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    $scope.ozUnitPrice= MeasureConverterService.ozsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    $scope.tominUnitPrice= MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    $scope.rialUnitPrice= MeasureConverterService.rialesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # TODO:
+    # $scope.castellanoUnitPrice= MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.ozUnitPrice= MeasureConverterService.ozsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.tominUnitPrice= MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.rialUnitPrice= MeasureConverterService.rialesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.gramUnitPrice= MeasureConverterService.gramsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -113,7 +116,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     # Appending dialog to document.body to cover sidenav in docs app
     confirm = $mdDialog.confirm()
                       .title('Desea realizar la compra?')
-                      .content('Va a ser generado una compra del lote de oro segun el anterior reporte. Esta usted de acuerdo?')
+                      .content('Va a ser generada una compra. Esta seguro que desea realizar la compra?')
                       .ariaLabel('Lucky day')
                       .ok('Si, deseo comprar')
                       .cancel('No, cancelar compra')
