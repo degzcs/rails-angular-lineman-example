@@ -9,6 +9,9 @@ module V1
       expose :origin_certificate_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :seller_picture, documentation: { type: "file", desc: "file", example: "..." }
       expose :origin_certificate_sequence, documentation: { type: "string", desc: "sequence", example: "123456789" }
+      expose :reference_code, documentation:{} do |purchase, options|
+        purchase.reference_code
+      end
       expose :access_token, documentation: { type: "string", desc: "authentication token", example: "sjahdkfjhasdfhaskdj" } do |purchase, options|
         purchase.user.create_token
       end

@@ -561,55 +561,56 @@ module V1
           #granos
           # hash
 
-           values = { provider: {               type: 'Sociedad anonima',
-                                                nit: '19191914jfjfjfjf',
-                                                name: 'Esteban Ceron',
-                                                identification_number: '129292294030302',
-                                                rucom: '1010101949482',
-                                                address: 'Carrera 9N #67N - 156',
-                                                phone: '10303039503'
-                                          },
-                      purchaser:{
-                                                type: 'Sociedad anonima',
-                                                nit: '19191914jfjfjfjf',
-                                                rucom: '1010101949482',
-                                                name: 'Esteban Ceron',
-                                                office: 'sede principal',
-                                                identification_number: '129292294030302',
+           # values = { provider: {               type: 'Sociedad anonima',
+           #                                      nit: '19191914jfjfjfjf',
+           #                                      name: 'Esteban Ceron',
+           #                                      identification_number: '129292294030302',
+           #                                      rucom: '1010101949482',
+           #                                      address: 'Carrera 9N #67N - 156',
+           #                                      phone: '10303039503'
+           #                                },
+           #            purchaser:{
+           #                                      type: 'Sociedad anonima',
+           #                                      nit: '19191914jfjfjfjf',
+           #                                      rucom: '1010101949482',
+           #                                      name: 'Esteban Ceron',
+           #                                      office: 'sede principal',
+           #                                      identification_number: '129292294030302',
 
-                                                address: 'Carrera 9N #67N - 156',
-                                                phone: '10303039503'
-                      },
+           #                                      address: 'Carrera 9N #67N - 156',
+           #                                      phone: '10303039503'
+           #            },
 
-                      gold_batch: {
-                                             castellanos:{
-                                                                 quantity: 200,
-                                                                 grams: 2500000
-                                                                },
-                                             tomines: {
-                                                                 quantity: 200,
-                                                                 grams: 2000000
-                                                             },
-                                             riales: {
-                                                         quantity: 5000,
-                                                         grams: 2000000
-                                                         },
-                                             ozs: {
-                                                           quantity: 600000,
-                                                           grams: 404003030303
-                                                           },
-                                            },
-                      purchase:{
-                                            price: 20202020202,
-                                            price_per_gram: 2020220 ,
-                                            law: 1000,
-                                            grams: 1000000,
-                                            fine_grams: 123546,
-                                            code: '11jddj29292929292'
-                                          }
-               }
+           #            gold_batch: {
+           #                                   castellanos:{
+           #                                                       quantity: 200,
+           #                                                       grams: 2500000
+           #                                                      },
+           #                                   tomines: {
+           #                                                       quantity: 200,
+           #                                                       grams: 2000000
+           #                                                   },
+           #                                   riales: {
+           #                                               quantity: 5000,
+           #                                               grams: 2000000
+           #                                               },
+           #                                   ozs: {
+           #                                                 quantity: 600000,
+           #                                                 grams: 404003030303
+           #                                                 },
+           #                                  },
+           #            purchase:{
+           #                                  price: 20202020202,
+           #                                  price_per_gram: 2020220 ,
+           #                                  law: 1000,
+           #                                  grams: 1000000,
+           #                                  fine_grams: 123546,
+           #                                  code: '11jddj29292929292'
+           #                                }
+           #     }
 
-           # values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
+           values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
+           # values.except!(:purchase)
             # binding.pry
            date = Time.now
            pdf = ::PdfFile.new(values , date , 'purchase_report')

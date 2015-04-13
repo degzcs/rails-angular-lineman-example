@@ -6,24 +6,39 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   CurrentUser.get().success (data) ->
+    #IMPROVE: Set up Missing values to generate a Purchase invoice
+    data.company_name = 'TrazOro'
+    data.nit = '123456789456123'
+    data.rucom_record = 6547896321
+    data.office = 'TrazOro Popayan'
+    data.address = 'Calle falsa 123'
+    data.phone = '3007854214'
     $scope.current_user = data
 
-  # window.s = $scope
   #
   # Fuctions
   #
 
+  $scope.flushData =->
+    $scope.purchase = []
+    $scope.goldBatch = []
+    sessionStorage.purchaseService =[]
+    sessionStorage.goldBatchService = []
+
   #
   #  Send calculated values to create a Purchase Renport in PDF format
-  $scope.createPDF =  (purchase, provider, goldBatch)->
+  $scope.createPDF =  (purchase, goldBatch, buyer)->
     goldBatchForPDF=
-      castellanos: {quantity: $scope.goldBatch.model.castellanos, unit_value:  $scope.goldBatch.castellanoUnitPrice}
-      tomines: {quantity: $scope.goldBatch.model.tomines, unit_value:  $scope.goldBatch.tominUnitPrice}
-      riales: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.rialUnitPrice}
-      ozs: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.ozUnitPrice}
-      gramos: {quantity: $scope.goldBatch.model.grams, unit_value:  $scope.goldBatch.gramUnitPrice}
-    provider = purchase.provider
+      castellanos: {quantity: $scope.goldBatch.model.castellanos} #TODO: add grams
+      tomines: {quantity: $scope.goldBatch.model.tomines}
+      riales: {quantity: $scope.goldBatch.model.riales}
+      ozs: {quantity: $scope.goldBatch.model.riales}
+      grams: {quantity: $scope.goldBatch.model.grams}
+      total_grams:  $scope.goldBatch.model.total_grams
+      total_fine_grams:  $scope.goldBatch.model.total_fine_grams
+
+    providerForPDF = purchase.provider
     purchase.provider=[]
 
-    $scope.pdfContent = PdfService.createPurchaseInvoice(purchase, provider, goldBatchForPDF)
+    $scope.pdfContent = PdfService.createPurchaseInvoice(purchase, providerForPDF, goldBatchForPDF, buyer)
 

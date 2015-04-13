@@ -15,12 +15,13 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
       origin_certificate_file: ''
       law: 1
       fine_gram_unit_price: 0 # this is set up for current buyer (current user login)
+      reference_code: ''
 
     #
     # HTTP resquests
     #
     create: (purchase, gold_batch) ->
-      if purchase.seller_picture and purchase.seller_picture.length
+      if purchase.origin_certificate_file and purchase.seller_picture
         i = 0
         files = []
         ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
@@ -28,9 +29,8 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
           ##IMPROVE: Setup the filenames in order to receive them properly in server side.
           ## I am using a Regx in server to know which files is each one
           seller_picture_blob.name = 'seller_picture.png'
-
           files = [purchase.origin_certificate_file[0], seller_picture_blob]
-          console.log files
+
           $upload.upload(
             # headers: {'Content-Type': file.type},
             url: '/api/v1/purchases/'
@@ -52,8 +52,12 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
           )
 
           .success (data, status, headers, config) ->
-              console.log 'file ' + config.file.name + ' uploaded. Response: ' + data
-          # i++
+              console.log 'uploaded file ' ##+ config.file.name + ' uploaded. Response: ' + data
+              window.data = data
+              model = angular.fromJson(sessionStorage.purchaseService)
+              model.reference_code = data.reference_code
+              sessionStorage.purchaseService = angular.toJson(model)
+              service.model = model
           ).catch (err) ->
           # image failed to load
           return
@@ -75,7 +79,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
   #
   # Listeners
   #
-  console.log(service)
+  # console.log(service)
   $rootScope.$on 'savePurchaseState', service.saveState
   $rootScope.$on 'restorePurchaseState', service.restoreState
 
