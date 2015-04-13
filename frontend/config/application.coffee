@@ -65,3 +65,5 @@ module.exports = (lineman) ->
       files:
         "vendor/fonts/": "vendor/fonts/**/*.*"
     # pages: dist: files: '../public/index.html': 'app/templates/homepage.*'
+    removeTasks: 
+      common: [ 'jshint' ]

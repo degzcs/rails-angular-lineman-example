@@ -8,6 +8,7 @@ describe 'Purchase', :type => :request do
         @token = @user.create_token
          file_path = "#{Rails.root}/spec/support/test_images/image.png"
         @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+        @seller_picture =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
       end
 
       context 'POST' do
@@ -19,6 +20,7 @@ describe 'Purchase', :type => :request do
            "gold_batch_id" => 1,
            "price" => 1.5,
            "origin_certificate_file" => {'url' => "#{Rails.root}/spec/uploads/purchase/origin_certificate_file/1/image.png"},
+           "seller_picture" => {'url' => "#{Rails.root}/spec/uploads/purchase/seller_picture/1/image.png"},
            "origin_certificate_sequence"=>"123456789",
           }
 
@@ -37,6 +39,7 @@ describe 'Purchase', :type => :request do
            "gold_batch_id" => new_gold_batch_values["id"],
            "price" => 1.5,
            "origin_certificate_file" => @file,
+           "seller_picture" => @seller_picture,
            "origin_certificate_sequence"=>"123456789",
           }
           post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_values},{ "Authorization" => "Barer #{@token}" }

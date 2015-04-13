@@ -63,7 +63,7 @@
             %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
               %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Save
-              %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "next()"} Next
+              %md-button{"ng-disabled" => "!formTabControl.secondUnlocked || !currentProvider.company_info", :class => "md-raised md-primary", "ng-click" => "next()"} Next
       #tab2-content{"ng-if" => "currentProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           %md-input-container{:flex => ""}

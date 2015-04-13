@@ -45,10 +45,10 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       }
       $scope.currentProvider = prov;
       ProviderService.setCurrentProv(prov);
-      if(prov.num_rucom) {
+      if(prov.rucom.num_rucom) {
         $scope.rucomIDField.label = 'RUCOM Number';
         $scope.rucomIDField.field = 'num_rucom';
-      } else if (prov.rucom_record) {
+      } else if (prov.rucom.rucom_record) {
         $scope.rucomIDField.label = 'RUCOM Record';
         $scope.rucomIDField.field = 'rucom_record';
       }
@@ -65,41 +65,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         $scope.saveBtnEnabled = true;
       }
   }, true); // objectEquality = true
-  // $scope.$watch(function(scope) {
-  //     return scope.currentProvider.address;
-  //   }, 
-  //   function(newVal, oldVal) {
-  //     if (oldVal && newVal !== oldVal) {
-  //       $scope.saveBtnEnabled = true;
-  //     }
-  // });
-
-  // $scope.$watch(function(scope) {
-  //     return scope.currentProvider.email;
-  //   }, 
-  //   function(newVal, oldVal) {
-  //     if (oldVal && newVal !== oldVal) {
-  //       $scope.saveBtnEnabled = true;
-  //     }
-  // });
-
-  // $scope.$watch(function(scope) {
-  //     return scope.currentProvider.phone_number;
-  //   }, 
-  //   function(newVal, oldVal) {
-  //     if (oldVal && newVal !== oldVal) {
-  //       $scope.saveBtnEnabled = true;
-  //     }
-  // });
-
-  // $scope.$watch(function(scope) {
-  //   return scope.currentProvider.population_center;
-  // }, 
-  // function(newVal, oldVal) {
-  //   if (oldVal && newVal !== oldVal) {
-  //     $scope.saveBtnEnabled = true;
-  //   }
-  // });
+    
   // end Watchers
 
   // Autocomplete for State, City and Population Center fields

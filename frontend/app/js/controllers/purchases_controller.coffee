@@ -1,15 +1,18 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, PdfService, $timeout, $q) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser) ->
   #
   # Instances
   #
   # $scope.purchase.model = PurchaseService.restoreState
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
+  window.p = $scope
   $scope.totalGrams = 0
+  CurrentUser.get().success (data) ->
+    $scope.current_user = data
 
   $scope.allProviders  = []
-  $scope.selectedProvider = null
   $scope.searchText = null
+  $scope.message
   window.s = $scope
   #
   # Fuctions
@@ -42,6 +45,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       prov =
         id: providers[i].id
         document_number: providers[i].document_number
+        company_name: 'company name test'
+        nit: 'NIT number'
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
@@ -59,10 +64,31 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   ), (error) ->
 
   # Set the last picture that was took
-  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+  $scope.photo=CameraService.getLastScanImage()
+  # Set the last certificate file that was took
+  $scope.file=CameraService.getJoinedFile()
+
+  if($scope.photo and CameraService.getTypeFile() == 1)
+    $scope.purchase.model.seller_picture=$scope.photo
+    CameraService.clearData();
+
+  if($scope.file and CameraService.getTypeFile() == 2)
+    $scope.purchase.model.origin_certificate_file=$scope.file
+    CameraService.clearData();
+
+  $scope.scanner = (type) ->
+    CameraService.setTypeFile(type)
 
   # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
+  $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price]', ->
+
+    # Measue Unit Price (COP)
+    # TODO:
+    # $scope.castellanoUnitPrice= MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.ozUnitPrice= MeasureConverterService.ozsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.tominUnitPrice= MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.rialUnitPrice= MeasureConverterService.rialesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    # $scope.gramUnitPrice= MeasureConverterService.gramsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -70,34 +96,44 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
     $scope.grams = $scope.goldBatch.model.grams
-    $scope.goldBatch.model.totalGrams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+
+    # cover grams to fineGrams
+    $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.purchase.model.law)
     #Price
-    $scope.purchase.model.price = $scope.goldBatch.model.totalGrams * $scope.goldBatch.gramUnitPrice
+    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
 
   #
   # Save the values in SessionStorage
   $scope.saveState= ->
     console.log('saving purchase state on sessionStore ... ')
     $scope.purchase.saveState()
-    $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+  #  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
     $scope.goldBatch.saveState()
 
   #
-  # Create a new purschase in the server
-  $scope.create = (data) ->
-    PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
+  # confirm Dialog
+  $scope.showConfirm = (ev) ->
+    # Appending dialog to document.body to cover sidenav in docs app
+    confirm = $mdDialog.confirm()
+                      .title('Desea realizar la compra?')
+                      .content('Va a ser generada una compra. Esta seguro que desea realizar la compra?')
+                      .ariaLabel('Lucky day')
+                      .ok('Si, deseo comprar')
+                      .cancel('No, cancelar compra')
+                      .targetEvent(ev)
+    $mdDialog.show(confirm).then (->
+      $scope.create()
+      $scope.message = 'Su compra a sido registrada con exito'
+      return
+    ), ->
+      console.log 'purchase canceled'
+      $scope.message = 'La compra ha sido cancelada'
+      return
 
   #
-  #  Send a predefined values to create a Purchase in PDF format
-  $scope.createPDF =  (purchase, provider, goldBatch)->
-    goldBatchForPDF=
-      castellanos: {quantity: $scope.goldBatch.model.castellanos, unit_value:  $scope.goldBatch.castellanoUnitPrice}
-      tomines: {quantity: $scope.goldBatch.model.tomines, unit_value:  $scope.goldBatch.tominUnitPrice}
-      riales: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.rialUnitPrice}
-      ozs: {quantity: $scope.goldBatch.model.riales, unit_value:  $scope.goldBatch.ozUnitPrice}
-      gramos: {quantity: $scope.goldBatch.model.grams, unit_value:  $scope.goldBatch.gramUnitPrice}
-    provider = purchase.provider
-    purchase.provider=[]
-
-    $scope.pdfContent = PdfService.createPurchaseInvoice(purchase, provider, goldBatchForPDF)
+  # Create a new purschase register in DB
+  $scope.create =  ->
+    console.log 'creating purchase ...'
+    PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 

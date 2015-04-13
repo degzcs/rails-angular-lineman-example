@@ -52,10 +52,19 @@ module V1
             [404, "Entry not found"],
           ] do
 
+              # update params
+              files =params[:purchase].slice(:files)[:files]
+              origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
+              seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
+              params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture)
+              # binding.pry
+
+              # create purchase
               purchase = current_user.purchases.build(params[:purchase])
               purchase.build_gold_batch(params[:gold_batch])
-              purchase.save
+              purchase.save!
               present purchase, with: V1::Entities::Purchase
+              Rails.logger.info(purchase.errors.inspect)
         end
 
         desc 'returns all existent purchases for the current user', {

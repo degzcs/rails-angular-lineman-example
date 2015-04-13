@@ -245,16 +245,16 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
 
-  #  --- Transporters Routes ---- #
+  #  --- Couriers Routes ---- #
 
-  .state("new_transporter",
-    url: "/tranporter",
+  .state("new_courier",
+    url: "/courier",
     ncyBreadcrumb:
-      label: 'Tranporter'
+      label: 'New Courier'
     views:
       'content':
-        templateUrl: "partials/transporters/new.html"
-        controller: "TransportersNewCtrl"
+        templateUrl: "partials/couriers/new.html"
+        controller: "CouriersNewCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -329,6 +329,23 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/purchases/step3.html"
         controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  .state("show_purchase",
+    url: "/purchases/show.html",
+    ncyBreadcrumb:
+      label: 'Factura Generada'
+    views:
+      'content':
+        templateUrl: "partials/purchases/show.html"
+        controller: "PurchasesShowCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

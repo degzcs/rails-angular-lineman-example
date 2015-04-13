@@ -3,9 +3,9 @@
 #
 angular.module('app').factory 'PdfService', ($http)->
   service=
-    createPurchaseInvoice: (purchase, provider, goldBatch)->
+    createPurchaseInvoice: (purchase, provider, goldBatch, buyer)->
       $http.post('/api/v1/files/download_purchase_report/',
-        {purchase: purchase , provider: provider, gold_batch: goldBatch},
+        {purchase: purchase , provider: provider, gold_batch: goldBatch, purchaser: buyer},
         headers: 'Content-type': 'application/pdf'
         responseType: 'arraybuffer'
         transformResponse = (data) ->

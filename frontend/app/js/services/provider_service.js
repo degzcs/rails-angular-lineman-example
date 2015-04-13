@@ -23,15 +23,33 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
           $upload.upload({
             url: '/api/v1/providers/',
             method: 'POST',
-            fields: {
-                  "provider[first_name]":provider.first_Name,
+            fields: !provider.company_info ? {
+                  "provider[first_name]":provider.first_name,
                   "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_Name,
+                  "provider[last_name]":provider.last_name,
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom_id,
+                  "provider[rucom_id]":provider.rucom.id,
                   "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center_id
+                  "provider[population_center_id]":provider.population_center.id
+            }
+            :
+            {
+                  "provider[first_name]":provider.first_name,
+                  "provider[document_number]":provider.document_number,
+                  "provider[last_name]":provider.last_name,
+                  "provider[phone_number]":provider.phone_number,
+                  "provider[address]":provider.address,
+                  "provider[rucom_id]":provider.rucom.id,
+                  "provider[email]":provider.email,
+                  "provider[population_center_id]":provider.population_center.id,
+                  "company_info[name]":provider.company_info.name,
+                  "company_info[nit_number]":provider.company_info.nit_number,
+                  "company_info[legal_representative]":provider.company_info.legal_representative,
+                  "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
+                  "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
+                  "company_info[phone_number]":provider.company_info.phone_number,
+                  "company_info[email]":provider.company_info.email                
             },
             file: file,
             fileFormDataName: 'provider[photo_file]'
@@ -43,14 +61,14 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
               save: {
                   method: 'POST',
                   params:{
-                  "provider[first_name]":provider.first_Name,
+                  "provider[first_name]":provider.first_name,
                   "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_Name,
+                  "provider[last_name]":provider.last_name,
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom_id,
+                  "provider[rucom_id]":provider.rucom.id,
                   "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center_id
+                  "provider[population_center_id]":provider.population_center.id
                   }
               }
             });
@@ -70,7 +88,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
           $upload.upload({
             url: '/api/v1/providers/',
             method: 'PUT',
-            fields: provider.company_info ? {
+            fields: !provider.company_info ? {
               "provider[phone_number]":provider.phone_number,
               "provider[address]":provider.address,
               "provider[email]":provider.email,
@@ -97,7 +115,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         {id:'@id'},{
             'update': {
                 method: 'PUT',
-                params: provider.company_info ? {
+                params: !provider.company_info ? {
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
                   "provider[email]":provider.email,

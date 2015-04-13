@@ -10,7 +10,7 @@
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"row"}
       .select-provider{'flex' => 80}
         %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
-          %md-autocomplete{"md-selected-item"=>"selectedProvider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor"}
+          %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
             %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
       .create-provider{'flex' =>20}
         %a{'ng-href' => "#provider"}
@@ -20,21 +20,20 @@
               %span.ion-android-checkmark-circle
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
       %span
-        Nombre : {{selectedProvider.name}}
+        Nombre : {{purchase.model.provider.name}}
       %span
-        CC : {{selectedProvider.document_number}}
+        CC : {{purchase.model.provider.document_number}}
 
   //------------------Photo and Certificate Column
   %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center center"}
     .row
       .photo{'flex' => ''}
-        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.provider_photo_file}}"}
-        %a{'ng-href' => "#scanner"}
+        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
+        %a{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
           %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
             %md-tooltip{"md-visible" => "demo.showTooltip"}
               Agregar Foto
               %span.ion-android-checkmark-circle
-
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"end center"}
       .oc-number{'flex' => ''}
         %md-input-container.md-input-has-value
@@ -48,5 +47,10 @@
           %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
             %md-icon{"md-svg-icon"=>"file:file_upload"}
             Subir Certificado
+      .md-tile-left.cam{:flex => "10"}
+        %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
+          %md-tooltip{"md-visible" => "demo.showTooltip"}
+            Certificado de origen
+            %span.ion-android-checkmark-circle
       .wizard-buttons{'flex' => ''}
         %md-button.md-primary.md-hue-2{flex: "100", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Ingresar Pesos
