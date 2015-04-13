@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20150412214440) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "total_amount",        default: 0.0,   null: false
+    t.float    "discount",            default: 0.0,   null: false
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
@@ -135,11 +136,11 @@ ActiveRecord::Schema.define(version: 20150412214440) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rucom_id"
-    t.string   "email"
     t.string   "identification_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
+    t.string   "email"
     t.integer  "population_center_id"
   end
 

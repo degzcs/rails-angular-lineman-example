@@ -34,7 +34,7 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', 'RucomService' ,f
   $scope.custom = {num_rucom: 'bold', provider_type: 'gray', name: 'gray', status: 'gray'};
   $scope.sortable = ['num_rucom', 'provider_type', 'name', 'status'];  
   $scope.thumbs = 'thumb';
-  $scope.count = 10;  
+  $scope.count = 8;  
   //$scope.currentRucom = ProviderService.getCurrentProv();
   //Cambiar get por query antes de subir...
   //RucomService.retrieveRucoms.get((function(res) {

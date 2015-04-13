@@ -6,7 +6,7 @@
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providerCreateForm"%form{:name => "providerSearchForm", "ng-submit" => "newProvider()", "novalidate" => "novalidate"}
+    %form{:name => "providerCreateForm", "ng-submit" => "createProvider()", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
@@ -30,7 +30,7 @@
             %md-input-container
               %label ID document number
               %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
-                %div{"ng-messages" => "providerSearchForm.document_number.$error"}
+                %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} This is required.
             %div
               %md-button.md-raised{:style => "margin-top:16px", "ui-sref" => "scanner"}
@@ -50,7 +50,8 @@
           %md-input-container{:flex => ""}
             %label Address
             %input{"ng-model" => "newProvider.address", :placeholder => "CLL/CR 1 22 - 33"}
-        %md-content.md-padding{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+        %br
+        %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
           %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
             %span{"md-highlight-text" => "searchState"} {{state.name}}
           %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
@@ -72,13 +73,13 @@
               %md-checkbox{"aria-label" => "Disabled", "ng-model" => "newProvider.has_company", "ng-change" => "check()"} It is a company?
           %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "save()"} Save
+            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", :type => "submit"} Save
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", "ng-if" => "newProvider.has_company", :class => "md-raised md-primary", "ng-click" => "next()"} Next
     #tab2-content{"ng-if" => "newProvider.has_company", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
       %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
         %md-input-container{:flex => ""}
           %label Company Name
-          %input{:readonly => "true", "ng-model" => "newProvider.company_info.name", :required => ""}
+          %input{"ng-model" => "newProvider.company_info.name", :required => ""}
             %div{"ng-messages" => "providerCreateForm.nit_number.$error"}
               %div{"ng-message" => "required"} This is required. 
         %md-input-container{:flex => ""}
@@ -104,7 +105,7 @@
           %md-input-container{:flex => ""}
             %label Phone Number
             %input{:required => "true", :name => "company_phone_number", "ng-model" => "newProvider.company_info.phone_number", :placeholder => "(555) 555 5555"}
-            %div{"ng-messages" => "providerEditionForm.company_phone_number.$error"}
+            %div{"ng-messages" => "providerCreateForm.company_phone_number.$error"}
               %div{"ng-message" => "required"} This is required
           %md-input-container{:flex => ""}
             %label E-mail
@@ -117,5 +118,5 @@
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
           %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "save()"} Save
+            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", :type => "submit"} Save
 

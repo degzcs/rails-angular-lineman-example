@@ -81,17 +81,19 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
       $scope.newProvider.company_info.name = prov.company_info.name;
     } 
 
-    $scope.newProvider = prov;
-    $scope.currentRucom = prov.rucom;
-    ProviderService.setCurrentProv(prov);
-
-    if(prov.num_rucom) {
+    console.log(prov.rucom.num_rucom);
+    console.log(prov.rucom.rucom_record);
+    if(prov.rucom.num_rucom) {
       $scope.rucomIDField.label = 'RUCOM Number';
       $scope.rucomIDField.field = 'num_rucom';
-    } else if (prov.rucom_record) {
+    } else if (prov.rucom.rucom_record) {
       $scope.rucomIDField.label = 'RUCOM Record';
       $scope.rucomIDField.field = 'rucom_record';
     }
+
+    $scope.newProvider = prov;
+    $scope.currentRucom = prov.rucom;
+    ProviderService.setCurrentProv(prov);
 
     //$scope.loadProviderLocation($scope.newProvider);
 
@@ -167,16 +169,16 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
    };
   }  
 
-  $scope.createProvider = function(){
-    // console.log(JSON.stringify($scope.newProvider));
+  $scope.createProvider = function(){  
     console.log($scope.newProvider);
     $resource = ProviderService.create($scope.newProvider);
-    if($resource){
-      $resource.save($scope.newProvider);
-      $scope.infoAlert('Provider', 'Successful registration');
-    } else{
-      $scope.infoAlert('Provider', 'Something went wrong');
-    }
+    $scope.infoAlert('Provider', 'Successful registration');
+    // if($resource){
+    //   $resource.save($scope.newProvider);
+    //   $scope.infoAlert('Provider', 'Successful registration');
+    // } else{
+    //   $scope.infoAlert('Provider', 'Something went wrong');
+    // }
   };
 
   $scope.infoAlert = function(title, content) {
