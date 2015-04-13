@@ -609,7 +609,7 @@ module V1
                                           }
                }
 
-           values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
+           # values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
             # binding.pry
            date = Time.now
            pdf = ::PdfFile.new(values , date , 'purchase_report')

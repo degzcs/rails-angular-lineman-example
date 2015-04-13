@@ -120,7 +120,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       return
 
   #
-  # Create a new purschase in the server
+  # Create a new purschase register in DB
   $scope.create =  ->
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
 

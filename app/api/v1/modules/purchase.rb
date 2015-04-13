@@ -49,7 +49,7 @@ module V1
               origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
               seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
               params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture)
-              binding.pry
+              # binding.pry
 
               # create purchase
               purchase = current_user.purchases.build(params[:purchase])

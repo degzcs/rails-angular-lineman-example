@@ -1,0 +1,187 @@
+%div{:layout => "column"}
+  %md-toolbar.md-primary
+    %h1.md-toolbar-tools
+      Compra
+  .purchase-container
+    %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+      %p Compra relizada
+    %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+      %md-content{"flex"=> "40", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"start start"}
+        %h5{"flex"=> "10"}
+          Comprador
+        %table.md-table{"flex"=> ""}
+          %tbody
+            %tr
+              %td.md-table-td-more
+                Razon social:
+              %td.md-table-td-more.value
+                value
+            %tr
+              %td.md-table-td-more
+                Nit:
+              %td.md-table-td-more.value
+                value
+            %tr
+              %td.md-table-td-more
+                Rucom:
+              %td.md-table-td-more.value
+                value
+            %tr
+              %td.md-table-td-more
+                Nombre de usuario:
+              %td.md-table-td-more
+                value
+            %tr
+              %td.md-table-td-more
+                Sucursal:
+              %td.md-table-td-more
+                value
+            %tr
+              %td.md-table-td-more
+                Direccion:
+              %td.md-table-td-more.value
+                value
+            %tr
+              %td.md-table-td-more
+                Telefono:
+              %td.md-table-td-more.value
+                value
+      %md-content{"flex"=> "", "class"=>"", "layout"=>"row", "layout-align"=>"center start"}
+        %md-content{"flex"=> "", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center start"}
+          %h5{"flex"=> ""}
+            Proveedor
+          %table.md-table{'flex' => ''}
+            %tbody
+              %tr.row
+                %td.md-table-td-more
+                  Razon social:
+                %td.md-table-td-more.value
+                  {{purchase.model.provider.company_name}}
+              %tr
+                %td.md-table-td-more
+                  Nit:
+                %td.md-table-td-more.value
+                  {{purchase.model.provider.nit}}
+              %tr
+                %td.md-table-td-more
+                  Rucom:
+                %td.md-table-td-more.value
+                  {{purchase.model.provider.rucom_record}}
+              %tr
+                %td.md-table-td-more
+                  Nombre de usuario
+                %td.md-table-td-more
+                  {{purchase.model.provider.name}}
+              %tr
+                %td.md-table-td-more
+                  Cedula
+                %td.md-table-td-more
+                  {{purchase.model.provider.document_number}}
+              %tr
+                %td.md-table-td-more
+                  Direccion:
+                %td.md-table-td-more.value
+                  {{purchase.model.provider.address}}
+              %tr
+                %td.md-table-td-more
+                  Telefono:
+                %td.md-table-td-more.value
+                  {{purchase.model.provider.phone_number}}
+        %md-content{"flex"=> "20", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
+          .image.row
+            .photo
+              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
+
+    %md-content{"class"=>"", "layout"=>"row"}
+      %h4
+        Datos de la Compra
+    %md-content{"class"=>"", "layout"=>"row"}
+      .purchase-info{'flex' => ''}
+        .row{'layout' => 'row'}
+          .oc-number{'flex' => ''}
+            %p
+              Numero de Certificado de Origen
+            %p
+              {{purchase.model.origin_certificate_sequence}}
+      .select-law{'flex' => ''}
+        %p
+          Ley
+        %p
+          {{purchase.model.law}}
+      .reference-code{'flex' => ''}
+        %p
+          Codigo de referencia
+        %p
+          {{purchase.model.reference_code}}
+
+    %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+      %h4
+        Peso comprado
+    %md-content{"class"=>"", "layout"=>"row"}
+      %table.md-table{'flex' => ''}
+        %thead
+          %tr.md-table-headers-row
+            %th.md-table-header
+              Medida
+            %th.md-table-header
+              Cantidad
+            %th.md-table-header
+              Precio por Unidad
+            %th.md-table-header
+              Total gramos
+            %th.md-table-header
+              Total gramos finos
+            %th.md-table-header
+              Precio Total
+        %tbody
+          %tr
+            %td.md-table-td-more
+              %p Gramo(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.grams}}
+            %td.md-table-td-more
+              %md-input-container
+                $ {{ goldBatch.gramUnitPrice | number:2}}
+            %td.md-table-td-more
+              %md-input-container
+                {{ goldBatch.model.total_grams | number:2}}
+            %td.md-table-td-more
+              %md-input-container
+                {{ goldBatch.model.total_fine_grams | number:3}}
+            %td.md-table-td-more
+              %md-input-container
+                $ {{ purchase.model.price | number:2}}
+          %tr
+            %td.md-table-td-more
+              Castellano(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.castellanos}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.castellanoUnitPrice  | number:2}}
+          %tr
+            %td.md-table-td-more
+              Onza(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.ozs}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.ozUnitPrice | number:2}}
+          %tr
+            %td.md-table-td-more
+              Tomine(s)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.tomines}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.tominUnitPrice | number:2}}
+          %tr
+            %td.md-table-td-more
+              Rial(es)
+            %td.md-table-td-more
+              %md-input-container
+                %span {{goldBatch.model.riales}}
+            %td.md-table-td-more{colspan: 3}
+              %span {{goldBatch.rialUnitPrice | number:2}}
+  %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"show_purchase", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
