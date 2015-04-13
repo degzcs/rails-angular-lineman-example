@@ -1,6 +1,8 @@
 angular.module('app').controller('SearchRucomCtrl', ['$scope', 'RucomService' ,function($scope, RucomService){
   
-  $scope.toggleSearch = false;      
+  $scope.toggleSearch = true;  
+  $scope.query = '';
+  $scope.content = []; 
   $scope.headers = [
     {
       name: 'RUCOM Number', 
@@ -24,37 +26,63 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', 'RucomService' ,f
       alternateField: 'mineral'
     }
   ];
-  
-  $scope.count = 10; 
-  $scope.pages = 0; 
 
-  RucomService.retrieveRucoms.query({per_page: $scope.count, page: 1}, (function(rucoms, headers) {
-    var content = [];
-    for (var i=0; i<rucoms.length; i++) {
-      var rucom = {
-        id: rucoms[i].id,
-        name: rucoms[i].name,
-        num_rucom: rucoms[i].num_rucom,
-        rucom_record: rucoms[i].rucom_record,
-        provider_type: rucoms[i].provider_type,
-        status: rucoms[i].status,
-        mineral: rucoms[i].mineral          
-      };
-      content.push(rucom);
-    }
-    $scope.pages = parseInt(headers().total_pages);
-    return $scope.content = content;
-  }), function(error) {});  
+  RucomService.retrieveRucoms.query({per_page: 100, page: 1}, function(rucoms) {
+    $scope.content = rucoms;    
+  });
 
   $scope.custom = {num_rucom: 'bold', provider_type: 'gray', name: 'gray', status: 'gray'};
   $scope.sortable = ['num_rucom', 'provider_type', 'name', 'status'];  
+  $scope.thumbs = 'thumb';
+  $scope.count = 10;  
+  //$scope.currentRucom = ProviderService.getCurrentProv();
+  //Cambiar get por query antes de subir...
+  //RucomService.retrieveRucoms.get((function(res) {
+  // RucomService.retrieveRucom.get((function(res) {
+  //   return $scope.content = res.list;
+  // }), function(error) {});
+  
+  $scope.searchRucom = {        
+    num_rucom: '',
+    provider_type: '' ,  
+    name: '',
+    status: '',
+    mineral: '',
+    rucom_record: ''    
+  };
+
+  $scope.$watch('searchRucom', 
+    function(newVal, oldVal) {
+      if (oldVal && newVal !== oldVal) {
+        $scope.search_rucom($scope.searchRucom.rucom_record);
+      }
+  }, true);  
+
+  $scope.search_rucom = function(query) {
+    console.log(query);    
+    //$scope.query = 'ARE_PLU-08141';
+    if(query.length > 3) {
+      RucomService.retrieveRucoms.query({rucom_query: query}, function(rucoms) {
+    //RucomService.retrieveRucoms.get(function(rucoms) {
+      console.log('Matching rucom registries: ' + JSON.stringify(rucoms));
+      $scope.query = '';  
+      $scope.content = rucoms;    
+      return true;
+      });
+    } else {
+      RucomService.retrieveRucoms.query({per_page: 100, page: 1}, function(rucoms) {
+        $scope.content = rucoms;    
+      });
+      return true;
+    }
+  };  
   
 }]);
 
-// angular.module('app').filter('startFrom',function (){
-//   return function(input, start) {
-//     if (!input || !input.length) { return; }
-//       start = +start; //parse to int
-//       return input.slice(start);
-//   };
-// });
+angular.module('app').filter('startFrom',function (){
+  return function(input, start) {
+    if (!input || !input.length) { return; }
+      start = +start; //parse to int
+      return input.slice(start);
+  };
+});

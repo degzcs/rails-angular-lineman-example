@@ -27,6 +27,7 @@ class Purchase < ActiveRecord::Base
   # Fields
   #
   mount_uploader :origin_certificate_file, AttachmentUploader
+  mount_uploader :seller_picture, AttachmentUploader
 
   # This is the uniq code assigned to this purchase
   def reference_code
