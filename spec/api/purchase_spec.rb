@@ -44,6 +44,18 @@ describe 'Purchase', :type => :request do
           expect(JSON.parse(response.body)).to include expected_response
         end
       end
+      context "GET" do
+        before(:all) do
+          provider = create(:provider)
+          create_list(:purchase, 20, user_id: @user.id, provider_id: provider.id)
+        end
+        it 'verifies that response has the elements number specified in per_page param' do
+          per_page = 5
+          get '/api/v1/purchases', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
+          expect(response.status).to eq 200
+          expect(JSON.parse(response.body).count).to be per_page
+        end
+      end
     end
   end
 end

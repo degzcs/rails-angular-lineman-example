@@ -6,6 +6,14 @@ module V1
         authenticate!
       end
 
+       helpers do
+        params :pagination do
+          optional :page, type: Integer
+          optional :per_page, type: Integer
+        end
+      end
+
+
       format :json
       content_type :json, 'application/json'
 
@@ -15,7 +23,7 @@ module V1
 
       resource :purchases do
 
-        desc 'Update the current user', {
+        desc 'Creates a purchase for the current user', {
             notes: <<-NOTE
               ### Description
               Create a new purchase made for the current user. \n
@@ -48,6 +56,24 @@ module V1
               purchase.build_gold_batch(params[:gold_batch])
               purchase.save
               present purchase, with: V1::Entities::Purchase
+        end
+
+        desc 'returns all existent purchases for the current user', {
+          entity: V1::Entities::Provider,
+          notes: <<-NOTES
+            Returns all existent sessions paginated
+          NOTES
+        }
+        params do
+          use :pagination
+        end
+        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          purchases = current_user.purchases.paginate(:page => page, :per_page => per_page)
+          header 'total_pages', purchases.total_pages.to_s
+          present purchases, with: V1::Entities::Purchase
         end
       end
     end
