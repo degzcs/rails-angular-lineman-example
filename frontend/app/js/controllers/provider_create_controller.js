@@ -106,23 +106,26 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
   $scope.photo=CameraService.getLastScanImage();
   $scope.file=CameraService.getJoinedFile();
 
-  if($scope.photo && CameraService.getTypeFile() == 1){
+  if($scope.photo && CameraService.getTypeFile() === 1){
     $scope.newProvider.photo_file=$scope.photo;
     CameraService.clearData();
   }
 
   if($scope.file){
-    if(CameraService.getTypeFile() == 2)
-      $scope.newProvider.identification_number_file=$scope.file
-    if(CameraService.getTypeFile() == 3)
-      $scope.newProvider.mining_register_file=$scope.file
-    if(CameraService.getTypeFile() == 4)
-      $scope.newProvider.rut_file=$scope.file
+    if(CameraService.getTypeFile() === 2) {
+      $scope.newProvider.identification_number_file=$scope.file;
+    }
+    if(CameraService.getTypeFile() === 3) {
+      $scope.newProvider.mining_register_file=$scope.file;
+    }
+    if(CameraService.getTypeFile() === 4) {
+      $scope.newProvider.rut_file=$scope.file;
+    }
     CameraService.clearData();
   } 
 
   $scope.scanner= function(type){
-    CameraService.setTypeFile(type)
+    CameraService.setTypeFile(type);
   };
 
   LocationService.getStates.query({}, function(states) {
