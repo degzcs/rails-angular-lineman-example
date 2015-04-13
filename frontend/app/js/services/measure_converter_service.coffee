@@ -41,35 +41,35 @@ angular.module('app').factory 'MeasureConverterService', ()->
 
     #
     # Get the Unit price for castellanos from the gram unit price
-    # @params gramUnitPrice [Integer]
+    # @params fineGramUnitPrice [Integer]
     # @return [Integer]
     #
-    castellanosUnitPriceFrom: (gramUnitPrice)->
-      (4.6*gramUnitPrice)
+    castellanosUnitPriceFrom: (fineGramUnitPrice)->
+      (4.6*fineGramUnitPrice)
 
     #
     # Get the Unit price for Ounces from the gram unit price
-    # @params gramUnitPrice [Integer]
+    # @params fineGramUnitPrice [Integer]
     # @return [Integer]
     #
-    ozsUnitPriceFrom: (gramUnitPrice)->
-      31.1035*gramUnitPrice
+    ozsUnitPriceFrom: (fineGramUnitPrice)->
+      31.1035*fineGramUnitPrice
 
     #
     # Get the Unit price for tomines from the gram unit price
-    # @params gramUnitPrice [Integer]
+    # @params fineGramUnitPrice [Integer]
     # @return [Integer]
     #
-    tominesUnitPriceFrom: (gramUnitPrice)->
-      (4.6*gramUnitPrice)/8
+    tominesUnitPriceFrom: (fineGramUnitPrice)->
+      (4.6*fineGramUnitPrice)/8
 
     #
     # Get the Unit price for riales from the gram unit price
-    # @params gramUnitPrice [Integer]
+    # @params fineGramUnitPrice [Integer]
     # @return [Integer]
     #
-    rialesUnitPriceFrom: (gramUnitPrice)->
-      (4.6*gramUnitPrice)/16
+    rialesUnitPriceFrom: (fineGramUnitPrice)->
+      (4.6*fineGramUnitPrice)/16
 
     #
     # Fine-Grams to Real-Grams

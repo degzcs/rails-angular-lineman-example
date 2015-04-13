@@ -77,7 +77,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     CameraService.setTypeFile(type)
 
   # Watch and setup measures and total price
-  $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams]', ->
+  $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price]', ->
+
+    # Measue Unit Price (COP)
+    #
+    $scope.castellanoUnitPrice= MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    $scope.ozUnitPrice= MeasureConverterService.ozsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    $scope.tominUnitPrice= MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
+    $scope.rialUnitPrice= MeasureConverterService.rialesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -86,10 +93,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
     $scope.grams = $scope.goldBatch.model.grams
     $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+
     # cover grams to fineGrams
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.purchase.model.law)
     #Price
-    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.goldBatch.gramUnitPrice
+    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
 
   #
   # Save the values in SessionStorage

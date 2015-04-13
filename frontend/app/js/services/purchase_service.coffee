@@ -14,7 +14,8 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
       origin_certificate_sequence: ''
       origin_certificate_file: ''
       law: 1
-      totalGrams: 0
+      fine_gram_unit_price: 0 # this is set up for current buyer (current user login)
+
     #
     # HTTP resquests
     #
@@ -25,7 +26,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
         ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
         blobUtil.imgSrcToBlob(purchase.seller_picture).then((seller_picture_blob) ->
           ##IMPROVE: Setup the filenames in order to receive them properly in server side.
-          ## I use a Reg in the server to know which files is each one
+          ## I am using a Regx in server to know which files is each one
           seller_picture_blob.name = 'seller_picture.png'
 
           files = [purchase.origin_certificate_file[0], seller_picture_blob]

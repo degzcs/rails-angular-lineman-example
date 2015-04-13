@@ -184,4 +184,6 @@
                 %span {{goldBatch.model.riales}}
             %td.md-table-td-more{colspan: 3}
               %span {{goldBatch.rialUnitPrice | number:2}}
-  %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"show_purchase", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
+    %md-content{"class"=>"", "layout"=>"row"}
+      %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"show_purchase", "ng-click" => "createPDF(purchase.model, goldBatch.model)"} Exportar a PDF
+      %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"new_purchase.step1"} Nueva compra
