@@ -15,64 +15,127 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         return currentProvider;
     };
 
-    var create = function(provider) {
-      var file,  _results;
-      if (provider.photo_file) {
-        _results = [];
-          file = provider.photo_file;
-          $upload.upload({
+    var create = function(provider) {      
+      if (provider.identification_number_file && provider.mining_register_file && provider.rut_file && provider.photo_file) {
+        i = 0;
+        files = [];
+        return blobUtil.imgSrcToBlob(provider.photo_file).then(function(provider_photo_file) {
+          provider_photo_file.name = 'provider_photo.png';
+          provider.identification_number_file[0].name = 'identification_number_file.pdf';
+          provider.mining_register_file[0].name = 'mining_register_file.pdf';
+          provider.rut_file[0].name = 'rut_file.pdf';
+          files = [
+            provider.identification_number_file[0], 
+            provider.mining_register_file[0],
+            provider.rut_file[0],
+            provider_photo_file,
+          ];
+          return $upload.upload({
             url: '/api/v1/providers/',
             method: 'POST',
             fields: !provider.company_info ? {
-                  "provider[first_name]":provider.first_name,
-                  "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_name,
-                  "provider[phone_number]":provider.phone_number,
-                  "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom.id,
-                  "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center.id
+              "provider[first_name]":provider.first_name,
+              "provider[document_number]":provider.document_number,
+              "provider[last_name]":provider.last_name,
+              "provider[phone_number]":provider.phone_number,
+              "provider[address]":provider.address,
+              "provider[rucom_id]":provider.rucom.id,
+              "provider[email]":provider.email,
+              "provider[population_center_id]":provider.population_center.id
             }
             :
             {
-                  "provider[first_name]":provider.first_name,
-                  "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_name,
-                  "provider[phone_number]":provider.phone_number,
-                  "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom.id,
-                  "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center.id,
-                  "company_info[name]":provider.company_info.name,
-                  "company_info[nit_number]":provider.company_info.nit_number,
-                  "company_info[legal_representative]":provider.company_info.legal_representative,
-                  "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
-                  "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
-                  "company_info[phone_number]":provider.company_info.phone_number,
-                  "company_info[email]":provider.company_info.email                
+              "provider[first_name]":provider.first_name,
+              "provider[document_number]":provider.document_number,
+              "provider[last_name]":provider.last_name,
+              "provider[phone_number]":provider.phone_number,
+              "provider[address]":provider.address,
+              "provider[rucom_id]":provider.rucom.id,
+              "provider[email]":provider.email,
+              "provider[population_center_id]":provider.population_center.id,
+              "company_info[name]":provider.company_info.name,
+              "company_info[nit_number]":provider.company_info.nit_number,
+              "company_info[legal_representative]":provider.company_info.legal_representative,
+              "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
+              "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
+              "company_info[phone_number]":provider.company_info.phone_number,
+              "company_info[email]":provider.company_info.email
             },
-            file: file,
-            fileFormDataName: 'provider[photo_file]'
-          })
-          .progress(progress).success(success);
-        }else{
-         return $resource('/api/v1/providers/',
-          {},{
-              save: {
-                  method: 'POST',
-                  params:{
-                  "provider[first_name]":provider.first_name,
-                  "provider[document_number]":provider.document_number,
-                  "provider[last_name]":provider.last_name,
-                  "provider[phone_number]":provider.phone_number,
-                  "provider[address]":provider.address,
-                  "provider[rucom_id]":provider.rucom.id,
-                  "provider[email]":provider.email,
-                  "provider[population_center_id]":provider.population_center.id
-                  }
-              }
-            });
-        }
+            file: files,
+            fileFormDataName: 'provider[files][]'
+          }).progress(function(evt) {
+            var progressPercentage;
+            progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            return console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+          }).success(function(data, status, headers, config) {
+            var model;
+            console.log('uploaded file ');
+            window.data = data;
+            model = angular.fromJson(sessionStorage.providerService);
+            model.reference_code = data.reference_code;
+            sessionStorage.providerService = angular.toJson(model);
+            return service.model = model;
+          });
+        })["catch"](function(err) {});
+      } 
+
+      // var file,  _results;
+      // if (provider.photo_file) {
+      //   _results = [];
+      //     file = provider.photo_file;
+      //     $upload.upload({
+      //       url: '/api/v1/providers/',
+      //       method: 'POST',
+      //       fields: !provider.company_info ? {
+      //             "provider[first_name]":provider.first_name,
+      //             "provider[document_number]":provider.document_number,
+      //             "provider[last_name]":provider.last_name,
+      //             "provider[phone_number]":provider.phone_number,
+      //             "provider[address]":provider.address,
+      //             "provider[rucom_id]":provider.rucom.id,
+      //             "provider[email]":provider.email,
+      //             "provider[population_center_id]":provider.population_center.id
+      //       }
+      //       :
+      //       {
+      //             "provider[first_name]":provider.first_name,
+      //             "provider[document_number]":provider.document_number,
+      //             "provider[last_name]":provider.last_name,
+      //             "provider[phone_number]":provider.phone_number,
+      //             "provider[address]":provider.address,
+      //             "provider[rucom_id]":provider.rucom.id,
+      //             "provider[email]":provider.email,
+      //             "provider[population_center_id]":provider.population_center.id,
+      //             "company_info[name]":provider.company_info.name,
+      //             "company_info[nit_number]":provider.company_info.nit_number,
+      //             "company_info[legal_representative]":provider.company_info.legal_representative,
+      //             "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
+      //             "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
+      //             "company_info[phone_number]":provider.company_info.phone_number,
+      //             "company_info[email]":provider.company_info.email                
+      //       },
+      //       file: file,
+      //       fileFormDataName: 'provider[photo_file]'
+      //     })
+      //     .progress(progress).success(success);
+      //   }else{
+      //    return $resource('/api/v1/providers/',
+      //     {},{
+      //         save: {
+      //             method: 'POST',
+      //             params:{
+      //             "provider[first_name]":provider.first_name,
+      //             "provider[document_number]":provider.document_number,
+      //             "provider[last_name]":provider.last_name,
+      //             "provider[phone_number]":provider.phone_number,
+      //             "provider[address]":provider.address,
+      //             "provider[rucom_id]":provider.rucom.id,
+      //             "provider[email]":provider.email,
+      //             "provider[population_center_id]":provider.population_center.id
+      //             }
+      //         }
+      //       });
+      //   }
   };
   //Can call edit like so:
   //$resource = ProviderService.edit($scope.currentProvider);

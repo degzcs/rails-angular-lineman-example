@@ -57,7 +57,7 @@ angular.module('app').directive('mdTableProvider', function () {
         }), function(error) {});
       };
       $scope.setCurrentProv = function (provider) {
-        ProviderService.setCurrentProv(provider);
+        //ProviderService.setCurrentProv(provider);
         //$scope.currentProvider = provider;
         console.log('Setting current Provider: ' + JSON.stringify($scope.currentProvider));
         $state.go("edit_provider", {providerId: provider.id});
