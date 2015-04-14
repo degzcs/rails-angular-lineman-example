@@ -68,7 +68,7 @@ module V1
         end
 
         desc 'returns all existent purchases for the current user', {
-          entity: V1::Entities::Provider,
+          entity: V1::Entities::Purchase,
           notes: <<-NOTES
             Returns all existent sessions paginated
           NOTES

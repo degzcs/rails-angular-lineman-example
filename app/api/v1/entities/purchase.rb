@@ -15,6 +15,14 @@ module V1
       expose :access_token, documentation: { type: "string", desc: "authentication token", example: "sjahdkfjhasdfhaskdj" } do |purchase, options|
         purchase.user.create_token
       end
+      expose :inventory do
+        expose :status  , documentation: { type: "string", desc: "inventory status", example: "123456789" }do|purchase, options|
+          purchase.inventory.status
+        end
+        expose :remaining_amount, documentation: { type: "string", desc: "inventory remaining_amount", example: "123456789" } do|purchase, options|
+          purchase.inventory.remaining_amount
+        end
+      end
     end
   end
 end

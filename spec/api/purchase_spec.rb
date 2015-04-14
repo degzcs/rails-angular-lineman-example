@@ -24,6 +24,10 @@ describe 'Purchase', :type => :request do
            "origin_certificate_file" => {'url' => "#{Rails.root}/spec/uploads/purchase/origin_certificate_file/1/image.png"},
            "seller_picture" => {'url' => "#{Rails.root}/spec/uploads/purchase/seller_picture/1/seller_picture.png"},
            "origin_certificate_sequence"=>"123456789",
+           "inventory" => {
+              "status" => true,
+              "remaining_amount" => 1.5
+           }
           }
 
           new_gold_batch_values = {
