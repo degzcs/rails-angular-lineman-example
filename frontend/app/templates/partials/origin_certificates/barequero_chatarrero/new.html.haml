@@ -1,0 +1,94 @@
+%div{:layout => "column"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h4 Certificado de Origen Barequero y Chatarrero
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    %md-input-container{"flex"=>"33"}
+      %label Fecha
+      %input{"ng-model" => "barequero_chatarrero_origin_certificate.date", "type" => "date", "required"=>""}
+
+    %md-input-container{"flex"=>"66"}
+      %label Ciudad
+      %input{"ng-model" => "barequero_chatarrero_origin_certificate.current_city", "type" => "text", "required"=>""}
+
+  ////-----------------------Provider section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h4 Informacion del Productor de Mineral
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    .column{"flex"=>""}
+      %md-select{"ng-model" => "barequero_chatarrero_origin_certificate.authorized_miner_type", :placeholder => "Explotador  Minero Autorizado"}
+        %md-option{:value => "barequero"} Barequero
+        %md-option{:value => "chatarrero"} Chatarrero
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Nombre
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider_first_name", "type" => "text", "required"=>""}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Apellido
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider_last_name", "type" => "text", "required"=>""}
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Cedula de Ciudadania
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider_document_number", "type" => "text", "required"=>""}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Departamento
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider_state", "type" => "text", "required"=>""}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Municipio
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider_city", "type" => "text", "required"=>""}
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Mineral Extraido y Vendido
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral", "type" => "text", "required"=>""}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Cantidad
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.amount", "type" => "text", "required"=>""}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Unidad de Medida
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.measure_unit", "type" => "text", "required"=>""}
+
+  ////-----------------------Buyer section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h4 Informacion del Comprador del Mineral
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Nombres y Apellidos o Razon Social
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.full_name_or_company_name", "type" => "text", "required"=>""}
+
+    .column{"flex"=>""}
+      %md-select{"ng-model" => "barequero_chatarrero_origin_certificate.buyer_document_type", :placeholder => "Tipo de Identificacion del Comprador"}
+        %md-option{:value => "nit"} NIT
+        %md-option{:value => "cedula"} Cedula
+        %md-option{:value => "aliens_card"} Cedula de Extranjeria
+        %md-option{:value => "rut"} RUT
+
+    .column{"flex"=>""}
+      %md-input-container{"flex"=>""}
+        %label Numero de Indentificacion
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.buyer_document_number", "type" => "text", "required"=>""}
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+    %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "barequeroChatarreroshowConfirm($event)"} Generar Certificado de Origen

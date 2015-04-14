@@ -356,6 +356,42 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
+  #  --- Origin Certificate Routes ---- #
+  .state("new_origin_certificate",
+    url: "/origin_certificates/new",
+    ncyBreadcrumb:
+      label: 'Seleccion de Certificado de Origen'
+    views:
+      'content':
+        templateUrl: "partials/origin_certificates/new.html"
+        controller: "OriginCertificateCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_origin_certificate.barequero_chatarrero",
+    url: "/origin_certificates/barequero_chatarrero/new",
+    ncyBreadcrumb:
+      label: 'Certificado de Origen Barequeros y Chatarreros'
+    views:
+      'content':
+        templateUrl: "partials/origin_certificates/barequero_chatarrero/new.html"
+        controller: "OriginCertificateCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
 
   $urlRouterProvider.otherwise "/home"
 
