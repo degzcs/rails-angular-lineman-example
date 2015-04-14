@@ -15,15 +15,23 @@ describe 'Purchase', :type => :request do
 
       context 'POST' do
         it 'should create one complete purchase even its origin cetificate file' do
+          provider = create(:provider)
           expected_response = {
            "id"=>1,
            "user_id"=>1,
-           "provider_id"=>1,
-           "gold_batch_id" => 1,
+           "provider"=>{
+              "id"=> provider.id,
+              "first_name"=> provider.first_name,
+              "last_name" => provider.last_name
+           },
            "price" => 1.5,
            "origin_certificate_file" => {'url' => "#{Rails.root}/spec/uploads/purchase/origin_certificate_file/1/image.png"},
            "seller_picture" => {'url' => "#{Rails.root}/spec/uploads/purchase/seller_picture/1/seller_picture.png"},
            "origin_certificate_sequence"=>"123456789",
+           "gold_batch"=> {
+              "id"=>1,
+              "grams"=>1.5
+           },
            "inventory" => {
               "status" => true,
               "remaining_amount" => 1.5
@@ -41,7 +49,7 @@ describe 'Purchase', :type => :request do
           new_values ={
            "id"=>1,
            "user_id"=>1,
-           "provider_id"=>1,
+           "provider_id"=>provider.id,
            "gold_batch_id" => new_gold_batch_values["id"],
            "price" => 1.5,
            "files" => @files,

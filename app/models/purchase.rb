@@ -40,6 +40,11 @@ class Purchase < ActiveRecord::Base
     Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
   end
 
+  #Gets the provider of the purchase
+  def provider
+    Provider.find(self.provider_id)
+  end
+
   protected 
     #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
     def create_inventory

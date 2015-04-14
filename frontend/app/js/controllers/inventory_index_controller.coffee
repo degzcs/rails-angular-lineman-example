@@ -7,23 +7,23 @@ angular.module('app').controller 'InventoryIndexCtrl', ($scope)->
       name:'',
       field:'thumbs'
     },{
-      name: 'Fecha',
-      field: 'date'
+      name: 'Proovedor',
+      field: 'provider_name'
     },{
-      name:'Hora',
-      field: 'hour'
+      name:'Gramos Comprados',
+      field: 'grams'
     },{
-      name: 'Quien',
+      name: 'Gramos Restantes',
       field: 'quien'
     },{
       name: 'Cuantos',
       field: 'cuantos'
     },{
-      name: 'Ley',
-      field: 'law'
+      name: 'Fecha',
+      field: 'created_at'
     },{
       name: 'Valor',
-      field: 'value'
+      field: 'price'
     }
   ]
 
@@ -31,7 +31,7 @@ angular.module('app').controller 'InventoryIndexCtrl', ($scope)->
   #InventoryService.query ((res) ->
   #  $scope.list = res.list
   #  $scope.count = res.list.length
-  #), (error) ->
+  # ), (error) ->
     # Error handler code
 
   $scope.custom = {date: 'bold', hour:'grey', quien: 'grey', cuantos: 'grey', law:'grey', value: 'grey'}
