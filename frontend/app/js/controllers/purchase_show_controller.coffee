@@ -6,7 +6,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   CurrentUser.get().success (data) ->
-    #IMPROVE: Set up Missing values to generate a Purchase invoice
+    #IMPROVE: Set up Missing values to generate the Purchase invoice
     data.company_name = 'TrazOro'
     data.nit = '123456789456123'
     data.rucom_record = 6547896321

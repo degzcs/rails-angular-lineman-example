@@ -44,7 +44,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         };
       }
       $scope.currentProvider = prov;
-      ProviderService.setCurrentProv(prov);
+      //ProviderService.setCurrentProv(prov);
       if(prov.rucom.num_rucom) {
         $scope.rucomIDField.label = 'RUCOM Number';
         $scope.rucomIDField.field = 'num_rucom';

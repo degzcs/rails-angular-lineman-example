@@ -8,7 +8,15 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   window.p = $scope
   $scope.totalGrams = 0
   CurrentUser.get().success (data) ->
+    #IMPROVE: Set up Missing values to generate the Purchase invoice
+    data.company_name = 'TrazOro'
+    data.nit = '123456789456123'
+    data.rucom_record = 6547896321
+    data.office = 'TrazOro Popayan'
+    data.address = 'Calle falsa 123'
+    data.phone = '3007854214'
     $scope.current_user = data
+
 
   $scope.allProviders  = []
   $scope.searchText = null

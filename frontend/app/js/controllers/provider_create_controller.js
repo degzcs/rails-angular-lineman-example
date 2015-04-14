@@ -1,7 +1,8 @@
-angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($scope, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
+angular.module('app').controller('ProvidersRucomCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($rootScope, $scope, $state, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
   
   $scope.newProvider = ProviderService.getCurrentProv();
   $scope.populationCenter = {};
+  $scope.abortCreate = false;
   $scope.currentRucom = {};
   $scope.companyInfo = {};
   $scope.companyName = "";
@@ -26,7 +27,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   var prov = {};
 
-  if($stateParams.rucomId){      
+  if($stateParams.rucomId){
     console.log("$stateParams.rucomId: " + $stateParams.rucomId); 
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
     $scope.companyName = rucom.name;        
@@ -39,7 +40,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
       city: $scope.selectedCity,
       state: $scope.selectedState,
       phone_number: $scope.newProvider.phone_number,
-      photo_file: $scope.newProvider.photo_file || ('http://robohash.org/'),
+      photo_file: $scope.newProvider.photo_file || '',
       rucom: {
         id: rucom.id,
         num_rucom: rucom.num_rucom,
@@ -49,9 +50,9 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
         mineral: rucom.mineral
       },
       population_center: {
-        id: '',
-        name: '',
-        population_center_code: ''
+        id: $scope.newProvider.population_center ? $scope.newProvider.population_center.id : '',
+        name: $scope.newProvider.population_center ? $scope.newProvider.population_center.name : '',
+        population_center_code: $scope.newProvider.population_center ? $scope.newProvider.population_center.name : ''
       },
       company_info: {
         name: '',
@@ -62,9 +63,9 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
         email: '',
         phone_number: ''             
       },
-      identification_number_file: '',
-      mining_register_file: '',
-      rut_file: ''
+      identification_number_file: $scope.newProvider.identification_number_file || '',
+      mining_register_file: $scope.newProvider.mining_register_file || '',
+      rut_file: $scope.newProvider.rut_file || ''
     };    
 
     if($scope.newProvider.has_company) {      
@@ -108,18 +109,22 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
 
   if($scope.photo && CameraService.getTypeFile() === 1){
     $scope.newProvider.photo_file=$scope.photo;
+    ProviderService.setCurrentProv($scope.newProvider);
     CameraService.clearData();
   }
 
   if($scope.file){
     if(CameraService.getTypeFile() === 2) {
       $scope.newProvider.identification_number_file=$scope.file;
+      ProviderService.setCurrentProv($scope.newProvider);
     }
     if(CameraService.getTypeFile() === 3) {
       $scope.newProvider.mining_register_file=$scope.file;
+      ProviderService.setCurrentProv($scope.newProvider);
     }
     if(CameraService.getTypeFile() === 4) {
       $scope.newProvider.rut_file=$scope.file;
+      ProviderService.setCurrentProv($scope.newProvider);
     }
     CameraService.clearData();
   } 
@@ -191,6 +196,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
     $resource = ProviderService.create($scope.newProvider);
     $scope.infoAlert('Provider', 'Successful registration');
     ProviderService.setCurrentProv({});
+    $scope.abortCreate = true;
     // if($resource){
     //   $resource.save($scope.newProvider);
     //   $scope.infoAlert('Provider', 'Successful registration');
@@ -213,7 +219,33 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$stateParams'
        $scope.saveBtnEnabled = true;
      }
      ProviderService.setCurrentProv($scope.newProvider);
- }, true);
+  }, true);
+
+  // end watchers
+
+  // It listens to state changes
+  $scope.$on('$stateChangeStart', 
+    function(event, toState, toParams, fromState, fromParams){ 
+      // console.log('Changing state from: ' + JSON.stringify(fromState) + ' to: ' + JSON.stringify(toState));
+      // console.log('Params state from: ' + JSON.stringify(fromParams) + ' to: ' + JSON.stringify(toParams));
+      if (toState.url !== "/scanner") {
+        if (!$scope.abortCreate) {
+          event.preventDefault();
+          var confirm;
+          confirm = $mdDialog.confirm().title('Cancel provider creation?').content('Do you wish to abort the current operation? Unsaved data will be lost').ariaLabel('Lucky day').ok('Yes, I do').cancel('Cancel').targetEvent(event);
+          return $mdDialog.show(confirm).then((function() {
+            $scope.abortCreate = true;
+            ProviderService.setCurrentProv({});
+            console.log('provider create: dismissing operation');
+            $state.go(toState, toParams);          
+          }), function() {
+            
+          });
+        }
+      }
+  });
+
+  // end state change listener
 
   $scope.stateSearch = function(query) {
     var results = query ? $scope.states.filter( createFilterFor(query) ) : [];

@@ -100,7 +100,17 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
+          #binding.pry
           content_type "text/json"
+
+          # update params
+          files =params[:provider].slice(:files)[:files]
+          identification_number_file = files.select{|file| file['filename'] =~ /identification_number_file/}.first
+          mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
+          rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
+          photo_file = files.select{|file| file['filename'] =~ /provider_photo/}.first
+          params[:provider].except!(:files).merge!(identification_number_file: identification_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
+          
           provider_params = params[:provider]
           provider = ::Provider.new(params[:provider])
           provider.build_company_info(params[:company_info]) if params[:company_info]

@@ -7,6 +7,15 @@ module V1
       expose :last_name, documentation: { type: "string", desc: "Lastname", example: "Perez" }
       expose :phone_number, documentation: { type: "string", desc: "Phone number", example: "83333333" }
       expose :address, documentation: { type: "string", desc: "Address", example: "Calle falsa n#4233" }
+      expose :identification_number_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
+        provider.identification_number_file_url
+      end
+      expose :mining_register_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
+        provider.mining_register_file_url
+      end
+      expose :rut_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
+        provider.rut_file_url
+      end
       expose :photo_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
         provider.photo_file_url
       end
