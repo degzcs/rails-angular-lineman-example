@@ -22,6 +22,12 @@ class Purchase < ActiveRecord::Base
   belongs_to :user
   # belongs_to :provider
   belongs_to :gold_batch
+  has_one :inventory
+
+  #
+  # Callbacks
+  # 
+  after_create :create_inventory
 
   #
   # Fields
@@ -33,4 +39,11 @@ class Purchase < ActiveRecord::Base
   def reference_code
     Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
   end
+
+  protected 
+    #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
+    def create_inventory
+      Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.grams)
+    end
+
 end

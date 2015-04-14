@@ -18,7 +18,7 @@ FactoryGirl.define do
     user_id 1
     provider_id 1
     origin_certificate_sequence {Faker::Code.isbn}
-    gold_batch_id 1
+    gold_batch {FactoryGirl.create(:gold_batch)}
     price 1.5
     origin_certificate_file {"MyString"}
   end
