@@ -4,7 +4,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
   $scope.options = [
     {name: "Dashboard", state: "dashboard"}
     {name: "Providers" , state: "providers"}
-  #  {name: "Inventory", state: "batches"}
+    {name: "Inventory", state: "index_inventory"}
     {name: "Couriers", state: "new_courier"}
     {name: "Compras", state: "new_purchase.step1"}
     {name: "Certificados de Origen", state: "new_origin_certificate"}

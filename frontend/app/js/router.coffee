@@ -392,7 +392,23 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
-
+  .state("index_inventory",
+    url: "/inventory",
+    ncyBreadcrumb:
+      label: 'Inventario de compras'
+    views:
+      'content':
+        templateUrl: "partials/inventory/index.html"
+        controller: "InventoryIndexCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
   $urlRouterProvider.otherwise "/home"
 
   # Satellizer config
