@@ -45,8 +45,7 @@ describe 'Purchase', :type => :request do
           }
           post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_values},{ "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 201
-          # binding.pry
-          # expect(JSON.parse(response.body)).to include expected_response
+          expect(JSON.parse(response.body)).to include expected_response
         end
       end
     end
