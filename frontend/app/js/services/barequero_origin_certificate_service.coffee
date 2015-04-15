@@ -2,21 +2,27 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
   service=
     model:
       date: ''
-      current_city: '' # where is generated the current OC
+      city: '' # where is generated the current OC
       ## mineral's Provider Info
-      authorized_miner_type: ''
-      provider_first_name: ''
-      provider_last_name: ''
-      provider_document_number: 0
-      provider_state: '' # state where the miner is/was registered
-      provider_city: '' # city where the miner is/was registered
-      mineral: '' #
-      amount: ''
-      measure_unit: ''
+      provider:
+        type: ''
+        first_name: ''
+        last_name: ''
+        name: ''
+        document_number: 0
+        state: '' # state where the miner is/was registered
+        city: '' # city where the miner is/was registered
+      ##mineral info
+      mineral:
+        type: ''
+        amount: ''
+        measure_unit: ''
       ## mineral's Buyer info
-      full_name_or_company_name: ''
-      buyer_document_type: '' # can be : NIT, CC, RUT, Aliens Card (foreign identification card)
-      buyer_document_number: ''
+      buyer:
+        full_name_or_company_name: ''
+        document_type: '' # can be : NIT, CC, RUT, Aliens Card (foreign identification card)
+        document_number: ''
+        rucom_number: ''
 
     #
     # Save model temporal states
