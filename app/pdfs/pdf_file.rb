@@ -45,7 +45,7 @@ class PdfFile < Prawn::Document
     #body producer
 
     move_down 53
-    case   values[:producer][:producer_type]
+    case   values[:provider][:type]
       when 'barequero'
         text_box "X", :at => [386,cursor] , :width => 85
       when 'chatarrero'
@@ -55,26 +55,26 @@ class PdfFile < Prawn::Document
     end
 
     move_down 40
-    text_box "#{values[:producer][:name]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:provider][:name]}" , :at => [300,cursor] , :width => 300
     move_down 30
-    text_box "#{values[:producer][:document_number]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:provider][:document_number]}" , :at => [300,cursor] , :width => 300
     move_down 40
-    text_box "#{values[:producer][:state]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:provider][:state]}" , :at => [300,cursor] , :width => 300
     move_down 60
-    text_box "#{values[:producer][:city]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:provider][:city]}" , :at => [300,cursor] , :width => 300
     move_down 40
-    text_box "#{values[:mineral][:mineral]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:mineral][:type]}" , :at => [300,cursor] , :width => 300
     move_down 30
-    text_box "#{values[:mineral][:quantity]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:mineral][:amount]}" , :at => [300,cursor] , :width => 300
     move_down 25
-    text_box "#{values[:mineral][:unit]}" , :at => [350,cursor] , :width => 300
+    text_box "#{values[:mineral][:measure_unit]}" , :at => [350,cursor] , :width => 300
 
     #body purchaser
 
     move_down 48
-    text_box "#{values[:purchaser][:name]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:buyer][:full_name_or_company_name]}" , :at => [300,cursor] , :width => 300
     move_down 34
-    case values[:purchaser][:identification_type]
+    case values[:buyer][:document_type]
       when 'nit'
         text_box "X" , :at => [320,cursor] , :width => 40
       when 'cedula de ciudadania'
@@ -86,9 +86,9 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 36
-    text_box "#{values[:purchaser][:identification_number]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:buyer][:document_number]}" , :at => [300,cursor] , :width => 300
     move_down 35
-    text_box "#{values[:purchaser][:rucom]}" , :at => [350,cursor] , :width => 300
+    text_box "#{values[:buyer][:rucom_number]}" , :at => [350,cursor] , :width => 300
   end
 
   # Generar certificado explotador minero autorizado
