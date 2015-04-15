@@ -30,6 +30,9 @@ FactoryGirl.define do
     company_info {FactoryGirl.build(:company_info)}
     population_center_id {Random.rand(1...100)}
     rucom_id {Random.rand(1...100)}
-    photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'image.png'),"image/jpeg") }
+    photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'provider_photo.png'),"image/jpeg") }
+    identification_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'identification_number_file.png'),"image/jpeg") }
+    mining_register_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'mining_register_file.png'),"image/jpeg") }
+    rut_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'rut_file.png'),"image/jpeg") }
   end
 end

@@ -7,8 +7,15 @@ describe 'Provider', :type => :request do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
         FactoryGirl.create_list(:provider, 20,{company_info: nil, rucom_id: FactoryGirl.create(:rucom).id, population_center_id: FactoryGirl.create(:population_center).id})
-           file_path = "#{Rails.root}/spec/support/test_images/image.png"
-        @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+        identification_number_file_path = "#{Rails.root}/spec/support/test_images/identification_number_file.png"
+        mining_register_file_path = "#{Rails.root}/spec/support/test_images/mining_register_file.png"
+        rut_file_path = "#{Rails.root}/spec/support/test_images/rut_file.png"
+        provider_photo_path = "#{Rails.root}/spec/support/test_images/provider_photo.png"
+        identification_number_file =  Rack::Test::UploadedFile.new(identification_number_file_path, "image/jpeg")
+        mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
+        rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
+        provider_photo =  Rack::Test::UploadedFile.new(provider_photo_path, "image/jpeg")
+        @files = [identification_number_file, mining_register_file, rut_file, provider_photo]
       end
 
       context 'GET' do
@@ -49,6 +56,9 @@ describe 'Provider', :type => :request do
               phone_number: provider.phone_number,
               address: provider.address,
               photo_file: provider.photo_file_url,
+              identification_number_file: provider.identification_number_file_url,
+              mining_register_file: provider.mining_register_file_url,
+              rut_file: provider.rut_file_url,
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               population_center: expected_population_center.stringify_keys
@@ -64,8 +74,8 @@ describe 'Provider', :type => :request do
       context 'POST' do
         context "without company_info" do
           it 'returns a representation of the new provider created and code 201' do
-              file_path = "#{Rails.root}/spec/support/test_images/image.png"
-            @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+            #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom = create(:rucom)
             population_center = create(:population_center)
@@ -79,7 +89,7 @@ describe 'Provider', :type => :request do
               address: provider.address,
               rucom_id: rucom.id,
               population_center_id: population_center.id,
-              photo_file: @file,
+              files: @files,
               email: provider.email
             }           
             
@@ -104,7 +114,10 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: "#{Rails.root}/spec/uploads/provider/photo_file/21/image.png",
+              photo_file: "#{Rails.root}/spec/uploads/provider/photo_file/21/provider_photo.png",
+              identification_number_file: "#{Rails.root}/spec/uploads/provider/identification_number_file/21/identification_number_file.png",
+              mining_register_file: "#{Rails.root}/spec/uploads/provider/mining_register_file/21/mining_register_file.png",
+              rut_file: "#{Rails.root}/spec/uploads/provider/rut_file/21/rut_file.png",
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               population_center: expected_population_center.stringify_keys
@@ -119,8 +132,8 @@ describe 'Provider', :type => :request do
         context "with company info" do
           it 'returns a representation of the new provider with his company_info created and code 201' do
             
-              file_path = "#{Rails.root}/spec/support/test_images/image.png"
-            @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+            #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom = create(:rucom)
             population_center = create(:population_center)
@@ -132,7 +145,7 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: @file,
+              files: @files,
               email: provider.email,
               rucom_id: rucom.id,
               population_center_id: population_center.id,
@@ -184,7 +197,10 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: "#{Rails.root}/spec/uploads/provider/photo_file/22/image.png",
+              photo_file: "#{Rails.root}/spec/uploads/provider/photo_file/22/provider_photo.png",
+              identification_number_file: "#{Rails.root}/spec/uploads/provider/identification_number_file/22/identification_number_file.png",
+              mining_register_file: "#{Rails.root}/spec/uploads/provider/mining_register_file/22/mining_register_file.png",
+              rut_file: "#{Rails.root}/spec/uploads/provider/rut_file/22/rut_file.png",
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               company_info: expected_company_info.stringify_keys,
@@ -253,6 +269,9 @@ describe 'Provider', :type => :request do
             phone_number: provider.phone_number,
             address: provider.address,
             photo_file: provider.photo_file_url,
+            identification_number_file: provider.identification_number_file_url,
+            mining_register_file: provider.mining_register_file_url,
+            rut_file: provider.rut_file_url,
             email: provider.email,
             rucom: expected_rucom.stringify_keys,
             company_info: expected_company_info.stringify_keys,
