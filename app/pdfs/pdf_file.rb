@@ -78,8 +78,8 @@ class PdfFile < Prawn::Document
       when 'nit'
         text_box "X" , :at => [320,cursor] , :width => 40
       when 'document'
-        text_box "X" , :at => [412,cursor] , :width => 40
-      when 'alians_card'
+        text_box "X" , :at => [409,cursor] , :width => 40
+      when 'aliens_card'
         text_box "X" , :at => [510,cursor] , :width => 40
       when 'rut'
         text_box "X" , :at => [579,cursor] , :width => 40
@@ -384,7 +384,7 @@ class PdfFile < Prawn::Document
     move_down 60
     text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
     move_down 5
-    text_box "#{values[:purchase][:reference_code]}" , :at => [55 , cursor] , :width => 165
+    text_box "#{values[:purchase][:reference_code]}" , :at => [40 , cursor] , :width => 220
     move_down 13
     text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80
 
