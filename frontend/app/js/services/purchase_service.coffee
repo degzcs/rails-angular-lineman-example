@@ -2,7 +2,7 @@
 # This service is in charge to manage the server requests related to Purchases
 #
 #TODO: make the remaining HTTP requests
-angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
+angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
   service=
     #
     # Model
@@ -73,6 +73,11 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload)->
         service.model = angular.fromJson(sessionStorage.purchaseService)
       else
         sessionStorage.restorestate = 'false'
+    #
+    # Get all paginated purchases for the current user
+    #
+    all: (page)->
+      return $http({method: "GET", url: "api/v1/purchases"}); 
     #
     # convert from data:image to Blob
     # convert: ->

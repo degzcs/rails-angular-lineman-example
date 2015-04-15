@@ -16,19 +16,5 @@
             %a.md-button.md-default-theme{:href => "#/inventory/all", "ng-click" => "toggleSearch = !toggleSearch"}
               %i.ion-android-search
     %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
-      %md-table-inventory{:headers => "headers", :content => "list", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count","grams" => "grams", :selectall => "selectall"}
-    %br
-    %md-input-container
-      %div{"layout" => "row"}
-        %div{"flex" => "20"}
-          %label Gramos finos seleccionados
-        %div{"flex" => "20"}
-          %input{"ng-model" => "grams.value" }
-    %br
-    %br
-    %md-input-container
-      %div{"layout" => "row"}
-        %div{"flex" => "20"}
-          %input{"md-maxlength" => "5", "required" => "", "type" => "text", "ng-model" => "grams.value" }
-        %div{"flex" => "20"}
-          %md-button.md-raised.md-primary.md-button.md-default-theme{"ui-sref" => "liquidate_batches"} Liquidar
+      %md-table-inventory{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count","grams" => "grams", :selectall => "selectall"}
+    
