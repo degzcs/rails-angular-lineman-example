@@ -66,18 +66,20 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
           }).progress(function(evt) {
             var progressPercentage;
             progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            return console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+            return console.log('progress: ' + progressPercentage + '% ' + evt.config.file);
           }).success(function(data, status, headers, config) {
-            var model;
-            console.log('uploaded file ');
-            window.data = data;
-            model = angular.fromJson(sessionStorage.providerService);
-            model.reference_code = data.reference_code;
-            sessionStorage.providerService = angular.toJson(model);
-            return service.model = model;
+            // var model;
+            // console.log('uploaded file ');
+            // window.data = data;
+            // model = angular.fromJson(sessionStorage.providerService);
+            // model.reference_code = data.reference_code;
+            // sessionStorage.providerService = angular.toJson(model);
+            // return service.model = model;
           });
         })["catch"](function(err) {});
-      } 
+      } else {
+        return false;
+      }
 
       // var file,  _results;
       // if (provider.photo_file) {
