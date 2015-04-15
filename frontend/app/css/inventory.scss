@@ -1,0 +1,39 @@
+//----- Provider Styles-----//
+.md-whiteframe-z4 {
+  box-shadow: none;
+}
+
+.inventory-table{
+
+  .md-table-header{
+    text-align: left!important;
+    width: 100px!important;
+    padding-left: 0px;
+    padding-right: 0px;
+  } 
+  .md-table-content{
+    text-align: left!important;
+    width: 100px!important;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .table-checkbox{
+    width: 10px!important;
+    color: rgb(130,130,130);
+    padding: 16px 16px 16px 0;
+    text-align: center;
+  }
+  .table-checkbox.all-check{
+    border-bottom: 1px solid rgb(230,230,230);
+  }
+  .md-table-footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+  }
+}
+

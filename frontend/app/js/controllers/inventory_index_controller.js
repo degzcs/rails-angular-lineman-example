@@ -1,14 +1,13 @@
 angular.module('app').controller('InventoryIndexCtrl', function($scope, PurchaseService) {
+  
+  // Table directive configuration
   $scope.toggleSearch = false;
   $scope.headers = [
     {
-      name: '',
-      field: 'thumbs'
-    }, {
       name: 'Proovedor',
       field: 'provider_name'
     }, {
-      name: 'Gramos Comprados',
+      name: 'Gramos Finos',
       field: 'gold_batch_grams'
     }, {
       name: 'Precio',
@@ -21,6 +20,21 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
       field: 'inventory_remaining_amount'
     }
   ];
+
+  $scope.sortable = ['provider_name', 'gold_batch_grams', 'price', 'created_at', 'inventory_remaining_amount'];
+  $scope.selectall = false;
+  $scope.grams = {
+    value: 0
+  };
+  $scope.custom = {
+    provider_name: 'bold',
+    gold_batch_grams: 'grey',
+    price: 'grey',
+    created_at: 'grey',
+    inventory_remaining_amount: 'bold',
+  };
+
+  //Purchase service call to api to retrieve all purchases for current user
   PurchaseService.all().success(function(purchases, headers) {
     var content, i, purchase;
     content = [];
@@ -41,19 +55,9 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
   }).error(function(data, status, headers, config) {
     return $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud');
   });
-  $scope.custom = {
-    provider_name: 'bold',
-    gold_batch_grams: 'bold',
-    price: 'grey',
-    created_at: 'grey',
-    inventory_remaining_amount: 'grey',
-  };
   
-  $scope.sortable = ['provider_name', 'gold_batch_grams', 'price', 'created_at', 'inventory_remaining_amount'];
-  $scope.selectall = false;
-  $scope.grams = {
-    value: 0
-  };
+
+  
   return $scope.show = function(item) {
     console.log('selecciona item' + item.selected);
     return InventoryService.setItem(item);

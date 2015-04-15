@@ -7,6 +7,7 @@ module V1
       expose :origin_certificate_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :seller_picture, documentation: { type: "file", desc: "file", example: "..." }
       expose :origin_certificate_sequence, documentation: { type: "string", desc: "sequence", example: "123456789" }
+      expose :created_at, documentation: { type: "created at", desc: "date", example: "date" }
       expose :reference_code, documentation:{} do |purchase, options|
         purchase.reference_code
       end
