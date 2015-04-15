@@ -385,7 +385,7 @@ class PdfFile < Prawn::Document
     text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
     move_down 5
     font ("Courier") do
-      text_box "#{values[:purchase][:reference_code]}" , :at => [45 , cursor] , :width => 240g
+      text_box "#{values[:purchase][:reference_code]}" , :at => [45 , cursor] , :width => 240
     end
     move_down 13
     text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80
