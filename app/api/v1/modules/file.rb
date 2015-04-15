@@ -502,7 +502,7 @@ module V1
         end
 
 
-        get 'download_b_c_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_b_c_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
           #requires :b_c_report ,type: Hash
@@ -521,23 +521,24 @@ module V1
           # rut
           # test data
           # ready
-          values = { city: 'Popayan',
-                     producer:{ name: 'Francisco Fuentes',
-                                document_number: '1061742777',
-                                city: 'Piendamo',
-                                state: 'Cauca',
-                                producer_type: 'barequero' },
-                     mineral:{ mineral: 'Oro',
-                               quantity: 200 ,
-                               unit: 'mg'} ,
-                     purchaser:{ name: 'compradores oro ltda',
-                                 identification_type: 'cedula de extranjeria',
-                                 identification_number: '1018458483',
-                                 rucom: '10139348989'}
-                     }
+          # values = { city: 'Popayan',
+          #            provider:{ name: 'Francisco Fuentes',
+          #                       document_number: '1061742777',
+          #                       city: 'Piendamo',
+          #                       state: 'Cauca',
+          #                       producer_type: 'barequero' },
+          #            mineral:{ type: 'Oro',
+          #                      amount: 200 ,
+          #                      measure_unit: 'mg'} ,
+          #            buyer:{ full_name_or_company_name: 'compradores oro ltda',
+          #                        document_type: 'cedula de extranjeria',
+          #                        document_number: '1018458483',
+          #                        rucom: '10139348989'}
+          #            }
           date = Date.today  #fecha
 
-          #values = params[:b_c_report]
+          values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
+          # binding.pry
           pdf = ::PdfFile.new(values , date , 'b_c_certificate')
           #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificado_barequeros_chatarreros_#{date.month}_#{date.day}.pdf"

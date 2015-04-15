@@ -19,6 +19,7 @@ vendor/bundle
 public/system
 /public/system*
 public/uploads
+public/js/
 .sass-cache/
 .jhw-cache/
 config/app_config.yml
