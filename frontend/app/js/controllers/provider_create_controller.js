@@ -95,8 +95,9 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$rootScope', '$scope', 
     $scope.newProvider = prov;
     $scope.currentRucom = prov.rucom;
     ProviderService.setCurrentProv(prov);
-
-    //$scope.loadProviderLocation($scope.newProvider);
+    if ($scope.newProvider.population_center.id !== '') {
+      $scope.loadProviderLocation($scope.newProvider);
+    }
 
     console.log('provider:' + prov);
     console.log(prov);
@@ -137,6 +138,42 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$rootScope', '$scope', 
     $scope.states = states;
     console.log('States: ' + JSON.stringify(states));
   });
+
+  $scope.loadProviderLocation = function (provider) {
+    if(provider) {
+      LocationService.getPopulationCenterById.get({populationCenterId: provider.population_center.id}, function(populationCenter) {
+        $scope.selectedPopulationCenter = populationCenter;
+        $scope.searchPopulationCenter = populationCenter.name;
+        $scope.populationCenterDisabled = false;
+        console.log('Current Population Center: ' + JSON.stringify(populationCenter));
+        
+        currentCity = null;
+        LocationService.getCityById.get({cityId: populationCenter.city_id}, function(city) {
+          currentCity = city;
+          $scope.selectedCity = currentCity;
+          $scope.searchCity = currentCity.name;
+          $scope.cityDisabled = false;
+          console.log('currentCity: ' + JSON.stringify(city));
+          LocationService.getPopulationCentersFromCity.query({cityId: currentCity.id}, function(population_centers) {
+            $scope.population_centers = population_centers;
+            console.log('Population Centers from ' + currentCity.name + ': ' + JSON.stringify(population_centers));
+          });
+
+          currentState = null;
+          LocationService.getStateById.get({stateId: currentCity.state_id}, function(state) {
+            currentState = state;
+            $scope.selectedState = currentState;
+            $scope.searchState = currentState.name;
+            console.log('currentState: ' + JSON.stringify(state));
+            LocationService.getCitiesFromState.query({stateId: currentState.id}, function(cities) {
+              $scope.cities = cities;
+              console.log('Cities from ' + currentState.name + ': ' + JSON.stringify(cities));
+            });
+          });
+        });
+      });
+    }
+  };
 
   $scope.idTypeLegalRep = [    
     { type: 1, name: 'CC' },
