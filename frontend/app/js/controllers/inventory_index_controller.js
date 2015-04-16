@@ -1,9 +1,13 @@
 angular.module('app').controller('InventoryIndexCtrl', function($scope, PurchaseService) {
   
-  // Table directive configuration
+  // ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false;
+  //Headers of the table
   $scope.headers = [
     {
+      name: 'Fecha',
+      field: 'created_at'
+    },{
       name: 'Proovedor',
       field: 'provider_name'
     }, {
@@ -12,28 +16,28 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
     }, {
       name: 'Precio',
       field: 'price'
-    }, {
-      name: 'Fecha',
-      field: 'created_at'
-    }, {
+    },{
       name: 'Gramos Restantes',
       field: 'inventory_remaining_amount'
     }
   ];
-
-  $scope.sortable = ['provider_name', 'gold_batch_grams', 'price', 'created_at', 'inventory_remaining_amount'];
+  //Filters 
+  $scope.sortable = ['created_at','provider_name', 'gold_batch_grams', 'price', 'inventory_remaining_amount'];
+  //Variables configuration
   $scope.selectall = false;
   $scope.grams = {
     value: 0
   };
+  //Header Styles
   $scope.custom = {
-    provider_name: 'bold',
+    provider_name: 'grey',
     gold_batch_grams: 'grey',
     price: 'grey',
-    created_at: 'grey',
+    created_at: 'bold',
     inventory_remaining_amount: 'bold',
   };
 
+  //---------------- Controller methods -----------------//
   //Purchase service call to api to retrieve all purchases for current user
   PurchaseService.all().success(function(purchases, headers) {
     var content, i, purchase;

@@ -12,7 +12,7 @@
           %md-toolbar-tools{"layout" => "row"}
             .sidebar-options{"flex" => 5, "ng-controller"=>"SidebarCtrl"}
               %md-toolbar-tools
-                %md-button{"ng-click" => "toggleLeft()"}
+                %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
                   %md-icon{"md-svg-icon"=>"action:reorder"}
             .breadcrumb{"flex" => 80, "hide-sm" => ""}
               .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}

@@ -3,7 +3,7 @@
     %thead
       %tr.md-table-headers-row
         %th.table-checkbox.all-check
-          %md-checkbox{"ng-click" => "selectAll(content,grams,selectall)","ng-model" => "selectall"}
+          %md-checkbox{"ng-click" => "selectAll(content,grams,selectall)","ng-model" => "selectall", "aria-label"=>"all-check"}
         %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
           %a{:href => "#", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
             {{h.name}}
@@ -11,9 +11,9 @@
             %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
           %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
     %tbody
-      %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count"}
+      %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | startFrom:tablePage*count | limitTo: count", }
         %td.table-checkbox
-          %md-checkbox{"ng-click" => "selectItem(c,grams)", "ng-model" => "c.selected"}
+          %md-checkbox{"ng-click" => "selectItem(c,grams,$event)", "ng-model" => "c.selected", "aria-label"=>"item-check"}
         %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ui-sref" => "show_batch"} {{h.field.indexOf('date') > 0 ? (c[h.field] | date) : c[h.field]}}
 
 .md-table-footer{:layout => "row"}

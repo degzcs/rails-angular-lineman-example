@@ -1,0 +1,16 @@
+%md-dialog
+  %md-content.sticky-container
+    %md-subheader.md-sticky-no-effect.md-toolbar.md-primary Seleccione la cantidad en gramos que desea liquidar
+    .dialog-content
+      %form{:name => "creditBillingForm","ng-submit"=> "confirmCreditBilling()"}
+        %md-input-container
+          %label Gramos
+          %input{"ng-model" => "grams"}
+        %h2 
+          %strong
+            Total Gramos:
+          {{item.gold_batch_grams}}
+
+        %md-button.login-button.md-raised.md-default-theme.credits_buy_button{type: "submit"}
+          ok
+
