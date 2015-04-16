@@ -4,7 +4,8 @@ angular.module('app').directive('trNavButton',function ($state) {
     templateUrl: 'directives/tr-nav-button.html',
     scope: {
       name: "=",
-      state: "="
+      state: "=",
+      icon: "="
     },
     link: function ($scope, iElement, iAttrs) {
       $scope.isSelected = function(){

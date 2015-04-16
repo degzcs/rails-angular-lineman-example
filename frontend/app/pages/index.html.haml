@@ -28,7 +28,7 @@
               %h1.md-toolbar-tools
                 Trazoro
             %md-content.sidebar-options{"layout" => "column"}
-              %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", "ng-click" =>"setSection(option.name)"}
+              %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", icon: "option.icon", "ng-click" =>"setSection(option.name)"}
         .main-content{"flex" =>100}
           %md-content.md-whiteframe-z4{"ui-view" => "content"}
   %script{"src" => "/js/app.js", "type" => "text/javascript"}
