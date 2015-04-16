@@ -10,7 +10,10 @@ angular.module('app').directive('mdTableProvider', function () {
       customClass: '=customClass',
       thumbs:'=', 
       count: '=',
-      currentProvider: '='
+      currentProvider: '=',
+      queryName: '=',
+      queryId: '=',
+      queryFocus: '='
     },
     controller: function ($scope, $filter, $location, $window, $state, ProviderService) {
       var orderBy = $filter('orderBy');
@@ -30,9 +33,15 @@ angular.module('app').directive('mdTableProvider', function () {
       $scope.getNumber = function (num) {
       	return new Array(num);
       };
-      $scope.goToPage = function (pag) {
+      $scope.goToPage = function (pag, queryFocus) {
         $scope.tablePage = pag;
-        ProviderService.retrieveProviders.query({per_page: $scope.count, page: (pag+1)}, (function(providers, headers) {
+        params = {per_page: $scope.count, page: (pag+1)};
+        if (queryFocus && queryFocus === 'name') {
+          params.query_name = $scope.queryName;
+        } else if (queryFocus && queryFocus === 'id') {
+          params.query_id = $scope.queryId;
+        }
+        ProviderService.retrieveProviders.query(params, (function(providers, headers) {
           var content = [];
           for (var i=0; i<providers.length; i++) {
             var prov = {

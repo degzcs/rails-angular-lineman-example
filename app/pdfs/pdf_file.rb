@@ -77,9 +77,9 @@ class PdfFile < Prawn::Document
     case values[:buyer][:document_type]
       when 'nit'
         text_box "X" , :at => [320,cursor] , :width => 40
-      when 'cedula de ciudadania'
-        text_box "X" , :at => [412,cursor] , :width => 40
-      when 'cedula de extranjeria'
+      when 'document'
+        text_box "X" , :at => [409,cursor] , :width => 40
+      when 'aliens_card'
         text_box "X" , :at => [510,cursor] , :width => 40
       when 'rut'
         text_box "X" , :at => [579,cursor] , :width => 40
@@ -129,9 +129,9 @@ class PdfFile < Prawn::Document
     case values[:mining_operator][:identification_type]
       when 'nit'
         text_box "X" , :at => [287,cursor] , :width => 150
-      when 'cedula de ciudadania'
+      when 'document'
         text_box "X" , :at => [371,cursor] , :width => 150
-      when 'cedula de extranjeria'
+      when 'alians_card'
         text_box "X" , :at => [482,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [579,cursor] , :width => 150
@@ -156,9 +156,9 @@ class PdfFile < Prawn::Document
     case values[:purchaser][:identification_type]
       when 'nit'
         text_box "X" , :at => [275,cursor] , :width => 150
-      when 'cedula de ciudadania'
+      when 'document'
         text_box "X" , :at => [376,cursor] , :width => 150
-      when 'cedula de extranjeria'
+      when 'alians_card'
         text_box "X" , :at => [497,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [585,cursor] , :width => 150
@@ -212,9 +212,9 @@ class PdfFile < Prawn::Document
     case values[:trader][:identification_type]
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
-      when 'cedula de ciudadania'
+      when 'document'
         text_box "X" , :at => [880,cursor] , :width => 150
-      when 'cedula de extranjeria'
+      when 'alians_card'
         text_box "X" , :at => [1050,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [1100,cursor] , :width => 150
@@ -267,9 +267,9 @@ class PdfFile < Prawn::Document
     case values[:purchaser][:identification_type]
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
-      when 'cedula de ciudadania'
+      when 'document'
         text_box "X" , :at => [880,cursor] , :width => 150
-      when 'cedula de extranjeria'
+      when 'alians_card'
         text_box "X" , :at => [1050,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [1100,cursor] , :width => 150
@@ -319,9 +319,9 @@ class PdfFile < Prawn::Document
     case values[:house][:identification_type]
       when 'nit'
         text_box "X" , :at => [343 , cursor] , :width => 150
-      when 'cedula de ciudadania'
+      when 'document'
         text_box "X" , :at => [440,cursor] , :width => 150
-      when 'cedula de extranjeria'
+      when 'alians_card'
         move_down 25
         text_box "X" , :at => [343,cursor] , :width => 150
       when 'rut'
@@ -342,9 +342,9 @@ class PdfFile < Prawn::Document
     case values[:purchaser][:identification_type]
       when 'nit'
         text_box "X" , :at => [717 , cursor] , :width => 150
-      when 'cedula de ciudadania'
+      when 'document'
         text_box "X" , :at => [800,cursor] , :width => 150
-      when 'cedula de extranjeria'
+      when 'alians_card'
         text_box "X" , :at => [895,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [960,cursor] , :width => 150
@@ -384,7 +384,9 @@ class PdfFile < Prawn::Document
     move_down 60
     text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
     move_down 5
-    text_box "#{values[:purchase][:reference_code]}" , :at => [70 , cursor] , :width => 150
+    font ("Courier") do
+      text_box "#{values[:purchase][:reference_code]}" , :at => [45 , cursor] , :width => 240
+    end
     move_down 13
     text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80
 

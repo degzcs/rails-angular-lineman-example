@@ -6,7 +6,7 @@
       {{ formTabControl.secondLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providerCreateForm", "ng-submit" => "createProvider()", "novalidate" => "novalidate"}
+    %form{:name => "providerCreateForm", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left.cam{:flex => "10"}
@@ -24,7 +24,7 @@
           %md-input-container{:flex => ""}
             %label {{rucomIDField.label}}
             %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
-            %md-tooltip{"md-direction" => "botton"} 
+            %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
               %span.ion-android-checkmark-circle &nbsp;válido
           %div{:flex => "", :layout => "row"}
             %md-input-container
@@ -98,6 +98,6 @@
           %div{:layout => "row", :flex => "15", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
             %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-              %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", :type => "submit"} Save
+              %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider()"} Save
 
  

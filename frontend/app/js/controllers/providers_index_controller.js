@@ -1,5 +1,8 @@
 angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderService' ,function($scope, ProviderService){
-  $scope.toggleSearch = false; 
+  $scope.toggleSearch = false;
+  $scope.queryName = '';
+  $scope.queryId = '';
+  $scope.queryFocus = '';
   $scope.headers = [
     {
       name:'',
@@ -70,6 +73,71 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
   $scope.sortable = ['first_name', 'last_name', 'document_number', 'mineral', 'num_rucom', 'rucom_status', 'provider_type', 'last_transaction_date'];
   $scope.thumbs = 'photo_file';
   $scope.currentProvider = ProviderService.getCurrentProv();
+
+  // Watchers for listen to changes in query fields
+
+  $scope.$watch('queryName', 
+    function(newVal, oldVal) {
+      if (oldVal && newVal !== oldVal) {
+        $scope.queryFocus = 'name';
+        ProviderService.retrieveProviders.query({per_page: $scope.count, page: 1, query_name: $scope.queryName}, (function(providers, headers) {
+          var content = [];
+          for (var i=0; i<providers.length; i++) {
+            var prov = {
+              id: providers[i].id,
+              document_number: providers[i].document_number,
+              first_name: providers[i].first_name,
+              last_name: providers[i].last_name,
+              address: providers[i].address,
+              email: providers[i].email,
+              phone_number: providers[i].phone_number,
+              photo_file: providers[i].photo_file || ('http://robohash.org/' + providers[i].id),
+              num_rucom: providers[i].rucom.num_rucom,
+              rucom_record: providers[i].rucom.rucom_record,
+              provider_type: providers[i].rucom.provider_type,
+              rucom_status: providers[i].rucom.status,
+              mineral: providers[i].rucom.mineral
+            };
+            content.push(prov);
+          }
+          $scope.pages = parseInt(headers().total_pages);
+          return $scope.content = content;
+        }), function(error) {});
+      }
+  }, true); // objectEquality = true
+
+  $scope.$watch('queryId', 
+    function(newVal, oldVal) {
+      if (oldVal && newVal !== oldVal) {
+        $scope.queryFocus = 'id';
+        ProviderService.retrieveProviders.query({per_page: $scope.count, page: 1, query_id: $scope.queryId}, (function(providers, headers) {
+          var content = [];
+          for (var i=0; i<providers.length; i++) {
+            var prov = {
+              id: providers[i].id,
+              document_number: providers[i].document_number,
+              first_name: providers[i].first_name,
+              last_name: providers[i].last_name,
+              address: providers[i].address,
+              email: providers[i].email,
+              phone_number: providers[i].phone_number,
+              photo_file: providers[i].photo_file || ('http://robohash.org/' + providers[i].id),
+              num_rucom: providers[i].rucom.num_rucom,
+              rucom_record: providers[i].rucom.rucom_record,
+              provider_type: providers[i].rucom.provider_type,
+              rucom_status: providers[i].rucom.status,
+              mineral: providers[i].rucom.mineral
+            };
+            content.push(prov);
+          }
+          $scope.pages = parseInt(headers().total_pages);
+          return $scope.content = content;
+        }), function(error) {});
+      }
+  }, true); // objectEquality = true
+
+    
+  // end Watchers
   
 }]);
 

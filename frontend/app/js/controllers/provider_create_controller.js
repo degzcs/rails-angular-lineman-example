@@ -1,4 +1,4 @@
-angular.module('app').controller('ProvidersRucomCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($rootScope, $scope, $state, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
+angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($scope, $state, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
   
   $scope.newProvider = ProviderService.getCurrentProv();
   $scope.populationCenter = {};
@@ -33,7 +33,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$rootScope', '$scope', 
     $scope.companyName = rucom.name;        
     var prov = {  
       document_number: $scope.newProvider.document_number,
-      first_name: rucom.name,
+      first_name: $scope.newProvider.first_name? $scope.newProvider.first_name : rucom.name,
       last_name: $scope.newProvider.last_name,        
       email: $scope.newProvider.email,
       address: $scope.newProvider.address,
@@ -231,21 +231,22 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$rootScope', '$scope', 
   $scope.createProvider = function(){  
     console.log($scope.newProvider);
     $resource = ProviderService.create($scope.newProvider);
-    $scope.infoAlert('Provider', 'Successful registration');
-    ProviderService.setCurrentProv({});
-    $scope.abortCreate = true;
-    // if($resource){
-    //   $resource.save($scope.newProvider);
-    //   $scope.infoAlert('Provider', 'Successful registration');
-    // } else{
-    //   $scope.infoAlert('Provider', 'Something went wrong');
-    // }
+    if($resource) {
+      $scope.newProvider = {};
+      ProviderService.setCurrentProv({});
+      $scope.infoAlert('Create new provider', 'Successful registration', false);
+      $scope.abortCreate = true;
+    } else {
+      $scope.infoAlert('Create new provider', 'Something went wrong. Please make sure of filling all required fields and provide all supporting documentation.', true);
+    }
   };
 
-  $scope.infoAlert = function(title, content) {
+  $scope.infoAlert = function(title, content, error) {
    $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'))
    .finally(function() {
-      $window.history.back();
+      if (!error) {
+        $window.history.back();
+      }
     });
   };
 
