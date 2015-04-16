@@ -16,6 +16,11 @@ module V1
           optional :per_page, type: Integer
         end
 
+        params :provider_query do
+          optional :query_name, type: String
+          optional :query_id, type: String
+        end
+
         params :id do
           requires :id, type: Integer, desc: 'User ID'
         end
@@ -59,12 +64,25 @@ module V1
         }
         params do
           use :pagination
+          use :provider_query
         end
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           page = params[:page] || 1
           per_page = params[:per_page] || 10
-          providers = ::Provider.paginate(:page => page, :per_page => per_page)
+          query_name = params[:query_name]
+          query_id = params[:query_id]
+          #binding.pry
+          if query_name
+            providers = ::Provider.where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name", 
+              {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
+          elsif query_id
+            providers = ::Provider.where("document_number LIKE :document_number", 
+              {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
+          else
+            providers = ::Provider.paginate(:page => page, :per_page => per_page)
+          end
+          #binding.pry
           header 'total_pages', providers.total_pages.to_s
           present providers, with: V1::Entities::Provider
         end
