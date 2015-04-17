@@ -43,10 +43,10 @@ angular.module('app').directive('mdTableRucom', function () {
       };
 
       $scope.setProviderType = function (provider_type){
-        if (provider_type === 'Comercializadores' || provider_type === 'Barequero' || provider_type === 'Consumidor'){
+        if (provider_type === 'Barequero'){
           console.log("Type A");
           return "type_1";
-        } else if (provider_type === 'Solicitante Legalización De Minería' || provider_type === 'Titular' || provider_type === 'Beneficiario Área Reserva Especial' || provider_type === 'Subcontrato de formalización'){
+        } else if (provider_type === 'Comercializadores' || provider_type === 'Solicitante Legalización De Minería' || provider_type === 'Titular' || provider_type === 'Beneficiario Área Reserva Especial' || provider_type === 'Subcontrato de formalización' || provider_type === 'Consumidor'){
           console.log("Type B");
           return "type_2";
         } else if (provider_type === 'Planta de Beneficio'){
