@@ -45,26 +45,14 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
       #@params item [Object]
 
       $scope.selectItem = (item, grams, ev) ->
-        $scope.batch_picked = item
-        console.log item
-        console.log 'selecciona item' + item.date + ' ' + grams.value + ' ' + item.selected
+
+        $scope.pickedItem = item
         if item.selected
-          grams.value = grams.value - 1
+          $scope.deleteGramsDialog(item, ev)
         else
-          grams.value = grams.value + 1
+          $scope.enterGramsDialog(item, ev)
+          
         
-        $mdDialog.show(
-          controller: 'InventoryAmountCtrl'
-          templateUrl: 'partials/inventory_amount_form.html'
-          targetEvent: ev).then ((answer) ->
-          $scope.alert = 'You said the information was "' + answer + '".'
-          return
-        ), ->
-          $scope.alert = 'You cancelled the dialog.'
-          return
-        return
-
-
       #updates all checkboxes in the inventory list
       # @params inventoryList [Array]
 
@@ -81,6 +69,24 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
         console.log 'select all value ' + selectall
         console.log 'rows selected number' + inventoryList.length
         return
+
+      $scope.enterGramsDialog = (item,ev)->
+        $mdDialog.show(
+          controller: 'InventoryAmountCtrl'
+          resolve: 
+            pickedItem: -> 
+              return item;
+          templateUrl: 'partials/inventory_amount_form.html'
+          targetEvent: ev).then ((answer) ->
+          $scope.alert = 'You said the information was "' + answer + '".'
+          return
+        ), ->
+          $scope.alert = 'You cancelled the dialog.'
+          item.selected = false
+          return
+        return
+
+      $scope.deleteGramsDialog= (item,ev)->
 
       return
     templateUrl: 'directives/md-table-inventory.html'
