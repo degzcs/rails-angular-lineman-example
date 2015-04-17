@@ -25,8 +25,6 @@ class Client < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :phone_number, presence: true
-  validates :address, presence: true
   validates :client_type , presence: true
   validates :email, presence: true
-  validates :population_center_id, presence: true
 end

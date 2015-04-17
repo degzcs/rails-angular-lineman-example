@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
 	has_secure_password
 	after_initialize :init
 
+	before_save :save_client
+
 	#
 	# Instance Methods
 	#
@@ -58,5 +60,26 @@ class User < ActiveRecord::Base
 		def init
 	    self.available_credits  ||= 0.0           #will set the default value only if it's nil
 	  end
+
+	  def save_client
+			puts 'hola mundo'
+
+			client_hash = { "first_name" => self.first_name,
+											"last_name" => self.last_name,
+											"phone_number" => self.phone_number,
+											"id_document_type" => 'CC',
+											"id_document_number" => self.document_number,
+											"client_type" => 'Comercializador',
+											"email" => self.email}
+
+			client = Client.new(client_hash)
+
+			if client.save
+				puts 'registro de client exitoso'
+				puts client.as_json
+			else
+				errors.add(:email,'Error al crear este usuario  como cliente')
+			end
+		end
 
 end
