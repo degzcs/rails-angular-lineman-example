@@ -20,13 +20,26 @@
 #
 
 class Client < ActiveRecord::Base
+
+  #
+  # Instance Methods
+  #
+
+  # @return the rucom of the client
+  def rucom
+    Rucom.find(self.rucom_id)
+  end
+
+  # @return the population_center of the provider
+  def population_center
+    PopulationCenter.find(self.population_center_id)
+  end
+
   validates :id_document_number, presence: true
   validates :id_document_type, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :phone_number, presence: true
-  validates :address, presence: true
   validates :client_type , presence: true
   validates :email, presence: true
-  validates :population_center_id, presence: true
 end
