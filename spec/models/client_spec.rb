@@ -68,14 +68,6 @@ describe Client do
       client = build(:client, phone_number: nil)
       expect(client).not_to be_valid
     end
-    it "should not allow to create a client without address" do
-      client = build(:client, address: nil)
-      expect(client).not_to be_valid
-    end
-    it "should not allow to create a client without population center" do
-      client = build(:client, population_center_id: nil)
-      expect(client).not_to be_valid
-    end
     it "should not allow to create a client without email" do
       client = build(:client, email: nil)
       expect(client).not_to be_valid
