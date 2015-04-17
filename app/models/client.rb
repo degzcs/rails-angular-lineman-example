@@ -27,12 +27,12 @@ class Client < ActiveRecord::Base
 
   # @return the rucom of the client
   def rucom
-    Rucom.find(self.rucom_id)
+    Rucom.find(self.rucom_id) if (self.rucom_id)
   end
 
   # @return the population_center of the provider
   def population_center
-    PopulationCenter.find(self.population_center_id)
+    PopulationCenter.find(self.population_center_id) if (self.population_center_id)
   end
 
   validates :id_document_number, presence: true

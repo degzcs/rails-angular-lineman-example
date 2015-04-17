@@ -62,7 +62,6 @@ class User < ActiveRecord::Base
 	  end
 
 	  def save_client
-			puts 'hola mundo'
 
 			client_hash = { "first_name" => self.first_name,
 											"last_name" => self.last_name,
@@ -71,13 +70,12 @@ class User < ActiveRecord::Base
 											"id_document_number" => self.document_number,
 											"client_type" => 'Comercializador',
 											"email" => self.email}
+										#	"rucom_id" => 1, #provisional
+										#	"population_center_id" => 1} #provisional
 
 			client = Client.new(client_hash)
 
-			if client.save
-				puts 'registro de client exitoso'
-				puts client.as_json
-			else
+			if !client.save
 				errors.add(:email,'Error al crear este usuario  como cliente')
 			end
 		end

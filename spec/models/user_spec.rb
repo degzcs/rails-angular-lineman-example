@@ -48,6 +48,13 @@ describe  User do
       user = create(:user)
       expect(user.available_credits).to eq(0.0)
     end
+  
+    it 'should trigger save_client on save' do
+      user = build(:user, password: 'super_password', password_confirmation: 'super_password')
+      user.should_receive(:save_client)
+      user.save
+    end
+
   end
 
   context '#instance methods' do 
