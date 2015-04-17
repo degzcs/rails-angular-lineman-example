@@ -10,7 +10,7 @@ angular.module('app').directive('mdTableRucom', function () {
       count: '=',
       currentRucom: '='
     },
-    controller: function ($scope, $filter, $location, $window, $state, RucomService) {
+    controller: function ($scope, $filter, $location, $window, $state, $mdDialog, RucomService, ProviderService) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
@@ -34,12 +34,20 @@ angular.module('app').directive('mdTableRucom', function () {
       };
 
       $scope.setCurrentRucom = function (rucom) {
-        console.log('setCurrentRucom' + JSON.stringify(rucom));
-        RucomService.setCurrentRucom(rucom);        
-        console.log(rucom.provider_type);
-        var type = $scope.setProviderType(rucom.provider_type);
-        console.log('1. Setting current Rucom: ' + rucom.id);        
-        $state.go(type, {rucomId: rucom.id});
+        ProviderService.retrieveProviders.query({query_rucomid: rucom.id}, (function(providers, headers) {
+          if (providers.length > 0) {
+            var title = 'RUCOM';
+            var text = 'There already exist a provider associated to this RUCOM';
+            $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
+          } else {
+            console.log('setCurrentRucom' + JSON.stringify(rucom));
+            RucomService.setCurrentRucom(rucom);        
+            console.log(rucom.provider_type);
+            var type = $scope.setProviderType(rucom.provider_type);
+            console.log('1. Setting current Rucom: ' + rucom.id);        
+            $state.go(type, {rucomId: rucom.id});
+          }
+        }), function(error) {});
       };
 
       $scope.setProviderType = function (provider_type){

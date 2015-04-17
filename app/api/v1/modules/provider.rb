@@ -19,6 +19,7 @@ module V1
         params :provider_query do
           optional :query_name, type: String
           optional :query_id, type: String
+          optional :query_rucomid, type: String
         end
 
         params :id do
@@ -72,6 +73,7 @@ module V1
           per_page = params[:per_page] || 10
           query_name = params[:query_name]
           query_id = params[:query_id]
+          query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
             providers = ::Provider.where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name", 
@@ -79,6 +81,8 @@ module V1
           elsif query_id
             providers = ::Provider.where("document_number LIKE :document_number", 
               {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
+          elsif query_rucomid
+            providers = ::Provider.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
             providers = ::Provider.paginate(:page => page, :per_page => per_page)
           end

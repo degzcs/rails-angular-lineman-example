@@ -4,10 +4,6 @@
     %md-toolbar.md-primary{:layout => "column"}      
       .md-toolbar-tools
         .fill-height{:layout => "row", :flex => "flex"}
-          %a{"ui-sref" => "type_1"}
-            %md-button.md-fab.md-accent.md-mini{"aria-label" => "New",:md-ripple-size => "partial"} +
-            %md-tooltip{"md-direction" => "botton", "md-visible" => "demo.showTooltip"} No Rucom
-              %span.ion-android-checkmark-circle
           %md-input-container{:flex => "flex", :style => "padding-left:25px;"}
             %label Rucom number
             %input#search-prov-id{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Type the rucom number"}
