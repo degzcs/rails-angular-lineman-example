@@ -15,6 +15,9 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
     controller: ($scope, $filter, $window)->
       orderBy = $filter('orderBy')
       $scope.tablePage = 0
+      $scope.selectedItems = []
+      $scope.totalAmount = 0
+
       $scope.nbOfPages = ->
         if $scope.content
           Math.ceil $scope.content.length / $scope.count
@@ -54,22 +57,40 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
           
         
       #updates all checkboxes in the inventory list
-      # @params inventoryList [Array]
+      
+      $scope.selectAll = (inventoryItems, grams, selectall,ev) ->
+        if $scope.selectedItems.length != 0
+          confirm = $mdDialog.confirm()
+          .title('Confirmar')
+          .content('Si selecciona esta opcion descartara las cantidades que ya especifico y seran adicionados todos los lotes')
+          .ariaLabel('Lucky day').ok('Estoy seguro').cancel('Cancelar')
+          .targetEvent(ev)
 
-      $scope.selectAll = (inventoryList, grams, selectall) ->
-        i = 0
-        while i < inventoryList.length
-          if selectall
-            inventoryList[i].selected = false
-            grams.value = 0
-          else
-            inventoryList[i].selected = true
-            grams.value = inventoryList.length
-          i++
-        console.log 'select all value ' + selectall
-        console.log 'rows selected number' + inventoryList.length
+          $mdDialog.show(confirm).then (->
+            #If the response is positive then clenans the previous values and recreate the arrays
+            $scope.totalAmount = 0
+            $scope.selectedItems = []
+            i=0
+            while i < inventoryItems.length
+              item = inventoryItems[i]
+              item.selected = true
+              new_item = {
+                item: item
+                amount_picked: item.inventory_remaining_amount
+              }
+              $scope.selectedItems.push(new_item)
+              $scope.totalAmount = $scope.totalAmount + new_item.amount_picked
+              i++
+            console.log $scope.selectedItems
+            return
+          ), ->
+            $scope.selectall = false
+            return
+          
+
         return
 
+      # Display a dialog that allows to enter the grams amount
       $scope.enterGramsDialog = (item,ev)->
         $mdDialog.show(
           controller: 'InventoryAmountCtrl'
@@ -78,16 +99,44 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
               return item;
           templateUrl: 'partials/inventory_amount_form.html'
           targetEvent: ev).then ((answer) ->
-          $scope.alert = 'You said the information was "' + answer + '".'
+          #It catches the answer and push it to the array selectItems, it also adds the amount to the total
+          $scope.selectedItems.push(answer)
+          $scope.totalAmount = $scope.totalAmount + answer.amount_picked
           return
         ), ->
-          $scope.alert = 'You cancelled the dialog.'
+          #if the response is negative set the checkbox to false
           item.selected = false
           return
         return
 
+      #Launches a dialog to ask the user if wants to delete the amount 
       $scope.deleteGramsDialog= (item,ev)->
+        confirm = $mdDialog.confirm()
+        .title('Confirmar')
+        .content('Desea quitar estos gramos de la liquidacion?')
+        .ariaLabel('Lucky day').ok('Si').cancel('No')
+        .targetEvent(ev)
+
+        $mdDialog.show(confirm).then (->
+          #If the response is positive then it finds the index of the item in the selectedItems array
+          deleted_item_index = null
+          i=0
+          while i < $scope.selectedItems.length
+            if item == $scope.selectedItems[i].item
+              deleted_item_index = i
+            i++
+          #Then deletes the item from the array and from the total
+          $scope.totalAmount = $scope.totalAmount - $scope.selectedItems[deleted_item_index].amount_picked
+          $scope.selectedItems.splice(deleted_item_index, 1)
+          return
+        ), ->
+          #If the response in negative sets the checkbox to true again
+          item.selected = true
+          return
+
 
       return
     templateUrl: 'directives/md-table-inventory.html'
+    link: (scope, element, attrs)->
+
   }
