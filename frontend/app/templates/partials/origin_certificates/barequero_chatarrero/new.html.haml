@@ -16,23 +16,23 @@
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
     %h4 Informacion del Productor de Mineral
   
-  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-    .column{"flex"=> 10}
-      %md-select{"ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
-        %md-option{:value => "barequero"} Barequero
-        %md-option{:value => "chatarrero"} Chatarrero
-
-    .select-provider{'flex' => 30}
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    .select-provider{'flex' => ''}
       %md-chips{"md-autocomplete-snap" => "", "ng-model" => "barequero_chatarrero_origin_certificate.provider"}
         %md-autocomplete{"md-selected-item"=>"barequero_chatarrero_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
-    .create-provider{'flex' =>10}
+    .create-provider{'flex' =>'10'}
       %a{'ng-href' => "#provider"}
         %md-button.md-fab.md-accent{} +
           %md-tooltip{"md-visible" => "demo.showTooltip"}
             Crear Proveedor
             %span.ion-android-checkmark-circle
-    %md-content{'flex' => 40, "class"=>"md-padding autocomplete", "layout"=>"column"}
+    .column{"flex"=> ''}
+      %md-select{"ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
+        %md-option{:value => "barequero"} Barequero
+        %md-option{:value => "chatarrero"} Chatarrero
+
+    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
       %span
         Nombre : {{barequero_chatarrero_origin_certificate.provider.name}}
       %span
@@ -46,17 +46,17 @@
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
 
     .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
+      %md-input-container
         %label Mineral Extraido y Vendido
         %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.type", "type" => "text", "required"=>""}
 
     .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
+      %md-input-container
         %label Cantidad
         %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.amount", "type" => "text", "required"=>""}
 
     .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
+      %md-input-container
         %label Unidad de Medida
         %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.measure_unit", "type" => "text", "required"=>""}
 
