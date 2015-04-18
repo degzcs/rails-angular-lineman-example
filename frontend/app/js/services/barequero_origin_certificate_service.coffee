@@ -19,10 +19,10 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
         measure_unit: ''
       ## mineral's Buyer info
       buyer:
-        full_name_or_company_name: ''
+        company_name: ''
         document_type: '' # can be : NIT, CC, RUT, Aliens Card (foreign identification card)
         document_number: ''
-        rucom_number: ''
+        rucom_record: ''
 
     #
     # Save model temporal states

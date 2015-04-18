@@ -17,6 +17,8 @@
 #  photo_file                 :string(255)
 #  email                      :string(255)
 #  population_center_id       :integer
+#  city                       :string(255)
+#  state                      :string(255)
 #
 
 FactoryGirl.define do

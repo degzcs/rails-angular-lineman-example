@@ -1,5 +1,5 @@
 angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser) ->
-  #
+    #
   # Instances
   #
   # $scope.purchase.model = PurchaseService.restoreState
@@ -67,6 +67,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
+        city: 'Popayan'
+        state: 'Cauca'
       $scope.allProviders.push prov
       i++
   ), (error) ->

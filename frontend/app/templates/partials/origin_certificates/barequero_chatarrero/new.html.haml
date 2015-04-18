@@ -15,40 +15,33 @@
   ////-----------------------Provider section ------------------------------////////
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
     %h4 Informacion del Productor de Mineral
-
+  
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-
-    .column{"flex"=>""}
+    .column{"flex"=> 10}
       %md-select{"ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
         %md-option{:value => "barequero"} Barequero
         %md-option{:value => "chatarrero"} Chatarrero
 
-    .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Nombre
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.first_name", "type" => "text", "required"=>""}
-
-    .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Apellido
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.last_name", "type" => "text", "required"=>""}
-
-  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-
-    .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Cedula de Ciudadania
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.document_number", "type" => "text", "required"=>""}
-
-    .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Departamento
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.state", "type" => "text", "required"=>""}
-
-    .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Municipio
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.city", "type" => "text", "required"=>""}
+    .select-provider{'flex' => 30}
+      %md-chips{"md-autocomplete-snap" => "", "ng-model" => "barequero_chatarrero_origin_certificate.provider"}
+        %md-autocomplete{"md-selected-item"=>"barequero_chatarrero_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
+          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+    .create-provider{'flex' =>10}
+      %a{'ng-href' => "#provider"}
+        %md-button.md-fab.md-accent{} +
+          %md-tooltip{"md-visible" => "demo.showTooltip"}
+            Crear Proveedor
+            %span.ion-android-checkmark-circle
+    %md-content{'flex' => 40, "class"=>"md-padding autocomplete", "layout"=>"column"}
+      %span
+        Nombre : {{barequero_chatarrero_origin_certificate.provider.name}}
+      %span
+        CC : {{barequero_chatarrero_origin_certificate.provider.document_number}}
+      %span
+        Departamento: {{barequero_chatarrero_origin_certificate.provider.state}}
+      %span
+        city: {{barequero_chatarrero_origin_certificate.provider.city}}
+  ////-----------------------Mineral section ------------------------------////////
 
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
 
@@ -74,26 +67,16 @@
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
 
     .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Nombres y Apellidos o Razon Social
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.buyer.full_name_or_company_name", "type" => "text", "required"=>""}
+      %label Nombres y Apellidos o Razon Social
+      %p {{barequero_chatarrero_origin_certificate.buyer.company_name}}
 
     .column{"flex"=>""}
-      %md-select{"ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_type", :placeholder => "Tipo de Identificacion del Comprador"}
-        %md-option{:value => "nit"} NIT
-        %md-option{:value => "document"} Cedula
-        %md-option{:value => "aliens_card"} Cedula de Extranjeria
-        %md-option{:value => "rut"} RUT
+      %label Tipo de Documento
+      %p {{barequero_chatarrero_origin_certificate.buyer.document_type}}
 
     .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Numero de Indentificacion
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text", "required"=>""}
-
-    .column{"flex"=>""}
-      %md-input-container{"flex"=>""}
-        %label Rucom
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.buyer.rucom_number", "type" => "text", "required"=>""}
+      %label Numero de Indentificacion
+      %p {{barequero_chatarrero_origin_certificate.buyer.document_number}}
 
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
     %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "barequeroChatarreroshowConfirm($event)"} Generar Certificado de Origen
