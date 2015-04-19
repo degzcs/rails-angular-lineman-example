@@ -23,6 +23,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     data.address = 'Calle falsa 123'
     data.phone = '3007854214'
     $scope.barequero_chatarrero_origin_certificate.buyer = data
+    $scope.beneficiation_plant_origin_certificate.buyer = data
 
   #
   # Set the origin certificate type
@@ -37,6 +38,11 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
       $scope.mining_operators = []
     $scope.mining_operators.push
       data: '' #provider
+      mineral_type: ''
+      amount: ''
+      measure_unit: ''
+      origin_certificate_number: ''
+      type: ''
 
   #
   # Search one specific provider into the allProviders array
@@ -66,7 +72,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
         id: providers[i].id
         document_number: providers[i].document_number
         company_name: 'company name test'
-        dicument_type: 'nit'
+        document_type: 'nit'
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
@@ -86,8 +92,23 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
   ), (error) ->
 
   #
+  # Set mining operators properly,
+  #
+  $scope.set_mining_operators = (mining_operators) ->
+    mining_operators.forEach (element, index, array)->
+      $scope.beneficiation_plant_origin_certificate.mining_operators.push
+        name: element.data.name
+        document_type: element.data.document_type
+        document_number: element.data.document_number
+        mineral_type: element.mineral_type
+        amount: element.amount
+        measure_unit: element.measure_unit
+        origin_certificate_number: element.origin_certificate_number
+        type: element.type
+
+  #
   # confirm Dialog
-  $scope.barequeroChatarreroshowConfirm = (ev, model) ->
+  $scope.showConfirm = (ev, option) ->
 
     confirm = $mdDialog.confirm()
                       .title('Centificado de Origen')
@@ -97,14 +118,15 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
                       .cancel('No, cancelar generacion de certificado')
                       .targetEvent(ev)
     $mdDialog.show(confirm).then (->
-      switch model
+      switch option
         when 'barequero_chatarrero'
-          PdfService.createBarequeroChatarreroOriginCertificate(model)
+          PdfService.createBarequeroChatarreroOriginCertificate($scope.barequero_chatarrero_origin_certificate)
         when 'beneficiation_plant'
-          PdfService.createBeficiationPlantOriginCertificate(model)
+          $scope.set_mining_operators($scope.mining_operators)
+          console.log $scope.beneficiation_plant_origin_certificate.mining_operators
+          PdfService.createBeficiationPlantOriginCertificate($scope.beneficiation_plant_origin_certificate)
         when 'another'
           ''
-
       $scope.message = 'Su certificado de origen ha sido generado exitosamente'
       return
     ), ->

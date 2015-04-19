@@ -27,10 +27,6 @@
           %md-tooltip{"md-visible" => "demo.showTooltip"}
             Crear Proveedor
             %span.ion-android-checkmark-circle
-    .column{"flex"=> ''}
-      %md-select{"ng-model" => "beneficiation_plant_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
-        %md-option{:value => "barequero"} Barequero
-        %md-option{:value => "chatarrero"} Chatarrero
 
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
       %span
@@ -43,6 +39,7 @@
         city: {{beneficiation_plant_origin_certificate.provider.city}}
 
   ////-----------------------Minening Opertors section ------------------------------////////
+
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     {{searchMining}}
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
@@ -57,13 +54,42 @@
 
       %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
         %span
-          Nombre : {{mining_operator.name}}
+          Nombre : {{mining_operator.data.name}}
         %span
-          CC : {{mining_operator.document_number}}
+          CC : {{mining_operator.data.document_number}}
         %span
-          Departamento: {{mining_operator.state}}
+          Departamento: {{mining_operator.data.state}}
         %span
-          city: {{mining_operator.city}}
+          city: {{mining_operator.data.city}}
 
+    %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+      %md-input-container{"flex"=>""}
+        %label Mineral Benefiado
+        %input{"ng-model" => "mining_operator.mineral_type", "type" => "text", "required"=>""}
+
+      %md-input-container{"flex"=>""}
+        %label Cantidad
+        %input{"ng-model" => "mining_operator.amount", "type" => "text", "required"=>""}
+
+      %md-input-container{"flex"=>""}
+        %label Unidad de Medida
+        %input{"ng-model" => "mining_operator.measure_unit", "type" => "text", "required"=>""}
+
+    %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+      %md-input-container{"flex"=>""}
+        %label  Numero de Cetificado de Origen
+        %input{'ng-model' => 'mining_operator.origin_certificate_number', "type" => "text", "required"=>""}
+      .column{"flex"=> ''}
+        %md-select{"ng-model" => "mining_operator.type", :placeholder => "Explotador  Minero Autorizado"}
+          %md-option{:value => "titular"} Titular
+          %md-option{:value => "are_beneficiary"} Beneficiario de Are
+          %md-option{:value => "legalization_applicant"} Solicitante de Legalizacion
+          %md-option{:value => "formalization_subcontract"} Subcontrato de Formalizacion
+
+  // ---------------------- Add mining operator button----------------------------------///
   %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
     %md-button.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addMiningOperator()"} Adherir Minero
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+  // ---------------------- Generate Origin Certificate button----------------------------------///
+  %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'beneficiation_plant')"} Generar Certificado de Origen

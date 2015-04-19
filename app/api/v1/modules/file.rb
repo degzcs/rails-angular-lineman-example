@@ -189,7 +189,7 @@ module V1
 
         end
 
-        get 'download_p_b_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_p_b_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
           #requires :p_b_report ,type: Hash
@@ -211,100 +211,100 @@ module V1
 
           #test data
           # ready no borrar
-          values = { certificate_number: '1292924838434 1010101383 1010101010101',
-                     trader: { rucom: '110043843848393 118181818181 1010101010101' ,
-                               name: 'mineros de boyaca mineros de boyaca' ,
-                               identification_type: 'cedula de extranjeria',
-                               identification_number: '129292294030302 818118172171'},
-                     purchaser:{ name: 'compradores oro ltda compradores oro ltda',
-                                 identification_type: 'cedula de extranjeria',
-                                 identification_number: '1018458483 1818117171',
-                                 rucom: '10139348989 17171718181'},
-                     mineral: { quantity: '200 mg 200 mg 200 mg 200 mg'},
-                     mining_operators: [{
-                                           type: 'titular',
-                                           certificate_code: '110043843848393 1919191',
-                                           name: 'mineros de boyaca mineros boyaca',
-                                           identification_type: 'rut',
-                                           identification_number: '129292294030302 22828282',
-                                           mineral: 'Oro',
-                                           quantity: '200',
-                                           unit:'mg'},
-                                       {
-                                           type: 'beneficiario',
-                                           certificate_code: '110043843848393-2',
-                                           name: 'mineros de boyaca-2',
-                                           identification_type: 'nit',
-                                           identification_number: '129292294030302-2',
-                                           mineral: 'Oro',
-                                           quantity: '400',
-                                           unit:'mg'},
-                                       {
-                                           type: 'solicitante',
-                                           certificate_code: '110043843848393-3',
-                                           name: 'mineros de boyaca-3',
-                                           identification_type: 'cedula de ciudadania',
-                                           identification_number: '129292294030302-3',
-                                           mineral: 'Oro',
-                                           quantity: '500',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'subcontrato',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'subcontrato',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'titular',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'beneficiario',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'titular',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-9',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       }
-                     ]
-          }
+          # values = { certificate_number: '1292924838434 1010101383 1010101010101',
+          #            provider: { rucom: '110043843848393 118181818181 1010101010101' ,
+          #                      company_name: 'mineros de boyaca mineros de boyaca' ,
+          #                      identification_type: 'cedula de extranjeria',
+          #                      identification_number: '129292294030302 818118172171'},
+          #            purchaser:{ name: 'compradores oro ltda compradores oro ltda',
+          #                        identification_type: 'cedula de extranjeria',
+          #                        identification_number: '1018458483 1818117171',
+          #                        rucom: '10139348989 17171718181'},
+          #            mineral: { amount: '200 mg 200 mg 200 mg 200 mg'}, # ???
+          #            mining_operators: [{
+          #                                  type: 'titular',
+          #                                  origin_certificate_number: '110043843848393 1919191', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca mineros boyaca',
+          #                                  document_type: 'rut',
+          #                                  document_number: '129292294030302 22828282',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '200',
+          #                                  measure_unit:'mg'},
+          #                              {
+          #                                  type: 'beneficiario',
+          #                                  origin_certificate_number: '110043843848393-2', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-2',
+          #                                  document_type: 'nit',
+          #                                  document_number: '129292294030302-2',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '400',
+          #                                  measure_unit:'mg'},
+          #                              {
+          #                                  type: 'solicitante',
+          #                                  origin_certificate_number: '110043843848393-3', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-3',
+          #                                  document_type: 'cedula de ciudadania',
+          #                                  document_number: '129292294030302-3',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '500',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'subcontrato',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'subcontrato',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'titular',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'beneficiario',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'titular',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-9',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              }
+          #            ]
+          # }
 
+          values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
+          # binding.pry
           date = Date.today
-
-          #values = params[:p_b_report]
           pdf = ::PdfFile.new(values , date , 'p_b_certificate')
           #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificado_plantas_beneficio_#{date.month}_#{date.day}.pdf"

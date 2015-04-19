@@ -126,7 +126,7 @@ class PdfFile < Prawn::Document
     move_down 30
     text_box "#{values[:mining_operator][:name]}" , :at => [290,cursor] , :width => 310
     move_down 36
-    case values[:mining_operator][:identification_type]
+    case values[:mining_operator][:document_type]
       when 'nit'
         text_box "X" , :at => [287,cursor] , :width => 150
       when 'document'
@@ -138,7 +138,7 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 45
-    text_box "#{values[:mining_operator][:identification_number]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:mining_operator][:document_number]}" , :at => [290,cursor] , :width => 310
     move_down 40
     text_box "#{values[:mineral][:state]}" , :at => [290,cursor] , :width => 310
     move_down 50
@@ -153,7 +153,7 @@ class PdfFile < Prawn::Document
     move_down 55
     text_box "#{values[:purchaser][:name]}" , :at => [290,cursor] , :width => 310
     move_down 33
-    case values[:purchaser][:identification_type]
+    case values[:purchaser][:document_type]
       when 'nit'
         text_box "X" , :at => [275,cursor] , :width => 150
       when 'document'
@@ -173,7 +173,7 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 36
-    text_box "#{values[:purchaser][:identification_number]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:purchaser][:document_number]}" , :at => [290,cursor] , :width => 310
     move_down 35
     text_box "#{values[:purchaser][:rucom]}" , :at => [300,cursor] , :width => 280
 
@@ -184,7 +184,7 @@ class PdfFile < Prawn::Document
 
   def generate_multiple_certificates_p_b(values , date)
 
-    values[:mining_operator].each_slice(7) do |mining_operator_group|
+    values[:mining_operators].each_slice(7) do |mining_operator_group|
       generate_certificate_p_b(values , mining_operator_group , date)
     end
 
@@ -205,11 +205,11 @@ class PdfFile < Prawn::Document
     text_box "#{date.year}" , :at => [430,cursor], :width => 85
 
     move_down 75
-    text_box "#{values[:trader][:name]}", :at => [750,cursor], :width => 300
+    text_box "#{values[:provider][:name]}", :at => [750,cursor], :width => 300
     move_down 30
-    text_box "#{values[:trader][:rucom]}", :at => [780 ,cursor], :width => 300
+    text_box "#{values[:provider][:rucom_record]}", :at => [780 ,cursor], :width => 300
     move_down 26
-    case values[:trader][:identification_type]
+    case values[:provider][:document_type]
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
       when 'document'
@@ -221,7 +221,7 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 30
-    text_box "#{values[:trader][:identification_number]}", :at => [750,cursor], :width => 300
+    text_box "#{values[:provider][:document_number]}", :at => [750,cursor], :width => 300
 
     # dynamic  information about explotadores mineros autorizados
 
@@ -231,11 +231,11 @@ class PdfFile < Prawn::Document
      case operator[:type]
        when 'titular'
          text_box "X" , :at => [82,cursor] , :width => 80
-       when 'beneficiario'
+       when 'are_beneficiary'
          text_box "X" , :at => [170,cursor] , :width => 80
-       when 'solicitante'
+       when 'legalization_applicant'
          text_box "X" , :at => [267,cursor] , :width => 80
-       when 'subcontrato'
+       when 'formalization_subcontract'
          text_box "X" , :at => [375,cursor] , :width => 80
      end
       move_down 28
@@ -244,27 +244,27 @@ class PdfFile < Prawn::Document
 
     move_cursor_to 470
     mining_operator_group.each do |operator|
-      text_box "#{operator[:certificate_code]}", :at => [405,cursor], :width => 80
+      text_box "#{operator[:origin_certificate_number]}", :at => [405,cursor], :width => 80
       text_box "#{operator[:name]}", :at => [500,cursor], :width => 200
-      text_box "#{operator[:identification_type]}", :at => [740,cursor], :width => 80
-      text_box "#{operator[:identification_number]}", :at => [825,cursor], :width => 90
-      text_box "#{operator[:mineral]}", :at => [920,cursor], :width => 85
-      text_box "#{operator[:quantity]}", :at => [1020,cursor], :width => 70
-      text_box "#{operator[:unit]}", :at => [1070,cursor], :width => 70
+      text_box "#{operator[:document_type]}", :at => [740,cursor], :width => 80
+      text_box "#{operator[:document_number]}", :at => [825,cursor], :width => 90
+      text_box "#{operator[:mineral_type]}", :at => [920,cursor], :width => 85
+      text_box "#{operator[:amount]}", :at => [1020,cursor], :width => 70
+      text_box "#{operator[:measure_unit]}", :at => [1070,cursor], :width => 70
       move_down 28
     end
 
 
 
 
-    # body purchaser
+    # body buyer
 
     move_cursor_to 225
-    text_box "#{values[:mineral][:quantity]}", :at => [750,cursor], :width => 300
+    # text_box "#{values[:mineral][:amount]}", :at => [750,cursor], :width => 300
     move_down 25
-    text_box "#{values[:purchaser][:name]}", :at => [750,cursor], :width => 300
+    text_box "#{values[:buyer][:company_name]}", :at => [750,cursor], :width => 300
     move_down 32
-    case values[:purchaser][:identification_type]
+    case values[:buyer][:document_type]
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
       when 'document'
@@ -276,9 +276,9 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 30
-    text_box "#{values[:purchaser][:identification_number]}", :at => [750,cursor], :width => 300
+    text_box "#{values[:buyer][:document_number]}", :at => [750,cursor], :width => 300
     move_down 27
-    text_box "#{values[:purchaser][:rucom]}", :at => [780,cursor], :width => 300
+    text_box "#{values[:buyer][:rucom_record]}", :at => [780,cursor], :width => 300
 
 
   end
@@ -316,7 +316,7 @@ class PdfFile < Prawn::Document
     text_box "#{values[:house][:name]}", :at => [260,cursor], :width => 200
 
     move_down 34
-    case values[:house][:identification_type]
+    case values[:house][:document_type]
       when 'nit'
         text_box "X" , :at => [343 , cursor] , :width => 150
       when 'document'
@@ -331,7 +331,7 @@ class PdfFile < Prawn::Document
     end
 
     move_cursor_to 460
-    text_box "#{values[:house][:identification_number]}", :at => [260,cursor], :width => 200
+    text_box "#{values[:house][:document_number]}", :at => [260,cursor], :width => 200
 
     # header comprador
 
@@ -339,7 +339,7 @@ class PdfFile < Prawn::Document
     text_box "#{values[:purchaser][:name]}", :at => [715,cursor], :width => 250
 
     move_down 34
-    case values[:purchaser][:identification_type]
+    case values[:purchaser][:document_type]
       when 'nit'
         text_box "X" , :at => [717 , cursor] , :width => 150
       when 'document'
@@ -352,7 +352,7 @@ class PdfFile < Prawn::Document
     end
 
     move_down 30
-    text_box "#{values[:purchaser][:identification_number]}", :at => [705,cursor], :width => 300
+    text_box "#{values[:purchaser][:document_number]}", :at => [705,cursor], :width => 300
     move_down 17
     text_box "#{values[:purchaser][:rucom]}", :at => [750,cursor], :width => 250
     move_down 17
