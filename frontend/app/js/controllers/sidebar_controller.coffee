@@ -5,6 +5,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     {name: "Dashboard", state: "dashboard", icon: 'action:dashboard'}
     {name: "Providers" , state: "providers", icon: 'social:people'}
     {name: "Couriers", state: "new_courier", icon: 'maps:local_shipping'}
+    {name: "Clients", state: "search_rucom({type: 'client'})", icon: 'social:people_outline'}
     {name: "Compras", state: "new_purchase.step1", icon: 'action:add_shopping_cart'}
     {name: "Inventario", state: "index_inventory", icon: 'action:assignment'}
     {name: "Certificados de Origen", state: "new_origin_certificate", icon: 'action:pageview'}

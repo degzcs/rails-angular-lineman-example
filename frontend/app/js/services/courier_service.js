@@ -21,7 +21,7 @@ angular.module('app').factory('CourierService', function($resource,$upload) {
               "courier[phone_number]":courier.phone_number,
               "courier[address]":courier.address,
               "courier[company_name]":courier.company_name,
-              "courier[nit_company_number]":courier.nit_company_number,
+              "courier[nit_company_number]":courier.nit_company_number
             }
           }
       });        
@@ -44,7 +44,7 @@ angular.module('app').factory('CourierService', function($resource,$upload) {
               "courier[phone_number]":courier.phone_number,
               "courier[address]":courier.address,
               "courier[company_name]":courier.company_name,
-              "courier[nit_company_number]":courier.nit_company_number,
+              "courier[nit_company_number]":courier.nit_company_number
             }
           }
       });

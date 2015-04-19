@@ -112,9 +112,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
   .state("search_rucom",
-    url: "/rucoms/:rucomId",
+    url: "/rucoms/:type",
     ncyBreadcrumb:
-      label: 'Search provider by rucom'
+      label: 'Search provider/client by rucom'
     views:
       'content':
         templateUrl: "partials/providers/search_rucom.html"
@@ -131,7 +131,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
     .state("type_1",
-      url: "/type_1/rucoms/:rucomId",
+      url: "/provider/type_1/rucom/:rucomId",
       ncyBreadcrumb:
         label: 'New provider'
       views:
@@ -150,7 +150,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     )
 
     .state("type_2",
-      url: "/type_2/rucoms/:rucomId",
+      url: "/provider/type_2/rucom/:rucomId",
       ncyBreadcrumb:
         label: 'New provider'
       views:
@@ -168,14 +168,16 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.promise
     )
 
-    .state("type_3",
-      url: "/type_3/rucoms/:rucomId",
+#  --- Clients Routes ---- #
+
+    .state("create_client",
+      url: "/client/rucom/:rucomId",
       ncyBreadcrumb:
-        label: 'New provider'
+        label: 'New Client'
       views:
         'content':
-          templateUrl: "partials/providers/type_c.html"
-          controller: "ProvidersRucomCtrl"
+          templateUrl: "partials/clients/new.html"
+          controller: "ClientsCreateCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -186,6 +188,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
             deferred.resolve()
           deferred.promise
     )
+
 
 
   #  --- Batches Routes ---- #
