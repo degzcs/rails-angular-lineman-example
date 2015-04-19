@@ -221,7 +221,7 @@ module V1
                                  identification_number: '1018458483 1818117171',
                                  rucom: '10139348989 17171718181'},
                      mineral: { quantity: '200 mg 200 mg 200 mg 200 mg'},
-                     mining_operator: [{
+                     mining_operators: [{
                                            type: 'titular',
                                            certificate_code: '110043843848393 1919191',
                                            name: 'mineros de boyaca mineros boyaca',
