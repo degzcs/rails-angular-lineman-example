@@ -431,6 +431,24 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
+  .state("new_origin_certificate.houses_buy_and_sell",
+    url: "/origin_certificates/houses_buy_and_sell/new",
+    ncyBreadcrumb:
+      label: 'Acreditacion de Facturas Casas de Compra y Venta'
+    views:
+      'content':
+        templateUrl: "partials/origin_certificates/houses_buy_and_sell/new.html"
+        controller: "OriginCertificateCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  # Inventory routes
   .state("index_inventory",
     url: "/inventory",
     ncyBreadcrumb:

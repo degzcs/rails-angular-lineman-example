@@ -313,7 +313,7 @@ module V1
 
         end
 
-        get 'download_c_c_report'  , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_c_c_report'  , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
           #requires :c_c_report ,type: Hash
@@ -332,169 +332,167 @@ module V1
 
           #test data
           # ready , no borrar
-          values = { certificate_number: '1292924838434 928282824747474',
-                     city: 'popayan popayan popayan popayan',
-                     house: { name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
-                              identification_type: 'cedula de ciudadania',
-                              identification_number: '12929229403030222828282828282828282828'
-                     },
-                     purchaser:{ name: 'compradores oro ltda compradores oro ltda compradores oro ltda',
-                                 identification_type: 'nit',
-                                 identification_number: '1018458483 1018458483 1018458483 1018458483',
-                                 rucom: '10139348989 10139348989 10139348989',
-                                 cp: '1393902020202 1393902020202 1393902020202'
-                     },
-                     invoices: [{
-                                    number: '1101010101010101 1101010101010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento descripccion del',
-                                    quantity: '500mg 500mg 500mg 500mg'
-                                },
-                                {
-                                    number: '1102010101010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010104010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101060101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010801',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010191',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010101',
-                                    date: Date.today.to_datetime,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010161010121',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101410102010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010101022220101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010102010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                }
-                     ]
-          }
+          # values = { certificate_number: '1292924838434 928282824747474',
+          #            city: 'popayan popayan popayan popayan',
+          #            provider: { name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
+          #                     docuement_type: 'cedula de ciudadania',
+          #                     docuement_number: '12929229403030222828282828282828282828'
+          #            },
+          #            buyer:{ name: 'compradores oro ltda compradores oro ltda compradores oro ltda',
+          #                        docuement_type: 'nit',
+          #                        docuement_number: '1018458483 1018458483 1018458483 1018458483',
+          #                        rucom: '10139348989 10139348989 10139348989',
+          #                        cp: '1393902020202 1393902020202 1393902020202'
+          #            },
+          #            invoices: [{
+          #                           number: '1101010101010101 1101010101010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento descripccion del',
+          #                           amount: '500mg 500mg 500mg 500mg'
+          #                       },
+          #                       {
+          #                           number: '1102010101010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010104010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101060101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010801',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010191',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010101',
+          #                           date: Date.today.to_datetime,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010161010121',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101410102010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010101022220101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010102010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       }
+          #            ]
+          # }
+          values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
           date = Date.today
-
-          #values = params[:c_c_report]
           pdf = ::PdfFile.new(values , date , 'c_c_certificate')
-          #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificate_casas_compraventa_#{date.month}_#{date.day}.pdf"
           env['api.format'] = :pdf
           body pdf.render
