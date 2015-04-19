@@ -20,7 +20,10 @@
         %tbody
           %tr.md-table-content-row{"ng-repeat" => "item in content | filter:filters | startFrom:tablePage*count | limitTo: count", }
             %td.table-checkbox
-              %md-checkbox{"ng-click" => "selectItem(item,grams,$event)", "ng-model" => "item.selected", "aria-label"=>"item-check", value:"item.selected"}
+              /%md-checkbox{"ng-click" => "selectItem(item,grams,$event)", "ng-model" => "item.selected", "aria-label"=>"item-check", value:"item.selected"}
+              %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)"} 
+                %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}"}
+              {{item.amount_picked}}
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ui-sref" => "show_batch"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
 
     .md-table-footer{:layout => "row"}

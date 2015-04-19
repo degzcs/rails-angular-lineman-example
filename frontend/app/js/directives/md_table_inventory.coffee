@@ -100,8 +100,10 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
           templateUrl: 'partials/inventory_amount_form.html'
           targetEvent: ev).then ((answer) ->
           #It catches the answer and push it to the array selectItems, it also adds the amount to the total
-          $scope.selectedItems.push(answer)
-          $scope.totalAmount = $scope.totalAmount + answer.amount_picked
+          item.selected = true
+          item.amount_picked = answer
+          $scope.selectedItems.push(item)
+          $scope.totalAmount = $scope.totalAmount + answer
           return
         ), ->
           #if the response is negative set the checkbox to false
@@ -122,12 +124,14 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
           deleted_item_index = null
           i=0
           while i < $scope.selectedItems.length
-            if item == $scope.selectedItems[i].item
+            if item == $scope.selectedItems[i]
               deleted_item_index = i
             i++
           #Then deletes the item from the array and from the total
           $scope.totalAmount = $scope.totalAmount - $scope.selectedItems[deleted_item_index].amount_picked
           $scope.selectedItems.splice(deleted_item_index, 1)
+          item.selected = false
+          item.amount_picked = null
           return
         ), ->
           #If the response in negative sets the checkbox to true again

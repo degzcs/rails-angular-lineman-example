@@ -16,11 +16,7 @@ angular.module('app')
 
     #After submit a valid amount it sent back the response to the directive with a hash 
     $scope.submit = ->
-      response = {
-        item: pickedItem
-        amount_picked: parseFloat($scope.selected_grams)
-      }
-      $mdDialog.hide(response)
+      $mdDialog.hide(parseFloat($scope.selected_grams))
   
   return
 
