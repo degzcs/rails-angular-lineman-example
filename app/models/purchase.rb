@@ -11,6 +11,7 @@
 #  created_at                  :datetime
 #  updated_at                  :datetime
 #  price                       :float
+#  seller_picture              :string(255)
 #
 
 #TODO: extract origin_certicated* fields to a single table and make the association

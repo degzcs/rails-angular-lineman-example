@@ -392,6 +392,25 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
+
+  .state("new_origin_certificate.beneficiation_plant",
+    url: "/origin_certificates/beneficiation_plant/new",
+    ncyBreadcrumb:
+      label: 'Certificado de Origen Planta de Beneficio'
+    views:
+      'content':
+        templateUrl: "partials/origin_certificates/beneficiation_plant/new.html"
+        controller: "OriginCertificateCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   .state("index_inventory",
     url: "/inventory",
     ncyBreadcrumb:

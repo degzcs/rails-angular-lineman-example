@@ -11,6 +11,7 @@
 #  created_at                  :datetime
 #  updated_at                  :datetime
 #  price                       :float
+#  seller_picture              :string(255)
 #
 
 require 'spec_helper'

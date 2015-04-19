@@ -72,7 +72,7 @@ class PdfFile < Prawn::Document
     #body purchaser
 
     move_down 48
-    text_box "#{values[:buyer][:full_name_or_company_name]}" , :at => [300,cursor] , :width => 300
+    text_box "#{values[:buyer][:company_name]}" , :at => [300,cursor] , :width => 300
     move_down 34
     case values[:buyer][:document_type]
       when 'nit'
@@ -88,7 +88,7 @@ class PdfFile < Prawn::Document
     move_down 36
     text_box "#{values[:buyer][:document_number]}" , :at => [300,cursor] , :width => 300
     move_down 35
-    text_box "#{values[:buyer][:rucom_number]}" , :at => [350,cursor] , :width => 300
+    text_box "#{values[:buyer][:rucom_record]}" , :at => [350,cursor] , :width => 300
   end
 
   # Generar certificado explotador minero autorizado

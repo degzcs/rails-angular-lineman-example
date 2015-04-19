@@ -227,9 +227,9 @@ module V1
                                            name: 'mineros de boyaca mineros boyaca',
                                            identification_type: 'rut',
                                            identification_number: '129292294030302 22828282',
-                                           mineral: 'Oro Oro Oro Oro',
-                                           quantity: '200 200 2000',
-                                           unit:'mg mg mg mg'},
+                                           mineral: 'Oro',
+                                           quantity: '200',
+                                           unit:'mg'},
                                        {
                                            type: 'beneficiario',
                                            certificate_code: '110043843848393-2',
@@ -527,13 +527,15 @@ module V1
           #                       city: 'Piendamo',
           #                       state: 'Cauca',
           #                       producer_type: 'barequero' },
+
           #            mineral:{ type: 'Oro',
           #                      amount: 200 ,
           #                      measure_unit: 'mg'} ,
-          #            buyer:{ full_name_or_company_name: 'compradores oro ltda',
+
+          #            buyer:{   company_name: 'compradores oro ltda',
           #                        document_type: 'cedula de extranjeria',
           #                        document_number: '1018458483',
-          #                        rucom: '10139348989'}
+          #                        rucom_record: '10139348989'}
           #            }
           date = Date.today  #fecha
 

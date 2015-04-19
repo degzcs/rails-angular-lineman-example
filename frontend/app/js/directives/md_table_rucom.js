@@ -10,7 +10,7 @@ angular.module('app').directive('mdTableRucom', function () {
       count: '=',
       currentRucom: '='
     },
-    controller: function ($scope, $filter, $location, $window, $state, RucomService) {
+    controller: function ($scope, $filter, $location, $window, $state, $mdDialog, RucomService, ProviderService) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
@@ -34,19 +34,27 @@ angular.module('app').directive('mdTableRucom', function () {
       };
 
       $scope.setCurrentRucom = function (rucom) {
-        console.log('setCurrentRucom' + JSON.stringify(rucom));
-        RucomService.setCurrentRucom(rucom);        
-        console.log(rucom.provider_type);
-        var type = $scope.setProviderType(rucom.provider_type);
-        console.log('1. Setting current Rucom: ' + rucom.id);        
-        $state.go(type, {rucomId: rucom.id});
+        ProviderService.retrieveProviders.query({query_rucomid: rucom.id}, (function(providers, headers) {
+          if (providers.length > 0) {
+            var title = 'RUCOM';
+            var text = 'There already exist a provider associated to this RUCOM';
+            $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
+          } else {
+            console.log('setCurrentRucom' + JSON.stringify(rucom));
+            RucomService.setCurrentRucom(rucom);        
+            console.log(rucom.provider_type);
+            var type = $scope.setProviderType(rucom.provider_type);
+            console.log('1. Setting current Rucom: ' + rucom.id);        
+            $state.go(type, {rucomId: rucom.id});
+          }
+        }), function(error) {});
       };
 
       $scope.setProviderType = function (provider_type){
-        if (provider_type === 'Comercializadores' || provider_type === 'Barequero' || provider_type === 'Consumidor'){
+        if (provider_type === 'Barequero'){
           console.log("Type A");
           return "type_1";
-        } else if (provider_type === 'Solicitante Legalización De Minería' || provider_type === 'Titular' || provider_type === 'Beneficiario Área Reserva Especial' || provider_type === 'Subcontrato de formalización'){
+        } else if (provider_type === 'Comercializadores' || provider_type === 'Solicitante Legalización De Minería' || provider_type === 'Titular' || provider_type === 'Beneficiario Área Reserva Especial' || provider_type === 'Subcontrato de formalización' || provider_type === 'Consumidor'){
           console.log("Type B");
           return "type_2";
         } else if (provider_type === 'Planta de Beneficio'){

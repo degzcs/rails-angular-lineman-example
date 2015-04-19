@@ -6,7 +6,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   $scope.currentRucom = {};
   $scope.companyInfo = {};
   $scope.companyName = "";
-  $scope.newProvider.has_company = false;
+  $scope.newProvider.has_company = $scope.newProvider.has_company || false;
   $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
     label: 'RUCOM Number',
@@ -214,7 +214,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   };
   
   $scope.previous = function() {
-    $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);    
+    $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
+    if ($scope.newProvider.population_center.id !== '') {
+      $scope.loadProviderLocation($scope.newProvider);
+    }
   };
 
   $scope.create = function(){

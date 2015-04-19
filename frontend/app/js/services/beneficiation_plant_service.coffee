@@ -1,4 +1,4 @@
-angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($rootScope, $upload)->
+angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($rootScope, $upload)->
   service=
     model:
       date: ''
@@ -13,10 +13,8 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
         state: '' # state where the miner is/was registered
         city: '' # city where the miner is/was registered
       ##mineral info
-      mineral:
-        type: ''
-        amount: ''
-        measure_unit: ''
+      mining_operators: []
+        
       ## mineral's Buyer info
       buyer:
         company_name: ''
@@ -29,10 +27,10 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
     #
     saveState: ->
       sessionStorage.restorestate = 'true'
-      sessionStorage.barequeroOriginCertificateService = angular.toJson(service.model)
+      sessionStorage.beneficiationPlantOriginCertificate = angular.toJson(service.model)
     restoreState: ->
-      if(sessionStorage.barequeroOriginCertificateService)
-        service.model = angular.fromJson(sessionStorage.barequeroOriginCertificateService)
+      if(sessionStorage.beneficiationPlantOriginCertificate)
+        service.model = angular.fromJson(sessionStorage.beneficiationPlantOriginCertificate)
       else
         sessionStorage.restorestate = 'false'
     #
@@ -42,8 +40,8 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
   # Listeners
   #
   # console.log(service)
-  $rootScope.$on 'saveBarequeroOriginCertificateService', service.saveState
-  $rootScope.$on 'restoreBarequeroOriginCertificateService', service.restoreState
+  $rootScope.$on 'saveBeneficiationPlantOriginCertificate', service.saveState
+  $rootScope.$on 'restoreBeneficiationPlantOriginCertificate', service.restoreState
 
   #
   # Return

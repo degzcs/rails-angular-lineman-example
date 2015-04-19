@@ -29,6 +29,7 @@ class API < Grape::API
   mount V1::Modules::CreditBilling
   mount V1::Modules::File
   mount V1::Modules::Courier
+  mount V1::Modules::Client
 
   # Adds the swagger documentation to your
   # api. You only need this once, not in

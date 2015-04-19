@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413230124) do
+ActiveRecord::Schema.define(version: 20150418162557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,25 @@ ActiveRecord::Schema.define(version: 20150413230124) do
   end
 
   add_index "cities", ["state_id"], name: "index_cities_on_state_id", using: :btree
+
+  create_table "clients", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "company_name"
+    t.string   "address"
+    t.string   "nit_company_number"
+    t.string   "id_document_type"
+    t.string   "id_document_number"
+    t.string   "client_type"
+    t.string   "rucom_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "population_center_id"
+    t.string   "email"
+  end
+
+  add_index "clients", ["population_center_id"], name: "index_clients_on_population_center_id", using: :btree
 
   create_table "company_infos", force: true do |t|
     t.string   "nit_number"
@@ -152,6 +171,8 @@ ActiveRecord::Schema.define(version: 20150413230124) do
     t.string   "photo_file"
     t.string   "email"
     t.integer  "population_center_id"
+    t.string   "city"
+    t.string   "state"
   end
 
   add_index "providers", ["population_center_id"], name: "index_providers_on_population_center_id", using: :btree
@@ -169,7 +190,7 @@ ActiveRecord::Schema.define(version: 20150413230124) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                   null: false
+    t.string   "idrucom",            limit: 90,                                 null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -177,7 +198,7 @@ ActiveRecord::Schema.define(version: 20150413230124) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: "now()"
+    t.datetime "updated_at",                    default: '2015-04-18 15:22:18'
     t.string   "provider_type"
     t.string   "num_rucom"
   end
