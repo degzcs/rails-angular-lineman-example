@@ -1,7 +1,7 @@
 
 angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
-  $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3) 
+  $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3)
 
   $scope.barequero_chatarrero_origin_certificate = BarequeroChatarreroOriginCertificateService.model
   $scope.beneficiation_plant_origin_certificate = BeneficiationPlantOriginCertificateService.model
@@ -10,6 +10,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
   $scope.searchText = null
   $scope.searchMining = null
 
+  window.s= $scope
 
   # Set buyer as a current user
   CurrentUser.get().success (data) ->
@@ -27,6 +28,15 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
   # Set the origin certificate type
   $scope.setOriginCertificateType = (origin_certificate_type) ->
     $scope.origin_certificate_type = origin_certificate_type
+
+  #
+  #
+  #
+  $scope.addMiningOperator = ->
+    if typeof $scope.mining_operators == 'undefined'
+      $scope.mining_operators = []
+    $scope.mining_operators.push
+      data: '' #provider
 
   #
   # Search one specific provider into the allProviders array

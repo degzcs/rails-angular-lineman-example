@@ -1,5 +1,5 @@
 %div{:layout => "column"}
-  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Certificado de Origen Planta de Beneficio
 
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
@@ -13,9 +13,9 @@
       %input{"ng-model" => "beneficiation_plant_origin_certificate.certificate_number", "type" => "text", "required"=>""}
 
   ////-----------------------Provider section ------------------------------////////
-  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion del Comercializador
-  
+
   %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
     .select-provider{'flex' => ''}
       %md-chips{"md-autocomplete-snap" => "", "ng-model" => "beneficiation_plant_origin_certificate.provider"}
@@ -43,21 +43,27 @@
         city: {{beneficiation_plant_origin_certificate.provider.city}}
 
   ////-----------------------Minening Opertors section ------------------------------////////
-  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    {{searchMining}}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion de los Explotadores Mineros autorizados que Benefician Minerales en la Planta
-  
-  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
-    .select-provider{'flex' => ''}
-      %md-chips{"md-autocomplete-snap" => "", "ng-model" => "mining_operators[0]"}
-        %md-autocomplete{"md-selected-item"=>"mining_operators[0]", "md-search-text"=> "searchMining", "md-items" => "provider in searchProvider(searchMining)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Minero (Proveedor) por Cedula"}
-          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
 
-    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
-      %span
-        Nombre : {{mining_operators[0].name}}
-      %span
-        CC : {{mining_operators[0].document_number}}
-      %span
-        Departamento: {{mining_operators[0].state}}
-      %span
-        city: {{mining_operators[0].city}}
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"column", 'ng-repeat' => 'mining_operator in mining_operators'}
+    %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+      .select-mining-operator{'flex' => ''}
+        %md-chips{"md-autocomplete-snap" => "", "ng-model" => "mining_operator.data"}
+          %md-autocomplete{"md-selected-item"=>"mining_operator.data", "md-search-text"=> "searchMining", "md-items" => "operator in searchProvider(searchMining)", "md-no-cache" => "true", "md-item-text"=>"operator.name", "placeholder" => "Buscar Minero (Proveedor) por Cedula"}
+            %span{"md-highlight-text" => "searchMining"} {{operator.name}} - c.c. {{operator.document_number}}
+
+      %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
+        %span
+          Nombre : {{mining_operator.name}}
+        %span
+          CC : {{mining_operator.document_number}}
+        %span
+          Departamento: {{mining_operator.state}}
+        %span
+          city: {{mining_operator.city}}
+
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    %md-button.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addMiningOperator()"} Adherir Minero
