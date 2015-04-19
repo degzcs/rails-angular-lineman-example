@@ -24,6 +24,23 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
+  .state("scanner1",
+    url: "/scanner1",
+    ncyBreadcrumb:
+      label: 'PDF scanner'
+    views:
+      'content':
+        templateUrl: "partials/scanner1.html"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   .state("scanner",
     url: "/scanner",
     ncyBreadcrumb:
