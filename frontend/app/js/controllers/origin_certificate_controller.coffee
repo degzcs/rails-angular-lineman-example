@@ -1,9 +1,14 @@
 
-angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+
+  $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3) 
 
   $scope.barequero_chatarrero_origin_certificate = BarequeroChatarreroOriginCertificateService.model
+  $scope.beneficiation_plant_origin_certificate = BeneficiationPlantOriginCertificateService.model
+  $scope.mining_operators = []
   $scope.allProviders  = []
   $scope.searchText = null
+  $scope.searchMining = null
 
 
   # Set buyer as a current user
@@ -17,6 +22,11 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     data.address = 'Calle falsa 123'
     data.phone = '3007854214'
     $scope.barequero_chatarrero_origin_certificate.buyer = data
+
+  #
+  # Set the origin certificate type
+  $scope.setOriginCertificateType = (origin_certificate_type) ->
+    $scope.origin_certificate_type = origin_certificate_type
 
   #
   # Search one specific provider into the allProviders array
@@ -67,7 +77,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
 
   #
   # confirm Dialog
-  $scope.barequeroChatarreroshowConfirm = (ev) ->
+  $scope.barequeroChatarreroshowConfirm = (ev, model) ->
 
     confirm = $mdDialog.confirm()
                       .title('Centificado de Origen')
@@ -77,11 +87,14 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
                       .cancel('No, cancelar generacion de certificado')
                       .targetEvent(ev)
     $mdDialog.show(confirm).then (->
-      window.oc  = $scope.barequero_chatarrero_origin_certificate
-      # provider = $scope.barequero_chatarrero_origin_certificate.provider
-      # provider.name = provider.first_name + ' ' + provider.last_name
-      #$scope.barequero_chatarrero_origin_certificate.provider = provider
-      PdfService.createBarequeroChatarreroOriginCertificate($scope.barequero_chatarrero_origin_certificate)
+      switch model
+        when 'barequero_chatarrero'
+          PdfService.createBarequeroChatarreroOriginCertificate(model)
+        when 'beneficiation_plant'
+          PdfService.createBeficiationPlantOriginCertificate(model)
+        when 'another'
+          ''
+
       $scope.message = 'Su certificado de origen ha sido generado exitosamente'
       return
     ), ->

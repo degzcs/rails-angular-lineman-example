@@ -227,9 +227,9 @@ module V1
                                            name: 'mineros de boyaca mineros boyaca',
                                            identification_type: 'rut',
                                            identification_number: '129292294030302 22828282',
-                                           mineral: 'Oro Oro Oro Oro',
-                                           quantity: '200 200 2000',
-                                           unit:'mg mg mg mg'},
+                                           mineral: 'Oro',
+                                           quantity: '200',
+                                           unit:'mg'},
                                        {
                                            type: 'beneficiario',
                                            certificate_code: '110043843848393-2',
