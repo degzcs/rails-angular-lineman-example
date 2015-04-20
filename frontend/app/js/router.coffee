@@ -41,6 +41,16 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
+   .state("sendPassword",
+    url: "/sendPassword",
+    ncyBreadcrumb:
+      label: 'PDF scanner'
+    views:
+      'content':
+        templateUrl: "partials/sessions/send_password.html"
+        controller: "SessionsNewCtrl"
+  )
+
   .state("scanner",
     url: "/scanner",
     ncyBreadcrumb:

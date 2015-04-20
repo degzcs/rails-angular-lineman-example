@@ -10,7 +10,16 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
         .ok('Adios!!')
         duration: 2
       return
-      
+
+  $scope.sendPassword = ->
+    console.log("send link");
+    confirm = $mdDialog.confirm().title('Recuperar contraseña')
+      .content('Se ha enviado un enlace para recuperar contraseña')
+      .ariaLabel('Lucky day')
+      .ok('Ok')
+    $mdDialog.show(confirm).then(window.history.back())
+    return
+
   $scope.login = ->
     $auth.login(
       email: $scope.email
