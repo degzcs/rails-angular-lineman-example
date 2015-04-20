@@ -108,25 +108,25 @@ class PdfFile < Prawn::Document
 
     #body mining operator
     move_down 42
-    case values[:mining_operator][:type]
+    case values[:provider][:type]
       when 'titular'
         text_box "X" , :at => [360,cursor] , :width => 150
-      when 'solicitante'
+      when 'legalization_applicant'
         move_down 32
         text_box "X" , :at => [360,cursor] , :width => 150
-      when 'beneficiario'
+      when 'are_beneficiary'
         text_box "X" , :at => [579,cursor] , :width => 150
-      when 'subcontrato'
+      when 'formalization_subcontract'
         move_down 32
         text_box "X" , :at => [579,cursor] , :width => 150
       else
     end
     move_down 40
-    text_box "#{values[:mining_operator][:code]}" , :at => [290,cursor] , :width => 310
+    # text_box "#{values[:provider][:code]}" , :at => [290,cursor] , :width => 310
     move_down 30
-    text_box "#{values[:mining_operator][:name]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:provider][:company_name]}" , :at => [290,cursor] , :width => 310
     move_down 36
-    case values[:mining_operator][:document_type]
+    case values[:provider][:document_type]
       when 'nit'
         text_box "X" , :at => [287,cursor] , :width => 150
       when 'document'
@@ -138,17 +138,17 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 45
-    text_box "#{values[:mining_operator][:document_number]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:provider][:document_number]}" , :at => [290,cursor] , :width => 310
     move_down 40
     text_box "#{values[:mineral][:state]}" , :at => [290,cursor] , :width => 310
     move_down 50
     text_box "#{values[:mineral][:city]}" , :at => [290,cursor] , :width => 310
     move_down 50
-    text_box "#{values[:mineral][:mineral]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:mineral][:type]}" , :at => [290,cursor] , :width => 310
     move_down 40
-    text_box "#{values[:mineral][:quantity]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:mineral][:amount]}" , :at => [290,cursor] , :width => 310
     move_down 25
-    text_box "#{values[:mineral][:unit]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:mineral][:measure_unit]}" , :at => [290,cursor] , :width => 310
 
     move_down 55
     text_box "#{values[:buyer][:name]}" , :at => [290,cursor] , :width => 310
@@ -165,17 +165,17 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 36
-    case values[:buyer][:buyer_type]
-      when 'comercializador'
+    case values[:buyer][:type]
+      when 'trade'
         text_box "X" , :at => [380,cursor] , :width => 150
-      when 'consumidor'
+      when 'consumer'
         text_box "X" , :at => [547,cursor] , :width => 150
       else
     end
     move_down 36
     text_box "#{values[:buyer][:document_number]}" , :at => [290,cursor] , :width => 310
     move_down 35
-    text_box "#{values[:buyer][:rucom]}" , :at => [300,cursor] , :width => 280
+    text_box "#{values[:buyer][:rucom_record]}" , :at => [300,cursor] , :width => 280
 
   end
 

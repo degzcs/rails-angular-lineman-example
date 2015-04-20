@@ -75,6 +75,24 @@ angular.module('app').factory 'PdfService', ($http)->
           fileURL = URL.createObjectURL(file)
           window.open(fileURL, '_blank', '')
 
+    #
+    # Beneficiation Plant OC
+    createAutorizedMinerOriginCertificate: (origin_certificate)->
+      $http.post('/api/v1/files/download_e_m_certificate/',
+        {origin_certificate: origin_certificate},
+        headers: 'Content-type': 'application/pdf'
+        responseType: 'arraybuffer'
+        transformResponse = (data) ->
+          pdf = undefined
+          if data
+            pdf = new Blob([ data ], type: 'application/pdf')
+          { response: pdf }
+        )
+      .success (response) ->
+          file = new Blob([ response ], type: 'application/pdf')
+          fileURL = URL.createObjectURL(file)
+          window.open(fileURL, '_blank', '')
+
 
 
 

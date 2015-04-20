@@ -1,11 +1,12 @@
 
-angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, BeneficiationPlantOriginCertificateService, HousesBuySellOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, BeneficiationPlantOriginCertificateService, HousesBuySellOriginCertificateService, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
   $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3)
 
   $scope.barequero_chatarrero_origin_certificate = BarequeroChatarreroOriginCertificateService.model
   $scope.beneficiation_plant_origin_certificate = BeneficiationPlantOriginCertificateService.model
   $scope.houses_buy_and_sell_origin_certificate = HousesBuySellOriginCertificateService.model
+  $scope.authorized_miner_origin_certificate = AuthorizedMinerOriginCertificateService.model
   $scope.mining_operators = []
   $scope.invoices = []
   $scope.allProviders  = []
@@ -27,6 +28,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     $scope.barequero_chatarrero_origin_certificate.buyer = data
     $scope.beneficiation_plant_origin_certificate.buyer = data
     $scope.houses_buy_and_sell_origin_certificate.buyer = data
+    $scope.authorized_miner_origin_certificate.buyer = data
 
   #
   # Set the origin certificate type
@@ -146,6 +148,8 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
         when 'houses_buy_and_sell'
           $scope.setInvoices($scope.invoices)
           PdfService.createHouseBuySellOriginCertificate($scope.houses_buy_and_sell_origin_certificate)
+        when 'authorized_miner'
+          PdfService.createAutorizedMinerOriginCertificate($scope.authorized_miner_origin_certificate)
       $scope.message = 'Su certificado de origen ha sido generado exitosamente'
       return
     ), ->
