@@ -11,7 +11,7 @@ var Dynamsoft = Dynamsoft || { WebTwainEnv: {} };
 
 Dynamsoft.WebTwainEnv.AutoLoad = true;
 ///
-Dynamsoft.WebTwainEnv.Containers = [{ContainerId:'dwtcontrolContainer', Width:300, Height:400}];
+Dynamsoft.WebTwainEnv.Containers = [{ContainerId:'dwtcontrolContainer', Width:1, Height:2}];
 ///
 Dynamsoft.WebTwainEnv.ProductKey = '6A6443A21F8A13E3481FA8F8CC07B917F126642A3AE7EE3EB906464A509FC293F126642A3AE7EE3E117C70114BD72E54F126642A3AE7EE3ED18D9BC126A2AFDFF126642A3AE7EE3E6253B20629C595C9F126642A3AE7EE3E9C6718E02ACBA02EF126642A3AE7EE3EA29BDEA33CDF7D1C60000000',
 ///

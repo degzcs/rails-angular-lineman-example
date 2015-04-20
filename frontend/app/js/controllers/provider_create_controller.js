@@ -1,4 +1,4 @@
-angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', function($scope, $state, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService){
+angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$stateParams', '$window', '$mdDialog', 'CameraService', 'RucomService', 'ProviderService', 'LocationService', 'ScannerService', function($scope, $state, $stateParams, $window, $mdDialog, CameraService, RucomService, ProviderService, LocationService,ScannerService){
   
   $scope.newProvider = ProviderService.getCurrentProv();
   $scope.populationCenter = {};
@@ -106,8 +106,12 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
 
   $scope.photo=CameraService.getLastScanImage();
-  $scope.file=CameraService.getJoinedFile();
-
+  if(CameraService.getJoinedFile() && CameraService.getJoinedFile().length>0){
+    $scope.file=CameraService.getJoinedFile();
+  }else if (ScannerService.getScanFiles() && ScannerService.getScanFiles().length>0){
+    $scope.file=ScannerService.getScanFiles();
+  }
+  
   if($scope.photo && CameraService.getTypeFile() === 1){
     $scope.newProvider.photo_file=$scope.photo;
     ProviderService.setCurrentProv($scope.newProvider);
@@ -128,6 +132,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
       ProviderService.setCurrentProv($scope.newProvider);
     }
     CameraService.clearData();
+    ScannerService.clearData();
   } 
 
   $scope.scanner= function(type){
@@ -269,7 +274,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     function(event, toState, toParams, fromState, fromParams){ 
       // console.log('Changing state from: ' + JSON.stringify(fromState) + ' to: ' + JSON.stringify(toState));
       // console.log('Params state from: ' + JSON.stringify(fromParams) + ' to: ' + JSON.stringify(toParams));
-      if (toState.url !== "/scanner") {
+      if (toState.url !== "/scanner" && toState.url !== "/scanner1") {
         if (!$scope.abortCreate) {
           event.preventDefault();
           var confirm;

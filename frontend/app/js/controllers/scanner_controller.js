@@ -2,6 +2,12 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
             	
         	$scope.images=[];	
 
+        	$scope.init=function(){
+        	var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
+         		DWObject.Width = 300;  
+    			DWObject.Height = 400;
+			};
+
 			  $scope.finish=function(){
 			  	$scope.images=[];
 			  	var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
@@ -15,13 +21,13 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 						imagedata = root.concat(imagedata);
 						$scope.images.push(imagedata);
 						console.log(imagedata);
-				        // DWObject.RemoveAllSelectedImages();
 				}
 				console.log($scope.images);
 				ScannerService.joinFile($scope.images);
-				
-
-	  		//	window.history.back();
+				DWObject.RemoveAllSelectedImages();
+				DWObject.Width = 1;  
+    			DWObject.Height = 2;
+	  			window.history.back();
 			  };	
 
               $scope.click=function(){

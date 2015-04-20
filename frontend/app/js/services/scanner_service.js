@@ -1,4 +1,4 @@
-angular.module('app').factory('ScannerService', function($window) {
+angular.module('app').factory('ScannerService', function() {
 
 var pdf = new jsPDF();
 var filesarray=[];
@@ -8,11 +8,11 @@ var filesarray=[];
     };
 //Clear data
     var clearData=function(){
-        filesarray= [];
+        filesarray=[];
     };
 //Method to get the last file in pdf joining all the images
      var joinFile=function(images){
-     var filesarray=[];        
+     filesarray=[];        
       if(images && images.length>0){
        for(var i=0;i<images.length;i++){
          if(i>0){

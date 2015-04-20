@@ -1,5 +1,5 @@
 angular.module('app')
-    .directive('scanner', function() {
+    .directive('scanner', function(ScannerService) {
         return {
             restrict: 'EA',
             replace: true,

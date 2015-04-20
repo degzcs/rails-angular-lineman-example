@@ -44,9 +44,13 @@
           {{purchase.model.origin_certificate_file[0].name}}
       .upload-oc{'flex' => ''}
         .button-action.md-padding
-          %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
-            %md-icon{"md-svg-icon"=>"file:file_upload"}
-            Subir Certificado
+          %div{:layout => "row",:layout-margin => "10"}
+            %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
+              %md-icon{"md-svg-icon"=>"file:file_upload"}
+              Subir Certificado
+            %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(2)"}
+              %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
+              Escanear documento
       .md-tile-left.cam{:flex => "10"}
         %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
           %md-tooltip{"md-visible" => "demo.showTooltip"}
