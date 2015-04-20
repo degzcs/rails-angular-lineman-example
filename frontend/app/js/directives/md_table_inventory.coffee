@@ -1,4 +1,4 @@
-angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
+angular.module('app').directive 'mdTableInventory', ($mdDialog,Inventory,$state) ->
   {
     restrict: 'E'
     scope:
@@ -17,6 +17,11 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
       $scope.tablePage = 0
       $scope.selectedItems = []
       $scope.totalAmount = 0
+      $scope.show_inventory = (item)->
+        Inventory.setCurrent(item)
+        $state.go('show_inventory')
+        return
+
 
       $scope.nbOfPages = ->
         if $scope.content

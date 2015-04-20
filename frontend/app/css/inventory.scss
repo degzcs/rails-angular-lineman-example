@@ -50,8 +50,18 @@
     width: 100%;
     padding-top: 10px;
   }
+  md-select{
+    width: 100%!important;
+  }
 }
 
 .item-selected{
   color: rgb(63,81,181);
+}
+
+.inventory-options-head{
+  border-bottom: 1px solid #eee; 
+  .md-button{
+    width: 250px;
+  }
 }

@@ -228,24 +228,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  .state( "show_batch",
-    url: "/inventory/detail",
-    ncyBreadcrumb:
-      label: 'Detail'
-    views:
-      'content':
-        templateUrl: "partials/batches/show.html"
-        controller: "BatchesShowCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-
+  
   .state( "liquidate_batches",
     url: "/inventory/liquidate",
     ncyBreadcrumb:
@@ -468,7 +451,8 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  # Inventory routes
+  # ------- Inventory routes ----------- #
+
   .state("index_inventory",
     url: "/inventory",
     ncyBreadcrumb:
@@ -486,6 +470,24 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
+  .state("show_inventory",
+    url: "/inventory/detail",
+    ncyBreadcrumb:
+      label: 'Detalle de compra'
+    views:
+      'content':
+        templateUrl: "partials/inventory/show.html"
+        controller: "InventoryShowCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   $urlRouterProvider.otherwise "/home"
 
   # Satellizer config

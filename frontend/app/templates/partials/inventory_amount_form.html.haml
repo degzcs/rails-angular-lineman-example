@@ -1,21 +1,17 @@
 %md-dialog
   %md-content.sticky-container
-    %md-subheader.md-sticky-no-effect.md-toolbar.md-primary 
-      %h2
-        %strong
-          Gramos disponibles: 
-          {{total_grams}}
     .dialog-inventory-form
       %form{:name => "gramsForm", "ng-submit"=>"gramsForm.selected_grams.$error.required ? '' : submit()"}
-        %md-select{"ng-model" => "selected_grams", :placeholder => "Gramos","required"=>"", "name"=>"selected_grams"}
+        %md-select{"ng-model" => "selected_grams", :placeholder => "Seleccione una cantidad","required"=>"", "name"=>"selected_grams"}
           .option{"ng-repeat"=> "option in gram_options"}
             %md-option{:value => "{{option}}"} {{option}}
-        %h4
+        
+        %h2
           %strong
-            Gramos restantes:
-          {{total_grams-selected_grams}}
+            Gramos restantes: 
+            {{total_grams-selected_grams}}
         %md-button.md-raised{type:"submit"} Ok
-
+    
 /        %md-input-container{"md-no-float"=>""}
 /          %input{ "type" => "number", "ng-model" => "grams", "name"=>"grams" , "min"=> "0.1", "max"=> "{{pickedItem.inventory_remaining_amount}}" , "required"=>"" ,"step"=>"any", "placeholder"=>"Gramos seleccionados"}
 /          %div{"ng-messages" => "gramsForm.grams.$error"}

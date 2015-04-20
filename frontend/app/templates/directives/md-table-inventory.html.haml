@@ -1,10 +1,9 @@
-%div{:flex => "", :layout => "column", "layout-fill" => ""}
-  %section
-    %md-subheader.md-primary
-      Total Gramos Seleccionados:
-      {{totalAmount}}
+%section{:flex => "", :layout => "column", "layout-fill" => ""}
+  %md-subheader.md-primary.inventory-options-head
+    %md-button.md-raised.md-primary
+      Liquidar {{totalAmount}} Gramos
+      %md-icon{:alt => "Alarm Icon", "md-svg-icon" =>"navigation:arrow_forward"}
   %md-content{:style => "height: 600px;"}
-  
     .table-container
       %table.md-table
         %thead
@@ -26,7 +25,7 @@
               %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)"} 
                 %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}"}
               {{item.amount_picked}}
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ui-sref" => "show_batch"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
+            %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory(item)"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
 
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
