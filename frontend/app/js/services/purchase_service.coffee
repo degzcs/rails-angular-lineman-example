@@ -79,8 +79,10 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
     all: (page)->
       return $http({method: "GET", url: "api/v1/purchases"}); 
     #
-    # convert from data:image to Blob
-    # convert: ->
+    # Get a single purchase by id 
+    #
+    get: (id)->
+      return $http({method: "GET", url: "api/v1/purchases/" + id})
   #
   # Listeners
   #

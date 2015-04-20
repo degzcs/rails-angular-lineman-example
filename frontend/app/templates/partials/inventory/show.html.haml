@@ -2,67 +2,89 @@
   %md-toolbar.md-primary
     %h1.md-toolbar-tools
       Detalles Inventario
+
   %md-content.md-padding
-    %h3{:style => "text-align:left;"}  Datos Proveedor 
-    .provider-data{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-      %md-input-container{:style => "width:80%"}
+    %h3{:style => "text-align:left;"} Informacion del Compra
+    .md-tile-center{:flex => "10"}
+      %img.provider_photo{:alt => "", "ng-src" => "{{inventory.seller_picture.url"}
+    %br
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Peso comprado
+        %input{:disabled => "true","ng-model" => "inventory.gold_batch.grams"}
+      %md-input-container{:flex => ""}
+        %label Cantidad Restante
+        %input{:disabled => "true","ng-model" => "inventory.inventory.remaining_amount"}
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Certificado de origen
+        %input{:disabled => "true","ng-model" => "invenotry.origin_certificate_file.url"}
+      %md-input-container{:flex => ""}
+        %label Numero de certificado
+        %input{:disabled => "true","ng-model" => "inventory.origin_certificate_sequence"}
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
+        %label Fecha de compra
+        %input{:disabled => "true","ng-model" => "inventory.created_at"}
+      %md-input-container{:flex => ""}
+        %label Precio de Compra 
+        %input{:disabled => "true","ng-model" => "inventory.price"}
+   
+  %md-content.md-padding
+    %h3{:style => "text-align:left;"}  Datos Proveedor
+    .md-tile-center{:flex => "10"}
+      %img.provider_photo{:alt => "", "ng-src" => "{{provider.photo_file}}"}
+    %br
+    %div{:layout => "", "layout-sm" => "column"}
+      %md-input-container{:flex => ""}
         %label Nombre
-        %input{:disabled => "true", "ng-model" => "provider.name"}
-      %md-input-container
-        %label ID RUCOM
-        %input{:disabled => "true","ng-model" => "provider.id_rucom"}
-  %md-content.md-padding
+        %input{:disabled => "true","ng-model" => "provider.first_name"}
+      %md-input-container{:flex => ""}
+        %label Apellido
+        %input{:disabled => "true","ng-model" => "provider.last_name"}
     %div{:layout => "", "layout-sm" => "column"}
       %md-input-container{:flex => ""}
-        %label ID
-        %input{:disabled => "true","ng-model" => "provider.id"}
+        %label Numero de Documento
+        %input{:disabled => "true","ng-model" => "provider.document_number"}
       %md-input-container{:flex => ""}
-        %label Tipo
-        %input{:disabled => "true","ng-model" => "provider.type"}
+        %label Documento de identidad
+        %input{:disabled => "true","ng-model" => "provider.identification_number_file"}
+    
     %div{:layout => "", "layout-sm" => "column"}
       %md-input-container{:flex => ""}
-        %label Teléfono
-        %input{:disabled => "true","ng-model" => "provider.phone_nb", :placeholder => "(3XX) XXX XXXXX"}
+        %label Telefono
+        %input{:disabled => "true","ng-model" => "provider.phone_number"}
+      %md-input-container{:flex => ""}
+        %label Direccion
+        %input{:disabled => "true","ng-model" => "provider.address"}
+    %div{:layout => "", "layout-sm" => "column"}
       %md-input-container{:flex => ""}
         %label Email
-        %input{:disabled => "true","ng-model" => "provider.email", :type => "email"}
-    %md-input-container
-      %label Dirección
-      %input{:disabled => "true","ng-model" => "provider.address", :placeholder => "CLL/CR X XX - XX"}
+        %input{:disabled => "true","ng-model" => "provider.email"}
+      %md-input-container{:flex => ""}
+        %label RUT
+        %input{:disabled => "true","ng-model" => "provider.rut_file"}
+
     %div{:layout => "", "layout-sm" => "column"}
       %md-input-container{:flex => ""}
-        %label Ciudad
-        %input{:disabled => "true","ng-model" => "provider.city"}
+        %label Registro Minero
+        %input{:disabled => "true","ng-model" => "provider.mining_register_file"}
       %md-input-container{:flex => ""}
-        %label Estado
-        %input{:disabled => "true","ng-model" => "provider.state"}
-      %md-input-container{:flex => ""}
-        %label Código Postal
-        %input{:disabled => "true","ng-model" => "provider.postalCode"}
-  %md-content.md-padding
-    %h3{:style => "text-align:left;"} Peso Comprado
-  
+        %label Centro Poblacional
+        %input{:disabled => "true","ng-model" => "provider.population_center.name"}
     %div{:layout => "", "layout-sm" => "column"}
       %md-input-container{:flex => ""}
-        %label Castellanos
-        %input{:disabled => "true","ng-model" => "compra.castellanos"}
+        %label Numero de Rucom
+        %input{:disabled => "true","ng-model" => "provider.rucom.num_rucom"}
       %md-input-container{:flex => ""}
-        %label Tomines
-        %input{:disabled => "true","ng-model" => "compra.tomines"}
+        %label Rucom Record
+        %input{:disabled => "true","ng-model" => "provider.rucom.rucom_record"}
     %div{:layout => "", "layout-sm" => "column"}
       %md-input-container{:flex => ""}
-        %label Reales
-        %input{:disabled => "true","ng-model" => "compra.reales"}
+        %label Tipo de proovedor
+        %input{:disabled => "true","ng-model" => "provider.rucom.provider_type"}
       %md-input-container{:flex => ""}
-        %label Granos
-        %input{:disabled => "true","ng-model" => "compra.granos"}
-    %md-input-container
-      %label Total
-      %input{:disabled => "true","ng-model" => "compra.total"}
-    %div{:layout => "", "layout-sm" => "column"}
-      %md-input-container{:flex => ""}
-        %label Ley
-        %input{:disabled => "true","ng-model" => "compra.ley"}
-      %md-input-container{:flex => ""}
-        %label Precio Gramo Fin
-        %input{:disabled => "true","ng-model" => "compra.precioGramo"}
+        %label Mineral
+        %input{:disabled => "true","ng-model" => "provider.ricom.mineral"}
+
+

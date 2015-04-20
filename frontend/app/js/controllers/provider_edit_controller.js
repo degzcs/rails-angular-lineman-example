@@ -7,6 +7,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     label: 'RUCOM Number',
     field: 'num_rucom'
   };
+  
   if ($stateParams.providerId) {
     ProviderService.retrieveProviderById.get({providerId: $stateParams.providerId}, function(provider) {
       var prov = {
