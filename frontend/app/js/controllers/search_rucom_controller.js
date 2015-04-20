@@ -1,7 +1,9 @@
-angular.module('app').controller('SearchRucomCtrl', ['$scope', 'RucomService' ,function($scope, RucomService){
+angular.module('app').controller('SearchRucomCtrl', ['$scope', '$stateParams', 'RucomService' ,function($scope, $stateParams, RucomService){
   
   $scope.toggleSearch = true;  
   $scope.query = '';
+  $scope.type = $stateParams.type;
+  $scope.capType = $stateParams.type.charAt(0).toUpperCase() + $stateParams.type.slice(1);
   $scope.content = []; 
   $scope.headers = [
     {

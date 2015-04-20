@@ -46,12 +46,12 @@ module V1
               optional :quantity , type: Integer , desc: 'mineral quantity' , documentation:{example: 'Rock'}
               optional :unit , type: String  , desc: 'mineral quantity unit' , documentation:{example: 'Rock'}
             end
-            optional :purchaser , type: Hash, desc: 'mineral' , documentation: {example: 'Rock'} do
-              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
-              optional :identification_type , type: String , desc: 'purchaser identification type' , documentation:{example: 'Rock'}
-              optional :purchaser_type , type: String , desc: 'purchaser type' , documentation:{example: 'Rock'}
-              optional :identification_number , type: String , desc: 'purchaser identification number' , documentation:{example: 'Rock'}
-              optional :rucom , type: String , desc: 'purchaser rucom' , documentation:{example: 'Rock'}
+            optional :buyer , type: Hash, desc: 'mineral' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'buyer name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'buyer identification type' , documentation:{example: 'Rock'}
+              optional :buyer_type , type: String , desc: 'buyer type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'buyer identification number' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'buyer rucom' , documentation:{example: 'Rock'}
             end
           end
         end
@@ -65,11 +65,11 @@ module V1
               optional :identification_type , type: String , desc: 'trader identification type' , documentation:{example: 'Rock'}
               optional :identification_number , type: String , desc: 'trader identification number' , documentation:{example: 'Rock'}
             end
-            optional :purchaser , type: Hash , desc: 'purchaser' , documentation:{example: 'Rock'} do
-              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
-              optional :rucom , type: String , desc: 'purchaser rucom' , documentation:{example: 'Rock'}
-              optional :identification_type , type: String , desc: 'purchaser identification type' , documentation:{example: 'Rock'}
-              optional :identification_number , type: String , desc: 'purchaser identification number' , documentation:{example: 'Rock'}
+            optional :buyer , type: Hash , desc: 'buyer' , documentation:{example: 'Rock'} do
+              optional :name , type: String , desc: 'buyer name' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'buyer rucom' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'buyer identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'buyer identification number' , documentation:{example: 'Rock'}
             end
             optional :mineral , type: Hash , desc: 'mineral' , documentation:{example: 'Rock'} do
               optional :quantity , type: String , desc: 'mineral quantity' , documentation:{example: 'Rock'}
@@ -87,12 +87,12 @@ module V1
               optional :identification_type , type: String , desc: 'house identification type' , documentation:{example: 'Rock'}
               optional :identification_number , type: String , desc: 'house identification number' , documentation:{example: 'Rock'}
             end
-            optional :purchaser , type: Hash, desc: 'purchaser' , documentation: {example: 'Rock'} do
-              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
-              optional :identification_type , type: String , desc: 'purchaser identification type' , documentation:{example: 'Rock'}
-              optional :identification_number , type: String , desc: 'purchaser identification number' , documentation:{example: 'Rock'}
-              optional :rucom , type: String , desc: 'purchaser rucom' , documentation:{example: 'Rock'}
-              optional :cp , type: String , desc: 'purchaser cp' , documentation:{example: 'Rock'}
+            optional :buyer , type: Hash, desc: 'buyer' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'buyer name' , documentation:{example: 'Rock'}
+              optional :identification_type , type: String , desc: 'buyer identification type' , documentation:{example: 'Rock'}
+              optional :identification_number , type: String , desc: 'buyer identification number' , documentation:{example: 'Rock'}
+              optional :rucom , type: String , desc: 'buyer rucom' , documentation:{example: 'Rock'}
+              optional :cp , type: String , desc: 'buyer cp' , documentation:{example: 'Rock'}
             end
             optional :invoices , type: Array , desc: 'invoices' , documentation: {example: "[{ number: '1101010101010101', date: Date.today.to_date, description: 'descripccion del documento', quantity: '500mg'}]"}
           end
@@ -113,8 +113,8 @@ module V1
               optional :quantity , type: String , desc: 'mineral quantity' , documentation:{example: 'Rock'}
               optional :unit , type: String , desc: 'mineral quantity unit' , documentation:{example: 'Rock'}
             end
-            optional :purchaser , type: Hash, desc: 'purchaser' , documentation: {example: 'Rock'} do
-              optional :name , type: String , desc: 'purchaser name' , documentation:{example: 'Rock'}
+            optional :buyer , type: Hash, desc: 'buyer' , documentation: {example: 'Rock'} do
+              optional :name , type: String , desc: 'buyer name' , documentation:{example: 'Rock'}
               optional :identification_type , type: String , desc: 'identification type' , documentation:{example: 'Rock'}
               optional :identification_number , type: String , desc: 'identification number' , documentation:{example: 'Rock'}
               optional :rucom , type: String , desc: 'rucom' , documentation:{example: 'Rock'}
@@ -132,7 +132,7 @@ module V1
 
       resource :files do
 
-        get 'download_e_m_certificate' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_e_m_certificate' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
           #requires :e_m_report ,type: Hash
@@ -152,34 +152,34 @@ module V1
           # beneficiario area de reserva especial --> beneficiario
           # subcontrato de formalizacion  --> subcontrato
 
-          #purchaser --> type
+          #buyer --> type
           #comercializador
           #consumidor
 
 
           #test data
           #ready , no borrar
-          values = { certificate_number: '1292924838434101010101010101',
-                     mining_operator: {type: 'subcontrato',
-                                       code: '110043843848393 1919191919191919191919191' ,
-                                       name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
-                                       identification_type: 'cedula de ciudadania' ,
-                                       identification_number: '129292294030302 129292294030302 129292294030302'},
-                     mineral: { state: 'cauca cauca cauca cauca cauca cauca cauca' ,
-                                city: 'popayan popayan popayan popayan popayan popayan' ,
-                                mineral: 'Oro Oro Oro Oro Oro Oro Oro Oro Oro Oro Oro' ,
-                                quantity: 2500000000000000000000000000000000000000 ,
-                                unit: 'miligramos tamines castellanos miligramos tamines' } ,
-                     purchaser:{ name: 'compradores oro ltda compradores oro ltda' ,
-                                 identification_type: 'rut',
-                                 purchaser_type: 'consumidor' ,
-                                 identification_number: '1018458483 1018458483 1018458483 1018458483' ,
-                                 rucom: '10139348989 10139348989 10139348989'}
-                    }
+          # values = { certificate_number: '1292924838434101010101010101',
+          #            provider: {type: 'subcontrato',
+          #                              code: '110043843848393 1919191919191919191919191' ,
+          #                              name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
+          #                              docuement_type: 'cedula de ciudadania' ,
+          #                              docuement_number: '129292294030302 129292294030302 129292294030302'},
+          #            mineral: { state: 'cauca cauca cauca cauca cauca cauca cauca' ,
+          #                       city: 'popayan popayan popayan popayan popayan popayan' ,
+          #                       mineral: 'Oro Oro Oro Oro Oro Oro Oro Oro Oro Oro Oro' ,
+          #                       quantity: 2500000000000000000000000000000000000000 ,
+          #                       unit: 'miligramos tamines castellanos miligramos tamines' } ,
+          #            buyer:{ name: 'compradores oro ltda compradores oro ltda' ,
+          #                        type: 'consumidor' ,
+          #                        docuement_type: 'rut',
+          #                        docuement_number: '1018458483 1018458483 1018458483 1018458483' ,
+          #                        rucom_record: '10139348989 10139348989 10139348989'}
+          #           }
 
           date = Date.today
 
-          #values = params[:e_m_report]
+          values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
           pdf = ::PdfFile.new(values , date , 'e_m_certificate')
           #puts pdf.render
           header['Content-Disposition'] = "attachment; filename= certificate_explotadores_mineros_#{date.month}_#{date.day}.pdf"
@@ -189,7 +189,7 @@ module V1
 
         end
 
-        get 'download_p_b_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_p_b_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
           #requires :p_b_report ,type: Hash
@@ -202,7 +202,7 @@ module V1
           # cedula de extrangeria
           # rut
 
-          # purchaser --> identification_type
+          # buyer --> identification_type
           #nit
           #cedula de ciudadania
           #cedula de extranjeria
@@ -211,100 +211,100 @@ module V1
 
           #test data
           # ready no borrar
-          values = { certificate_number: '1292924838434 1010101383 1010101010101',
-                     trader: { rucom: '110043843848393 118181818181 1010101010101' ,
-                               name: 'mineros de boyaca mineros de boyaca' ,
-                               identification_type: 'cedula de extranjeria',
-                               identification_number: '129292294030302 818118172171'},
-                     purchaser:{ name: 'compradores oro ltda compradores oro ltda',
-                                 identification_type: 'cedula de extranjeria',
-                                 identification_number: '1018458483 1818117171',
-                                 rucom: '10139348989 17171718181'},
-                     mineral: { quantity: '200 mg 200 mg 200 mg 200 mg'},
-                     mining_operator: [{
-                                           type: 'titular',
-                                           certificate_code: '110043843848393 1919191',
-                                           name: 'mineros de boyaca mineros boyaca',
-                                           identification_type: 'rut',
-                                           identification_number: '129292294030302 22828282',
-                                           mineral: 'Oro',
-                                           quantity: '200',
-                                           unit:'mg'},
-                                       {
-                                           type: 'beneficiario',
-                                           certificate_code: '110043843848393-2',
-                                           name: 'mineros de boyaca-2',
-                                           identification_type: 'nit',
-                                           identification_number: '129292294030302-2',
-                                           mineral: 'Oro',
-                                           quantity: '400',
-                                           unit:'mg'},
-                                       {
-                                           type: 'solicitante',
-                                           certificate_code: '110043843848393-3',
-                                           name: 'mineros de boyaca-3',
-                                           identification_type: 'cedula de ciudadania',
-                                           identification_number: '129292294030302-3',
-                                           mineral: 'Oro',
-                                           quantity: '500',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'subcontrato',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'subcontrato',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'titular',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'beneficiario',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-4',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       },
-                                       {
-                                           type: 'titular',
-                                           certificate_code: '110043843848393-4',
-                                           name: 'mineros de boyaca-9',
-                                           identification_type: 'cedula de extranjeria',
-                                           identification_number: '129292294030302-4',
-                                           mineral: 'Oro',
-                                           quantity: '600',
-                                           unit:'mg'
-                                       }
-                     ]
-          }
+          # values = { certificate_number: '1292924838434 1010101383 1010101010101',
+          #            provider: { rucom: '110043843848393 118181818181 1010101010101' ,
+          #                      company_name: 'mineros de boyaca mineros de boyaca' ,
+          #                      identification_type: 'cedula de extranjeria',
+          #                      identification_number: '129292294030302 818118172171'},
+          #            buyer:{ name: 'compradores oro ltda compradores oro ltda',
+          #                        identification_type: 'cedula de extranjeria',
+          #                        identification_number: '1018458483 1818117171',
+          #                        rucom: '10139348989 17171718181'},
+          #            mineral: { amount: '200 mg 200 mg 200 mg 200 mg'}, # ???
+          #            mining_operators: [{
+          #                                  type: 'titular',
+          #                                  origin_certificate_number: '110043843848393 1919191', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca mineros boyaca',
+          #                                  document_type: 'rut',
+          #                                  document_number: '129292294030302 22828282',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '200',
+          #                                  measure_unit:'mg'},
+          #                              {
+          #                                  type: 'beneficiario',
+          #                                  origin_certificate_number: '110043843848393-2', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-2',
+          #                                  document_type: 'nit',
+          #                                  document_number: '129292294030302-2',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '400',
+          #                                  measure_unit:'mg'},
+          #                              {
+          #                                  type: 'solicitante',
+          #                                  origin_certificate_number: '110043843848393-3', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-3',
+          #                                  document_type: 'cedula de ciudadania',
+          #                                  document_number: '129292294030302-3',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '500',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'subcontrato',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'subcontrato',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'titular',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'beneficiario',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-4',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              },
+          #                              {
+          #                                  type: 'titular',
+          #                                  origin_certificate_number: '110043843848393-4', # eventually we have to seve the origin certificate and its information
+          #                                  name: 'mineros de boyaca-9',
+          #                                  document_type: 'cedula de extranjeria',
+          #                                  document_number: '129292294030302-4',
+          #                                  mineral_type: 'Oro',
+          #                                  amount: '600',
+          #                                  measure_unit:'mg'
+          #                              }
+          #            ]
+          # }
 
+          values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
+          # binding.pry
           date = Date.today
-
-          #values = params[:p_b_report]
           pdf = ::PdfFile.new(values , date , 'p_b_certificate')
           #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificado_plantas_beneficio_#{date.month}_#{date.day}.pdf"
@@ -313,7 +313,7 @@ module V1
 
         end
 
-        get 'download_c_c_report'  , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'download_c_c_report'  , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
           #requires :c_c_report ,type: Hash
@@ -321,7 +321,7 @@ module V1
 
           # values certificado origen casas compraventa
 
-          # purchaser --> identification_type
+          # buyer --> identification_type
           #nit
           #cedula de ciudadania
           #cedula de extranjeria
@@ -332,169 +332,167 @@ module V1
 
           #test data
           # ready , no borrar
-          values = { certificate_number: '1292924838434 928282824747474',
-                     city: 'popayan popayan popayan popayan',
-                     house: { name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
-                              identification_type: 'cedula de ciudadania',
-                              identification_number: '12929229403030222828282828282828282828'
-                     },
-                     purchaser:{ name: 'compradores oro ltda compradores oro ltda compradores oro ltda',
-                                 identification_type: 'nit',
-                                 identification_number: '1018458483 1018458483 1018458483 1018458483',
-                                 rucom: '10139348989 10139348989 10139348989',
-                                 cp: '1393902020202 1393902020202 1393902020202'
-                     },
-                     invoices: [{
-                                    number: '1101010101010101 1101010101010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento descripccion del',
-                                    quantity: '500mg 500mg 500mg 500mg'
-                                },
-                                {
-                                    number: '1102010101010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010104010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101060101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010801',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010191',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010101010101',
-                                    date: Date.today.to_datetime,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010161010121',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101410102010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010101022220101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '1101010102010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                },
-                                {
-                                    number: '11010134322010101',
-                                    date: Date.today.to_date,
-                                    description: 'descripccion del documento',
-                                    quantity: '500mg'
-                                }
-                     ]
-          }
+          # values = { certificate_number: '1292924838434 928282824747474',
+          #            city: 'popayan popayan popayan popayan',
+          #            provider: { name: 'mineros de boyaca mineros de boyaca mineros de boyaca' ,
+          #                     docuement_type: 'cedula de ciudadania',
+          #                     docuement_number: '12929229403030222828282828282828282828'
+          #            },
+          #            buyer:{ name: 'compradores oro ltda compradores oro ltda compradores oro ltda',
+          #                        docuement_type: 'nit',
+          #                        docuement_number: '1018458483 1018458483 1018458483 1018458483',
+          #                        rucom: '10139348989 10139348989 10139348989',
+          #                        cp: '1393902020202 1393902020202 1393902020202'
+          #            },
+          #            invoices: [{
+          #                           number: '1101010101010101 1101010101010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento descripccion del',
+          #                           amount: '500mg 500mg 500mg 500mg'
+          #                       },
+          #                       {
+          #                           number: '1102010101010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010104010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101060101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010801',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010191',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010101010101',
+          #                           date: Date.today.to_datetime,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010161010121',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101410102010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010101022220101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '1101010102010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       },
+          #                       {
+          #                           number: '11010134322010101',
+          #                           date: Date.today.to_date,
+          #                           description: 'descripccion del documento',
+          #                           amount: '500mg'
+          #                       }
+          #            ]
+          # }
+          values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
           date = Date.today
-
-          #values = params[:c_c_report]
           pdf = ::PdfFile.new(values , date , 'c_c_certificate')
-          #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificate_casas_compraventa_#{date.month}_#{date.day}.pdf"
           env['api.format'] = :pdf
           body pdf.render
@@ -514,7 +512,7 @@ module V1
           # barequero
           # chatarrero
 
-          # purchaser_entity --> identification_type
+          # buyer_entity --> identification_type
           # cedula de ciudadania
           # cedula de extranjeria
           # nit
@@ -572,7 +570,7 @@ module V1
            #                                      address: 'Carrera 9N #67N - 156',
            #                                      phone: '10303039503'
            #                                },
-           #            purchaser:{
+           #            buyer:{
            #                                      type: 'Sociedad anonima',
            #                                      nit: '19191914jfjfjfjf',
            #                                      rucom: '1010101949482',

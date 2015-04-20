@@ -41,10 +41,11 @@
                 {{newProvider.identification_number_file[0].name}}
               .upload-oc{'flex' => ''}
                 .button-action.md-padding
-                  %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
+                  %md-button.md-flat.margined{'aria-label' => 'identification_number_file', 'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
               .md-tile-left.cam{:flex => "10"} 
-                %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
+                %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "identification_number_file", "md-ripple-size" => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
+                  %md-icon{"md-svg-icon" => "image:camera_alt"}
                   %md-tooltip{"md-visible" => "demo.showTooltip"}
                     Scan
         %md-content.md-padding{:layout => "", "layout-sm" => "column"}
@@ -82,12 +83,13 @@
             %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
               %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
                 .md-tile-left.cam{:flex => "10"} 
-                  %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"} +
+                  %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "mining_register_file", "md-ripple-size" => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"}
+                    %md-icon{"md-svg-icon" => "image:camera_alt"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
                       Mining Record
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
-                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
+                    %md-button.md-flat.margined{"aria-label" => "mining_register_file", 'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
                       %md-icon{"md-svg-icon"=>"file:file_upload"}  
                       Mining register
               %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
@@ -95,12 +97,13 @@
                   {{newProvider.mining_register_file[0].name}}
               %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
                 .md-tile-left.cam{:flex => "10"} 
-                  %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"} +
+                  %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "rut_file", "md-ripple-size" => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"}
+                    %md-icon{"md-svg-icon" => "image:camera_alt"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
                       RUT file
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
-                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
+                    %md-button.md-flat.margined{"aria-label" => "rut_file", 'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
                       %md-icon{"md-svg-icon"=>"file:file_upload"} 
                       RUT file
               %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}

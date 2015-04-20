@@ -1,0 +1,92 @@
+%div{:layout => "column"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4 Acreditacion de Faturas de Casas de Compra y Venta
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    %md-input-container{"flex"=>"33"}
+      %label Fecha
+      %input{"ng-model" => "houses_buy_and_sell_origin_certificate.date", "type" => "date", "required"=>""}
+
+    %md-input-container{"flex"=>"33"}
+      %label Ciudad
+      %input{"ng-model" => "houses_buy_and_sell_origin_certificate.city", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>"33"}
+      %label Numero consecutivo del Certificado de Origen
+      %input{"ng-model" => "houses_buy_and_sell_origin_certificate.certificate_number", "type" => "text", "required"=>""}
+
+  ////-----------------------Provider section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4 Casa de Compra  y Venta
+
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    .select-provider{'flex' => ''}
+      %md-chips{"md-autocomplete-snap" => "", "ng-model" => "houses_buy_and_sell_origin_certificate.provider"}
+        %md-autocomplete{"md-selected-item"=>"houses_buy_and_sell_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar casa de compra y venta (proveedor) por Cedula"}
+          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+    .create-provider{'flex' =>'10'}
+      %a{'ng-href' => "#provider"}
+        %md-button.md-fab.md-accent{} +
+          %md-tooltip{"md-visible" => "demo.showTooltip"}
+            Crear Proveedor
+            %span.ion-android-checkmark-circle
+
+    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
+      %span
+        Nombre : {{houses_buy_and_sell_origin_certificate.provider.name}}
+      %span
+        CC : {{houses_buy_and_sell_origin_certificate.provider.document_number}}
+      %span
+        Departamento: {{houses_buy_and_sell_origin_certificate.provider.state}}
+      %span
+        city: {{houses_buy_and_sell_origin_certificate.provider.city}}
+
+  ////-----------------------Buy and Sell Invoices section ------------------------------////////
+
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4 Informacion de las Facturas de Compra
+
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"column", 'ng-repeat' => 'invoice in invoices'}
+
+    %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+      %md-input-container{"flex"=>""}
+        %label Numero de Factura, Contrato Compra-venta o Documento equivalente
+        %input{"ng-model" => "invoice.number", "type" => "text", "required"=>""}
+
+      %md-input-container{"flex"=>""}
+        %label Fecha de la factura
+        %input{"ng-model" => "invoice.date", "type" => "date", "required"=>""}
+
+      %md-input-container{"flex"=>""}
+        %label Description
+        %input{"ng-model" => "invoice.description", "type" => "text", "required"=>""}
+
+      %md-input-container{"flex"=>""}
+        %label Cantidad
+        %input{"ng-model" => "invoice.amount", "type" => "text", "required"=>""}
+
+  // ---------------------- Add Invoice  button----------------------------------///
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    %md-button.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addInvoice()"} Adherir Factura
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+  ////-----------------------Buyer section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h4 Informacion del Comprador del Mineral
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+    %md-input-container{"flex"=>""}
+      %label Nombres y Apellidos o Razon Social
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.company_name", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Tipo de Documento
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_type", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Numero de Indentificacion
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text", "required"=>""}
+
+  // ---------------------- Generate Origin Certificate button----------------------------------///
+  %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'houses_buy_and_sell')"} Generar Certificado de Origen

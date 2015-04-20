@@ -22,6 +22,7 @@ city = FactoryGirl.create(:city, state_id: state.id, state_code: state.state_cod
 population_center = FactoryGirl.create(:population_center, city_id: city.id, city_code: city.city_code)
 rucoms.each do|rucom|
 	FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
+	FactoryGirl.create(:client,rucom_id: rucom.id, population_center_id: population_center.id)
 end
 
 

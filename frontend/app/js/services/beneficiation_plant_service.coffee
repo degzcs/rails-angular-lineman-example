@@ -1,4 +1,4 @@
-angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($rootScope, $upload)->
+angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($rootScope)->
   service=
     model:
       date: ''
@@ -13,8 +13,8 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
         state: '' # state where the miner is/was registered
         city: '' # city where the miner is/was registered
       ##mineral info
-      mining_operators: []
-        
+      mining_operators: [] # Array of Hashes with the next keys:  type, name, identification_type, identification_number, origin_certificate_number, amount, measure_unit and mineral_type
+
       ## mineral's Buyer info
       buyer:
         company_name: ''
