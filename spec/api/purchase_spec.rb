@@ -71,6 +71,22 @@ describe 'Purchase', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be per_page
         end
+        context '/:id' do
+
+          it 'gets purchase by id' do 
+
+            purchase = Purchase.last
+
+            expected_response = {
+              id: purchase.id,
+              price: purchase.price,
+            }
+
+            get "/api/v1/purchases/#{purchase.id}",{},{ "Authorization" => "Barer #{@token}" }
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+          end
+        end
       end
     end
   end

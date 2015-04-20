@@ -84,6 +84,20 @@ module V1
           header 'total_pages', purchases.total_pages.to_s
           present purchases, with: V1::Entities::Purchase
         end
+        desc 'returns one existent provider by :id', {
+          entity: V1::Entities::Purchase,
+          notes: <<-NOTES
+            Returns one existent purchase by :id
+          NOTES
+        }
+        params do
+          requires :id, type: Integer, desc: 'Purchase ID'
+        end
+        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          purchase = ::Purchase.find(params[:id])
+          present purchase, with: V1::Entities::Purchase
+        end
       end
     end
   end
