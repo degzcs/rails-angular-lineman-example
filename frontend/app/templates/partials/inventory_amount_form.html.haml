@@ -7,7 +7,6 @@
           {{total_grams}}
     .dialog-inventory-form
       %form{:name => "gramsForm", "ng-submit"=>"gramsForm.selected_grams.$error.required ? '' : submit()"}
-
         %md-select{"ng-model" => "selected_grams", :placeholder => "Gramos","required"=>"", "name"=>"selected_grams"}
           .option{"ng-repeat"=> "option in gram_options"}
             %md-option{:value => "{{option}}"} {{option}}

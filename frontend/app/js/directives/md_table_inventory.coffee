@@ -59,35 +59,30 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
       #updates all checkboxes in the inventory list
       
       $scope.selectAll = (inventoryItems, grams, selectall,ev) ->
-        if $scope.selectedItems.length != 0
-          confirm = $mdDialog.confirm()
-          .title('Confirmar')
-          .content('Si selecciona esta opcion descartara las cantidades que ya especifico y seran adicionados todos los lotes')
-          .ariaLabel('Lucky day').ok('Estoy seguro').cancel('Cancelar')
-          .targetEvent(ev)
+        #First we check if the all select box is pressed
+        if $scope.selectall
+          #if its already pressed then we clean the variables and the items
+          $scope.totalAmount = 0
+          $scope.selectall = false
+          $scope.selectedItems = []
+          clean_checkbox_items(inventoryItems)
+        else
+          #The we check if there are already items selected, 
+          if $scope.selectedItems.length != 0
+            confirm = $mdDialog.confirm()
+            .title('Confirmar')
+            .content('Si selecciona esta opcion descartara las cantidades que ya especifico y seran adicionados todos los lotes')
+            .ariaLabel('Lucky day').ok('Estoy seguro').cancel('Cancelar')
+            .targetEvent(ev)
 
-          $mdDialog.show(confirm).then (->
-            #If the response is positive then clenans the previous values and recreate the arrays
-            $scope.totalAmount = 0
-            $scope.selectedItems = []
-            i=0
-            while i < inventoryItems.length
-              item = inventoryItems[i]
-              item.selected = true
-              new_item = {
-                item: item
-                amount_picked: item.inventory_remaining_amount
-              }
-              $scope.selectedItems.push(new_item)
-              $scope.totalAmount = $scope.totalAmount + new_item.amount_picked
-              i++
-            console.log $scope.selectedItems
-            return
-          ), ->
-            $scope.selectall = false
-            return
-          
-
+            $mdDialog.show(confirm).then (->
+              #If the response is positive then clenans the previous values and recreate the arrays
+              add_all_items(inventoryItems)
+            ), ->
+              $scope.selectall = false
+              return
+          else
+            add_all_items(inventoryItems)
         return
 
       # Display a dialog that allows to enter the grams amount
@@ -120,6 +115,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
         .targetEvent(ev)
 
         $mdDialog.show(confirm).then (->
+          $scope.selectall = false
           #If the response is positive then it finds the index of the item in the selectedItems array
           deleted_item_index = null
           i=0
@@ -138,8 +134,31 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog) ->
           item.selected = true
           return
 
-
+      add_all_items = (inventoryItems)->
+        $scope.selectall = true
+        $scope.totalAmount = 0
+        $scope.selectedItems = []
+        i=0
+        while i < inventoryItems.length
+          item = inventoryItems[i]
+          item.selected = true
+          item.amount_picked = item.inventory_remaining_amount
+          $scope.selectedItems.push(item)
+          $scope.totalAmount = $scope.totalAmount + item.amount_picked
+          i++
+        console.log $scope.selectedItems
+        return
+      clean_checkbox_items = (inventoryItems)->
+        i=0
+        while i < inventoryItems.length
+          item = inventoryItems[i]
+          item.selected = false
+          item.amount_picked = null
+          i++
+        console.log $scope.selectedItems
+        return
       return
+    
     templateUrl: 'directives/md-table-inventory.html'
     link: (scope, element, attrs)->
 

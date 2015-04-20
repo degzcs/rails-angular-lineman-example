@@ -10,7 +10,9 @@
         %thead
           %tr.md-table-headers-row
             %th.table-checkbox.all-check
-              %md-checkbox{"ng-click" => "selectAll(content,grams,selectall,$event)","ng-model" => "selectall", "aria-label"=>"all-check"}
+              %md-button.md-icon-button.launch{"ng-click"=>"selectAll(content,grams,selectall,$event)"} 
+                %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{selectall ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"selectall ? 'item-selected' : ''","aria-label"=>"selectall"}
+              
             %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
               %a{:href => "#", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
                 {{h.name}}
