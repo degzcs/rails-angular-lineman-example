@@ -1,11 +1,14 @@
 
-angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChatarreroOriginCertificateService, BeneficiationPlantOriginCertificateService, HousesBuySellOriginCertificateService, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
   $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3)
 
   $scope.barequero_chatarrero_origin_certificate = BarequeroChatarreroOriginCertificateService.model
   $scope.beneficiation_plant_origin_certificate = BeneficiationPlantOriginCertificateService.model
+  $scope.houses_buy_and_sell_origin_certificate = HousesBuySellOriginCertificateService.model
+  $scope.authorized_miner_origin_certificate = AuthorizedMinerOriginCertificateService.model
   $scope.mining_operators = []
+  $scope.invoices = []
   $scope.allProviders  = []
   $scope.searchText = null
   $scope.searchMining = null
@@ -24,6 +27,8 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     data.phone = '3007854214'
     $scope.barequero_chatarrero_origin_certificate.buyer = data
     $scope.beneficiation_plant_origin_certificate.buyer = data
+    $scope.houses_buy_and_sell_origin_certificate.buyer = data
+    $scope.authorized_miner_origin_certificate.buyer = data
 
   #
   # Set the origin certificate type
@@ -31,7 +36,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     $scope.origin_certificate_type = origin_certificate_type
 
   #
-  #
+  # Add mining operator field with empty values
   #
   $scope.addMiningOperator = ->
     if typeof $scope.mining_operators == 'undefined'
@@ -43,6 +48,18 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
       measure_unit: ''
       origin_certificate_number: ''
       type: ''
+
+  #
+  #
+  #
+  $scope.addInvoice = ->
+    if typeof $scope.invoices == 'undefined'
+      $scope.invoices = []
+    $scope.invoices.push
+      number: '' #provider
+      date: ''
+      description: ''
+      amount: ''
 
   #
   # Search one specific provider into the allProviders array
@@ -93,8 +110,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
 
   #
   # Set mining operators properly,
-  #
-  $scope.set_mining_operators = (mining_operators) ->
+  $scope.setMiningOperators = (mining_operators) ->
     mining_operators.forEach (element, index, array)->
       $scope.beneficiation_plant_origin_certificate.mining_operators.push
         name: element.data.name
@@ -105,6 +121,11 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
         measure_unit: element.measure_unit
         origin_certificate_number: element.origin_certificate_number
         type: element.type
+
+  #
+  # Set  Invoices in the model
+  $scope.setInvoices = (invoices)->
+    $scope.houses_buy_and_sell_origin_certificate.invoices =  invoices
 
   #
   # confirm Dialog
@@ -122,11 +143,13 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
         when 'barequero_chatarrero'
           PdfService.createBarequeroChatarreroOriginCertificate($scope.barequero_chatarrero_origin_certificate)
         when 'beneficiation_plant'
-          $scope.set_mining_operators($scope.mining_operators)
-          console.log $scope.beneficiation_plant_origin_certificate.mining_operators
+          $scope.setMiningOperators($scope.mining_operators)
           PdfService.createBeficiationPlantOriginCertificate($scope.beneficiation_plant_origin_certificate)
-        when 'another'
-          ''
+        when 'houses_buy_and_sell'
+          $scope.setInvoices($scope.invoices)
+          PdfService.createHouseBuySellOriginCertificate($scope.houses_buy_and_sell_origin_certificate)
+        when 'authorized_miner'
+          PdfService.createAutorizedMinerOriginCertificate($scope.authorized_miner_origin_certificate)
       $scope.message = 'Su certificado de origen ha sido generado exitosamente'
       return
     ), ->

@@ -91,5 +91,22 @@
     %md-button.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addMiningOperator()"} Adherir Minero
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
 
+  ////-----------------------Buyer section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h4 Informacion del Comprador del Mineral
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+    %md-input-container{"flex"=>""}
+      %label Nombres y Apellidos o Razon Social
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.company_name", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Tipo de Documento
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_type", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Numero de Indentificacion
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text", "required"=>""}
+
   // ---------------------- Generate Origin Certificate button----------------------------------///
   %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'beneficiation_plant')"} Generar Certificado de Origen

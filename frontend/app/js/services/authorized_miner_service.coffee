@@ -1,4 +1,4 @@
-angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($rootScope)->
+angular.module('app').factory 'AuthorizedMinerOriginCertificateService', ($rootScope)->
   service=
     model:
       date: ''
@@ -13,10 +13,15 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
         state: '' # state where the miner is/was registered
         city: '' # city where the miner is/was registered
       ##mineral info
-      mining_operators: [] # Array of Hashes with the next keys:  type, name, identification_type, identification_number, origin_certificate_number, amount, measure_unit and mineral_type
-
+      mineral:
+        type: ''
+        amount: ''
+        measure_unit: ''
+        state: ''
+        city: ''
       ## mineral's Buyer info
       buyer:
+        type: ''
         company_name: ''
         document_type: '' # can be : NIT, CC, RUT, Aliens Card (foreign identification card)
         document_number: ''
@@ -27,10 +32,10 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
     #
     saveState: ->
       sessionStorage.restorestate = 'true'
-      sessionStorage.beneficiationPlantOriginCertificate = angular.toJson(service.model)
+      sessionStorage.authorizedMinerOriginCertificate = angular.toJson(service.model)
     restoreState: ->
-      if(sessionStorage.beneficiationPlantOriginCertificate)
-        service.model = angular.fromJson(sessionStorage.beneficiationPlantOriginCertificate)
+      if(sessionStorage.authorizedMinerOriginCertificate)
+        service.model = angular.fromJson(sessionStorage.authorizedMinerOriginCertificate)
       else
         sessionStorage.restorestate = 'false'
     #
@@ -40,8 +45,8 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
   # Listeners
   #
   # console.log(service)
-  $rootScope.$on 'saveBeneficiationPlantOriginCertificate', service.saveState
-  $rootScope.$on 'restoreBeneficiationPlantOriginCertificate', service.restoreState
+  $rootScope.$on 'saveAuthorizedMinerOriginCertificate', service.saveState
+  $rootScope.$on 'restoreAuthorizedMinerOriginCertificate', service.restoreState
 
   #
   # Return

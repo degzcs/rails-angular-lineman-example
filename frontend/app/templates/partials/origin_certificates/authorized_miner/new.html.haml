@@ -1,0 +1,99 @@
+%div{:layout => "column"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4 Certificado de Origen Planta de Beneficio
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    %md-input-container{"flex"=>"33"}
+      %label Fecha
+      %input{"ng-model" => "authorized_miner_origin_certificate.date", "type" => "date", "required"=>""}
+
+    %md-input-container{"flex"=>"66"}
+      %label Numero consecutivo del Certificado de Origen
+      %input{"ng-model" => "authorized_miner_origin_certificate.certificate_number", "type" => "text", "required"=>""}
+
+  ////-----------------------Provider section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4 Informacion del Productor del Mineral
+
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    .select-provider{'flex' => ''}
+      %md-chips{"md-autocomplete-snap" => "", "ng-model" => "authorized_miner_origin_certificate.provider"}
+        %md-autocomplete{"md-selected-item"=>"authorized_miner_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
+          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+    .create-provider{'flex' =>'10'}
+      %a{'ng-href' => "#provider"}
+        %md-button.md-fab.md-accent{} +
+          %md-tooltip{"md-visible" => "demo.showTooltip"}
+            Crear Proveedor
+            %span.ion-android-checkmark-circle
+
+    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
+      %span
+        Nombre : {{authorized_miner_origin_certificate.provider.name}}
+      %span
+        CC : {{authorized_miner_origin_certificate.provider.document_number}}
+      %span
+        Departamento: {{authorized_miner_origin_certificate.provider.state}}
+      %span
+        city: {{authorized_miner_origin_certificate.provider.city}}
+
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    .column{"flex"=> ''}
+      %md-select{"ng-model" => "authorized_miner_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
+        %md-option{:value => "titular"} Titular
+        %md-option{:value => "are_beneficiary"} Beneficiario de Are
+        %md-option{:value => "legalization_applicant"} Solicitante de Legalizacion
+        %md-option{:value => "formalization_subcontract"} Subcontrato de Formalizacion
+
+  ////-----------------------Mineral section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4 Informacion del Mineral
+
+  %md-content{"class"=>"", "layout"=>"row"}
+
+    %md-input-container{"flex"=>""}
+      %label Mineral
+      %input{"ng-model" => "authorized_miner_origin_certificate.mineral.type", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Cantidad
+      %input{"ng-model" => "authorized_miner_origin_certificate.mineral.amount", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Unidad de Medida
+      %input{"ng-model" => "authorized_miner_origin_certificate.mineral.measure_unit", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Departamento(s) donde realiza la explotacion
+      %input{"ng-model" => "authorized_miner_origin_certificate.mineral.state", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Municipio(s) donde realiza la explotacion
+      %input{"ng-model" => "authorized_miner_origin_certificate.mineral.city", "type" => "text", "required"=>""}
+
+
+  ////-----------------------Buyer section ------------------------------////////
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h4 Informacion del Comprador del Mineral
+
+  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    %md-input-container{"flex"=>""}
+      %label Nombres y Apellidos o Razon Social
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.company_name", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Tipo de Documento
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_type", "type" => "text", "required"=>""}
+
+    %md-input-container{"flex"=>""}
+      %label Numero de Indentificacion
+      %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text", "required"=>""}
+    .column{"flex"=> ''}
+      %md-select{"ng-model" => "authorized_miner_origin_certificate.buyer.type", :placeholder => "Explotador  Minero Autorizado"}
+        %md-option{:value => "trader"} Comercializador
+        %md-option{:value => "consumer"} Consumidor
+
+  // ---------------------- Generate Origin Certificate button----------------------------------///
+  %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'authorized_miner')"} Generar Certificado de Origen

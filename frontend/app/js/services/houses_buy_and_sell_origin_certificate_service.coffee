@@ -1,7 +1,8 @@
-angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($rootScope)->
+angular.module('app').factory 'HousesBuySellOriginCertificateService', ($rootScope, $upload)->
   service=
     model:
       date: ''
+      certificate_number: ''# NOTE: I think this is a origin certificate number
       city: '' # where is generated the current OC
       ## mineral's Provider Info
       provider:
@@ -13,7 +14,7 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
         state: '' # state where the miner is/was registered
         city: '' # city where the miner is/was registered
       ##mineral info
-      mining_operators: [] # Array of Hashes with the next keys:  type, name, identification_type, identification_number, origin_certificate_number, amount, measure_unit and mineral_type
+      invoices: [] # Array of Hashes with the next keys:
 
       ## mineral's Buyer info
       buyer:
@@ -27,10 +28,10 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
     #
     saveState: ->
       sessionStorage.restorestate = 'true'
-      sessionStorage.beneficiationPlantOriginCertificate = angular.toJson(service.model)
+      sessionStorage.housesBuySellOriginCertificate = angular.toJson(service.model)
     restoreState: ->
-      if(sessionStorage.beneficiationPlantOriginCertificate)
-        service.model = angular.fromJson(sessionStorage.beneficiationPlantOriginCertificate)
+      if(sessionStorage.housesBuySellOriginCertificate)
+        service.model = angular.fromJson(sessionStorage.housesBuySellOriginCertificate)
       else
         sessionStorage.restorestate = 'false'
     #
@@ -40,8 +41,8 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
   # Listeners
   #
   # console.log(service)
-  $rootScope.$on 'saveBeneficiationPlantOriginCertificate', service.saveState
-  $rootScope.$on 'restoreBeneficiationPlantOriginCertificate', service.restoreState
+  $rootScope.$on 'saveHousesBuySellOriginCertificate', service.saveState
+  $rootScope.$on 'restoreHousesBuySellOriginCertificate', service.restoreState
 
   #
   # Return
