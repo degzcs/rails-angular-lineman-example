@@ -41,13 +41,16 @@
                 {{newProvider.identification_number_file[0].name}}
               .upload-oc{'flex' => ''}
                 .button-action.md-padding
-                  %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
-                    %md-icon{"md-svg-icon"=>"file:file_upload"}
+                  %div{:layout => "row",:layout-margin => "10"}
+                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
+                      %md-icon{"md-svg-icon"=>"file:file_upload"}
+                    %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(2)"}
+                      %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
               .md-tile-left.cam{:flex => "10"} 
                 %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
                   %md-icon{"md-svg-icon" => "image:camera_alt"}
                   %md-tooltip{"md-visible" => "demo.showTooltip"}
-                    Scan
+                    Photo
         %md-content.md-padding{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
             %label Provider type
@@ -81,21 +84,24 @@
         %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{:layout => "row", :flex => "", "layout-align" => "start center", "layout-margin" => "", "layout-sm" => "column"}
             %div{:layout => "row", :flex => "90", "layout-align" => "space-between center"}
-              %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+              %div{:layout => "row", :flex => "40", "layout-align" => "space-between center"}
                 .md-tile-left.cam{:flex => "10"} 
                   %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"}
                     %md-icon{"md-svg-icon" => "image:camera_alt"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Mining Record
+                      Mining Register
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
-                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
-                      %md-icon{"md-svg-icon"=>"file:file_upload"}  
-                      Mining register
+                    %div{:layout => "row",:layout-margin => "20"}  
+                      %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
+                        %md-icon{"md-svg-icon"=>"file:file_upload"}  
+                        Mining register
+                      %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(3)"}
+                        %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
               %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
                 %span
                   {{newProvider.mining_register_file[0].name}}
-              %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+              %div{:layout => "row", :flex => "40", "layout-align" => "space-between center"}
                 .md-tile-left.cam{:flex => "10"} 
                   %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"}
                     %md-icon{"md-svg-icon" => "image:camera_alt"}
@@ -103,9 +109,12 @@
                       RUT file                      
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
-                    %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
-                      %md-icon{"md-svg-icon"=>"file:file_upload"} 
-                      RUT file
+                    %div{:layout => "row",:layout-margin => "10"}
+                      %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
+                        %md-icon{"md-svg-icon"=>"file:file_upload"} 
+                        RUT file
+                      %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(4)"}
+                        %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
               %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
                 %span
                   {{newProvider.rut_file[0].name}}

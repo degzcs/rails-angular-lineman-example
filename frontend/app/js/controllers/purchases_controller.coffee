@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser, ScannerService) ->
     #
   # Instances
   #
@@ -75,8 +75,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   # Set the last picture that was took
   $scope.photo=CameraService.getLastScanImage()
-  # Set the last certificate file that was took
-  $scope.file=CameraService.getJoinedFile()
+  # Set the last certificate file that was 
+  if(ScannerService.getScanFiles() and ScannerService.getScanFiles().length>0)
+    $scope.file= ScannerService.getScanFiles()
+  else if(CameraService.getJoinedFile() and CameraService.getJoinedFile().length>0)
+    $scope.file= CameraService.getJoinedFile()
 
   if($scope.photo and CameraService.getTypeFile() == 1)
     $scope.purchase.model.seller_picture=$scope.photo
@@ -84,7 +87,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   if($scope.file and CameraService.getTypeFile() == 2)
     $scope.purchase.model.origin_certificate_file=$scope.file
-    CameraService.clearData();
+    CameraService.clearData()
+    ScannerService.clearData()
 
   $scope.scanner = (type) ->
     CameraService.setTypeFile(type)
