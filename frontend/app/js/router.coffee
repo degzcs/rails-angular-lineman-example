@@ -240,7 +240,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   
   .state( "liquidate_batches",
-    url: "/inventory/liquidate",
+    url: "/inventory/liquidates",
     ncyBreadcrumb:
       label: 'Inventory'
     views:
@@ -488,6 +488,23 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/inventory/show.html"
         controller: "InventoryShowCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  .state("liquidate_inventory",
+    url: "/inventory/liquidate",
+    ncyBreadcrumb:
+      label: 'Lingotear'
+    views:
+      'content':
+        templateUrl: "partials/inventory/liquidate.html"
+        controller: "InventoryLiquidateCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

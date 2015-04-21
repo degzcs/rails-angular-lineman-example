@@ -1,0 +1,38 @@
+%section.liquidate-inventory-view{layout: "row"}
+  %md-card.amounts-picked.md-padding{flex: "20"}
+    %h3
+      Gramos Seleccionados
+    %div.selected_amount{"ng-repeat"=> "item in selectedInventoryItems"} 
+      {{item.amount_picked}} gr
+    %div.total_amount
+      %strong
+        Gramos Totales: 
+      {{total_amount}}
+  %md-card.batches{flex: ""}
+    %h3
+      Lingotes Resultantes
+    %form.sale-form{name: "ingotsForm"}
+      %md-content.ingot_form{:layout => "row", "layout-padding" => "", "md-theme" => "docs-dark", "ng-repeat" => "ingot in ingots"}
+        %h3{flex: "30"} Lingote {{$index +1 }} :
+        %md-input-container{flex: ""}
+          %label Ley
+          %input{"ng-model" => "ingot.law", required: ""}
+        %md-input-container{flex: ""}
+          %label Gramos
+          %input{"ng-model" => "ingot.grams", required: ""}
+      %md-content.customer-form{layout: "row"}
+        .customer-info{flex: ""}
+          %h3 Comprador
+          %md-autocomplete{"md-item-text" => "item.display", "md-items" => "item in ctrl.querySearch(ctrl.searchText)", "md-no-cache" => "ctrl.noCache", "md-search-text" => "ctrl.searchText", "md-search-text-change" => "ctrl.searchTextChange(ctrl.searchText)", "md-selected-item" => "ctrl.selectedItem", "md-selected-item-change" => "ctrl.selectedItemChange(item)", "ng-disabled" => "ctrl.isDisabled", :placeholder => "What is your favorite US state?"}
+            %span{"md-highlight-flags" => "^i", "md-highlight-text" => "ctrl.searchText"} 
+          %a{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
+        .courier-info{flex: ""}
+          %h3 Transportador
+          %md-autocomplete{"md-item-text" => "item.display", "md-items" => "item in ctrl.querySearch(ctrl.searchText)", "md-no-cache" => "ctrl.noCache", "md-search-text" => "ctrl.searchText", "md-search-text-change" => "ctrl.searchTextChange(ctrl.searchText)", "md-selected-item" => "ctrl.selectedItem", "md-selected-item-change" => "ctrl.selectedItemChange(item)", "ng-disabled" => "ctrl.isDisabled", :placeholder => "What is your favorite US state?"}
+            %span{"md-highlight-flags" => "^i", "md-highlight-text" => "ctrl.searchText"} 
+          %a{"ui-sref"=>"new_courier"} crear transportador
+      %md-button.submit-button{type: "submit"} Submit
+          
+
+
+

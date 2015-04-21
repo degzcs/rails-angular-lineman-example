@@ -1,6 +1,6 @@
 %section{:flex => "", :layout => "column", "layout-fill" => ""}
   %md-subheader.md-primary.inventory-options-head
-    %md-button.md-raised.md-primary
+    %md-button.md-raised.md-primary{"ng-click"=>"liquidate_selected_items($event)"}
       Liquidar {{totalAmount}} Gramos
       %md-icon{:alt => "Alarm Icon", "md-svg-icon" =>"navigation:arrow_forward"}
   %md-content{:style => "height: 600px;"}

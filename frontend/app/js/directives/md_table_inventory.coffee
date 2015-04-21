@@ -17,6 +17,19 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,Inventory,$state)
       $scope.tablePage = 0
       $scope.selectedItems = []
       $scope.totalAmount = 0
+
+      $scope.liquidate_selected_items = (ev)->
+        if $scope.selectedItems.length == 0
+          $mdDialog.show(
+            $mdDialog.alert()
+            .title('Mensaje Inventario')
+            .content('Debe seleccionar al menos una cantidad')
+            .ariaLabel('Alert Dialog Demo').ok('Ok')
+            .targetEvent(ev))
+        else
+          enterIngotsNumber(ev)
+        return
+
       $scope.show_inventory = (item)->
         Inventory.setCurrent(item)
         $state.go('show_inventory')
@@ -161,6 +174,24 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,Inventory,$state)
           item.amount_picked = null
           i++
         console.log $scope.selectedItems
+        return
+      
+      # Display a dialog that allows to enter the ingots number
+      enterIngotsNumber = (ev)->
+        $mdDialog.show(
+          controller: 'InventoryIngotsCtrl'
+          templateUrl: 'partials/ingots_number_form.html'
+          targetEvent: ev).then ((answer) ->
+          sale_info = {
+            selected_items: $scope.selectedItems,
+            total_amount: $scope.totalAmount
+            ingots_number: answer
+          }
+          Inventory.setSaleInfo(sale_info)
+          $state.go 'liquidate_inventory'
+          return
+        ), ->
+          return
         return
       return
     

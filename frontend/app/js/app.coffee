@@ -64,5 +64,5 @@ angular.module("app", [
 
 .config ($mdThemingProvider) ->
     $mdThemingProvider.theme('docs-dark', 'default')
-      .primaryPalette('blue')
+      .primaryPalette('yellow')
       .dark();
