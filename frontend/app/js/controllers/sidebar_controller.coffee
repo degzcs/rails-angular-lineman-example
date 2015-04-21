@@ -3,10 +3,10 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
   #  Here just add the sidebar navigation options with their state
   $scope.options = [
     {name: "Dashboard", state: "dashboard", icon: 'action:dashboard'}
-    {name: "Certificados de Origen", state: "new_origin_certificate", icon: 'action:pageview'}
-    {name: "Clients", state: "search_rucom({type: 'client'})", icon: 'social:people_outline'}
     {name: "Compras", state: "new_purchase.step1", icon: 'action:add_shopping_cart'}
+    {name: "Certificados de Origen", state: "new_origin_certificate", icon: 'action:pageview'}
     {name: "Inventario", state: "index_inventory", icon: 'action:assignment'}
+    {name: "Clients", state: "search_rucom({type: 'client'})", icon: 'social:people_outline'}
     {name: "Proovedores" , state: "providers", icon: 'social:people'}
     {name: "Transportadores", state: "new_courier", icon: 'maps:local_shipping'}
   ]

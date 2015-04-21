@@ -1,4 +1,4 @@
-angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDialog) ->
+angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDialog,SessionService) ->
 
   $scope.logout = ->
     if !$auth.isAuthenticated()
@@ -11,7 +11,17 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
         duration: 2
       return
 
-  $scope.sendPassword = ->
+   $scope.activateNewPassword = ->
+   #TODO: save password  SessionService
+    confirm = $mdDialog.confirm().title('Recuperar contraseña')
+      .content('Se ha actualizado la contraseña')
+      .ariaLabel('Lucky day')
+      .ok('Ok')
+    $mdDialog.show(confirm).then()
+    return    
+
+  $scope.sendToken = ->
+  #TODO: SEND TOKEN SessionService
     console.log("send link");
     confirm = $mdDialog.confirm().title('Recuperar contraseña')
       .content('Se ha enviado un enlace para recuperar contraseña')
