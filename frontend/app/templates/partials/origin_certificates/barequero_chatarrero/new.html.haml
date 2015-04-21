@@ -13,7 +13,8 @@
       %input{"ng-model" => "barequero_chatarrero_origin_certificate.city", "type" => "text", "required"=>""}
 
   ////-----------------------Provider section ------------------------------////////
-  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+  %md-divider
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion del Productor de Mineral
 
   %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
@@ -43,6 +44,7 @@
         city: {{barequero_chatarrero_origin_certificate.provider.city}}
   ////-----------------------Mineral section ------------------------------////////
 
+  %md-divider
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
 
     .column{"flex"=>""}
@@ -61,6 +63,7 @@
         %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.measure_unit", "type" => "text", "required"=>""}
 
   ////-----------------------Buyer section ------------------------------////////
+  %md-divider
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
     %h4 Informacion del Comprador del Mineral
 

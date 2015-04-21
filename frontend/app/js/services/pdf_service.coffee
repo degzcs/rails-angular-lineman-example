@@ -35,6 +35,7 @@ angular.module('app').factory 'PdfService', ($http)->
           { response: pdf }
         )
       .success (response) ->
+          sessionStorage.barequeroOriginCertificateService = []
           file = new Blob([ response ], type: 'application/pdf')
           fileURL = URL.createObjectURL(file)
           window.open(fileURL, '_blank', '')
@@ -53,12 +54,13 @@ angular.module('app').factory 'PdfService', ($http)->
           { response: pdf }
         )
       .success (response) ->
+          sessionStorage.beneficiationPlantOriginCertificate = []
           file = new Blob([ response ], type: 'application/pdf')
           fileURL = URL.createObjectURL(file)
           window.open(fileURL, '_blank', '')
 
     #
-    # Beneficiation Plant OC
+    # Houses Buy Sell  OC
     createHouseBuySellOriginCertificate: (origin_certificate)->
       $http.post('/api/v1/files/download_c_c_report/',
         {origin_certificate: origin_certificate},
@@ -71,12 +73,13 @@ angular.module('app').factory 'PdfService', ($http)->
           { response: pdf }
         )
       .success (response) ->
+          sessionStorage.housesBuySellOriginCertificate = []
           file = new Blob([ response ], type: 'application/pdf')
           fileURL = URL.createObjectURL(file)
           window.open(fileURL, '_blank', '')
 
     #
-    # Beneficiation Plant OC
+    # Authorized Miner OC
     createAutorizedMinerOriginCertificate: (origin_certificate)->
       $http.post('/api/v1/files/download_e_m_certificate/',
         {origin_certificate: origin_certificate},
@@ -89,6 +92,7 @@ angular.module('app').factory 'PdfService', ($http)->
           { response: pdf }
         )
       .success (response) ->
+          sessionStorage.authorizedMinerOriginCertificate =[]
           file = new Blob([ response ], type: 'application/pdf')
           fileURL = URL.createObjectURL(file)
           window.open(fileURL, '_blank', '')

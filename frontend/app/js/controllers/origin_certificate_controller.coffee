@@ -43,7 +43,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
       $scope.mining_operators = []
     $scope.mining_operators.push
       data: '' #provider
-      mineral_type: ''
+      mineral_type: 'Oro'
       amount: ''
       measure_unit: ''
       origin_certificate_number: ''

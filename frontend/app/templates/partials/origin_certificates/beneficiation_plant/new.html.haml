@@ -65,7 +65,7 @@
     %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
       %md-input-container{"flex"=>""}
         %label Mineral Benefiado
-        %input{"ng-model" => "mining_operator.mineral_type", "type" => "text", "required"=>""}
+        %input{"readonly"=> "true", "ng-model" => "mining_operator.mineral_type", "type" => "text", "required"=>""}
 
       %md-input-container{"flex"=>""}
         %label Cantidad
@@ -88,11 +88,11 @@
 
   // ---------------------- Add mining operator button----------------------------------///
   %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
-    %md-button.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addMiningOperator()"} Adherir Minero
+    %md-button.md-raised.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addMiningOperator()"} Adherir Minero
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
 
   ////-----------------------Buyer section ------------------------------////////
-  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion del Comprador del Mineral
 
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}

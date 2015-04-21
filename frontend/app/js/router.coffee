@@ -41,13 +41,23 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-   .state("sendPassword",
-    url: "/sendPassword",
+   .state("sendtoken",
+    url: "/sendtoken",
     ncyBreadcrumb:
       label: 'PDF scanner'
     views:
       'content':
-        templateUrl: "partials/sessions/send_password.html"
+        templateUrl: "partials/sessions/send_token.html"
+        controller: "SessionsNewCtrl"
+  )
+
+   .state("passwordconfirm",
+    url: "/passwordconfirm",
+    ncyBreadcrumb:
+      label: 'PDF scanner'
+    views:
+      'content':
+        templateUrl: "partials/sessions/password_confirm.html"
         controller: "SessionsNewCtrl"
   )
 
