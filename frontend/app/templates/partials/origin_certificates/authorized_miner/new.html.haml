@@ -13,6 +13,7 @@
       %input{"ng-model" => "authorized_miner_origin_certificate.certificate_number", "type" => "text", "required"=>""}
 
   ////-----------------------Provider section ------------------------------////////
+  %md-divider
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion del Productor del Mineral
 
@@ -47,6 +48,7 @@
         %md-option{:value => "formalization_subcontract"} Subcontrato de Formalizacion
 
   ////-----------------------Mineral section ------------------------------////////
+  %md-divider
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion del Mineral
 
@@ -74,7 +76,8 @@
 
 
   ////-----------------------Buyer section ------------------------------////////
-  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+  %md-divider
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4 Informacion del Comprador del Mineral
 
   %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
