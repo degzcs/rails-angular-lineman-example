@@ -4,14 +4,25 @@
       Certificado de Origen
   .origin-certificate-container
 
-    %md-content{"class"=>"", "layout"=>"row"}
-      %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"new_origin_certificate.barequero_chatarrero", "ng-click" => "setOriginCertificateType('barequero_chatarrero')"} Barequero y Chatarrero
+%div
+  %md-content.md-padding
+    %md-tabs{"md-border-bottom" => "", "md-dynamic-height" => ""}
+      %md-tab{:label => "Barequero y Chatarrero", "ui-sref"=>"new_origin_certificate.barequero_chatarrero"}
+        %md-content.md-padding
+          %h1.md-display-2  Barequero y Chatarrero
+          %div{"ui-view"=>"content"}
 
-      %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"new_origin_certificate.beneficiation_plant", "ng-click" => "setOriginCertificateType('beneficiation_plant')"} Planta de Beneficio
+      %md-tab{:label => "Planta de Beneficio", "ui-sref"=>"new_origin_certificate.beneficiation_plant"}
+        %md-content.md-padding
+          %h1.md-display-2 Planta de Beneficio
+          %div{"ui-view"=>"content"}
 
-    %md-content{"class"=>"", "layout"=>"row"}
-      %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"new_origin_certificate.houses_buy_and_sell", "ng-click" => "setOriginCertificateType('houses_buy_and_sell')"}Acreditacion de Faturas Casas de C-V
+      %md-tab{:label => "Acreditacion de Faturas Casas de C-V", "ui-sref"=>"new_origin_certificate.houses_buy_and_sell"}
+        %md-content.md-padding
+          %h1.md-display-2 Acreditacion de Faturas Casas de C-V
+          %div{"ui-view"=>"content"}
 
-      %md-button.md-primary.md-hue-2{flex: "", "ui-sref"=>"new_origin_certificate.authorized_miner", "ng-click" => "setOriginCertificateType('authorized_miner')"} Explotador Minero Autorizado
-
-    %div{"ui-view"=>"content"}
+      %md-tab{'label' => 'Explotador Minero Autorizado', "ui-sref"=>"new_origin_certificate.authorized_miner"}
+        %md-content.md-padding
+          %h1.md-display-2 Explotador Minero Autorizado
+          %div{"ui-view"=>"content"}
