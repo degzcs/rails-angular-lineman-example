@@ -48,7 +48,7 @@ class CreditBilling < ActiveRecord::Base
 
     # Initialize values when a new credit_billing is build
     def init
-      self.per_unit_value = 1000  
+      self.per_unit_value = 500  
     end
 
     # Before save a new credit_billing calculate the discount and the total

@@ -2,7 +2,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                 
                 $scope.optionsSource=CameraService.getMediaSources();
                 $scope.optionSelected='';
-                $scope.isForCamera='Photo';
+                $scope.isForCamera='Foto';
                 $scope.number=0;
                 $scope.image1='';
                 $scope.changeCamera=function(option){
@@ -60,26 +60,26 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                 };
                 $scope.comeBack=function(){
                     //console.log("all the files "+ CameraService.getScanFiles());
-                    if($scope.isForCamera === 'Photo'){
+                    if($scope.isForCamera === 'Foto'){
                         $scope.addScanFile();
                     }
                     window.history.back();
                 };
                 $scope.showConfirmAdd = function(ev) {
                     // Appending dialog to document.body to cover sidenav in docs app
-                    var confirm = $mdDialog.confirm().title('Do you wish to add the file?')
-                      .content('Are you sure to add the file?')
+                    var confirm = $mdDialog.confirm().title('Agregar página')
+                      .content('Está seguro de agregar al archivo?')
                       .ariaLabel('Lucky day')
-                      .ok('Please do it!')
-                      .cancel('No please')
+                      .ok('Aceptar')
+                      .cancel('Cancelar')
                       .targetEvent(ev);
                     $mdDialog.show(confirm).then($scope.addScanFile);
                   };
                   $scope.showConfirmRemove = function(ev) {
                     // Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
-                      .title('Do you wish to remove the last file?')
-                      .content('Are you sure to add the last file?')
+                      .title('Remover paǵina')
+                      .content('Está seguro de eliminar el archivo?')
                       .ariaLabel('Lucky day')
                       .ok('Please do it!')
                       .cancel('No please')
