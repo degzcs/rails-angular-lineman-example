@@ -13,6 +13,7 @@
 #  updated_at               :datetime
 #  password_digest          :string(255)
 #  available_credits        :float
+#  reset_token              :string(255)
 #
 
 FactoryGirl.define do

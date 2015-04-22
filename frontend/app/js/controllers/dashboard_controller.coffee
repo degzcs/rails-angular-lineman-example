@@ -26,7 +26,7 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
     if($scope.unit != null)
       confirm = $mdDialog.confirm()
         .title('Confirmacion solicitud de creditos')
-        .content("Esta seguro de comprar #{$scope.unit} por un total de #{$scope.unit*1000} pesos")
+        .content("Esta seguro de comprar #{$scope.unit} por un total de #{$scope.unit*500} pesos")
         .ariaLabel('Lucky day').ok('Solicitar Factura').cancel('Cancelar')
         
       $mdDialog.show(confirm).then (->

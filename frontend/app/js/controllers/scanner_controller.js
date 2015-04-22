@@ -3,11 +3,17 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
         	$scope.images=[];	
 
         	$scope.init=function(){
-        	var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
+        		var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
          		DWObject.Width = 300;  
     			DWObject.Height = 400;
 			};
-
+			
+			$scope.$on("$destroy", function(){
+		       var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
+         		DWObject.Width = 1;  
+    			DWObject.Height = 1;
+		    });
+			
 			  $scope.finish=function(){
 			  	$scope.images=[];
 			  	var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
@@ -26,7 +32,7 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 				ScannerService.joinFile($scope.images);
 				DWObject.RemoveAllSelectedImages();
 				DWObject.Width = 1;  
-    			DWObject.Height = 2;
+    			DWObject.Height = 1;
 	  			window.history.back();
 			  };	
 
