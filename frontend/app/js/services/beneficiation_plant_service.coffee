@@ -14,7 +14,7 @@ angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($ro
         city: '' # city where the miner is/was registered
       ##mineral info
       mining_operators: [] # Array of Hashes with the next keys:  type, name, identification_type, identification_number, origin_certificate_number, amount, measure_unit and mineral_type
-
+      total_amount: 0
       ## mineral's Buyer info
       buyer:
         company_name: ''

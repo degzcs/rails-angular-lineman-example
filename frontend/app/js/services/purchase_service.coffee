@@ -13,7 +13,6 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
       provider: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
-      law: 1
       fine_gram_unit_price: 0 # this is set up for current buyer (current user login)
       reference_code: ''
 
@@ -40,7 +39,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
               "purchase[provider_id]": purchase.provider.id
               "gold_batch[parent_batches]": gold_batch.parent_batches
               "gold_batch[grams]": gold_batch.total_fine_grams
-              "gold_batch[grade]": gold_batch.grade # < -- What is this?
+              "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
               "gold_batch[inventory_id]": gold_batch.inventory_id
               "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             file: files
@@ -77,9 +76,9 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
     # Get all paginated purchases for the current user
     #
     all: (page)->
-      return $http({method: "GET", url: "api/v1/purchases"}); 
+      return $http({method: "GET", url: "api/v1/purchases"});
     #
-    # Get a single purchase by id 
+    # Get a single purchase by id
     #
     get: (id)->
       return $http({method: "GET", url: "api/v1/purchases/" + id})

@@ -75,7 +75,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   # Set the last picture that was took
   $scope.photo=CameraService.getLastScanImage()
-  # Set the last certificate file that was 
+  # Set the last certificate file that was
   if(ScannerService.getScanFiles() and ScannerService.getScanFiles().length>0)
     $scope.file= ScannerService.getScanFiles()
   else if(CameraService.getJoinedFile() and CameraService.getJoinedFile().length>0)
@@ -113,7 +113,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
 
     # cover grams to fineGrams
-    $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.purchase.model.law)
+    $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
     #Price
     $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
 
@@ -131,7 +131,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     # Appending dialog to document.body to cover sidenav in docs app
     confirm = $mdDialog.confirm()
                       .title('Desea realizar la compra?')
-                      .content('Va a ser generada una compra. Esta seguro que desea realizar la compra?')
+                      .content('Va a ser generada una compra. Esta seguro que desea realizar esta compra?')
                       .ariaLabel('Lucky day')
                       .ok('Si, deseo comprar')
                       .cancel('No, cancelar compra')

@@ -260,7 +260,7 @@ class PdfFile < Prawn::Document
     # body buyer
 
     move_cursor_to 225
-    # text_box "#{values[:mineral][:amount]}", :at => [750,cursor], :width => 300
+    text_box "#{values[:total_amount]}", :at => [750,cursor], :width => 300
     move_down 25
     text_box "#{values[:buyer][:company_name]}", :at => [750,cursor], :width => 300
     move_down 32

@@ -109,9 +109,10 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
   ), (error) ->
 
   #
-  # Set mining operators properly,
+  # Set mining operators properly and get the total  amount of gold
   $scope.setMiningOperators = (mining_operators) ->
     mining_operators.forEach (element, index, array)->
+      $scope.beneficiation_plant_origin_certificate.total_amount += parseInt(element.amount)
       $scope.beneficiation_plant_origin_certificate.mining_operators.push
         name: element.data.name
         document_type: element.data.document_type
