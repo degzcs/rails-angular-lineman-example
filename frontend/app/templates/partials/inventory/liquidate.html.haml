@@ -1,4 +1,6 @@
+/--------------------------- Liquidate invnetory view ------------------------/
 %section.liquidate-inventory-view{layout: "row"}
+  /--------------------------- Selected Grams layout ------------------------/
   %md-card.amounts-picked.md-padding{flex: "20"}
     %h3
       Gramos Seleccionados
@@ -9,8 +11,11 @@
         Gramos Totales: 
       {{total_amount}}
   %md-card.batches{flex: ""}
+    /--------------------------- Ingot Creation layout ------------------------/
     %h3
       Lingotes Resultantes
+    %md-checkbox.md-primary{"aria-label" => "equal_amount_divider", "md-no-ink" => "", "ng-model" => "divide_by_equal_amounts",  "ng-disabled"=>"{{!allow_equal_divider}}", "ng-change"=>"divideIngots()"}
+      Dividir en cantidades iguales?
     %form.sale-form{name: "ingotsForm"}
       %md-content.ingot_form{:layout => "row", "layout-padding" => "", "md-theme" => "docs-dark", "ng-repeat" => "ingot in ingots"}
         %h3{flex: "30"} Lingote {{$index +1 }} :
@@ -20,17 +25,19 @@
         %md-input-container{flex: ""}
           %label Gramos
           %input{"ng-model" => "ingot.grams", required: ""}
-      %md-content.customer-form{layout: "row"}
+      .customer-form{layout: "row"}
         .customer-info{flex: ""}
-          %h3 Comprador
-          %md-autocomplete{"md-item-text" => "item.display", "md-items" => "item in ctrl.querySearch(ctrl.searchText)", "md-no-cache" => "ctrl.noCache", "md-search-text" => "ctrl.searchText", "md-search-text-change" => "ctrl.searchTextChange(ctrl.searchText)", "md-selected-item" => "ctrl.selectedItem", "md-selected-item-change" => "ctrl.selectedItemChange(item)", "ng-disabled" => "ctrl.isDisabled", :placeholder => "What is your favorite US state?"}
-            %span{"md-highlight-flags" => "^i", "md-highlight-text" => "ctrl.searchText"} 
-          %a{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
+          %h3 Seleccione Cliente
+          %md-autocomplete{"md-selected-item"=>"selectedClient", "md-search-text"=> "searchClientText", "md-items" => "client in searchClients(searchClientText)", "md-no-cache" => "true", "md-item-text"=>"client.first_name", "placeholder" => "Buscar Clientes por Cedula","md-selected-item-change"=>"setSelectedClientInfo()"}
+            %span{"md-highlight-text" => "searchClientText"} {{client.id_document_number}} - {{client.first_name}} 
+          %md-button{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
         .courier-info{flex: ""}
-          %h3 Transportador
-          %md-autocomplete{"md-item-text" => "item.display", "md-items" => "item in ctrl.querySearch(ctrl.searchText)", "md-no-cache" => "ctrl.noCache", "md-search-text" => "ctrl.searchText", "md-search-text-change" => "ctrl.searchTextChange(ctrl.searchText)", "md-selected-item" => "ctrl.selectedItem", "md-selected-item-change" => "ctrl.selectedItemChange(item)", "ng-disabled" => "ctrl.isDisabled", :placeholder => "What is your favorite US state?"}
-            %span{"md-highlight-flags" => "^i", "md-highlight-text" => "ctrl.searchText"} 
-          %a{"ui-sref"=>"new_courier"} crear transportador
+          %h3 Seleccione Transportador
+          %md-autocomplete{"md-selected-item"=>"selectedCourier", "md-search-text"=> "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula"}
+            %span{"md-highlight-text" => "searchClientText"} {{courier.id_document_number}} - Nombre: {{client.first_name}} 
+
+          %md-button{"ui-sref"=>"new_courier"} crear transportador
+
       %md-button.submit-button{type: "submit"} Submit
           
 

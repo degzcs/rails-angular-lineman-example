@@ -7,7 +7,7 @@ angular.module('app').factory('ClientService', function($resource,$upload) {
         currentClient = client;
     };
 
-    var retrieveClients = $resource('/api/v1/clients.json', {per_page: '@per_page', page: '@page'});
+    var retrieveClients = $resource('/api/v1/clients.json', {per_page: '@per_page', page: '@page', query_id: '@query_id'});
 
     var retrieveClientById = $resource('/api/v1/clients/:clientId.json', {clientId:'@clientId'});
 
