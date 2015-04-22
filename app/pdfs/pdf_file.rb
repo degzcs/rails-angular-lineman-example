@@ -1,7 +1,7 @@
 class PdfFile < Prawn::Document
 
   def initialize(values , date , type)
-    super()
+    super(:skip_page_creation => true)
 
     case type
 
