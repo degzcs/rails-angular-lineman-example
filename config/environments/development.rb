@@ -34,12 +34,12 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => '3315871f26850a1c1',
-    :password => '5e83e853f94866',
-    :address => 'mailtrap.io',
-    :domain => 'mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
+  :user_name => '33816890e008028df',
+  :password => 'bedc441c314552',
+  :address => 'mailtrap.io',
+  :domain => 'mailtrap.io',
+  :port => '2525',
+  :authentication => :cram_md5
   }
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

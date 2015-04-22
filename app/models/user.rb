@@ -13,6 +13,7 @@
 #  updated_at               :datetime
 #  password_digest          :string(255)
 #  available_credits        :float
+#  reset_token              :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -57,10 +58,11 @@ class User < ActiveRecord::Base
 
 	protected
 
-		def init
-	    self.available_credits  ||= 0.0           #will set the default value only if it's nil
-	  end
+	def init
+	  self.available_credits  ||= 0.0           #will set the default value only if it's nil
+	end
 
+	# NOTE: what is Client class?
 	  def save_client
 
 			client_hash = { "first_name" => self.first_name,
