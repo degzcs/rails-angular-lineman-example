@@ -11,7 +11,7 @@
 #  location           :text
 #  subcontract_number :text
 #  mining_permit      :text
-#  updated_at         :datetime         default(2015-04-18 15:22:18 UTC)
+#  updated_at         :datetime         default(2015-04-10 01:25:41 UTC)
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
 #
