@@ -37,7 +37,6 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
     inventory_remaining_amount: 'bold',
   };
 
-
   //---------------- Controller methods -----------------//
   //Purchase service call to api to retrieve all purchases for current user
   PurchaseService.all().success(function(purchases, headers) {
@@ -46,12 +45,24 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
     i = 0;
     while (i < purchases.length) {
       purchase = {
-        purchase_id: purchases[i].id,
-        provider_name: purchases[i].provider.first_name + " " + purchases[i].provider.last_name,
-        gold_batch_grams: purchases[i].gold_batch.grams,
+        // Default purchase entity parameters
+        id: purchases[i].id,
+        user_id: purchases[i].user_id,
         price: purchases[i].price,
+        origin_certificate_file: purchases[i].origin_certificate_file,
+        seller_picture: purchases[i].seller_picture,
+        origin_certificate_sequence: purchases[i].origin_certificate_sequence,
         created_at: purchases[i].created_at,
-        inventory_remaining_amount: purchases[i].inventory.remaining_amount
+        reference_code: purchases[i].reference_code,
+        access_token: purchases[i].access_token,
+        provider: purchases[i].provider,
+        gold_batch: purchases[i].gold_batch,
+        inventory: purchases[i].inventory,
+        // Aditional table paramteres
+        provider_name: purchases[i].provider.first_name + " " + purchases[i].provider.last_name,
+        inventory_remaining_amount: purchases[i].inventory.remaining_amount,
+        gold_batch_grams: purchases[i].gold_batch.grams,
+        
       };
       content.push(purchase);
       i++;

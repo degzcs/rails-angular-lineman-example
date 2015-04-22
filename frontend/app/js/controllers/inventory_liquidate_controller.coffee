@@ -1,8 +1,9 @@
-angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,Inventory, PurchaseService,ClientService,CourierService) ->
-  sale_info = Inventory.getSaleInfo()
-  $scope.selectedInventoryItems = sale_info.selected_items
-  $scope.ingots_number = sale_info.ingots_number
-  $scope.total_amount = sale_info.total_amount
+angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService) ->
+  sale_info = SaleService.restoreState()
+  console.log sale_info
+  $scope.selectedPurchases = sale_info.selectedPurchases
+  $scope.ingotsNumber = sale_info.ingotsNumber
+  $scope.totalAmount = sale_info.totalAmount
   $scope.ingots = []
   $scope.searchClientText = null
   $scope.selectedClient = null
@@ -10,25 +11,26 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,Inventory, Pu
   $scope.selectedCouries = null
   $scope.divide_by_equal_amounts = false
   
-
-
+  #
   #It creates an array of ingots based on the ingots_number selected by the user
   i=0
-  while i < $scope.ingots_number
+  while i < $scope.ingotsNumber
     item = {
       law: null,
       grams: null
     }
     $scope.ingots.push(item)
     i++
-
+  
+  #
   #If the amount of ingots is lowe than 1 it doesn`t permit to divide by equal
-  if $scope.ingots_number > 1
+  if $scope.ingotsNumber > 1
     $scope.allow_equal_divider = true
   else
     $scope.allow_equal_divider = false
-    $scope.ingots[0].grams = $scope.total_amount
+    $scope.ingots[0].grams = $scope.totalAmount
     
+  #
   #Seacrch clients by id
   $scope.searchClients = (query)->
     if query 
@@ -41,6 +43,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,Inventory, Pu
     else 
       return []
 
+  #
   #Seacrch couriers by id
   $scope.searchCouriers = (query)->
     console.log query
@@ -53,11 +56,12 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,Inventory, Pu
       ), (error) ->
     else 
       return []
+
   $scope.divideIngots = ->
     i=0
     while i < $scope.ingots.length
       if $scope.divide_by_equal_amounts
-        $scope.ingots[i].grams = $scope.total_amount/$scope.ingots_number 
+        $scope.ingots[i].grams = $scope.totalAmount/$scope.ingotsNumber 
       else
         $scope.ingots[i].grams = null
       i++

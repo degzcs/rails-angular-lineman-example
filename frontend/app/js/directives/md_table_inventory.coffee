@@ -1,4 +1,4 @@
-angular.module('app').directive 'mdTableInventory', ($mdDialog,Inventory,$state) ->
+angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$state) ->
   {
     restrict: 'E'
     scope:
@@ -31,7 +31,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,Inventory,$state)
         return
 
       $scope.show_inventory = (item)->
-        Inventory.setCurrent(item)
+        PurchaseService.setCurrent(item)
         $state.go('show_inventory')
         return
 
@@ -182,12 +182,12 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,Inventory,$state)
           controller: 'InventoryIngotsCtrl'
           templateUrl: 'partials/ingots_number_form.html'
           targetEvent: ev).then ((answer) ->
-          sale_info = {
-            selected_items: $scope.selectedItems,
-            total_amount: $scope.totalAmount
-            ingots_number: answer
-          }
-          Inventory.setSaleInfo(sale_info)
+          
+          SaleService.model.selectedPurchases = $scope.selectedItems
+          SaleService.model.totalAmount = $scope.totalAmount
+          SaleService.model.ingotsNumber = answer
+          SaleService.saveState()
+
           $state.go 'liquidate_inventory'
           return
         ), ->

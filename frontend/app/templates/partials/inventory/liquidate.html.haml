@@ -4,12 +4,12 @@
   %md-card.amounts-picked.md-padding{flex: "20"}
     %h3
       Gramos Seleccionados
-    %div.selected_amount{"ng-repeat"=> "item in selectedInventoryItems"} 
-      {{item.amount_picked}} gr
+    %div.selected_amount{"ng-repeat"=> "item in selectedPurchases"} 
+      {{item.amount_picked}} 
     %div.total_amount
       %strong
         Gramos Totales: 
-      {{total_amount}}
+      {{totalAmount}}
   %md-card.batches{flex: ""}
     /--------------------------- Ingot Creation layout ------------------------/
     %h3
