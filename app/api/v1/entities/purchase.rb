@@ -36,8 +36,14 @@ module V1
         expose :grams , documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
           purchase.gold_batch.grams.round(3) 
         end
+        expose :grade , documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
+          purchase.gold_batch.grade
+        end
       end
       expose :inventory do
+        expose :id , documentation: { type: "integer", desc: "inventory id", example: "123456789" }do|purchase, options|
+          purchase.inventory.id
+        end
         expose :status  , documentation: { type: "string", desc: "inventory status", example: "123456789" }do|purchase, options|
           purchase.inventory.status
         end

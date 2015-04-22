@@ -5,11 +5,13 @@
     %h3
       Gramos Seleccionados
     %div.selected_amount{"ng-repeat"=> "item in selectedPurchases"} 
-      {{item.amount_picked}} 
+      %p {{item.amount_picked}} Gr Finos
+      %p {{item.gold_batch.grade}} Ley
+      
     %div.total_amount
       %strong
         Gramos Totales: 
-      {{totalAmount}}
+      {{totalAmount}} 
   %md-card.batches{flex: ""}
     /--------------------------- Ingot Creation layout ------------------------/
     %h3
