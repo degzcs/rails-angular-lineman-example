@@ -10,11 +10,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,Inventory, Pu
   $scope.selectedCouries = null
   $scope.divide_by_equal_amounts = false
   
-  #If the amount of ingots is lowe than 1 it doesn`t permit to divide by equal
-  if $scope.ingots_number > 1
-    $scope.allow_equal_divider = true
-  else
-    $scope.allow_equal_divider = false
+
 
   #It creates an array of ingots based on the ingots_number selected by the user
   i=0
@@ -26,6 +22,13 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,Inventory, Pu
     $scope.ingots.push(item)
     i++
 
+  #If the amount of ingots is lowe than 1 it doesn`t permit to divide by equal
+  if $scope.ingots_number > 1
+    $scope.allow_equal_divider = true
+  else
+    $scope.allow_equal_divider = false
+    $scope.ingots[0].grams = $scope.total_amount
+    
   #Seacrch clients by id
   $scope.searchClients = (query)->
     if query 
