@@ -8,6 +8,7 @@ angular.module('app').factory 'GoldBatchService', ($rootScope)->
     #
     model:
       parent_batches: ''
+      grade: 1
       grams: 0 # the introduced grams  by the seller or provider
       castellanos: 0
       ozs: 0
