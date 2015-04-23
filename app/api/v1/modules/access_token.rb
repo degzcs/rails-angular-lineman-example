@@ -38,9 +38,10 @@ module V1
           }
         end
 
-        #
-        # Forgot password?
-        #
+      #
+      # Forgot password?
+      #
+
       desc 'Returns a token by authenticating user email and sending a reset token to the user email', {
             entity: V1::Entities::AccessToken,
             notes: <<-NOTE
@@ -67,7 +68,41 @@ module V1
           }
         end
 
-      end
+      #
+      #  check reset token to change password
+      #
+
+      desc 'it check if the reset_token is correct to change the password ', {
+            entity: V1::Entities::AccessToken,
+            notes: <<-NOTE
+              ### Description
+              It check if the reset_token is correct to change the password and returns its current representation with a JWT. \n
+
+              ### Example successful response
+
+                  {
+                    "access_token": "the_most_secure_token",
+                    "expires_in": "2014-06-09T13:50:52-05:00"
+                  }
+            NOTE
+          }
+        params do
+          requires :email, type: String
+          requires :token, type: String
+        end
+        get 'can_change_password' do
+          user = ::User.where(email: params[:email]).last
+          if UserResetPassword.new(user).can_change_password_with_this_token?(params[:token])
+            {
+              access_token: user.create_token,
+              expires_in: Time.now.tomorrow
+            }
+          else
+            {message: 'Usted no puede cambiar la contrasena de este usuario!!'}
+          end
+        end
+
+     end
     end
   end
 end
