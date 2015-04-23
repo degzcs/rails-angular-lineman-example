@@ -14,6 +14,13 @@ describe 'Auth', :type => :request do
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end
 
+        it 'should save a reset_token  and send a email' do
+          post '/api/v1/auth/forgot_password', %Q{email=#{@user.email}}
+          expect(response.status).to eq 201
+          expect(@user.reload.reset_token).not_to be_nil
+          expect(JSON.parse(response.body)["access_token"]).not_to be_nil
+        end
+
       end
     end
   end

@@ -41,7 +41,7 @@ class UserResetPassword
   end
 
   def host
-    'http://localhost:3000'
+    Rails.application.routes.url_helpers.root_url
   end
 
   def send_email!(url)

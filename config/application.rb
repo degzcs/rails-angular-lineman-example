@@ -30,3 +30,4 @@ module RailsAngularLinemanExample
     config.autoload_paths = Dir[File.join(Rails.root, 'app', 'api', '*')]
   end
 end
+
