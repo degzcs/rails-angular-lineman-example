@@ -4,7 +4,7 @@ module V1
       expose :id, documentation: { type: "string", desc: "id of the purchase", example: '1' }
       expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" }
       expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do|purchase, options|
-        purchase.price.round(3) 
+        purchase.price.round(2) 
       end
       expose :origin_certificate_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :seller_picture, documentation: { type: "file", desc: "file", example: "..." }
@@ -34,7 +34,7 @@ module V1
           purchase.gold_batch.id
         end
         expose :grams , documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
-          purchase.gold_batch.grams.round(3) 
+          purchase.gold_batch.grams.round(2) 
         end
         expose :grade , documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
           purchase.gold_batch.grade
@@ -48,7 +48,7 @@ module V1
           purchase.inventory.status
         end
         expose :remaining_amount, documentation: { type: "string", desc: "inventory remaining_amount", example: "123456789" } do|purchase, options|
-          purchase.inventory.remaining_amount.round(3) 
+          purchase.inventory.remaining_amount.round(2) 
         end
       end
     end
