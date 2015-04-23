@@ -20,6 +20,14 @@ describe 'Auth', :type => :request do
           expect(@user.reload.reset_token).not_to be_nil
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end
+
+         it 'should reset the password a reset_token  and send a email' do
+          post '/api/v1/auth/change_password', %Q{email=#{@user.email}&password=another_super_password&password_confirmation=another_super_password}
+          expect(response.status).to eq 201
+          expect(@user.reload.authenticate('another_super_password')).to  be_kind_of  User
+          expect(JSON.parse(response.body)["access_token"]).not_to be_nil
+        end
+
       end
 
       context 'GET' do
