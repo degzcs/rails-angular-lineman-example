@@ -90,7 +90,7 @@ module V1
           requires :email, type: String
           requires :token, type: String
         end
-        get 'can_change_password' do
+        get 'confirmation' do
           user = ::User.where(email: params[:email]).last
           if UserResetPassword.new(user).can_change_password_with_this_token?(params[:token])
             {
