@@ -3,30 +3,39 @@
   /--------------------------- Selected Grams layout ------------------------/
   %md-card.amounts-picked.md-padding{flex: "20"}
     %h3
-      Gramos Seleccionados
+      Seleccion (Gramos Finos)
     %div.selected_amount{"ng-repeat"=> "item in selectedPurchases"} 
-      %p {{item.amount_picked}} Gr Finos
-      %p {{item.gold_batch.grade}} Ley
-      
+      {{item.amount_picked}} gr
     %div.total_amount
       %strong
         Gramos Totales: 
-      {{totalAmount}} 
+      {{totalAmount}} gr
   %md-card.batches{flex: ""}
     /--------------------------- Ingot Creation layout ------------------------/
     %h3
-      Lingotes Resultantes
-    %md-checkbox.md-primary{"aria-label" => "equal_amount_divider", "md-no-ink" => "", "ng-model" => "divide_by_equal_amounts",  "ng-disabled"=>"{{!allow_equal_divider}}", "ng-change"=>"divideIngots()"}
-      Dividir en cantidades iguales?
+      Lote Resultante
+    /%md-checkbox.md-primary{"aria-label" => "equal_amount_divider", "md-no-ink" => "", "ng-model" => "divide_by_equal_amounts",  "ng-disabled"=>"{{!allow_equal_divider}}", "ng-change"=>"divideIngots()"}
+    /  Dividir en cantidades iguales?
     %form.sale-form{name: "ingotsForm"}
-      %md-content.ingot_form{:layout => "row", "layout-padding" => "", "md-theme" => "docs-dark", "ng-repeat" => "ingot in ingots"}
-        %h3{flex: "30"} Lingote {{$index +1 }} :
+      %md-content.ingot_form{:layout => "row", "layout-padding" => "", "md-theme" => "docs-dark"}
+        //%h3{flex: "30"} 
+        //  Lote 
+        //  /{{$index +1 }} :
         %md-input-container{flex: ""}
           %label Ley
-          %input{"ng-model" => "ingot.law", required: ""}
+          %input{"ng-model" => "selectedGrade", required: "", "type" => "number", "step"=>"any"}
         %md-input-container{flex: ""}
           %label Gramos
-          %input{"ng-model" => "ingot.grams", required: ""}
+          %input{"ng-model" => "selectedGrams", required: "","type" => "number", "step"=>"any","ng-change"=>"calculate_total_amount()"}
+
+      %h1
+        Gramos Finos Totales:
+        {{selectedTotalAmount}}
+
+      %div.liquidation-messages{"ng-messages" => "validation_messages"}
+        %div.valid{"ng-message" => "valid"} Cantidad correcta
+        %div.invalid{"ng-message" => "invalid"} La cantidad no corresponde con los gramos finos seleccionados
+
       .customer-form{layout: "row"}
         .customer-info{flex: ""}
           %h3 Seleccione Cliente

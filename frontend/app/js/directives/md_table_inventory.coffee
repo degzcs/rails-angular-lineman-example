@@ -74,7 +74,13 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
         if item.selected
           $scope.deleteGramsDialog(item, ev)
         else
-          $scope.enterGramsDialog(item, ev)
+          if item.inventory_remaining_amount <= 1
+            item.selected = true
+            item.amount_picked = item.inventory_remaining_amount
+            $scope.selectedItems.push(item)
+            $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
+          else
+            $scope.enterGramsDialog(item, ev)
           
         
       #updates all checkboxes in the inventory list

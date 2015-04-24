@@ -1,4 +1,4 @@
-%md-dialog
+%md-dialog.amount-dialog
   %md-content.sticky-container
     .dialog-inventory-form
       %form{:name => "gramsForm", "ng-submit"=>"gramsForm.$valid && submit()"}
@@ -7,18 +7,15 @@
         /    %md-option{:value => "{{option}}"} {{option}}
         
         %md-input-container{"md-no-float"=>""}
-          %label Gramos Seleccionados, Maximo {{total_grams}}
-          %input{ "type" => "number", "ng-model" => "selected_grams", "name"=>"selected_grams" , "min"=> "1", "max"=> "{{pickedItem.inventory_remaining_amount}}" , "required"=>"" ,"step"=>"any","ng-keypress"=>"calculate_remaining()"}
+          %label Gramos Seleccionados, Max: {{total_grams}}
+          %input{ "type" => "number", "ng-model" => "selected_grams", "name"=>"selected_grams" , "min"=> "1", "max"=> "{{pickedItem.inventory_remaining_amount}}" , "required"=>"" ,"step"=>"any","ng-change"=>"calculate_remaining()"}
           %div{"ng-messages" => "gramsForm.selected_grams.$error"}
             %div{"ng-message" => "min"} Debe escojer una cantidad mayor a 0
             %div{"ng-message" => "max"} La cantidad seleccionada excede la disponible
             %div{"ng-message" => "number"} Formato invalido
-        %md-input-container{"md-no-float"=>""}
-          %label Gramos Restantes
-          %input{ "type"=>"number" , "ng-model"=>"remaining_amount" , "min"=> "1", "name"=>"remaining_amount","required"=>"","step"=>"any","ng-disabled"=>"true"}
-          %div{"ng-messages" => "gramsForm.remaining_amount.$error"}
-            %div{"ng-message" => "min"} Solo puede dejar 1 gr restante
-           
+          %div{"ng-messages" => "inventory_validation_messages"}
+            %div{"ng-message" => "invalid"} No puede dejar en inventario una cantidad menor a 1 gramo, debe seleccionar la totalidad del lote
+            
         %md-button.md-raised{type:"submit"} Ok
     
         

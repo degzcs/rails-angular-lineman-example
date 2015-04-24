@@ -139,3 +139,22 @@
     padding-right: 10px;
   }
 }
+
+.amount-dialog{
+  width: 400px;
+}
+
+.liquidation-messages{
+  .valid{
+    padding:10px;
+    border: 1px solid green;
+    width: 100%;
+    text-align: center;
+  }
+  .invalid{
+    padding:10px;
+    border: 1px solid red;
+    width: 100%;
+    text-align: center;
+  }
+}

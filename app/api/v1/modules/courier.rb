@@ -56,8 +56,8 @@ module V1
           per_page = params[:per_page] || 10
           id_document_number = params[:id_document_number]
           if id_document_number
-            couriers = ::Courier.where("id_document_number = :id_document_number", 
-              {id_document_number: id_document_number})            
+            couriers = ::Courier.where("id_document_number LIKE :id_document_number", 
+              {id_document_number: "%#{id_document_number.gsub('%', '\%').gsub('_', '\_')}%"})
           else
             couriers = ::Courier.paginate(:page => page, :per_page => per_page)
             header 'total_pages', couriers.total_pages.to_s
