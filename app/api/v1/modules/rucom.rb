@@ -18,6 +18,7 @@ module V1
 
         params :rucom_query do
           optional :rucom_query, type: String
+          optional :query_provtype, type: String
         end
 
         params :id do
@@ -42,10 +43,15 @@ module V1
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           rucom_query = params[:rucom_query]
+          query_provtype = params[:query_provtype]
           if rucom_query
             rucoms = ::Rucom.where("num_rucom LIKE :num_rucom OR rucom_record LIKE :rucom_record OR subcontract_number LIKE :subc_num", 
               {num_rucom: "%#{rucom_query.gsub('%', '\%').gsub('_', '\_')}%", rucom_record: "%#{rucom_query.gsub('%', '\%').gsub('_', '\_')}%", subc_num: "%#{rucom_query.gsub('%', '\%').gsub('_', '\_')}%"})
             #rucoms = rucoms.paginate(:page => page, :per_page => per_page)
+          elsif query_provtype
+            rucoms = ::Rucom.where("provider_type LIKE :provider_type", 
+              {provider_type: "%#{query_provtype.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
+            header 'total_pages', rucoms.total_pages.to_s
           else
             rucoms = ::Rucom.paginate(:page => page, :per_page => per_page)
             header 'total_pages', rucoms.total_pages.to_s
