@@ -85,3 +85,5 @@ Rails.application.configure do
     :authentication => :cram_md5
   }
 end
+# set hostname
+Rails.application.routes.default_url_options[:host] = 'trazoro-staging.cloudapp.net'

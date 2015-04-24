@@ -14,7 +14,35 @@ describe 'Auth', :type => :request do
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end
 
+        it 'should save a reset_token  and send a email' do
+          post '/api/v1/auth/forgot_password', %Q{email=#{@user.email}}
+          expect(response.status).to eq 201
+          expect(@user.reload.reset_token).not_to be_nil
+          expect(JSON.parse(response.body)["access_token"]).not_to be_nil
+        end
+
+         it 'should reset the password a reset_token  and send a email' do
+          post '/api/v1/auth/change_password', %Q{email=#{@user.email}&password=another_super_password&password_confirmation=another_super_password}
+          expect(response.status).to eq 201
+          expect(@user.reload.authenticate('another_super_password')).to  be_kind_of  User
+          expect(JSON.parse(response.body)["access_token"]).not_to be_nil
+        end
+
       end
+
+      context 'GET' do
+        before :each do
+          UserResetPassword.new(@user).process!
+          @token = ActionMailer::Base.deliveries.last.body.to_s.split('token=').last.split('</p>').first.to_s.strip
+        end
+        it 'should save a reset_token  and send a email' do
+          get '/api/v1/auth/confirmation', %Q{email=#{@user.email}&token=#{@token}}
+          expect(response.status).to eq 200
+          expect(@user.reload.reset_token).not_to be_nil
+          expect(JSON.parse(response.body)["access_token"]).not_to be_nil
+        end
+      end
+
     end
   end
 end

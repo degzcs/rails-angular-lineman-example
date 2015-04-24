@@ -12,6 +12,10 @@ class UserResetPassword
     send_email!(url)
   end
 
+  def can_change_password_with_this_token?(token)
+    get_reset_token == token
+  end
+
   private
 
   # Save the encoded token
@@ -37,11 +41,11 @@ class UserResetPassword
 
   # @return [String] with  the url that the user  will use to reset the password
   def generate_url(token)
-    "#{host}/api/v1/auth/reset_password?token=#{token}"
+    "#{host}/reset_password?token=#{token}"
   end
 
   def host
-    'http://localhost:3000'
+    Rails.application.routes.url_helpers.root_url
   end
 
   def send_email!(url)
