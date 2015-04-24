@@ -85,7 +85,8 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #eee;
-    background: lighten(rgb(255,64,129), 30);
+    //background: lighten(rgb(255,64,129), 30);
+    background: #71d883;
     text-align: center;
   }
 
@@ -105,7 +106,10 @@
 }
 
 .ingot_form{
-  margin-bottom: 10px;
+  padding-bottom:20px;
+  md-input-container{
+    overflow-x: visible!important;
+  }
   md-input-container.md-docs-dark-theme label, md-input-container.md-docs-dark-theme .md-placeholder {
     text-shadow: 1px 1px 0px rgba(0,0,0,0.4), -1px -1px 0px rgba(0,0,0,0.4); 
     color: rgba(255,255,255,0.6);
@@ -114,7 +118,6 @@
     //color: rgb(255,235,59);
     color: white;
   }
-
 }
 
 .sale-form{
@@ -147,14 +150,25 @@
 .liquidation-messages{
   .valid{
     padding:10px;
-    border: 1px solid green;
+    border: 1px solid #eee;
     width: 100%;
     text-align: center;
+    background: #71d883;
   }
   .invalid{
     padding:10px;
-    border: 1px solid red;
+    border: 1px solid #eee;
     width: 100%;
     text-align: center;
+    background: lighten(rgb(255,64,129), 30)
   }
+}
+
+.customer-form{
+  margin-top: 70px!important;
+  margin-bottom: 50px;
+}
+
+.ingot-submit-btn{
+  padding: 30px;
 }

@@ -6,7 +6,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   $scope.totalAmount = sale_info.totalAmount
   $scope.selectedGrams = null
   $scope.selectedGrade = null
-  $scope.selectedTotalAmount = null
+  $scope.selectedTotalAmount = 0
 
   $scope.searchClientText = null
   $scope.selectedClient = null
