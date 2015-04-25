@@ -244,6 +244,25 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.promise
     )
 
+    .state("edit_client",
+    url: "/client/:clientId",
+    ncyBreadcrumb:
+      label: 'Edición de cliente'
+    views:
+      'content':
+        templateUrl: "partials/clients/edit.html"
+        controller: "ClientsEditCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+    )
+
 
 
   #  --- Batches Routes ---- #
