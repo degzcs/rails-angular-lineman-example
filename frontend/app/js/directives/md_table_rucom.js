@@ -50,7 +50,7 @@ angular.module('app').directive('mdTableRucom', function () {
               $state.go(type, {rucomId: rucom.id});
             }
           }), function(error) {});
-        } else {
+        } else if ($scope.type === 'client') {
           ClientService.retrieveClients.query({query_rucomid: rucom.id}, (function(clients, headers) {
             if (clients.length > 0) {
               var title = 'RUCOM';

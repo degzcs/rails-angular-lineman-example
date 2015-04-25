@@ -29,9 +29,15 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', '$stateParams', '
     }
   ];
 
-  RucomService.retrieveRucoms.query({per_page: 100, page: 1}, function(rucoms) {
-    $scope.content = rucoms;    
-  });
+  if ($scope.type === 'client') {
+    RucomService.retrieveRucoms.query({per_page: 100, page: 1, query_provtype: 'Comercializadores'}, function(rucoms) {
+      $scope.content = rucoms;    
+    });
+  } else {
+    RucomService.retrieveRucoms.query({per_page: 100, page: 1}, function(rucoms) {
+      $scope.content = rucoms;    
+    });
+  }
 
   $scope.custom = {num_rucom: 'bold', provider_type: 'gray', name: 'gray', status: 'gray'};
   $scope.sortable = ['num_rucom', 'provider_type', 'name', 'status'];  
@@ -72,10 +78,17 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', '$stateParams', '
       return true;
       });
     } else {
-      RucomService.retrieveRucoms.query({per_page: 100, page: 1}, function(rucoms) {
-        $scope.content = rucoms;    
-      });
-      return true;
+      if ($scope.type === 'client') {
+        RucomService.retrieveRucoms.query({per_page: 100, page: 1, query_provtype: 'Comercializadores'}, function(rucoms) {
+          $scope.content = rucoms;    
+        });
+        return true;
+      } else {
+        RucomService.retrieveRucoms.query({per_page: 100, page: 1}, function(rucoms) {
+          $scope.content = rucoms;    
+        });
+        return true;
+      }
     }
   };  
   
