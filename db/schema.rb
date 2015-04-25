@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422022009) do
+ActiveRecord::Schema.define(version: 20150424072713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20150422022009) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                                 null: false
+    t.string   "idrucom",            limit: 90,                   null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -198,9 +198,20 @@ ActiveRecord::Schema.define(version: 20150422022009) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2015-04-10 01:25:41'
+    t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
+  end
+
+  create_table "sales", force: true do |t|
+    t.integer  "courier_id"
+    t.integer  "client_id"
+    t.integer  "user_id"
+    t.integer  "gold_batch_id"
+    t.float    "grams"
+    t.string   "barcode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "states", force: true do |t|

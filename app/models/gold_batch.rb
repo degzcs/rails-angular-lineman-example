@@ -16,4 +16,5 @@ class GoldBatch < ActiveRecord::Base
   # Associations
   #
   has_many :purchases
+  has_many :sales
 end
