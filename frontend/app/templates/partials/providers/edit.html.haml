@@ -60,7 +60,7 @@
               %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
           %br
           %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
+            %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
               %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar
               %md-button{"ng-show" => "currentProvider.company_info", "ng-disabled" => "!formTabControl.secondUnlocked || !currentProvider.company_info", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
