@@ -4,7 +4,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.companyInfo = null;
   $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
-    label: 'RUCOM Number',
+    label: 'Número de RUCOM',
     field: 'num_rucom'
   };
   
@@ -47,10 +47,10 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       $scope.currentProvider = prov;
       //ProviderService.setCurrentProv(prov);
       if(prov.rucom.num_rucom) {
-        $scope.rucomIDField.label = 'RUCOM Number';
+        $scope.rucomIDField.label = 'Número de RUCOM';
         $scope.rucomIDField.field = 'num_rucom';
       } else if (prov.rucom.rucom_record) {
-        $scope.rucomIDField.label = 'RUCOM Record';
+        $scope.rucomIDField.label = 'Número de Expediente';
         $scope.rucomIDField.field = 'rucom_record';
       }
       console.log('Current provider: ' + prov.id);
@@ -228,8 +228,8 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.formTabControl = {
     selectedIndex : 0,
     secondUnlocked : true,
-    firstLabel : "Basic Info",
-    secondLabel : "Company Info"
+    firstLabel : "Información Básica",
+    secondLabel : "Información de la Compañía"
   };
 
   $scope.save = function() {

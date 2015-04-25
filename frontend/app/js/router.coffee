@@ -114,7 +114,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("providers",
     url: "/provider",
     ncyBreadcrumb:
-      label: 'Providers'
+      label: 'Proveedores'
     views:
       'content':
         templateUrl: "partials/providers/index.html"
@@ -132,7 +132,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("edit_provider",
     url: "/provider/:providerId",
     ncyBreadcrumb:
-      label: 'Provider Edition'
+      label: 'Edición de proveedores'
     views:
       'content':
         templateUrl: "partials/providers/edit.html"
@@ -151,7 +151,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("search_rucom",
     url: "/rucoms/:type",
     ncyBreadcrumb:
-      label: 'Search provider or client by rucom'
+      label: 'Buscar proveedor o cliente en el RUCOM'
     views:
       'content':
         templateUrl: "partials/providers/search_rucom.html"
@@ -170,7 +170,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     .state("type_1",
       url: "/provider/type_1/rucom/:rucomId",
       ncyBreadcrumb:
-        label: 'New provider'
+        label: 'Nuevo proveedor'
       views:
         'content':
           templateUrl: "partials/providers/type_a.html"
@@ -189,7 +189,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     .state("type_2",
       url: "/provider/type_2/rucom/:rucomId",
       ncyBreadcrumb:
-        label: 'New provider'
+        label: 'Nuevo proveedor'
       views:
         'content':
           templateUrl: "partials/providers/type_b.html"
@@ -210,7 +210,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     .state("clients",
     url: "/clients",
     ncyBreadcrumb:
-      label: 'Clients'
+      label: 'Clientes'
     views:
       'content':
         templateUrl: "partials/clients/index.html"
@@ -228,7 +228,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     .state("create_client",
       url: "/client/rucom/:rucomId",
       ncyBreadcrumb:
-        label: 'New Client'
+        label: 'Nuevo cliente'
       views:
         'content':
           templateUrl: "partials/clients/new.html"

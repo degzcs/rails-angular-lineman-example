@@ -9,15 +9,15 @@ angular.module('app').controller('ClientsIndexCtrl', ['$scope', 'ClientService' 
       field:'photo_file',
       alternateField: 'photo_file'
     },{
-      name: 'First Name', 
+      name: 'Nombre', 
       field: 'first_name',
       alternateField: 'first_name'
     },{
-      name: 'Last Name', 
+      name: 'Apellido', 
       field: 'last_name',
       alternateField: 'last_name'
     },{
-      name:'ID Number', 
+      name:'Número de Identificación', 
       field: 'id_document_number',
       alternateField: 'id_document_number'
     },{
@@ -25,15 +25,15 @@ angular.module('app').controller('ClientsIndexCtrl', ['$scope', 'ClientService' 
       field: 'mineral',
       alternateField: 'mineral'
     },{
-      name: 'RUCOM Number', 
+      name: 'Número RUCOM', 
       field: 'num_rucom',
       alternateField: 'rucom_record'
     },{
-      name: 'Client Type', 
+      name: 'Tipo de Cliente', 
       field: 'client_type',
       alternateField: 'client_type'
     },{
-      name: 'Last Transaction', 
+      name: 'Última Transacción', 
       field: 'last_transaction_date',
       alternateField: 'last_transaction_date'
     }

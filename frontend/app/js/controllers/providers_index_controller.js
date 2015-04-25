@@ -9,15 +9,15 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       field:'photo_file',
       alternateField: 'photo_file'
     },{
-      name: 'First Name', 
+      name: 'Nombre', 
       field: 'first_name',
       alternateField: 'first_name'
     },{
-      name: 'Last Name', 
+      name: 'Apellido', 
       field: 'last_name',
       alternateField: 'last_name'
     },{
-      name:'ID Number', 
+      name:'Número de Identificación', 
       field: 'document_number',
       alternateField: 'document_number'
     },{
@@ -25,19 +25,19 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
       field: 'mineral',
       alternateField: 'mineral'
     },{
-      name: 'RUCOM Number', 
+      name: 'Número de RUCOM', 
       field: 'num_rucom',
       alternateField: 'rucom_record'
     },{
-      name: 'RUCOM Status', 
+      name: 'Estado del RUCOM', 
       field: 'rucom_status',
       alternateField: 'rucom_status'
     },{
-      name: 'Provider Type', 
+      name: 'Tipo de Proveedor', 
       field: 'provider_type',
       alternateField: 'provider_type'
     },{
-      name: 'Last Transaction', 
+      name: 'Última Transacción', 
       field: 'last_transaction_date',
       alternateField: 'last_transaction_date'
     }

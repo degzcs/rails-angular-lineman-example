@@ -9,7 +9,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   $scope.newProvider.has_company = $scope.newProvider.has_company || false;
   $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
-    label: 'RUCOM Number',
+    label: 'Número de RUCOM',
     field: 'num_rucom'
   };
 
@@ -85,10 +85,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     console.log(prov.rucom.num_rucom);
     console.log(prov.rucom.rucom_record);
     if(prov.rucom.num_rucom) {
-      $scope.rucomIDField.label = 'RUCOM Number';
+      $scope.rucomIDField.label = 'Número de RUCOM';
       $scope.rucomIDField.field = 'num_rucom';
     } else if (prov.rucom.rucom_record) {
-      $scope.rucomIDField.label = 'RUCOM Record';
+      $scope.rucomIDField.label = 'Número de Expediente';
       $scope.rucomIDField.field = 'rucom_record';
     }
 
@@ -188,8 +188,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   $scope.formTabControl = {
     selectedIndex : 0,
     secondUnlocked : true,
-    firstLabel : "Provider info",
-    secondLabel : "Company info"
+    firstLabel : "Información de Proveedor",
+    secondLabel : "Información de Compañia"
   };
 
   $scope.formValidateRucom = {    
@@ -242,10 +242,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     if($resource) {
       $scope.newProvider = {};
       ProviderService.setCurrentProv({});
-      $scope.infoAlert('Create new provider', 'Successful registration', false);
+      $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);
       $scope.abortCreate = true;
     } else {
-      $scope.infoAlert('Create new provider', 'Something went wrong. Please make sure of filling all required fields and provide all supporting documentation.', true);
+      $scope.infoAlert('Crear nuevo proveedor', 'Algo salió mal. Por favor asegurese de diligenciar todos los campos requeridos y proveer la documentación de soporte.', true);
     }
   };
 
@@ -278,7 +278,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
         if (!$scope.abortCreate) {
           event.preventDefault();
           var confirm;
-          confirm = $mdDialog.confirm().title('Cancel provider creation?').content('Do you wish to abort the current operation? Unsaved data will be lost').ariaLabel('Lucky day').ok('Yes, I do').cancel('Cancel').targetEvent(event);
+          confirm = $mdDialog.confirm().title('Cancelar la creación del nuevo proveedor').content('¿Desea cancelar la operación actual? Los datos que no haya guardado se perderán').ariaLabel('Lucky day').ok('Aceptar').cancel('Cancelar').targetEvent(event);
           return $mdDialog.show(confirm).then((function() {
             $scope.abortCreate = true;
             ProviderService.setCurrentProv({});

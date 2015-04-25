@@ -11,9 +11,9 @@
             %span Providers
           %span{:flex => "flex", "ng-hide" => "toggleSearch"}
           %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
-            %input#search-prov-name{"ng-model" => "queryName", :type => "text", :placeholder => "Name"}
+            %input#search-prov-name{"ng-model" => "queryName", :type => "text", :placeholder => "Nombre"}
           %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
-            %input#search-prov-id{"ng-model" => "queryId", :type => "text", :placeholder => "ID"}
+            %input#search-prov-id{"ng-model" => "queryId", :type => "text", :placeholder => "Número de Identificación"}
           .md-toolbar-item.md-tools{:layout => "row"}
             %a.md-button.md-default-theme{"ng-click" => "toggleSearch = !toggleSearch"}
               %i.ion-android-search
