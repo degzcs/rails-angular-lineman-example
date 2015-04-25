@@ -58,4 +58,4 @@
         %div{:layout => "row", :flex => "20", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
           %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
             %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
-            %md-button{"ng-disabled" => "!clientEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createClient()"} Guardar
+            %md-button{"ng-disabled" => "!clientEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "save()"} Guardar
