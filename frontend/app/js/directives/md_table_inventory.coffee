@@ -19,6 +19,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
       $scope.totalAmount = 0
 
       $scope.liquidate_selected_items = (ev)->
+        
         if $scope.selectedItems.length == 0
           $mdDialog.show(
             $mdDialog.alert()
@@ -27,8 +28,10 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
             .ariaLabel('Alert Dialog Demo').ok('Ok')
             .targetEvent(ev))
         else
-          enterIngotsNumber(ev)
+          #enterIngotsNumber(ev)
+          confirm_liquidate($scope.totalAmount,ev)
         return
+        
 
       $scope.show_inventory = (item)->
         PurchaseService.setCurrent(item)
@@ -71,7 +74,13 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
         if item.selected
           $scope.deleteGramsDialog(item, ev)
         else
-          $scope.enterGramsDialog(item, ev)
+          if item.inventory_remaining_amount <= 1
+            item.selected = true
+            item.amount_picked = item.inventory_remaining_amount
+            $scope.selectedItems.push(item)
+            $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
+          else
+            $scope.enterGramsDialog(item, ev)
           
         
       #updates all checkboxes in the inventory list
@@ -116,7 +125,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
           item.selected = true
           item.amount_picked = answer
           $scope.selectedItems.push(item)
-          $scope.totalAmount = $scope.totalAmount + answer
+          $scope.totalAmount = Number(($scope.totalAmount + answer).toFixed(2))
           return
         ), ->
           #if the response is negative set the checkbox to false
@@ -142,7 +151,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
               deleted_item_index = i
             i++
           #Then deletes the item from the array and from the total
-          $scope.totalAmount = $scope.totalAmount - $scope.selectedItems[deleted_item_index].amount_picked
+          $scope.totalAmount = Number(($scope.totalAmount - $scope.selectedItems[deleted_item_index].amount_picked).toFixed(2))
           $scope.selectedItems.splice(deleted_item_index, 1)
           item.selected = false
           item.amount_picked = null
@@ -162,7 +171,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
           item.selected = true
           item.amount_picked = item.inventory_remaining_amount
           $scope.selectedItems.push(item)
-          $scope.totalAmount = $scope.totalAmount + item.amount_picked
+          $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
           i++
         console.log $scope.selectedItems
         return
@@ -193,7 +202,29 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
         ), ->
           return
         return
+
+      confirm_liquidate = (total_grams,ev)->
+        confirm = $mdDialog.confirm()
+        .title('Confirmar')
+        .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
+        .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
+        .targetEvent(ev)
+
+        $mdDialog.show(confirm).then (->
+          SaleService.model.selectedPurchases = $scope.selectedItems
+          SaleService.model.totalAmount = $scope.totalAmount
+          SaleService.model.ingotsNumber = 1
+          SaleService.saveState()
+
+          $state.go 'liquidate_inventory'
+          return
+        ), ->
+          #If the response in negative sets the checkbox to true again
+          
+          return
+        return
       return
+
     
     templateUrl: 'directives/md-table-inventory.html'
     link: (scope, element, attrs)->

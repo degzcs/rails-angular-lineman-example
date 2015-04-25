@@ -30,9 +30,11 @@ describe 'Purchase', :type => :request do
            "origin_certificate_sequence"=>"123456789",
            "gold_batch"=> {
               "id"=>1,
-              "grams"=>1.5
+              "grams"=>1.5,
+              "grade"=>1
            },
            "inventory" => {
+              "id"=> 1,
               "status" => true,
               "remaining_amount" => 1.5
            }

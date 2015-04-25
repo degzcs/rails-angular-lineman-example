@@ -26,7 +26,7 @@
                 %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}"}
               {{item.amount_picked}}
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory(item)"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
-
+            
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
         Rows per page :

@@ -1,21 +1,21 @@
-%md-dialog
+%md-dialog.amount-dialog
   %md-content.sticky-container
     .dialog-inventory-form
-      %form{:name => "gramsForm", "ng-submit"=>"gramsForm.selected_grams.$error.required ? '' : submit()"}
-        %md-select{"ng-model" => "selected_grams", :placeholder => "Seleccione una cantidad","required"=>"", "name"=>"selected_grams"}
-          .option{"ng-repeat"=> "option in gram_options"}
-            %md-option{:value => "{{option}}"} {{option}}
+      %form{:name => "gramsForm", "ng-submit"=>"gramsForm.$valid && submit()"}
+        /%md-select{"ng-model" => "selected_grams", :placeholder => "Seleccione una cantidad","required"=>"", "name"=>"selected_grams"}
+        /  .option{"ng-repeat"=> "option in gram_options"}
+        /    %md-option{:value => "{{option}}"} {{option}}
         
-        %h2
-          %strong
-            Gramos restantes: 
-            {{total_grams-selected_grams}}
+        %md-input-container{"md-no-float"=>""}
+          %label Gramos Seleccionados, Max: {{total_grams}}
+          %input{ "type" => "number", "ng-model" => "selected_grams", "name"=>"selected_grams" , "min"=> "1", "max"=> "{{pickedItem.inventory_remaining_amount}}" , "required"=>"" ,"step"=>"any","ng-change"=>"calculate_remaining()"}
+          %div{"ng-messages" => "gramsForm.selected_grams.$error"}
+            %div{"ng-message" => "min"} Debe escojer una cantidad mayor a 0
+            %div{"ng-message" => "max"} La cantidad seleccionada excede la disponible
+            %div{"ng-message" => "number"} Formato invalido
+          %div{"ng-messages" => "inventory_validation_messages"}
+            %div{"ng-message" => "invalid"} No puede dejar en inventario una cantidad menor a 1 gramo, debe seleccionar la totalidad del lote
+            
         %md-button.md-raised{type:"submit"} Ok
     
-/        %md-input-container{"md-no-float"=>""}
-/          %input{ "type" => "number", "ng-model" => "grams", "name"=>"grams" , "min"=> "0.1", "max"=> "{{pickedItem.inventory_remaining_amount}}" , "required"=>"" ,"step"=>"any", "placeholder"=>"Gramos seleccionados"}
-/          %div{"ng-messages" => "gramsForm.grams.$error"}
-/            %div{"ng-message" => "min"} Debe escojer una cantidad mayor a 0
-/            %div{"ng-message" => "max"} La cantidad seleccionada excede la disponible
-/            %div{"ng-message" => "number"} Formato invalido
-
+        

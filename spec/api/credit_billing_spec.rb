@@ -46,6 +46,7 @@ describe 'Credit Billing', :type => :request do
         context "with company info" do
           it 'returns a representation of the new credit billing created and code 201' do
             
+            per_unit_value = 500.0
             new_values = {
               user_id: @user.id,
               unit: 200
@@ -53,10 +54,10 @@ describe 'Credit Billing', :type => :request do
 
             expected_response = {
               unit: 200,
-              per_unit_value: 1000.0,
-              iva_value: 200 * 1000.0 * 0.16,
+              per_unit_value: per_unit_value,
+              iva_value: 200 * per_unit_value * 0.16,
               discount: 0.0,
-              total_amount: 200 * 1000.0,
+              total_amount: 200 * per_unit_value,
               payment_flag: false,
               payment_date: nil,
               discount_percentage: 0.0
