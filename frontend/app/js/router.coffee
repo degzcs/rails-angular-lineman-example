@@ -207,6 +207,24 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
 #  --- Clients Routes ---- #
 
+    .state("clients",
+    url: "/clients",
+    ncyBreadcrumb:
+      label: 'Clients'
+    views:
+      'content':
+        templateUrl: "partials/clients/index.html"
+        controller: "ClientsIndexCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+    )
+
     .state("create_client",
       url: "/client/rucom/:rucomId",
       ncyBreadcrumb:
