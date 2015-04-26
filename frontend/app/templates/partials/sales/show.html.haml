@@ -1,1 +1,71 @@
-%h1 Preview de la venta
+%md-content.md-padding
+  %h1 Reporte - Remision
+  %div{layout: "row"}
+    /------------------------ CLIENT CARD ---------------------/      
+    %md-card.sell-card-info{flex:""}
+      %md-toolbar
+        .md-toolbar-tools
+          %h3
+            %span Datos Comprador
+      %md-card-content
+        .card-inputs
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Tipo
+              %input{:disabled => "disabled", "ng-model" => "currentClient.client_type"}
+            %md-input-container{flex: ""}
+              %label Cedula
+              %input{:disabled => "disabled", "ng-model" => "currentClient.id_document_number"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Nombre
+              %input{:disabled => "disabled", "ng-model" => "currentClient.first_name"}
+            %md-input-container{flex: ""}
+              %label Apellido
+              %input{:disabled => "disabled", "ng-model" => "currentClient.last_name"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Telefono
+              %input{:disabled => "disabled", "ng-model" => "currentClient.phone_number"}
+            %md-input-container{flex: ""}
+              %label Direccion
+              %input{:disabled => "disabled", "ng-model" => "currentClient.address"}
+          %div{layout: "row"}
+            %md-input-container{flex: "50"}
+              %label Correo
+              %input{:disabled => "disabled", "ng-model" => "currentClient.email"}
+
+    /------------------------ COURIER CARD ---------------------/ 
+    %md-card.sell-card-info{flex: ""}
+      %md-toolbar
+        .md-toolbar-tools
+          %h3
+            %span Datos Transportador
+      %md-card-content
+        .card-inputs
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Cedula
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.id_document_number"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Nombre
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.first_name"}
+            %md-input-container{flex: ""}
+              %label Apellido
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.last_name"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Telefono
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.phone_number"}
+            %md-input-container{flex: ""}
+              %label Direccion
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.address"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Compañia
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.company_name"}
+            %md-input-container{flex: ""}
+              %label Nit
+              %input{:disabled => "disabled", "ng-model" => "currentCourier.nit_company_number"}
+

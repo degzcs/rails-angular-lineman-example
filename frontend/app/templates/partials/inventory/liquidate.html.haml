@@ -62,7 +62,8 @@
                   %input{:disabled => "disabled", "ng-model" => "selectedClient.id_document_number"}
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
-          %a{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
+          %br
+          %a.md-button{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
         /--------------------------- Courier info ------------------------/
         .courier-info{flex: ""}
           %fieldset.standard.tr-fieldset{:layout => "column"}
@@ -85,5 +86,6 @@
                   %input{:disabled => "disabled", "ng-model" => "selectedCourier.id_document_number"}
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"courierVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
-          %a{"ui-sref"=>"new_courier"} crear transportador
+          %br
+          %a.md-button{"ui-sref"=>"new_courier"} crear transportador
       %md-button.submit-button.ingot-submit-btn.md-raised{type: "submit"} Crear Venta
