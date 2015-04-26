@@ -37,9 +37,6 @@ describe Sale do
     it "should not allow to create a sale without client id" do
       expect(build(:sale, client_id: nil)).not_to be_valid
     end
-    it "should not allow to create a sale without gold_batch id" do
-      expect(build(:sale, gold_batch_id: nil)).not_to be_valid
-    end
     it "should not allow to create a sale without grams" do
       expect(build(:sale, grams: nil)).not_to be_valid
     end
