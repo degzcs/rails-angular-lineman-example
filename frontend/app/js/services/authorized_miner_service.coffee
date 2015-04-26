@@ -16,7 +16,7 @@ angular.module('app').factory 'AuthorizedMinerOriginCertificateService', ($rootS
       mineral:
         type: 'Oro'
         amount: ''
-        measure_unit: ''
+        measure_unit: 'Gramos'
         state: ''
         city: ''
       ## mineral's Buyer info

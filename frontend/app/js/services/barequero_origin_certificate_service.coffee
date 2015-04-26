@@ -16,7 +16,7 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
       mineral:
         type: 'Oro'
         amount: ''
-        measure_unit: ''
+        measure_unit: 'Gramos'
       ## mineral's Buyer info
       buyer:
         company_name: ''
