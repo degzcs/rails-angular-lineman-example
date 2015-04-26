@@ -14,7 +14,7 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
         city: '' # city where the miner is/was registered
       ##mineral info
       mineral:
-        type: ''
+        type: 'Oro'
         amount: ''
         measure_unit: ''
       ## mineral's Buyer info
