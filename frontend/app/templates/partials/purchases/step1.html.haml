@@ -30,7 +30,8 @@
       .photo{'flex' => ''}
         %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
         %a{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
-          %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"} +
+          %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"}
+            %md-icon{"md-svg-icon" => "image:camera_alt"}
             %md-tooltip{"md-visible" => "demo.showTooltip"}
               Agregar Foto
               %span.ion-android-checkmark-circle
