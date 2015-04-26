@@ -39,7 +39,7 @@ angular.module('app').directive('mdTableRucom', function () {
           ProviderService.retrieveProviders.query({query_rucomid: rucom.id}, (function(providers, headers) {
             if (providers.length > 0) {
               var title = 'RUCOM';
-              var text = 'There already exists a provider associated to this RUCOM';
+              var text = 'Ya existe un proveedor asociado a este registro del RUCOM';
               $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
             } else {
               console.log('setCurrentRucom' + JSON.stringify(rucom));
@@ -54,7 +54,7 @@ angular.module('app').directive('mdTableRucom', function () {
           ClientService.retrieveClients.query({query_rucomid: rucom.id}, (function(clients, headers) {
             if (clients.length > 0) {
               var title = 'RUCOM';
-              var text = 'There already exists a client associated to this RUCOM';
+              var text = 'Ya existe un cliente asociado a este registro del RUCOM';
               $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
             } else {
               console.log('setCurrentRucom' + JSON.stringify(rucom));

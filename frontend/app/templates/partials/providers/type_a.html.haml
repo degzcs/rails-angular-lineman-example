@@ -13,18 +13,18 @@
             %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Photo", :md-ripple-size => "partial", "ng-href" => "#scanner", "ng-click" =>"scanner(1)"} +
               %img.face.cam{:ng-src => "{{newProvider.photo_file}}"}  
                 %md-tooltip{"md-visible" => "demo.showTooltip"}
-                  Photo
+                  Foto
                   %span.ion-android-checkmark-circle
           %md-input-container{:flex => ""}
-            %label First name
+            %label Nombre
             %input{:name => "first_name", "ng-model" => "newProvider.first_name", :required => ""}
             %div{"ng-messages" => "providerCreateForm.first_name.$error"}
-              %div{"ng-message" => "required"} This is required.
+              %div{"ng-message" => "required"} Este campo es requerido.
           %md-input-container{:flex => ""}
-            %label Last name
+            %label Apellido
             %input{:name => "last_name", "ng-model" => "newProvider.last_name", :required => ""}
             %div{"ng-messages" => "providerCreateForm.last_name.$error"}
-              %div{"ng-message" => "required"} This is required.
+              %div{"ng-message" => "required"} Este campo es requerido.
           %md-input-container{:flex => ""}
             %label {{rucomIDField.label}}
             %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
@@ -32,10 +32,10 @@
               %span.ion-android-checkmark-circle &nbsp;válido
           %div{:flex => "", :layout => "row"}
             %md-input-container
-              %label ID document number
+              %label Número de Identificación
               %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
               %div{"ng-messages" => "providerCreateForm.document_number.$error"}
-                %div{"ng-message" => "required"} This is required.
+                %div{"ng-message" => "required"} Este campo es requerido.
             %div
               %span
                 {{newProvider.identification_number_file[0].name}}
@@ -50,35 +50,35 @@
                 %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
                   %md-icon{"md-svg-icon" => "image:camera_alt"}
                   %md-tooltip{"md-visible" => "demo.showTooltip"}
-                    Photo
+                    Foto
         %md-content.md-padding{:layout => "", "layout-sm" => "column"}
           %md-input-container{:flex => ""}
-            %label Provider type
+            %label Tipo de Proveedor
             %input{"ng-model" => "newProvider.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
           %md-input-container{:flex => "15"}
-            %label Phone Number
+            %label Teléfono
             %input{:name => "phone_number", "ng-model" => "newProvider.phone_number", :placeholder => "(555) 555 5555", :required => ""}
             %div{"ng-messages" => "providerCreateForm.phone_number.$error"}
-              %div{"ng-message" => "required"} This is required.
+              %div{"ng-message" => "required"} Este campo es requerido.
           %md-input-container{:flex => ""}
             %label Email
             %input{:name => "email", "ng-model" => "newProvider.email", :type => "email", :required => ""}
             %div{"ng-messages" => "providerCreateForm.email.$error"}
-              %div{"ng-message" => "required"} This is required.
-              %div{"ng-message" => "email"} Enter a valid email
+              %div{"ng-message" => "required"} Este campo es requerido.
+              %div{"ng-message" => "email"} Ingrese un e-mail válido.
         %md-content.md-padding
           %md-input-container{:flex => ""}
-            %label Address
+            %label Dirección
             %input{:name => "address", "ng-model" => "newProvider.address", :placeholder => "CLL/CR 1 22 - 33", :required => ""}
             %div{"ng-messages" => "providerCreateForm.address.$error"}
-              %div{"ng-message" => "required"} This is required.          
+              %div{"ng-message" => "required"} Este campo es requerido.          
         %br
         %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
-          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "State"}
+          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
             %span{"md-highlight-text" => "searchState"} {{state.name}}
-          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "City"}
+          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
             %span{"md-highlight-text" => "searchCity"} {{city.name}}
-          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Population Center"}
+          %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
             %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
         %br
         %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
@@ -89,13 +89,13 @@
                   %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"}
                     %md-icon{"md-svg-icon" => "image:camera_alt"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Mining Register
+                      Registro Minero
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
                     %div{:layout => "row",:layout-margin => "20"}  
                       %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
                         %md-icon{"md-svg-icon"=>"file:file_upload"}  
-                        Mining register
+                        Registro Minero
                       %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(3)"}
                         %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
               %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
@@ -106,13 +106,13 @@
                   %md-button.md-fab.md-accent.md-default-theme.cam{:md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"}
                     %md-icon{"md-svg-icon" => "image:camera_alt"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      RUT file                      
+                      Copia del RUT
                 .upload-oc{'flex' => ''}
                   .button-action.md-padding
                     %div{:layout => "row",:layout-margin => "10"}
                       %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
                         %md-icon{"md-svg-icon"=>"file:file_upload"} 
-                        RUT file
+                        Copia del RUT
                       %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(4)"}
                         %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
               %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
@@ -120,7 +120,7 @@
                   {{newProvider.rut_file[0].name}}
           %div{:layout => "row", :flex => "15", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
             %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
-              %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-              %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider()"} Save
+              %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
+              %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider()"} Guardar
 
  

@@ -1,6 +1,6 @@
-angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams', '$window', 'ProviderService', 'RucomService', 'LocationService', function($scope, $stateParams, $window, ProviderService, RucomService, LocationService){
-  //$scope.currentProvider = providerService.getCurrentProv() ? ;
-  $scope.currentProvider = null;
+angular.module('app').controller('ClientsEditCtrl', ['$scope', '$stateParams', '$window', 'ClientService', 'RucomService', 'LocationService', function($scope, $stateParams, $window, ClientService, RucomService, LocationService){
+  //$scope.currentClient = clientService.getCurrentProv() ? ;
+  $scope.currentClient = null;
   $scope.companyInfo = null;
   $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
@@ -8,59 +8,51 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     field: 'num_rucom'
   };
   
-  if ($stateParams.providerId) {
-    ProviderService.retrieveProviderById.get({providerId: $stateParams.providerId}, function(provider) {
-      var prov = {
-        id: provider.id,
-        document_number: provider.document_number,
-        first_name: provider.first_name,
-        last_name: provider.last_name,
-        address: provider.address,
-        email: provider.email,
-        phone_number: provider.phone_number,
-        photo_file: provider.photo_file || ('http://robohash.org/' + provider.id),
+  if ($stateParams.clientId) {
+    ClientService.retrieveClientById.get({clientId: $stateParams.clientId}, function(client) {
+      var clnt = {
+        id: client.id,
+        id_document_number: client.id_document_number,
+        id_document_type: client.id_document_type,
+        first_name: client.first_name,
+        last_name: client.last_name,
+        address: client.address,
+        email: client.email,
+        phone_number: client.phone_number,
+        client_type: client.client_type,
         rucom: {
-          num_rucom: provider.rucom.num_rucom,
-          rucom_record: provider.rucom.rucom_record,
-          provider_type: provider.rucom.provider_type,
-          rucom_status: provider.rucom.status,
-          mineral: provider.rucom.mineral
+          num_rucom: client.rucom.num_rucom,
+          rucom_record: client.rucom.rucom_record,
+          provider_type: client.rucom.provider_type,
+          rucom_status: client.rucom.status,
+          mineral: client.rucom.mineral
         },
         population_center: {
-          id: provider.population_center.id,
-          name: provider.population_center.name,
-          population_center_code: provider.population_center.population_center_code,
-        }
+          id: client.population_center.id,
+          name: client.population_center.name,
+          population_center_code: client.population_center.population_center_code,
+        },
+        company_name: client.company_name,
+        nit_company_number: client.nit_company_number
       };
-      if (provider.company_info) {
-        prov.company_info = {
-          id: provider.company_info.id,
-          nit_number: provider.company_info.nit_number,
-          name: provider.company_info.name,
-          legal_representative: provider.company_info.legal_representative,
-          id_type_legal_rep: provider.company_info.id_type_legal_rep,
-          id_number_legal_rep: provider.company_info.id_number_legal_rep,
-          email: provider.company_info.email,
-          phone_number: provider.company_info.phone_number
-        };
-      }
-      $scope.currentProvider = prov;
-      //ProviderService.setCurrentProv(prov);
-      if(prov.rucom.num_rucom) {
+      
+      $scope.currentClient = clnt;
+      //ClientService.setCurrentProv(prov);
+      if(clnt.rucom.num_rucom) {
         $scope.rucomIDField.label = 'Número de RUCOM';
         $scope.rucomIDField.field = 'num_rucom';
-      } else if (prov.rucom.rucom_record) {
+      } else if (clnt.rucom.rucom_record) {
         $scope.rucomIDField.label = 'Número de Expediente';
         $scope.rucomIDField.field = 'rucom_record';
       }
-      console.log('Current provider: ' + prov.id);
-      $scope.loadProviderLocation($scope.currentProvider);
+      console.log('Current client: ' + clnt.id);
+      $scope.loadClientLocation($scope.currentClient);
     });
   }
 
   // Watchers for listen to changes in editable fields
 
-  $scope.$watch('currentProvider', 
+  $scope.$watch('currentClient', 
     function(newVal, oldVal) {
       if (oldVal && newVal !== oldVal) {
         $scope.saveBtnEnabled = true;
@@ -87,9 +79,9 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.cityDisabled = true;
   $scope.populationCenterDisabled = true;
 
-  $scope.loadProviderLocation = function (provider) {
-    if(provider) {
-      LocationService.getPopulationCenterById.get({populationCenterId: provider.population_center.id}, function(populationCenter) {
+  $scope.loadClientLocation = function (client) {
+    if(client) {
+      LocationService.getPopulationCenterById.get({populationCenterId: client.population_center.id}, function(populationCenter) {
         $scope.selectedPopulationCenter = populationCenter;
         $scope.searchPopulationCenter = populationCenter.name;
         $scope.populationCenterDisabled = false;
@@ -169,7 +161,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   $scope.selectedPopulationCenterChange = function(population_center) {
     if(population_center){
       console.log('Population Center changed to ' + JSON.stringify(population_center));
-      $scope.currentProvider.population_center.id = population_center.id;
+      $scope.currentClient.population_center.id = population_center.id;
     } else {
       console.log('Population Center changed to none');
     }
@@ -234,9 +226,9 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
 
   $scope.save = function() {
     //PUT Request:
-    $resource = ProviderService.edit($scope.currentProvider);
+    $resource = ClientService.edit($scope.currentClient);
     if($resource){
-      $resource.update({ id:$scope.currentProvider.id }, $scope.currentProvider);
+      $resource.update({ id:$scope.currentClient.id }, $scope.currentClient);
     }
     $window.history.back();
   };

@@ -8,7 +8,7 @@ angular.module('app').controller('ClientsCreateCtrl', ['$scope', '$state', '$sta
   $scope.companyName = "";
   $scope.saveBtnEnabled = false;
   $scope.rucomIDField = {
-    label: 'RUCOM Number',
+    label: 'Número de RUCOM',
     field: 'num_rucom'
   };
 
@@ -60,10 +60,10 @@ angular.module('app').controller('ClientsCreateCtrl', ['$scope', '$state', '$sta
     console.log(clnt.rucom.num_rucom);
     console.log(clnt.rucom.rucom_record);
     if(clnt.rucom.num_rucom) {
-      $scope.rucomIDField.label = 'RUCOM Number';
+      $scope.rucomIDField.label = 'Número deRUCOM';
       $scope.rucomIDField.field = 'num_rucom';
     } else if (clnt.rucom.rucom_record) {
-      $scope.rucomIDField.label = 'RUCOM Record';
+      $scope.rucomIDField.label = 'Número de Expediente';
       $scope.rucomIDField.field = 'rucom_record';
     }
 
@@ -139,10 +139,10 @@ angular.module('app').controller('ClientsCreateCtrl', ['$scope', '$state', '$sta
       $resource .save($scope.newClient);
       //$scope.newClient = {};
       ClientService.setCurrentClient({});
-      $scope.infoAlert('Create new client', 'Successful registration', false);
+      $scope.infoAlert('Crear nuevo cliente', 'El registro ha sido exitoso', false);
       $scope.abortCreate = true;
     } else {
-      $scope.infoAlert('Create new client', 'Something went wrong. Please make sure of filling all required fields and provide all supporting documentation.', true);
+      $scope.infoAlert('Crear nuevo cliente', 'Algo salió mal. Por favor asegurese de diligenciar todos los campos requeridos.', true);
     }
   };
 
@@ -175,7 +175,7 @@ angular.module('app').controller('ClientsCreateCtrl', ['$scope', '$state', '$sta
         if (!$scope.abortCreate) {
           event.preventDefault();
           var confirm;
-          confirm = $mdDialog.confirm().title('Cancel client creation?').content('Do you wish to abort the current operation? Unsaved data will be lost').ariaLabel('Lucky day').ok('Yes, I do').cancel('Cancel').targetEvent(event);
+          confirm = $mdDialog.confirm().title('Cancelar la creación del nuevo cliente').content('¿Desea cancelar la operación actual? Los datos que no haya guardado se perderán').ariaLabel('Lucky day').ok('Aceptar').cancel('Cancelar').targetEvent(event);
           return $mdDialog.show(confirm).then((function() {
             $scope.abortCreate = true;
             ClientService.setCurrentClient({});

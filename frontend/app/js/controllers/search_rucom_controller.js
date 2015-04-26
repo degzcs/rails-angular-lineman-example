@@ -3,23 +3,23 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', '$stateParams', '
   $scope.toggleSearch = true;  
   $scope.query = '';
   $scope.type = $stateParams.type;
-  $scope.capType = $stateParams.type.charAt(0).toUpperCase() + $stateParams.type.slice(1);
+  $scope.capType = $stateParams.type === 'client' ? 'Cliente' : 'Proveedor';
   $scope.content = []; 
   $scope.headers = [
     {
-      name: 'RUCOM Number', 
+      name: 'Número de RUCOM', 
       field: 'num_rucom',
       alternateField: 'rucom_record'
     },{
-      name: 'Provider type', 
+      name: 'Tipo de Proveedor', 
       field: 'provider_type',
       alternateField: 'provider_type'
     },{
-      name: 'Name', 
+      name: 'Nombre', 
       field: 'name',
       alternateField: 'name'
     },{
-      name: 'RUCOM Status', 
+      name: 'Estado del RUCOM', 
       field: 'status',
       alternateField: 'status'
     },{

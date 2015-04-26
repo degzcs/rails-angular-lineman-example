@@ -1,14 +1,14 @@
 %md-content
   %div{:layout => "column"}
     .main-fab
-      %a{"ui-sref" => "search_rucom({type: 'provider'})"}
+      %a{"ui-sref" => "search_rucom({type: 'client'})"}
         %md-button.md-fab.md-accent{"aria-label" => "New", :md-ripple-size => "partial"} +
     %md-toolbar.md-tall{:layout => "column"}
       %span{:flex => "flex"}
       .md-toolbar-tools
         .fill-height{:layout => "row", :flex => "flex"}
           .md-toolbar-item.md-breadcrumb{"ng-hide" => "toggleSearch"}
-            %span Providers
+            %span Clientes
           %span{:flex => "flex", "ng-hide" => "toggleSearch"}
           %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
             %input#search-prov-name{"ng-model" => "queryName", :type => "text", :placeholder => "Nombre"}
@@ -18,4 +18,4 @@
             %a.md-button.md-default-theme{"ng-click" => "toggleSearch = !toggleSearch"}
               %i.ion-android-search
     %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
-      %md-table-provider{:headers => "headers", :content => "content", :pages => "pages", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count", "current-provider" => "currentProvider", "query-name" => "queryName", "query-id" => "queryId", "query-focus" => "queryFocus"}
+      %md-table-client{:headers => "headers", :content => "content", :pages => "pages", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count", "current-client" => "currentClient", "query-name" => "queryName", "query-id" => "queryId", "query-focus" => "queryFocus"}
