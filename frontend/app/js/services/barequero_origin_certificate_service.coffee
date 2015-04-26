@@ -1,7 +1,7 @@
-angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($rootScope, $upload)->
+angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($rootScope, $upload, $filter)->
   service=
     model:
-      date: ''
+      date: $filter('date')(Date.now(), 'yyyy-MM-dd');
       city: '' # where is generated the current OC
       ## mineral's Provider Info
       provider:
