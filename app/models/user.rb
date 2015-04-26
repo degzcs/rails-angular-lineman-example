@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
 	  self.available_credits  ||= 0.0           #will set the default value only if it's nil
 	end
 
-	# NOTE: what is Client class?
+	# NOTE: what is Client class for?... I think is better use a Single-Table Inheritance approach here!
 	  def save_client
 
 			client_hash = { "first_name" => self.first_name,

@@ -19,6 +19,7 @@
 #  email                :string(255)
 #
 
+# this class is like User but wiht more fields, so why don't use Single-Table Inheritance (STI) instead create a new model?
 class Client < ActiveRecord::Base
 
   #
@@ -27,11 +28,13 @@ class Client < ActiveRecord::Base
 
   # @return the rucom of the client
   def rucom
+    # IMPROVE: what is the reason to don't use an association (eg has_one :rucom) instead this?
     Rucom.find(self.rucom_id) if (self.rucom_id)
   end
 
   # @return the population_center of the provider
   def population_center
+    # IMPROVE: what is the reason to don't use an association (eg has_one :population_center) instead this?
     PopulationCenter.find(self.population_center_id) if (self.population_center_id)
   end
 
