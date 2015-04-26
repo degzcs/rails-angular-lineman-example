@@ -1,4 +1,11 @@
 angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService) ->
+  #
+  # Redirects to The index inventory if there is no pendinigs liquidations
+  #
+  if sessionStorage.pendingLiquidation == 'false'
+    $state.go "index_inventory"
+    return
+
   liquidation_info = LiquidationService.restoreState()
   console.log liquidation_info
 

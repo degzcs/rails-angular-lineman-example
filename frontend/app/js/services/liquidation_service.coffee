@@ -17,5 +17,9 @@ angular.module('app').factory 'LiquidationService', ($http)->
       else
         sessionStorage.pendingLiquidation = 'false'
 
+    deleteState: ->
+      sessionStorage.pendingLiquidation = 'false'
+      sessionStorage.liquidationService = null
+
 
   service
