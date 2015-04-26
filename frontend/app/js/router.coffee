@@ -561,6 +561,24 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
+  .state("show_sale",
+    url: "/sale/info",
+    ncyBreadcrumb:
+      label: 'Informacion de venta'
+    views:
+      'content':
+        templateUrl: "partials/sales/show.html"
+        controller: "SaleShowCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
 
   $urlRouterProvider.otherwise "/home"
 

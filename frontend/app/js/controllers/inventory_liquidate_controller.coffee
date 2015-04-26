@@ -1,9 +1,9 @@
-angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog) ->
-  sale_info = SaleService.restoreState()
-  console.log sale_info
+angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService) ->
+  liquidation_info = LiquidationService.restoreState()
+  console.log liquidation_info
 
-  $scope.selectedPurchases = sale_info.selectedPurchases
-  $scope.totalAmount = sale_info.totalAmount
+  $scope.selectedPurchases = liquidation_info.selectedPurchases
+  $scope.totalAmount = liquidation_info.totalAmount
   $scope.selectedGrams = null
   $scope.selectedGrade = null
   $scope.selectedTotalAmount = 0
@@ -84,25 +84,32 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
       $scope.infoAlert('Atencion', 'Por favor ingrese todos los campos correctamente')
       return
     else
-      gold_batch = {
+      gold_batch_params = {
         parent_batches: "",
         grams: $scope.totalAmount,
         grade: $scope.selectedGrade
       }
 
-      sale = {
+      sale_params = {
         courier_id: $scope.selectedCourier.id,
         client_id: $scope.selectedClient.id,
         grams: $scope.totalAmount,
         barcode: "hdjashkdjhq"
       }
 
-      SaleService.create(sale,gold_batch).success((data) ->
-        $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+      SaleService.create(sale_params,gold_batch_params).success((sale) ->
+        #$scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+        SaleService.model.id = sale.id
+        SaleService.model.courier_id = sale.courier_id
+        SaleService.model.client_id = sale.client_id
+        SaleService.model.user_id = sale.user_id
+        SaleService.model.gold_batch_id = sale.gold_batch_id
+        SaleService.model.grams = sale.grams
+        SaleService.model.barcode = sale.barcode
+        SaleService.saveState()
+        $state.go('show_sale')
       ).error (data, status, headers, config) ->
         $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud')
-
-
 
   #Dialg alert helper
   $scope.infoAlert = (title,content)->

@@ -1,28 +1,30 @@
 
 angular.module('app').factory 'SaleService', ($http)-> 
   service = 
-
-    model:
-      selectedPurchases: null
-      totalAmount: 0
-      ingots_number: 0
-
-    create: (sale, gold_batch)->
-      console.log(sale)
-      console.log(gold_batch)
-      return $http.post("api/v1/sales", {sale: sale, gold_batch: gold_batch})
     
+    model: 
+      id: null
+      courier_id: null
+      client_id: null
+      user_id: null
+      gold_batch_id: null 
+      grams: null
+      barcode: null
+
+    create: (sale_params, gold_batch_params)->
+      return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params})
+
     saveState: ->
       sessionStorage.restoreSale = 'true'
       sessionStorage.saleService = angular.toJson(service.model)
       console.log 'Sale Saved'
 
     restoreState: ->
-      if(sessionStorage.saleService)
+      if(sessionStorage.restoreSale)
         service.model = angular.fromJson(sessionStorage.saleService)
+        return service.model
       else
         sessionStorage.restoreSale = 'false'
-
 
     #setSaleInfo: function(sale_info){
     #  sessionStorage.setItem('saleInfo',JSON.stringify(sale_info));

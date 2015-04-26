@@ -1,4 +1,4 @@
-angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$state) ->
+angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationService,$state) ->
   {
     restrict: 'E'
     scope:
@@ -192,10 +192,10 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
           templateUrl: 'partials/ingots_number_form.html'
           targetEvent: ev).then ((answer) ->
           
-          SaleService.model.selectedPurchases = $scope.selectedItems
-          SaleService.model.totalAmount = $scope.totalAmount
-          SaleService.model.ingotsNumber = answer
-          SaleService.saveState()
+          LiquidationService.model.selectedPurchases = $scope.selectedItems
+          LiquidationService.model.totalAmount = $scope.totalAmount
+          LiquidationService.model.ingotsNumber = answer
+          LiquidationService.saveState()
 
           $state.go 'liquidate_inventory'
           return
@@ -211,10 +211,10 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,SaleService,$stat
         .targetEvent(ev)
 
         $mdDialog.show(confirm).then (->
-          SaleService.model.selectedPurchases = $scope.selectedItems
-          SaleService.model.totalAmount = $scope.totalAmount
-          SaleService.model.ingotsNumber = 1
-          SaleService.saveState()
+          LiquidationService.model.selectedPurchases = $scope.selectedItems
+          LiquidationService.model.totalAmount = $scope.totalAmount
+          LiquidationService.model.ingotsNumber = 1
+          LiquidationService.saveState()
 
           $state.go 'liquidate_inventory'
           return
