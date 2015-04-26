@@ -1,4 +1,15 @@
-angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDialog,SessionService) ->
+angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDialog,SessionService, $stateParams, $location) ->
+
+  #
+  # Instances
+  #
+  $scope.email = $stateParams.email || ''
+  $scope.password = ''
+  $scope.password_confirmation = ''
+
+  #
+  # Functions
+  #
 
   $scope.logout = ->
     if !$auth.isAuthenticated()
@@ -12,13 +23,16 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
       return
 
    $scope.activateNewPassword = ->
-   #TODO: save password  SessionService
+    #TODO: save password  SessionService
     confirm = $mdDialog.confirm().title('Recuperar contraseña')
-      .content('Se ha actualizado la contraseña')
-      .ariaLabel('Lucky day')
-      .ok('Ok')
-    $mdDialog.show(confirm).then()
-    return    
+                                        .content('Se ha actualizado la contraseña')
+                                        .ariaLabel('Lucky day')
+                                        .ok('Ok')
+    $mdDialog.show(confirm).then(->
+      SessionService.resetPassword($scope.email, $scope.password, $scope.password_confirmation)
+      $location.path '/login'
+      return
+    )
 
   $scope.sendToken = ->
   #TODO: SEND TOKEN SessionService
@@ -27,8 +41,13 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
       .content('Se ha enviado un enlace para recuperar contraseña')
       .ariaLabel('Lucky day')
       .ok('Ok')
-    $mdDialog.show(confirm).then(window.history.back())
-    return
+    $mdDialog.show(confirm).then( ->
+      SessionService.forgotPassword($scope.email)
+      window.history.back()
+      return
+    )#, ->
+    #   console.log 'Intentalo de nuevo!'
+    #   return
 
   $scope.login = ->
     $auth.login(
@@ -40,7 +59,7 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
         .ok('hecho!')
         duration: 2
       return
-      
+
     ).catch (response) ->
       $mdDialog.show $mdDialog.alert()
         .title('Datos incorrectos!')
