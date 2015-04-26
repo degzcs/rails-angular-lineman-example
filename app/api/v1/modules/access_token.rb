@@ -61,18 +61,22 @@ module V1
         end
         post 'forgot_password' do
           user = ::User.where(email: params[:email]).last
-          UserResetPassword.new(user).process!
-          {
-            access_token: user.create_token,
-            expires_in: Time.now.tomorrow
-          }
+          if user.present?
+            UserResetPassword.new(user).process!
+            {
+              access_token: user.create_token,
+              expires_in: Time.now.tomorrow
+            }
+          else
+            { message:  'El usuario no se ha encontrado!!', status: 404}
+          end
         end
 
       #
       #  check reset token to change password
       #
 
-      desc 'it check if the reset_token is correct to change the password ', {
+      desc 'it checks if the reset_token is correct to change the password ', {
             entity: V1::Entities::AccessToken,
             notes: <<-NOTE
               ### Description
@@ -126,6 +130,7 @@ module V1
           requires :password_confirmation, type: String
         end
         post 'change_password' do
+          # binding.pry
           user = ::User.where(email: params[:email]).last
           updated= user.update_attributes(password: params[:password_confirmation], password_confirmation: params[:password_confirmation])
           if updated
