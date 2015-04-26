@@ -29,7 +29,7 @@
             %div{"ng-message" => "max"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "number"} Formato Invalido
         %md-input-container{flex: ""}
-          %label Gramos
+          %label Peso
           %input{"ng-model" => "selectedGrams", required: "","type" => "number", "step"=>"any","ng-change"=>"calculate_total_amount()"}
           %div{"ng-messages" => "ingotsForm.selectedGrams.$error"}
             %div{"ng-message" => "number"} Formato Invalido
@@ -40,14 +40,50 @@
         Gramos Finos Totales:
         {{selectedTotalAmount}}
       .customer-form{layout: "row"}
+        /--------------------------- Client info ------------------------/
         .customer-info{flex: ""}
-          %h3 Seleccione Cliente
-          %md-autocomplete{"md-selected-item"=>"selectedClient", "md-search-text"=> "searchClientText", "md-items" => "client in searchClients(searchClientText)", "md-no-cache" => "true", "md-item-text"=>"client.first_name", "placeholder" => "Buscar Clientes por Cedula","md-selected-item-change"=>"setSelectedClientInfo()"}
-            %span{"md-highlight-text" => "searchClientText"} {{client.id_document_number}} - {{client.first_name}} {{ client.last_name}}
-          %md-button{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
+          %fieldset.standard.tr-fieldset{:layout => "column"}
+            %legend 
+              %h3 
+                Seleccione un cliente
+            %md-autocomplete{"md-selected-item"=>"selectedClient", "md-search-text"=> "searchClientText", "md-items" => "client in searchClients(searchClientText)", "md-no-cache" => "true", "md-item-text"=>"client.first_name", "placeholder" => "Buscar Clientes por Cedula","md-selected-item-change"=>"setSelectedClient(selectedClient)"}
+              %span{"md-highlight-text" => "searchClientText"} {{client.id_document_number}} - {{client.first_name}} {{ client.last_name}}
+            %div.fieldset-inputs
+              %div{layout: "row"}
+                %md-input-container{flex: ""}
+                  %label Nombre
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.first_name"}
+                %md-input-container{flex: ""}
+                  %label Apellido
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.last_name"} 
+              %div.inventory-client-names{layout: "row"}
+                %md-input-container{flex: }
+                  %label Cedula
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.id_document_number"}
+              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
+                %md-progress-circular{"md-mode" => "indeterminate"}
+          %a{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
+        /--------------------------- Courier info ------------------------/
         .courier-info{flex: ""}
-          %h3 Seleccione Transportador
-          %md-autocomplete{"md-selected-item"=>"selectedCourier", "md-search-text"=> "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula"}
-            %span{"md-highlight-text" => "searchClientText"} {{courier.id_document_number}} - {{courier.first_name}} {{courier.last_name}}
-          %md-button{"ui-sref"=>"new_courier"} crear transportador
+          %fieldset.standard.tr-fieldset{:layout => "column"}
+            %legend 
+              %h3 
+                Seleccione un Transportador
+            %md-autocomplete{"md-selected-item"=>"selectedCourier", "md-search-text"=> "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula","md-selected-item-change"=>"setSelectedCourier(selectedCourier)"}
+              %span{"md-highlight-text" => "searchClientText"} {{courier.id_document_number}} - {{courier.first_name}} {{courier.last_name}}
+            %div.fieldset-inputs
+              %div{layout: "row"}
+                %md-input-container{flex: ""}
+                  %label Nombre
+                  %input{:disabled => "disabled", "ng-model" => "selectedCourier.first_name"}
+                %md-input-container{flex: ""}
+                  %label Apellido
+                  %input{:disabled => "disabled", "ng-model" => "selectedCourier.last_name"} 
+              %div.inventory-client-names{layout: "row"}
+                %md-input-container{flex: }
+                  %label Cedula
+                  %input{:disabled => "disabled", "ng-model" => "selectedCourier.id_document_number"}
+              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"courierVerifiedProgress"}
+                %md-progress-circular{"md-mode" => "indeterminate"}
+          %a{"ui-sref"=>"new_courier"} crear transportador
       %md-button.submit-button.ingot-submit-btn.md-raised{type: "submit"} Crear Venta

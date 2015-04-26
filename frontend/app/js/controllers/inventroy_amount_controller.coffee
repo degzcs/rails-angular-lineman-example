@@ -19,7 +19,7 @@ angular.module('app')
       $scope.remaining_amount = Number(($scope.total_grams - $scope.selected_grams).toFixed(2))
       $scope.inventory_validation_messages = validate_inventory()
   
-    #After submit a valid amount it sent back the response to the directive with a hash 
+    #After submit a valid amount it sent back the response to the directive with the selected grams
     $scope.submit = ->
       unless $scope.inventory_validation_messages.invalid
         $mdDialog.hide(parseFloat($scope.selected_grams))

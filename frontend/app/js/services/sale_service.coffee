@@ -1,10 +1,6 @@
 
-angular.module('app').factory 'SaleService', -> 
+angular.module('app').factory 'SaleService', ($http)-> 
   service = 
-    #
-    # Sale Model.
-    # NOTE: selectedPurchases is an array of hashes with the purchase info plus the amount_picked from the batch
-    #
 
     model:
       selectedPurchases: null
@@ -12,9 +8,10 @@ angular.module('app').factory 'SaleService', ->
       ingots_number: 0
 
     create: (sale, gold_batch)->
-      console.log "Sale Created!"
-      return
-
+      console.log(sale)
+      console.log(gold_batch)
+      return $http.post("api/v1/sales", {sale: sale, gold_batch: gold_batch})
+    
     saveState: ->
       sessionStorage.restoreSale = 'true'
       sessionStorage.saleService = angular.toJson(service.model)

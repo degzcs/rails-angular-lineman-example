@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService) ->
+angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog) ->
   sale_info = SaleService.restoreState()
   console.log sale_info
 
@@ -11,7 +11,10 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   $scope.searchClientText = null
   $scope.selectedClient = null
   $scope.searchCourierText = null
-  $scope.selectedCouries = null
+  $scope.selectedCourier = null
+
+  $scope.validation_messages = null
+  $scope.clientVerifiedProgress = false
   
   $scope.calculate_total_amount = ->
     $scope.selectedTotalAmount = Number(($scope.selectedGrams * $scope.selectedGrade/999).toFixed(2))
@@ -49,8 +52,76 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
     else 
       return []
 
+  #
+  # After select a client from the list clear the search word inside the autocomplete form and waits 400
+  # milliseconds to update the client data just for user interaction purposes
+  #
+  $scope.setSelectedClient = (selectedClient)->
+    $scope.searchClientText = null
+    $scope.selectedClient = selectedClient
+    $scope.clientVerifiedProgress = true
+    $timeout (->
+      $scope.clientVerifiedProgress = false
+      return
+    ), 400
+
+  # Same for the courier autocomplete field
+  $scope.setSelectedCourier = (selectedCourier)->
+    $scope.searchCourierText = null
+    $scope.selectedCourier = selectedCourier
+    $scope.courierVerifiedProgress = true
+    $timeout (->
+      $scope.courierVerifiedProgress = false
+      return
+    ), 400
+    
+  #
+  #Submit a sale if the sale is valid
+  #
   $scope.submitSale = ->
-    SaleService.create()
+
+    if $scope.validation_messages.invalid || $scope.selectedClient == null || $scope.selectedCourier == null
+      $scope.infoAlert('Atencion', 'Por favor ingrese todos los campos correctamente')
+      return
+    else
+      gold_batch = {
+        parent_batches: "",
+        grams: $scope.totalAmount,
+        grade: $scope.selectedGrade
+      }
+
+      sale = {
+        courier_id: $scope.selectedCourier.id,
+        client_id: $scope.selectedClient.id,
+        grams: $scope.totalAmount,
+        barcode: "hdjashkdjhq"
+      }
+
+      SaleService.create(sale,gold_batch).success((data) ->
+        $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+      ).error (data, status, headers, config) ->
+        $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud')
+
+
+
+  #Dialg alert helper
+  $scope.infoAlert = (title,content)->
+    $mdDialog.show $mdDialog.alert()
+      .title(title)
+      .content(content)
+      .ok('hecho!')
+      duration: 2
+    return
+
+
+
+
+
+
+
+
+
+
 
   #$scope.ingotsNumber = sale_info.ingotsNumber
   #$scope.ingots = []

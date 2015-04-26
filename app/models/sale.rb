@@ -21,6 +21,5 @@ class Sale < ActiveRecord::Base
   validates :client_id, presence: true
   validates :user_id, presence: true
   validates :grams, presence: true
-  validates :gold_batch_id, presence: true
-
+  
 end

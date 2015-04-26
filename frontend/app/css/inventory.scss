@@ -172,3 +172,31 @@
 .ingot-submit-btn{
   padding: 30px;
 }
+
+.tr-fieldset{
+  padding-bottom: 20px;
+  position: relative;
+  md-autocomplete{
+    margin-bottom: 10px;
+  }
+  md-input-container{
+    padding-bottom: 0;
+    input[disabled]{
+      color: black!important;
+    }
+  }
+}
+
+.fieldset-inputs{
+  position: relative;
+  width: 100%;
+  .progress-fieldset{
+    background: white;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    padding-top:30px;
+  }
+}
