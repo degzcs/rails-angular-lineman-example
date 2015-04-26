@@ -1,5 +1,4 @@
 angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $auth, $state) ->
-
   #  Here just add the sidebar navigation options with their state
   $scope.options = [
     {name: "Dashboard", state: "dashboard", icon: 'action:dashboard'}
@@ -10,7 +9,6 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     {name: "Proovedores" , state: "providers", icon: 'social:people'}
     {name: "Transportadores", state: "new_courier", icon: 'maps:local_shipping'}
   ]
-
 
   $scope.allowSidebar= ->
       unless $state.current.name == "home" || $state.current.name == "new_session"

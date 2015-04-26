@@ -12,14 +12,13 @@ module V1
           optional :per_page, type: Integer
         end
       end
-
-
+      
       format :json
       content_type :json, 'application/json'
 
-        # params :auth do
-        #   requires :access_token, type: String, desc: 'Auth token', documentation: { example: '837f6b854fc7802c2800302e' }
-        # end
+      # params :auth do
+      #   requires :access_token, type: String, desc: 'Auth token', documentation: { example: '837f6b854fc7802c2800302e' }
+      # end
 
       resource :purchases do
 

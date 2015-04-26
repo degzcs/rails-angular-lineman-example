@@ -16,7 +16,7 @@
       Lote Resultante
     /%md-checkbox.md-primary{"aria-label" => "equal_amount_divider", "md-no-ink" => "", "ng-model" => "divide_by_equal_amounts",  "ng-disabled"=>"{{!allow_equal_divider}}", "ng-change"=>"divideIngots()"}
     /  Dividir en cantidades iguales?
-    %form.sale-form{name: "ingotsForm", novalidate: ""}
+    %form.sale-form{name: "ingotsForm","ng-submit"=>"submitSale()"}
       %md-content.ingot_form{:layout => "row", "layout-padding" => "", "md-theme" => "docs-dark"}
         //%h3{flex: "30"} 
         //  Lote 
@@ -39,7 +39,6 @@
       %h1
         Gramos Finos Totales:
         {{selectedTotalAmount}}
-
       .customer-form{layout: "row"}
         .customer-info{flex: ""}
           %h3 Seleccione Cliente
@@ -50,11 +49,5 @@
           %h3 Seleccione Transportador
           %md-autocomplete{"md-selected-item"=>"selectedCourier", "md-search-text"=> "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula"}
             %span{"md-highlight-text" => "searchClientText"} {{courier.id_document_number}} - {{courier.first_name}} {{courier.last_name}}
-
           %md-button{"ui-sref"=>"new_courier"} crear transportador
-
-      %md-button.submit-button.ingot-submit-btn{type: "submit"} Crear Venta
-          
-
-
-
+      %md-button.submit-button.ingot-submit-btn.md-raised{type: "submit"} Crear Venta

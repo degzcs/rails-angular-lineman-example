@@ -49,6 +49,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
     else 
       return []
 
+  $scope.submitSale = ->
+    SaleService.create()
 
   #$scope.ingotsNumber = sale_info.ingotsNumber
   #$scope.ingots = []

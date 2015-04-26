@@ -11,6 +11,10 @@ angular.module('app').factory 'SaleService', ->
       totalAmount: 0
       ingots_number: 0
 
+    create: (sale, gold_batch)->
+      console.log "Sale Created!"
+      return
+
     saveState: ->
       sessionStorage.restoreSale = 'true'
       sessionStorage.saleService = angular.toJson(service.model)
@@ -31,7 +35,6 @@ angular.module('app').factory 'SaleService', ->
     #  sale_info =JSON.parse(sessionStorage.getItem('saleInfo'));
     #  return sale_info;
     #}
-
   #
   # Return
   #

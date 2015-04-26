@@ -56,7 +56,7 @@ describe 'Sale', :type => :request do
             "barcode" => "hdjashkdjhq"
           }
 
-          post '/api/v1/sales/', {gold_batch: new_gold_batch_values, sale: new_values},{ "Authorization" => "Barer #{@token}" }
+          post '/api/v1/sales/', {gold_batch: new_gold_batch_values, sale: new_values},{"Authorization" => "Barer #{@token}"}
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end
