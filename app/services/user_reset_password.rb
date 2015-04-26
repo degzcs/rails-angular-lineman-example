@@ -41,7 +41,7 @@ class UserResetPassword
 
   # @return [String] with  the url that the user  will use to reset the password
   def generate_url(token)
-    "#{host}/reset_password?token=#{token}"
+    "#{host}#/passwordconfirm?token=#{token}&email=#{user.email}"
   end
 
   def host
