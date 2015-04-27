@@ -583,6 +583,7 @@ module V1
            #            },
 
            #            gold_batch: {
+          #                                   grade: 999,
            #                                   castellanos:{
            #                                                       quantity: 200,
            #                                                       grams: 2500000
@@ -603,7 +604,6 @@ module V1
            #            purchase:{
            #                                  price: 20202020202,
            #                                  price_per_gram: 2020220 ,
-           #                                  law: 1000,
            #                                  grams: 1000000,
            #                                  fine_grams: 123546,
            #                                  code: '11jddj29292929292'

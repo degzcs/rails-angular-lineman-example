@@ -1,61 +1,106 @@
 //---------------------- Provider and Origin Certificate TAB ---------------------------------------
-%form{:name => "purchase-form"}
-%section
-  .seller
-    %md-subheader
-      %span Datos del Proveedor y Certificado de Origen
-//----------------------Provider Column
-%md-content{"class"=>"md-padding autocomplete", "layout"=>"row", "layout-sm" => "column"}
-  %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
-    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"row"}
-      .select-provider{'flex' => 80}
-        %md-chips{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider"}
-          %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
-            %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
-      .create-provider{'flex' =>20}
-        %a{'ng-href' => "#provider"}
-          %md-button.md-fab.md-accent{} +
-            %md-tooltip{"md-visible" => "demo.showTooltip"}
-              Crear Proveedor
-              %span.ion-android-checkmark-circle
-    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
-      %span
-        Nombre : {{purchase.model.provider.name}}
-      %span
-        CC : {{purchase.model.provider.document_number}}
-
+%form{:name => "purchaseForm", "novalidate" => "novalidate"}
+  %section
+    .seller
+      %md-subheader
+        %span Datos del Proveedor y Certificado de Origen
   //------------------Photo and Certificate Column
-  %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center center"}
-    .row
-      .photo{'flex' => ''}
-        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
+  %md-content{:flex => '', "class"=>"md-padding autocomplete", :layout=>"row"}
+    %md-input-container.row{:flex => ''}
+      .photo
+        %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => ''}
         %a{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
           %md-button.md-fab.md-accent{"aria-label" => "Photo", 'md-ripple-size' => "partial"}
             %md-icon{"md-svg-icon" => "image:camera_alt"}
             %md-tooltip{"md-visible" => "demo.showTooltip"}
               Agregar Foto
               %span.ion-android-checkmark-circle
-    %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"end center"}
-      .oc-number{'flex' => ''}
-        %md-input-container.md-input-has-value
-          %label Numero Certificado de Origen
-          %input{"ng-model" => "purchase.model.origin_certificate_sequence"}
-      .oc-number{'flex' => ''}
-        %span
-          {{purchase.model.origin_certificate_file[0].name}}
-      .upload-oc{'flex' => ''}
-        .button-action.md-padding
-          %div{:layout => "row",:layout-margin => "10"}
-            %md-button.md-flat.margined{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
-              %md-icon{"md-svg-icon"=>"file:file_upload"}
-              Subir Certificado
-            %md-button.md-flat.margined{:ng-href => "#scanner1",'ng-click' => "scanner(2)"}
-              %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-              Escanear documento
-      .md-tile-left.cam{:flex => "10"}
-        %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"} +
+    .select-provider{:flex => ''}
+      %md-chips.purchase-autocomplete{"md-autocomplete-snap" => "", "ng-model" => "purchase.model.provider", :name=> 'provider', :required => ''}
+        %div{"ng-messages" => "purchaseForm.provider.$error"}
+          %div{"ng-message" => "required"} * Este campo es requerido.
+        %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", :required => ""}
+          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+    %md-input-container.create-provider{:flex =>''}
+      %a{'ng-href' => "#provider"}
+        %md-button.md-fab.md-accent{} +
           %md-tooltip{"md-visible" => "demo.showTooltip"}
-            Certificado de origen
+            Crear Proveedor
             %span.ion-android-checkmark-circle
-      .wizard-buttons{'flex' => ''}
-        %md-button.md-primary.md-hue-2{flex: "100", "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Ingresar Pesos
+
+  //----------------------Provider info
+
+  %md-content{:flex => '', "class"=>"md-padding autocomplete", :layout=>"row"}
+    %md-input-container{:flex => ''}
+      %label Nombre
+      %input{"ng-model" => "purchase.model.provider.name", :required => "", :name => 'provider_name', :readOnly => 'true'}
+
+    %md-input-container{:flex => ''}
+      %label Tipo de Documento
+      %input{"ng-model" => "purchase.model.provider.document_type", :required => "", :name => 'provider_document_type', :readOnly => 'true'}
+
+    %md-input-container{:flex => ''}
+      %label Numero de Documento
+      %input{"ng-model" => "purchase.model.provider.document_number", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+
+    %md-input-container{:flex => ''}
+      %label Nombre de la Compania
+      %input{"ng-model" => "purchase.model.provider.company_name", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+
+    %md-input-container{:flex => ''}
+      %label Estado Rucom
+      %input{"ng-model" => "purchase.model.provider.rucom_status", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+
+    %md-input-container{:flex => ''}
+      %label Registro Rucom
+      %input{"ng-model" => "purchase.model.provider.rucom_record", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+
+    //--- Origin Certificate section
+  %md-content{:flex => '', "class"=>"md-padding autocomplete", :layout=>"row"}
+    %md-input-container{:flex => ''}
+      %label Numero Certificado de Origen
+      %input{"ng-model" => "purchase.model.origin_certificate_sequence", :required => "", :name => 'origin_certificate_sequence'}
+      %div{"ng-messages" => "purchaseForm.origin_certificate_sequence.$error"}
+        %div{"ng-message" => "required"} * Este campo es requerido.
+
+    .column{"flex"=> ''}
+      %md-select{"ng-model" => "origin_certificate_upload_type", :placeholder => "Cargar Centificado de Origen ...", :required => ''}
+        %md-option{:value => "by_upload"} Desde el PC
+        %md-option{:value => "by_scan"} Por Escaner
+        %md-option{:value => "by_photo"} por Camara
+
+
+    .upload-oc{:flex => ''}
+      .button-action.md-padding{:ng-switch => '', :on => 'origin_certificate_upload_type'}
+        .by_upload{:ng-switch-when =>'by_upload'}
+          %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
+            %md-icon{"md-svg-icon"=>"file:file_upload"}
+            %md-tooltip{"md-visible" => "demo.showTooltip"}
+              Subir Foto
+              %span.ion-android-checkmark-circle
+
+          %md-input-container
+            %label Nombre del archivo
+            %input{"ng-model" => "purchase.model.origin_certificate_file[0].name", :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
+            %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
+              %div{"ng-message" => "required"} * Debe seleccionar el certificado de origen desde su computado
+
+
+        .by_scan{:ng-switch-when =>'by_scan'}
+          %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
+            %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
+            %md-tooltip{"md-visible" => "demo.showTooltip"}
+              Escanear Documento
+              %span.ion-android-checkmark-circle
+
+
+        .by_photo{:ng-switch-when =>'by_photo'}
+          .md-tile-left.cam
+            %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
+              %md-icon{"md-svg-icon" => "image:camera_alt"}
+              %md-tooltip{"md-visible" => "demo.showTooltip"}
+                Tomar Foto
+                %span.ion-android-checkmark-circle
+
+  .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.md-primary.md-raised.md-accent{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar

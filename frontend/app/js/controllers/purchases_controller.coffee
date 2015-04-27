@@ -1,11 +1,10 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser, ScannerService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location) ->
     #
   # Instances
   #
   # $scope.purchase.model = PurchaseService.restoreState
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
-  window.p = $scope
   $scope.totalGrams = 0
   CurrentUser.get().success (data) ->
     #IMPROVE: Set up Missing values to generate the Purchase invoice
@@ -21,7 +20,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.allProviders  = []
   $scope.searchText = null
   $scope.message
-  window.s = $scope
   #
   # Fuctions
   #
@@ -53,8 +51,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       prov =
         id: providers[i].id
         document_number: providers[i].document_number
-        company_name: 'company name test'
-        nit: 'NIT number'
+        company_name: 'company name test' # <-- TODO: migration
+        document_type: 'NIT' # <-- TODO: migration
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
@@ -126,6 +124,15 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.saveState()
 
   #
+  #
+  $scope.flushData =->
+    $scope.purchase = {}
+    $scope.goldBatch = {}
+    sessionStorage.purchaseService =[]
+    sessionStorage.goldBatchService = []
+    console.log 'deleting sessionStorage'
+
+  #
   # confirm Dialog
   $scope.showConfirm = (ev) ->
     # Appending dialog to document.body to cover sidenav in docs app
@@ -138,6 +145,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
                       .targetEvent(ev)
     $mdDialog.show(confirm).then (->
       $scope.create()
+      # $scope.flushData()
+      $location.path('/purchases/show')
       $scope.message = 'Su compra a sido registrada con exito'
       return
     ), ->

@@ -452,7 +452,7 @@ class PdfFile < Prawn::Document
     move_cursor_to 412
     text_box "#{values[:gold_batch][:total_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150
     move_down 18
-    text_box "#{values[:purchase][:law]}" , :at => [300 , cursor] , :width => 150
+    text_box "#{values[:gold_batch][:grade]}" , :at => [300 , cursor] , :width => 150
 
     move_cursor_to 375
     text_box "#{values[:gold_batch][:total_fine_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150
