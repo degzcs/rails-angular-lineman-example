@@ -80,7 +80,7 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Tipo
-              %input{:disabled => "disabled", "ng-model" => ""}
+              %input{:disabled => "disabled"}
             %md-input-container{flex: ""}
               %label Cedula
               %input{:disabled => "disabled", "ng-model" => "currentUser.document_number"}
@@ -97,9 +97,20 @@
               %input{:disabled => "disabled", "ng-model" => "currentUser.phone_number"}
             %md-input-container{flex: ""}
               %label Direccion
-              %input{:disabled => "disabled", "ng-model" => ""}
+              %input{:disabled => "disabled", "ng-model" => "currentUser.address"}
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Email
               %input{:disabled => "disabled", "ng-model" => "currentUser.email"}
-          
+
+  %div{layout: "row"}
+    /------------------------ PURCHASES CARD ---------------------/ 
+    %md-card.sell-card-info{flex: "50"}
+      %md-toolbar
+        .md-toolbar-tools
+          %h3
+            %span Lotes Seleccionados
+      %md-card-content
+        .card-inputs
+          %div{"ng-repeat"=>"purchase in selectedPurchases"}
+            %h2 compra

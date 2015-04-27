@@ -7,9 +7,10 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   #
   #Get the Sale Recently created and the selected purchases
   $scope.currentSale = SaleService.restoreState()
-  $scope.selectedPurchases = SaleService.selectedPurchases
+  $scope.selectedPurchases = $scope.currentSale.selectedPurchases
   $scope.currentClient = null
   $scope.currentUser = null
+  console.log $scope.selectedPurchases
   #
   # get Client
   $scope.client = ClientService.retrieveClientById.get {clientId: $scope.currentSale.client_id}, (client)->

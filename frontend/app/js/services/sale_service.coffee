@@ -10,8 +10,7 @@ angular.module('app').factory 'SaleService', ($http)->
       gold_batch_id: null 
       grams: null
       barcode: null
-
-    selectedPurchases: null
+      selectedPurchases: null # Purchases
 
     create: (sale_params, gold_batch_params)->
       return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params})
