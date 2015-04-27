@@ -14,6 +14,7 @@
 #  password_digest          :string(255)
 #  available_credits        :float
 #  reset_token              :string(255)
+#  address                  :string(255)
 #
 
 require 'spec_helper'
@@ -31,6 +32,7 @@ describe  User do
     it { expect(user.document_expedition_date).not_to be_nil }
     it { expect(user.phone_number).not_to be_nil }
     it { expect(user.available_credits).not_to be_nil }
+    it { expect(user.address).not_to be_nil }
   end
 
   context 'create user' do

@@ -15,9 +15,12 @@ describe 'Auth', :type => :request do
            "first_name"=>@user.first_name,
            "last_name"=>@user.last_name,
            "email"=>"elcho.esquillas@fake.com",
+           "document_number"=>@user.document_number,
            "access_token"=> @token,
            "available_credits"=> @user.available_credits,
-           "document_number"=>@user.document_number
+           "phone_number"=>@user.phone_number,
+           "address"=>@user.address,
+           
           }
 
           get '/api/v1/users/me', {},{ "Authorization" => "Barer #{@token}" }

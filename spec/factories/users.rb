@@ -14,6 +14,7 @@
 #  password_digest          :string(255)
 #  available_credits        :float
 #  reset_token              :string(255)
+#  address                  :string(255)
 #
 
 FactoryGirl.define do
@@ -28,6 +29,6 @@ FactoryGirl.define do
     document_number { Faker::Number.number(10) }
     document_expedition_date { Faker::Time.between(2.days.ago, Time.now) }
     phone_number { Faker::PhoneNumber.cell_phone }
-    
+    address { Faker::Address.street_address}
   end
 end

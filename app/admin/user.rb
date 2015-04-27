@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 3, label: 'Usuarios'
 
-  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :password
+  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :password
 
   index do
     selectable_column
@@ -12,6 +12,7 @@ ActiveAdmin.register User do
     column :document_number
     column :document_expedition_date
     column :phone_number
+    column :address
     column :password
     actions
   end
@@ -22,6 +23,7 @@ ActiveAdmin.register User do
   filter :document_number
   filter :document_expedition_date
   filter :phone_number
+  filter :address
   filter :password
 
   form do |f|
@@ -32,6 +34,7 @@ ActiveAdmin.register User do
       f.input :document_number
       f.input :document_expedition_date
       f.input :phone_number
+      f.input :address
       f.input :password
     end
     f.actions

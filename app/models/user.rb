@@ -14,6 +14,7 @@
 #  password_digest          :string(255)
 #  available_credits        :float
 #  reset_token              :string(255)
+#  address                  :string(255)
 #
 
 class User < ActiveRecord::Base
