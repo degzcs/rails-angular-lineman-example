@@ -360,7 +360,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
   .state("new_purchase.step1",
-    url: "/step1",
+    url: "/purchases/step1",
     ncyBreadcrumb:
       label: 'Provedor y Certificado de Origen'
     views:
@@ -413,7 +413,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
   .state("show_purchase",
-    url: "/purchases/show.html",
+    url: "/purchases/show",
     ncyBreadcrumb:
       label: 'Factura Generada'
     views:
