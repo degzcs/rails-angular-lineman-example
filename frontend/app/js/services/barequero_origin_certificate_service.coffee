@@ -1,7 +1,7 @@
-angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($rootScope, $upload)->
+angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($rootScope, $upload, $filter)->
   service=
     model:
-      date: ''
+      date: $filter('date')(Date.now(), 'yyyy-MM-dd');
       city: '' # where is generated the current OC
       ## mineral's Provider Info
       provider:
@@ -14,9 +14,9 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
         city: '' # city where the miner is/was registered
       ##mineral info
       mineral:
-        type: ''
+        type: 'Oro'
         amount: ''
-        measure_unit: ''
+        measure_unit: 'Gramos'
       ## mineral's Buyer info
       buyer:
         company_name: ''

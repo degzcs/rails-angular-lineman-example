@@ -6,7 +6,7 @@
 
     %md-input-container{"flex"=>"33"}
       %label Fecha
-      %input{"ng-model" => "barequero_chatarrero_origin_certificate.date", "type" => "date", "required"=>""}
+      %input{"ng-model" => "barequero_chatarrero_origin_certificate.date", "type" => "text", "readonly" => "true"}
 
     %md-input-container{"flex"=>"66"}
       %label Ciudad
@@ -50,7 +50,7 @@
     .column{"flex"=>""}
       %md-input-container
         %label Mineral Extraido y Vendido
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.type", "type" => "text", "required"=>""}
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.type", "type" => "text", "readOnly"=>"true"}
 
     .column{"flex"=>""}
       %md-input-container
@@ -60,7 +60,7 @@
     .column{"flex"=>""}
       %md-input-container
         %label Unidad de Medida
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.measure_unit", "type" => "text", "required"=>""}
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.measure_unit", "type" => "text", "readOnly"=>"true"}
 
   ////-----------------------Buyer section ------------------------------////////
   %md-divider

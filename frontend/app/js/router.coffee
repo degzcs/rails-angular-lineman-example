@@ -52,14 +52,28 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
    .state("passwordconfirm",
-    url: "/passwordconfirm",
+    url: "/passwordconfirm?token&email",
     ncyBreadcrumb:
-      label: 'PDF scanner'
+      label: 'Restablecer password'
     views:
       'content':
         templateUrl: "partials/sessions/password_confirm.html"
         controller: "SessionsNewCtrl"
+    resolve:
+      confirm: ($q, SessionService, $stateParams) ->
+        SessionService.canChangePassword($stateParams.email, $stateParams.token)
+        # # deferred = $q.defer()
+        #  if SessionService.can_updated_password
+        #   console.log 'true'
+        #   # deferred.resolve()
+        #  else
+        #   console.log 'false'
+        #    # deferred.reject()
+        #   $location.path "/login"
+        # # deferred.promise
   )
+
+# Scanner
 
   .state("scanner",
     url: "/scanner",
@@ -285,7 +299,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  
+
   .state( "liquidate_batches",
     url: "/inventory/liquidates",
     ncyBreadcrumb:

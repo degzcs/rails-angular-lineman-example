@@ -1,7 +1,7 @@
-angular.module('app').factory 'HousesBuySellOriginCertificateService', ($rootScope, $upload)->
+angular.module('app').factory 'HousesBuySellOriginCertificateService', ($rootScope, $upload, $filter)->
   service=
     model:
-      date: ''
+      date: $filter('date')(Date.now(), 'yyyy-MM-dd')
       certificate_number: ''# NOTE: I think this is a origin certificate number
       city: '' # where is generated the current OC
       ## mineral's Provider Info
