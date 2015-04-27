@@ -36,6 +36,7 @@ class Sale < ActiveRecord::Base
   validates :grams, presence: true
   
   protected
+    #Before the sale if saved generate a barcode and the html representation
     def generate_barcode
       new_id = Sale.count + 1
       code = new_id.to_s.rjust(12, '0')
