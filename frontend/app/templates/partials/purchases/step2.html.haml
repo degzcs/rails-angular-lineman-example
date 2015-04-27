@@ -1,5 +1,5 @@
 //---------------------- Purchase TAB ---------------------------------------
-%form{:name => "purchase-form"}
+%form{:name => "purchaseForm"}
   %section{"class"=>"md-padding autocomplete"}
     .seller
       %md-subheader
@@ -10,12 +10,16 @@
           %h5 Digite el numero de ley
           %md-input-container
             %label Ley
-            %input{ "type" => "number", "string-to-number"=>"", "min"=> "0" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', "required"=>""}
+            %input{ "type" => "number", "string-to-number"=>"", :min => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre'}
+            %div{"ng-messages" => "purchaseForm.degre.$error"}
+              %div{"ng-message" => "required"} * Este campo es requerido.
         .fine-gram-unit-price{'flex' => ''}
           %h5 Valor por unidad de gramo fino en Pesos Colombianos(COP)
           %md-input-container
             %label Precio de gramo fino por unidad
-            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', "required"=>""}
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1"}
+            %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
+              %div{"ng-message" => "required"} * Este campo es requerido.
 
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
@@ -40,10 +44,13 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "required"=>""}
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>""}
                 %td.md-table-td-more.total-grams
                   %md-input-container
-                    {{ goldBatch.model.total_grams | number:2}}
+                    %label
+                    %input{"ng-model" => "goldBatch.model.total_grams",  :min => "1", :requiered => '', :readOnly => 'true', "type" => "number", "string-to-number"=>"", :name => 'total_grams'}
+                    %div{"ng-messages" => "purchaseForm.total_grams.$error"}
+                      %div{"ng-message" => "required"} * Tiene que seleccionar la cantidad de oro a facturar mayor a 1 gramo.
                 %td.md-table-td-more.total-fine-grams
                   %md-input-container
                     {{ goldBatch.model.total_fine_grams | number:3}}
@@ -53,34 +60,35 @@
               %tr
                 %td.md-table-td-more
                   Castellano(s)
-                %td.md-table-td-more{colspan: 5}
+                %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "required"=>""}
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>""}
               %tr
                 %td.md-table-td-more
                   Onza(s)
-                %td.md-table-td-more{colspan: 5}
+                %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>"", "required"=>""}
+                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>""}
               %tr
                 %td.md-table-td-more
                   Tomine(s)
-                %td.md-table-td-more{colspan: 5}
+                %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "required"=>""}
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>""}
               %tr
                 %td.md-table-td-more
                   Rial(es)
-                %td.md-table-td-more{colspan: 5}
+                %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>"", "required"=>""}
-  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete"}
-    %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver a Datos Proveedor Y Certificado de Compra
-    %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Reporte de la Compra
+                    %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>""}
+
+  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
+    %md-button.md-primary.md-raised.md-accent{ "ng-disabled" => 'purchaseForm.$invalid', flex: "20", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
 
 
 

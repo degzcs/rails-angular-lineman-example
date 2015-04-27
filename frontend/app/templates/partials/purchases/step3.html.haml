@@ -102,7 +102,7 @@
     %p
       Ley
     %p
-      {{purchase.model.law}}
+      {{goldBatch.model.grade}}
 
 %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
   %h4
@@ -161,9 +161,9 @@
         %td.md-table-td-more{colspan: 5}
           %md-input-container
             %span {{goldBatch.model.riales}}
-.wizard-buttons{"class"=>"", "layout"=>"row"}
-  %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"new_purchase.step2", "ng-click" => ""} volver a Pesos
-  %md-button.md-primary.md-hue-2{flex: "50", "ui-sref"=>"show_purchase", "ng-click" => "showConfirm($event)"} Realizar la Compra
+.wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+  %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
+  %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
 
 
 
