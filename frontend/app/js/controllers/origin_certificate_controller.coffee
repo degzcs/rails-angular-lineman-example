@@ -13,8 +13,6 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
   $scope.searchText = null
   $scope.searchMining = null
 
-  window.s= $scope
-
   # Set buyer as a current user
   CurrentUser.get().success (data) ->
     #IMPROVE: Set up Missing values to generate the Purchase invoice
@@ -23,12 +21,21 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     data.nit = '123456789456123'
     data.rucom_record = 6547896321
     data.office = 'TrazOro Popayan'
-    data.address = 'Calle falsa 123'
+    data.city = 'Popayan'
+    data.address = 'Calle # 123'
     data.phone = '3007854214'
+    # set barequero chatarrero oc
     $scope.barequero_chatarrero_origin_certificate.buyer = data
+    $scope.barequero_chatarrero_origin_certificate.city = data.city
+    # set beneficiation plant oc
     $scope.beneficiation_plant_origin_certificate.buyer = data
+    $scope.beneficiation_plant_origin_certificate.city = data.city
+    # set houses buy and sell oc
     $scope.houses_buy_and_sell_origin_certificate.buyer = data
+    $scope.houses_buy_and_sell_origin_certificate.city = data.city
+    # set authorized miner oc
     $scope.authorized_miner_origin_certificate.buyer = data
+    $scope.authorized_miner_origin_certificate.city = data.city
 
   #
   # Set the origin certificate type

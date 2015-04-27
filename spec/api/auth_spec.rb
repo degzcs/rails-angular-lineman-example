@@ -33,7 +33,7 @@ describe 'Auth', :type => :request do
       context 'GET' do
         before :each do
           UserResetPassword.new(@user).process!
-          @token = ActionMailer::Base.deliveries.last.body.to_s.split('token=').last.split('</p>').first.to_s.strip
+          @token = ActionMailer::Base.deliveries.last.body.to_s.split('token=').last.split('&').first.to_s.strip
         end
         it 'should save a reset_token  and send a email' do
           get '/api/v1/auth/confirmation', %Q{email=#{@user.email}&token=#{@token}}
