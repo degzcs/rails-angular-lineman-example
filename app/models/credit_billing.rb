@@ -20,6 +20,9 @@ class CreditBilling < ActiveRecord::Base
   # Associations
   #
   belongs_to :user
+  #
+  # Callbacks
+  #
   before_save :calculate_total
   after_initialize :init
   

@@ -10,6 +10,7 @@ angular.module('app').factory 'SaleService', ($http)->
       gold_batch_id: null 
       grams: null
       barcode: null
+      barcode_html: null
       selectedPurchases: null # Purchases
       totalAmount: null
 

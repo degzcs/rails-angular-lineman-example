@@ -11,6 +11,7 @@
 #  barcode       :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
+#  barcode_html  :string(255)
 #
 
 require 'spec_helper'
@@ -24,6 +25,7 @@ describe Sale do
     it {expect(sale.gold_batch_id).not_to be_nil}
     it {expect(sale.grams).not_to be_nil}
     it {expect(sale.barcode).not_to be_nil}
+    it {expect(sale.barcode_html).not_to be_nil}
   end
   context "test creation" do
     it "should create a new sale with valid data" do
@@ -43,5 +45,12 @@ describe Sale do
     #it "should not allow to create a sale without barcode" do
       #expect(build(:sale, grams: nil)).not_to be_valid
     #end
+  end
+
+  context "test barcode generations" do
+    it "should generate a barcode and a barcode_html when the sale is created" do
+      new_sale = create(:sale)
+      expect(new_sale.barcode_html).not_to be_nil
+    end
   end
 end

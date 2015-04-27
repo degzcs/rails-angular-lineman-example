@@ -36,6 +36,7 @@ gem 'factory_girl_rails'
 gem 'faker'
 gem 'sass'
 gem 'will_paginate', '~> 3.0.6'
+gem 'barby'
 
 # upload files
 gem 'carrierwave'

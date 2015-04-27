@@ -70,7 +70,7 @@
               %input{:disabled => "disabled", "ng-model" => "currentCourier.nit_company_number"}
   %div{layout: "row"}
     /------------------------ USER CARD ---------------------/ 
-    %md-card.sell-card-info{flex: "50"}
+    %md-card.sell-card-info{flex: ""}
       %md-toolbar
         .md-toolbar-tools
           %h3
@@ -102,10 +102,8 @@
             %md-input-container{flex: ""}
               %label Email
               %input{:disabled => "disabled", "ng-model" => "currentUser.email"}
-
-  %div{layout: "row"}
-    /------------------------ PURCHASES CARD ---------------------/ 
-    %md-card.sell-card-info{flex: "50"}
+          /------------------------ PURCHASES CARD ---------------------/ 
+    %md-card.sell-card-info{flex: ""}
       %md-toolbar
         .md-toolbar-tools
           %h3
@@ -123,7 +121,16 @@
               %td {{purchase.amount_picked}}
             %tr.table-last
               %td
-              %td{"style"=>"text-align: right;"}
-                %strong
-                  Gramos Totales:
-              %td {{totalAmount}}
+              %td
+              %td 
+                %h2
+                  %strong
+                    Gramos Totales:
+                    {{totalAmount}}
+
+  %div{layout: "row"}
+    %div{flex: ""}
+    %div{flex: ""}
+      /%h2{style: "text-align: left;"} Codigo de venta
+      %div{"ng-bind-html"=>"barcode_html"}
+      {{barcode}}

@@ -35,7 +35,6 @@ describe 'Sale', :type => :request do
             "user_id"=>@user.id,
             "gold_batch_id"=>1,
             "grams"=>1.5,
-            "barcode"=> "hdjashkdjhq"
           }
 
           new_gold_batch_values = {
@@ -53,7 +52,6 @@ describe 'Sale', :type => :request do
             "user_id"=>@user.id,
             "gold_batch_id" => new_gold_batch_values["id"],
             "grams" => new_gold_batch_values["grams"],
-            "barcode" => "hdjashkdjhq"
           }
 
           post '/api/v1/sales/', {gold_batch: new_gold_batch_values, sale: new_values},{"Authorization" => "Barer #{@token}"}

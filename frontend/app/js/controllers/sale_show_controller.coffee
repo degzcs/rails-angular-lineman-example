@@ -1,4 +1,4 @@
-angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,ClientService,CourierService,ProviderService) ->
+angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,ClientService,CourierService,ProviderService,$sce) ->
   #
   # Deletes the last liquidation  
   LiquidationService.deleteState()
@@ -9,6 +9,8 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   $scope.currentSale = SaleService.restoreState()
   $scope.selectedPurchases = $scope.currentSale.selectedPurchases
   $scope.totalAmount = $scope.currentSale.totalAmount
+  $scope.barcode_html = $sce.trustAsHtml($scope.currentSale.barcode_html)
+  $scope.barcode = $scope.currentSale.barcode
   $scope.currentClient = null
   $scope.currentUser = null
   #
