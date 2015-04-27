@@ -20,10 +20,13 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   #
 
   $scope.flushData =->
-    $scope.purchase = []
-    $scope.goldBatch = []
-    sessionStorage.purchaseService =[]
+    PurchaseService.model = {}
+    GoldBatchService.model = {}
+    $scope.purchase = {}
+    $scope.goldBatch = {}
+    sessionStorage.purchaseService = []
     sessionStorage.goldBatchService = []
+    console.log 'deleting sessionStorage'
 
   #
   #  Send calculated values to create a Purchase Renport in PDF format
@@ -36,9 +39,12 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       grams: {quantity: $scope.goldBatch.model.grams}
       total_grams:  $scope.goldBatch.model.total_grams
       total_fine_grams:  $scope.goldBatch.model.total_fine_grams
+      grade: $scope.goldBatch.model.grade
 
     providerForPDF = purchase.provider
-    purchase.provider=[]
 
-    $scope.pdfContent = PdfService.createPurchaseInvoice(purchase, providerForPDF, goldBatchForPDF, buyer)
+    purchasePDF =  purchase
+    # purchasePDF.provider=[]
+
+    $scope.pdfContent = PdfService.createPurchaseInvoice(purchasePDF, providerForPDF, goldBatchForPDF, buyer)
 
