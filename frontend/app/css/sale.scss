@@ -22,3 +22,24 @@
     color: black!important;
   }
 }
+
+.sale-table{
+  width: 100%;
+
+  tr.table-head{
+    border-bottom: 1px solid darken(#eee, 20%); 
+  }
+  tr.table-last{
+    border-top: 1px solid darken(#eee, 20%);; 
+  }
+  tr.stripped:nth-child(odd){
+    background-color: #eee;
+  }
+  th{
+    text-align: left;
+    padding: 10px;
+  }
+  td{
+    padding: 10px;
+  }
+}

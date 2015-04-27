@@ -114,6 +114,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         SaleService.model.grams = sale.grams
         SaleService.model.barcode = sale.barcode
         SaleService.model.selectedPurchases = $scope.selectedPurchases
+        SaleService.model.totalAmount = $scope.totalAmount
         SaleService.saveState()
         $state.go('show_sale')
       ).error (data, status, headers, config) ->

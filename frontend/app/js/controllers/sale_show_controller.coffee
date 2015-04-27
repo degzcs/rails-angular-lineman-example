@@ -1,4 +1,4 @@
-angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,ClientService,CourierService) ->
+angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,ClientService,CourierService,ProviderService) ->
   #
   # Deletes the last liquidation  
   LiquidationService.deleteState()
@@ -8,9 +8,9 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   #Get the Sale Recently created and the selected purchases
   $scope.currentSale = SaleService.restoreState()
   $scope.selectedPurchases = $scope.currentSale.selectedPurchases
+  $scope.totalAmount = $scope.currentSale.totalAmount
   $scope.currentClient = null
   $scope.currentUser = null
-  console.log $scope.selectedPurchases
   #
   # get Client
   $scope.client = ClientService.retrieveClientById.get {clientId: $scope.currentSale.client_id}, (client)->
@@ -26,4 +26,17 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   $scope.client = CourierService.retrieveCourierById.get {courierId: $scope.currentSale.courier_id}, (courier)->
     console.log(courier)
     $scope.currentCourier = courier
+  #
+  # TODO: Get All providers for purchases
+  ###
+  i=0
+  while i < $scope.selectedPurchases.length
+    provider_id = $scope.selectedPurchases[i].provider.id
+    ProviderService.retrieveProviderById.get {providerId: provider_id}, (provider)->
+      #$scope.selectedPurchases[i].provider = provider
+      $scope.selectedPurchases[i]['provider'] = provider
+      console.log provider
+    i++
+  console.log $scope.selectedPurchases
+  ###
   

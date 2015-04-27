@@ -11,6 +11,7 @@ angular.module('app').factory 'SaleService', ($http)->
       grams: null
       barcode: null
       selectedPurchases: null # Purchases
+      totalAmount: null
 
     create: (sale_params, gold_batch_params)->
       return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params})

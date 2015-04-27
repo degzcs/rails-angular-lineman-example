@@ -112,5 +112,18 @@
             %span Lotes Seleccionados
       %md-card-content
         .card-inputs
-          %div{"ng-repeat"=>"purchase in selectedPurchases"}
-            %h2 compra
+          %table.sale-table
+            %tr.table-head
+              %th ID Proovedor
+              %th Nombre Proovedor
+              %th Gramos (Finos)
+            %tr.stripped{"ng-repeat"=>"purchase in selectedPurchases"}
+              %td {{purchase.provider.id}}
+              %td {{purchase.provider_name}}
+              %td {{purchase.amount_picked}}
+            %tr.table-last
+              %td
+              %td{"style"=>"text-align: right;"}
+                %strong
+                  Gramos Totales:
+              %td {{totalAmount}}
