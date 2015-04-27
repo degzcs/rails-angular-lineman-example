@@ -10,6 +10,7 @@ module V1
         user.create_token
       end
       expose :available_credits , documentation: { type: "float", desc: "Available credits", example: 0.0 }
+      expose :phone_number , documentation: { type: "string", desc: "Phone number", example: "312344626" }
     end
   end
 end

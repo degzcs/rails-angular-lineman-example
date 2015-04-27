@@ -564,7 +564,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("show_sale",
     url: "/sale/info",
     ncyBreadcrumb:
-      label: 'Informacion de venta'
+      label: 'Reporte - Remision'
     views:
       'content':
         templateUrl: "partials/sales/show.html"

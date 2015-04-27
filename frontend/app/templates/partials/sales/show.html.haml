@@ -1,4 +1,4 @@
-%md-content.md-padding
+%md-content.md-padding.sale-show-content
   %h1 Reporte - Remision
   %div{layout: "row"}
     /------------------------ CLIENT CARD ---------------------/      
@@ -68,4 +68,38 @@
             %md-input-container{flex: ""}
               %label Nit
               %input{:disabled => "disabled", "ng-model" => "currentCourier.nit_company_number"}
-
+  %div{layout: "row"}
+    /------------------------ USER CARD ---------------------/ 
+    %md-card.sell-card-info{flex: "50"}
+      %md-toolbar
+        .md-toolbar-tools
+          %h3
+            %span Datos Vendedor
+      %md-card-content
+        .card-inputs
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Tipo
+              %input{:disabled => "disabled", "ng-model" => ""}
+            %md-input-container{flex: ""}
+              %label Cedula
+              %input{:disabled => "disabled", "ng-model" => "currentUser.document_number"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Nombre
+              %input{:disabled => "disabled", "ng-model" => "currentUser.first_name"}
+            %md-input-container{flex: ""}
+              %label Apellido
+              %input{:disabled => "disabled", "ng-model" => "currentUser.last_name"}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Telefono
+              %input{:disabled => "disabled", "ng-model" => "currentUser.phone_number"}
+            %md-input-container{flex: ""}
+              %label Direccion
+              %input{:disabled => "disabled", "ng-model" => ""}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %label Email
+              %input{:disabled => "disabled", "ng-model" => "currentUser.email"}
+          
