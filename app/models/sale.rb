@@ -37,9 +37,11 @@ class Sale < ActiveRecord::Base
   
   protected
     def generate_barcode
-      code = '012345678912'
+      new_id = Sale.count + 1
+      code = new_id.to_s.rjust(12, '0')
       barcode = Barby::EAN13.new(code)
+      barcode_html = Barby::HtmlOutputter.new(barcode).to_html
       self.barcode = code
-      self.barcode_html = Barby::HtmlOutputter.new(barcode).to_html
+      self.barcode_html = barcode_html
     end
 end
