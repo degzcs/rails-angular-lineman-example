@@ -14,6 +14,9 @@
 #  seller_picture              :string(255)
 #
 
+require 'barby'
+require 'barby/barcode/ean_13'
+require 'barby/outputter/html_outputter'
 #TODO: extract origin_certicated* fields to a single table and make the association
 class Purchase < ActiveRecord::Base
   #
@@ -27,8 +30,9 @@ class Purchase < ActiveRecord::Base
 
   #
   # Callbacks
-  # 
+  #
   after_create :create_inventory
+  before_save :generate_barcode
 
   #
   # Fields
@@ -46,10 +50,37 @@ class Purchase < ActiveRecord::Base
     Provider.find(self.provider_id)
   end
 
-  protected 
+  # @return [Barby::HtmlOutputter] wiht the purchase code converted in a barcode
+  def barcode_html
+    barcode = Barby::EAN13.new(self.code)
+    Barby::HtmlOutputter.new(barcode).to_html
+  end
+
+  protected
     #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
     def create_inventory
       Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.grams)
+    end
+
+    # Article about how setup ean13
+    # http://www.barcodeisland.com/ean13.phtml
+    def generate_barcode
+      # Number System: 3 digits
+      # this is Colombia code:
+      number_system = "770"
+
+      # Manufacturer Code: 5 digits
+      # this is the office code:
+      mfg_code =  self.user.id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+
+      # Product Code: 4 digits
+      # This is the goldbach code:
+      product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+
+      # Check Digit: 1 digit
+      # this is calculated by Barby (gem)
+      code = "#{number_system}#{mfg_code}#{product_code}"
+      self.code = code
     end
 
 end

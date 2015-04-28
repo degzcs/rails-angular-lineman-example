@@ -11,7 +11,7 @@
 #  barcode       :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
-#  barcode_html  :string(255)
+#  barcode_html  :text
 #
 
 require 'barby'
