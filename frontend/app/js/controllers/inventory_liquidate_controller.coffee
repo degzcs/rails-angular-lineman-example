@@ -96,18 +96,18 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         courier_id: $scope.selectedCourier.id,
         client_id: $scope.selectedClient.id,
         grams: $scope.totalAmount,
-        barcode: "hdjashkdjhq"
       }
 
       SaleService.create(sale_params,gold_batch_params).success((sale) ->
-        #$scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+        $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+        console.log sale
         SaleService.model.id = sale.id
         SaleService.model.courier_id = sale.courier_id
         SaleService.model.client_id = sale.client_id
         SaleService.model.user_id = sale.user_id
         SaleService.model.gold_batch_id = sale.gold_batch_id
         SaleService.model.grams = sale.grams
-        SaleService.model.barcode = sale.barcode
+        SaleService.model.code = sale.code
         SaleService.model.barcode_html = sale.barcode_html
         SaleService.model.selectedPurchases = $scope.selectedPurchases
         SaleService.model.totalAmount = $scope.totalAmount

@@ -9,7 +9,7 @@ angular.module('app').factory 'SaleService', ($http)->
       user_id: null
       gold_batch_id: null 
       grams: null
-      barcode: null
+      code: null
       barcode_html: null
       selectedPurchases: null # Purchases
       totalAmount: null

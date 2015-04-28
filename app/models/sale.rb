@@ -8,10 +8,9 @@
 #  user_id       :integer
 #  gold_batch_id :integer
 #  grams         :float
-#  barcode       :string(255)
+#  code          :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
-#  barcode_html  :text
 #
 
 require 'barby'
@@ -37,15 +36,17 @@ class Sale < ActiveRecord::Base
   validates :client_id, presence: true
   validates :user_id, presence: true
   validates :grams, presence: true
+
+  def barcode_html
+    barcode = Barby::EAN13.new(self.code)
+    barcode_html = Barby::HtmlOutputter.new(barcode).to_html
+  end
   
   protected
     #Before the sale is saved generate a barcode and its html representation
     def generate_barcode
       new_id = Sale.count + 1
       code = new_id.to_s.rjust(12, '0')
-      barcode = Barby::EAN13.new(code)
-      barcode_html = Barby::HtmlOutputter.new(barcode).to_html
-      self.barcode = code
-      self.barcode_html = barcode_html
+      self.code = code
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428160600) do
+ActiveRecord::Schema.define(version: 20150428194129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,10 +210,9 @@ ActiveRecord::Schema.define(version: 20150428160600) do
     t.integer  "user_id"
     t.integer  "gold_batch_id"
     t.float    "grams"
-    t.string   "barcode"
+    t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "barcode_html"
   end
 
   create_table "sold_batches", force: true do |t|
