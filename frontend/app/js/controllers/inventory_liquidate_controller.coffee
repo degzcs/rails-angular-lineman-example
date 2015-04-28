@@ -11,9 +11,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
   $scope.selectedPurchases = liquidation_info.selectedPurchases
   $scope.totalAmount = liquidation_info.totalAmount
-  $scope.selectedGrams = null
   $scope.selectedGrade = null
-  $scope.selectedTotalAmount = 0
+  $scope.selectedWeight  = 0
 
   $scope.searchClientText = null
   $scope.selectedClient = null
@@ -23,13 +22,9 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   $scope.validation_messages = null
   $scope.clientVerifiedProgress = false
   
-  $scope.calculate_total_amount = ->
-    $scope.selectedTotalAmount = Number(($scope.selectedGrams * $scope.selectedGrade/999).toFixed(2))
-    if $scope.selectedTotalAmount == $scope.totalAmount
-      $scope.validation_messages = {valid: true}
-    else
-      $scope.validation_messages = {invalid: true}
-    
+  $scope.calculate_weight = ->
+    $scope.selectedWeight  = Number(($scope.totalAmount * 999/$scope.selectedGrade).toFixed(2))
+
   #
   # Seacrch clients by id
   #
@@ -87,8 +82,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   #
   $scope.submitSale = ->
 
-    if $scope.validation_messages.invalid || $scope.selectedClient == null || $scope.selectedCourier == null
-      $scope.infoAlert('Atencion', 'Por favor ingrese todos los campos correctamente')
+    if $scope.selectedClient == null || $scope.selectedCourier == null
+      $scope.infoAlert('Atencion', 'Por favor un transportador y un cliente')
       return
     else
       gold_batch_params = {

@@ -118,6 +118,9 @@
     //color: rgb(255,235,59);
     color: white;
   }
+  input , input[disabled]{
+    color: white!important;
+  }
 }
 
 .sale-form{
@@ -172,6 +175,7 @@
 .ingot-submit-btn{
   padding: 30px;
 }
+
 
 .tr-fieldset{
   padding-bottom: 20px;
