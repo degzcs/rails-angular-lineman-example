@@ -10,7 +10,7 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   $scope.selectedPurchases = $scope.currentSale.selectedPurchases
   $scope.totalAmount = $scope.currentSale.totalAmount
   $scope.barcode_html = $sce.trustAsHtml($scope.currentSale.barcode_html)
-  $scope.barcode = $scope.currentSale.barcode
+  $scope.code = $scope.currentSale.code
   $scope.currentClient = null
   $scope.currentUser = null
   #

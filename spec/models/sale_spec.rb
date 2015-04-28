@@ -8,10 +8,9 @@
 #  user_id       :integer
 #  gold_batch_id :integer
 #  grams         :float
-#  barcode       :string(255)
+#  code          :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
-#  barcode_html  :text
 #
 
 require 'spec_helper'
@@ -24,8 +23,7 @@ describe Sale do
     it {expect(sale.user_id).not_to be_nil}
     it {expect(sale.gold_batch_id).not_to be_nil}
     it {expect(sale.grams).not_to be_nil}
-    it {expect(sale.barcode).not_to be_nil}
-    it {expect(sale.barcode_html).not_to be_nil}
+    it {expect(sale.code).not_to be_nil}
   end
   context "test creation" do
     it "should create a new sale with valid data" do
@@ -48,9 +46,9 @@ describe Sale do
   end
 
   context "test barcode generations" do
-    it "should generate a barcode and a barcode_html when the sale is created" do
+    it "should generate a code when the sale is created" do
       new_sale = create(:sale)
-      expect(new_sale.barcode_html).not_to be_nil
+      expect(new_sale.code).not_to be_nil
     end
   end
 end

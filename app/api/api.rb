@@ -31,6 +31,8 @@ class API < Grape::API
   mount V1::Modules::Courier
   mount V1::Modules::Client
   mount V1::Modules::Sale
+  mount V1::Modules::Inventory
+
 
   # Adds the swagger documentation to your
   # api. You only need this once, not in

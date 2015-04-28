@@ -38,7 +38,7 @@ RSpec.describe Inventory, type: :model do
 
   context "test after creation callback methods" do
     context "create_inventory" do
-      it 'craetes a new inventory for the purchase with the same remaining_amount value of the gold_batch grams' do
+      it 'creates a new inventory for the purchase with the same remaining_amount value of the gold_batch grams' do
         new_gold_batch = create(:gold_batch, grams: 3.5,  )
         new_purchase = create(:purchase, gold_batch_id: new_gold_batch.id)
         expect(new_purchase.inventory.remaining_amount).to be 3.5 

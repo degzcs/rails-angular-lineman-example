@@ -16,7 +16,7 @@
 
 FactoryGirl.define do
   factory :purchase do
-    user_id 1
+    user_id {FactoryGirl.create(:user).id}
     provider_id 1
     origin_certificate_sequence {Faker::Code.isbn}
     gold_batch {FactoryGirl.create(:gold_batch)}
