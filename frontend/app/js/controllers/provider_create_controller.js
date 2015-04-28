@@ -189,7 +189,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     selectedIndex : 0,
     secondUnlocked : true,
     firstLabel : "Información de Proveedor",
-    secondLabel : "Información de Compañia"
+    secondLabel : "Información de Compañia",
+    thirdLabel : "Documentación"
   };
 
   $scope.formValidateRucom = {
@@ -214,7 +215,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   };
 
   $scope.next = function() {
-    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
+    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 2) ;
     console.log("type: " + $scope.newProvider);
   };
 

@@ -229,7 +229,8 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     selectedIndex : 0,
     secondUnlocked : true,
     firstLabel : "Información Básica",
-    secondLabel : "Información de la Compañía"
+    secondLabel : "Información de la Compañía",
+    thirdLabel : "Documentación"
   };
 
   $scope.save = function() {
@@ -246,7 +247,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
   };
 
   $scope.next = function() {
-    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 1) ;
+    $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 2) ;
   };
 
   $scope.previous = function() {

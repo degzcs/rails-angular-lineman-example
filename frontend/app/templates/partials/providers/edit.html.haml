@@ -2,8 +2,10 @@
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
       {{ formTabControl.firstLabel }}
-    %md-tab#tab2{"ng-if" => "currentProvider.company_info", "aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
+    %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "!formTabControl.secondUnlocked"}
       {{ formTabControl.secondLabel }}
+    %md-tab#tab3{"aria-controls" => "tab3-content"}
+      {{ formTabControl.thirdLabel }}
 
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
     %form{:name => "providerEditionForm", "novalidate" => "novalidate"}
@@ -63,7 +65,7 @@
             %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
               %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar
-              %md-button{"ng-show" => "currentProvider.company_info", "ng-disabled" => "!formTabControl.secondUnlocked || !currentProvider.company_info", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+              %md-button{"ng-show" => "currentProvider.company_info", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
       #tab2-content{"ng-if" => "currentProvider.company_info", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           %md-input-container{:flex => ""}
@@ -98,7 +100,14 @@
           %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{:layout => "row", :flex => "", "layout-align" => "start center"}
               %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
-            %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
+            %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
               %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar
-
+              %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+      #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "2", :role => "tabpanel"}
+        %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+          %div{:layout => "row", :flex => "", "layout-align" => "start center"}
+            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
+          %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
+            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
+            %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar
