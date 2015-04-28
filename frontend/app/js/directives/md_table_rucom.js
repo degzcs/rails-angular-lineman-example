@@ -36,32 +36,44 @@ angular.module('app').directive('mdTableRucom', function () {
 
       $scope.setCurrentRucom = function (rucom) {
         if ($scope.type === 'provider') {
-          ProviderService.retrieveProviders.query({query_rucomid: rucom.id}, (function(providers, headers) {
-            if (providers.length > 0) {
-              var title = 'RUCOM';
-              var text = 'Ya existe un proveedor asociado a este registro del RUCOM';
-              $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
-            } else {
-              console.log('setCurrentRucom' + JSON.stringify(rucom));
-              RucomService.setCurrentRucom(rucom);        
-              console.log(rucom.provider_type);
-              var type = $scope.setProviderType(rucom.provider_type);
-              console.log('1. Setting current Rucom: ' + rucom.id);        
-              $state.go(type, {rucomId: rucom.id});
-            }
-          }), function(error) {});
+          if (rucom.status === 'Rechazado') {
+            var title = 'RUCOM';
+            var text = 'No es posible crear un proveedor con un estado de RUCOM \'Rechazado\'';
+            $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
+          } else {
+           ProviderService.retrieveProviders.query({query_rucomid: rucom.id}, (function(providers, headers) {
+              if (providers.length > 0) {
+                var title = 'RUCOM';
+                var text = 'Ya existe un proveedor asociado a este registro del RUCOM';
+                $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
+              } else {
+                console.log('setCurrentRucom' + JSON.stringify(rucom));
+                RucomService.setCurrentRucom(rucom);        
+                console.log(rucom.provider_type);
+                var type = $scope.setProviderType(rucom.provider_type);
+                console.log('1. Setting current Rucom: ' + rucom.id);        
+                $state.go(type, {rucomId: rucom.id});
+              }
+            }), function(error) {});
+         }
         } else if ($scope.type === 'client') {
-          ClientService.retrieveClients.query({query_rucomid: rucom.id}, (function(clients, headers) {
-            if (clients.length > 0) {
-              var title = 'RUCOM';
-              var text = 'Ya existe un cliente asociado a este registro del RUCOM';
-              $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
-            } else {
-              console.log('setCurrentRucom' + JSON.stringify(rucom));
-              RucomService.setCurrentRucom(rucom);                      
-              $state.go('create_client', {rucomId: rucom.id});
-            }
-          }), function(error) {});
+          if (rucom.status === 'Rechazado') {
+            var title = 'RUCOM';
+            var text = 'No es posible crear un cliente con un estado de RUCOM \'Rechazado\'';
+            $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
+          } else {
+            ClientService.retrieveClients.query({query_rucomid: rucom.id}, (function(clients, headers) {
+              if (clients.length > 0) {
+                var title = 'RUCOM';
+                var text = 'Ya existe un cliente asociado a este registro del RUCOM';
+                $mdDialog.show($mdDialog.alert().title(title).content(text).ok('OK'));
+              } else {
+                console.log('setCurrentRucom' + JSON.stringify(rucom));
+                RucomService.setCurrentRucom(rucom);                      
+                $state.go('create_client', {rucomId: rucom.id});
+              }
+            }), function(error) {});
+          }
         }
       };
 
