@@ -19,7 +19,10 @@ require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
 
 class Sale < ActiveRecord::Base
-
+  #
+  # Associations
+  #
+  has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :user
   belongs_to :gold_batch
   #
@@ -36,7 +39,7 @@ class Sale < ActiveRecord::Base
   validates :grams, presence: true
   
   protected
-    #Before the sale if saved generate a barcode and the html representation
+    #Before the sale is saved generate a barcode and its html representation
     def generate_barcode
       new_id = Sale.count + 1
       code = new_id.to_s.rjust(12, '0')
