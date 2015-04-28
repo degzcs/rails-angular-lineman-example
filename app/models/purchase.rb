@@ -46,6 +46,7 @@ class Purchase < ActiveRecord::Base
   end
 
   #Gets the provider of the purchase
+  # IMPROVE: I think this is an association like "belongs_to :provider" and in the provider model "has_many :purchases"
   def provider
     Provider.find(self.provider_id)
   end
