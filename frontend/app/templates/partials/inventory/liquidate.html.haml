@@ -1,14 +1,14 @@
 /--------------------------- Liquidate invnetory view ------------------------/
 %section.liquidate-inventory-view{layout: "row"}
   /--------------------------- Selected Grams layout ------------------------/
-  %md-card.amounts-picked.md-padding{flex: "20"}
+  %md-card.amounts-picked.md-padding{flex: "25"}
     %h3
       Seleccion (Gramos Finos)
     %div.selected_amount{"ng-repeat"=> "item in selectedPurchases"} 
       {{item.amount_picked}} gr
     %div.total_amount
       %strong
-        Gramos Totales: 
+        Gramos Finos Totales: 
       {{totalAmount}} gr
   %md-card.batches{flex: ""}
     /--------------------------- Ingot Creation layout ------------------------/
@@ -23,22 +23,22 @@
         //  /{{$index +1 }} :
         %md-input-container{flex: ""}
           %label Ley
-          %input{"name"=> "selectedGrade","ng-model" => "selectedGrade", required: "", "type" => "number","ng-change"=>"calculate_total_amount()","min"=> "1","max"=> "999","step"=>"1"}
+          %input{"name"=> "selectedGrade","ng-model" => "selectedGrade", required: "", "type" => "number","ng-change"=>"calculate_weight()","min"=> "1","max"=> "999","step"=>"1"}
           %div{"ng-messages" => "ingotsForm.selectedGrade.$error"}
             %div{"ng-message" => "min"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "max"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "number"} Formato Invalido
         %md-input-container{flex: ""}
           %label Peso
-          %input{"ng-model" => "selectedGrams", required: "","type" => "number", "step"=>"any","ng-change"=>"calculate_total_amount()"}
+          %input{"ng-model" => "selectedWeight", required: "","type" => "number", "step"=>"any",disabled: ""}
           %div{"ng-messages" => "ingotsForm.selectedGrams.$error"}
             %div{"ng-message" => "number"} Formato Invalido
-      %div.liquidation-messages{"ng-messages" => "validation_messages"}
-        %div.valid{"ng-message" => "valid"} Cantidad correcta
-        %div.invalid{"ng-message" => "invalid"} La cantidad no corresponde con los gramos finos seleccionados
+      /%div.liquidation-messages{"ng-messages" => "validation_messages"}
+      /  %div.valid{"ng-message" => "valid"} Cantidad correcta
+      /  %div.invalid{"ng-message" => "invalid"} La cantidad no corresponde con los gramos finos seleccionados
       %h1
-        Gramos Finos Totales:
-        {{selectedTotalAmount}}
+        Peso Total:
+        {{selectedWeight}} gr
       .customer-form{layout: "row"}
         /--------------------------- Client info ------------------------/
         .customer-info{flex: ""}
