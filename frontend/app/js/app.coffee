@@ -5,8 +5,9 @@ angular.module("app", [
   "mgcrea.ngStrap"
   "satellizer"
   "ngMaterial"
-  'ncy-angular-breadcrumb',
+  'ncy-angular-breadcrumb'
   'angularFileUpload'
+  'jcs.angular-http-batch'
 ]).run ($rootScope) ->
 
   # adds some basic utilities to the $rootScope for debugging purposes
@@ -66,3 +67,20 @@ angular.module("app", [
     $mdThemingProvider.theme('docs-dark', 'default')
       .primaryPalette('yellow')
       .dark();
+
+
+
+# TODO: Check if the http batcher is working!! Im testing with diferent setups buts i dont see any change
+
+.config [
+  'httpBatchConfigProvider'
+  (httpBatchConfigProvider) ->
+    httpBatchConfigProvider.setAllowedBatchEndpoint 'http://localhost:3000', 
+    'http://localhost:3000/api/v1/inventories/:id', 
+    {
+      maxBatchedRequestPerCall: 20
+    }
+    return
+]
+
+
