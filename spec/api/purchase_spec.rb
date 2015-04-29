@@ -57,7 +57,7 @@ describe 'Purchase', :type => :request do
            "files" => @files,
            "origin_certificate_sequence"=>"123456789",
           }
-          post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_values},{ "Authorization" => "Barer #{@token}" }
+          post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_purchase_values},{ "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end

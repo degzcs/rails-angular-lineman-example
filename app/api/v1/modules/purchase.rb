@@ -83,7 +83,7 @@ module V1
           content_type "text/json"
           page = params[:page] || 1
           per_page = params[:per_page] || 10
-          purchases = current_user.purchases.paginate(:page => page, :per_page => per_page)
+          purchases = current_user.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)
           header 'total_pages', purchases.total_pages.to_s
           present purchases, with: V1::Entities::Purchase
         end
