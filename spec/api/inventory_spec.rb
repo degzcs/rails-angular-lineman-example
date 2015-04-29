@@ -1,5 +1,5 @@
 
-describe 'Invenotry', :type => :request do
+describe 'Inventory', :type => :request do
 
   describe :v1 do
     context '#inventories' do
@@ -10,17 +10,16 @@ describe 'Invenotry', :type => :request do
       end
 
       context 'PUT' do
-        it 'should update an inventory' do
+        it 'should update an inventory after a sale is created' do
           gold_batch = create(:gold_batch, grams: 100)
           purchase = create(:purchase, gold_batch: gold_batch)
+          ##
+          sale = create(:sale)
+          amount_picked = 20
           inventory = purchase.inventory
-          new_inventory_remaining_amount = 50
-          new_values = {
-            remaining_amount: new_inventory_remaining_amount
-          }
-          put "/api/v1/inventories/#{inventory.id}", {inventory: new_values}, { "Authorization" => "Barer #{@token}" }
+          put "/api/v1/inventories/#{inventory.id}", {sale_id: sale.id,amount_picked: amount_picked}, { "Authorization" => "Barer #{@token}" }
           inventory.reload
-          expect(inventory.remaining_amount).to eq 50
+          expect(inventory.remaining_amount).to eq 80
           expect(response.status).to eq 200
         end
       end

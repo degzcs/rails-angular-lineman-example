@@ -1,10 +1,13 @@
-angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, PdfService, $timeout, $q, $mdDialog, CurrentUser) ->
+angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, PdfService, $timeout, $q, $mdDialog, CurrentUser,  $sce) ->
+
   #
   # Instances
   #
-  # $scope.purchase.model = PurchaseService.restoreState
+  PurchaseService.restoreState()
+  GoldBatchService.restoreState()
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
+  $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
   CurrentUser.get().success (data) ->
     #IMPROVE: Set up Missing values to generate the Purchase invoice
     data.company_name = 'TrazOro'
@@ -15,17 +18,17 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
     data.phone = '3007854214'
     $scope.current_user = data
 
+  window.s =$scope
   #
   # Fuctions
   #
 
   $scope.flushData =->
-    PurchaseService.model = {}
-    GoldBatchService.model = {}
-    $scope.purchase = {}
-    $scope.goldBatch = {}
     sessionStorage.purchaseService = []
     sessionStorage.goldBatchService = []
+    $scope.purchase = PurchaseService
+    $scope.goldBatch = GoldBatchService
+    $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
     console.log 'deleting sessionStorage'
 
   #

@@ -18,6 +18,7 @@ class SoldBatch < ActiveRecord::Base
   #
   # Validations
   #
+
   validates :purchase_id, presence: true
   validates :grams_picked, presence: true
 

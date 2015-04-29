@@ -16,5 +16,4 @@ FactoryGirl.define do
     grams_picked 2.5
     sale_id 1
   end
-
 end

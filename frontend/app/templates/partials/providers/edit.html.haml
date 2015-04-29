@@ -105,9 +105,29 @@
               %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar
               %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
       #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "2", :role => "tabpanel"}
-        %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+        %md-content.md-padding
+        %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}   
+          %md-button{:class => "md-raised", , :flex => "15", "ng-click" => "alert('Documento')"}  
+            %p Cédula de Ciudadanía
+            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}
+          %md-button{:class => "md-raised", , :flex => "15", "ng-click" => "alert('Documento')"}  
+            %p Registro minero
+            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}                                        
+          %md-button{:class => "md-raised", , :flex => "15", "ng-click" => "alert('Documento')"}  
+            %p Camara de comercio
+            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
+          %md-button{:class => "md-raised", , :flex => "15", "ng-click" => "alert('Documento')"}  
+            %p RUT
+            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
+          %md-button{:class => "md-raised", , :flex => "15", "ng-click" => "alert('Documento')"}  
+            %p Autorización*
+            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
+        %span
+        %md-content.md-padding  
+        %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}                  
           %div{:layout => "row", :flex => "", "layout-align" => "start center"}
             %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
           %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
-            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
+            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar              
             %md-button{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar
+

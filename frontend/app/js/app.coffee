@@ -33,14 +33,14 @@ angular.module("app", [
       console.log('restoring models...')
       $rootScope.$broadcast 'restorePurchaseState'
       $rootScope.$broadcast 'restoreGoldBatchState'
-      #let everything know we need to restore state
+      #??
       # sessionStorage.restorestate = false
 
   # Save the state of models, e.g. purchase.model on PurchaseService
   # let everthing know that we need to save state now.
   window.onbeforeunload = (event) ->
-    $console.log('saving state ...')
-    $rootScope.$broadcast 'savePurchaseState'
+    # $console.log('saving state ...')
+    # $rootScope.$broadcast 'savePurchaseState'
 
 .config ($mdIconProvider) ->
   $mdIconProvider
