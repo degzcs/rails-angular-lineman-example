@@ -106,6 +106,20 @@ module V1
           sale = ::Sale.find(params[:id])
           present sale, with: V1::Entities::Sale
         end
+        desc 'returns all batches for a given sale', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales paginated
+          NOTES
+        }
+        params do
+          requires :id, type: Integer, desc: 'Sale ID'
+        end
+        get '/:id/batches', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          batches = ::Sale.find(params[:id]).batches
+          present batches, with: V1::Entities::SoldBatch
+        end
       end
     end
   end
