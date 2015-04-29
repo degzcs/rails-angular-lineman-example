@@ -109,10 +109,8 @@
         %p
           {{goldBatch.model.grade}}
       .reference-code{'flex' => ''}
-        %p
-          Codigo de referencia
-        %p
-          {{purchase.model.reference_code}}
+        %div{"ng-bind-html"=>"barcode_html"}
+        {{purchase.model.code}}
 
     %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
       %h4

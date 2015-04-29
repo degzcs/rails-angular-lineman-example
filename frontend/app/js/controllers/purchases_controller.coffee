@@ -16,6 +16,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     data.phone = '3007854214'
     $scope.current_user = data
 
+    window.s = $scope
+
 
   $scope.allProviders  = []
   $scope.searchText = null
@@ -124,15 +126,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.saveState()
 
   #
-  #
-  $scope.flushData =->
-    $scope.purchase = {}
-    $scope.goldBatch = {}
-    sessionStorage.purchaseService =[]
-    sessionStorage.goldBatchService = []
-    console.log 'deleting sessionStorage'
-
-  #
   # confirm Dialog
   $scope.showConfirm = (ev) ->
     # Appending dialog to document.body to cover sidenav in docs app
@@ -145,7 +138,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
                       .targetEvent(ev)
     $mdDialog.show(confirm).then (->
       $scope.create()
-      # $scope.flushData()
       $location.path('/purchases/show')
       $scope.message = 'Su compra a sido registrada con exito'
       return
