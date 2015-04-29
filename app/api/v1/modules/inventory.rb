@@ -41,8 +41,9 @@ module V1
             NOTE
           }
         params do
-           requires :id, type: Integer
-           requires :inventory, type: Hash
+         requires :id, type: Integer
+         requires :sale_id, type: Integer
+         requires :amount_picked, type: Float
         end
         put '/:id', http_codes: [
             [200, "Successful"],
@@ -51,10 +52,13 @@ module V1
             [404, "Entry not found"],
           ] do
             inventory = ::Inventory.find(params[:id])
-            inventory.update_attributes(params[:inventory])
-            unless inventory.save
-              error!(inventory.errors, 400)
-            end
+            amount_picked = params[:amount_picked]
+            inventory.update_remainig_amount(amount_picked)
+            # 
+            #Sold batch registration
+            #
+            sale = ::Sale.find(params[:sale_id])
+            sold_batch = ::SoldBatchRegistration.register_sold_batch(sale,inventory.purchase,amount_picked)
         end
       end
     end
