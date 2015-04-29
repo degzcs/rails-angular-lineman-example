@@ -15,6 +15,8 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
       origin_certificate_file: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
+      barcode_html: ''
+      code: ''
 
     #
     # HTTP resquests
@@ -51,10 +53,11 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
         )
 
         .success (data, status, headers, config) ->
-            console.log 'uploaded file ' ##+ config.file.name + ' uploaded. Response: ' + data
-            window.data = data
+            console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
+            # window.response = data
             model = angular.fromJson(sessionStorage.purchaseService)
-            model.reference_code = data.reference_code
+            model.barcode_html = data.barcode_html
+            model.code = data.code
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
         ).catch (err) ->

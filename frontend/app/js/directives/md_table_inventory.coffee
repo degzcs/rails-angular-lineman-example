@@ -74,6 +74,14 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         if item.selected
           $scope.deleteGramsDialog(item, ev)
         else
+          if item.inventory_remaining_amount == 0
+            $mdDialog.show(
+              $mdDialog.alert()
+              .title('Mensaje Inventario')
+              .content('No tiene gramos restantes en este lote')
+              .ariaLabel('Alert Dialog Demo').ok('Ok')
+              .targetEvent(ev))
+            return
           if item.inventory_remaining_amount <= 1
             item.selected = true
             item.amount_picked = item.inventory_remaining_amount
@@ -168,10 +176,11 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         i=0
         while i < inventoryItems.length
           item = inventoryItems[i]
-          item.selected = true
-          item.amount_picked = item.inventory_remaining_amount
-          $scope.selectedItems.push(item)
-          $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
+          unless item.inventory_remaining_amount == 0
+            $scope.selectedItems.push(item)
+            item.selected = true
+            item.amount_picked = item.inventory_remaining_amount
+            $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
           i++
         console.log $scope.selectedItems
         return

@@ -48,7 +48,7 @@ describe 'Purchase', :type => :request do
             "inventory_id" => 1,
           }
 
-          new_values ={
+          new_purchase_values ={
            "id"=>1,
            "user_id"=>1,
            "provider_id"=>provider.id,
@@ -75,7 +75,7 @@ describe 'Purchase', :type => :request do
         end
         context '/:id' do
 
-          it 'gets purchase by id' do 
+          it 'gets purchase by id' do
 
             purchase = Purchase.last
 

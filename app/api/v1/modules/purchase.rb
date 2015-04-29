@@ -12,7 +12,7 @@ module V1
           optional :per_page, type: Integer
         end
       end
-      
+
       format :json
       content_type :json, 'application/json'
 
@@ -38,6 +38,8 @@ module V1
                      "price" => 1.5,
                      "origin_certificate_file" => "image.png",
                      "origin_certificate_sequence"=>"123456789",
+                     "barcode_html" => "table html code",
+                     "code" => '123456789012',
                   }
             NOTE
           }
@@ -56,14 +58,16 @@ module V1
               origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
               seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
               params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture)
-              # binding.pry
 
               # create purchase
               purchase = current_user.purchases.build(params[:purchase])
               purchase.build_gold_batch(params[:gold_batch])
               purchase.save!
-              present purchase, with: V1::Entities::Purchase
-              Rails.logger.info(purchase.errors.inspect)
+              # binding.pry
+              present purchase.reload , with: V1::Entities::Purchase
+              if purchase.errors.present?
+                Rails.logger.info(purchase.errors.inspect)
+              end
         end
 
         desc 'returns all existent purchases for the current user', {

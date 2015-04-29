@@ -5,8 +5,9 @@ angular.module("app", [
   "mgcrea.ngStrap"
   "satellizer"
   "ngMaterial"
-  'ncy-angular-breadcrumb',
+  'ncy-angular-breadcrumb'
   'angularFileUpload'
+  'jcs.angular-http-batch'
 ]).run ($rootScope) ->
 
   # adds some basic utilities to the $rootScope for debugging purposes
@@ -31,14 +32,14 @@ angular.module("app", [
       console.log('restoring models...')
       $rootScope.$broadcast 'restorePurchaseState'
       $rootScope.$broadcast 'restoreGoldBatchState'
-      #let everything know we need to restore state
+      #??
       # sessionStorage.restorestate = false
 
   # Save the state of models, e.g. purchase.model on PurchaseService
   # let everthing know that we need to save state now.
   window.onbeforeunload = (event) ->
-    $console.log('saving state ...')
-    $rootScope.$broadcast 'savePurchaseState'
+    # $console.log('saving state ...')
+    # $rootScope.$broadcast 'savePurchaseState'
 
 .config ($mdIconProvider) ->
   $mdIconProvider
@@ -66,3 +67,20 @@ angular.module("app", [
     $mdThemingProvider.theme('docs-dark', 'default')
       .primaryPalette('yellow')
       .dark();
+
+
+
+# TODO: Check if the http batcher is working!! Im testing with diferent setups buts i dont see any change
+
+.config [
+  'httpBatchConfigProvider'
+  (httpBatchConfigProvider) ->
+    httpBatchConfigProvider.setAllowedBatchEndpoint 'http://localhost:3000', 
+    'http://localhost:3000/api/v1/inventories/:id', 
+    {
+      maxBatchedRequestPerCall: 20
+    }
+    return
+]
+
+
