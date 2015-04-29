@@ -76,7 +76,15 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
     # Get all paginated purchases for the current user
     #
     all: (page)->
-      return $http({method: "GET", url: "api/v1/purchases"});
+      if page
+        return $http
+                 method: "GET"
+                 url: "api/v1/purchases"
+                 params: page: page
+      else
+        return $http
+                 method: "GET"
+                 url: "api/v1/purchases"
     #
     # Get a single purchase by id
     #

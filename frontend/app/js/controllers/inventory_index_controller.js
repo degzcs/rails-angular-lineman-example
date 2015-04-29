@@ -37,9 +37,12 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
     inventory_remaining_amount: 'bold',
   };
 
+  $scope.pages = 0;
+  $scope.currentPage = 1;
+
   //---------------- Controller methods -----------------//
   //Purchase service call to api to retrieve all purchases for current user
-  PurchaseService.all().success(function(purchases, headers) {
+  PurchaseService.all().success(function(purchases, status, headers, config) {
     var content, i, purchase;
     content = [];
     i = 0;
@@ -67,10 +70,11 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
       content.push(purchase);
       i++;
     }
+    $scope.pages = parseInt(headers().total_pages);
     $scope.count = content.length;
     return $scope.content = content;
   }).error(function(data, status, headers, config) {
-    return $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud');
+    return $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud');
   });
   
 

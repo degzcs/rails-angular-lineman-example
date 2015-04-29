@@ -8,6 +8,7 @@ angular.module("app", [
   'ncy-angular-breadcrumb'
   'angularFileUpload'
   'jcs.angular-http-batch'
+  'infinite-scroll'
 ]).run ($rootScope) ->
 
   # adds some basic utilities to the $rootScope for debugging purposes
