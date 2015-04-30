@@ -18,5 +18,7 @@
 
 class Rucom < ActiveRecord::Base
 
+  has_one :provider
+
 
 end
