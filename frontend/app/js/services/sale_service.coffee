@@ -11,11 +11,11 @@ angular.module('app').factory 'SaleService', ($http)->
       grams: null
       code: null
       barcode_html: null
-      selectedPurchases: null # Purchases
+      selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
       totalAmount: null
 
-    create: (sale_params, gold_batch_params)->
-      return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params})
+    create: (sale_params, gold_batch_params,selectedPurchases)->
+      return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params,selectedPurchases: selectedPurchases})
 
     saveState: ->
       sessionStorage.restoreSale = 'true'

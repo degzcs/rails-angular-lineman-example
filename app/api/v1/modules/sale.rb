@@ -58,6 +58,7 @@ module V1
         params do
            requires :sale, type: Hash
            requires :gold_batch, type: Hash
+           requires :selectedPurchases, type: Array
         end
         post '/', http_codes: [
             [200, "Successful"],
@@ -65,14 +66,18 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-            #create_sale
-              sale = current_user.sales.build(params[:sale])
-              ##TODO
-              #Check if it is necesary to create a new gold_barch
-              sale.build_gold_batch(params[:gold_batch])
-              sale.save!
-              present sale, with: V1::Entities::Sale
-              Rails.logger.info(sale.errors.inspect)
+            selectedPurchases = params[:selectedPurchases]
+            sale = current_user.sales.build(params[:sale])
+            sale.build_gold_batch(params[:gold_batch])
+            sale.save!
+            #Service Sale registration methods
+            binding.pry
+            
+            ::SaleRegistration.update_inventories(selectedPurchases)
+            ::SaleRegistration.register_sold_batches(sale,selectedPurchases)
+            binding.pry
+            present sale, with: V1::Entities::Sale
+            Rails.logger.info(sale.errors.inspect)
         end
 
         desc 'returns all existent sale for the current user', {

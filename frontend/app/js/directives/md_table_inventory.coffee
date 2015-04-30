@@ -103,59 +103,26 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
       #@params item [Object]
 
       $scope.selectItem = (item, grams, ev) ->
-
-        $scope.pickedItem = item
         if item.selected
+          #Delete selected grams
           $scope.deleteGramsDialog(item, ev)
         else
+          #Show a message if there is no remainign grams
           if item.inventory_remaining_amount == 0
-            $mdDialog.show(
-              $mdDialog.alert()
-              .title('Mensaje Inventario')
-              .content('No tiene gramos restantes en este lote')
-              .ariaLabel('Alert Dialog Demo').ok('Ok')
-              .targetEvent(ev))
+            show_dialog('Mensaje Inventario','No tiene gramos restantes en este lote', ev)
             return
+          #Check if the remaining amount is lowe than 1
           if item.inventory_remaining_amount <= 1
             item.selected = true
             item.amount_picked = item.inventory_remaining_amount
-            $scope.selectedItems.push(item)
+            #Push the hash to the array of selected items
+            $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
             $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
           else
-            $scope.enterGramsDialog(item, ev)
-          
-        
-      #updates all checkboxes in the inventory list
-      
-      $scope.selectAll = (inventoryItems, grams, selectall,ev) ->
-        #First we check if the all select box is pressed
-        if $scope.selectall
-          #if its already pressed then we clean the variables and the items
-          $scope.totalAmount = 0
-          $scope.selectall = false
-          $scope.selectedItems = []
-          clean_checkbox_items(inventoryItems)
-        else
-          #The we check if there are already items selected, 
-          if $scope.selectedItems.length != 0
-            confirm = $mdDialog.confirm()
-            .title('Confirmar')
-            .content('Si selecciona esta opcion descartara las cantidades que ya especifico y seran adicionados todos los lotes')
-            .ariaLabel('Lucky day').ok('Estoy seguro').cancel('Cancelar')
-            .targetEvent(ev)
-
-            $mdDialog.show(confirm).then (->
-              #If the response is positive then clenans the previous values and recreate the arrays
-              add_all_items(inventoryItems)
-            ), ->
-              $scope.selectall = false
-              return
-          else
-            add_all_items(inventoryItems)
-        return
+            enterGramsDialog(item, ev)
 
       # Display a dialog that allows to enter the grams amount
-      $scope.enterGramsDialog = (item,ev)->
+      enterGramsDialog = (item,ev)->
         $mdDialog.show(
           controller: 'InventoryAmountCtrl'
           resolve: 
@@ -166,14 +133,72 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           #It catches the answer and push it to the array selectItems, it also adds the amount to the total
           item.selected = true
           item.amount_picked = answer
-          $scope.selectedItems.push(item)
+          #Push the hash to the array of selected items
+          $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
           $scope.totalAmount = Number(($scope.totalAmount + answer).toFixed(2))
           return
         ), ->
           #if the response is negative set the checkbox to false
           item.selected = false
           return
+        return          
+
+
+      #updates all checkboxes in the inventory list
+      $scope.selectAll = (inventoryItems, grams, selectall,ev) ->
+        #First we check if the all select box is pressed
+        if $scope.selectall
+          #if its already pressed then we clean the variables and the items
+          $scope.totalAmount = 0
+          $scope.selectall = false
+          $scope.selectedItems = []
+          clean_checkbox_items(inventoryItems)
+        else
+          #Then we check if there are already items selected, 
+          if $scope.selectedItems.length != 0
+            confirm = $mdDialog.confirm()
+            .title('Confirmar')
+            .content('Si selecciona esta opcion descartara las cantidades que ya especifico y seran adicionados todos los lotes')
+            .ariaLabel('Lucky day').ok('Estoy seguro').cancel('Cancelar')
+            .targetEvent(ev)
+            $mdDialog.show(confirm).then (->
+              #If the response is positive then clenans the previous values and recreate the arrays
+              add_all_items(inventoryItems)
+            ), ->
+              $scope.selectall = false
+              return
+          else
+            add_all_items(inventoryItems)
         return
+
+      add_all_items = (inventoryItems)->
+        #Clear all the checkboxed and total amount
+        $scope.selectall = true
+        $scope.totalAmount = 0
+        $scope.selectedItems = []
+        i=0
+        while i < inventoryItems.length
+          item = inventoryItems[i]
+          unless item.inventory_remaining_amount == 0
+            item.selected = true
+            item.amount_picked = item.inventory_remaining_amount
+            #Push the hash to the array of selected items
+            $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
+            $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
+          i++
+        console.log $scope.selectedItems
+        return
+
+      clean_checkbox_items = (inventoryItems)->
+        i=0
+        while i < inventoryItems.length
+          item = inventoryItems[i]
+          item.selected = false
+          item.amount_picked = null
+          i++
+        console.log $scope.selectedItems
+        return
+
 
       #Launches a dialog to ask the user if wants to delete the amount 
       $scope.deleteGramsDialog= (item,ev)->
@@ -203,31 +228,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           item.selected = true
           return
 
-      add_all_items = (inventoryItems)->
-        $scope.selectall = true
-        $scope.totalAmount = 0
-        $scope.selectedItems = []
-        i=0
-        while i < inventoryItems.length
-          item = inventoryItems[i]
-          unless item.inventory_remaining_amount == 0
-            $scope.selectedItems.push(item)
-            item.selected = true
-            item.amount_picked = item.inventory_remaining_amount
-            $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
-          i++
-        console.log $scope.selectedItems
-        return
-      clean_checkbox_items = (inventoryItems)->
-        i=0
-        while i < inventoryItems.length
-          item = inventoryItems[i]
-          item.selected = false
-          item.amount_picked = null
-          i++
-        console.log $scope.selectedItems
-        return
-      
+
       # Display a dialog that allows to enter the ingots number
       enterIngotsNumber = (ev)->
         $mdDialog.show(
@@ -263,9 +264,17 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           return
         ), ->
           #If the response in negative sets the checkbox to true again
-          
           return
         return
+
+      #Show simple information dialog
+      show_dialog = (title, message, ev)->
+        $mdDialog.show(
+          $mdDialog.alert()
+          .title(title)
+          .content(message)
+          .ariaLabel('Alert Dialog Demo').ok('Ok')
+          .targetEvent(ev))
       return
 
     

@@ -2,10 +2,9 @@
 angular.module('app').factory 'LiquidationService', ($http)-> 
   service = 
     model:
-      selectedPurchases: null
+      selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
       totalAmount: 0
-      ingots_number: 0
-
+    
     saveState: ->
       sessionStorage.pendingLiquidation = 'true'
       sessionStorage.liquidationService = angular.toJson(service.model)

@@ -98,10 +98,10 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         grams: $scope.totalAmount,
       }
 
-      SaleService.create(sale_params,gold_batch_params).success((sale) ->
+      SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
         ## TODO: Check for http batch petition to update all inventories-----
-        InventoryService.update_all_inventories($scope.selectedPurchases,sale.id) #--
+        #InventoryService.update_all_inventories($scope.selectedPurchases,sale.id) #--
         ##-------------------------------------------------------------------
         SaleService.model.id = sale.id
         SaleService.model.courier_id = sale.courier_id
