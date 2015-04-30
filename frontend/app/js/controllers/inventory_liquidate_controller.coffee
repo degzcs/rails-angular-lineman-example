@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService,InventoryService) ->
+angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService) ->
   #
   # Redirects to The index inventory if there is no pendinigs liquidations
   #
@@ -100,9 +100,6 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
-        ## TODO: Check for http batch petition to update all inventories-----
-        #InventoryService.update_all_inventories($scope.selectedPurchases,sale.id) #--
-        ##-------------------------------------------------------------------
         SaleService.model.id = sale.id
         SaleService.model.courier_id = sale.courier_id
         SaleService.model.client_id = sale.client_id

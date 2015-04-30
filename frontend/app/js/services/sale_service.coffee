@@ -15,7 +15,7 @@ angular.module('app').factory 'SaleService', ($http)->
       totalAmount: null
 
     create: (sale_params, gold_batch_params,selectedPurchases)->
-      return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params,selectedPurchases: selectedPurchases})
+      return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params,selected_purchases: selectedPurchases})
 
     saveState: ->
       sessionStorage.restoreSale = 'true'
