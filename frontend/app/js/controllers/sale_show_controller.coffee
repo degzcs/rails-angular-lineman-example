@@ -7,12 +7,22 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   #
   #Get info
   currentSale = SaleService.restoreState()
-  $scope.selectedPurchases = currentSale.selectedPurchases
-  #GET full info for every selected purchase from api
-  console.log "Purchases"
+  $scope.selected_purchases = currentSale.selectedPurchases
+  $scope.purchases = null
+
+  ids = []
+  i=0
+  while i < $scope.selected_purchases.length
+    id = $scope.selected_purchases[i].purchase_id
+    ids.push(id)
+    i++
+  
+  PurchaseService.get_list(ids).success (data)->
+    $scope.purchases = data
+    #console.log data
+  
   #PurchaseService.get_list(currentSale.selectedPurchases.length).success (data)->
   #  $scope.selectedPurchases = data
-
   $scope.totalAmount = currentSale.totalAmount
   $scope.barcode_html = $sce.trustAsHtml(currentSale.barcode_html)
   $scope.code = currentSale.code

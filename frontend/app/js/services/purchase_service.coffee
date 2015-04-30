@@ -96,12 +96,13 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
     get: (id)->
       return $http({method: "GET", url: "api/v1/purchases/" + id})
 
-    get_list: (selected_purchases)->
-      
-      return $http
-                method: "GET"
-                url: "api/v1/purchases"
-                data: { list: selected_purchases}
+    get_list: (ids)->
+      console.log "IDS"
+      console.log ids
+      return $http.get('api/v1/purchases', params:
+                "purchase_list[]": ids)
+
+                  
   #
   # Listeners
   #

@@ -8,6 +8,9 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
       name: 'Fecha',
       field: 'created_at'
     },{
+      name: 'ID Compra',
+      field: 'id'
+    },{
       name: 'Proovedor',
       field: 'provider_name'
     }, {
@@ -31,6 +34,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
   //Header Styles
   $scope.custom = {
     provider_name: 'grey',
+    id: 'bold',
     gold_batch_grams: 'grey',
     price: 'grey',
     created_at: 'bold',

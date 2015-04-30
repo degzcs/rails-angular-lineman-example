@@ -214,7 +214,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           deleted_item_index = null
           i=0
           while i < $scope.selectedItems.length
-            if item == $scope.selectedItems[i]
+            if item.id == $scope.selectedItems[i].purchase_id
               deleted_item_index = i
             i++
           #Then deletes the item from the array and from the total

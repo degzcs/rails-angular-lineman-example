@@ -112,14 +112,17 @@
         .card-inputs
           %table.sale-table
             %tr.table-head
+              %th ID Compra
               %th ID Proovedor
               %th Nombre Proovedor
               %th Gramos (Finos)
-            %tr.stripped{"ng-repeat"=>"purchase in selectedPurchases"}
+            %tr.stripped{"ng-repeat"=>"purchase in purchases"}
+              %th {{purchase.id}}
               %td {{purchase.provider.id}}
-              %td {{purchase.provider_name}}
-              %td {{purchase.amount_picked}}
+              %td {{purchase.provider.first_name}} {{purchase.provider.last_name}}
+              %td {{selected_purchases[$index].amount_picked}}
             %tr.table-last
+              %td
               %td
               %td
               %td 

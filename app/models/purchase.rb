@@ -65,6 +65,7 @@ class Purchase < ActiveRecord::Base
   # Class methods
   #
 
+  #Get a list of purchases using an array of puchase ids
   def self.get_list(ids_array)
     list = []
     ids_array.each do |id|
