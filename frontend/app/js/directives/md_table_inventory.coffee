@@ -19,7 +19,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
       $scope.tablePage = 0
       $scope.selectedItems = []
       $scope.totalAmount = 0
-
+      $scope.count = 0
       $scope.liquidate_selected_items = (ev)->
         
         if $scope.selectedItems.length == 0
