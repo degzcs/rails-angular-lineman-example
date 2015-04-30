@@ -26,7 +26,9 @@ FactoryGirl.define do
     location {Faker::Address.city}
     subcontract_number {Faker::Company.ein}
     mining_permit {Faker::Code.ean}
-    provider_type {"Barequero"}
+    # Provider Types
+    #1) chatarrero, 2) barequero, 3) titular minero, 4) beneficiario de area de reserva especial, 5) solicitante de legalizacion, 6) subcontrato de formalizaion
+    provider_type {["barequero", "chatarrero", "minero", "beneficiario", "solicitante", "subcontrato" ].sample}
     num_rucom {Faker::Code.ean}
   end
 

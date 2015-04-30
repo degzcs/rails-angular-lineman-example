@@ -1,6 +1,7 @@
 angular.module('app').factory 'BeneficiationPlantOriginCertificateService', ($rootScope, $filter)->
   service=
     model:
+      type: 'beneficiario'
       date: $filter('date')(Date.now(), 'yyyy-MM-dd')
       city: '' # where is generated the current OC
       ## mineral's Provider Info

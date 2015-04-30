@@ -54,20 +54,11 @@ module V1
           ] do
 
               # update params
-              files =params[:purchase].slice(:files)[:files]
-              origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
-              seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
-              params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture)
-
-              # create purchase
-              purchase = current_user.purchases.build(params[:purchase])
-              purchase.build_gold_batch(params[:gold_batch])
-              purchase.save!
+              new_params = V1::Helpers::PurchaseHelper.format_params(params)
+              buy_gold_batch = BuyGoldBatch.new(current_user, new_params[:purchase], new_params[:gold_batch])
+              buy_gold_batch.process!
               # binding.pry
-              present purchase.reload , with: V1::Entities::Purchase
-              if purchase.errors.present?
-                Rails.logger.info(purchase.errors.inspect)
-              end
+              present buy_gold_batch.purchase , with: V1::Entities::Purchase
         end
 
         desc 'returns all existent purchases for the current user', {

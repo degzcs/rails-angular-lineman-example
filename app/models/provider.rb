@@ -29,11 +29,24 @@ class Provider < ActiveRecord::Base
   #
 
   has_one :company_info
+  belongs_to :rucom
   mount_uploader :identification_number_file, AttachmentUploader
   mount_uploader :rut_file, AttachmentUploader
   mount_uploader :mining_register_file, AttachmentUploader
   mount_uploader :photo_file, AttachmentUploader
-  
+
+  #
+  # Scopes
+  #
+  #IMPROVE: This is temporal because the rumcom implementation will be changed (integration with the legacy system)
+  # Provider Types
+  #1) chatarrero, 2) barequero, 3) titular minero, 4) beneficiario de area de reserva especial, 5) solicitante de legalizacion, 6) subcontrato de formalizaion
+  scope :chatarrero, -> {joins(:rucom).where('rucoms.provider_type = ?', 'chatarrero')}
+  scope :barequero, -> {joins(:rucom).where('rucoms.provider_type = ?', 'barequero')}
+  scope :minero, -> {joins(:rucom).where('rucoms.provider_type = ?', 'minero')}
+  scope :beneficiario, -> {joins(:rucom).where('rucoms.provider_type = ?', 'beneficiario')}
+  scope :solicitante, -> {joins(:rucom).where('rucoms.provider_type = ?', 'solicitante')}
+  scope :subcontrato, -> {joins(:rucom).where('rucoms.provider_type = ?', 'subcontrato')}
   #
   # Instance Methods
   #
@@ -44,8 +57,12 @@ class Provider < ActiveRecord::Base
   end
 
   # @return the rucom of the provider
-  def rucom
-    Rucom.find(self.rucom_id)
+  # def rucom
+  #   Rucom.find(self.rucom_id)
+  # end
+
+  def type
+    rucom.provider_type
   end
 
   # @return the population_center of the provider
