@@ -1,8 +1,8 @@
 angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location) ->
-    #
+
+  #
   # Instances
   #
-  # $scope.purchase.model = PurchaseService.restoreState
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
@@ -16,12 +16,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     data.phone = '3007854214'
     $scope.current_user = data
 
-    window.s = $scope
-
-
   $scope.allProviders  = []
   $scope.searchText = null
-  $scope.message
+  window.s = $scope
+
   #
   # Fuctions
   #
@@ -118,6 +116,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
 
   #
+  # Flush Data
+  #
+  $scope.flushData =->
+    $scope.purchase.model = {}
+    $scope.goldBatch.model = {}
+    console.log 'deleting sessionStorage'
+
+  #
   # Save the values in SessionStorage
   $scope.saveState= ->
     console.log('saving purchase state on sessionStore ... ')
@@ -138,6 +144,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
                       .targetEvent(ev)
     $mdDialog.show(confirm).then (->
       $scope.create()
+      $scope.flushData()
       $location.path('/purchases/show')
       $scope.message = 'Su compra a sido registrada con exito'
       return

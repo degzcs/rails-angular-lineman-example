@@ -18,18 +18,38 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
     data.phone = '3007854214'
     $scope.current_user = data
 
-  window.s =$scope
   #
   # Fuctions
   #
 
   $scope.flushData =->
-    sessionStorage.purchaseService = []
-    sessionStorage.goldBatchService = []
-    $scope.purchase = PurchaseService
-    $scope.goldBatch = GoldBatchService
-    $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
-    console.log 'deleting sessionStorage'
+    PurchaseService.deleteState()
+    GoldBatchService.deleteState()
+
+    PurchaseService.model =
+      price: 0
+      seller_picture: ''
+      provider: {}
+      origin_certificate_sequence: ''
+      origin_certificate_file: ''
+      fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
+      reference_code: ''
+      barcode_html: ''
+      code: ''
+
+    GoldBatchService.model =
+      parent_batches: ''
+      grade: 1
+      grams: 0 # the introduced grams  by the seller or provider
+      castellanos: 0
+      ozs: 0
+      tomines: 0
+      riales: 0
+      inventory_id: 1
+      total_grams: 0
+      total_fine_grams: 0
+
+    console.log 'deleting sessionStorage ...'
 
   #
   #  Send calculated values to create a Purchase Renport in PDF format

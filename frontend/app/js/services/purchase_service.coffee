@@ -65,7 +65,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
         return
 
     #
-    # Save model temporal states
+    # Save, restore and  delete model temporal states
     #
     saveState: ->
       sessionStorage.restorestate = 'true'
@@ -75,6 +75,8 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
         service.model = angular.fromJson(sessionStorage.purchaseService)
       else
         sessionStorage.restorestate = 'false'
+    deleteState: ->
+      sessionStorage.purchaseService = []
     #
     # Get all paginated purchases for the current user
     #

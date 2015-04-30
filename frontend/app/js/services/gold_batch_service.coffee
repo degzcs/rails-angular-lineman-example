@@ -28,6 +28,8 @@ angular.module('app').factory 'GoldBatchService', ($rootScope)->
         service.model = angular.fromJson(sessionStorage.goldBatchService)
       else
         sessionStorage.restorestate = 'false'
+    deleteState: ->
+      sessionStorage.goldBatchService =[]
 
   #
   # Listeners
