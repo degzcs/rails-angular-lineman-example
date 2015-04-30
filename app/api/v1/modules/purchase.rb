@@ -69,13 +69,18 @@ module V1
         }
         params do
           use :pagination
+          optional :purchase_list, type: Array #Array of purchase ids
         end
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          page = params[:page] || 1
-          per_page = params[:per_page] || 10
-          purchases = current_user.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)
-          header 'total_pages', purchases.total_pages.to_s
+          if params[:purchase_list]
+            purchases = ::Purchase.get_list(params[:purchase_list])
+          else  
+            page = params[:page] || 1
+            per_page = params[:per_page] || 10
+            purchases = current_user.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)
+            header 'total_pages', purchases.total_pages.to_s
+          end
           present purchases, with: V1::Entities::Purchase
         end
         desc 'returns one existent provider by :id', {
