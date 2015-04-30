@@ -90,6 +90,13 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
     per_page: 100
     page: 1
   }, ((providers, headers) ->
+    setAllProviders(providers)
+  ), (error) ->
+    console.log 'Error in Providers query'
+
+  #
+  # Set all retrieved providers to the current scope
+  setAllProviders =(providers)->
     i = 0
     while i < providers.length
       prov =
@@ -113,7 +120,7 @@ angular.module('app').controller 'OriginCertificateCtrl', ($scope, BarequeroChat
         state: 'Cauca'
       $scope.allProviders.push prov
       i++
-  ), (error) ->
+
 
   #
   # Set mining operators properly and get the total  amount of gold
