@@ -204,3 +204,13 @@
     padding-top:30px;
   }
 }
+
+.purchase-empty{
+  background: lighten(red, 30%);
+}
+
+.inventory-index-table{
+  tbody tr{
+    border-bottom: 1px solid #eee;
+  }
+}
