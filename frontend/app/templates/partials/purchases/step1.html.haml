@@ -1,10 +1,10 @@
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
   %section{layout: "row"}
     %div.md-padding{flex: ""}
-      // ---------------------- Provider info ------------------- //
+      // ---------------------- Provider info ------------------- ///
       %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend 
-          %h3 
+        %legend
+          %h3
             1. Seleccione un Proovedor
         %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", :required => ""}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
@@ -22,7 +22,7 @@
               %input{"ng-model" => "purchase.model.provider.document_type", :required => "", :name => 'provider_document_type', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Numero de Documento
-              %input{"ng-model" => "purchase.model.provider.document_number", :required => "", :name => 'provider_document_number', :readOnly => 'true'}  
+              %input{"ng-model" => "purchase.model.provider.document_number", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Registro Rucom
@@ -37,7 +37,7 @@
     %div{flex: ""}
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
-        %legend 
+        %legend
           %h3 2. Tome una foto al vendedor
         %md-input-container.row
           .photo
@@ -45,13 +45,13 @@
               %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png'}}","ng-model" => "purchase.model.seller_picture",  "check-image" => ''}
               %md-tooltip{'md-direction'=> 'right'}
                 Tomar Foto
-            
+
   %section.uploader-certificate-form{layout: "row"}
     %div.md-padding{flex: ""}
       // ---------------------- Origin certificate info ------------------- //
       %fieldset.standard.tr-fieldset.origin-certificate-fieldset
-        %legend 
-          %h3 
+        %legend
+          %h3
             3. Suba el certificado de origen e ingrese el numero
         %div{layout: "row"}
           %md-input-container{flex: '40'}
@@ -62,7 +62,7 @@
 
         %section.uploader-certificate-tab{layout: "row"}
           %div{flex: '40'}
-            %h4 Seleccione una forma de subir el certificado 
+            %h4 Seleccione una forma de subir el certificado
             %md-select.uploader-selector{"ng-model" => "origin_certificate_upload_type", :placeholder => "Cargar Centificado de Origen ...", :required => ''}
               %md-option{:value => "by_upload"} Desde el PC
               %md-option{:value => "by_scan"} Por Escaner
