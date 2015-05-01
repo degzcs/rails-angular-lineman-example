@@ -21,6 +21,7 @@ md-card.seller{
   .photo{
       position: relative;
       z-index: 20;
+
     .md-fab{
       position: absolute;
       top: 0;
@@ -34,10 +35,16 @@ md-card.seller{
       background: #ccc;
       text-align: center;
       position: relative;
-      height: 100px;
-      width: 100px;
+      height: 150px;
+      width: 150px;
       border:none;
       outline: none;
+      border: 1px solid darken(#eee,20%);
+    }
+    .photo-provider-button{
+      margin-top: 10px;
+      margin-bottom: 10px;
+      width: 60px;
     }
   }
 
@@ -72,3 +79,49 @@ md-card.seller{
 .chipsdemoContactChips .md-item-text.compact {
   padding-top: 8px;
   padding-bottom: 8px; }
+
+.purchase-form{
+  margin-top: 40px;
+  .photo{
+    text-align: center;
+    margin-top: 30px;
+  }
+  fieldset{
+    margin: 15px!important;
+  }
+  fieldset.photo-fieldset{
+    height: 247.5px;
+  }
+}
+.create-provider-button{
+  margin-left: 10px;
+}
+
+.image-container{
+  position: relative;
+  display: inline-block;
+}
+
+.image-container:hover {
+    background: url("/img/take-photo.png");
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+.uploader-certificate-form{
+  margin-top: 40px;
+  md-input-container{
+    padding-bottom: 25px!important;
+  }
+  .origin-certificate-number{
+    //width: 300px;
+  }
+  .origin-certificate-fieldset{
+    min-height: 300px;
+  }
+
+  .uploader-selector{
+    width: 100%;
+  }
+}
