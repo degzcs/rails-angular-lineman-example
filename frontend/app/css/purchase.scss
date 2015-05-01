@@ -94,7 +94,7 @@ md-card.seller{
   }
 }
 .create-provider-button{
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .image-container{
@@ -124,4 +124,23 @@ md-card.seller{
   .uploader-selector{
     width: 100%;
   }
+  md-select{
+    margin-top: 0!important;
+  }
+}
+
+.upload-oc{
+  border: 1px solid #eee;
+  min-height: 150px;
+  background: #eee;
+  margin-top: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding: 20px;
+}
+.uploader-certificate-tab{
+  margin-top: 10px;
+}
+.origin-certificate-fieldset{
+  padding-left: 30px!important;
 }
