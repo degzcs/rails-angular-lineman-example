@@ -21,6 +21,7 @@ require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
 #TODO: extract origin_certicated* fields to a single table and make the association
+#TODO: change field name from grams to fine_grams
 class Purchase < ActiveRecord::Base
   #
   # Associations

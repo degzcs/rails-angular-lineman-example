@@ -13,6 +13,7 @@
 #  updated_at    :datetime
 #
 
+#TODO: change field name from grams to fine_grams
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
@@ -28,7 +29,7 @@ class Sale < ActiveRecord::Base
   # Callbacks
   #
   before_save :generate_barcode
-  
+
   #
   # Validations
   #
@@ -41,7 +42,7 @@ class Sale < ActiveRecord::Base
     barcode = Barby::EAN13.new(self.code)
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
   end
-  
+
   protected
     #Before the sale is saved generate a barcode and its html representation
     def generate_barcode

@@ -94,6 +94,22 @@ module V1
           header 'total_pages', sales.total_pages.to_s
           present sales, with: V1::Entities::Sale
         end
+
+        desc 'Given sale code, it returns both provider and gold batch information necessary for made a purchase', {
+          entity: V1::Entities::SaleForPurchase,
+          notes: <<-NOTES
+            Given sale code, it returns both provider and gold batch information necessary for made a purchase
+          NOTES
+        }
+        params do
+          requires :code, type: String, desc: 'Sale ID'
+        end
+        get 'get_by_code/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          sale = ::Sale.find_by(code: params[:code])
+          present sale, with: V1::Entities::SaleForPurchase
+        end
+
         desc 'returns one existent sale by :id', {
           entity: V1::Entities::Sale,
           notes: <<-NOTES
@@ -108,26 +124,7 @@ module V1
           sale = ::Sale.find(params[:id])
           present sale, with: V1::Entities::Sale
         end
-        desc 'returns all batches for a given sale', {
-          entity: V1::Entities::Sale,
-          notes: <<-NOTES
-            Returns all existent sales paginated
-          NOTES
-        }
-        desc 'returns one existent sale by :code', {
-          entity: V1::Entities::Sale,
-          notes: <<-NOTES
-            Returns one existent sale by :id
-          NOTES
-        }
-        params do
-          requires :code, type: String, desc: 'Sale ID'
-        end
-        get '/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          content_type "text/json"
-          sale = ::Sale.find_by(code: params[:code])
-          present sale, with: V1::Entities::Sale
-        end
+
         desc 'returns all batches for a given sale', {
           entity: V1::Entities::Sale,
           notes: <<-NOTES
