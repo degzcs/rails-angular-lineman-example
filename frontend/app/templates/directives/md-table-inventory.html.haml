@@ -5,7 +5,7 @@
       %md-icon{:alt => "Alarm Icon", "md-svg-icon" =>"navigation:arrow_forward"}
   %md-content
     .table-container
-      %table.md-table
+      %table.md-table.inventory-index-table
         %thead
           %tr.md-table-headers-row
             %th.table-checkbox.all-check
@@ -19,7 +19,7 @@
                 %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
               %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
-          %tr.md-table-content-row{"ng-repeat" => "item in content | filter:filters"}
+          %tr.md-table-content-row{"ng-repeat" => "item in content | filter:filters","ng-class"=>"{'purchase-empty': item.inventory.remaining_amount == 0}"}
             %td.table-checkbox
               /%md-checkbox{"ng-click" => "selectItem(item,grams,$event)", "ng-model" => "item.selected", "aria-label"=>"item-check", value:"item.selected"}
               %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)"} 

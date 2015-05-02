@@ -55,8 +55,8 @@ module V1
 
               # update params
               new_params = V1::Helpers::PurchaseHelper.format_params(params)
-              buy_gold_batch = BuyGoldBatch.new(current_user, new_params[:purchase], new_params[:gold_batch])
-              buy_gold_batch.process!
+              buy_gold_batch = BuyGoldBatch.new(new_params[:purchase], new_params[:gold_batch], current_user)
+              buy_gold_batch.from_non_trazoro_user!
               # binding.pry
               present buy_gold_batch.purchase , with: V1::Entities::Purchase
         end
@@ -75,7 +75,7 @@ module V1
           content_type "text/json"
           if params[:purchase_list]
             purchases = ::Purchase.get_list(params[:purchase_list])
-          else  
+          else
             page = params[:page] || 1
             per_page = params[:per_page] || 10
             purchases = current_user.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)

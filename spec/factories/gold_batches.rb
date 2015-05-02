@@ -14,7 +14,7 @@
 FactoryGirl.define do
   factory :gold_batch do
     parent_batches ""
-    grams 2.5
+    grams 100
     grade 1
     inventory_id 1
   end

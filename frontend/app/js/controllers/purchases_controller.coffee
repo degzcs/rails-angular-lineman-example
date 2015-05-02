@@ -6,6 +6,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
+  $scope.hover_image = "http://www.gravatar.com/avatar/b76f6e92d9fc0690e6886f7b9d4f32da?s=100";
   CurrentUser.get().success (data) ->
     #IMPROVE: Set up Missing values to generate the Purchase invoice
     data.company_name = 'TrazOro'
