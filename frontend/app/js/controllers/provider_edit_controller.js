@@ -46,6 +46,8 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
           email: provider.company_info.email,
           phone_number: provider.company_info.phone_number
         };
+      } else {
+        $scope.formTabControl.secondUnlocked = false;
       }
       $scope.currentProvider = prov;
       //ProviderService.setCurrentProv(prov);
