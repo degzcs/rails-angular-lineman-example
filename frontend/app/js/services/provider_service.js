@@ -4,6 +4,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
     var currentProvider = {};
     var providers = [];
     impl.uploadProgress = 0;
+    var currentTabProvCreation = 0;
 
     var setCurrentProv = function(provider) {
         currentProvider = provider;
@@ -239,6 +240,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         retrieveProviderById: retrieveProviderById,
         uploadProgress: impl.uploadProgress,
         impl: impl,
-        retrieve: retrieve
+        retrieve: retrieve,
+        currentTabProvCreation: currentTabProvCreation
     };
 });

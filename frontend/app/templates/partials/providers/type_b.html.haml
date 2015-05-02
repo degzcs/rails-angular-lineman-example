@@ -1,10 +1,10 @@
 %div{:layout => "column", :style => "padding-left:20px; padding-right:20px;"}
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
-    %md-tab#tab1{"aria-controls" => "tab1-content"}
+    %md-tab#tab1{"aria-controls" => "tab1-content", "ng-click" => "formTabControl.selectedIndex = 0"}
       {{ formTabControl.firstLabel }}
-    %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "!newProvider.has_company"}
+    %md-tab#tab2{"aria-controls" => "tab2-content", "ng-disabled" => "!newProvider.has_company", "ng-click" => "formTabControl.selectedIndex = 1"}
       {{ formTabControl.secondLabel }}
-    %md-tab#tab3{"aria-controls" => "tab3-content"}
+    %md-tab#tab3{"aria-controls" => "tab3-content", "ng-click" => "formTabControl.selectedIndex = 2"}
       {{ formTabControl.thirdLabel }}
       
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}

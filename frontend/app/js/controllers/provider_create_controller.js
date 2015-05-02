@@ -192,7 +192,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   ];
 
   $scope.formTabControl = {
-    selectedIndex : 0,
+    selectedIndex : ProviderService.currentTabProvCreation,
     secondUnlocked : true,
     firstLabel : "Información de Proveedor",
     secondLabel : "Información de Compañia",
@@ -222,11 +222,13 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
   $scope.next = function() {
     $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 2) ;
+    ProviderService.currentTabProvCreation = $scope.formTabControl.selectedIndex;
     console.log("type: " + $scope.newProvider);
   };
 
   $scope.previous = function() {
     $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
+    ProviderService.currentTabProvCreation = $scope.formTabControl.selectedIndex;
     if ($scope.newProvider.population_center.id !== '') {
       $scope.loadProviderLocation($scope.newProvider);
     }
@@ -314,7 +316,16 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
      ProviderService.setCurrentProv($scope.newProvider);
   }, true);
 
+  $scope.$watch('formTabControl.selectedIndex',
+   function(newVal, oldVal) {
+     if (newVal !== oldVal) {
+       ProviderService.currentTabProvCreation = $scope.formTabControl.selectedIndex;
+     }
+  }, true);
+
   // end watchers
+
+
 
   // It listens to state changes
   $scope.$on('$stateChangeStart',
