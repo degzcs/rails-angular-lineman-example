@@ -61,7 +61,7 @@ angular.module('app').factory 'PdfService', ($http)->
 
     #
     # Houses Buy Sell  OC
-    createHouseBuySellOriginCertificate: (origin_certificate)->
+    createPawnshopsOriginCertificate: (origin_certificate)->
       $http.post('/api/v1/files/download_c_c_report/',
         {origin_certificate: origin_certificate},
         headers: 'Content-type': 'application/pdf'

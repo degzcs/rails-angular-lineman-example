@@ -10,7 +10,7 @@ module V1
       content_type :json, 'application/json'
 
       helpers do
-        
+
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -76,10 +76,10 @@ module V1
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            providers = ::Provider.where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name", 
+            providers = ::Provider.where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
               {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_id
-            providers = ::Provider.where("document_number LIKE :document_number", 
+            providers = ::Provider.where("document_number LIKE :document_number",
               {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
             providers = ::Provider.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
@@ -90,6 +90,37 @@ module V1
           header 'total_pages', providers.total_pages.to_s
           present providers, with: V1::Entities::Provider
         end
+
+        desc 'returns all provider by provider_types', {
+          entity: V1::Entities::Provider,
+          notes: <<-NOTES
+            Returns all provider by provider_types
+          NOTES
+        }
+        params do
+          # use :pagination
+          # requires :provider_types
+        end
+        get 'by_types'do
+          # content_type "text/json"
+          providers = case params[:types]
+                                when 'barequero_chatarrero'
+                                 ::Provider.barequeros_chatarreros
+                                when 'beneficiarios_mineros'
+                                  ::Provider.mineros
+                                when 'mineros'
+                                  ::Provider.mineros
+                                when 'beneficiarios'
+                                  ::Provider.beneficiarios
+                                when 'solicitantes'
+                                  ::Provider.solicitantes
+                                when 'subcontratados'
+                                  ::Provider.subcontratados
+                              end
+          # binding.pry
+          present providers, with: V1::Entities::Provider
+        end
+
         desc 'returns one existent provider by :id', {
           entity: V1::Entities::Provider,
           notes: <<-NOTES
@@ -104,6 +135,7 @@ module V1
           provider = ::Provider.find(params[:id])
           present provider, with: V1::Entities::Provider
         end
+
         # POST
         desc 'creates a new provider', {
             entity: V1::Entities::Provider,
@@ -132,7 +164,7 @@ module V1
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /provider_photo/}.first
           params[:provider].except!(:files).merge!(identification_number_file: identification_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
-          
+
           provider_params = params[:provider]
           provider = ::Provider.new(params[:provider])
           provider.build_company_info(params[:company_info]) if params[:company_info]

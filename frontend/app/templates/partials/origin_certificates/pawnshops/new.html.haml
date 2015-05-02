@@ -6,15 +6,15 @@
 
     %md-input-container{"flex"=>"33"}
       %label Fecha
-      %input{"ng-model" => "houses_buy_and_sell_origin_certificate.date","type" => "text", "readonly" => "true"}
+      %input{"ng-model" => "pawnshops_origin_certificate.date","type" => "text", "readonly" => "true"}
 
     %md-input-container{"flex"=>"33"}
       %label Ciudad
-      %input{"ng-model" => "houses_buy_and_sell_origin_certificate.city", "type" => "text", "required"=>""}
+      %input{"ng-model" => "pawnshops_origin_certificate.city", "type" => "text", "required"=>""}
 
     %md-input-container{"flex"=>"33"}
       %label Numero consecutivo del Certificado de Origen
-      %input{"ng-model" => "houses_buy_and_sell_origin_certificate.certificate_number", "type" => "text", "required"=>""}
+      %input{"ng-model" => "pawnshops_origin_certificate.certificate_number", "type" => "text", "required"=>""}
 
   ////-----------------------Provider section ------------------------------////////
   %md-divider
@@ -23,8 +23,8 @@
 
   %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
     .select-provider{'flex' => ''}
-      %md-chips{"md-autocomplete-snap" => "", "ng-model" => "houses_buy_and_sell_origin_certificate.provider"}
-        %md-autocomplete{"md-selected-item"=>"houses_buy_and_sell_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar casa de compra y venta (proveedor) por Cedula"}
+      %md-chips{"md-autocomplete-snap" => "", "ng-model" => "pawnshops_origin_certificate.provider"}
+        %md-autocomplete{"md-selected-item"=>"pawnshops_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar casa de compra y venta (proveedor) por Cedula"}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
     .create-provider{'flex' =>'10'}
       %a{'ng-href' => "#provider"}
@@ -35,13 +35,13 @@
 
     %md-content{'flex' => '', "class"=>"md-padding autocomplete", "layout"=>"column"}
       %span
-        Nombre : {{houses_buy_and_sell_origin_certificate.provider.name}}
+        Nombre : {{pawnshops_origin_certificate.provider.name}}
       %span
-        CC : {{houses_buy_and_sell_origin_certificate.provider.document_number}}
+        CC : {{pawnshops_origin_certificate.provider.document_number}}
       %span
-        Departamento: {{houses_buy_and_sell_origin_certificate.provider.state}}
+        Departamento: {{pawnshops_origin_certificate.provider.state}}
       %span
-        city: {{houses_buy_and_sell_origin_certificate.provider.city}}
+        city: {{pawnshops_origin_certificate.provider.city}}
 
   ////-----------------------Buy and Sell Invoices section ------------------------------////////
 
@@ -92,4 +92,4 @@
       %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text", "required"=>""}
 
   // ---------------------- Generate Origin Certificate button----------------------------------///
-  %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'houses_buy_and_sell')"} Generar Certificado de Origen
+  %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'pawnshops')"} Generar Certificado de Origen

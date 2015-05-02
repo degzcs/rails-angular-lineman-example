@@ -1,4 +1,4 @@
-angular.module('app').factory('ProviderService', function($resource,$upload) {
+angular.module('app').factory('ProviderService', function($resource,$upload,$http) {
 
     var impl = this;
     var currentProvider = {};
@@ -13,11 +13,15 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
 
     var retrieveProviderById = $resource('/api/v1/providers/:providerId.json', {providerId:'@providerId'});
 
+    var retrieve = $resource('/api/v1/providers/by_types', {types:'@types', per_page: '@per_page', page: '@page'},{
+        byTypes: {method:'GET', isArray: true}
+    });
+
     var getCurrentProv = function() {
         return currentProvider;
     };
 
-    var create = function(provider) {      
+    var create = function(provider) {
       if (provider.identification_number_file && provider.mining_register_file && provider.rut_file && provider.photo_file) {
         i = 0;
         files = [];
@@ -27,7 +31,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
           provider.mining_register_file[0].name = 'mining_register_file.pdf';
           provider.rut_file[0].name = 'rut_file.pdf';
           files = [
-            provider.identification_number_file[0], 
+            provider.identification_number_file[0],
             provider.mining_register_file[0],
             provider.rut_file[0],
             provider_photo_file,
@@ -66,7 +70,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
             file: files,
             fileFormDataName: 'provider[files][]'
           }).progress(function(evt) {
-            console.log('progress: ' + impl.uploadProgress + '% ' + evt.config.file);            
+            console.log('progress: ' + impl.uploadProgress + '% ' + evt.config.file);
             impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
           }).success(function(data, status, headers, config) {
             //uploadProgress = 0;
@@ -116,7 +120,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
       //             "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
       //             "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
       //             "company_info[phone_number]":provider.company_info.phone_number,
-      //             "company_info[email]":provider.company_info.email                
+      //             "company_info[email]":provider.company_info.email
       //       },
       //       file: file,
       //       fileFormDataName: 'provider[photo_file]'
@@ -160,7 +164,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
               "provider[address]":provider.address,
               "provider[email]":provider.email,
               "provider[population_center_id]":provider.population_center.id
-            }  
+            }
             :
             {
               "provider[phone_number]":provider.phone_number,
@@ -187,7 +191,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
                   "provider[address]":provider.address,
                   "provider[email]":provider.email,
                   "provider[population_center_id]":provider.population_center.id
-                }  
+                }
                 :
                 {
                   "provider[phone_number]":provider.phone_number,
@@ -220,5 +224,6 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         retrieveProviderById: retrieveProviderById,
         uploadProgress: impl.uploadProgress,
         impl: impl
+        retrieve: retrieve
     };
 });

@@ -41,12 +41,15 @@ class Provider < ActiveRecord::Base
   #IMPROVE: This is temporal because the rumcom implementation will be changed (integration with the legacy system)
   # Provider Types
   #1) chatarrero, 2) barequero, 3) titular minero, 4) beneficiario de area de reserva especial, 5) solicitante de legalizacion, 6) subcontrato de formalizaion
-  scope :chatarrero, -> {joins(:rucom).where('rucoms.provider_type = ?', 'chatarrero')}
-  scope :barequero, -> {joins(:rucom).where('rucoms.provider_type = ?', 'barequero')}
-  scope :minero, -> {joins(:rucom).where('rucoms.provider_type = ?', 'minero')}
-  scope :beneficiario, -> {joins(:rucom).where('rucoms.provider_type = ?', 'beneficiario')}
-  scope :solicitante, -> {joins(:rucom).where('rucoms.provider_type = ?', 'solicitante')}
-  scope :subcontrato, -> {joins(:rucom).where('rucoms.provider_type = ?', 'subcontrato')}
+  # I don't know how name this scopes in english and that make sense at the same time
+  scope :chatarreros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'chatarrero')}
+  scope :barequeros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'barequero')}
+  scope :barequeros_chatarreros, -> {joins(:rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'barequero', 'chatarrero')}
+  scope :beneficiarios_mineros, -> {joins(:rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'beneficiario', 'minero')}
+  scope :mineros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'minero')}
+  scope :beneficiarios, -> {joins(:rucom).where('rucoms.provider_type = ?', 'beneficiario')}
+  scope :solicitantes, -> {joins(:rucom).where('rucoms.provider_type = ?', 'solicitante')}
+  scope :subcontratados, -> {joins(:rucom).where('rucoms.provider_type = ?', 'subcontrato')}
   #
   # Instance Methods
   #
