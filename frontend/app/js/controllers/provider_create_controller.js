@@ -70,6 +70,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
     if($scope.newProvider.has_company) {
       prov.first_name = $scope.newProvider.first_name;
+      prov.has_company =  true;
       prov.company_info = {
        name: $scope.companyName,
        nit_number: $scope.newProvider.company_info.nit_number,
@@ -241,6 +242,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     console.log($scope.newProvider);
     $resource = ProviderService.create($scope.newProvider);
     if($resource) {
+      saveBtnEnabled = false;
       $scope.showUploadingDialog($event);
     } else {
       $scope.infoAlert('Crear nuevo proveedor', 'Algo salió mal. Por favor asegurese de diligenciar todos los campos requeridos y proveer la documentación de soporte.', true);
