@@ -122,7 +122,7 @@ class PdfFile < Prawn::Document
       else
     end
     move_down 40
-    # text_box "#{values[:provider][:code]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:provider][:rucom_record]}" , :at => [290,cursor] , :width => 310
     move_down 30
     text_box "#{values[:provider][:company_name]}" , :at => [290,cursor] , :width => 310
     move_down 36
