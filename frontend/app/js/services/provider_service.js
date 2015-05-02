@@ -223,7 +223,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         edit : edit,
         retrieveProviderById: retrieveProviderById,
         uploadProgress: impl.uploadProgress,
-        impl: impl
+        impl: impl,
         retrieve: retrieve
     };
 });
