@@ -1,12 +1,32 @@
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
   %section{layout: "row"}
     %div.md-padding{flex: ""}
-      // ---------------------- Provider info ------------------- ///
+      // ---Purchase Type
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3
-            1. Seleccione un Proovedor
-        %md-autocomplete{"md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", :required => ""}
+            1. Seleccione El Tipo de Compra
+        %div.fieldset-inputs
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %md-radio-group{"ng-model" => "type", :ng-init => "type='provider'",:required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
+                %md-radio-button{:value => "trazoro"} Trazoro
+                %md-radio-button{:value => "provider"} Directamente desde proveedor
+
+  %section{layout: "row"}
+    // ---------------------- Provider info ------------------- ///
+    %div.md-padding{flex: ""}
+      %fieldset.standard.tr-fieldset{:layout => "column"}
+        %legend
+          %h3{:ng-if => "type == 'provider'"}
+            2. Seleccione un Proovedor
+          %h3{:ng-if => "type == 'trazoro'"}
+            2. Ingrese el codigo de barras
+
+        %md-autocomplete{:ng-if => "type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", :required => ""}
+          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+
+        %md-autocomplete{:ng-if => "type == 'trazoro'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", :placeholder => "Numero de codigo de barras de la Venta", :required => ""}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
         %div.fieldset-inputs
           %div{layout: "row"}
@@ -38,7 +58,11 @@
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
         %legend
-          %h3 2. Tome una foto al vendedor
+          %h3{:ng-if => "type == 'provider'"}
+            3. Tome una foto al Provedor
+          %h3{:ng-if => "type == 'trazoro'"}
+            3. Tome una foto al Transportador
+
         %md-input-container.row
           .photo
             %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
@@ -52,7 +76,10 @@
       %fieldset.standard.tr-fieldset.origin-certificate-fieldset
         %legend
           %h3
-            3. Suba el certificado de origen e ingrese el numero
+          %h3{:ng-if => "type == 'provider'"}
+            4. Suba el certificado de origen e ingrese el numero
+          %h3{:ng-if => "type == 'trazoro'"}
+            4. Ingrese el numero
         %div{layout: "row"}
           %md-input-container{flex: '40'}
             %label Numero Certificado de Origen
@@ -61,7 +88,7 @@
               %div{"ng-message" => "required"} * Este campo es requerido.
 
         %section.uploader-certificate-tab{layout: "row"}
-          %div{flex: '40'}
+          %div{flex: '40', :ng-if => "type == 'provider'"}
             %h4 Seleccione una forma de subir el certificado
             %md-select.uploader-selector{"ng-model" => "origin_certificate_upload_type", :placeholder => "Cargar Centificado de Origen ...", :required => ''}
               %md-option{:value => "by_upload"} Desde el PC
@@ -77,11 +104,11 @@
                       Subir Foto
                       %span.ion-android-checkmark-circle
 
-                %md-input-container
-                  %label Nombre del archivo
-                  %input{"ng-model" => "purchase.model.origin_certificate_file[0].name", :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
-                  %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
-                    %div{"ng-message" => "required"} * Debe seleccionar el certificado de origen desde su computado
+                  %md-input-container
+                    %label Nombre del archivo
+                    %input{"ng-model" => "purchase.model.origin_certificate_file[0].name", :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
+                    %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
+                      %div{"ng-message" => "required"} * Debe seleccionar el certificado de origen desde su computado
 
 
                 .by_scan{:ng-switch-when =>'by_scan'}
