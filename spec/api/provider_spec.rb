@@ -10,12 +10,14 @@ describe 'Provider', :type => :request do
         identification_number_file_path = "#{Rails.root}/spec/support/test_images/identification_number_file.png"
         mining_register_file_path = "#{Rails.root}/spec/support/test_images/mining_register_file.png"
         rut_file_path = "#{Rails.root}/spec/support/test_images/rut_file.png"
+        chamber_commerce_file_path = "#{Rails.root}/spec/support/test_images/chamber_commerce_file.png"
         provider_photo_path = "#{Rails.root}/spec/support/test_images/provider_photo.png"
         identification_number_file =  Rack::Test::UploadedFile.new(identification_number_file_path, "image/jpeg")
         mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
         rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
+        chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
         provider_photo =  Rack::Test::UploadedFile.new(provider_photo_path, "image/jpeg")
-        @files = [identification_number_file, mining_register_file, rut_file, provider_photo]
+        @files = [identification_number_file, mining_register_file, rut_file, chamber_commerce_file, provider_photo]
       end
 
       context 'GET' do
@@ -59,6 +61,7 @@ describe 'Provider', :type => :request do
               identification_number_file: provider.identification_number_file_url,
               mining_register_file: provider.mining_register_file_url,
               rut_file: provider.rut_file_url,
+              chamber_commerce_file: provider.chamber_commerce_file_url,
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               population_center: expected_population_center.stringify_keys
@@ -118,6 +121,7 @@ describe 'Provider', :type => :request do
               identification_number_file: "#{Rails.root}/spec/uploads/provider/identification_number_file/21/identification_number_file.png",
               mining_register_file: "#{Rails.root}/spec/uploads/provider/mining_register_file/21/mining_register_file.png",
               rut_file: "#{Rails.root}/spec/uploads/provider/rut_file/21/rut_file.png",
+              chamber_commerce_file: "#{Rails.root}/spec/uploads/provider/chamber_commerce_file/21/chamber_commerce_file.png",
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               population_center: expected_population_center.stringify_keys
@@ -201,6 +205,7 @@ describe 'Provider', :type => :request do
               identification_number_file: "#{Rails.root}/spec/uploads/provider/identification_number_file/22/identification_number_file.png",
               mining_register_file: "#{Rails.root}/spec/uploads/provider/mining_register_file/22/mining_register_file.png",
               rut_file: "#{Rails.root}/spec/uploads/provider/rut_file/22/rut_file.png",
+              chamber_commerce_file: "#{Rails.root}/spec/uploads/provider/chamber_commerce_file/22/chamber_commerce_file.png",
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               company_info: expected_company_info.stringify_keys,
@@ -272,6 +277,7 @@ describe 'Provider', :type => :request do
             identification_number_file: provider.identification_number_file_url,
             mining_register_file: provider.mining_register_file_url,
             rut_file: provider.rut_file_url,
+            chamber_commerce_file: provider.chamber_commerce_file_url,
             email: provider.email,
             rucom: expected_rucom.stringify_keys,
             company_info: expected_company_info.stringify_keys,
