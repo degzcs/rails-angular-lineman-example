@@ -91,6 +91,26 @@ describe 'Sale', :type => :request do
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
         end
+        context '/:code' do
+          it 'gets purchase by code' do 
+            sale = Sale.last
+
+            expected_response = {
+              id:  sale.id,
+              courier_id: sale.courier_id,
+              client_id:  sale.client_id,
+              user_id: sale.user_id,
+              gold_batch_id: sale.gold_batch_id,
+              grams: sale.grams,
+              code: sale.code,
+              barcode_html: sale.barcode_html
+            }
+
+            get "/api/v1/sales/#{sale.code}",{},{ "Authorization" => "Barer #{@token}" }
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+          end
+        end
         context '/:id/batches' do
           it 'verifies that response has the elements number specified in per_page param' do
             sale = Sale.last
