@@ -77,11 +77,11 @@
                       Subir Foto
                       %span.ion-android-checkmark-circle
 
-                  %md-input-container
-                    %label Nombre del archivo
-                    %input{"ng-model" => "purchase.model.origin_certificate_file[0].name", :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
-                    %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
-                      %div{"ng-message" => "required"} * Debe seleccionar el certificado de origen desde su computado
+                %md-input-container
+                  %label Nombre del archivo
+                  %input{"ng-model" => "purchase.model.origin_certificate_file[0].name", :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
+                  %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
+                    %div{"ng-message" => "required"} * Debe seleccionar el certificado de origen desde su computado
 
 
                 .by_scan{:ng-switch-when =>'by_scan'}
