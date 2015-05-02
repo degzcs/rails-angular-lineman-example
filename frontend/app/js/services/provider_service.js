@@ -21,8 +21,11 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         return currentProvider;
     };
 
-    var create = function(provider) {
+    var create = function(provider) {      
       if (provider.identification_number_file && provider.mining_register_file && provider.rut_file && provider.photo_file) {
+        if (provider.rucom.provider_type === "Comercializadores" && !provider.chamber_commerce_file) {
+          return false;
+        }
         i = 0;
         files = [];
         return blobUtil.imgSrcToBlob(provider.photo_file).then(function(provider_photo_file) {
@@ -30,12 +33,24 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
           provider.identification_number_file[0].name = 'identification_number_file.pdf';
           provider.mining_register_file[0].name = 'mining_register_file.pdf';
           provider.rut_file[0].name = 'rut_file.pdf';
-          files = [
-            provider.identification_number_file[0],
-            provider.mining_register_file[0],
-            provider.rut_file[0],
-            provider_photo_file,
-          ];
+          files = [];
+          if (provider.rucom.provider_type === "Comercializadores") {
+            provider.chamber_commerce_file[0].name = 'chamber_commerce_file.pdf';
+            files = [
+              provider.identification_number_file[0],
+              provider.mining_register_file[0],
+              provider.rut_file[0],
+              provider.chamber_commerce_file[0],
+              provider_photo_file,
+            ];
+          } else {
+            files = [
+              provider.identification_number_file[0],
+              provider.mining_register_file[0],
+              provider.rut_file[0],
+              provider_photo_file,
+            ];
+          }
           return $upload.upload({
             url: '/api/v1/providers/',
             method: 'POST',

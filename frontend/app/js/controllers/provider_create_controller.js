@@ -65,7 +65,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
       },
       identification_number_file: $scope.newProvider.identification_number_file || '',
       mining_register_file: $scope.newProvider.mining_register_file || '',
-      rut_file: $scope.newProvider.rut_file || ''
+      rut_file: $scope.newProvider.rut_file || '',
+      chamber_commerce_file: $scope.newProvider.chamber_commerce_file || ''
     };
 
     if($scope.newProvider.has_company) {
@@ -130,6 +131,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     }
     if(CameraService.getTypeFile() === 4) {
       $scope.newProvider.rut_file=$scope.file;
+      ProviderService.setCurrentProv($scope.newProvider);
+    }
+    if(CameraService.getTypeFile() === 5) {
+      $scope.newProvider.chamber_commerce_file=$scope.file;
       ProviderService.setCurrentProv($scope.newProvider);
     }
     CameraService.clearData();

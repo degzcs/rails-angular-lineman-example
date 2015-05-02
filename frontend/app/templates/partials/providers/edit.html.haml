@@ -113,13 +113,13 @@
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.mining_register_file}}", :target => "_blank", :download => ""}  
             %p Registro minero
             %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}                                        
-          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file}}", :target => "_blank", :download => ""}  
+          %md-button{"ng-show"=>"currentProvider.chamber_commerce_file", :class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.chamber_commerce_file}}", :target => "_blank", :download => ""}
             %p Camara de comercio
             %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.rut_file}}", :target => "_blank", :download => ""}  
             %p RUT
             %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
-          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file}}", :target => "_blank", :download => ""}  
+          %md-button{"ng-show"=>"currentProvider.authorization_file", :class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file}}", :target => "_blank", :download => ""}  
             %p Autorización*
             %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
         %span
