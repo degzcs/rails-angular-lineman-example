@@ -1,28 +1,26 @@
 %div.{:layout => "column", :style => "padding-left:20px; padding-right:20px;"}
   %md-tabs{"md-selected" => "formTabControl.selectedIndex"}
     %md-tab#tab1{"aria-controls" => "tab1-content"}
-      {{ formTabControl.firstLabel }}
-    %md-tab#tab2{"aria-controls" => "tab2-content"}
-      
+      {{ formTabControl.firstLabel }}      
     %md-tab#tab3{"aria-controls" => "tab3-content"}
       {{ formTabControl.thirdLabel }}  
   %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
     %form{:name => "providerCreateForm", "novalidate" => "novalidate"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
-        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-          %fieldset.standard.tr-fieldset.photo-fieldset
+        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
+          %fieldset.standard.photo-fieldset
             %legend
               %h5 Tome una foto al proveedor
-            %md-input-container.row
+            %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
                 %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
                   %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newProvider.photo_file || 'img/default-user.png'}}","ng-model" => "newProvider.photo_file",  "check-image" => ''}
-                  %md-tooltip{'md-direction'=> 'right'}
+                  %md-tooltip{'md-direction'=> 'bottom'}
                     Tomar Foto
-          %fieldset.standard.tr-fieldset.fieldset-information
+          %fieldset.standard.fieldset-information{:flex => ""}
             %legend
               %h3 Información
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+            %md-content.md-padding{:layout => "", "layout-sm" => "column", :style => "font-size:1.2em"}
               %md-input-container{:flex => ""}
                 %label Nombre
                 %input{:name => "first_name", "ng-model" => "newProvider.first_name", :required => ""}
@@ -39,35 +37,33 @@
                 %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
                 %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
                   %span.ion-android-checkmark-circle &nbsp;válido
-              %md-input-container
+              %md-input-container{:flex => ""}
                 %label Número de Identificación
                 %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
               %md-input-container{:flex => ""}
                 %label Tipo de Proveedor
                 %input{"ng-model" => "newProvider.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
-              %md-input-container{:flex => "40"}
+            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+              %md-input-container{:flex => ""}
                 %label Teléfono
                 %input{:name => "phone_number", "ng-model" => "newProvider.phone_number", :placeholder => "(555) 555 5555", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.phone_number.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
               %md-input-container{:flex => ""}
                 %label Email
                 %input{:name => "email", "ng-model" => "newProvider.email", :type => "email", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.email.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
                   %div{"ng-message" => "email"} Ingrese un e-mail válido.
-            %md-content.md-padding
               %md-input-container{:flex => ""}
                 %label Dirección
                 %input{:name => "address", "ng-model" => "newProvider.address", :placeholder => "CLL/CR 1 22 - 33", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.address.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.          
+                  %div{"ng-message" => "required"} Este campo es requerido.
             %br
-            %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
+            %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
               %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
                 %span{"md-highlight-text" => "searchState"} {{state.name}}
               %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
@@ -81,7 +77,8 @@
                 %div{:layout => "row", :flex => "30", "layout-align" => "space-between center"}
                   %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
                   %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
-      #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "2", :role => "tabpanel"}
+                  %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+      #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"}
         %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
                        
           %div{flex: '60'}
@@ -208,8 +205,9 @@
 
         %md-content.md-padding
           %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{:layout => "row", :flex => "70", "layout-align" => "space-between center"}
-            %div{:layout => "row", :flex => "15", "layout-align" => "space-between right"}
+            %div{:layout => "row", :flex => "", "layout-align" => "start center"}
+              %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
+            %div{:layout => "row", :flex => "20", "layout-align" => "space-between right"}
               %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
               %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
  

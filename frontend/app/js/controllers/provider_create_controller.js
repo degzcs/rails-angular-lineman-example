@@ -268,28 +268,27 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
            '    </md-button>' +
            '  </div>' +
            '</md-dialog>',       
-       controller: DialogController
+       controller: ['scope', '$mdDialog', 'ProviderService', function(scope, $mdDialog, ProviderService) {
+         scope.progress = ProviderService.impl.uploadProgress;
+         scope.message = 'Espere por favor...'
+         scope.$watch(function () { return ProviderService.impl.uploadProgress }, function (newVal, oldVal) {
+           if (typeof newVal !== 'undefined') {
+             console.log('Progress: ' + scope.progress + ' (' + ProviderService.impl.uploadProgress + ')');
+             scope.progress = ProviderService.impl.uploadProgress;
+             if(scope.progress === 100) {
+               scope.closeDialog();
+             }
+           }
+         });
+         scope.closeDialog = function() {
+           $mdDialog.hide();
+           $scope.newProvider = {};
+           ProviderService.setCurrentProv({});
+           $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);
+           $scope.abortCreate = true;
+         }
+      }]
     });
-    function DialogController(scope, $mdDialog, ProviderService) {
-      scope.progress = ProviderService.impl.uploadProgress;
-      scope.message = 'Espere por favor...'
-      scope.$watch(function () { return ProviderService.impl.uploadProgress }, function (newVal, oldVal) {
-        if (typeof newVal !== 'undefined') {
-          console.log('Progress: ' + scope.progress + ' (' + ProviderService.impl.uploadProgress + ')');
-          scope.progress = ProviderService.impl.uploadProgress;
-          if(scope.progress === 100) {
-            scope.closeDialog();
-          }
-        }
-      });
-      scope.closeDialog = function() {
-        $mdDialog.hide();
-        $scope.newProvider = {};
-        ProviderService.setCurrentProv({});
-        $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);
-        $scope.abortCreate = true;
-      }
-    }
   };
 
   $scope.infoAlert = function(title, content, error) {
