@@ -12,6 +12,9 @@
 #  updated_at                  :datetime
 #  price                       :float
 #  seller_picture              :string(255)
+#  code                        :text
+#  client_id                   :integer
+#  trazoro                     :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'

@@ -28,6 +28,9 @@ angular.module('app').factory 'SaleService', ($http)->
         return service.model
       else
         sessionStorage.restoreSale = 'false'
+        
+    get_by_code: (code)->
+      return $http.get("api/v1/sales/"+code)
 
     #setSaleInfo: function(sale_info){
     #  sessionStorage.setItem('saleInfo',JSON.stringify(sale_info));

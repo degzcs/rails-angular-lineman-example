@@ -7,6 +7,7 @@ angular.module('app').factory('CameraService', function($window) {
     var height=150;
     var y=0;
     var typeFile=0;
+    var consecutivo=0;
     var hasUserMedia = function() {
         return !!getUserMedia();
     };
@@ -18,10 +19,19 @@ angular.module('app').factory('CameraService', function($window) {
         $window.navigator.msGetUserMedia);
         return navigator.getUserMedia;
     };
+    var getDate=function(){
+        var today = new Date();
+        var min = today.getMinutes(); 
+        var hrs = today.getHours(); 
+        var dd = today.getDate(); 
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();      
+        return yyyy+"-"+mm+"-"+dd+"-"+hrs+"-"+min;
+    };
 //mehtod to add scan files
     var addScanFile = function($datarUrl){
         images.push($datarUrl);
-        files.push(dataURItoFile($datarUrl,'file'+files.length+'.png'));
+        files.push(dataURItoFile($datarUrl,consecutivo+getDate()+files.length+'.png'));
         console.log(files);
     };
 //Method to remove scan files
@@ -76,7 +86,7 @@ angular.module('app').factory('CameraService', function($window) {
         }
         var blob= pdf.blob('file.pdf');
         blob.lastModifiedDate = new Date();
-        blob.name = 'file.pdf';
+        blob.name = consecutivo+getDate()+'.pdf';
         filesarray.push(blob);
         return filesarray;
         }

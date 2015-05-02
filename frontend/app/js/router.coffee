@@ -429,7 +429,23 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
-
+  .state("trazoro_purchase",
+    url: "/purchases/trazoro_purchase",
+    ncyBreadcrumb:
+      label: 'Crear una compra Trazoro'
+    views:
+      'content':
+        templateUrl: "partials/purchases/trazoro.html"
+        controller: "PurchasesTrazoroCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
   #  --- Origin Certificate Routes ---- #
   .state("new_origin_certificate",
     url: "/origin_certificates/new",

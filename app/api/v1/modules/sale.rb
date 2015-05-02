@@ -114,6 +114,26 @@ module V1
             Returns all existent sales paginated
           NOTES
         }
+        desc 'returns one existent sale by :code', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns one existent sale by :id
+          NOTES
+        }
+        params do
+          requires :code, type: String, desc: 'Sale ID'
+        end
+        get '/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          sale = ::Sale.find_by(code: params[:code])
+          present sale, with: V1::Entities::Sale
+        end
+        desc 'returns all batches for a given sale', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales paginated
+          NOTES
+        }
         params do
           requires :id, type: Integer, desc: 'Sale ID'
         end
