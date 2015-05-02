@@ -1,7 +1,7 @@
 
 angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($timeout, $scope, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
-  $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3)
+  $scope.tab = 1
 
   $scope.beneficiation_plant_origin_certificate = BeneficiationPlantOriginCertificateService.model
   $scope.mining_operators = []

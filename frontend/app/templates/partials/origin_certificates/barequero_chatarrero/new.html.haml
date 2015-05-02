@@ -1,90 +1,94 @@
-%div{:layout => "column"}
+%form.purchase-form{:name => "originCertificateForm", "novalidate" => "novalidate"}
+  %div{:layout => "column"}
 
-  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-    %md-input-container{"flex"=>"33"}
-      %label Fecha
-      %input{"ng-model" => "barequero_chatarrero_origin_certificate.date", "type" => "text", "readOnly" => "true"}
+    %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+      %md-input-container{"flex"=>"33"}
+        %label Fecha
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.date", "type" => "text", :readOnly => "true"}
 
-    %md-input-container{"flex"=>"66"}
-      %label Ciudad
-      %input{"ng-model" => "barequero_chatarrero_origin_certificate.city", "type" => "text", "readOnly"=>"true"}
+      %md-input-container{"flex"=>"66"}
+        %label Ciudad
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.city", "type" => "text", :readOnly=>"true"}
 
-  %section{flex: "", layout: "row"}
-    ////-----------------------Provider section ------------------------------////////
-    %div.origin-certificate-padding{flex: ""}
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            Informacion del Productor de Mineral
-        %md-autocomplete{"md-selected-item"=>"barequero_chatarrero_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
-          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
-        %div.fieldset-inputs
-          %div{layout: "row"}
-            %md-select{flex: "", "ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
-              %md-option{:value => "barequero"} Barequero
-              %md-option{:value => "chatarrero"} Chatarrero
-            %md-input-container{flex: ""}
-              %label Nombre Proovedor
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.name", :required => "", :name => 'provider_name', :readOnly => 'true'}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Tipo de Documento
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.document_type", :required => "", :name => 'provider_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Numero de Documento
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.document_number", :required => "", :name => 'provider_name', :readOnly => 'true'}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Departamento
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.state", :required => "", :name => 'provider_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Ciudad
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.city", :required => "", :name => 'provider_name', :readOnly => 'true'}
-            %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
-              %md-progress-circular{"md-mode" => "indeterminate"}
-      .button
-        %a.md-button.create-provider-button{'ng-href' => "#provider"}  crear proovedor
-      ////-----------------------Mineral section ------------------------------////////
-    %div.origin-certificate-padding{flex: ""}
-      %fieldset.standard.tr-fieldset.mineral{:layout => "column"}
-        %legend
-          %h3
-            Mineral
-        %div.fieldset-inputs
-          %div{layout: "column"}
-            %md-input-container{flex: ""}
-              %label Mineral Extraido y Vendido
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.type", "type" => "text", "readOnly"=>"true"}
+    %section{flex: "", layout: "row"}
+      ////-----------------------Provider section ------------------------------////////
+      %div.origin-certificate-padding{flex: ""}
+        %fieldset.standard.tr-fieldset{:layout => "column"}
+          %legend
+            %h3
+              Informacion del Productor de Mineral
+          %md-autocomplete{"md-selected-item"=>"barequero_chatarrero_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
+            %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+          %div.fieldset-inputs
+            %div{layout: "row"}
+              %md-input-container{flex: ""}
+                %md-radio-group{"ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :required => "", :name => 'provider_type',:placeholder => "Explotador  Minero Autorizado"}
+                  %md-radio-button{:value => "barequero"} Barequero
+                  %md-radio-button{:value => "chatarrero"} Chatarrero
+            %div{layout: "row"}
+              %md-input-container{flex: ""}
+                %label Nombre Proovedor
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.name",  :name => 'provider_name', :readOnly => 'true'}
+              %md-input-container{flex: ""}
+                %label Tipo de Documento
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.document_type",  :name => 'provider_name', :readOnly => 'true'}
+              %md-input-container{flex: ""}
+                %label Numero de Documento
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.document_number",  :name => 'provider_name', :readOnly => 'true'}
+            %div{layout: "row"}
+              %md-input-container{flex: ""}
+                %label Departamento
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.state",  :name => 'provider_name', :readOnly => 'true'}
+              %md-input-container{flex: ""}
+                %label Ciudad
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.provider.city",  :name => 'provider_name', :readOnly => 'true'}
+              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
+                %md-progress-circular{"md-mode" => "indeterminate"}
+        .button
+          %a.md-button.create-provider-button{'ng-href' => "#provider"}  crear proovedor
+        ////-----------------------Mineral section ------------------------------////////
+      %div.origin-certificate-padding{flex: ""}
+        %fieldset.standard.tr-fieldset.mineral{:layout => "column"}
+          %legend
+            %h3
+              Mineral
+          %div.fieldset-inputs
+            %div{layout: "column"}
+              %md-input-container{flex: ""}
+                %label Mineral Extraido y Vendido
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.type", "type" => "text", :readOnly=>"true"}
 
-            %md-input-container{flex: ""}
-              %label Cantidad
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.amount", "type" => "text", "required"=>""}
+              %md-input-container{flex: ""}
+                %label Cantidad
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.amount", "type" => "text", :name => 'amount', :required => ""}
+                %div{"ng-messages" => "purchaseForm.amount.$error"}
+                  %div{"ng-message" => "required"} * Este campo es requerido.
 
-            %md-input-container{flex: ""}
-              %label Unidad de Medida
-              %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.measure_unit", "type" => "text", "readOnly"=>"true"}
+              %md-input-container{flex: ""}
+                %label Unidad de Medida
+                %input{"ng-model" => "barequero_chatarrero_origin_certificate.mineral.measure_unit", "type" => "text", :readOnly=>"true"}
 
-  ////-----------------------Buyer section ------------------------------////////
-  %section{flex: "", layout: "row"}
-    %div.origin-certificate-padding{flex: ""}
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            Informacion del Comprador del Mineral
+    ////-----------------------Buyer section ------------------------------////////
+    %section{flex: "", layout: "row"}
+      %div.origin-certificate-padding{flex: ""}
+        %fieldset.standard.tr-fieldset{:layout => "column"}
+          %legend
+            %h3
+              Informacion del Comprador del Mineral
 
-        %div.fieldset-inputs
-          %div{layout: "row"}
-            %md-input-container{"flex"=>""}
-              %label Nombres y Apellidos o Razon Social
-              %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.company_name", "type" => "text", "required"=>""}
+          %div.fieldset-inputs
+            %div{layout: "row"}
+              %md-input-container{"flex"=>""}
+                %label Nombres y Apellidos o Razon Social
+                %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.company_name", "type" => "text"}
 
-            %md-input-container{"flex"=>""}
-              %label Tipo de Documento
-              %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_type", "type" => "text", "required"=>""}
+              %md-input-container{"flex"=>""}
+                %label Tipo de Documento
+                %input{:readonly => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_type", "type" => "text"}
 
-            %md-input-container{"flex"=>""}
-              %label Numero de Indentificacion
-              %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text", "required"=>""}
+              %md-input-container{"flex"=>""}
+                %label Numero de Indentificacion
+                %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text"}
 
-  %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-    %md-button.md-primary.md-hue-2{flex: "", "ng-click" => "showConfirm($event, 'barequero_chatarrero')"} Generar Certificado de Origen
+    %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+      %md-button.md-primary.md-hue-2{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "", "ng-click" => "showConfirm($event, 'barequero_chatarrero')"} Generar Certificado de Origen

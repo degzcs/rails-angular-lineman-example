@@ -1,7 +1,7 @@
 
 angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $scope, PawnshopsOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
-  $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3)
+  $scope.tab = 2
 
   $scope.pawnshops_origin_certificate = PawnshopsOriginCertificateService.model
   $scope.invoices = []

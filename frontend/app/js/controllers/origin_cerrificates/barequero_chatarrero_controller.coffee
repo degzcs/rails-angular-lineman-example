@@ -1,7 +1,7 @@
 
 angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($timeout, $scope, BarequeroChatarreroOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
-  $scope.origin_certificate_type = '' # can be 1) barequero_chatarrero 2) beneficiation_plant 3)
+  $scope.tab = 0
 
   $scope.barequero_chatarrero_origin_certificate = BarequeroChatarreroOriginCertificateService.model
   $scope.allProviders  = []

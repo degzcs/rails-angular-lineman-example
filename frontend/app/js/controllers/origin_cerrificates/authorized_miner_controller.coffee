@@ -1,6 +1,8 @@
 
 angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
 
+  $scope.tab = 3
+
   $scope.authorized_miner_origin_certificate = AuthorizedMinerOriginCertificateService.model
   $scope.allProviders  = []
   $scope.searchText = null
