@@ -50,8 +50,18 @@ set :deploy_to, '/home/deploy/code/trazoro'
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-namespace :deploy do
+namespace :db do
+  desc 'run seeds'
+  task :run_seeds do
+     on roles(:web) do
+      within "#{current_path}" do
+        execute :rake, 'db:seed RAILS_ENV=staging '
+      end
+    end
+  end
+end
 
+namespace :deploy do
 
   desc 'Restart application'
   task :restart do
