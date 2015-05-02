@@ -4,4 +4,20 @@
   max-width: 1040px;
   position: relative;
   width: 100%;
+
+  .origin-certificate-padding{
+    margin: 30px 0;
+  }
+
+  fieldset.mineral{
+    min-height: 290px;
+  }
+
+  .button{
+     margin-top: 8px;
+  }
+  .mining-operator-padding{
+    margin: 40px 0;
+    border-top-color: rgba(202, 199, 17, 1);
+  }
 }

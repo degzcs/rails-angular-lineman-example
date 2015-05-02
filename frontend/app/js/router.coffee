@@ -456,7 +456,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/origin_certificates/barequero_chatarrero/new.html"
-        controller: "OriginCertificateCtrl"
+        controller: "BarequeroChatarreroOriginCertificateCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -474,7 +474,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/origin_certificates/beneficiation_plant/new.html"
-        controller: "OriginCertificateCtrl"
+        controller: "BeneficiationPlantOriginCertificateCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -485,14 +485,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  .state("new_origin_certificate.houses_buy_and_sell",
-    url: "/origin_certificates/houses_buy_and_sell/new",
+  .state("new_origin_certificate.pawnshops",
+    url: "/origin_certificates/pawnshops/new",
     ncyBreadcrumb:
       label: 'Acreditacion de Facturas Casas de Compra y Venta'
     views:
       'content':
-        templateUrl: "partials/origin_certificates/houses_buy_and_sell/new.html"
-        controller: "OriginCertificateCtrl"
+        templateUrl: "partials/origin_certificates/pawnshops/new.html"
+        controller: "PawnshopsOriginCertificateCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -511,7 +511,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/origin_certificates/authorized_miner/new.html"
-        controller: "OriginCertificateCtrl"
+        controller: "AuthorizedMinerOriginCertificateCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

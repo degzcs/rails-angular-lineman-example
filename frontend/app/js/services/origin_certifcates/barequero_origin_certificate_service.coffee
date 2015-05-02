@@ -10,7 +10,7 @@ angular.module('app').factory 'BarequeroChatarreroOriginCertificateService', ($r
         first_name: ''
         last_name: ''
         name: ''
-        document_number: 0
+        document_number:''
         state: '' # state where the miner is/was registered
         city: '' # city where the miner is/was registered
       ##mineral info

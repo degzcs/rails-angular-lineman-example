@@ -1,0 +1,107 @@
+%form.purchase-form{:name => "originCertificateForm", "novalidate" => "novalidate"}
+  %div{:layout => "column"}
+
+    %md-content{ :flex=>"", "class"=>"md-padding", "layout"=>"row"}
+      %md-input-container{:flex=>"33"}
+        %label Fecha
+        %input{"ng-model" => "pawnshops_origin_certificate.date","type" => "text", "readonly" => "true"}
+
+      %md-input-container{:flex=>"33"}
+        %label Ciudad
+        %input{"ng-model" => "pawnshops_origin_certificate.city", "type" => "text", :required=>""}
+
+      %md-input-container{:flex=>"33"}
+        %label Numero consecutivo del Certificado de Origen
+        %input{"ng-model" => "pawnshops_origin_certificate.certificate_number", "type" => "text", :required=>""}
+
+    ////-----------------------Provider section ------------------------------////////
+    %section{flex: "", layout: "row"}
+      %div.origin-certificate-padding{flex: ""}
+        %fieldset.standard.tr-fieldset{:layout => "column"}
+          %legend
+            %h3 Casa de Compra  y Venta
+
+          %md-autocomplete{:required=>"", "md-selected-item"=>"pawnshops_origin_certificate.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar casa de compra y venta (proveedor) por Cedula"}
+            %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+
+          %div.fieldset-inputs
+            %div{layout: "row"}
+              %md-input-container{flex: ""}
+                %label Nombre Proovedor
+                %input{"ng-model" => "pawnshops_origin_certificate.provider.name",  :name => 'provider_name', :readOnly => 'true', :required=>""}
+              %md-input-container{flex: ""}
+                %label Tipo de Documento
+                %input{"ng-model" => "pawnshops_origin_certificate.provider.document_type",  :name => 'provider_name', :readOnly => 'true'}
+              %md-input-container{flex: ""}
+                %label Numero de Documento
+                %input{"ng-model" => "pawnshops_origin_certificate.provider.document_number",  :name => 'provider_name', :readOnly => 'true'}
+            %div{layout: "row"}
+              %md-input-container{flex: ""}
+                %label Departamento
+                %input{"ng-model" => "pawnshops_origin_certificate.provider.state",  :name => 'provider_name', :readOnly => 'true'}
+              %md-input-container{flex: ""}
+                %label Ciudad
+                %input{"ng-model" => "pawnshops_origin_certificate.provider.city",  :name => 'provider_name', :readOnly => 'true'}
+              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
+                %md-progress-circular{"md-mode" => "indeterminate"}
+        .button
+          %a.md-button.create-provider-button{'ng-href' => "#provider"}  crear proovedor
+
+    ////-----------------------Buy and Sell Invoices section ------------------------------////////
+
+    %section{flex: "", layout: "row"}
+      %div.origin-certificate-padding{flex: ""}
+        %fieldset.standard.tr-fieldset{:layout => "column"}
+          %legend
+            %h3 Informacion de las Facturas de Compra
+
+          %md-content{:flex=>"", "class"=>"", "layout"=>"column", 'ng-repeat' => 'invoice in invoices'}
+
+            %md-content{ :flex=>"", "class"=>"", "layout"=>"row"}
+              %md-input-container{:flex=>""}
+                %label Numero de Factura, Contrato Compra-venta o Documento equivalente
+                %input{"ng-model" => "invoice.number", "type" => "text", :required=>""}
+
+              %md-input-container{:flex=>""}
+                %label Fecha de la factura
+                %input{"ng-model" => "invoice.date", "type" => "date", :required=>""}
+
+              %md-input-container{:flex=>""}
+                %label Description
+                %input{"ng-model" => "invoice.description", "type" => "text", :required=>""}
+
+              %md-input-container{:flex=>""}
+                %label Cantidad
+                %input{"ng-model" => "invoice.amount", "type" => "text", :required=>""}
+
+            %md-divider.mining-operator-padding
+
+    // ---------------------- Add Invoice  button----------------------------------///
+    %md-content{ :flex=>"", "class"=>"", "layout"=>"row"}
+      %md-button.md-raised.md-primary.md-hue-2{'flex'=> '', "ng-click" => "addInvoice()"} Adherir Factura
+    %md-content{ :flex=>"", "class"=>"md-padding", "layout"=>"row"}
+
+    ////-----------------------Buyer section ------------------------------////////
+    %section{flex: "", layout: "row"}
+      %div.origin-certificate-padding{flex: ""}
+        %fieldset.standard.tr-fieldset{:layout => "column"}
+          %legend
+            %h3
+              Informacion del Comprador del Mineral
+
+          %div.fieldset-inputs
+            %div{layout: "row"}
+              %md-input-container{"flex"=>""}
+                %label Nombres y Apellidos o Razon Social
+                %input{"readonly" => "true", "ng-model" => "pawnshops_origin_certificate.buyer.company_name", "type" => "text", :required=>""}
+
+              %md-input-container{"flex"=>""}
+                %label Tipo de Documento
+                %input{:readonly => "true", "ng-model" => "pawnshops_origin_certificate.buyer.document_type", "type" => "text"}
+
+              %md-input-container{"flex"=>""}
+                %label Numero de Indentificacion
+                %input{"readonly" => "true", "ng-model" => "pawnshops_origin_certificate.buyer.document_number", "type" => "text"}
+
+    // ---------------------- Generate Origin Certificate button----------------------------------///
+    %md-button.md-primary.md-hue-2{flex: "", "ng-disabled" => 'originCertificateForm.$invalid',  "ng-click" => "showConfirm($event, 'pawnshops')"} Generar Certificado de Origen

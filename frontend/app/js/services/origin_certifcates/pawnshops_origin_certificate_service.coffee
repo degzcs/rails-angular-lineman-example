@@ -1,4 +1,4 @@
-angular.module('app').factory 'HousesBuySellOriginCertificateService', ($rootScope, $upload, $filter)->
+angular.module('app').factory 'PawnshopsOriginCertificateService', ($rootScope, $upload, $filter)->
   service=
     model:
       type: ''

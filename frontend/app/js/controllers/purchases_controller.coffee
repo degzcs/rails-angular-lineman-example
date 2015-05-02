@@ -19,7 +19,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.allProviders  = []
   $scope.searchText = null
-  window.s = $scope
 
   #
   # Fuctions
@@ -122,7 +121,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.flushData =->
     $scope.purchase.model = {}
     $scope.goldBatch.model = {}
-    console.log 'deleting sessionStorage'
+    console.log 'deleting models ...'
 
   #
   # Save the values in SessionStorage
