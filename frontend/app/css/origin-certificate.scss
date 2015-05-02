@@ -4,14 +4,16 @@
   max-width: 1040px;
   position: relative;
   width: 100%;
-}
 
-.origin-certificate-padding{
-  margin: 30px 0;
-  fieldset.mineral{
-      min-height: 251px;
+  .origin-certificate-padding{
+    margin: 30px 0;
   }
-}
-.button{
- margin-top: 8px;
+
+  fieldset.mineral{
+    min-height: 290px;
+  }
+
+  .button{
+     margin-top: 8px;
+  }
 }
