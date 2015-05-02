@@ -1,7 +1,9 @@
 angular.module('app').factory('ProviderService', function($resource,$upload) {
 
+    var impl = this;
     var currentProvider = {};
     var providers = [];
+    impl.uploadProgress = 0;
 
     var setCurrentProv = function(provider) {
         currentProvider = provider;
@@ -64,10 +66,10 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
             file: files,
             fileFormDataName: 'provider[files][]'
           }).progress(function(evt) {
-            var progressPercentage;
-            progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            return console.log('progress: ' + progressPercentage + '% ' + evt.config.file);
+            console.log('progress: ' + impl.uploadProgress + '% ' + evt.config.file);            
+            impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
           }).success(function(data, status, headers, config) {
+            //uploadProgress = 0;
             // var model;
             // console.log('uploaded file ');
             // window.data = data;
@@ -215,6 +217,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload) {
         retrieveProviders: retrieveProviders,
         create : create,
         edit : edit,
-        retrieveProviderById: retrieveProviderById
+        retrieveProviderById: retrieveProviderById,
+        uploadProgress: impl.uploadProgress,
+        impl: impl
     };
 });

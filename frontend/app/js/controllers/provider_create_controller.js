@@ -237,16 +237,56 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
    };
   }
 
-  $scope.createProvider = function(){
+  $scope.createProvider = function($event){
     console.log($scope.newProvider);
     $resource = ProviderService.create($scope.newProvider);
     if($resource) {
-      $scope.newProvider = {};
-      ProviderService.setCurrentProv({});
-      $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);
-      $scope.abortCreate = true;
+      $scope.showUploadingDialog($event);
     } else {
       $scope.infoAlert('Crear nuevo proveedor', 'Algo salió mal. Por favor asegurese de diligenciar todos los campos requeridos y proveer la documentación de soporte.', true);
+    }
+  };
+
+  $scope.showUploadingDialog = function ($event) {
+     var parentEl = angular.element(document.body);
+     $mdDialog.show({
+       parent: parentEl,
+       targetEvent: $event,
+       template:
+         '<md-dialog>' +
+           '  <md-dialog-content>' +
+           '    <div layout="column" layout-align="center center">' +
+           '      <p>{{message}}</p>' +
+           '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' +
+           '    </div>' +
+           '  </md-dialog-content>' +
+           '  <div class="md-actions">' +
+           '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' +
+           '      Cerrar' +
+           '    </md-button>' +
+           '  </div>' +
+           '</md-dialog>',       
+       controller: DialogController
+    });
+    function DialogController(scope, $mdDialog, ProviderService) {
+      scope.progress = ProviderService.impl.uploadProgress;
+      scope.message = 'Espere por favor...'
+      scope.$watch(function () { return ProviderService.impl.uploadProgress }, function (newVal, oldVal) {
+        if (typeof newVal !== 'undefined') {
+          console.log('Progress: ' + scope.progress + ' (' + ProviderService.impl.uploadProgress + ')');
+          scope.progress = ProviderService.impl.uploadProgress;
+          if(scope.progress === 100) {
+            scope.closeDialog();
+          }
+        }
+      });
+      scope.closeDialog = function() {
+        $mdDialog.hide();
+        $scope.newProvider = {};
+        ProviderService.setCurrentProv({});
+        $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);
+        $scope.abortCreate = true;
+      }
     }
   };
 
