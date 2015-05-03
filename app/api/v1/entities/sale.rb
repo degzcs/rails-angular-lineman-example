@@ -11,6 +11,7 @@ module V1
       expose :code ,documentation: { type: "string", desc: "barcode", example: '123123asdfdaf' }
       expose :barcode_html ,documentation: { type: "string", desc: "barcode_html", example: 'TABLE' }
       expose :origin_certificate_file, documentation: { type: "string", desc: "origin_certificate_file", example: 'TABLE' }
+      expose :price, documentation: { type: "float", desc: "price", example: '123399' } 
     end
   end
 end
