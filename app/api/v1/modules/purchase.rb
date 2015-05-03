@@ -55,9 +55,9 @@ module V1
 
               # update params
               new_params = V1::Helpers::PurchaseHelper.format_params(params)
+              # binding.pry
               buy_gold_batch = BuyGoldBatch.new(new_params[:purchase], new_params[:gold_batch], current_user)
               buy_gold_batch.from_non_trazoro_user!
-              # binding.pry
               present buy_gold_batch.purchase , with: V1::Entities::Purchase
         end
 

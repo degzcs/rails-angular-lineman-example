@@ -13,8 +13,8 @@
 #  price                       :float
 #  seller_picture              :string(255)
 #  code                        :text
-#  client_id                   :integer
 #  trazoro                     :boolean          default(FALSE), not null
+#  sale_id                     :integer
 #
 
 require 'spec_helper'

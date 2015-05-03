@@ -10,8 +10,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.allProviders  = []
   $scope.searchText = null
   $scope.code = null
-  if $scope.purchase.model.origin_certificate_file.url
-    $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
+  $scope.origin_certificate_upload_type = null
+  # if $scope.purchase.model.origin_certificate_file.url
+  # $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
 
   CurrentUser.get().success (data) ->
   #IMPROVE: I Set up Missing values to generate the Purchase invoice but this values have to be creted in the DB and return them by the API endpoint
@@ -47,9 +48,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       if data
         $scope.goldBatch.model.id = data.gold_batch_id
         $scope.goldBatch.model.grade = data.grade
+        $scope.purchase.model.fine_gram_unit_price = 100000 #data.fine_gram_unit_price
         $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.grams, data.grade)
-        $scope.purchase.sale_id =  data.sale_id
+        $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
+        $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
         $scope.purchase.model.provider = data.provider
 
   #
@@ -157,7 +160,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $mdDialog.show(confirm).then (->
       $scope.create()
       $scope.flushData()
-      $location.path('/purchases/show')
       $scope.message = 'Su compra a sido registrada con exito'
       return
     ), ->

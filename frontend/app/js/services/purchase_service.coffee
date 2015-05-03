@@ -2,7 +2,7 @@
 # This service is in charge to manage the server requests related to Purchases
 #
 #TODO: make the remaining HTTP requests
-angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
+angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload , $http)->
   service=
     #
     # Model
@@ -11,6 +11,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
       type: ''
       price: 0
       seller_picture: ''
+      sale_id: ''
       provider: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
@@ -31,7 +32,11 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
         ##IMPROVE: Setup the filenames in order to receive them properly in server side.
         ## I am using a Regx in server to know which files is each one
         seller_picture_blob.name = 'seller_picture.png'
-        files = [purchase.origin_certificate_file[0], seller_picture_blob]
+        if purchase.origin_certificate_file[0]
+          files = [purchase.origin_certificate_file[0], seller_picture_blob]
+        else
+          js_pdf = new jsPDF()
+          files = [seller_picture_blob]
 
         $upload.upload(
           # headers: {'Content-Type': file.type},
@@ -40,6 +45,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
           fields:
             "purchase[price]": purchase.price,
             "purchase[provider_id]": purchase.provider.id
+            "purchase[sale_id]": purchase.sale_id
             "gold_batch[parent_batches]": gold_batch.parent_batches
             "gold_batch[grams]": gold_batch.total_fine_grams
             "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
@@ -61,7 +67,11 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
             model.code = data.code
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
+            $location.path('/purchases/show')
         ).catch (err) ->
+          console.log '[SERVICE-ERROR]: image failed to load!!'
+          service.restoreState()
+          # $location.path('/purchases/new/step1')
         # image failed to load
         return
 

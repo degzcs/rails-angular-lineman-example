@@ -11,6 +11,7 @@ module V1
         #IMPROVE: this entity was created provitionaly in order to convert the user in provider. Have to be refactored!!
         #sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date)
         user_transformed_to_provider = {
+          id: sale.user.id,
           name: "#{sale.user.first_name} #{sale.user.last_name}",
           company_name: "TrazOro",
           document_type: 'cedula',
