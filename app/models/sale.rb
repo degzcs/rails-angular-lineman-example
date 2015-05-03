@@ -7,11 +7,11 @@
 #  client_id               :integer
 #  user_id                 :integer
 #  gold_batch_id           :integer
-#  grams                   :float
 #  code                    :string(255)
 #  created_at              :datetime
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
+#  price                   :float
 #
 
 #TODO: change field name from grams to fine_grams
@@ -43,11 +43,14 @@ class Sale < ActiveRecord::Base
   validates :courier_id, presence: true
   validates :client_id, presence: true
   validates :user_id, presence: true
-  validates :grams, presence: true
 
   def barcode_html
     barcode = Barby::EAN13.new(self.code)
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
+  end
+
+  def grams
+    gold_batch.grams
   end
 
   def grade

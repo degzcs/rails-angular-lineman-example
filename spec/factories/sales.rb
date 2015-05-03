@@ -7,11 +7,11 @@
 #  client_id               :integer
 #  user_id                 :integer
 #  gold_batch_id           :integer
-#  grams                   :float
 #  code                    :string(255)
 #  created_at              :datetime
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
+#  price                   :float
 #
 
 FactoryGirl.define do
@@ -19,8 +19,7 @@ FactoryGirl.define do
     courier_id    1
     client_id     1
     user_id       1
-    gold_batch_id 1
-    grams         200
+    gold_batch 
     code       "12345677"
   end
 end

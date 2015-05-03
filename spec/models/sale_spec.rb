@@ -7,11 +7,11 @@
 #  client_id               :integer
 #  user_id                 :integer
 #  gold_batch_id           :integer
-#  grams                   :float
 #  code                    :string(255)
 #  created_at              :datetime
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
+#  price                   :float
 #
 
 require 'spec_helper'
@@ -23,7 +23,6 @@ describe Sale do
     it {expect(sale.client_id).not_to be_nil }
     it {expect(sale.user_id).not_to be_nil}
     it {expect(sale.gold_batch_id).not_to be_nil}
-    it {expect(sale.grams).not_to be_nil}
     it {expect(sale.code).not_to be_nil}
   end
   context "test creation" do
@@ -37,9 +36,6 @@ describe Sale do
 
     it "should not allow to create a sale without client id" do
       expect(build(:sale, client_id: nil)).not_to be_valid
-    end
-    it "should not allow to create a sale without grams" do
-      expect(build(:sale, grams: nil)).not_to be_valid
     end
     #it "should not allow to create a sale without barcode" do
       #expect(build(:sale, grams: nil)).not_to be_valid
