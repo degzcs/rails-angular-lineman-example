@@ -8,7 +8,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     # Model
     #
     model:
-      type: ''
+      type: 'trazoro'
       price: 0
       seller_picture: ''
       sale_id: ''
