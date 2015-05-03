@@ -52,8 +52,13 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.grams, data.grade)
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
-        $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
         $scope.purchase.model.provider = data.provider
+
+  #
+  #
+  #
+  $scope.formatOriginCertificate = (url) ->
+    url.split('/').pop()
 
   #
   # Create filter function for a query string, just filte by document number field

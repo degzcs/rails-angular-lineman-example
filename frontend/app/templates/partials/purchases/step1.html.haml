@@ -138,7 +138,7 @@
                 .trazoro-origin-certificate
                   %md-input-container
                     %label Certificado de Origen
-                    %input{"ng-model" => "origin_certificate_file_name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
+                    %input{"ng-model" => "formatOriginCertificate(purchase.model.origin_certificate_file.url)",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
 
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
