@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502194346) do
+ActiveRecord::Schema.define(version: 20150502221546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,11 +189,9 @@ ActiveRecord::Schema.define(version: 20150502194346) do
     t.float    "price"
     t.string   "seller_picture"
     t.text     "code"
-    t.integer  "client_id"
     t.boolean  "trazoro",                     default: false, null: false
+    t.integer  "sale_id"
   end
-
-  add_index "purchases", ["client_id"], name: "index_purchases_on_client_id", using: :btree
 
   create_table "rucoms", force: true do |t|
     t.string   "idrucom",            limit: 90,                                 null: false
