@@ -21,5 +21,6 @@ FactoryGirl.define do
     user_id       1
     gold_batch 
     code       "12345677"
+    price 123214521
   end
 end
