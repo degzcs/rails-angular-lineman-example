@@ -19,6 +19,8 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       reference_code: ''
       barcode_html: ''
       code: ''
+      trazoro: ''
+      sale_id: ''
 
     #
     # HTTP resquests

@@ -65,6 +65,8 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
         provider: purchases[i].provider,
         gold_batch: purchases[i].gold_batch,
         inventory: purchases[i].inventory,
+        trazoro:  purchases[i].trazoro,
+        sale_id: purchases[i].sale_id,
         // Aditional table paramters
         provider_name: purchases[i].provider.first_name + " " + purchases[i].provider.last_name,
         inventory_remaining_amount: purchases[i].inventory.remaining_amount,

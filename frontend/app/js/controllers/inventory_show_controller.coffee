@@ -1,6 +1,6 @@
-angular.module('app').controller 'InventoryShowCtrl', ($scope,Inventory, PurchaseService,ProviderService) ->
+angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService) ->
   #Get the current inventory from the sessionStorage using the Inventory Service
-  currentInventory = Inventory.getCurrent()
+  currentInventory = PurchaseService.restoreState()
   console.log(currentInventory)
   
   #Get the purchase object using the api

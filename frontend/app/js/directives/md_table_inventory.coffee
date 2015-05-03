@@ -1,4 +1,4 @@
-angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationService,$state) ->
+angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationService,$state,PurchaseService) ->
   {
     restrict: 'E'
     scope:
@@ -36,8 +36,22 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         
 
       $scope.show_inventory = (item)->
-        PurchaseService.setCurrent(item)
+        
+        PurchaseService.model.price = item.price
+        PurchaseService.model.seller_picture = item.seller_picture
+        PurchaseService.model.origin_certificate_sequence = item.origin_certificate_sequence
+        PurchaseService.model.origin_certificate_file = item.origin_certificate_file
+        PurchaseService.model.fine_gram_unit_price = item.fine_gram_unit_price
+        PurchaseService.model.reference_code = item.reference_code
+        PurchaseService.model.barcode_html = item.barcode_html
+        PurchaseService.model.code = item.code
+        PurchaseService.model.trazoro = item.trazoro
+        PurchaseService.model.sale_id = item.sale_id
+        PurchaseService.saveState()
         $state.go('show_inventory')
+
+        
+
         return
 
 
