@@ -50,6 +50,8 @@ module V1
           purchase.inventory.remaining_amount.round(2)
         end
       end
+      expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" } 
+      expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 } 
     end
   end
 end
