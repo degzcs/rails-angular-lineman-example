@@ -40,6 +40,7 @@ gem 'barby'
 
 # upload files
 gem 'carrierwave'
+gem 'rmagick'
 
  # API
  gem 'jwt'
