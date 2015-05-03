@@ -1,17 +1,21 @@
-angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService) ->
+angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser) ->
   #Get the current inventory from the sessionStorage using the Inventory Service
-  currentInventory = PurchaseService.restoreState()
-  console.log(currentInventory)
+  $scope.purchase = PurchaseService.restoreState()
+  $scope.provider = null
+  $scope.barcode_html = $sce.trustAsHtml($scope.purchase.barcode_html)
+  $scope.current_user =  null
+
+  #TODO: refactor grams and fine_grams notation
+  $scope.total_fine_grams =  $scope.purchase.gold_batch.grams
+  $scope.fine_gram_unit_price =  $scope.purchase.price / $scope.total_fine_grams
+  $scope.price =  $scope.purchase.price
   
-  #Get the purchase object using the api
-  PurchaseService.get(currentInventory.purchase_id).success (data) ->
-    $scope.inventory = data
-    getProvider()
-    console.log($scope.inventory)
-    return
+  CurrentUser.get().success (data)->
+    $scope.current_user = data
+    console.log data
 
   #Get the provier using the api
-  getProvider = ->
-    ProviderService.retrieveProviderById.get {providerId: $scope.inventory.provider.id}, (provider)->
-      $scope.provider = provider
-      console.log($scope.provider)
+
+  ProviderService.retrieveProviderById.get {providerId: $scope.purchase.provider.id}, (provider)->
+    $scope.provider = provider
+  
