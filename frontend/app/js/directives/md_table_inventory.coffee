@@ -36,7 +36,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         
 
       $scope.show_inventory = (item)->
-        
+        console.log item
         PurchaseService.model.price = item.price
         PurchaseService.model.seller_picture = item.seller_picture
         PurchaseService.model.origin_certificate_sequence = item.origin_certificate_sequence
@@ -47,6 +47,10 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         PurchaseService.model.code = item.code
         PurchaseService.model.trazoro = item.trazoro
         PurchaseService.model.sale_id = item.sale_id
+        PurchaseService.model.provider = item.provider
+        PurchaseService.model.gold_batch = item.gold_batch
+        PurchaseService.model.barcode_html = item.barcode_html
+        PurchaseService.model.code = item.code
         PurchaseService.saveState()
         $state.go('show_inventory')
 
