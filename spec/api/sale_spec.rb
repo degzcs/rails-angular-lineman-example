@@ -97,14 +97,24 @@ describe 'Sale', :type => :request do
           it 'gets purchase by code' do
             sale = Sale.last
 
-            provider_hash = sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date).stringify_keys
+          ###IMPROVE: this test was created provitionaly in order to convert the user in provider. Have to be refactored!!
+            # provider_hash = sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date).stringify_keys
+
+            provider_hash = {
+            name: "#{sale.user.first_name} #{sale.user.last_name}",
+            company_name: "TrazOro",
+            document_type: 'cedula',
+            document_number: sale.user.document_number,
+            rucom_record: '0025478',
+            rucom_status: 'active'
+          }
 
             expected_response = {
               id:  sale.id,
               gold_batch_id: sale.gold_batch_id,
               grams: sale.grams,
               code: sale.code,
-              provider: provider_hash
+              provider: provider_hash.stringify_keys
             }
 
             get "/api/v1/sales/get_by_code/#{sale.code}",{},{ "Authorization" => "Barer #{@token}" }
