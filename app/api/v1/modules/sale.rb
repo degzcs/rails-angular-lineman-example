@@ -70,9 +70,12 @@ module V1
             sale = current_user.sales.build(params[:sale])
             sale.build_gold_batch(params[:gold_batch])
             sale.save!
+            # ----- TODO: Unify all Services ------- #
             #Service Sale registration methods
             ::SaleRegistration.update_inventories(selectedPurchases) if selectedPurchases
             ::SaleRegistration.register_sold_batches(sale,selectedPurchases) if selectedPurchases
+            SaleCertificateGenerator.new(sale).generate_certificate
+            
             present sale, with: V1::Entities::Sale
             Rails.logger.info(sale.errors.inspect)
         end

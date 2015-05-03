@@ -2,15 +2,16 @@
 #
 # Table name: sales
 #
-#  id            :integer          not null, primary key
-#  courier_id    :integer
-#  client_id     :integer
-#  user_id       :integer
-#  gold_batch_id :integer
-#  grams         :float
-#  code          :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
+#  id                      :integer          not null, primary key
+#  courier_id              :integer
+#  client_id               :integer
+#  user_id                 :integer
+#  gold_batch_id           :integer
+#  grams                   :float
+#  code                    :string(255)
+#  created_at              :datetime
+#  updated_at              :datetime
+#  origin_certificate_file :string(255)
 #
 
 require 'barby'
@@ -28,6 +29,11 @@ class Sale < ActiveRecord::Base
   # Callbacks
   #
   before_save :generate_barcode
+  
+  #
+  # Uploaders
+  #
+  mount_uploader :origin_certificate_file, AttachmentUploader
   
   #
   # Validations

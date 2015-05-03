@@ -24,7 +24,7 @@ FactoryGirl.define do
     origin_certificate_sequence {Faker::Code.isbn}
     gold_batch {FactoryGirl.create(:gold_batch)}
     price 1.5
-    origin_certificate_file {"MyString"}
+    origin_certificate_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf'))}
   end
 
 end

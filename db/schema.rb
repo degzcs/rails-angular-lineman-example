@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502180321) do
+ActiveRecord::Schema.define(version: 20150502235401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 20150502180321) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "origin_certificate_file"
   end
 
   create_table "sold_batches", force: true do |t|
