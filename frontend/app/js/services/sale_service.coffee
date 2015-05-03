@@ -1,13 +1,13 @@
 
-angular.module('app').factory 'SaleService', ($http)-> 
-  service = 
-    
-    model: 
+angular.module('app').factory 'SaleService', ($http)->
+  service =
+
+    model:
       id: null
       courier_id: null
       client_id: null
       user_id: null
-      gold_batch_id: null 
+      gold_batch_id: null
       grams: null
       code: null
       barcode_html: null
@@ -28,9 +28,9 @@ angular.module('app').factory 'SaleService', ($http)->
         return service.model
       else
         sessionStorage.restoreSale = 'false'
-        
+
     get_by_code: (code)->
-      return $http.get("api/v1/sales/"+code)
+      return $http.get("api/v1/sales/get_by_code/"+code)
 
     #setSaleInfo: function(sale_info){
     #  sessionStorage.setItem('saleInfo',JSON.stringify(sale_info));

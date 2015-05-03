@@ -9,8 +9,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.goldBatch = GoldBatchService
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
   CurrentUser.get().success (data) ->
-    #IMPROVE: Set up Missing values to generate the Purchase invoice
-    data.company_name = 'TrazOro'
+    #IMPROVE: I Set up Missing values to generate the Purchase invoice but this values have to be creted in the DB and return them by the API endpoint
     data.nit = '123456789456123'
     data.rucom_record = 6547896321
     data.office = 'TrazOro Popayan'

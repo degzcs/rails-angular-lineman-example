@@ -9,7 +9,7 @@
         %div.fieldset-inputs
           %div{layout: "row"}
             %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "type", :ng-init => "type='provider'",:required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
+              %md-radio-group{"ng-model" => "type", :ng-init => "type='trazoro'",:required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
                 %md-radio-button{:value => "trazoro"} Trazoro
                 %md-radio-button{:value => "provider"} Directamente desde proveedor
 
@@ -26,9 +26,13 @@
         %md-autocomplete{:ng-if => "type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", :required => ""}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
 
-        %md-autocomplete{:ng-if => "type == 'trazoro'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", :placeholder => "Numero de codigo de barras de la Venta", :required => ""}
-          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
         %div.fieldset-inputs
+          %div{layout: "row", :ng-if => "type == 'trazoro'"}
+            %md-input-container{flex: ''}
+              %label Numero de codigo de barras de la Venta
+              %input{"ng-model" => "code", :required => "", :name => 'provider_name'}
+            %md-input-container{flex: 30}
+              %a.md-button..md-raised.md-primary.find-provider-button{:ng-click =>"searchProviderByCode(code)"}  Buscar
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Nombre Proovedor

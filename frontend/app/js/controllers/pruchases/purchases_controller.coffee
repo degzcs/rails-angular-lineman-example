@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location) ->
 
   #
   # Instances
@@ -7,8 +7,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
   $scope.hover_image = "http://www.gravatar.com/avatar/b76f6e92d9fc0690e6886f7b9d4f32da?s=100";
+  $scope.allProviders  = []
+  $scope.searchText = null
+  $scope.code = null
+
   CurrentUser.get().success (data) ->
-    #IMPROVE: Set up Missing values to generate the Purchase invoice
+  #IMPROVE: I Set up Missing values to generate the Purchase invoice but this values have to be creted in the DB and return them by the API endpoint
     data.company_name = 'TrazOro'
     data.nit = '123456789456123'
     data.rucom_record = 6547896321
@@ -17,8 +21,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     data.phone = '3007854214'
     $scope.current_user = data
 
-  $scope.allProviders  = []
-  $scope.searchText = null
+  window.s =  $scope
 
   #
   # Fuctions
@@ -31,6 +34,19 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     console.log 'query: ' + query
     results = if query then $scope.allProviders.filter(createFilterFor(query)) else []
     results
+
+  #
+  # Search provider by sale code
+  # @ sale_code [Integer] is the generated code when the sale is created
+  # @return [Array] with the matched options with the query
+  $scope.searchProviderByCode = (sale_code)->
+    console.log 'query: ' + sale_code
+    SaleService.get_by_code(sale_code).success (data)->
+      if data
+        $scope.goldBatch.id = data.gold_batch_id
+        $scope.goldBatch.total_fine_grams = data.grams
+        $scope.purchase.sale_id =  data.sale_id
+        $scope.purchase.model.provider = data.provider
 
   #
   # Create filter function for a query string, just filte by document number field
