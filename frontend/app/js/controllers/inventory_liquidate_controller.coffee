@@ -95,7 +95,6 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
       sale_params = {
         courier_id: $scope.selectedCourier.id,
         client_id: $scope.selectedClient.id,
-        grams: $scope.totalAmount,
       }
 
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->

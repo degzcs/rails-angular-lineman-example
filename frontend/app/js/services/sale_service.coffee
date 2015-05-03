@@ -8,7 +8,6 @@ angular.module('app').factory 'SaleService', ($http)->
       client_id: null
       user_id: null
       gold_batch_id: null
-      grams: null
       code: null
       barcode_html: null
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
