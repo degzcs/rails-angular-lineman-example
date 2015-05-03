@@ -58,7 +58,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   #
   $scope.formatOriginCertificate = (url) ->
-    url.split('/').pop()
+    if url
+      url.split('/').pop()
 
   #
   # Create filter function for a query string, just filte by document number field
