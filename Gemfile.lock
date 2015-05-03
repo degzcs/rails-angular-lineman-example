@@ -283,6 +283,7 @@ GEM
       json (~> 1.4)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
+    rmagick (2.15.0)
     rspec-core (3.2.3)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.1)
@@ -400,6 +401,7 @@ DEPENDENCIES
   rack-contrib (~> 1.1.0)
   rails (= 4.1.9)
   rails-lineman!
+  rmagick
   rspec-rails
   rubocop
   sass
