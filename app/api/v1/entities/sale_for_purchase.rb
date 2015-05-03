@@ -5,6 +5,7 @@ module V1
       expose :gold_batch_id ,documentation: { type: "integer", desc: "gold batch id", example: '1' }
       expose :grams ,documentation: { type: "float", desc: "grams", example: '239923' }
       expose :grade ,documentation: { type: "float", desc: "grade", example: '999' }
+      expose :fine_gram_unit_price ,documentation: { type: "float", desc: "price per fine gram", example: '4654789' }
       expose :code ,documentation: { type: "string", desc: "number user to create a barcode", example: '123123asdfdaf' }
       expose :origin_certificate_file, documentation: { type: "file", desc: "pdf with all previous origin certificates to the current one" }
       expose :provider, documentation: { type: "string", desc: "information about the persorn who made the sale" } do | sale, options|

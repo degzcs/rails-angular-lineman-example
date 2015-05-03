@@ -48,7 +48,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       if data
         $scope.goldBatch.model.id = data.gold_batch_id
         $scope.goldBatch.model.grade = data.grade
-        $scope.purchase.model.fine_gram_unit_price = 100000 #data.fine_gram_unit_price
+        $scope.purchase.model.fine_gram_unit_price = data.fine_gram_unit_price
         $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.grams, data.grade)
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file

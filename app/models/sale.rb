@@ -57,6 +57,10 @@ class Sale < ActiveRecord::Base
     gold_batch.grade
   end
 
+  def fine_gram_unit_price
+    (price/grams)
+  end
+
   protected
     #Before the sale is saved generate a barcode and its html representation
     def generate_barcode
