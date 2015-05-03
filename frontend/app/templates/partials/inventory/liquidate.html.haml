@@ -22,23 +22,29 @@
         //  Lote 
         //  /{{$index +1 }} :
         %md-input-container{flex: ""}
+          %label Precio Gramo
+          %input{"name"=>"per_unit_value","ng-model" => "per_unit_value", required: "","type" => "number", "step"=>"any","ng-change"=>"calculate_price()" }
+          %div{"ng-messages" => "ingotsForm.per_unit_value.$error"}
+            %div{"ng-message" => "number"} Formato Invalido
+        %md-input-container{flex: ""}
           %label Ley
           %input{"name"=> "selectedGrade","ng-model" => "selectedGrade", required: "", "type" => "number","ng-change"=>"calculate_weight()","min"=> "1","max"=> "999","step"=>"1"}
           %div{"ng-messages" => "ingotsForm.selectedGrade.$error"}
             %div{"ng-message" => "min"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "max"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "number"} Formato Invalido
-        %md-input-container{flex: ""}
-          %label Peso
-          %input{"ng-model" => "selectedWeight", required: "","type" => "number", "step"=>"any",disabled: ""}
-          %div{"ng-messages" => "ingotsForm.selectedGrams.$error"}
-            %div{"ng-message" => "number"} Formato Invalido
+        
       /%div.liquidation-messages{"ng-messages" => "validation_messages"}
       /  %div.valid{"ng-message" => "valid"} Cantidad correcta
       /  %div.invalid{"ng-message" => "invalid"} La cantidad no corresponde con los gramos finos seleccionados
-      %h1
-        Peso Total:
-        {{selectedWeight}} gr
+      .inventory-total-values{layout: "row"}
+        %h1{flex: ""}
+          Precio Total:
+          $ {{price}}
+        %h1{flex: ""}
+          Peso Total:
+          {{selectedWeight}} gr
+        
       .customer-form{layout: "row"}
         /--------------------------- Client info ------------------------/
         .customer-info{flex: ""}

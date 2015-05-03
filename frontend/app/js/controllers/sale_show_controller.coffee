@@ -9,6 +9,13 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   currentSale = SaleService.restoreState()
   $scope.selected_purchases = currentSale.selectedPurchases
   $scope.purchases = null
+  $scope.price = currentSale.price
+  $scope.totalAmount = currentSale.totalAmount
+  $scope.barcode_html = $sce.trustAsHtml(currentSale.barcode_html)
+  $scope.code = currentSale.code
+  $scope.currentClient = null
+  $scope.currentUser = null
+  $scope.origin_certificate_file = currentSale.origin_certificate_file
 
   ids = []
   i=0
@@ -21,13 +28,6 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
     $scope.purchases = data
     #console.log data
   
-  #PurchaseService.get_list(currentSale.selectedPurchases.length).success (data)->
-  #  $scope.selectedPurchases = data
-  $scope.totalAmount = currentSale.totalAmount
-  $scope.barcode_html = $sce.trustAsHtml(currentSale.barcode_html)
-  $scope.code = currentSale.code
-  $scope.currentClient = null
-  $scope.currentUser = null
   #
   # get Client
   $scope.client = ClientService.retrieveClientById.get {clientId: currentSale.client_id}, (client)->

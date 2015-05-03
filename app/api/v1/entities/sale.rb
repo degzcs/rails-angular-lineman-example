@@ -10,6 +10,7 @@ module V1
       expose :grams ,documentation: { type: "float", desc: "grams", example: '239923' }
       expose :code ,documentation: { type: "string", desc: "barcode", example: '123123asdfdaf' }
       expose :barcode_html ,documentation: { type: "string", desc: "barcode_html", example: 'TABLE' }
+      expose :origin_certificate_file, documentation: { type: "string", desc: "origin_certificate_file", example: 'TABLE' }
     end
   end
 end

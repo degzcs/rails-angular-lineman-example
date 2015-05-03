@@ -13,6 +13,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   $scope.totalAmount = liquidation_info.totalAmount
   $scope.selectedGrade = null
   $scope.selectedWeight  = 0
+  $scope.price = 0
+  $scope.per_unit_value = null
 
   $scope.searchClientText = null
   $scope.selectedClient = null
@@ -25,6 +27,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   $scope.calculate_weight = ->
     $scope.selectedWeight  = Number(($scope.totalAmount * 999/$scope.selectedGrade).toFixed(2))
 
+  $scope.calculate_price = ->
+    $scope.price = Number(($scope.totalAmount * $scope.per_unit_value).toFixed(2))
   #
   # Seacrch clients by id
   #
@@ -95,6 +99,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
       sale_params = {
         courier_id: $scope.selectedCourier.id,
         client_id: $scope.selectedClient.id,
+        price: $scope.price
       }
 
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
@@ -109,6 +114,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         SaleService.model.barcode_html = sale.barcode_html
         SaleService.model.selectedPurchases = $scope.selectedPurchases
         SaleService.model.totalAmount = $scope.totalAmount
+        SaleService.model.price = sale.price
+        SaleService.model.origin_certificate_file = sale.origin_certificate_file
         SaleService.saveState()
         $state.go('show_sale')
       ).error (data, status, headers, config) ->

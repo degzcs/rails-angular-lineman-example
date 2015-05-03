@@ -129,10 +129,21 @@
                 %h2
                   %strong
                     Gramos Totales:
-                    {{totalAmount}}
+                    %br 
+                    {{totalAmount}} gr
+                %h2
+                  %strong
+                    Precio Total:
+                    %br
+                    ${{price}}
+
 
   %div{layout: "row"}
     %div{flex: ""}
+      %h2 
+        %a.md-button{href: "{{origin_certificate_file.url}}"}
+          Certificados de origen adjuntos
+        
     %div{flex: ""}
       /%h2{style: "text-align: left;"} Codigo de venta
       %div{"ng-bind-html"=>"barcode_html"}
