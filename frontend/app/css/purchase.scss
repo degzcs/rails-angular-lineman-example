@@ -32,7 +32,7 @@ md-card.seller{
       line-height: 130px; /* Equals height of image */
       vertical-align: middle; /* Aligning vertically */
       color: white; /* Better contrast than blue on black */
-      background: #ccc;
+      background-color:#ccc;
       text-align: center;
       position: relative;
       height: 150px;
@@ -106,7 +106,7 @@ md-card.seller{
     background: url("/img/take-photo.png");
     background-size: 50px 50px;
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
 }
 
 .uploader-certificate-form{

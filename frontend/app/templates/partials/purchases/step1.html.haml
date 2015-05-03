@@ -9,7 +9,7 @@
         %div.fieldset-inputs
           %div{layout: "row"}
             %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "type", :ng-init => "type='trazoro'",:required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
+              %md-radio-group{"ng-model" => "purchase.model.type", :ng-init => "purchase.model.type='trazoro'",:required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
                 %md-radio-button{:value => "trazoro"} Trazoro
                 %md-radio-button{:value => "provider"} Directamente desde proveedor
 
@@ -18,19 +18,19 @@
     %div.md-padding{flex: ""}
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
-          %h3{:ng-if => "type == 'provider'"}
+          %h3{:ng-if => "purchase.model.type == 'provider'"}
             2. Seleccione un Proovedor
-          %h3{:ng-if => "type == 'trazoro'"}
+          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             2. Ingrese el codigo de barras
 
-        %md-autocomplete{:ng-if => "type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", :required => ""}
+        %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
 
         %div.fieldset-inputs
-          %div{layout: "row", :ng-if => "type == 'trazoro'"}
+          %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
             %md-input-container{flex: ''}
               %label Numero de codigo de barras de la Venta
-              %input{"ng-model" => "code", :required => "", :name => 'provider_name'}
+              %input{"ng-model" => "code", :name => 'provider_name'}
             %md-input-container{flex: 30}
               %a.md-button..md-raised.md-primary.find-provider-button{:ng-click =>"searchProviderByCode(code)"}  Buscar
           %div{layout: "row"}
@@ -57,20 +57,20 @@
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
-      %a.md-button.create-provider-button{:ng-if => "type == 'provider'", 'ng-href' => "#provider"}  crear proovedor
+      %a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", 'ng-href' => "#provider"}  crear proovedor
     %div{flex: ""}
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
         %legend
-          %h3{:ng-if => "type == 'provider'"}
+          %h3{:ng-if => "purchase.model.type == 'provider'"}
             3. Tome una foto al Provedor
-          %h3{:ng-if => "type == 'trazoro'"}
+          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             3. Tome una foto al Transportador
 
         %md-input-container.row
           .photo
             %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png'}}","ng-model" => "purchase.model.seller_picture",  "check-image" => ''}
+              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', :ng-style => "{'background-image': 'url(img/default-user.png);'}"}
               %md-tooltip{'md-direction'=> 'right'}
                 Tomar Foto
 
@@ -80,9 +80,9 @@
       %fieldset.standard.tr-fieldset.origin-certificate-fieldset
         %legend
           %h3
-          %h3{:ng-if => "type == 'provider'"}
+          %h3{:ng-if => "purchase.model.type == 'provider'"}
             4. Suba el certificado de origen e ingrese el numero
-          %h3{:ng-if => "type == 'trazoro'"}
+          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             4. Ingrese el numero
         %div{layout: "row"}
           %md-input-container{flex: '40'}
@@ -92,7 +92,7 @@
               %div{"ng-message" => "required"} * Este campo es requerido.
 
         %section.uploader-certificate-tab{layout: "row"}
-          %div{flex: '40', :ng-if => "type == 'provider'"}
+          %div{flex: '40', :ng-if => "purchase.model.type == 'provider'"}
             %h4 Seleccione una forma de subir el certificado
             %md-select.uploader-selector{"ng-model" => "origin_certificate_upload_type", :placeholder => "Cargar Centificado de Origen ...", :required => ''}
               %md-option{:value => "by_upload"} Desde el PC
@@ -131,8 +131,12 @@
                         Tomar Foto
                         %span.ion-android-checkmark-circle
 
-
+                .trazoro-origin-certificate{:ng-if => "purchase.model.type == 'trazoro'"}
+                  %md-input-container
+                    %label {{origin_certificate_file_name}}
+                    %md-icon{"md-svg-icon" => "file:attachment"}
 
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.md-primary.md-raised.md-accent{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+    %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'provider'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+    %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar

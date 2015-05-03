@@ -94,30 +94,37 @@ describe 'Sale', :type => :request do
         end
 
         context 'get_by_code/:code' do
+          before :each do
+            @sale = Sale.last
+            file_path = "#{Rails.root}/spec/support/test_pdfs/origin_certificate_file.pdf"
+            File.open(file_path){|f|  @sale.origin_certificate_file = f}
+            @sale.save
+          end
           it 'gets purchase by code' do
-            sale = Sale.last
+
 
           ###IMPROVE: this test was created provitionaly in order to convert the user in provider. Have to be refactored!!
             # provider_hash = sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date).stringify_keys
 
             provider_hash = {
-            name: "#{sale.user.first_name} #{sale.user.last_name}",
+            name: "#{@sale.user.first_name} #{@sale.user.last_name}",
             company_name: "TrazOro",
             document_type: 'cedula',
-            document_number: sale.user.document_number,
+            document_number: @sale.user.document_number,
             rucom_record: '0025478',
             rucom_status: 'active'
           }
 
             expected_response = {
-              id:  sale.id,
-              gold_batch_id: sale.gold_batch_id,
-              grams: sale.grams,
-              code: sale.code,
-              provider: provider_hash.stringify_keys
+              id:  @sale.id,
+              gold_batch_id: @sale.gold_batch_id,
+              grams: @sale.grams,
+              code: @sale.code,
+              provider: provider_hash.stringify_keys,
+              origin_certificate_file: {"url"=>"#{Rails.root}/spec/uploads/sale/origin_certificate_file/#{@sale.id}/origin_certificate_file.pdf"}
             }
 
-            get "/api/v1/sales/get_by_code/#{sale.code}",{},{ "Authorization" => "Barer #{@token}" }
+            get "/api/v1/sales/get_by_code/#{@sale.code}",{},{ "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end

@@ -15,6 +15,7 @@
 #
 
 #TODO: change field name from grams to fine_grams
+# however I think the grams or fine_grams is a delegate method like I do with grade
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
@@ -35,7 +36,7 @@ class Sale < ActiveRecord::Base
   # Uploaders
   #
   mount_uploader :origin_certificate_file, AttachmentUploader
-  
+
   #
   # Validations
   #
@@ -47,6 +48,10 @@ class Sale < ActiveRecord::Base
   def barcode_html
     barcode = Barby::EAN13.new(self.code)
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
+  end
+
+  def grade
+    gold_batch.grade
   end
 
   protected

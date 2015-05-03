@@ -20,13 +20,16 @@ rucoms = FactoryGirl.create_list(:rucom, 20)
 state = FactoryGirl.create(:state)
 city = FactoryGirl.create(:city, state_id: state.id, state_code: state.state_code)
 population_center = FactoryGirl.create(:population_center, city_id: city.id, city_code: city.city_code)
+
+puts 'creating rucoms ...'
 rucoms.each do|rucom|
-	FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
-	FactoryGirl.create(:client,rucom_id: rucom.id, population_center_id: population_center.id)
+  FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
+  FactoryGirl.create(:client,rucom_id: rucom.id, population_center_id: population_center.id)
 end
 
 
-User.all.each do |user| 
+puts 'creating purchases ...'
+User.all.each do |user|
   FactoryGirl.create(:purchase, user_id: user.id, provider_id: Provider.last.id, gold_batch_id: FactoryGirl.create(:gold_batch).id )
 end
 

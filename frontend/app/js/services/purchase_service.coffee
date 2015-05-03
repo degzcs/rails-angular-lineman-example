@@ -8,6 +8,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
     # Model
     #
     model:
+      type: ''
       price: 0
       seller_picture: ''
       provider: {}
@@ -102,7 +103,7 @@ angular.module('app').factory 'PurchaseService', ($rootScope, $upload , $http)->
       return $http.get('api/v1/purchases', params:
                 "purchase_list[]": ids)
 
-                  
+
   #
   # Listeners
   #

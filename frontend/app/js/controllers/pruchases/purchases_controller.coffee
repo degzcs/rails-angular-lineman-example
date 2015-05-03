@@ -10,6 +10,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.allProviders  = []
   $scope.searchText = null
   $scope.code = null
+  if $scope.purchase.model.origin_certificate_file.url
+    $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
 
   CurrentUser.get().success (data) ->
   #IMPROVE: I Set up Missing values to generate the Purchase invoice but this values have to be creted in the DB and return them by the API endpoint
@@ -43,9 +45,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     console.log 'query: ' + sale_code
     SaleService.get_by_code(sale_code).success (data)->
       if data
-        $scope.goldBatch.id = data.gold_batch_id
-        $scope.goldBatch.total_fine_grams = data.grams
+        $scope.goldBatch.model.id = data.gold_batch_id
+        $scope.goldBatch.model.grade = data.grade
+        $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.grams, data.grade)
         $scope.purchase.sale_id =  data.sale_id
+        $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
         $scope.purchase.model.provider = data.provider
 
   #
@@ -110,14 +114,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Watch and setup measures and total price
   $scope.$watch '[purchase.model.law, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price]', ->
 
-    # Measue Unit Price (COP)
-    # TODO:
-    # $scope.castellanoUnitPrice= MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    # $scope.ozUnitPrice= MeasureConverterService.ozsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    # $scope.tominUnitPrice= MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    # $scope.rialUnitPrice= MeasureConverterService.rialesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-    # $scope.gramUnitPrice= MeasureConverterService.gramsUnitPriceFrom($scope.purchase.model.fine_gram_unit_price)
-
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
     $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
@@ -142,10 +138,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   # Save the values in SessionStorage
   $scope.saveState= ->
-    console.log('saving purchase state on sessionStore ... ')
+    console.log('saving purchase and gold batch states on sessionStore ... ')
     $scope.purchase.saveState()
-  #  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
     $scope.goldBatch.saveState()
+  #  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
 
   #
   # confirm Dialog

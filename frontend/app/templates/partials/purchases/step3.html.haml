@@ -127,7 +127,7 @@
           %p Gramo(s)
         %td.md-table-td-more
           %md-input-container
-            %span {{goldBatch.model.grams}}
+            %span {{goldBatch.model.grams | number:3}}
         %td.md-table-td-more
           %md-input-container
             {{ goldBatch.model.total_grams | number:2}}
@@ -162,7 +162,8 @@
           %md-input-container
             %span {{goldBatch.model.riales}}
 .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-  %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
+  %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'provider'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
+  %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'trazoro'", flex: "20", "ui-sref"=>"new_purchase.step1"} Volver
   %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
 
 
