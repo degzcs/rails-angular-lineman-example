@@ -9,7 +9,7 @@
         %div.fieldset-inputs
           %div{layout: "row"}
             %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "purchase.model.type", :ng-init => "purchase.model.type='trazoro'",:required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
+              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
                 %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
 
