@@ -19,6 +19,7 @@
 #  population_center_id       :integer
 #  city                       :string(255)
 #  state                      :string(255)
+#  chamber_commerce_file      :string(255)
 #
 
 # TODO: change  column name from identification_number_file to tableIdentification_document_file

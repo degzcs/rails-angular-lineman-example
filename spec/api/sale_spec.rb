@@ -59,6 +59,7 @@ describe 'Sale', :type => :request do
           expect(JSON.parse(response.body)).to include expected_response
         end
       end
+
       context "GET" do
         before(:all) do
           create_list(:sale, 20)
@@ -71,8 +72,9 @@ describe 'Sale', :type => :request do
             expect(JSON.parse(response.body).count).to be per_page
           end
         end
+
         context '/:id' do
-          it 'gets purchase by id' do 
+          it 'gets purchase by id' do
             sale = Sale.last
 
             expected_response = {
@@ -85,38 +87,38 @@ describe 'Sale', :type => :request do
               code: sale.code,
               barcode_html: sale.barcode_html
             }
-
             get "/api/v1/sales/#{sale.id}",{},{ "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
         end
-        context '/:code' do
-          it 'gets purchase by code' do 
+
+        context 'get_by_code/:code' do
+          it 'gets purchase by code' do
             sale = Sale.last
+
+            provider_hash = sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date).stringify_keys
 
             expected_response = {
               id:  sale.id,
-              courier_id: sale.courier_id,
-              client_id:  sale.client_id,
-              user_id: sale.user_id,
               gold_batch_id: sale.gold_batch_id,
               grams: sale.grams,
               code: sale.code,
-              barcode_html: sale.barcode_html
+              provider: provider_hash
             }
 
-            get "/api/v1/sales/#{sale.code}",{},{ "Authorization" => "Barer #{@token}" }
+            get "/api/v1/sales/get_by_code/#{sale.code}",{},{ "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
         end
+
         context '/:id/batches' do
           it 'verifies that response has the elements number specified in per_page param' do
             sale = Sale.last
             total_sold_batches = 30
             list = create_list(:sold_batch,total_sold_batches,sale_id: sale.id)
-            
+
             get "/api/v1/sales/#{sale.id}/batches", {} , { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to be total_sold_batches
