@@ -33,6 +33,7 @@ class Provider < ActiveRecord::Base
   mount_uploader :identification_number_file, AttachmentUploader
   mount_uploader :rut_file, AttachmentUploader
   mount_uploader :mining_register_file, AttachmentUploader
+  mount_uploader :chamber_commerce_file, AttachmentUploader
   mount_uploader :photo_file, AttachmentUploader
 
   #

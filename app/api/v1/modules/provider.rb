@@ -162,8 +162,9 @@ module V1
           identification_number_file = files.select{|file| file['filename'] =~ /identification_number_file/}.first
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
+          chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /provider_photo/}.first
-          params[:provider].except!(:files).merge!(identification_number_file: identification_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
+          params[:provider].except!(:files).merge!(identification_number_file: identification_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file, chamber_commerce_file: chamber_commerce_file)
 
           provider_params = params[:provider]
           provider = ::Provider.new(params[:provider])

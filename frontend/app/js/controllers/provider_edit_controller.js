@@ -49,6 +49,9 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
       } else {
         $scope.formTabControl.secondUnlocked = false;
       }
+      if (provider.rucom.provider_type === "Comercializadores") {
+        prov.chamber_commerce_file = provider.chamber_commerce_file;
+      }
       $scope.currentProvider = prov;
       //ProviderService.setCurrentProv(prov);
       if(prov.rucom.num_rucom) {

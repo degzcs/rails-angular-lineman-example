@@ -65,7 +65,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
       },
       identification_number_file: $scope.newProvider.identification_number_file || '',
       mining_register_file: $scope.newProvider.mining_register_file || '',
-      rut_file: $scope.newProvider.rut_file || ''
+      rut_file: $scope.newProvider.rut_file || '',
+      chamber_commerce_file: $scope.newProvider.chamber_commerce_file || ''
     };
 
     if($scope.newProvider.has_company) {
@@ -132,6 +133,10 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
       $scope.newProvider.rut_file=$scope.file;
       ProviderService.setCurrentProv($scope.newProvider);
     }
+    if(CameraService.getTypeFile() === 5) {
+      $scope.newProvider.chamber_commerce_file=$scope.file;
+      ProviderService.setCurrentProv($scope.newProvider);
+    }
     CameraService.clearData();
     ScannerService.clearData();
   }
@@ -187,7 +192,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   ];
 
   $scope.formTabControl = {
-    selectedIndex : 0,
+    selectedIndex : ProviderService.currentTabProvCreation,
     secondUnlocked : true,
     firstLabel : "Información de Proveedor",
     secondLabel : "Información de Compañia",
@@ -217,11 +222,13 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
   $scope.next = function() {
     $scope.formTabControl.selectedIndex = Math.min($scope.formTabControl.selectedIndex + 1, 2) ;
+    ProviderService.currentTabProvCreation = $scope.formTabControl.selectedIndex;
     console.log("type: " + $scope.newProvider);
   };
 
   $scope.previous = function() {
     $scope.formTabControl.selectedIndex = Math.max($scope.formTabControl.selectedIndex - 1, 0);
+    ProviderService.currentTabProvCreation = $scope.formTabControl.selectedIndex;
     if ($scope.newProvider.population_center.id !== '') {
       $scope.loadProviderLocation($scope.newProvider);
     }
@@ -309,7 +316,16 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
      ProviderService.setCurrentProv($scope.newProvider);
   }, true);
 
+  $scope.$watch('formTabControl.selectedIndex',
+   function(newVal, oldVal) {
+     if (newVal !== oldVal) {
+       ProviderService.currentTabProvCreation = $scope.formTabControl.selectedIndex;
+     }
+  }, true);
+
   // end watchers
+
+
 
   // It listens to state changes
   $scope.$on('$stateChangeStart',

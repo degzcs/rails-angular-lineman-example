@@ -16,6 +16,9 @@ module V1
       expose :rut_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
         provider.rut_file_url
       end
+      expose :chamber_commerce_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
+        provider.chamber_commerce_file_url if provider.chamber_commerce_file
+      end
       expose :photo_file, documentation: { type: "file", desc: "file", example: "..." } do|provider, options|
         provider.photo_file_url
       end
