@@ -11,6 +11,8 @@
             %th.table-checkbox.all-check
               %md-button.md-icon-button.launch{"ng-click"=>"selectAll(content,grams,selectall,$event)"} 
                 %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{selectall ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"selectall ? 'item-selected' : ''","aria-label"=>"selectall"}
+            %th.md-table-header
+
               
             %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
               %a{:href => "#", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
@@ -25,6 +27,9 @@
               %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)"} 
                 %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}"}
               {{item.amount_picked}}
+            %td 
+              .trazoro-state.tag{"ng-if"=>"item.trazoro"}
+                Trazoro
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory(item)"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
             
     .md-table-footer{:layout => "row"}
