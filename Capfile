@@ -21,9 +21,7 @@ require 'capistrano/rbenv'
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
-require 'capistrano/passenger'
 require 'capistrano/postgresql'
-require 'capistrano/nginx'
 require 'capistrano/nodenv'
 
 # Load custom tasks from `lib/capistrano/tasks' if you have any defined
