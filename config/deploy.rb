@@ -21,7 +21,7 @@ set :nodenv_roles, :all # default value
 # dirs we want symlinked to the shared folder
 # during deployment
 set :linked_dirs, %w{uploads bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-set :linked_files, %w{config/database.yml config/app_config.yml}
+set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml}
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deploy/code/trazoro'
@@ -62,33 +62,4 @@ namespace :db do
 end
 
 namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
-      #
-      # The capistrano-unicorn-nginx gem handles all this
-      # for this example
-    end
-
-    on roles(fetch(:passenger_roles)), in: fetch(:passenger_restart_runner), wait: fetch(:passenger_restart_wait), limit: fetch(:passenger_restart_limit) do
-  		execute :touch, release_path.join('tmp/restart.txt')
-	  end
-  end
-
-  after :publishing, 'nginx:restart'
-
-  after :restart, :deploy_frontend do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      within "#{current_path}/frontend" do
-        execute :npm, 'install'
-        execute :lineman, "build"
-        execute  "mv #{current_path}/frontend/dist/* #{current_path}/public"
-      end
-    end
-  end
-
 end

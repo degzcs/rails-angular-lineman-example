@@ -6,37 +6,41 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-AdminUser.create(email:'admin@example.com',password:'password')
+unless Rails.env.production? 
 
-FactoryGirl.create :user, email: 'diego@trazoro.com', password: '123456', password_confirmation: '123456'
-FactoryGirl.create :user, email: 'jesus@trazoro.com', password: '123456', password_confirmation: '123456'
-FactoryGirl.create :user, email: 'camilo@trazoro.com', password: '123456', password_confirmation: '123456'
-FactoryGirl.create :user, email: 'javier@trazoro.com', password: '123456', password_confirmation: '123456'
-FactoryGirl.create :user, email: 'leandro@trazoro.com', password: '123456', password_confirmation: '123456'
-FactoryGirl.create :user, email: 'esteban@trazoro.com', password: '123456', password_confirmation: '123456'
+  AdminUser.create(email:'admin@example.com',password:'password')
 
-
-rucoms = FactoryGirl.create_list(:rucom, 20)
-state = FactoryGirl.create(:state)
-city = FactoryGirl.create(:city, state_id: state.id, state_code: state.state_code)
-population_center = FactoryGirl.create(:population_center, city_id: city.id, city_code: city.city_code)
-
-puts 'creating rucoms ...'
-rucoms.each do|rucom|
-  FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
-  FactoryGirl.create(:client,rucom_id: rucom.id, population_center_id: population_center.id)
-end
+  FactoryGirl.create :user, email: 'diego@trazoro.com', password: '123456', password_confirmation: '123456'
+  FactoryGirl.create :user, email: 'jesus@trazoro.com', password: '123456', password_confirmation: '123456'
+  FactoryGirl.create :user, email: 'camilo@trazoro.com', password: '123456', password_confirmation: '123456'
+  FactoryGirl.create :user, email: 'javier@trazoro.com', password: '123456', password_confirmation: '123456'
+  FactoryGirl.create :user, email: 'leandro@trazoro.com', password: '123456', password_confirmation: '123456'
+  FactoryGirl.create :user, email: 'esteban@trazoro.com', password: '123456', password_confirmation: '123456'
 
 
-puts 'creating purchases ...'
-User.all.each do |user|
-  FactoryGirl.create(:purchase, user_id: user.id, provider_id: Provider.last.id, gold_batch_id: FactoryGirl.create(:gold_batch).id )
-end
+  rucoms = FactoryGirl.create_list(:rucom, 20)
+  state = FactoryGirl.create(:state)
+  city = FactoryGirl.create(:city, state_id: state.id, state_code: state.state_code)
+  population_center = FactoryGirl.create(:population_center, city_id: city.id, city_code: city.city_code)
 
-states = FactoryGirl.create_list(:state, 10)
-states.each do|state|
-	cities = FactoryGirl.create_list(:city, 5, state_id: state.id, state_code: state.state_code)
-	cities.each do|city|
-		FactoryGirl.create_list(:population_center, 5, city_id: city.id, city_code: city.city_code)
-	end
+  puts 'creating rucoms ...'
+  rucoms.each do|rucom|
+    FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
+    FactoryGirl.create(:client,rucom_id: rucom.id, population_center_id: population_center.id)
+  end
+
+
+  puts 'creating purchases ...'
+  User.all.each do |user|
+    FactoryGirl.create(:purchase, user_id: user.id, provider_id: Provider.last.id, gold_batch_id: FactoryGirl.create(:gold_batch).id )
+  end
+
+  states = FactoryGirl.create_list(:state, 10)
+  states.each do|state|
+  	cities = FactoryGirl.create_list(:city, 5, state_id: state.id, state_code: state.state_code)
+  	cities.each do|city|
+  		FactoryGirl.create_list(:population_center, 5, city_id: city.id, city_code: city.city_code)
+  	end
+  end
+
 end
