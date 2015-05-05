@@ -495,8 +495,8 @@ class PdfFile < Prawn::Document
     text_box "#{values[:purchase][:fine_gram_unit_price].round(2)} pesos" , :at => [300 , cursor] , :width => 150
 
     # 
-    move_cursor_to 105
-    text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
+    # move_cursor_to 105
+    # text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
 
   end
 
