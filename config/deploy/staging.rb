@@ -7,9 +7,9 @@ require 'capistrano/nginx'
 # property set.  Don't declare `role :all`, it's a meta role.
 
 
-role :app, %w{deploy@104.211.33.17}
-role :web, %w{deploy@104.211.33.17}
-role :db,  %w{deploy@104.211.33.17}
+role :app, %w{deploy@trazoro-staging.cloudapp.net}
+role :web, %w{deploy@trazoro-staging.cloudapp.net}
+role :db,  %w{deploy@trazoro-staging.cloudapp.net}
 set :branch, 'staging'
 
 
