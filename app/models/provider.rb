@@ -44,14 +44,14 @@ class Provider < ActiveRecord::Base
   # Provider Types
   #1) chatarrero, 2) barequero, 3) titular minero, 4) beneficiario de area de reserva especial, 5) solicitante de legalizacion, 6) subcontrato de formalizaion
   # I don't know how name this scopes in english and that make sense at the same time
-  scope :chatarreros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'chatarrero')}
-  scope :barequeros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'barequero')}
-  scope :barequeros_chatarreros, -> {joins(:rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'barequero', 'chatarrero')}
-  scope :beneficiarios_mineros, -> {joins(:rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'beneficiario', 'minero')}
-  scope :mineros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'minero')}
-  scope :beneficiarios, -> {joins(:rucom).where('rucoms.provider_type = ?', 'beneficiario')}
-  scope :solicitantes, -> {joins(:rucom).where('rucoms.provider_type = ?', 'solicitante')}
-  scope :subcontratados, -> {joins(:rucom).where('rucoms.provider_type = ?', 'subcontrato')}
+  scope :chatarreros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'Chatarrero')}
+  scope :barequeros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'Barequero')}
+  scope :barequeros_chatarreros, -> {joins(:rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Barequero', 'Chatarrero')}
+  scope :beneficiarios_mineros, -> {joins(:rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial', 'Titular')}
+  scope :mineros, -> {joins(:rucom).where('rucoms.provider_type = ?', 'Titular')}
+  scope :beneficiarios, -> {joins(:rucom).where('rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial')}
+  scope :solicitantes, -> {joins(:rucom).where('rucoms.provider_type = ?', 'Solicitante Legalización De Minería')}
+  scope :subcontratados, -> {joins(:rucom).where('rucoms.provider_type = ?', 'Comercializadores')}
   #
   # Instance Methods
   #
