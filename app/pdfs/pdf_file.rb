@@ -1,3 +1,8 @@
+require 'barby'
+require 'barby/barcode/ean_13'
+require 'barby/outputter/prawn_outputter'
+
+
 class PdfFile < Prawn::Document
 
   def initialize(values , date , type)
@@ -383,12 +388,15 @@ class PdfFile < Prawn::Document
     # header
     move_down 60
     text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
-    move_down 5
+    move_down 60
+    barcode = Barby::EAN13.new(values[:purchase][:code])
+    outputter = Barby::PrawnOutputter.new(barcode)
+    outputter.annotate_pdf(self,options = {x:45 , y:cursor})
     font ("Courier") do
-      text_box "#{values[:purchase][:reference_code]}" , :at => [45 , cursor] , :width => 240
+      text_box "#{values[:purchase][:code]}" , :at => [45 , cursor] , :width => 240
     end
     move_down 13
-    text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80
+    text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,757], :width => 80
 
     #provider
     move_cursor_to 666
