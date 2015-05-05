@@ -28,12 +28,12 @@
 
     %md-card.credit-card{flex:"30", "flex-sm"=>"100"}
       %md-subheader.md-primary
-        %span Crédito Restante
+        %span Créditos Restante
       %md-divider{inset: ""}
       %md-item
         %md-item-content
           .md-tile-content.credit-value
-            %span ${{currentUser.available_credits}}
+            %span {{currentUser.available_credits}}
             %br
             %md-button.md-raised.md-primary.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
               Comprar Créditos
