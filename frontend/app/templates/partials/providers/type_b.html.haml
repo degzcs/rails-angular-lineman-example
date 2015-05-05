@@ -7,8 +7,8 @@
     %md-tab#tab3{"aria-controls" => "tab3-content", "ng-click" => "formTabControl.selectedIndex = 2"}
       {{ formTabControl.thirdLabel }}
       
-  %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
-    %form{:name => "providerCreateForm", "novalidate" => "novalidate"}
+  %form{:name => "providerCreateForm", "novalidate" => "novalidate"}
+    %ng-switch.tabpanel-container{:on => "formTabControl.selectedIndex"}
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.tr-fieldset.photo-fieldset
@@ -78,10 +78,10 @@
               %div{:layout => "row", :flex => "50", "layout-align" => "space-between center"}
                 %md-input-container{:style => "margin-top:26px"}
                   %md-checkbox{"aria-label" => "Disabled", "ng-model" => "newProvider.has_company", "ng-change" => "check()"} ¿Es una compañía?
-              %div{:layout => "row", :flex => "40", "layout-align" => "space-between center"}
-                %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
-                %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
-                %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+              / %div{:layout => "row", :flex => "40", "layout-align" => "space-between center"}
+              /   %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
+              /   %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
+              /   %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
       #tab2-content{"ng-if" => "newProvider.has_company", "aria-labelledby" => "tab2", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "1", :role => "tabpanel"} 
         %fieldset.standard.fieldset-information
           %legend
@@ -124,26 +124,26 @@
                 %div{"ng-message" => "email"} Ingrese un e-mail válido
           %md-content.md-padding{:layout => "", "layout-sm" => "column"}
 
-        %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-          %div{:layout => "row", :flex => "", "layout-align" => "start center"}
-            %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
-          %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
-            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
-            %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
-            %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+        / %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+        /   %div{:layout => "row", :flex => "", "layout-align" => "start center"}
+        /     %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
+        /   %div{:layout => "row", :flex => "25", "layout-align" => "space-between center"}
+        /     %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
+        /     %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
+        /     %md-button{:class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
       #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "2", :role => "tabpanel"}
         %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
                        
           %div{flex: '40'}
-            %h4 Número de Identificación
-            %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Número de Identificación", :required => ''}
+            %h4 Subir documento de identificación
+            %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Número de Identificación"}
               %md-option{:value => "by_upload"} Desde el PC
               %md-option{:value => "by_scan"} Por Escaner
               %md-option{:value => "by_photo"} por Camara
           %div{flex: ''}
             .upload-oc{:flex => ''}
-              .button-action.md-padding{:ng-switch => '', :on => 'identification_number_upload_type'}
-                .by_upload{:ng-switch-when =>'by_upload'}
+              .button-action.md-padding{"ng-switch" => '', :on => 'identification_number_upload_type'}
+                .by_upload{"ng-switch-when" =>'by_upload'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -152,12 +152,12 @@
 
                 %md-input-container
                   %label Nombre del archivo
-                  %input{"ng-model" => "newProvider.identification_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
+                  %input{"ng-model" => "newProvider.identification_number_file[0].name", :readonly => 'true',:required => "", :name => 'identification_number'}
                   %div{"ng-messages" => "providerCreateForm.identification_number.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el número de id 
 
 
-                .by_scan{:ng-switch-when =>'by_scan'}
+                .by_scan{"ng-switch-when" =>'by_scan'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -165,9 +165,9 @@
                       %span.ion-android-checkmark-circle
 
 
-                .by_photo{:ng-switch-when =>'by_photo'}
+                .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Número de Identificación", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
+                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
                       %md-tooltip{"md-visible" => "demo.showTooltip"}
                         Tomar Foto
@@ -177,14 +177,14 @@
         %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{flex: '40'}
             %h4 Registro Minero
-            %md-select.uploader-selector{"ng-model" => "mining_register_upload_type", :placeholder => "Cargar Registro Minero", :required => ''}
+            %md-select.uploader-selector{"ng-model" => "mining_register_upload_type", :placeholder => "Cargar Registro Minero"}
               %md-option{:value => "by_upload"} Desde el PC
               %md-option{:value => "by_scan"} Por Escaner
               %md-option{:value => "by_photo"} por Camara
           %div{flex: ''}
             .upload-oc{:flex => ''}
-              .button-action.md-padding{:ng-switch => '', :on => 'mining_register_upload_type'}
-                .by_upload{:ng-switch-when =>'by_upload'}
+              .button-action.md-padding{"ng-switch" => '', :on => 'mining_register_upload_type'}
+                .by_upload{"ng-switch-when" =>'by_upload'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -193,11 +193,11 @@
 
                 %md-input-container
                   %label Nombre del archivo
-                  %input{"ng-model" => "newProvider.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register_file'}
+                  %input{"ng-model" => "newProvider.mining_register_file[0].name", :readonly => 'true',:required => "", :name => 'mining_register_file'}
                   %div{"ng-messages" => "providerCreateForm.mining_register_file.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el registro minero 
 
-                .by_scan{:ng-switch-when =>'by_scan'}
+                .by_scan{"ng-switch-when" =>'by_scan'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(3)"}
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -205,9 +205,9 @@
                       %span.ion-android-checkmark-circle
 
 
-                .by_photo{:ng-switch-when =>'by_photo'}
+                .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Registro Minero", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(3)"}
+                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Registro Minero", "md-ripple-size" => "partial", "ng-href" => "#scanner",'ng-click' => "scanner(3)"}
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
                       %md-tooltip{"md-visible" => "demo.showTooltip"}
                         Tomar Foto
@@ -216,14 +216,14 @@
         %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{flex: '40'}
             %h4 Copia del RUT
-            %md-select.uploader-selector{"ng-model" => "rut_upload_type", :placeholder => "Cargar Copia del RUT", :required => ''}
+            %md-select.uploader-selector{"ng-model" => "rut_upload_type", :placeholder => "Cargar Copia del RUT"}
               %md-option{:value => "by_upload"} Desde el PC
               %md-option{:value => "by_scan"} Por Escaner
               %md-option{:value => "by_photo"} por Camara
           %div{flex: ''}
             .upload-oc{:flex => ''}
-              .button-action.md-padding{:ng-switch => '', :on => 'rut_upload_type'}
-                .by_upload{:ng-switch-when =>'by_upload'}
+              .button-action.md-padding{"ng-switch" => '', :on => 'rut_upload_type'}
+                .by_upload{"ng-switch-when" =>'by_upload'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -232,12 +232,12 @@
 
                 %md-input-container
                   %label Nombre del archivo
-                  %input{"ng-model" => "newProvider.rut_file[0].name", :readOnly => 'true',:required => "", :name => 'rut_file'}
+                  %input{"ng-model" => "newProvider.rut_file[0].name", :readonly => 'true',:required => "", :name => 'rut_file'}
                   %div{"ng-messages" => "providerCreateForm.rut_file.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el rut 
 
 
-                .by_scan{:ng-switch-when =>'by_scan'}
+                .by_scan{"ng-switch-when" =>'by_scan'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(4)"}
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -245,25 +245,25 @@
                       %span.ion-android-checkmark-circle
 
 
-                .by_photo{:ng-switch-when =>'by_photo'}
+                .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "RUT", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(4)"}
+                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(4)"}
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
                       %md-tooltip{"md-visible" => "demo.showTooltip"}
                         Tomar Foto
                         %span.ion-android-checkmark-circle
 
-        %div.uploader-certificate-tab{"ng-show" => "newProvider.rucom.provider_type === 'Comercializadores'", :layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+        %div.uploader-certificate-tab{"ng-if" => "newProvider.rucom.provider_type === 'Comercializadores'", :layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{flex: '40'}
             %h4 Cámara de Comercio
-            %md-select.uploader-selector{"ng-model" => "chamber_commerce_upload_type", :placeholder => "Cargar Cámara de Comercio", :required => ''}
+            %md-select.uploader-selector{"ng-model" => "chamber_commerce_upload_type", :placeholder => "Cargar Cámara de Comercio"}
               %md-option{:value => "by_upload"} Desde el PC
               %md-option{:value => "by_scan"} Por Escaner
               %md-option{:value => "by_photo"} por Camara
           %div{flex: ''}
             .upload-oc{:flex => ''}
-              .button-action.md-padding{:ng-switch => '', :on => 'chamber_commerce_upload_type'}
-                .by_upload{:ng-switch-when =>'by_upload'}
+              .button-action.md-padding{"ng-switch" => '', :on => 'chamber_commerce_upload_type'}
+                .by_upload{"ng-switch-when" =>'by_upload'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.chamber_commerce_file'}
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -272,12 +272,12 @@
 
                 %md-input-container
                   %label Nombre del archivo
-                  %input{"ng-model" => "newProvider.chamber_commerce_file[0].name", :readOnly => 'true',:required => "", :name => 'chamber_commerce_file'}
+                  %input{"ng-model" => "newProvider.chamber_commerce_file[0].name", :readonly => 'true',:required => "", :name => 'chamber_commerce_file'}
                   %div{"ng-messages" => "providerCreateForm.chamber_commerce_file.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el certificado de cámara de comercio 
 
 
-                .by_scan{:ng-switch-when =>'by_scan'}
+                .by_scan{"ng-switch-when" =>'by_scan'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(5)"}
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
@@ -285,19 +285,20 @@
                       %span.ion-android-checkmark-circle
 
 
-                .by_photo{:ng-switch-when =>'by_photo'}
+                .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Cámara de Comercio", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(5)"}
+                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Cámara de Comercio", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(5)"}
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
                       %md-tooltip{"md-visible" => "demo.showTooltip"}
                         Tomar Foto
                         %span.ion-android-checkmark-circle
 
-        %md-content.md-padding
-          %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{:layout => "row", :flex => "", "layout-align" => "start center"}
-              %md-button{"ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Prev
-            %div{:layout => "row", :flex => "20", "layout-align" => "space-between center"}
-              %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
-              %md-button{"ng-disabled" => "!providerCreateForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
+    %md-content.md-padding
+      %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+        %div{:layout => "row", :flex => "", "layout-align" => "start center"}
+          %md-button{"ng-if" => "formTabControl.selectedIndex > 0", "ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
+        %div{:layout => "row", :flex => "25", "layout-align" => "space-between right"}
+          %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
+          %md-button{"ng-disabled" => "(!providerCreateForm.$valid || !saveBtnEnabled) && formTabControl.selectedIndex !== 2", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
+          %md-button{"ng-if" => "formTabControl.selectedIndex < 2", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
 
