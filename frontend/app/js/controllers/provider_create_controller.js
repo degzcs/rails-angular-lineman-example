@@ -293,6 +293,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
            ProviderService.setCurrentProv({});
            $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);
            $scope.abortCreate = true;
+           ProviderService.currentTabProvCreation = 0;
          }
       }]
     });
