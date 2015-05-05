@@ -39,18 +39,17 @@ class PdfFile < Prawn::Document
     # complete information
 
     # header
-    move_down 132
+    move_cursor_to 590
     text_box "#{values[:city]}", :at => [370,cursor], :width => 250
-    move_down 3
+    move_cursor_to 586
     text_box "#{date.day}", :at => [141,cursor] , :width => 85
     text_box "#{date.month}", :at => [178,cursor] , :width => 85
     text_box "#{date.year}" , :at => [222,cursor], :width => 85
 
 
     #body producer
-
-    move_down 53
-    case   values[:provider][:type]
+    move_cursor_to 532
+    case   values[:provider][:type].downcase
       when 'barequero'
         text_box "X", :at => [386,cursor] , :width => 85
       when 'chatarrero'
@@ -59,27 +58,27 @@ class PdfFile < Prawn::Document
         puts 'No se ha enviado  un parametro o este es incorrecto'
     end
 
-    move_down 40
+    move_cursor_to 492
     text_box "#{values[:provider][:name]}" , :at => [300,cursor] , :width => 300
-    move_down 30
+    move_cursor_to 462
     text_box "#{values[:provider][:document_number]}" , :at => [300,cursor] , :width => 300
-    move_down 40
+    move_cursor_to 422
     text_box "#{values[:provider][:state]}" , :at => [300,cursor] , :width => 300
-    move_down 60
+    move_cursor_to 362
     text_box "#{values[:provider][:city]}" , :at => [300,cursor] , :width => 300
-    move_down 40
+    move_cursor_to 322
     text_box "#{values[:mineral][:type]}" , :at => [300,cursor] , :width => 300
-    move_down 30
+    move_cursor_to 294
     text_box "#{values[:mineral][:amount]}" , :at => [300,cursor] , :width => 300
-    move_down 25
+    move_cursor_to 267
     text_box "#{values[:mineral][:measure_unit]}" , :at => [350,cursor] , :width => 300
 
     #body buyer
 
-    move_down 48
+    move_cursor_to 219
     text_box "#{values[:buyer][:company_name]}" , :at => [300,cursor] , :width => 300
-    move_down 34
-    case values[:buyer][:document_type]
+    move_cursor_to 185
+    case values[:buyer][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [320,cursor] , :width => 40
       when 'document'
@@ -90,9 +89,9 @@ class PdfFile < Prawn::Document
         text_box "X" , :at => [579,cursor] , :width => 40
       else
     end
-    move_down 36
+    move_cursor_to 149
     text_box "#{values[:buyer][:document_number]}" , :at => [300,cursor] , :width => 300
-    move_down 35
+    move_cursor_to 112
     text_box "#{values[:buyer][:rucom_record]}" , :at => [350,cursor] , :width => 300
   end
 
@@ -202,18 +201,19 @@ class PdfFile < Prawn::Document
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     #header
-    move_down 140
+    #move_down 140
+    move_cursor_to 710
     text_box "#{values[:certificate_number]}", :at => [750,cursor], :width => 300
-    move_down 7
+    move_cursor_to 703
     text_box "#{date.day}", :at => [240,cursor] , :width => 85
     text_box "#{date.month}", :at => [345,cursor] , :width => 85
     text_box "#{date.year}" , :at => [430,cursor], :width => 85
 
-    move_down 75
+    move_cursor_to 628
     text_box "#{values[:provider][:name]}", :at => [750,cursor], :width => 300
-    move_down 30
+    move_cursor_to 603
     text_box "#{values[:provider][:rucom_record]}", :at => [780 ,cursor], :width => 300
-    move_down 26
+    move_cursor_to 575
     case values[:provider][:document_type]
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
@@ -225,7 +225,7 @@ class PdfFile < Prawn::Document
         text_box "X" , :at => [1100,cursor] , :width => 150
       else
     end
-    move_down 30
+    move_cursor_to 547
     text_box "#{values[:provider][:document_number]}", :at => [750,cursor], :width => 300
 
     # dynamic  information about explotadores mineros autorizados
@@ -266,11 +266,11 @@ class PdfFile < Prawn::Document
 
     move_cursor_to 225
     text_box "#{values[:total_amount]}", :at => [750,cursor], :width => 300
-    move_down 25
+    move_cursor_to 200
     text_box "#{values[:buyer][:company_name]}", :at => [750,cursor], :width => 300
-    move_down 32
+    move_cursor_to 167  #32
     case values[:buyer][:document_type]
-      when 'nit'
+      when 'NIT'
         text_box "X" , :at => [775,cursor] , :width => 150
       when 'document'
         text_box "X" , :at => [880,cursor] , :width => 150
@@ -280,9 +280,9 @@ class PdfFile < Prawn::Document
         text_box "X" , :at => [1100,cursor] , :width => 150
       else
     end
-    move_down 30
+    move_cursor_to 137
     text_box "#{values[:buyer][:document_number]}", :at => [750,cursor], :width => 300
-    move_down 27
+    move_cursor_to 109
     text_box "#{values[:buyer][:rucom_record]}", :at => [780,cursor], :width => 300
 
 
@@ -308,20 +308,24 @@ class PdfFile < Prawn::Document
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     #header
-    move_down 140
+    #move_down 140
+    move_cursor_to 585
     text_box "#{values[:certificate_number]}", :at => [755,cursor], :width => 270
     text_box "#{values[:city]}" , :at => [385 ,cursor] , :width => 200
-    move_down 7
+    #move_down 7
+    move_cursor_to 577
     text_box "#{date.day}", :at => [150 , cursor] , :width => 85
     text_box "#{date.month}", :at => [184 , cursor] , :width => 85
     text_box "#{date.year}" , :at => [210 , cursor], :width => 85
 
     # header casas de compra y venta
-    move_cursor_to 547
+    move_cursor_to 517
     text_box "#{values[:provider][:company_name]}", :at => [260,cursor], :width => 200
 
-    move_down 34
-    case values[:provider][:document_type]
+    #move_down 34
+    move_cursor_to 483
+
+    case values[:provider][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [343 , cursor] , :width => 150
       when 'document'
@@ -335,16 +339,17 @@ class PdfFile < Prawn::Document
       else
     end
 
-    move_cursor_to 460
+    move_cursor_to 428
     text_box "#{values[:provider][:document_number]}", :at => [260,cursor], :width => 200
 
     # header comprador
 
-    move_cursor_to 547
+    move_cursor_to 515
     text_box "#{values[:buyer][:company_name]}", :at => [715,cursor], :width => 250
 
-    move_down 34
-    case values[:buyer][:document_type]
+    #move_down 34
+    move_cursor_to 483
+    case values[:buyer][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [717 , cursor] , :width => 150
       when 'document'
@@ -356,17 +361,20 @@ class PdfFile < Prawn::Document
       else
     end
 
-    move_down 30
+    #move_down 30
+    move_cursor_to 457
     text_box "#{values[:buyer][:document_number]}", :at => [705,cursor], :width => 300
-    move_down 17
+    #move_down 17
+    move_cursor_to 437
     text_box "#{values[:buyer][:rucom_record]}", :at => [750,cursor], :width => 250
-    move_down 17
+    #move_down 17
+    #move_cursor_to 448
     # text_box "#{values[:buyer][:cp]}", :at => [710,cursor], :width => 300
 
 
     #body
 
-    move_cursor_to 375
+    move_cursor_to 344
     invoices_group.each do |invoice|
       puts invoice[:date]
       text_box "#{invoice[:number]}", :at => [90,cursor], :width => 250
