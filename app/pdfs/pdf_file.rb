@@ -410,51 +410,52 @@ class PdfFile < Prawn::Document
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header
-    move_down 60
+    #move_down 60
+    move_cursor_to 775
     text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
-    move_down 60
+    move_cursor_to 715
     barcode = Barby::EAN13.new(values[:purchase][:code])
     outputter = Barby::PrawnOutputter.new(barcode)
     outputter.annotate_pdf(self,options = {x:45 , y:cursor})
     font ("Courier") do
       text_box "#{values[:purchase][:code]}" , :at => [45 , cursor] , :width => 240
     end
-    move_down 13
+    #move_down 13
+    move_cursor_to 702
     text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,757], :width => 80
 
     #provider
     move_cursor_to 666
     text_box "#{values[:provider][:company_name]}", :at => [400,cursor], :width => 150
-    move_down 16
+    #move_down 16
+    move_cursor_to 648
     text_box "#{values[:provider][:nit]}", :at => [400,cursor], :width => 150
-    move_down 20
+    move_cursor_to 630
     text_box "#{values[:provider][:name]}", :at => [400,cursor], :width => 150
-    move_down 19
+    move_cursor_to 611
     text_box "#{values[:provider][:document_number]}", :at => [400,cursor], :width => 150
-    move_down 18
+    move_cursor_to 593
     text_box "#{values[:provider][:rucom_record]}", :at => [400,cursor], :width => 150
-    move_down 18
+    move_cursor_to 575
     text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150
-    move_down 18
+    move_cursor_to 557
     text_box "#{values[:provider][:phone]}", :at => [400,cursor], :width => 150
+
     #buyer
     move_cursor_to 666
     text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150
-    move_down 16
+    move_cursor_to 650
     text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150
-    move_down 20
+    move_cursor_to 630
     text_box "#{values[:buyer][:rucom_record]}", :at => [130,cursor], :width => 150
-    move_down 19
+    move_cursor_to 613
     text_box "#{values[:buyer][:first_name]}", :at => [130,cursor], :width => 150
-    move_down 18
+    move_cursor_to 593
     text_box "#{values[:buyer][:office]}", :at => [130,cursor], :width => 150
-    move_down 18
+    move_cursor_to 575
     text_box "#{values[:buyer][:address]}", :at => [130,cursor], :width => 150
-    move_down 18
+    move_cursor_to 557
     text_box "#{values[:buyer][:phone]}", :at => [130,cursor], :width => 150
-
-
-
 
 
     if values[:gold_batch][:castellanos][:quantity] != 0
@@ -483,14 +484,14 @@ class PdfFile < Prawn::Document
 
     move_cursor_to 412
     text_box "#{values[:gold_batch][:total_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150
-    move_down 18
+    move_cursor_to 394
     text_box "#{values[:gold_batch][:grade]}" , :at => [300 , cursor] , :width => 150
 
     move_cursor_to 375
     text_box "#{values[:gold_batch][:total_fine_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150
-    move_down 18
+    move_cursor_to 357
     text_box "#{values[:purchase][:price].round(2)} pesos" , :at => [300 , cursor] , :width => 150
-    move_down 18
+    move_cursor_to 339
     text_box "#{values[:purchase][:fine_gram_unit_price].round(2)} pesos" , :at => [300 , cursor] , :width => 150
 
     # 
