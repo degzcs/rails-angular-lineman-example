@@ -136,12 +136,12 @@ class PdfFile < Prawn::Document
     text_box "#{values[:provider][:company_name]}" , :at => [290,cursor] , :width => 310
     move_cursor_to 554
     #move_down 36
-    case values[:provider][:document_type]
+    case  values[:provider][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [287,cursor] , :width => 150
       when 'document'
         text_box "X" , :at => [371,cursor] , :width => 150
-      when 'alians_card'
+      when 'aliens_card'
         text_box "X" , :at => [482,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [579,cursor] , :width => 150
@@ -170,12 +170,12 @@ class PdfFile < Prawn::Document
     text_box "#{values[:buyer][:name]}" , :at => [290,cursor] , :width => 310
     move_cursor_to 216
     #move_down 33
-    case values[:buyer][:document_type].downcase
+    case  values[:buyer][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [275,cursor] , :width => 150
       when 'document'
-        text_box "X" , :at => [376,cursor] , :width => 150
-      when 'alians_card'
+        text_box "X" , :at => [373,cursor] , :width => 150
+      when 'aliens_card'
         text_box "X" , :at => [497,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [585,cursor] , :width => 150
@@ -230,12 +230,12 @@ class PdfFile < Prawn::Document
     move_cursor_to 603
     text_box "#{values[:provider][:rucom_record]}", :at => [780 ,cursor], :width => 300
     move_cursor_to 575
-    case values[:provider][:document_type]
+    case  values[:provider][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
       when 'document'
         text_box "X" , :at => [880,cursor] , :width => 150
-      when 'alians_card'
+      when 'aliens_card'
         text_box "X" , :at => [1050,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [1100,cursor] , :width => 150
@@ -285,12 +285,12 @@ class PdfFile < Prawn::Document
     move_cursor_to 200
     text_box "#{values[:buyer][:company_name]}", :at => [750,cursor], :width => 300
     move_cursor_to 167  #32
-    case values[:buyer][:document_type]
-      when 'NIT'
+    case values[:buyer][:document_type].downcase
+      when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
       when 'document'
         text_box "X" , :at => [880,cursor] , :width => 150
-      when 'alians_card'
+      when 'aliens_card'
         text_box "X" , :at => [1050,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [1100,cursor] , :width => 150
@@ -341,17 +341,17 @@ class PdfFile < Prawn::Document
     #move_down 34
     move_cursor_to 483
 
-    case values[:provider][:document_type].downcase
+    case  values[:provider][:document_type].downcase
       when 'nit'
-        text_box "X" , :at => [343 , cursor] , :width => 150
+        text_box "X" , :at => [341 , cursor] , :width => 150
       when 'document'
-        text_box "X" , :at => [440,cursor] , :width => 150
-      when 'alians_card'
-        move_down 25
-        text_box "X" , :at => [343,cursor] , :width => 150
+        text_box "X" , :at => [439,cursor] , :width => 150
+      when 'aliens_card'
+        move_down 23
+        text_box "X" , :at => [341,cursor] , :width => 150
       when 'rut'
         move_down 25
-        text_box "X" , :at => [440,cursor] , :width => 150
+        text_box "X" , :at => [439,cursor] , :width => 150
       else
     end
 
@@ -364,13 +364,13 @@ class PdfFile < Prawn::Document
     text_box "#{values[:buyer][:company_name]}", :at => [715,cursor], :width => 250
 
     #move_down 34
-    move_cursor_to 483
+    move_cursor_to 484
     case values[:buyer][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [717 , cursor] , :width => 150
       when 'document'
         text_box "X" , :at => [800,cursor] , :width => 150
-      when 'alians_card'
+      when 'aliens_card'
         text_box "X" , :at => [895,cursor] , :width => 150
       when 'rut'
         text_box "X" , :at => [960,cursor] , :width => 150
