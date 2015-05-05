@@ -83,7 +83,7 @@
                        
           %div{flex: '60'}
             %h4 Subir documento de identificación
-            %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Número de Identificación", :required => ''}
+            %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
               %md-option{:value => "by_upload"} Desde el PC
               %md-option{:value => "by_scan"} Por Escaner
               %md-option{:value => "by_photo"} por Camara
@@ -101,7 +101,7 @@
                   %label Nombre del archivo
                   %input{"ng-model" => "newProvider.identification_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
                   %div{"ng-messages" => "providerCreateForm.identification_number.$error"}
-                    %div{"ng-message" => "required"} * Debe seleccionar el número de id 
+                    %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
 
                 .by_scan{"ng-switch-when" =>'by_scan'}
