@@ -20,7 +20,7 @@ set :nodenv_roles, :all # default value
 
 # dirs we want symlinked to the shared folder
 # during deployment
-set :linked_dirs, %w{uploads bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{uploads bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml}
 
 # Default deploy_to directory is /var/www/my_app_name
