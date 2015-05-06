@@ -107,9 +107,10 @@
       #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "2", :role => "tabpanel"}
         %md-content.md-padding
         %div{:layout => "row", "layout-align" => "space-around center", "layout-margin" => "", "layout-sm" => "column"}   
+
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file.url}}", :target => "_blank", :download => ""}  
             %p Cédula de Ciudadanía
-            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}
+            %img.md-card-image{:alt => "Cédula", "ng-src" => "{{currentProvider.identification_number_file.preview.url}}"}
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.mining_register_file.url}}", :target => "_blank", :download => ""}  
             %p Registro minero
             %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}                                        
