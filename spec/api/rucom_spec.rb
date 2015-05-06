@@ -21,7 +21,7 @@ describe 'Rucom', :type => :request do
 
         it 'retrieves rucom registries matching rucom_query' do
           rucom_query = 'ARE_PLU-08141'
-          get '/api/v1/rucoms', { rucom_query: rucom_query } , { "Authorization" => "Barer #{@token}" }
+          get '/api/v1/rucoms', { rucom_query: rucom_query, name_query: '' } , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be 20
         end
