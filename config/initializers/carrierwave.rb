@@ -15,7 +15,6 @@ if Rails.env.test? or Rails.env.cucumber?
 end
 
 CarrierWave.configure do |config|
-  config.root = Rails.root
   config.base_path = ''
 end
 
