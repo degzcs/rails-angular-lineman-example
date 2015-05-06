@@ -3,19 +3,23 @@ if Rails.env.test? or Rails.env.cucumber?
     config.storage = :file
     config.enable_processing = false
   end
-  class AttachmentUploader < CarrierWave::Uploader::Base
+  class PdfUploader < CarrierWave::Uploader::Base
+    storage :file
+    def store_dir
+      "#{Rails.root}/spec/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    end
+  end
+  
+  class PhotoUploader < CarrierWave::Uploader::Base
+    storage :file
 
-  storage :file
-
-  def store_dir
-    "#{Rails.root}/spec/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    def store_dir
+      "#{Rails.root}/spec/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    end
   end
 
-
-end
-
-CarrierWave.configure do |config|
-  config.base_path = ''
-end
+  CarrierWave.configure do |config|
+    config.base_path = ''
+  end
 
 end

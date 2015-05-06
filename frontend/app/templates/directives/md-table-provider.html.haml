@@ -12,7 +12,7 @@
     %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | limitTo: count", "ng-click" => "setCurrentProv(c)"}
       %td
         .md-table-thumbs{"ng-repeat" => "h in headers", "ng-if" => "h.field == thumbs"}
-          %div{:style => "background-image:url({{c.photo_file.url}})"}
+          %div{:style => "background-image:url({{c.photo_file.thumb.url}})"}
       %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs"}         
         %pre {{h.field.indexOf('date') > 0 ? (c[h.field] | date) : (c[h.field] || c[h.alternateField])}}
       %td.md-table-td-more
