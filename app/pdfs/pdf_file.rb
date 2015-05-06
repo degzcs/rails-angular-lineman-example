@@ -167,7 +167,7 @@ class PdfFile < Prawn::Document
     text_box "#{values[:mineral][:measure_unit]}" , :at => [290,cursor] , :width => 310
     move_cursor_to 249
     #move_down 55
-    text_box "#{values[:buyer][:name]}" , :at => [290,cursor] , :width => 310
+    text_box "#{values[:buyer][:company_name]}" , :at => [290,cursor] , :width => 310
     move_cursor_to 216
     #move_down 33
     case  values[:buyer][:document_type].downcase
