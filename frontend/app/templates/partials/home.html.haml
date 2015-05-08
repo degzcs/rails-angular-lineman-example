@@ -1,16 +1,46 @@
 %h1
   %img{:src => "/img/trazoro_icon_small.png"}
   
-.div-trazoro.gold
-  %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
-    %md-input-container.md-default-theme{"md-no-float" => ""}
-      %input{"ng-model" => "email", :placeholder => "Email", :type => "email"}
-    %md-input-container.md-default-theme{"md-no-float" => ""}
-      %input.md-input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
-    %md-button.login-button.md-raised.md-default-theme
-      Log in
-    %a{:ng-href => "#sendtoken"} olvidó la contraseña?
+%md-content.md-padding.div-trazoro.gold
+  %form.login-form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
+    .yellow-border
+      %md-input-container.md-default-theme{"md-no-float" => ""}
+        %input{"ng-model" => "email", :placeholder => "Email", :type => "email"}
+      %md-input-container.md-default-theme{"md-no-float" => ""}
+        %input.md-input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
+      .remember-password-form
+        %a{:ng-href => "#sendtoken"} Recordar contraseña
 
+    %md-button.login-home-button.md-raised.md-default-theme
+      Iniciar Session
+
+%md-content.md-padding.div-trazoro.gray.trazoro-padding
+  .text-content
+    %h1 
+      %b ¿Que es Trazoro?
+    %p 
+      %b TrazOro 
+      es una 
+      %b herramienta 
+      tecnológica dirigida al cumplimiento 
+      %b normativo 
+      y 
+      %b estandarización 
+      de procesos de la cadena de comercialización de los metales preciosos en Colombia.
+    %p
+      A través del uso de 
+      %b TrazOro se garantiza la 
+      %b trazabilidad total de los metales preciosos desde que son 
+      %b producidos, comercializados y exportados 
+      del país.   
+    %p  
+      La herramienta esta diseñada para que cada compra que ingresa al sistema cuente con 
+      %b todos 
+      los documentos y cumplan todas las condiciones establecidas en el 
+      %b decreto 0276 de 2015.
+    %p  
+      Trazoro es un servicio de Min-Trace Colombia SAS, una empresa dedicada a proveer soluciones a diversas industrias. 
+      
 
 / #home
 /   %div{:style => "text-align:justify;"}

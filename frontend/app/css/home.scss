@@ -1,5 +1,6 @@
 //--------- Home Styles ----------- //
 .div-trazoro.gold{
+  text-align: center;
   color: rgba(255,255,255,0.87);
   background: url("/img/background1.png");
   -webkit-background-size: cover;
@@ -8,6 +9,49 @@
   background-size: cover;
 }
 
-.login-form{
+.div-trazoro.gray{
+
+  background: #ebeae5;
+  text-align: center;
+  .text-content{
+    text-align: justify;
+    width: 600px;
+    display: inline-block;
+  }
+  h1{
+    color: #231f20;
+    text-align: left;
+  }
+  p{
+    color: #8d8e8f;
+  }
   
 }
+
+.login-form{
+  width: 400px;
+  display: inline-block;
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+.login-form .remember-password-form{
+  text-align: right!important;
+  a{
+    font-size: 0.8em;
+  }
+}
+.login-home-button{
+  background: #edb039!important;
+  color: white!important;
+  margin-top: 30px;
+  border: 3px solid #ffcb34!important;
+  text-transform: capitalize!important;
+  font-weight: bold!important;
+  width: 400px;
+}
+
+.yellow-border{
+  border: 3px solid #ffcb34;
+  padding: 10px;
+}
+
