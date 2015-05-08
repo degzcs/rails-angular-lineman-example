@@ -24,6 +24,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       gold_batch: ''
       barcode_html: ''
       code: ''
+      rucom_id_field: ''
 
     #
     # HTTP resquests

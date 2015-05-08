@@ -11,6 +11,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.searchText = null
   $scope.code = null
   $scope.origin_certificate_upload_type = null
+
+  $scope.rucomIDField = 
+    label: 'Número de RUCOM'
+    field: 'num_rucom'
+
   # if $scope.purchase.model.origin_certificate_file.url
   # $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
 
@@ -53,6 +58,23 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
         $scope.purchase.model.provider = data.provider
+
+  #
+  #
+  #
+  $scope.selectedProviderChange = (provider) ->
+    if provider
+      console.log 'Provider changed to ' + JSON.stringify(provider)
+      if provider.num_rucom
+        $scope.rucomIDField.label = 'Número de RUCOM'
+        $scope.rucomIDField.field = 'num_rucom'
+        $scope.purchase.model.rucom_id_field = 'num_rucom'
+      else if provider.rucom_record
+        $scope.rucomIDField.label = 'Número de Expediente'
+        $scope.rucomIDField.field = 'rucom_record'
+        $scope.purchase.model.rucom_id_field = 'rucom_record'
+    else
+      console.log 'State changed to none'
 
   #
   #
