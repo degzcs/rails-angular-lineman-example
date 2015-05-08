@@ -548,7 +548,6 @@ module V1
         end
 
 
-
         post 'download_purchase_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
@@ -611,16 +610,105 @@ module V1
            #     }
 
            values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
-           # values.except!(:purchase)
-            # binding.pry
            date = Time.now
-           pdf = ::PdfFile.new(values , date , 'purchase_report')
+           pdf = ::PdfFile.new(values , date , 'purchase_report') #// corregir prueba para sales
            puts ' creating purchase report ... '
            header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
            env['api.format'] = :pdf
            body pdf.render
           #render json: {test: 'teste'}
         end
+
+        # download_sales_report
+        post 'download_sales_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+
+          # purchase --> type
+          #castellanos
+          #tamines
+          #reales
+          #granos
+          # hash
+
+           values = { provider: {
+                          social: 'razon social',
+                          name: 'Esteban Ceron',
+                          type: 'Sociedad anonima',
+                          identification_number: '129292294030302',
+                          nit: '19191914jfjfjfjf',
+                          rucom: '1010101949482',
+                          address: 'Carrera 9N #67N - 156',
+                          email: 'email@trazoro.com',
+                          phone: '10303039503'
+                                },
+                      buyer:    {
+                          social: 'razon social',
+                          name: 'Esteban Ceron',
+                          type: 'Sociedad anonima',
+                          identification_number: '129292294030302',
+                          nit: '19191914jfjfjfjf',
+                          rucom: '1010101949482',
+                          address: 'Carrera 9N #67N - 156',
+                          email: 'email@trazoro.com',
+                          phone: '10303039503'
+                                },
+                      carrier: {
+                          name: 'hola'
+                      },
+                       purchase:{
+                          price: 20202020202,
+                          law: 20 ,
+                          grams: 1000000,
+                          fine_grams: 123546,
+                          code: '770000120040'
+                       },
+                      batch:[{
+                              id_purchase: '11010101001',
+                              id_provider: '1112222323',
+                              social: 'razon social',
+                              certificate_number: '2222929292922',
+                              rucom: '2234324242342',
+                              fine_grams: 'gramos finos'
+                              },
+                             {
+                                 id_purchase: '11011010101',
+                                 id_provider: '1112221323',
+                                 social: 'razon social',
+                                 certificate_number: '2222929292922',
+                                 rucom: '2234324242342',
+                                 fine_grams: 'gramos finos'
+                             },
+                             {
+                                 id_purchase: '11011010101',
+                                 id_provider: '1112221323',
+                                 social: 'razon social',
+                                 certificate_number: '2222929292922',
+                                 rucom: '2234324242342',
+                                 fine_grams: 'gramos finos'
+                             },
+                             {
+                                 id_purchase: '110101010101',
+                                 id_provider: '11122221323',
+                                 social: 'razon social',
+                                 certificate_number: '2222929292922',
+                                 rucom: '2234324242342',
+                                 fine_grams: 'gramos finos'
+                             },
+                             ]
+                      }
+
+
+          #     }
+
+          #values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
+
+          date = Time.now
+          pdf = ::PdfFile.new(values , date , 'sales_report')
+          puts ' creating sales report ... '
+          header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
+          env['api.format'] = :pdf
+          body pdf.render
+        end
+
 
       end
 
