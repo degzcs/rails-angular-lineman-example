@@ -547,7 +547,6 @@ module V1
 
         end
 
-
         post 'download_purchase_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           #params do
@@ -693,7 +692,9 @@ module V1
                                  rucom: '2234324242342',
                                  fine_grams: 'gramos finos'
                              },
-                             ]
+                             ],
+                        certificate_path:'uploads/sale/origin_certificate_file/3/certificate.pdf'
+
                       }
 
 

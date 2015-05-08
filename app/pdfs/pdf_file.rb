@@ -511,6 +511,17 @@ class PdfFile < Prawn::Document
       counter = counter + 1
     end
 
+    # add certificates
+    start_new_page
+    text_box "Certificados Adjuntos" , :at => [60,1100] , width: 400 , size: 30
+
+    file = File.open(File.join(Rails.root, 'public',values[:certificate_path]))
+    reader = PDF::Reader.new(file)
+
+    for page in 1..reader.page_count.to_i do
+      start_new_page({:template => "#{file.path}" , :template_page => page})
+    end
+
   end
 
 

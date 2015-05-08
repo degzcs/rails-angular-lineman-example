@@ -6,6 +6,7 @@ gem 'rails', '4.1.9'
 
 #generate pdf files
 gem 'prawn','1.0.0.rc2'
+gem 'pdf-reader', '~> 1.3.3'
 
 # DB
 gem 'pg'
