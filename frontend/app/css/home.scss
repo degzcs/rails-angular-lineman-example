@@ -13,6 +13,8 @@
 
   background: #ebeae5;
   text-align: center;
+  padding-bottom: 40px;
+  padding-top: 30px;
   .text-content{
     text-align: justify;
     width: 600px;
@@ -27,6 +29,51 @@
   }
   
 }
+
+.div-trazoro.white{
+
+  background: white;
+  text-align: center;
+  padding-bottom: 40px;
+  padding-top: 30px;
+  .text-content{
+    text-align: justify;
+    width: 600px;
+    display: inline-block;
+  }
+  h1{
+    color: #231f20;
+    text-align: left;
+  }
+  p{
+    color: #8d8e8f;
+  }
+  
+}
+
+.div-trazoro.image-gold{
+  text-align: center;
+  color: rgba(255,255,255,0.87);
+  background: url("/img/gold_image.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 300px;
+}
+.div-trazoro.image-barequero{
+  text-align: center;
+  color: rgba(255,255,255,0.87);
+  background: url("/img/barequero.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 300px;
+}
+
 
 .login-form{
   width: 400px;

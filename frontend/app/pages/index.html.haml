@@ -7,20 +7,24 @@
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
     .main-container{"flex" => ""}
+      .side-button-options{"ng-controller"=>"SidebarCtrl"}
+        %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
+          %md-icon{"md-svg-icon"=>"action:reorder"}
+
       //---------------------------------------Header -  Navigation Bar ---------------------------------////
-      .nav-bar
-        %md-toolbar
-          %md-toolbar-tools{"layout" => "row"}
-            .sidebar-options{"flex" => 5, "ng-controller"=>"SidebarCtrl"}
-              %md-toolbar-tools
-                %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
-                  %md-icon{"md-svg-icon"=>"action:reorder"}
-            .breadcrumb{"flex" => 80, "hide-sm" => ""}
-              .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
-            .session-buttons{"flex" =>10,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
-              %md-toolbar-tools
-                %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
-                %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
+      / .nav-bar
+      /   %md-toolbar
+      /     %md-toolbar-tools{"layout" => "row"}
+      /       .sidebar-options{"flex" => 5, "ng-controller"=>"SidebarCtrl"}
+      /         %md-toolbar-tools
+      /           %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
+      /             %md-icon{"md-svg-icon"=>"action:reorder"}
+      /       .breadcrumb{"flex" => 80, "hide-sm" => ""}
+      /         .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
+      /       .session-buttons{"flex" =>10,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
+      /         %md-toolbar-tools
+      /           %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
+      /           %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
       //------------------------------------------------ Content  ------------------------------------------------////
       .container{"layout" => "row"}
         .sidebar{"flex" =>0, "ng-controller"=>"SidebarCtrl"}
