@@ -65,9 +65,17 @@ angular.module("app", [
   return
 
 .config ($mdThemingProvider) ->
-    $mdThemingProvider.theme('docs-dark', 'default')
-      .primaryPalette('yellow')
-      .dark();
+  goldYellow = $mdThemingProvider.extendPalette('yellow', {
+    '500': 'edb039'
+  });
+  $mdThemingProvider.definePalette('goldYellow', goldYellow);
+  
+  $mdThemingProvider.theme('default')
+    .primaryPalette('goldYellow')
+    .accentPalette('orange');
+  $mdThemingProvider.theme('docs-dark', 'default')
+    .primaryPalette('yellow')
+    .dark();
 
 
 

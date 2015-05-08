@@ -1,24 +1,24 @@
 %md-content.md-padding.div-trazoro.gold
   %section.top-nav-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
     .btn-cont
-      %md-button.md-fab{"aria-label" => "Eat cake"}
-        %md-icon{"md-svg-icon"=>"action:reorder"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "dashboar","ng-class"=>"getNavigationClass('dashboard')"}
+        %md-icon{"md-svg-icon"=>"action:dashboard"}
       %h6 Dashboard
     .btn-cont
-      %md-button.md-fab{"aria-label" => "Use Android"}
-        %md-icon{"md-svg-icon"=>"action:reorder"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "purchases","ng-class"=>"getNavigationClass()"}
+        %md-icon{"md-svg-icon"=>"action:add_shopping_cart"}
       %h6 Compras
     .btn-cont
-      %md-button.md-fab{"aria-label" => "Comment"}
-        %md-icon{"md-svg-icon"=>"action:reorder"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "origin_certificates","ng-class"=>"getNavigationClass()"}
+        %md-icon{"md-svg-icon"=>"action:pageview"}
       %h6 Certificados de Origen
     .btn-cont
-      %md-button.md-fab{"aria-label" => "Profile"}
-        %md-icon{"md-svg-icon"=>"action:reorder"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "inventory","ng-class"=>"getNavigationClass()"}
+        %md-icon{"md-svg-icon"=>"action:assignment"}
       %h6 Inventario
     .btn-cont
-      %md-button.md-fab{"aria-label" => "Eat cake"}
-        %md-icon{"md-svg-icon"=>"action:reorder"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "providers","ng-class"=>"getNavigationClass()"}
+        %md-icon{"md-svg-icon"=>"social:group"}
       %h6 Proovedores
 .breadcrumb{"flex" => 80, "hide-sm" => ""}
   .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}

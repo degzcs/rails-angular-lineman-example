@@ -37,4 +37,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
         .ok('Adios!!')
         duration: 2
       return
+  $scope.getNavigationClass = (button)->
+    if $state.current.name == button
+      return"selected"
   return

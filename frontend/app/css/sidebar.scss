@@ -29,15 +29,17 @@ md-sidenav{
   padding-top: 10px;
   padding-bottom: 6px;
   text-align: center;
+  border-bottom: 2px solid #edb039;
 }
 
 .top-nav-buttons{
   .md-button{
     background-color: transparent!important;
+    color: white!important;
   }
   .md-button:hover{
     background-color: white!important;
-    color: #edb039;
+    color: #edb039!important;
   }
   .btn-cont{
     text-align: center;
@@ -51,6 +53,11 @@ md-sidenav{
     }
 
   }
+}
+
+.top-nav-button.selected{
+  background-color: white!important;
+  color: #edb039!important;
 }
 .trazoro-icon-small{
   width: 80px;

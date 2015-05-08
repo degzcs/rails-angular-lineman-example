@@ -1,42 +1,32 @@
-%md-content.dashboard
-  %div{layout: "row", "layout-sm" => "column"}
-    %md-card.user-card{flex:"full"}
-      %md-subheader.md-primary
-        %span Información de Usuario
-      %md-divider{inset: ""}
-      %div{layout: "row", "layout-sm" => "column"}
-        %md-item{flex: "50"}
-          %md-item-content
-            .md-tile-content
-              %span
-                %strong Nombre:
-                {{currentUser.first_name}} {{currentUser.last_name}}
-        %md-item{flex: "50"}
-          %md-item-content
-            .md-tile-content
-              %span
-                %strong Email:
-                {{currentUser.email}}
+/------------------- DASHBOARD VIEW -------------------/
+.dashboard-content
+  .dashboard-user-info
+    %div{layout: "row"}
+      .user-photo-container
+        %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file || 'img/default-user.png'}}"}
+      .info-container
+        %h4 
+          Nombre:
+          .info
+            {{currentUser.first_name}} {{currentUser.last_name}}
+        %h4 
+          Numero de Documento:
+          .info
+            {{currentUser.document_number}}
+        %h4 
+          Email:
+          .info
+            {{currentUser.email}}
+  .dashboard-credit-info
+    .credits 
+      %h3
+        Creditos Restantes
+      .value
+        {{currentUser.available_credits}}
+    %br
+    %md-button.md-raised.md-primary.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
+      Comprar Créditos
 
-      %md-divider{inset: ""}
-      %md-item
-        %md-item-content
-          .md-tile-content
-            %span
-              %strong Numero de Documento:
-              {{currentUser.document_number}}
-
-    %md-card.credit-card{flex:"30", "flex-sm"=>"100"}
-      %md-subheader.md-primary
-        %span Créditos Restante
-      %md-divider{inset: ""}
-      %md-item
-        %md-item-content
-          .md-tile-content.credit-value
-            %span {{currentUser.available_credits}}
-            %br
-            %md-button.md-raised.md-primary.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
-              Comprar Créditos
 
 -#  %h3 Options
 -#  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
