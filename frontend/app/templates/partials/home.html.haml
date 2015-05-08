@@ -1,7 +1,5 @@
-%h1
-  %img{:src => "/img/trazoro_icon_small.png"}
-  
-%md-content.md-padding.div-trazoro.gold
+//--------------------------HOME VIEW-----------------------------//  
+%md-content.md-padding.div-trazoro.gold{"ng-controller"=>"SessionsNewCtrl"}
   %form.login-form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
     .yellow-border
       %md-input-container.md-default-theme{"md-no-float" => ""}
@@ -9,12 +7,13 @@
       %md-input-container.md-default-theme{"md-no-float" => ""}
         %input.md-input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
       .remember-password-form
-        %a{:ng-href => "#sendtoken"} Recordar contraseña
+        %a{:ng-href => "#sendtoken"} Recuperar contraseña
 
     %md-button.login-home-button.md-raised.md-default-theme
       Iniciar Session
-
 %md-content.md-padding.div-trazoro.gray.trazoro-padding
+  %h2
+    %img{:src => "/img/trazoro_icon_small.png"}
   .text-content
     %h1 
       %b ¿Que es Trazoro?

@@ -27,5 +27,14 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
       # $log.debug 'toggle LEFT is done'
       return
     return
-
+  $scope.logout = ->
+    if !$auth.isAuthenticated()
+      return
+    $auth.logout().then ->
+      $mdDialog.show $mdDialog.alert()
+        .title('Logout')
+        .content('Adios!')
+        .ok('Adios!!')
+        duration: 2
+      return
   return

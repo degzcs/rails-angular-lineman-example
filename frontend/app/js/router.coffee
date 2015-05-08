@@ -100,6 +100,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/dashboard.html"
         controller: "DashboardCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
