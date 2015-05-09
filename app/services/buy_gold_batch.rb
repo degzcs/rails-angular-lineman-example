@@ -34,7 +34,7 @@ class BuyGoldBatch
      purchase.save
 
     #discount available credits
-    buyer.available_credits = buyer.available_credits - gold_batch_hash['grams'].to_f
+    buyer.available_credits = buyer.available_credits - gold_batch_hash['grams'].to_f unless purchase.trazoro
     buyer.save
   end
 
