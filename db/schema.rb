@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150503040745) do
+ActiveRecord::Schema.define(version: 20150509025244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -249,6 +249,11 @@ ActiveRecord::Schema.define(version: 20150503040745) do
     t.float    "available_credits"
     t.string   "reset_token"
     t.string   "address"
+    t.string   "document_number_file"
+    t.string   "rut_file"
+    t.string   "mining_register_file"
+    t.string   "photo_file"
+    t.string   "chamber_commerce_file"
   end
 
 end

@@ -15,6 +15,11 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
+#  document_number_file     :string(255)
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
+#  photo_file               :string(255)
+#  chamber_commerce_file    :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -27,8 +32,12 @@ class User < ActiveRecord::Base
 	has_many :sales
 	has_many :credit_billings
 	has_secure_password
-	after_initialize :init
 
+	#
+	# Calbacks
+	#
+
+	after_initialize :init
 	before_save :save_client
 
 	#

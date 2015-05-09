@@ -15,6 +15,11 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
+#  document_number_file     :string(255)
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
+#  photo_file               :string(255)
+#  chamber_commerce_file    :string(255)
 #
 
 FactoryGirl.define do
