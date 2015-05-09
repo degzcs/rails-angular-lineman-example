@@ -38,6 +38,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
         duration: 2
       return
   $scope.getNavigationClass = (button)->
-    if $state.current.name == button
+    console.log($state.current.name)
+    if $state.current.name.indexOf(button)> -1
       return"selected"
   return

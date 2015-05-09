@@ -1,19 +1,19 @@
 %md-content.md-padding.div-trazoro.gold
   %section.top-nav-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
     .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "dashboar","ng-class"=>"getNavigationClass('dashboard')"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "dashboard","ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
         %md-icon{"md-svg-icon"=>"action:dashboard"}
       %h6 Dashboard
     .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "purchases","ng-class"=>"getNavigationClass()"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "purchases","ng-class"=>"getNavigationClass('new_purchase.step1')","ui-sref" => "new_purchase.step1"}
         %md-icon{"md-svg-icon"=>"action:add_shopping_cart"}
       %h6 Compras
     .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "origin_certificates","ng-class"=>"getNavigationClass()"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "origin_certificates","ng-class"=>"getNavigationClass('new_origin_certificate')","ui-sref" => "new_origin_certificate.barequero_chatarrero"}
         %md-icon{"md-svg-icon"=>"action:pageview"}
       %h6 Certificados de Origen
     .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "inventory","ng-class"=>"getNavigationClass()"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "inventory","ng-class"=>"getNavigationClass('index_inventory')","ui-sref" => "index_inventory"}
         %md-icon{"md-svg-icon"=>"action:assignment"}
       %h6 Inventario
     .btn-cont
