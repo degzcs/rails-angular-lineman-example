@@ -20,6 +20,9 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  chamber_commerce_file    :string(255)
+#  rucom_id                 :integer
+#  company_info_id          :integer
+#  population_center_id     :integer
 #
 
 class User < ActiveRecord::Base
@@ -31,6 +34,10 @@ class User < ActiveRecord::Base
 	has_many :purchases
 	has_many :sales
 	has_many :credit_billings
+	belongs_to :rucom #  NOTE: this is temporal becauses we don't have access to the real Rucom table just by the scrapper in python.
+	belongs_to :company_info #TODO: this model will be renamed to Company so the association have to be renamed too.
+	belongs_to :population_center
+
 	has_secure_password
 
 	#

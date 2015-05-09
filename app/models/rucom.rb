@@ -19,6 +19,7 @@
 class Rucom < ActiveRecord::Base
 
   has_one :provider
+  has_one :user # used when the user wants buy or sale gold
 
 
 end
