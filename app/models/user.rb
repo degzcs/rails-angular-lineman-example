@@ -62,6 +62,32 @@ class User < ActiveRecord::Base
 	# Instance Methods
 	#
 
+	def company_name
+		company_info.name
+	end
+
+	# TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
+	def phone
+		phone_number
+	end
+
+	#IMPROVE:  this value introduce inconsistencies in the transactions!!
+	def city
+		population_center.try(:city)
+	end
+
+	#IMPROVE:  this value introduce inconsistencies in the transactions!!
+	def nit
+		company_info.nit_number
+	end
+
+	def rucom_record
+		rucom.rucom_record
+	end
+
+	def office
+		'Trazoro Popayan'
+	end
 	# @return [String] whith the JWT to send the client
 	def create_token
 		payload = {

@@ -12,6 +12,12 @@ module V1
       expose :available_credits , documentation: { type: "float", desc: "Available credits", example: 0.0 }
       expose :phone_number , documentation: { type: "string", desc: "Phone number", example: "312344626" }
       expose :address , documentation: { type: "string", desc: "Address", example: "Calle falsa 123" }
+      expose :company_name, documentation: { type: "string", desc: "", example: "Trazoro." }
+      expose :nit, documentation: { type: "string", desc: "", example: "12345617." }
+      expose :rucom_record, documentation: { type: "string", desc: "", example: "7895465." }
+      expose :office, documentation: { type: "string", desc: "", example: "7895465." }
+      expose :city, documentation: { type: "string", desc: "", example: "user city" }
+      expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }
     end
   end
 end
