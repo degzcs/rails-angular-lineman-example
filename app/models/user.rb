@@ -47,6 +47,8 @@ class User < ActiveRecord::Base
 	after_initialize :init
 	before_save :save_client
 
+	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :company_info, :population_center
+
 	#
 	# Instance Methods
 	#

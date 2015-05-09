@@ -14,11 +14,11 @@ module V1
         user_transformed_to_provider = {
           id: sale.user.id,
           name: "#{sale.user.first_name} #{sale.user.last_name}",
-          company_name: "TrazOro",
+          company_name: sale.user.company_info.name,
           document_type: 'NIT',
-          document_number: sale.user.document_number,
-          rucom_record:  "0025478",
-          rucom_status: 'active'
+          document_number: sale.user.company_info.nit_number,
+          rucom_record:  sale.user.rucom.rucom_record,
+          rucom_status: sale.user.rucom.status
         }
       end
     end
