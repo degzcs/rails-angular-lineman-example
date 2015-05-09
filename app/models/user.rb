@@ -50,6 +50,15 @@ class User < ActiveRecord::Base
 	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :company_info, :population_center
 
 	#
+	# fields for save files by carrierwave
+	#
+	mount_uploader :document_number_file, AttachmentUploader
+	mount_uploader :rut_file, AttachmentUploader
+	mount_uploader :mining_register_file, AttachmentUploader
+	mount_uploader :photo_file, AttachmentUploader
+	mount_uploader :chamber_commerce_file, AttachmentUploader
+
+	#
 	# Instance Methods
 	#
 
