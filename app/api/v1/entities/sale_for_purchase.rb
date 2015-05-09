@@ -15,7 +15,7 @@ module V1
           id: sale.user.id,
           name: "#{sale.user.first_name} #{sale.user.last_name}",
           company_name: "TrazOro",
-          document_type: 'cedula',
+          document_type: 'NIT',
           document_number: sale.user.document_number,
           rucom_record:  "0025478",
           rucom_status: 'active'
