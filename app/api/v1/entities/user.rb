@@ -18,6 +18,7 @@ module V1
       expose :office, documentation: { type: "string", desc: "", example: "7895465." }
       expose :city, documentation: { type: "string", desc: "", example: "user city" }
       expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }
+      expose :photo_file, documentation: { type: "photo", desc: "photo file", example: "" }
     end
   end
 end

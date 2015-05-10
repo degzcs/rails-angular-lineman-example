@@ -38,5 +38,7 @@ FactoryGirl.define do
     document_expedition_date { Faker::Time.between(2.days.ago, Time.now) }
     phone_number { Faker::PhoneNumber.cell_phone }
     address { Faker::Address.street_address}
+    company_info
+    rucom
   end
 end

@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
 	#
 
 	def company_name
-		company_info.name
+		company_info.name 
 	end
 
 	# TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
