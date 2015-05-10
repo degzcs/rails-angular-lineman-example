@@ -10,8 +10,9 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
-                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
+                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
+                
 
   %section{layout: "row"}
     // ---------------------- Provider info ------------------- ///

@@ -440,11 +440,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("show_purchase",
     url: "/purchases/show",
     ncyBreadcrumb:
-      label: 'Factura Generada'
+      label: 'Detalles de compra'
     views:
       'content':
         templateUrl: "partials/purchases/show.html"
         controller: "PurchasesShowCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -596,6 +599,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/inventory/show.html"
         controller: "InventoryShowCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
