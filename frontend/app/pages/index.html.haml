@@ -12,16 +12,13 @@
         %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left"}
           %md-content.logo
             %h1.md-toolbar-tools
-              Trazoro
+              %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
           %md-content.sidebar-options{"layout" => "column"}
             %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", icon: "option.icon", "ng-click" =>"setSection(option.name)"}
             %md-button{"ng-click"=>"logout()"} Cerrar Session
     /----------------- PAGE CONTENT -------------------------/
     #wrapper
       #header
-        .side-button-options{"ng-controller"=>"SidebarCtrl"}
-          %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
-            %md-icon{"md-svg-icon"=>"action:reorder"}
         .mini-top-bar
           %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
         %div{"ui-view" => "top-nav"}
