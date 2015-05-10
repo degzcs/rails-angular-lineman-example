@@ -1,28 +1,10 @@
-angular.module('app').controller('CameraController',  ['$scope','$q','$timeout','$mdDialog','CameraService', function($scope,$q, $timeout,$mdDialog,CameraService) {
-                $scope.photoTaken = false;
+angular.module('app').controller('CameraScannerController',  ['$scope','$q','$timeout','$mdDialog','CameraService', function($scope,$q, $timeout,$mdDialog,CameraService) {
                 $scope.optionsSource=CameraService.getMediaSources();
                 $scope.optionSelected='';
                 $scope.isForCamera='Foto';
                 $scope.number=0;
                 $scope.image1='';
                 
-                showCanvas = function(){
-                    var canvas = angular.element( document.querySelector('canvas') );
-                    var options = angular.element(document.querySelector('.camera-options'));
-                    var optionsFinal = angular.element(document.querySelector('.camera-options-final'));
-                    canvas.addClass('show');
-                    options.removeClass('show');
-                    optionsFinal.addClass('show');
-                }
-                hideCanvas = function(){
-                    var canvas = angular.element( document.querySelector('canvas') );
-                    var options = angular.element(document.querySelector('.camera-options'));
-                    var optionsFinal = angular.element(document.querySelector('.camera-options-final'));
-                    canvas.removeClass('show');
-                    options.addClass('show');
-                    optionsFinal.removeClass('show');
-                }
-
                 $scope.changeCamera=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
                     CameraService.playVideo(dimensions,option);
@@ -34,7 +16,6 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                   
                 };
                 $scope.takeSnapshot = function() {
-                    showCanvas();
                     var canvas  = document.querySelector('canvas'),
                         ctx     = canvas.getContext('2d'),
                         videoElement = document.querySelector('video'),

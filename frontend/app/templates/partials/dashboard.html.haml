@@ -3,7 +3,7 @@
   .dashboard-user-info
     %div{layout: "row"}
       .user-photo-container
-        %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file || 'img/default-user.png'}}"}
+        %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.url || 'img/default-user.png'}}"}
       .info-container
         %h4 
           Nombre:

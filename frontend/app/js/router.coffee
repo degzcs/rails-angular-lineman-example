@@ -91,6 +91,22 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
+  .state("camera",
+    url: "/camera",
+    ncyBreadcrumb:
+      label: 'Camera'
+    views:
+      'content':
+        templateUrl: "partials/camera.html"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
 
   .state "dashboard",
     url: "/dashboard"
@@ -136,6 +152,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/providers/index.html"
         controller: "ProvidersIndexCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

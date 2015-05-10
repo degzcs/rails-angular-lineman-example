@@ -6,6 +6,8 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
   $scope.unit = null
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
+    console.log "Current user"
+    console.log data
 
   
   # Shows a form that allows to the user choose an amount of credits

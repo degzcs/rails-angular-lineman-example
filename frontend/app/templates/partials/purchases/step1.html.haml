@@ -69,8 +69,8 @@
 
         %md-input-container.row
           .photo
-            %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', :ng-style => "{'background-image': 'url(img/default-user.png);'}"}
+            %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
+              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               %md-tooltip{'md-direction'=> 'right'}
                 Tomar Foto
 

@@ -1,0 +1,45 @@
+//------- Camera styles ------------//
+
+.camera-layout{
+  text-align: center;
+  height: 450px;
+}
+.camera-selector{
+  margin-top: 0;
+}
+.camera-container{
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: inline-block;
+  border: 1px solid #eee;
+  background: #eee;
+  video{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.camera-options{
+  position: relative;
+  width: 400px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.camera-options-final{
+  display: none;
+}
+
+canvas.taken-photo{
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.show{
+  display: inline-block!important;
+}
