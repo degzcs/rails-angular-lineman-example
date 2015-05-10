@@ -168,11 +168,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("edit_provider",
     url: "/provider/:providerId",
     ncyBreadcrumb:
-      label: 'Edición de proveedores'
+      label: 'Edición proovedor'
     views:
       'content':
         templateUrl: "partials/providers/edit.html"
         controller: "ProvidersEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
 
     resolve:
       authenticated: ($q, $location, $auth) ->
@@ -211,6 +214,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'content':
           templateUrl: "partials/providers/type_a.html"
           controller: "ProvidersRucomCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -230,6 +236,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'content':
           templateUrl: "partials/providers/type_b.html"
           controller: "ProvidersRucomCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -619,6 +628,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/inventory/liquidate.html"
         controller: "InventoryLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -636,6 +648,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/sales/show.html"
         controller: "SaleShowCtrl"
+        controller: "InventoryLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

@@ -78,7 +78,7 @@
     width: 100%;
     padding: 10px;
     border: 1px solid #eee;
-    background: lighten(rgb(63,81,181), 30);
+    background: #ffcb34;
     text-align: center;
   }
   .total_amount{
@@ -86,7 +86,7 @@
     padding: 10px;
     border: 1px solid #eee;
     //background: lighten(rgb(255,64,129), 30);
-    background: #71d883;
+    background: #edb039;
     text-align: center;
   }
 
@@ -189,9 +189,11 @@
     margin-right: 5px;
     input[disabled]{
       color: black!important;
+      background-image: none!important;
     }
   }
 }
+
 
 .fieldset-inputs{
   position: relative;

@@ -99,12 +99,20 @@ md-input-container label:not(.md-no-float), md-input-container .md-placeholder {
   }
 }
 
+input[disabled]{
+  background-image: none!important;
+}
+
 .md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input {
   border-color: rgb(237,176,57)!important;
 }
 
 md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-icon {
   fill: rgb(237,176,57)!important;
+}
+
+.md-table tr:hover{
+  background: rgba(#edb039, 0.2) !important;
 }
 
 

@@ -333,7 +333,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     function(event, toState, toParams, fromState, fromParams){
       // console.log('Changing state from: ' + JSON.stringify(fromState) + ' to: ' + JSON.stringify(toState));
       // console.log('Params state from: ' + JSON.stringify(fromParams) + ' to: ' + JSON.stringify(toParams));
-      if (toState.url !== "/scanner" && toState.url !== "/scanner1") {
+      if (toState.url !== "/scanner" && toState.url !== "/scanner1" && toState.url !== "/camera" ) {
         if (!$scope.abortCreate) {
           event.preventDefault();
           var confirm;
