@@ -1,7 +1,6 @@
 %md-content
   %h2
-    Seleccione el Rucom del proovedor
-
+    Seleccione el Rucom del proovedor/cliente que va a registrar
   %div.search-tool-header{:layout => "row"}
     %div{flex: "50"}
     %md-input-container{:flex => "", "md-no-float"=>""}
@@ -11,5 +10,8 @@
       %input{"ng-model" => "searchRucom.name", :type => "text", :placeholder => "Filtrar Por Nombre"}
         %md-icon.search{"md-svg-icon"=>"action:search"}
 
-  %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
-    %md-table-rucom{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :count => "count", :type => "type", :style => "padding-left:20px; padding-right:20px;"}
+  %form{:name => "rucomForm"}
+  %div{:layout => "column"}
+    %md-content.md-padding
+    %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
+      %md-table-rucom{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :count => "count", :type => "type", :style => "padding-left:20px; padding-right:20px;"}

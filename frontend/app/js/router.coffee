@@ -260,6 +260,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/clients/index.html"
         controller: "ClientsIndexCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -278,6 +281,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'content':
           templateUrl: "partials/clients/new.html"
           controller: "ClientsCreateCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -297,6 +303,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/clients/edit.html"
         controller: "ClientsEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
 
     resolve:
       authenticated: ($q, $location, $auth) ->
@@ -355,11 +364,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("new_courier",
     url: "/courier",
     ncyBreadcrumb:
-      label: 'New Courier'
+      label: 'Registro de Transportador'
     views:
       'content':
         templateUrl: "partials/couriers/new.html"
         controller: "CouriersNewCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
