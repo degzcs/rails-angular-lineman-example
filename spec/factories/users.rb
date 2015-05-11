@@ -39,6 +39,7 @@ FactoryGirl.define do
     phone_number { Faker::PhoneNumber.cell_phone }
     address { Faker::Address.street_address}
     company_info
+    population_center
     rucom
   end
 end

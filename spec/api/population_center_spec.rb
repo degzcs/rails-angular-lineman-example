@@ -14,7 +14,7 @@ describe 'PopulationCenter', :type => :request do
         it 'retrieves all population center registries' do
           get '/api/v1/population_centers', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 20
+          expect(JSON.parse(response.body).count).to be 21 #Plus 1 of the user created
         end
   
         context '/:id' do

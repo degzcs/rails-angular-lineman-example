@@ -25,7 +25,7 @@ describe 'Auth', :type => :request do
 
           get '/api/v1/users/me', {},{ "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body)).to eq expected_response
+          expect(JSON.parse(response.body)).to include expected_response
         end
 
       end

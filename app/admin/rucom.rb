@@ -7,7 +7,7 @@ ActiveAdmin.register Rucom do
   index do
     selectable_column
     id_column
-    column :idrucom
+    #column :idrucom
     column :num_rucom
     column :rucom_record
     column :provider_type
@@ -21,7 +21,7 @@ ActiveAdmin.register Rucom do
     actions
   end
 
-  filter :idrucom
+  #filter :idrucom
   filter :num_rucom
   filter :rucom_record
   filter :provider_type
@@ -35,7 +35,7 @@ ActiveAdmin.register Rucom do
 
   form do |f|
     f.inputs "Rucom Details" do
-      f.input :idrucom
+      #f.input :idrucom
       f.input :num_rucom
       f.input :rucom_record
       f.input :provider_type
