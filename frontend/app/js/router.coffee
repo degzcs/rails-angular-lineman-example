@@ -119,6 +119,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -155,6 +158,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -175,6 +181,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         controller: "ProvidersEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
         controller: "SidebarCtrl"
 
     resolve:
@@ -217,6 +226,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -238,6 +250,9 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           controller: "ProvidersRucomCtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
           controller: "SidebarCtrl"
 
       resolve:
@@ -263,6 +278,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -284,6 +303,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
+
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -306,6 +329,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
 
     resolve:
       authenticated: ($q, $location, $auth) ->
@@ -372,6 +399,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -395,6 +426,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -469,6 +504,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -507,6 +546,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -603,6 +646,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -623,6 +670,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -643,6 +694,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -664,6 +719,10 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
