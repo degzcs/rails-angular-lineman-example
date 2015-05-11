@@ -20,6 +20,8 @@ class PdfFile < Prawn::Document
         generate_multiple_certificates_c_c(values,date)
       when 'p_b_certificate'
         generate_multiple_certificates_p_b(values,date)
+      when 'sales_report'
+        generate_multiple_sales_reports(values,date)
       else
     end
 
@@ -404,7 +406,6 @@ class PdfFile < Prawn::Document
   end
 
   # Generar certificado de compra
-
   def generate_purchase_report(values,date)
     file = File.open(File.join(Rails.root, 'vendor','pdfs','reporte_de_compra.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
@@ -498,6 +499,136 @@ class PdfFile < Prawn::Document
     # move_cursor_to 105
     # text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
 
+  end
+
+
+  def generate_multiple_sales_reports(values , date)
+
+    counter = 1
+
+    values[:batch].each_slice(10) do |gold_group|
+      generate_sales_report(values , gold_group , date,counter)
+      counter = counter + 1
+    end
+
+    # add certificates
+    start_new_page
+    text_box "Certificados Adjuntos" , :at => [60,1100] , width: 400 , size: 30
+
+    file = File.open(File.join(Rails.root, 'public',values[:certificate_path]))
+    reader = PDF::Reader.new(file)
+
+    for page in 1..reader.page_count.to_i do
+      start_new_page({:template => "#{file.path}" , :template_page => page})
+    end
+
+  end
+
+
+
+
+  def generate_sales_report(values,gold_group,date,counter)
+
+    file = File.open(File.join(Rails.root, 'vendor','pdfs','reporte_de_venta.pdf'))
+    start_new_page({:template => "#{file.path}" , :template_page => 1})
+
+    # header
+    #move_down 60
+    move_cursor_to 1046
+    text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
+
+    move_cursor_to 1028
+    text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80
+
+    move_cursor_to 1010
+    text_box "#{counter}" , :at => [420,cursor] , :width => 80
+
+    move_cursor_to 980
+    barcode = Barby::EAN13.new('770000120040')
+    outputter = Barby::PrawnOutputter.new(barcode)
+    outputter.annotate_pdf(self,options = {x:45 , y:cursor})
+    move_cursor_to 978
+    font ("Courier") do
+      text_box "#{values[:purchase][:code]}" , :at => [45 , cursor] , :width => 240
+    end
+    #buyer
+    move_cursor_to 919
+    text_box "#{values[:buyer][:social]}", :at => [115,cursor], :width => 170
+    move_cursor_to 900
+    text_box "#{values[:buyer][:name]}", :at => [115,cursor], :width => 170
+    move_cursor_to 882
+    text_box "#{values[:buyer][:type]}", :at => [115,cursor], :width => 170
+    move_cursor_to 865
+    text_box "#{values[:buyer][:identification_number]}", :at => [115,cursor], :width => 170
+    move_cursor_to 846
+    text_box "#{values[:buyer][:nit]}", :at => [115,cursor], :width => 170
+    move_cursor_to 829
+    text_box "#{values[:buyer][:rucom]}", :at => [115,cursor], :width => 170
+    move_cursor_to 810
+    text_box "#{values[:buyer][:address]}", :at => [115,cursor], :width => 170
+    move_cursor_to 792
+    text_box "#{values[:buyer][:email]}", :at => [115,cursor], :width => 170
+    move_cursor_to 774
+    text_box "#{values[:buyer][:phone]}", :at => [115,cursor], :width => 170
+
+
+    #provider
+    move_cursor_to 919
+    text_box "#{values[:provider][:social]}", :at => [370,cursor], :width => 170
+    move_cursor_to 900
+    text_box "#{values[:provider][:name]}", :at => [370,cursor], :width => 170
+    move_cursor_to 882
+    text_box "#{values[:provider][:type]}", :at => [370,cursor], :width => 170
+    move_cursor_to 865
+    text_box "#{values[:provider][:identification_number]}", :at => [370,cursor], :width => 170
+    move_cursor_to 846
+    text_box "#{values[:provider][:nit]}", :at => [370,cursor], :width => 170
+    move_cursor_to 829
+    text_box "#{values[:provider][:rucom]}", :at => [370,cursor], :width => 170
+    move_cursor_to 810
+    text_box "#{values[:provider][:address]}", :at => [370,cursor], :width => 170
+    move_cursor_to 792
+    text_box "#{values[:provider][:email]}", :at => [370,cursor], :width => 170
+    move_cursor_to 774
+    text_box "#{values[:provider][:phone]}", :at => [370,cursor], :width => 170
+
+
+    #transportador
+    move_cursor_to 720
+    text_box "nombre del transportador", :at => [115,cursor], :width => 170
+    text_box "telefono del transportador", :at => [370,cursor], :width => 170
+    move_cursor_to 702
+    text_box "apellido del transportador", :at => [115,cursor], :width => 170
+    text_box "direccion del transportador", :at => [370,cursor], :width => 170
+    move_cursor_to 682
+    text_box "cedula del transportador", :at => [115,cursor], :width => 170
+    text_box "compania del transportador", :at => [370,cursor], :width => 170
+    move_cursor_to 665
+    text_box "nit del transportador", :at => [115,cursor], :width => 170
+
+    #lotes seleccionados
+
+    move_cursor_to 585
+    gold_group.each do |gold|
+      text_box "#{gold[:id_purchase]}", :at => [50,cursor], :width => 70 , :size => 10
+      text_box "#{gold[:id_provider]}", :at => [130,cursor], :width => 70 , :size => 10
+      text_box "#{gold[:social]}", :at => [233,cursor], :width => 120 , :size => 10
+      text_box "#{gold[:certificate_number]}", :at => [392,cursor], :width => 90 , :size => 10
+      text_box "#{gold[:rucom]}", :at => [487,cursor], :width => 90 , :size => 10
+      text_box "#{gold[:fine_grams]}", :at => [565,cursor], :width => 90, :size => 10
+      move_down 25
+    end
+
+    # numero total de lotes
+
+    move_cursor_to 285
+    text_box "#{values[:purchase][:fine_grams]}", :at => [420,cursor], :width => 90 , :size => 10
+    move_cursor_to 267
+    text_box "#{values[:purchase][:grams]}", :at => [420,cursor], :width => 90 , :size => 10
+    move_cursor_to 248
+    text_box "#{values[:purchase][:law]}", :at => [420,cursor], :width => 90 , :size => 10
+    move_cursor_to 229
+    text_box "#{values[:purchase][:price]}", :at => [420,cursor], :width => 90 , :size => 10
   end
 
 end

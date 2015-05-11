@@ -10,8 +10,9 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
-                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
+                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
+                
 
   %section{layout: "row"}
     // ---------------------- Provider info ------------------- ///
@@ -57,7 +58,7 @@
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
-      %a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", 'ng-href' => "#provider"}  crear proovedor
+      %a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", 'ui-sref' => "search_rucom({type: 'provider'})"}  crear proovedor
     %div{flex: ""}
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
@@ -69,8 +70,8 @@
 
         %md-input-container.row
           .photo
-            %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', :ng-style => "{'background-image': 'url(img/default-user.png);'}"}
+            %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
+              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               %md-tooltip{'md-direction'=> 'right'}
                 Tomar Foto
 

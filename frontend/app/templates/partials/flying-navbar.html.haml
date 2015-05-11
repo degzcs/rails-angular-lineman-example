@@ -1,0 +1,21 @@
+/------------------- Flying navbar--------------------/
+#cssmenu{"set-class-when-at-top"=>"fix-to-top","top-reference"=>200}
+  %ul
+    %li{"ng-class"=>"getNavigationClass('dashboard')"}
+      %a{"ui-sref" => "dashboard"}
+        %span Dashboard
+    %li{"ng-class"=>"getNavigationClass('new_purchase')"}
+      %a{"ui-sref" => "new_purchase.step1"}
+        %span Comprar
+    %li{"ng-class"=>"getNavigationClass('new_origin_certificate')"}
+      %a{"ui-sref" => "new_origin_certificate.barequero_chatarrero"}
+        %span Certificados
+    %li{"ng-class"=>"getNavigationClass('index_inventory')"}
+      %a{"ui-sref" => "index_inventory"}
+        %span Inventario  
+    %li{"ng-class"=>"getNavigationClass('clients')"}
+      %a{"ui-sref" => "clients"}
+        %span Clientes  
+    %li{"ng-class"=>"getNavigationClass('providers')"}
+      %a{"ui-sref" => "providers"}
+        %span Inventario  

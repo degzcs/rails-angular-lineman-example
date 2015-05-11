@@ -20,6 +20,7 @@
 
 class CompanyInfo < ActiveRecord::Base
   belongs_to :provider
+  has_one :user
 
   validates :nit_number, presence: true
   validates :name, presence: true

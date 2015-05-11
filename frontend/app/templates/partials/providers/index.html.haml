@@ -1,21 +1,14 @@
 %md-content
   %div{:layout => "column"}
-    .main-fab
-      %a{"ui-sref" => "search_rucom({type: 'provider'})"}
-        %md-button.md-fab.md-accent{"aria-label" => "New", :md-ripple-size => "partial"} +
-    %md-toolbar.md-tall{:layout => "column"}
-      %span{:flex => "flex"}
-      .md-toolbar-tools
-        .fill-height{:layout => "row", :flex => "flex"}
-          .md-toolbar-item.md-breadcrumb{"ng-hide" => "toggleSearch"}
-            %span Proveedores
-          %span{:flex => "flex", "ng-hide" => "toggleSearch"}
-          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
-            %input#search-prov-name{"ng-model" => "queryName", :type => "text", :placeholder => "Nombre"}
-          %md-input-container{:flex => "flex", "ng-show" => "toggleSearch", :style => "padding-left:88px;"}
-            %input#search-prov-id{"ng-model" => "queryId", :type => "text", :placeholder => "Número de Identificación"}
-          .md-toolbar-item.md-tools{:layout => "row"}
-            %a.md-button.md-default-theme{"ng-click" => "toggleSearch = !toggleSearch"}
-              %i.ion-android-search
+    %div.search-tool-header{:layout => "row"}
+      %div{flex: "50"}
+        %md-button.md-primary.md-raised{"aria-label" => "New", "ui-sref" => "search_rucom({type: 'provider'})"} Crear Proovedor
+          %md-icon{"md-svg-icon"=>"content:add_circle"}
+      %md-input-container{:flex => "", "md-no-float"=>""}
+        %input{"ng-model" => "queryName", :type => "text", :placeholder => "Filtrar por nombre"}
+          %md-icon.search{"md-svg-icon"=>"action:search"}
+      %md-input-container{:flex => "","md-no-float"=>""}
+        %input{"ng-model" => "queryId", :type => "text", :placeholder => "Filtrar por num. documento"}
+          %md-icon.search{"md-svg-icon"=>"action:search"}
     %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
       %md-table-provider{:headers => "headers", :content => "content", :pages => "pages", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count", "current-provider" => "currentProvider", "query-name" => "queryName", "query-id" => "queryId", "query-focus" => "queryFocus"}

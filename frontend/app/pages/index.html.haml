@@ -6,34 +6,30 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
-    .main-container{"flex" => ""}
-      //---------------------------------------Header -  Navigation Bar ---------------------------------////
-      .nav-bar
-        %md-toolbar
-          %md-toolbar-tools{"layout" => "row"}
-            .sidebar-options{"flex" => 5, "ng-controller"=>"SidebarCtrl"}
-              %md-toolbar-tools
-                %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
-                  %md-icon{"md-svg-icon"=>"action:reorder"}
-            .breadcrumb{"flex" => 80, "hide-sm" => ""}
-              .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
-            .session-buttons{"flex" =>10,"layout-align"=>"end", "ng-controller"=> "SessionsNewCtrl"}
-              %md-toolbar-tools
-                %md-button{"ui-sref" => "new_session","ng-if" => "!isAuthenticated()"} Log in
-                %md-button{"ng-click" => "logout()", "ng-if"=> "isAuthenticated()"} Log out
-      //------------------------------------------------ Content  ------------------------------------------------////
-      .container{"layout" => "row"}
-        .sidebar{"flex" =>0, "ng-controller"=>"SidebarCtrl"}
-          %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left"}
-            %md-content.logo
-              %h1.md-toolbar-tools
-                Trazoro
-            %md-content.sidebar-options{"layout" => "column"}
-              %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", icon: "option.icon", "ng-click" =>"setSection(option.name)"}
-        .main-content{"flex" =>100}
-          %md-content.md-whiteframe-z4{"ui-view" => "content"}
-          //------------------------------------------------ SCANNER DRIVER ALERT  ------------------------------------------------////
-          %div{:layout => "row", :layout-align => "center center"}
-            #dwtcontrolContainer
+    .main-container{layout: "row"} 
+      /----------------- SIDEBAR -------------------------/
+      %section.sidebar{flex: "0","ng-controller"=>"SidebarCtrl"}
+        %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left"}
+          %md-content.logo
+            %h1.md-toolbar-tools
+              %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
+          %md-content.sidebar-options{"layout" => "column"}
+            %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", icon: "option.icon", "ng-click" =>"setSection(option.name)"}
+            %md-button{"ng-click"=>"logout()"} Cerrar Session
+    /----------------- PAGE CONTENT -------------------------/
+    #wrapper
+      #header
+        .mini-top-bar
+          %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
+        %div{"ui-view" => "top-nav"}
+      #content
+        %md-content{"ui-view" => "content"}
+      #footer.div-trazoro.footer
+        %img.logo-bitbang{:src => "/img/logo_bitbang.png"}
+            
+    //------------------------------------------------ SCANNER DRIVER ALERT  ----------- / 
+    %div{:layout => "row", :layout-align => "center center"}
+      #dwtcontrolContainer
+    %md-content{"ui-view" => "flying-navbar"}
   %script{"src" => "/js/app.js", "type" => "text/javascript"}
   %script{"src" => "/js/jspdf.debug.js", "type" => "text/javascript"}

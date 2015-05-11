@@ -1,7 +1,8 @@
 ActiveAdmin.register User do
   menu priority: 3, label: 'Usuarios'
 
-  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :password
+  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :password, :document_number_file, :rut_file, :mining_register_file, :photo_file, :chamber_commerce_file, :company_info_id, :rucom_id, :population_center_id
+
 
   index do
     selectable_column
@@ -17,14 +18,13 @@ ActiveAdmin.register User do
     actions
   end
 
+  filter :rucom
   filter :email
   filter :first_name
   filter :last_name
   filter :document_number
   filter :document_expedition_date
   filter :phone_number
-  filter :address
-  filter :password
 
   form do |f|
     f.inputs "Admin Details" do
@@ -36,6 +36,14 @@ ActiveAdmin.register User do
       f.input :phone_number
       f.input :address
       f.input :password
+      f.input :document_number_file, :as => :file
+      f.input :rut_file, :as => :file
+      f.input :mining_register_file, :as => :file
+      f.input :photo_file, :as => :file
+      f.input :chamber_commerce_file, :as => :file
+      f.input :company_info
+      f.input :rucom
+      f.input :population_center
     end
     f.actions
   end

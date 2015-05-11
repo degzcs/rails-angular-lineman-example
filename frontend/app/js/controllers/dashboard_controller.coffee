@@ -4,8 +4,10 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
   
   $scope.newCreditBilling = {}
   $scope.unit = null
+  $scope.available_credits = null
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
+    $scope.available_credits = Number(data.available_credits.toFixed(2))
 
   
   # Shows a form that allows to the user choose an amount of credits

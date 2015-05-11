@@ -2,7 +2,6 @@
 #
 # Table name: rucoms
 #
-#  id                 :integer          not null, primary key
 #  idrucom            :string(90)       not null
 #  rucom_record       :text
 #  name               :text
@@ -11,14 +10,16 @@
 #  location           :text
 #  subcontract_number :text
 #  mining_permit      :text
-#  updated_at         :datetime         default(2015-04-10 01:25:41 UTC)
+#  updated_at         :datetime
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
+#  id                 :integer          not null, primary key
 #
 
 class Rucom < ActiveRecord::Base
 
   has_one :provider
+  has_one :user # used when the user wants buy or sale gold
 
 
 end

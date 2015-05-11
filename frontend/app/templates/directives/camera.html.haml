@@ -1,29 +1,19 @@
-%div{:layout => "row"}
-  %div{:layout => "column"}  
-    %br
-    %div{:layout => "row", :layout-align => "center center",:layout-margin =>""}
-      %div{:flex => "50"}
-        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()"} Capturar
-      %div{:flex => "30",:ng-hide => "isForCamera === 'Foto'",:layout-margin =>""}
-        %md-button.md-raised.md-primary.md-default-theme.md-primary{"aria-label" => "Foto", :md-ripple-size => "partial","ng-click" => "showConfirmAdd($event)"} 
-          %span.ion-android-add
-        %md-button.md-raised.md-primary.md-default-theme.md-primary{"aria-label" => "Foto", :md-ripple-size => "partial","ng-click" => "showConfirmRemove($event)"}
-          %span..ion-android-delete
-    %div{:layout => "row", :layout-align => "center center",:ng-hide => "isForCamera === 'Foto'"}
-      {{number}} páginas    
-    %div{:layout => "row", :layout-align => "center center",:layout-margin =>""}
-      %canvas{}
-    %div{:layout => "row", :layout-align => "center center",:layout-margin =>""}
-      %button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "comeBack()"} Finalizar
-  %div{:layout => "column",:flex => "60"}
-    %div{:layout => "row", :layout-align => "center center"}
-      %div{:flex => "25"}  
-        %md-select{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
-          %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
-      %div{:flex => "25"}    
-        %md-checkbox{:ng-model => "isForCamera",:ng-true-value => "'Foto'", :ng-false-value => "'Documentos'",:ng-click => "changeParameter(options.value)"}
-          {{isForCamera}}    
-    %div.camera{:layout => "row", :layout-align => "center center"}
-      %video.camera{:autoplay => ""}
-    %br
-    %div{"ng-transclude" => ""}
+%secion.camera-directive
+  %h3
+    %md-select.camera-selector{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
+      %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
+  %section.camera-layout
+    .camera-container
+      %video{:autoplay => ""}
+      %canvas.taken-photo{"ng-class"=> "{{photoTaken ? 'show' : ''}}"}
+      .camera-options.show{layout: "row"}
+        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()",flex:""} 
+          Capturar
+          %md-icon{"md-svg-icon"=>"image:camera_alt"}
+      .camera-options-final{layout: "row"}
+        %md-button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "takeAgain()",flex:""} 
+          Tomar otra
+          %md-icon{"md-svg-icon"=>"navigation:refresh"}
+        %md-button.md-primary.md-raised{"ng-click" => "comeBack()",flex:""} 
+          Finalizar
+          %md-icon{"md-svg-icon"=>"action:done"}
