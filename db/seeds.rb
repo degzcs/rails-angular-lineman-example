@@ -21,12 +21,12 @@ unless Rails.env.production?
   rucoms = FactoryGirl.create_list(:rucom, 20)
   state = FactoryGirl.create(:state)
   city = FactoryGirl.create(:city, state_id: state.id, state_code: state.state_code)
-  population_center = FactoryGirl.create(:population_center, city_id: city.id, city_code: city.city_code)
+  #population_center = FactoryGirl.create(:population_center, city_id: city.id, city_code: city.city_code)
 
   puts 'creating rucoms ...'
   rucoms.each do|rucom|
-    FactoryGirl.create(:provider,rucom_id: rucom.id, population_center_id: population_center.id)
-    FactoryGirl.create(:client,rucom_id: rucom.id, population_center_id: population_center.id)
+    FactoryGirl.create(:provider,rucom_id: rucom.id) #, population_center_id: population_center.id)
+    FactoryGirl.create(:client,rucom_id: rucom.id) #, population_center_id: population_center.id)
   end
 
 

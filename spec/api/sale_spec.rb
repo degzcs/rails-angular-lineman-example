@@ -95,10 +95,15 @@ describe 'Sale', :type => :request do
         context 'get_by_code/:code' do
           before :each do
             @sale = Sale.last
+            @sale.user.company_info = create(:company_info)
+            @sale.user.rucom = create(:rucom)
+            @sale.user.save
             file_path = "#{Rails.root}/spec/support/test_pdfs/origin_certificate_file.pdf"
             File.open(file_path){|f|  @sale.origin_certificate_file = f}
             @sale.save
+            @sale.reload
           end
+
           it 'gets purchase by code' do
 
 
@@ -108,11 +113,11 @@ describe 'Sale', :type => :request do
             provider_hash = {
             id: @sale.user.id,
             name: "#{@sale.user.first_name} #{@sale.user.last_name}",
-            company_name: "TrazOro",
-            document_type: 'cedula',
-            document_number: @sale.user.document_number,
-            rucom_record: '0025478',
-            rucom_status: 'active'
+            company_name: @sale.user.company_info.name,
+            document_type: 'NIT',
+            document_number: @sale.user.company_info.nit_number,
+            rucom_record:  @sale.user.rucom.rucom_record,
+            rucom_status: @sale.user.rucom.status
           }
 
             expected_response = {

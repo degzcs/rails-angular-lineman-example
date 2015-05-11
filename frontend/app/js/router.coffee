@@ -91,6 +91,22 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.resolve()
         deferred.promise
   )
+  .state("camera",
+    url: "/camera",
+    ncyBreadcrumb:
+      label: 'Camera'
+    views:
+      'content':
+        templateUrl: "partials/camera.html"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
 
   .state "dashboard",
     url: "/dashboard"
@@ -100,6 +116,12 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/dashboard.html"
         controller: "DashboardCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -133,6 +155,12 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/providers/index.html"
         controller: "ProvidersIndexCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -146,11 +174,17 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("edit_provider",
     url: "/provider/:providerId",
     ncyBreadcrumb:
-      label: 'Edición de proveedores'
+      label: 'Edición proovedor'
     views:
       'content':
         templateUrl: "partials/providers/edit.html"
         controller: "ProvidersEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
 
     resolve:
       authenticated: ($q, $location, $auth) ->
@@ -189,6 +223,12 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'content':
           templateUrl: "partials/providers/type_a.html"
           controller: "ProvidersRucomCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -208,6 +248,12 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'content':
           templateUrl: "partials/providers/type_b.html"
           controller: "ProvidersRucomCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -229,6 +275,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/clients/index.html"
         controller: "ClientsIndexCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -247,6 +300,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         'content':
           templateUrl: "partials/clients/new.html"
           controller: "ClientsCreateCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
+
 
       resolve:
         authenticated: ($q, $location, $auth) ->
@@ -266,6 +326,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/clients/edit.html"
         controller: "ClientsEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
 
     resolve:
       authenticated: ($q, $location, $auth) ->
@@ -324,11 +391,18 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("new_courier",
     url: "/courier",
     ncyBreadcrumb:
-      label: 'New Courier'
+      label: 'Registro de Transportador'
     views:
       'content':
         templateUrl: "partials/couriers/new.html"
         controller: "CouriersNewCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -349,6 +423,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/purchases/new.html"
         controller: "PurchasesCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -415,11 +496,18 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("show_purchase",
     url: "/purchases/show",
     ncyBreadcrumb:
-      label: 'Factura Generada'
+      label: 'Detalles de compra'
     views:
       'content':
         templateUrl: "partials/purchases/show.html"
         controller: "PurchasesShowCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -455,6 +543,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/origin_certificates/new.html"
         controller: "OriginCertificateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -548,6 +643,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/inventory/index.html"
         controller: "InventoryIndexCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -565,6 +667,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/inventory/show.html"
         controller: "InventoryShowCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -582,6 +691,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/inventory/liquidate.html"
         controller: "InventoryLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -599,6 +715,14 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/sales/show.html"
         controller: "SaleShowCtrl"
+        controller: "InventoryLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()

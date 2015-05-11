@@ -1,21 +1,17 @@
 %md-content
+  %h2
+    Seleccione el Rucom del proovedor/cliente que va a registrar
+  %div.search-tool-header{:layout => "row"}
+    %div{flex: "50"}
+    %md-input-container{:flex => "", "md-no-float"=>""}
+      %input{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Filtrar numero"}
+        %md-icon.search{"md-svg-icon"=>"action:search"}
+    %md-input-container{:flex => "","md-no-float"=>""}
+      %input{"ng-model" => "searchRucom.name", :type => "text", :placeholder => "Filtrar Por Nombre"}
+        %md-icon.search{"md-svg-icon"=>"action:search"}
+
   %form{:name => "rucomForm"}
   %div{:layout => "column"}
-    %md-toolbar.md-primary{:layout => "column"}      
-      .md-toolbar-tools
-        .fill-height{:layout => "row", :flex => "flex"}
-          %a{"ui-sref" => "create_client", "ng-if" => "type == 'client'"}
-            %md-button.md-fab.md-accent.md-mini{"aria-label" => "New", "md-ripple-size" => "partial"} +
-            %md-tooltip{"md-direction" => "botton", "md-visible" => "demo.showTooltip"} No Rucom
-          %md-input-container{:flex => "flex", :style => "padding-left:25px;"}
-            %label Numero de Rucom
-            %input#search-prov-id{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Type the rucom number"}
-          %md-input-container{:flex => "flex", :style => "padding-left:50px; padding-right:30px;"}
-            %label Nombre del {{capType}}
-            %input#search-prov-name{"ng-model" => "searchRucom.name", :type => "text", :placeholder => "Type a name to refine your search"}
-          / .md-toolbar-item.md-tools{:layout => "row"}
-          /   %a.md-button.md-default-theme{"ng-click" => "search_rucom(searchRucom.rucom_record)"}
-          /     %i.ion-android-search
     %md-content.md-padding
     %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
       %md-table-rucom{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :count => "count", :type => "type", :style => "padding-left:20px; padding-right:20px;"}

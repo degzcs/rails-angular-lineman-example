@@ -15,6 +15,14 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
+#  document_number_file     :string(255)
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
+#  photo_file               :string(255)
+#  chamber_commerce_file    :string(255)
+#  rucom_id                 :integer
+#  company_info_id          :integer
+#  population_center_id     :integer
 #
 
 class User < ActiveRecord::Base
@@ -26,15 +34,68 @@ class User < ActiveRecord::Base
 	has_many :purchases
 	has_many :sales
 	has_many :credit_billings
-	has_secure_password
-	after_initialize :init
+	belongs_to :rucom #  NOTE: this is temporal becauses we don't have access to the real Rucom table just by the scrapper in python.
+	belongs_to :company_info #TODO: this model will be renamed to Company so the association have to be renamed too.
+	belongs_to :population_center
 
+	has_secure_password
+
+	#
+	# Validations
+	#
+
+	validates :rucom_id, presence: true
+	validates :company_info, presence: true
+	validates :population_center, presence: true
+
+	#
+	# Calbacks
+	#
+
+	after_initialize :init
 	before_save :save_client
+
+	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :company_info, :population_center
+
+	#
+	# fields for save files by carrierwave
+	#
+	mount_uploader :document_number_file, AttachmentUploader
+	mount_uploader :rut_file, AttachmentUploader
+	mount_uploader :mining_register_file, AttachmentUploader
+	mount_uploader :photo_file, AttachmentUploader
+	mount_uploader :chamber_commerce_file, AttachmentUploader
 
 	#
 	# Instance Methods
 	#
 
+	def company_name
+		company_info.name 
+	end
+
+	# TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
+	def phone
+		phone_number
+	end
+
+	#IMPROVE:  this value introduce inconsistencies in the transactions!!
+	def city
+		population_center.try(:city)
+	end
+
+	#IMPROVE:  this value introduce inconsistencies in the transactions!!
+	def nit
+		company_info.nit_number
+	end
+
+	def rucom_record
+		rucom.rucom_record
+	end
+
+	def office
+		'Trazoro Popayan'
+	end
 	# @return [String] whith the JWT to send the client
 	def create_token
 		payload = {

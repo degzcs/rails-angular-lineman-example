@@ -16,7 +16,7 @@
               %h4 Tome una foto al proveedor
             %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
-                %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
+                %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
                   %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newProvider.photo_file || 'img/default-user.png'}}","ng-model" => "newProvider.photo_file",  "check-image" => ''}
                   %md-tooltip{'md-direction'=> 'bottom'}
                     Tomar Foto

@@ -15,6 +15,14 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
+#  document_number_file     :string(255)
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
+#  photo_file               :string(255)
+#  chamber_commerce_file    :string(255)
+#  rucom_id                 :integer
+#  company_info_id          :integer
+#  population_center_id     :integer
 #
 
 FactoryGirl.define do
@@ -30,5 +38,8 @@ FactoryGirl.define do
     document_expedition_date { Faker::Time.between(2.days.ago, Time.now) }
     phone_number { Faker::PhoneNumber.cell_phone }
     address { Faker::Address.street_address}
+    company_info
+    population_center
+    rucom
   end
 end

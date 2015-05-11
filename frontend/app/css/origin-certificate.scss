@@ -1,3 +1,4 @@
+//------------ ORIGIN CERTIFICATE STYLES--------------//
 .origin-certificate-container{
   margin-left: auto;
   margin-right: auto;
@@ -21,3 +22,14 @@
     border-top-color: rgba(202, 199, 17, 1);
   }
 }
+
+.origin-certificate-tabs{
+  padding-left: 80px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  md-tab{
+    display: inline-block;
+  }
+}
+

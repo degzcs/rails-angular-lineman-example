@@ -11,14 +11,7 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
   # Set buyer as a current user
   CurrentUser.get().success (data) ->
     #IMPROVE: Set up Missing values to generate the Purchase invoice
-    data.company_name = 'TrazOro'
     data.document_type = 'NIT'
-    data.nit = '123456789456123'
-    data.rucom_record = 6547896321
-    data.office = 'TrazOro Popayan'
-    data.city = 'Popayan'
-    data.address = 'Calle # 123'
-    data.phone = '3007854214'
     # set authorized miner oc
     $scope.authorized_miner_origin_certificate.buyer = data
     $scope.authorized_miner_origin_certificate.city = data.city

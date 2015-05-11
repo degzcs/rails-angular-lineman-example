@@ -1,7 +1,8 @@
 ActiveAdmin.register User do
   menu priority: 3, label: 'Usuarios'
 
-  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :password
+  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :password, :document_number_file, :rut_file, :mining_register_file, :photo_file, :chamber_commerce_file, :company_info_id, :rucom_id, :population_center_id
+
 
   index do
     selectable_column
@@ -13,31 +14,73 @@ ActiveAdmin.register User do
     column :document_expedition_date
     column :phone_number
     column :address
-    column :password
     actions
   end
 
+  filter :rucom
   filter :email
   filter :first_name
   filter :last_name
   filter :document_number
   filter :document_expedition_date
   filter :phone_number
-  filter :address
-  filter :password
 
   form do |f|
-    f.inputs "Admin Details" do
-      f.input :email
-      f.input :first_name
-      f.input :last_name
-      f.input :document_number
-      f.input :document_expedition_date
-      f.input :phone_number
-      f.input :address
-      f.input :password
+    f.inputs "User Details" do
+      f.input :email 
+      f.input :first_name , label: "Nombre"
+      f.input :last_name, label: "Apellido"
+      f.input :document_number , label: "Numero de documento"
+      f.input :document_expedition_date, label: "fecha de expedicion" ,as: :datepicker, label: "Fecha de pago" 
+      f.input :phone_number, label: "Numero telefonico"
+      f.input :address, label: "Direccion"
+      f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.url)
+      f.input :document_number_file, :as => :file , label: "PDF cedula"
+      f.input :rut_file, :as => :file, label: "PDF Rut"
+      f.input :mining_register_file, :as => :file, label: "PDF refistro minero"
+      f.input :chamber_commerce_file, :as => :file, label: "PDF cedula"
+      f.input :company_info, label: "Compañia"
+      f.input :rucom_id, label: "Id Rucom (Revisar campo 'Id' en la Tabla de Rucoms)" ,as: :number
+      f.input :population_center, label: "Centro poblacional"
     end
     f.actions
+  end
+
+  show do
+    attributes_table do
+      row :email
+      row :first_name, label: "Nombre"
+      row :last_name, label: "Apellido"
+      row :document_number, label: "Numero de documento"
+      row :document_expedition_date, label: "Fecha de expedicion"
+      row :phone_number , label: "Numero telefonico"
+      row :address, label: "Direccion"
+      row :photo_file, label: "Foto usuario" do|u|
+        image_tag u.photo_file.url , class: "photo-user"
+      end
+      row :document_number_file , label: "PDF cedula"do|u|
+        link_to "archivo PDF", u.document_number_file.url
+      end
+      row :rut_file , label: "PDF Rut"do|u|
+        link_to "archivo PDF",u.rut_file.url if u.rut_file
+      end
+      row :mining_register_file , label: "PDF registro minero"do|u|
+        link_to "archivo PDF",u.mining_register_file.url
+      end
+      row :chamber_commerce_file , label: "PDF camara de comercio"do|u|
+        link_to "archivo PDF",u.chamber_commerce_file.url
+      end
+      row :company , label: "Compañia"do|u|
+        u.company_info.name
+      end
+      row :rucom do|u|
+        link_to "Rucom: #{u.rucom.name}", admin_rucom_path(u.rucom.id)
+      end
+      row :population_center, label: "Centro poblado"  do|u|
+        u.population_center.name
+      end 
+    end
+    active_admin_comments
   end
 
 end

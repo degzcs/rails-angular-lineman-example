@@ -11,17 +11,15 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.searchText = null
   $scope.code = null
   $scope.origin_certificate_upload_type = null
+
+  $scope.rucomIDField =
+    label: 'Número de RUCOM'
+    field: 'num_rucom'
+
   # if $scope.purchase.model.origin_certificate_file.url
   # $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
 
   CurrentUser.get().success (data) ->
-  #IMPROVE: I Set up Missing values to generate the Purchase invoice but this values have to be creted in the DB and return them by the API endpoint
-    data.company_name = 'TrazOro'
-    data.nit = '123456789456123'
-    data.rucom_record = 6547896321
-    data.office = 'TrazOro Popayan'
-    data.address = 'Calle falsa 123'
-    data.phone = '3007854214'
     $scope.current_user = data
 
   window.s =  $scope
@@ -57,6 +55,23 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   #
   #
+  $scope.selectedProviderChange = (provider) ->
+    if provider
+      console.log 'Provider changed to ' + JSON.stringify(provider)
+      if provider.num_rucom
+        $scope.rucomIDField.label = 'Número de RUCOM'
+        $scope.rucomIDField.field = 'num_rucom'
+        $scope.purchase.model.rucom_id_field = 'num_rucom'
+      else if provider.rucom_record
+        $scope.rucomIDField.label = 'Número de Expediente'
+        $scope.rucomIDField.field = 'rucom_record'
+        $scope.purchase.model.rucom_id_field = 'rucom_record'
+    else
+      console.log 'State changed to none'
+
+  #
+  #
+  #
   $scope.formatOriginCertificate = (url) ->
     if url
       url.split('/').pop()
@@ -79,14 +94,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     while i < providers.length
       prov =
         id: providers[i].id
-        document_number: providers[i].document_number
+        document_number: providers[i].nit || providers[i].document_number
         company_name: 'company name test' # <-- TODO: migration
         document_type: 'NIT' # <-- TODO: migration
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
         email: providers[i].email
-        phone_number: providers[i].phone_number
+        phone_number: providers[i].phone_number || providers[i].phone
         photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
         num_rucom: providers[i].rucom.num_rucom
         rucom_record: providers[i].rucom.rucom_record
@@ -94,8 +109,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: 'Popayan'
+        city: providers[i].city || 'Popayan'
         state: 'Cauca'
+        address: providers[i].address
       $scope.allProviders.push prov
       i++
   ), (error) ->

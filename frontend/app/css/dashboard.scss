@@ -27,17 +27,13 @@
   font-size: 15px!important;
 }
 
-.bt-buy-credits{
-  width: 100%;
-  margin-top: 15px;
-  text-transform: none;
-}
 
 .dashboard-buttons{
   .md-button{
     width: 200px;
     margin: 20px;
     padding: 20px;
+    
   }
 }
 
@@ -51,4 +47,70 @@
 
 .credits_buy_button{
   width: 100%;
+}
+
+.dashboard-user-info .user-photo{
+  width: 120px;
+  height: 120px;
+  border: 2px solid #ffcb34;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.dashboard-content{
+  text-align: center;
+}
+.dashboard-user-info{
+  display: inline-block;
+  margin: 40px;
+}
+.dashboard-user-info .info-container{
+  margin-left: 20px;
+  //width: 400px;
+  margin-top: 15px;
+  h4{
+    text-align: left;
+    font-weight: 1px;
+    color: #bbbcbb;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-weight: 400;
+    .info{
+      display: inline-block;
+      color: #8d8e8f;
+
+    }
+  }
+}
+
+.dashboard-credit-info{
+  width: 100%;
+  text-align: center;
+  .credits{
+    display: inline-block;
+    width: 400px;
+    background: #ebeae5;
+    padding-bottom: 20px;
+  }
+  .credits h3{
+    color: #8d8e8f;
+    font-weight: 600;
+  }
+  .credits .value{
+    color: #231f20;
+    font-weight: 900;
+    font-size: 30px;
+  }
+
+  .bt-buy-credits{
+    margin-top: 15px;
+    background: transparent!important;
+    color: #8d8e8f!important;
+    margin-top: 20px;
+    border: 3px solid #ffcb34!important;
+    text-transform: capitalize!important;
+    font-weight: bold!important;
+    width: 400px;
+  }
+
 }

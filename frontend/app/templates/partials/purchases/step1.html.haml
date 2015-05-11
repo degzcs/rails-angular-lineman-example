@@ -10,8 +10,9 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
-                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
+                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
+                
 
   %section{layout: "row"}
     // ---------------------- Provider info ------------------- ///
@@ -23,7 +24,7 @@
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             2. Ingrese el codigo de barras
 
-        %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula"}
+        %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedProviderChange(provider)"}
           %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
 
         %div.fieldset-inputs
@@ -39,7 +40,7 @@
               %input{"ng-model" => "purchase.model.provider.name", :required => "", :name => 'provider_name', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Nombre de la Compania
-              %input{"ng-model" => "purchase.model.provider.company_name", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.provider.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
           %div{layout: "row"}
             %md-input-container{flex: "20"}
               %label tipo doc.
@@ -50,14 +51,14 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Registro Rucom
-              %input{"ng-model" => "purchase.model.provider.rucom_record", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.provider[purchase.model.rucom_id_field]", :name => 'provider_rucom', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Estado Rucom
-              %input{"ng-model" => "purchase.model.provider.rucom_status", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.provider.rucom_status", :name => 'provider_rucom_status', :readOnly => 'true'}
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
-      %a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", 'ng-href' => "#provider"}  crear proovedor
+      %a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", 'ui-sref' => "search_rucom({type: 'provider'})"}  crear proovedor
     %div{flex: ""}
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
@@ -69,8 +70,8 @@
 
         %md-input-container.row
           .photo
-            %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', :ng-style => "{'background-image': 'url(img/default-user.png);'}"}
+            %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
+              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               %md-tooltip{'md-direction'=> 'right'}
                 Tomar Foto
 
