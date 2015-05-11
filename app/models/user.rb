@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
 	has_secure_password
 
 	#
+	# Validations
+	#
+
+	validates :rucom_id, presence: true
+	validates :company_info, presence: true
+	validates :population_center, presence: true
+
+	#
 	# Calbacks
 	#
 
