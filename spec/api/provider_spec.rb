@@ -57,11 +57,6 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: provider.photo_file_url,
-              identification_number_file: provider.identification_number_file_url,
-              mining_register_file: provider.mining_register_file_url,
-              rut_file: provider.rut_file_url,
-              chamber_commerce_file: provider.chamber_commerce_file_url,
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               population_center: expected_population_center.stringify_keys
@@ -69,7 +64,7 @@ describe 'Provider', :type => :request do
 
             get "/api/v1/providers/#{provider.id}",{},{ "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
-            expect(JSON.parse(response.body)).to match expected_response.stringify_keys
+            expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
         end
       end
@@ -117,11 +112,6 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: "#{Rails.root}/spec/uploads/provider/photo_file/21/provider_photo.png",
-              identification_number_file: "#{Rails.root}/spec/uploads/provider/identification_number_file/21/identification_number_file.png",
-              mining_register_file: "#{Rails.root}/spec/uploads/provider/mining_register_file/21/mining_register_file.png",
-              rut_file: "#{Rails.root}/spec/uploads/provider/rut_file/21/rut_file.png",
-              chamber_commerce_file: "#{Rails.root}/spec/uploads/provider/chamber_commerce_file/21/chamber_commerce_file.png",
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               population_center: expected_population_center.stringify_keys
@@ -130,7 +120,7 @@ describe 'Provider', :type => :request do
             post '/api/v1/providers', {provider: new_values}, { "Authorization" => "Barer #{@token}" }
 
             expect(response.status).to eq 201
-            expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
+            expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
           end
         end
         context "with company info" do
@@ -201,11 +191,6 @@ describe 'Provider', :type => :request do
               last_name: provider.last_name,
               phone_number: provider.phone_number,
               address: provider.address,
-              photo_file: "#{Rails.root}/spec/uploads/provider/photo_file/22/provider_photo.png",
-              identification_number_file: "#{Rails.root}/spec/uploads/provider/identification_number_file/22/identification_number_file.png",
-              mining_register_file: "#{Rails.root}/spec/uploads/provider/mining_register_file/22/mining_register_file.png",
-              rut_file: "#{Rails.root}/spec/uploads/provider/rut_file/22/rut_file.png",
-              chamber_commerce_file: "#{Rails.root}/spec/uploads/provider/chamber_commerce_file/22/chamber_commerce_file.png",
               email: provider.email,
               rucom: expected_rucom.stringify_keys,
               company_info: expected_company_info.stringify_keys,
@@ -216,7 +201,7 @@ describe 'Provider', :type => :request do
                                       { "Authorization" => "Barer #{@token}" }
 
             expect(response.status).to eq 201
-            expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
+            expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
           end
         end
       end
@@ -273,11 +258,6 @@ describe 'Provider', :type => :request do
             last_name: provider.last_name,
             phone_number: provider.phone_number,
             address: provider.address,
-            photo_file: provider.photo_file_url,
-            identification_number_file: provider.identification_number_file_url,
-            mining_register_file: provider.mining_register_file_url,
-            rut_file: provider.rut_file_url,
-            chamber_commerce_file: provider.chamber_commerce_file_url,
             email: provider.email,
             rucom: expected_rucom.stringify_keys,
             company_info: expected_company_info.stringify_keys,
@@ -287,7 +267,7 @@ describe 'Provider', :type => :request do
           put "/api/v1/providers/#{provider.id}", {id: provider.id, provider: new_values, company_info: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
 
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
+          expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
         end
       end
     end

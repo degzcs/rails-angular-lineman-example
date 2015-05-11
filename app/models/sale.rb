@@ -35,7 +35,7 @@ class Sale < ActiveRecord::Base
   #
   # Uploaders
   #
-  mount_uploader :origin_certificate_file, AttachmentUploader
+  mount_uploader :origin_certificate_file, PdfUploader
 
   #
   # Validations

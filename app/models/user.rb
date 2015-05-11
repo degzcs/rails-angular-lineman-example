@@ -60,11 +60,11 @@ class User < ActiveRecord::Base
 	#
 	# fields for save files by carrierwave
 	#
-	mount_uploader :document_number_file, AttachmentUploader
-	mount_uploader :rut_file, AttachmentUploader
-	mount_uploader :mining_register_file, AttachmentUploader
-	mount_uploader :photo_file, AttachmentUploader
-	mount_uploader :chamber_commerce_file, AttachmentUploader
+	mount_uploader :document_number_file, PdfUploader
+	mount_uploader :rut_file, PdfUploader
+	mount_uploader :mining_register_file, PdfUploader
+	mount_uploader :photo_file, PhotoUploader
+	mount_uploader :chamber_commerce_file, PdfUploader
 
 	#
 	# Instance Methods

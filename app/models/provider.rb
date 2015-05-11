@@ -31,11 +31,11 @@ class Provider < ActiveRecord::Base
 
   has_one :company_info
   belongs_to :rucom
-  mount_uploader :identification_number_file, AttachmentUploader
-  mount_uploader :rut_file, AttachmentUploader
-  mount_uploader :mining_register_file, AttachmentUploader
-  mount_uploader :chamber_commerce_file, AttachmentUploader
-  mount_uploader :photo_file, AttachmentUploader
+  mount_uploader :identification_number_file, PdfUploader
+  mount_uploader :rut_file, PdfUploader
+  mount_uploader :mining_register_file, PdfUploader
+  mount_uploader :chamber_commerce_file, PdfUploader
+  mount_uploader :photo_file, PhotoUploader
 
   #
   # Scopes

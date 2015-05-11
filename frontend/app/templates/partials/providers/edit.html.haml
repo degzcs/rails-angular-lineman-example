@@ -12,7 +12,7 @@
       #tab1-content{"aria-labelledby" => "tab1", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "0", :role => "tabpanel"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
           .md-tile-left{:flex => "10"}
-            %img.face{:alt => "", "ng-src" => "{{currentProvider.photo_file}}"}
+            %img.face{:alt => "", "ng-src" => "{{currentProvider.photo_file.thumb.url}}"}
           %md-input-container{:flex => "25"}
             %label Nombre
             %input{:readonly => "true", "ng-model" => "currentProvider.first_name"}
@@ -107,21 +107,22 @@
       #tab3-content{"aria-labelledby" => "tab3", "md-swipe-left" => "next()", "md-swipe-right" => "previous()", "ng-switch-when" => "2", :role => "tabpanel"}
         %md-content.md-padding
         %div{:layout => "row", "layout-align" => "space-around center", "layout-margin" => "", "layout-sm" => "column"}   
-          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file}}", :target => "_blank", :download => ""}  
+
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file.url}}", :target => "_blank", :download => ""}  
             %p Cédula de Ciudadanía
-            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}
-          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.mining_register_file}}", :target => "_blank", :download => ""}  
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentProvider.identification_number_file.preview.url || 'img/pdf.png'}}"}
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.mining_register_file.url}}", :target => "_blank", :download => ""}  
             %p Registro minero
-            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"}                                        
-          %md-button{"ng-show"=>"currentProvider.chamber_commerce_file", :class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.chamber_commerce_file}}", :target => "_blank", :download => ""}
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentProvider.mining_register_file.preview.url || 'img/pdf.png'}}"}                                  
+          %md-button{"ng-show"=>"currentProvider.chamber_commerce_file.url", :class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.chamber_commerce_file.url}}", :target => "_blank", :download => ""}
             %p Camara de comercio
-            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
-          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.rut_file}}", :target => "_blank", :download => ""}  
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentProvider.rut_file.preview.url }}" } 
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.rut_file.url}}", :target => "_blank", :download => ""}  
             %p RUT
-            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
-          %md-button{"ng-show"=>"currentProvider.authorization_file", :class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file}}", :target => "_blank", :download => ""}  
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentProvider.rut_file.preview.url || 'img/pdf.png'}}" } 
+          %md-button{"ng-show"=>"currentProvider.authorization_file.url", :class => "md-raised", :flex => "15", "ng-href" => "{{currentProvider.identification_number_file.url}}", :target => "_blank", :download => ""}  
             %p Autorización*
-            %img.md-card-image{:alt => "Cédula", :src => "img/pdf.png"} 
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentProvider.identification_number_file.preview.url || 'img/pdf.png'}}"} 
         %span
         %md-content.md-padding  
         %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}                  

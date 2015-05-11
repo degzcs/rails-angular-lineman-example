@@ -34,7 +34,7 @@ ActiveAdmin.register User do
       f.input :document_expedition_date, label: "fecha de expedicion" ,as: :datepicker, label: "Fecha de pago" 
       f.input :phone_number, label: "Numero telefonico"
       f.input :address, label: "Direccion"
-      f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.url)
+      f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)
       f.input :document_number_file, :as => :file , label: "PDF cedula"
       f.input :rut_file, :as => :file, label: "PDF Rut"
       f.input :mining_register_file, :as => :file, label: "PDF refistro minero"
@@ -56,7 +56,7 @@ ActiveAdmin.register User do
       row :phone_number , label: "Numero telefonico"
       row :address, label: "Direccion"
       row :photo_file, label: "Foto usuario" do|u|
-        image_tag u.photo_file.url , class: "photo-user"
+        image_tag u.photo_file.thumb.url , class: "photo-user"
       end
       row :document_number_file , label: "PDF cedula"do|u|
         link_to "archivo PDF", u.document_number_file.url

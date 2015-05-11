@@ -41,8 +41,8 @@ class Purchase < ActiveRecord::Base
   #
   # Fields
   #
-  mount_uploader :origin_certificate_file, AttachmentUploader
-  mount_uploader :seller_picture, AttachmentUploader
+  mount_uploader :origin_certificate_file, PdfUploader
+  mount_uploader :seller_picture, PhotoUploader
 
   #
   # Instance methods
