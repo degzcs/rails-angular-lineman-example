@@ -18,20 +18,6 @@ class SalePDFService
   end
 
  private
-  def provider 
-    user = @sale.user
-    {
-      social: '',
-      name: user.first_name + user.last_name,
-      type: 'Usuario trazoro',
-      identification_number: user.document_number,
-      nit: '',
-      rucom: user.rucom.num_rucom || user.rucom.rucom_record,
-      address: user.address,
-      email: user.email,
-      phone: user.phone_number
-    }
-  end
 
   def provider 
     user = @sale.user

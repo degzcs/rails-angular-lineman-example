@@ -624,7 +624,7 @@ module V1
           sale = SalePDFService.new(sale_id)
 
           values = sale.values
-
+          binding.pry
           # purchase --> type
           #castellanos
           #tamines
