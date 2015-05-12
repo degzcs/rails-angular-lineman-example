@@ -20,6 +20,22 @@ angular.module('app').factory 'PdfService', ($http)->
           file = new Blob([ response ], type: 'application/pdf')
           fileURL = URL.createObjectURL(file)
           window.open(fileURL, '_blank', '')
+    #
+    # Sale Invoice !!! NOTE: USING GET METHOD AND POPULATIONG THE PDF ON SERVER SIDE
+    createSaleInvoice: (sale_id)->
+      $http.get('/api/v1/files/download_sales_report/'+sale_id,
+        headers: 'Content-type': 'application/pdf'
+        responseType: 'arraybuffer'
+        transformResponse = (data) ->
+          pdf = undefined
+          if data
+            pdf = new Blob([ data ], type: 'application/pdf')
+          { response: pdf }
+        )
+      .success (response) ->
+          file = new Blob([ response ], type: 'application/pdf')
+          fileURL = URL.createObjectURL(file)
+          window.open(fileURL, '_blank', '')
 
     #
     # Barequero chatarrero  OC

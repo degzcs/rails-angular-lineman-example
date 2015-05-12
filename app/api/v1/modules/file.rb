@@ -619,7 +619,11 @@ module V1
         end
 
         # download_sales_report
-        post 'download_sales_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get 'download_sales_report/:sale_id' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          sale_id = params[:sale_id]
+          sale = SalePDFService.new(sale_id)
+
+          values = sale.values
 
           # purchase --> type
           #castellanos
@@ -627,7 +631,7 @@ module V1
           #reales
           #granos
           # hash
-
+=begin
            values = { provider: {
                           social: 'razon social',
                           name: 'Esteban Ceron',
@@ -697,7 +701,7 @@ module V1
 
                       }
 
-
+=end
           #     }
 
           #values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
