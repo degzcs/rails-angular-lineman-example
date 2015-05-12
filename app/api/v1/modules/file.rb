@@ -621,11 +621,10 @@ module V1
         # download_sales_report
         get 'download_sales_report/:sale_id' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           sale_id = params[:sale_id]
-          values = ::SalePDFService.values(sale_id)
+          sale = SalePDFService.new(sale_id)
 
-          p = values.provider
-          binding.pry
-          puts ""
+          values = sale.values
+
           # purchase --> type
           #castellanos
           #tamines
