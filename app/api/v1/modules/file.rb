@@ -619,15 +619,20 @@ module V1
         end
 
         # download_sales_report
-        post 'download_sales_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get 'download_sales_report/:sale_id' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          sale_id = params[:sale_id]
+          values = ::SalePDFService.values(sale_id)
 
+          p = values.provider
+          binding.pry
+          puts ""
           # purchase --> type
           #castellanos
           #tamines
           #reales
           #granos
           # hash
-
+=begin
            values = { provider: {
                           social: 'razon social',
                           name: 'Esteban Ceron',
@@ -697,7 +702,7 @@ module V1
 
                       }
 
-
+=end
           #     }
 
           #values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
