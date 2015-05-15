@@ -17,7 +17,7 @@ ActiveAdmin.register User do
     actions
   end
 
-  filter :rucom
+  #filter :rucom
   filter :email
   filter :first_name
   filter :last_name
