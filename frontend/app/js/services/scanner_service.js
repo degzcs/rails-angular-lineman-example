@@ -22,6 +22,7 @@ var consecutivo=0;
     };
 //Method to get the last file in pdf joining all the images
      var joinFile=function(images){
+     pdf=new jsPDF();    
      filesarray=[];        
      consecutivo++;
       if(images && images.length>0){
@@ -30,12 +31,12 @@ var consecutivo=0;
             pdf.addPage();
             pdf.setPage(0);
         } 
-        pdf.addImage(images[i],"png",5,5,200,280);
+        pdf.addImage(images[i],"JPEG",5,5,200,280);
         }
      //   pdf.save("a.pdf");
-        var blob= pdf.blob(consecutio+getDate()+'.pdf');
+        var blob= pdf.getBlob();
         blob.lastModifiedDate = new Date();
-        blob.name = 'file.pdf';
+        blob.name = consecutivo+getDate()+'.pdf';;
         filesarray.push(blob);
         return filesarray;
         }

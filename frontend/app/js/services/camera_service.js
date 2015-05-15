@@ -31,7 +31,7 @@ angular.module('app').factory('CameraService', function($window) {
 //mehtod to add scan files
     var addScanFile = function($datarUrl){
         images.push($datarUrl);
-        files.push(dataURItoFile($datarUrl,consecutivo+getDate()+files.length+'.png'));
+        files.push(dataURItoFile($datarUrl,consecutivo+getDate()+files.length+'.JPEG'));
         console.log(files);
     };
 //Method to remove scan files
@@ -75,6 +75,7 @@ angular.module('app').factory('CameraService', function($window) {
     };
 //Method to get the last file in pdf joining all the images
      var getJoinedFile=function(){
+      pdf=new jsPDF();
       filesarray=[];
       if(images && images.length>0){
        for(var i=0;i<images.length;i++){
@@ -82,9 +83,9 @@ angular.module('app').factory('CameraService', function($window) {
             pdf.addPage();
             pdf.setPage(y);
         } 
-        pdf.addImage(images[i],"png",30,5,width,height);
+        pdf.addImage(images[i],'JPEG',30,5,width,height);
         }
-        var blob= pdf.blob('file.pdf');
+        var blob= pdf.getBlob();
         blob.lastModifiedDate = new Date();
         blob.name = consecutivo+getDate()+'.pdf';
         filesarray.push(blob);

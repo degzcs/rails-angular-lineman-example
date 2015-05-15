@@ -26,7 +26,7 @@ angular.module('app').controller('CameraScannerController',  ['$scope','$q','$ti
                     $timeout(function() {
                         ctx.fillRect(0, 0, vari, vari);
                         ctx.drawImage(videoElement, 0, 0, vari, vari);
-                        d.resolve(canvas.toDataURL());
+                        d.resolve(canvas.toDataURL("image/jpeg", 1.0));
                     }, 0);
                     d.promise.then(function(image) {
                             $scope.image1=image;
@@ -35,7 +35,7 @@ angular.module('app').controller('CameraScannerController',  ['$scope','$q','$ti
                     $timeout(function() {
                         ctx.fillRect(0, 0, $scope.w2, $scope.h2);
                         ctx.drawImage(videoElement, 0, 0, $scope.w2, $scope.h2);
-                        d.resolve(canvas.toDataURL());
+                        d.resolve(canvas.toDataURL("image/jpeg", 1.0));
                     }, 0);
                     d.promise.then(function(image) {
                             $scope.image=image;
@@ -47,7 +47,7 @@ angular.module('app').controller('CameraScannerController',  ['$scope','$q','$ti
 
                 $scope.takeAgain = function(){
                     hideCanvas();
-                }
+                };
                 $scope.addScanFile=function(){
                     if($scope.image) {
                         CameraService.addScanFile($scope.image1);

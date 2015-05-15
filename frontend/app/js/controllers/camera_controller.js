@@ -13,7 +13,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     canvas.addClass('show');
                     options.removeClass('show');
                     optionsFinal.addClass('show');
-                }
+                };
                 hideCanvas = function(){
                     var canvas = angular.element( document.querySelector('canvas') );
                     var options = angular.element(document.querySelector('.camera-options'));
@@ -21,7 +21,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     canvas.removeClass('show');
                     options.addClass('show');
                     optionsFinal.removeClass('show');
-                }
+                };
 
                 $scope.changeCamera=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
@@ -45,7 +45,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     $timeout(function() {
                         ctx.fillRect(0, 0, vari, vari);
                         ctx.drawImage(videoElement, 0, 0, vari, vari);
-                        d.resolve(canvas.toDataURL());
+                        d.resolve(canvas.toDataURL("image/jpeg", 1.0));
                     }, 0);
                     d.promise.then(function(image) {
                             $scope.image1=image;
@@ -54,7 +54,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     $timeout(function() {
                         ctx.fillRect(0, 0, $scope.w2, $scope.h2);
                         ctx.drawImage(videoElement, 0, 0, $scope.w2, $scope.h2);
-                        d.resolve(canvas.toDataURL());
+                        d.resolve(canvas.toDataURL("image/jpeg", 1.0));
                     }, 0);
                     d.promise.then(function(image) {
                             $scope.image=image;
@@ -66,7 +66,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
 
                 $scope.takeAgain = function(){
                     hideCanvas();
-                }
+                };
                 $scope.addScanFile=function(){
                     if($scope.image) {
                         CameraService.addScanFile($scope.image1);

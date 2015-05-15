@@ -107,14 +107,14 @@
                   %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Subir Foto
+                      Subir Certificado
                       %span.ion-android-checkmark-circle
 
-                  %md-input-container
-                    %label Nombre del archivo
-                    %input{"ng-model" => "purchase.model.origin_certificate_file[0].name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
-                    %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
-                      %div{"ng-message" => "required"} * Debe seleccionar el certificado de origen desde su computado
+                %md-input-container
+                  %label Nombre del archivo
+                  %input{"ng-model" => "purchase.model.origin_certificate_file[0].name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
+                  %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
+                    %div{"ng-message" => "required"} * Debe cargar el certificado de origen 
                   / .preview
                   /   %img{:ngf-src=>"purchase.model.origin_certificate_file[0]"}
 
