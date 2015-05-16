@@ -20,9 +20,6 @@
       %div{:flex => "25"}  
         %md-select{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
           %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
-      %div{:flex => "25"}    
-        %md-checkbox{:ng-model => "isForCamera",:ng-true-value => "'Foto'", :ng-false-value => "'Documentos'",:ng-click => "changeParameter(options.value)"}
-          {{isForCamera}}    
     %div.camera{:layout => "row", :layout-align => "center center"}
       %video.camera{:autoplay => ""}
     %br

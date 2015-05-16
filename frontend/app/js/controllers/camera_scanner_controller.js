@@ -1,7 +1,7 @@
 angular.module('app').controller('CameraScannerController',  ['$scope','$q','$timeout','$mdDialog','CameraService', function($scope,$q, $timeout,$mdDialog,CameraService) {
                 $scope.optionsSource=CameraService.getMediaSources();
                 $scope.optionSelected='';
-                $scope.isForCamera='Foto';
+                $scope.isForCamera='';
                 $scope.number=0;
                 $scope.image1='';
                 
