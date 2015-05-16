@@ -715,7 +715,6 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
       'content':
         templateUrl: "partials/sales/show.html"
         controller: "SaleShowCtrl"
-        controller: "InventoryLiquidateCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"

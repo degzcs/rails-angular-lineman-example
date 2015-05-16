@@ -135,7 +135,8 @@ class User < ActiveRecord::Base
 											"id_document_type" => 'CC',
 											"id_document_number" => self.document_number,
 											"client_type" => 'Comercializador',
-											"email" => self.email}
+											"email" => self.email,
+											"rucom_id"=>self.rucom_id}
 										#	"rucom_id" => 1, #provisional
 										#	"population_center_id" => 1} #provisional
 
