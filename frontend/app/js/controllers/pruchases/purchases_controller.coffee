@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state) ->
 
   #
   # Instances
@@ -219,4 +219,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.create =  ->
     console.log 'creating purchase ...'
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
+
+  $scope.createProvider = ->
+    ProviderService.setCallerState('new_purchase.step1')
+    $state.go('search_rucom',{type: 'provider'})
 

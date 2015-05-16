@@ -6,6 +6,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
     impl.uploadProgress = 0;
     var currentTabProvCreation = 0;
 
+
     var setCurrentProv = function(provider) {
         currentProvider = provider;
     };
@@ -350,6 +351,17 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
             return console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
         };
 
+    var setCallerState = function(state){
+      sessionStorage.callerState = state;
+    }
+
+    var getCallerState = function(){
+      if(sessionStorage.callerState ){
+        state = sessionStorage.callerState
+      }
+      return state;
+    }
+
     return {
         getCurrentProv: getCurrentProv,
         setCurrentProv: setCurrentProv,
@@ -360,6 +372,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         uploadProgress: impl.uploadProgress,
         impl: impl,
         retrieve: retrieve,
-        currentTabProvCreation: currentTabProvCreation
+        currentTabProvCreation: currentTabProvCreation,
+        setCallerState: setCallerState,
+        getCallerState: getCallerState
     };
 });

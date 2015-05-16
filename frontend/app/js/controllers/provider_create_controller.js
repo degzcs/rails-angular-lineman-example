@@ -150,6 +150,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     console.log('States: ' + JSON.stringify(states));
   });
 
+
   $scope.loadProviderLocation = function (provider) {
     if(provider) {
       LocationService.getPopulationCenterById.get({populationCenterId: provider.population_center.id}, function(populationCenter) {
@@ -217,7 +218,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
   $scope.back = function() {
     ProviderService.setCurrentProv({});
-    $window.history.back();
+    $state.go(ProviderService.getCallerState || 'providers')
   };
 
   $scope.next = function() {
@@ -303,7 +304,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
    $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'))
    .finally(function() {
       if (!error) {
-        $window.history.back();
+        $state.go(ProviderService.getCallerState() || 'providers')
       }
     });
   };

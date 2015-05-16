@@ -427,36 +427,36 @@ class PdfFile < Prawn::Document
 
     #provider
     move_cursor_to 666
-    text_box "#{values[:provider][:company_name]}", :at => [400,cursor], :width => 150
+    text_box "#{values[:provider][:company_name]}", :at => [400,cursor], :width => 150 , :size => 10 , :height =>  10
     #move_down 16
     move_cursor_to 648
-    text_box "#{values[:provider][:nit]}", :at => [400,cursor], :width => 150
-    move_cursor_to 630
-    text_box "#{values[:provider][:name]}", :at => [400,cursor], :width => 150
+    text_box "#{values[:provider][:nit]}", :at => [400,cursor], :width => 150, :size => 10 , :height =>  10
+    move_cursor_to 629
+    text_box "#{values[:provider][:name]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 611
-    text_box "#{values[:provider][:document_number]}", :at => [400,cursor], :width => 150
+    text_box "#{values[:provider][:document_number]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 593
-    text_box "#{values[:provider][:rucom_record]}", :at => [400,cursor], :width => 150
+    text_box "#{values[:provider][:rucom_record]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 575
-    text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150
+    text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 557
-    text_box "#{values[:provider][:phone]}", :at => [400,cursor], :width => 150
+    text_box "#{values[:provider][:phone]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
 
     #buyer
     move_cursor_to 666
-    text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150
+    text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 650
-    text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150
+    text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 630
-    text_box "#{values[:buyer][:rucom_record]}", :at => [130,cursor], :width => 150
-    move_cursor_to 613
-    text_box "#{values[:buyer][:first_name]}", :at => [130,cursor], :width => 150
+    text_box "#{values[:buyer][:rucom_record]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
+    move_cursor_to 612
+    text_box "#{values[:buyer][:first_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 593
-    text_box "#{values[:buyer][:office]}", :at => [130,cursor], :width => 150
+    text_box "#{values[:buyer][:office]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 575
-    text_box "#{values[:buyer][:address]}", :at => [130,cursor], :width => 150
+    text_box "#{values[:buyer][:address]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
     move_cursor_to 557
-    text_box "#{values[:buyer][:phone]}", :at => [130,cursor], :width => 150
+    text_box "#{values[:buyer][:phone]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
 
 
     if values[:gold_batch][:castellanos][:quantity] != 0
@@ -484,16 +484,16 @@ class PdfFile < Prawn::Document
     # end
 
     move_cursor_to 412
-    text_box "#{values[:gold_batch][:total_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150
+    text_box "#{values[:gold_batch][:total_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
     move_cursor_to 394
-    text_box "#{values[:gold_batch][:grade]}" , :at => [300 , cursor] , :width => 150
+    text_box "#{values[:gold_batch][:grade]}" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
 
     move_cursor_to 375
-    text_box "#{values[:gold_batch][:total_fine_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150
+    text_box "#{values[:gold_batch][:total_fine_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
     move_cursor_to 357
-    text_box "#{values[:purchase][:price].round(2)} pesos" , :at => [300 , cursor] , :width => 150
+    text_box "#{values[:purchase][:price].round(2)} pesos" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
     move_cursor_to 339
-    text_box "#{values[:purchase][:fine_gram_unit_price].round(2)} pesos" , :at => [300 , cursor] , :width => 150
+    text_box "#{values[:purchase][:fine_gram_unit_price].round(2)} pesos" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
 
     # 
     # move_cursor_to 105
@@ -553,44 +553,44 @@ class PdfFile < Prawn::Document
     end
     #buyer
     move_cursor_to 919
-    text_box "#{values[:buyer][:social]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:social]}", :at => [115,cursor], :width => 170 , :size => 10 , :height =>  10
     move_cursor_to 900
-    text_box "#{values[:buyer][:name]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:name]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 882
-    text_box "#{values[:buyer][:type]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:type]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 865
-    text_box "#{values[:buyer][:identification_number]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:identification_number]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 846
-    text_box "#{values[:buyer][:nit]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:nit]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 829
-    text_box "#{values[:buyer][:rucom]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:rucom]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 810
-    text_box "#{values[:buyer][:address]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:address]}", :at => [115,cursor], :width => 170 , :size => 10, :height =>  10
     move_cursor_to 792
-    text_box "#{values[:buyer][:email]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:email]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 774
-    text_box "#{values[:buyer][:phone]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:buyer][:phone]}", :at => [115,cursor], :width => 170, :size => 10, :height =>  10
 
 
     #provider
     move_cursor_to 919
-    text_box "#{values[:provider][:social]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:social]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 900
-    text_box "#{values[:provider][:name]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:name]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 882
-    text_box "#{values[:provider][:type]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:type]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 865
-    text_box "#{values[:provider][:identification_number]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:identification_number]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 846
-    text_box "#{values[:provider][:nit]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:nit]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 829
-    text_box "#{values[:provider][:rucom]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:rucom]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 810
-    text_box "#{values[:provider][:address]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:address]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 792
-    text_box "#{values[:provider][:email]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:email]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
     move_cursor_to 774
-    text_box "#{values[:provider][:phone]}", :at => [370,cursor], :width => 170
+    text_box "#{values[:provider][:phone]}", :at => [370,cursor], :width => 170, :size => 10, :height =>  10
 
 
     #transportador
@@ -610,25 +610,25 @@ class PdfFile < Prawn::Document
 
     move_cursor_to 585
     gold_group.each do |gold|
-      text_box "#{gold[:id_purchase]}", :at => [50,cursor], :width => 70 , :size => 10
-      text_box "#{gold[:id_provider]}", :at => [130,cursor], :width => 70 , :size => 10
-      text_box "#{gold[:social]}", :at => [233,cursor], :width => 120 , :size => 10
-      text_box "#{gold[:certificate_number]}", :at => [392,cursor], :width => 90 , :size => 10
-      text_box "#{gold[:rucom]}", :at => [487,cursor], :width => 90 , :size => 10
-      text_box "#{gold[:fine_grams]}", :at => [565,cursor], :width => 90, :size => 10
+      text_box "#{gold[:id_purchase]}", :at => [50,cursor], :width => 70 , :size => 10, :height =>  10
+      text_box "#{gold[:id_provider]}", :at => [130,cursor], :width => 70 , :size => 10, :height =>  10
+      text_box "#{gold[:social]}", :at => [233,cursor], :width => 120 , :size => 10, :height =>  10
+      text_box "#{gold[:certificate_number]}", :at => [392,cursor], :width => 90 , :size => 10, :height =>  10
+      text_box "#{gold[:rucom]}", :at => [487,cursor], :width => 90 , :size => 10, :height =>  10
+      text_box "#{gold[:fine_grams]}", :at => [565,cursor], :width => 90, :size => 10, :height =>  10
       move_down 25
     end
 
     # numero total de lotes
 
     move_cursor_to 285
-    text_box "#{values[:purchase][:fine_grams]}", :at => [420,cursor], :width => 90 , :size => 10
+    text_box "#{values[:purchase][:fine_grams]}", :at => [420,cursor], :width => 90 , :size => 10 , :height =>  10
     move_cursor_to 267
-    text_box "#{values[:purchase][:grams]}", :at => [420,cursor], :width => 90 , :size => 10
+    text_box "#{values[:purchase][:grams]}", :at => [420,cursor], :width => 90 , :size => 10 , :height =>  10
     move_cursor_to 248
-    text_box "#{values[:purchase][:law]}", :at => [420,cursor], :width => 90 , :size => 10
+    text_box "#{values[:purchase][:law]}", :at => [420,cursor], :width => 90 , :size => 10, :height =>  10
     move_cursor_to 229
-    text_box "#{values[:purchase][:price]}", :at => [420,cursor], :width => 90 , :size => 10
+    text_box "#{values[:purchase][:price]}", :at => [420,cursor], :width => 90 , :size => 10, :height =>  10
   end
 
 end
