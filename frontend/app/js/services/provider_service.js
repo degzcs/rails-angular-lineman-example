@@ -27,77 +27,196 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         if (provider.rucom.provider_type === "Comercializadores" && !provider.chamber_commerce_file) {
           return false;
         }
-        i = 0;
-        files = [];
+        // i = 0;
+        // files = [];
         return blobUtil.imgSrcToBlob(provider.photo_file).then(function(provider_photo_file) {
           provider_photo_file.name = 'provider_photo.png';
-          provider.identification_number_file[0].name = 'identification_number_file.pdf';
-          provider.mining_register_file[0].name = 'mining_register_file.pdf';
-          provider.rut_file[0].name = 'rut_file.pdf';
+
+          var filesRemaining = 0;
+
+          if (!(provider.identification_number_file[0] instanceof File)) {
+            provider.identification_number_file[0].name = 'identification_number_file.pdf';
+          } else {
+            var identification_number_file_copy = provider.identification_number_file;  
+
+            var identification_number_reader = new FileReader();
+            provider.identification_number_file = [];
+            identification_number_reader.onload = function(){
+                var i, l, d, array;
+                d = this.result;
+                l = d.length;
+                array = new Uint8Array(l);
+                for (var i = 0; i < l; i++){
+                  array[i] = d.charCodeAt(i);
+                }
+                provider.identification_number_file.push(new Blob([array], {type: 'application/octet-stream'}));
+                provider.identification_number_file[0].name = 'identification_number_file' + identification_number_file_copy[0].name.substring(identification_number_file_copy[0].name.lastIndexOf('.'));
+                --filesRemaining;
+                if(filesRemaining <= 0) {
+                  uploadFiles();
+                }
+                // window.location.href = URL.createObjectURL(b);
+            };
+            identification_number_reader.readAsBinaryString(identification_number_file_copy[0]);
+            filesRemaining++;
+          }
+
+          if (!(provider.mining_register_file[0] instanceof File)) {
+            provider.mining_register_file[0].name = 'mining_register_file.pdf';
+          } else {
+            var mining_register_file_copy = provider.mining_register_file;
+
+            var mining_register_reader = new FileReader();
+            provider.mining_register_file = [];
+            mining_register_reader.onload = function(){
+                var i, l, d, array;
+                d = this.result;
+                l = d.length;
+                array = new Uint8Array(l);
+                for (var i = 0; i < l; i++){
+                    array[i] = d.charCodeAt(i);
+                }
+                provider.mining_register_file.push(new Blob([array], {type: 'application/octet-stream'}));
+                provider.mining_register_file[0].name = 'mining_register_file' + mining_register_file_copy[0].name.substring(mining_register_file_copy[0].name.lastIndexOf('.'));
+                --filesRemaining;
+                if(filesRemaining <= 0) {
+                  uploadFiles();
+                }
+                // window.location.href = URL.createObjectURL(b);
+            };
+            mining_register_reader.readAsBinaryString(mining_register_file_copy[0]);
+            filesRemaining++;
+          }
+
+          if (!(provider.rut_file[0] instanceof File)) {
+            provider.rut_file[0].name = 'rut_file.pdf';
+          } else {
+            var rut_file_copy = provider.rut_file;
+            
+            var rut_reader = new FileReader();
+            provider.rut_file = [];
+            rut_reader.onload = function(){
+                var i, l, d, array;
+                d = this.result;
+                l = d.length;
+                array = new Uint8Array(l);
+                for (var i = 0; i < l; i++){
+                    array[i] = d.charCodeAt(i);
+                }
+                provider.rut_file.push(new Blob([array], {type: 'application/octet-stream'}));
+                provider.rut_file[0].name = 'rut_file' + rut_file_copy[0].name.substring(rut_file_copy[0].name.lastIndexOf('.'));
+                --filesRemaining;
+                if(filesRemaining <= 0) {
+                  uploadFiles();
+                }
+                // window.location.href = URL.createObjectURL(b);
+            };
+            rut_reader.readAsBinaryString(rut_file_copy[0]);
+            filesRemaining++;
+          }
+          
+  
           files = [];
           if (provider.rucom.provider_type === "Comercializadores") {
-            provider.chamber_commerce_file[0].name = 'chamber_commerce_file.pdf';
-            files = [
-              provider.identification_number_file[0],
-              provider.mining_register_file[0],
-              provider.rut_file[0],
-              provider.chamber_commerce_file[0],
-              provider_photo_file,
-            ];
-          } else {
-            files = [
-              provider.identification_number_file[0],
-              provider.mining_register_file[0],
-              provider.rut_file[0],
-              provider_photo_file,
-            ];
-          }
-          return $upload.upload({
-            url: '/api/v1/providers/',
-            method: 'POST',
-            fields: !provider.company_info ? {
-              "provider[first_name]":provider.first_name,
-              "provider[document_number]":provider.document_number,
-              "provider[last_name]":provider.last_name,
-              "provider[phone_number]":provider.phone_number,
-              "provider[address]":provider.address,
-              "provider[rucom_id]":provider.rucom.id,
-              "provider[email]":provider.email,
-              "provider[population_center_id]":provider.population_center.id
+            if (!(provider.chamber_commerce_file[0] instanceof File)) {
+              provider.chamber_commerce_file[0].name = 'chamber_commerce_file.pdf';
+            } else {
+              var chamber_commerce_file_copy = provider.chamber_commerce_file;
+
+              var chamber_commerce_reader = new FileReader();
+              provider.chamber_commerce_file = [];
+              chamber_commerce_reader.onload = function(){
+                  var i, l, d, array;
+                  d = this.result;
+                  l = d.length;
+                  array = new Uint8Array(l);
+                  for (var i = 0; i < l; i++){
+                      array[i] = d.charCodeAt(i);
+                  }
+                  provider.chamber_commerce_file.push(new Blob([array], {type: 'application/octet-stream'}));
+                  provider.chamber_commerce_file[0].name = 'chamber_commerce_file' + chamber_commerce_file_copy[0].name.substring(chamber_commerce_file_copy[0].name.lastIndexOf('.'));
+                  --filesRemaining;
+                  if(filesRemaining <= 0) {
+                    uploadFiles();
+                  }
+                  // window.location.href = URL.createObjectURL(b);
+              };
+              chamber_commerce_reader.readAsBinaryString(chamber_commerce_file_copy[0]);
+              filesRemaining++;
             }
-            :
-            {
-              "provider[first_name]":provider.first_name,
-              "provider[document_number]":provider.document_number,
-              "provider[last_name]":provider.last_name,
-              "provider[phone_number]":provider.phone_number,
-              "provider[address]":provider.address,
-              "provider[rucom_id]":provider.rucom.id,
-              "provider[email]":provider.email,
-              "provider[population_center_id]":provider.population_center.id,
-              "company_info[name]":provider.company_info.name,
-              "company_info[nit_number]":provider.company_info.nit_number,
-              "company_info[legal_representative]":provider.company_info.legal_representative,
-              "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
-              "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
-              "company_info[phone_number]":provider.company_info.phone_number,
-              "company_info[email]":provider.company_info.email
-            },
-            file: files,
-            fileFormDataName: 'provider[files][]'
-          }).progress(function(evt) {
-            console.log('progress: ' + impl.uploadProgress + '% ' + evt.config.file);
-            impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
-          }).success(function(data, status, headers, config) {
-            //uploadProgress = 0;
-            // var model;
-            // console.log('uploaded file ');
-            // window.data = data;
-            // model = angular.fromJson(sessionStorage.providerService);
-            // model.reference_code = data.reference_code;
-            // sessionStorage.providerService = angular.toJson(model);
-            // return service.model = model;
-          });
+            //provider.chamber_commerce_file[0].name = 'chamber_commerce_file.pdf';          
+          }
+
+          if(filesRemaining <= 0) {
+            uploadFiles();
+          }
+
+          var uploadFiles = function() {
+            if (provider.rucom.provider_type === "Comercializadores") {
+              files = [
+                provider.identification_number_file[0],
+                provider.mining_register_file[0],
+                provider.rut_file[0],
+                provider.chamber_commerce_file[0],
+                provider_photo_file,
+              ];
+            }
+            else {
+              files = [
+                provider.identification_number_file[0],
+                provider.mining_register_file[0],
+                provider.rut_file[0],
+                provider_photo_file,
+              ];
+            }
+            return $upload.upload({
+              url: '/api/v1/providers/',
+              method: 'POST',
+              fields: !provider.company_info ? {
+                "provider[first_name]":provider.first_name,
+                "provider[document_number]":provider.document_number,
+                "provider[last_name]":provider.last_name,
+                "provider[phone_number]":provider.phone_number,
+                "provider[address]":provider.address,
+                "provider[rucom_id]":provider.rucom.id,
+                "provider[email]":provider.email,
+                "provider[population_center_id]":provider.population_center.id
+              }
+              :
+              {
+                "provider[first_name]":provider.first_name,
+                "provider[document_number]":provider.document_number,
+                "provider[last_name]":provider.last_name,
+                "provider[phone_number]":provider.phone_number,
+                "provider[address]":provider.address,
+                "provider[rucom_id]":provider.rucom.id,
+                "provider[email]":provider.email,
+                "provider[population_center_id]":provider.population_center.id,
+                "company_info[name]":provider.company_info.name,
+                "company_info[nit_number]":provider.company_info.nit_number,
+                "company_info[legal_representative]":provider.company_info.legal_representative,
+                "company_info[id_type_legal_rep]":provider.company_info.id_type_legal_rep,
+                "company_info[id_number_legal_rep]":provider.company_info.id_number_legal_rep,
+                "company_info[phone_number]":provider.company_info.phone_number,
+                "company_info[email]":provider.company_info.email
+              },
+              file: files,
+              fileFormDataName: 'provider[files][]'
+            }).progress(function(evt) {
+              console.log('progress: ' + impl.uploadProgress + '% ' + evt.config.file);
+              impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+            }).success(function(data, status, headers, config) {
+              //uploadProgress = 0;
+              // var model;
+              // console.log('uploaded file ');
+              // window.data = data;
+              // model = angular.fromJson(sessionStorage.providerService);
+              // model.reference_code = data.reference_code;
+              // sessionStorage.providerService = angular.toJson(model);
+              // return service.model = model;
+            });            
+          }
+
         })["catch"](function(err) {});
       } else {
         return false;
