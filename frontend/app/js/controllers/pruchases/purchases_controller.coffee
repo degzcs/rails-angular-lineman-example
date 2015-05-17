@@ -12,7 +12,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.code = null
   $scope.origin_certificate_upload_type = null
 
-  $scope.rucomIDField =
+  $scope.rucomIDFiel0d =
     label: 'Número de RUCOM'
     field: 'num_rucom'
 
@@ -205,7 +205,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
                       .cancel('No, cancelar compra')
                       .targetEvent(ev)
     $mdDialog.show(confirm).then (->
-      $scope.create()
+      $scope.create(ev)
       # $scope.flushData()
       $scope.message = 'Su compra a sido registrada con exito'
       return
@@ -216,9 +216,55 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Create a new purschase register in DB
-  $scope.create =  ->
+  $scope.create =  (ev) ->
     console.log 'creating purchase ...'
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
+    $scope.showUploadingDialog(ev)
+
+  #
+  # Show dialog displaying file uploading progress
+  $scope.showUploadingDialog = (ev) ->
+    parentEl = angular.element(document.body)
+    $mdDialog.show
+      parent: parentEl
+      targetEvent: ev
+      template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
+      controller: [
+        'scope'
+        '$mdDialog'
+        'PurchaseService'
+        (scope, $mdDialog, PurchaseService) ->
+          scope.progress = PurchaseService.impl.uploadProgress
+          scope.message = 'Espere por favor...'
+          scope.$watch (->
+            PurchaseService.impl.uploadProgress
+          ), (newVal, oldVal) ->
+            if typeof newVal != 'undefined'
+              console.log 'Progress: ' + scope.progress + ' (' + PurchaseService.impl.uploadProgress + ')'
+              scope.progress = PurchaseService.impl.uploadProgress
+              if scope.progress == 100
+                scope.closeDialog()
+            return
+
+          scope.closeDialog = ->
+            $mdDialog.hide()
+            # $scope.newProvider = {}
+            # PurchaseService.setCurrentProv {}
+            $scope.infoAlert 'Crear nueva compra', 'El registro ha sido exitoso', false
+            # $scope.abortCreate = true
+            # PurchaseService.currentTabProvCreation = 0
+            return
+
+          return
+      ]
+    return
+
+  $scope.infoAlert = (title, content, error) ->
+    $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK')).finally ->
+      if !error
+        $state.go 'index_inventory'
+      return
+    return
 
   $scope.createProvider = ->
     ProviderService.setCallerState('new_purchase.step1')

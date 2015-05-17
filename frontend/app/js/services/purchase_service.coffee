@@ -5,6 +5,11 @@
 angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload , $http)->
   service=
     #
+    # Service impl
+    #
+    impl: this
+
+    #
     # Model
     #
     model:
@@ -61,8 +66,10 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           fileFormDataName: 'purchase[files][]')
 
         .progress((evt) ->
-            progressPercentage = parseInt(100.0 * evt.loaded / evt.total)
-            console.log 'progress: ' + progressPercentage + '% ' + evt.config.file.name
+            # progressPercentage = parseInt(100.0 * evt.loaded / evt.total)
+            # console.log 'progress: ' + progressPercentage + '% ' + evt.config.file.name
+            console.log 'progress: ' + service.impl.uploadProgress + '% ' + evt.config.file
+            service.impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
         )
 
         .success (data, status, headers, config) ->
@@ -119,6 +126,11 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       return $http.get('api/v1/purchases', params:
                 "purchase_list[]": ids)
 
+
+  #
+  # Set uploadProgress variable
+  #
+  service.impl.uploadProgress = 0
 
   #
   # Listeners

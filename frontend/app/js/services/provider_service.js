@@ -356,6 +356,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
     }
 
     var getCallerState = function(){
+      var state = null;
       if(sessionStorage.callerState ){
         state = sessionStorage.callerState
       }
