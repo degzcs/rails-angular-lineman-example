@@ -65,15 +65,15 @@ module V1
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            clients = ::Client.where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name", 
+            clients = ::Client.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name", 
               {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_id
-            clients = ::Client.where("id_document_number LIKE :id_document_number", 
+            clients = ::Client.order("id DESC").where("id_document_number LIKE :id_document_number", 
               {id_document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
-            clients = ::Client.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+            clients = ::Client.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
-            clients = ::Client.paginate(:page => page, :per_page => per_page)
+            clients = ::Client.order("id DESC").paginate(:page => page, :per_page => per_page)
           end
           #binding.pry
           header 'total_pages', clients.total_pages.to_s

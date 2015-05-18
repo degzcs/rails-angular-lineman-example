@@ -25,7 +25,7 @@ class PdfUploader < CarrierWave::Uploader::Base
 
   version :preview do
     process :cover
-    process :resize_to_fit => [310, 438]
+    process :resize_to_fill => [310, 200]
     process :convert => :jpg
 
     def full_filename (for_file = model.source.file)

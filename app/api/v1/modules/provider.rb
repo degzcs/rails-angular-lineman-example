@@ -76,15 +76,15 @@ module V1
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            providers = ::Provider.where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
+            providers = ::Provider.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
               {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_id
-            providers = ::Provider.where("document_number LIKE :document_number",
+            providers = ::Provider.order("id DESC").where("document_number LIKE :document_number",
               {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
-            providers = ::Provider.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+            providers = ::Provider.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
-            providers = ::Provider.paginate(:page => page, :per_page => per_page)
+            providers = ::Provider.order("id DESC").paginate(:page => page, :per_page => per_page)
           end
           #binding.pry
           header 'total_pages', providers.total_pages.to_s
