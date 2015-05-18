@@ -143,36 +143,32 @@
           %div{flex: ''}
             .upload-oc{:flex => ''}
               .button-action.md-padding{"ng-switch" => '', :on => 'identification_number_upload_type'}
-                .by_upload{"ng-switch-when" =>'by_upload'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
-                    %md-icon{"md-svg-icon"=>"file:file_upload"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Subir Foto
-                      %span.ion-android-checkmark-circle
-
                 %md-input-container
                   %label Nombre del archivo
                   %input{"ng-model" => "newProvider.identification_number_file[0].name", :readonly => 'true',:required => "", :name => 'identification_number'}
                   %div{"ng-messages" => "providerCreateForm.identification_number.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
+                .by_upload{"ng-switch-when" =>'by_upload'}
+                  %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newProvider.identification_number_file'}
+                    Subir desde PC
+                    %md-icon{"md-svg-icon"=>"file:file_upload"}
+                    
+
 
                 .by_scan{"ng-switch-when" =>'by_scan'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
+                  %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
+                    Escanear
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Escanear Documento
-                      %span.ion-android-checkmark-circle
+                    
 
 
                 .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
+                    %md-button.btn-save{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
+                      Escanear con camara
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
-                      %md-tooltip{"md-visible" => "demo.showTooltip"}
-                        Tomar Foto
-                        %span.ion-android-checkmark-circle  
-
+                      
 
         %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{flex: '40'}
@@ -184,34 +180,29 @@
           %div{flex: ''}
             .upload-oc{:flex => ''}
               .button-action.md-padding{"ng-switch" => '', :on => 'mining_register_upload_type'}
-                .by_upload{"ng-switch-when" =>'by_upload'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
-                    %md-icon{"md-svg-icon"=>"file:file_upload"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Subir Foto
-                      %span.ion-android-checkmark-circle
-
                 %md-input-container
                   %label Nombre del archivo
                   %input{"ng-model" => "newProvider.mining_register_file[0].name", :readonly => 'true',:required => "", :name => 'mining_register_file'}
                   %div{"ng-messages" => "providerCreateForm.mining_register_file.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el registro minero 
 
+                .by_upload{"ng-switch-when" =>'by_upload'}
+                  %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newProvider.mining_register_file'}
+                    Subir Desde PC
+                    %md-icon{"md-svg-icon"=>"file:file_upload"}
+                    
                 .by_scan{"ng-switch-when" =>'by_scan'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(3)"}
+                  %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(3)"}
+                    Escanear
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Escanear Documento
-                      %span.ion-android-checkmark-circle
-
+                    
 
                 .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Registro Minero", "md-ripple-size" => "partial", "ng-href" => "#scanner",'ng-click' => "scanner(3)"}
+                    %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial", "ng-href" => "#scanner",'ng-click' => "scanner(3)"}
+                      Escanear con camara
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
-                      %md-tooltip{"md-visible" => "demo.showTooltip"}
-                        Tomar Foto
-                        %span.ion-android-checkmark-circle  
+                     
 
         %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{flex: '40'}
@@ -223,35 +214,30 @@
           %div{flex: ''}
             .upload-oc{:flex => ''}
               .button-action.md-padding{"ng-switch" => '', :on => 'rut_upload_type'}
-                .by_upload{"ng-switch-when" =>'by_upload'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
-                    %md-icon{"md-svg-icon"=>"file:file_upload"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Subir Foto
-                      %span.ion-android-checkmark-circle
-
                 %md-input-container
                   %label Nombre del archivo
                   %input{"ng-model" => "newProvider.rut_file[0].name", :readonly => 'true',:required => "", :name => 'rut_file'}
                   %div{"ng-messages" => "providerCreateForm.rut_file.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el rut 
 
+                .by_upload{"ng-switch-when" =>'by_upload'}
+                  %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newProvider.rut_file'}
+                    Subir desde PC
+                    %md-icon{"md-svg-icon"=>"file:file_upload"}
+                    
 
                 .by_scan{"ng-switch-when" =>'by_scan'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(4)"}
+                  %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(4)"}
+                    Escanear 
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Escanear Documento
-                      %span.ion-android-checkmark-circle
-
+                    
 
                 .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(4)"}
+                    %md-button.btn-save{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(4)"}
+                      Escanear con camara
                       %md-icon{"md-svg-icon" => "image:camera_alt"}
-                      %md-tooltip{"md-visible" => "demo.showTooltip"}
-                        Tomar Foto
-                        %span.ion-android-checkmark-circle
+                     
 
         %div.uploader-certificate-tab{"ng-if" => "newProvider.rucom.provider_type === 'Comercializadores'", :layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
           %div{flex: '40'}
