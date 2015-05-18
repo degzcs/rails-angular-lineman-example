@@ -50,9 +50,9 @@ angular.module('app').controller('CouriersNewCtrl', function($scope, $window, $m
       $resource = CourierService.create($scope.courier);
       if($resource){
         $resource .save($scope.courier);
-        $scope.infoAlert('Courier', 'Successful registration');
+        $scope.infoAlert('Transportador', 'Transportador registrado!');
       } else{
-      	$scope.infoAlert('Courier', 'Something went wrong');
+      	$scope.infoAlert('No se pudo hacer el registro', 'Ingrese todos los datos');
       }
   	};
 });

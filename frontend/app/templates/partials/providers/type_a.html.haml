@@ -13,7 +13,7 @@
               %h5 Tome una foto al proveedor
             %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
-                %a.image-container{'ng-href' => "#scanner",'ng-click' => "scanner(1)"}
+                %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
                   %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newProvider.photo_file || 'img/default-user.png'}}","ng-model" => "newProvider.photo_file",  "check-image" => ''}
                   %md-tooltip{'md-direction'=> 'bottom'}
                     Tomar Foto
@@ -137,21 +137,17 @@
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
                       Subir Foto
                       %span.ion-android-checkmark-circle
-
                 %md-input-container
                   %label Nombre del archivo
                   %input{"ng-model" => "newProvider.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register_file'}
                   %div{"ng-messages" => "providerCreateForm.mining_register_file.$error"}
                     %div{"ng-message" => "required"} * Debe seleccionar el registro minero 
-
                 .by_scan{"ng-switch-when" =>'by_scan'}
                   %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(3)"}
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
                     %md-tooltip{"md-visible" => "demo.showTooltip"}
                       Escanear Documento
                       %span.ion-android-checkmark-circle
-
-
                 .by_photo{"ng-switch-when" =>'by_photo'}
                   .md-tile-left.cam
                     %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(3)"}

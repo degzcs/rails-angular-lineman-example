@@ -7,7 +7,7 @@
           %i.ion-android-arrow-dropup{"ng-show" => "reverse && h.field == predicate"}
           %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
         %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
-      %th.md-table-header
+      /%th.md-table-header
   %tbody
     %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | limitTo: count", "ng-click" => "setCurrentProv(c)"}
       %td
@@ -15,10 +15,10 @@
           %div{:style => "background-image:url({{c.photo_file.thumb.url}})"}
       %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs"}         
         %pre {{h.field.indexOf('date') > 0 ? (c[h.field] | date) : (c[h.field] || c[h.alternateField])}}
-      %td.md-table-td-more
-        %a{"ng-click" => "setCurrentProv(c)"}
-          %md-button{"aria-label" => "Edit"}
-            %i.ion-android-create
+      /%td.md-table-td-more
+      /  %a{"ng-click" => "setCurrentProv(c)"}
+      /    %md-button{"aria-label" => "Edit"}
+      /      %i.ion-android-create
 .md-table-footer{:layout => "row"}
   %span.md-table-count-info
     Registros por página :

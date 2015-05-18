@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($timeout, $scope, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($timeout, $scope, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state) ->
 
   $scope.tab = 1
 
@@ -133,3 +133,7 @@ angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($ti
       console.log 'purchase canceled'
       $scope.message = 'El proceso ha sido cancelado '
       return
+      
+  $scope.createProvider = ->
+    ProviderService.setCallerState('new_origin_certificate.barequero_chatarrero')
+    $state.go('search_rucom',{type: 'provider'})

@@ -1,5 +1,5 @@
 %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
-  %p Reporte de Compra Trazoro
+  %h1 Reporte de Compra Trazoro
 %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
   %md-content{"flex"=> "40", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"start start"}
     %h5{"flex"=> "10"}
@@ -162,9 +162,9 @@
           %md-input-container
             %span {{goldBatch.model.riales}}
 .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-  %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'provider'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
-  %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'trazoro'", flex: "20", "ui-sref"=>"new_purchase.step1"} Volver
-  %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
+  %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'provider'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
+  %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'trazoro'", flex: "20", "ui-sref"=>"new_purchase.step1"} Volver
+  %md-button.btn-save{ flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
 
 
 

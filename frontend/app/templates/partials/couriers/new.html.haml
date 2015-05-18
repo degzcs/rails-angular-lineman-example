@@ -1,52 +1,54 @@
 %div{"layout" => "row", "layout-align" => "center center"}
   %md-content{:flex => "100", "layout-margin" => "", "layout-padding" => ""}
-    %h2 Ingrese los datos del nuevo transportador
+    %h2 
+      %i.ion-android-bus{:style => "font-size:2.8em"}
+      
+      Ingrese los datos del nuevo transportador
+
     %form{:name => "courierForm", "ng-submit" => "newCourier()", "novalidate" => "novalidate"}
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column", :style => "font-size:1.2em"}
-        .md-tile-left{:flex => "5", "layout-align" => "end end", :style => "margin-top: 20px; margin-left: 10px;"}
-          %i.ion-android-bus{:style => "font-size:2.8em"}
-        %md-input-container{:flex => ""}
-          %label Primer Nombre
-          %input{:required => "true", :name => "first_name", "ng-model" => "courier.first_name"}
-          %div{"ng-messages" => "courierForm.first_name.$error"}
-            %div{"ng-message" => "required"} requerido
-        %md-input-container{:flex => ""}
-          %label Apellido
-          %input{:required => "true", :name => "last_name", "ng-model" => "courier.last_name"}
-          %div{"ng-messages" => "courierForm.last_name.$error"}
-            %div{"ng-message" => "required"} requerido
-      %md-content.md-padding{:layout => "", "layout-sm" => "column", :style => "font-size:1.2em"}
-        %md-select{:style => "margin-top: 21px;", :required => "true", :name => "id_document_type", "ng-model" => "courier.id_document_type", :placeholder => "Tipo de Documento"}
-          %md-option{:value => "CC"} CC
-          %md-option{:value => "CE"} CE
-          %md-option{:value => "NIT"} NIT
-        %md-input-container{:flex => ""}
-          %label Número de identificación
-          %input{:required => "true", :name => "id_document_number", "ng-model" => "courier.id_document_number"}
-          %div{"ng-messages" => "courierForm.id_document_number.$error"}
-            %div{"ng-message" => "required"} requerido
-        %md-input-container{:flex => ""}
-          %label Teléfono
-          %input{:required => "true", :name => "phone_number", "ng-model" => "courier.phone_number", :placeholder => "(555) 555 5555"}
-          %div{"ng-messages" => "courierForm.phone_number.$error"}
-            %div{"ng-message" => "required"} requerido
-      %md-content.md-padding
-        %div{:layout => "", "layout-sm" => "column"}
-          %md-input-container{:flex => ""}
-            %label Dirección
-            %input{:required => "true", :name => "address", "ng-model" => "courier.address", :placeholder => "CLL/CR 1 2 - 34"}
-            %div{"ng-messages" => "courierForm.address.$error"}
-              %div{"ng-message" => "required"} requerido
-      %md-content.md-padding
-        %div{:layout => "", "layout-sm" => "column"}
-          %md-input-container{:flex => ""}
-            %label Nombre compañía
-            %input{:name => "company_name", "ng-model" => "courier.company_name", :placeholder => "Delivery Corp."}          
-          %md-input-container{:flex => ""}
-            %label NIT compañía
-            %input{:name => "nit_company_number", "ng-model" => "courier.nit_company_number", :placeholder => "900555555-6"}
-      %br
-      %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
-        %div{:layout => "row", :flex => "15", "layout-align" => "space-between center"}
-          %md-button{:class => "md-raised", "ng-click" => "back()"} Cancel
-          %md-button.md-raised.md-warn{"ng-disabled" => "!courierForm.$valid || !saveBtnEnabled", :type => "submit"} Guardar
+      .provider-info
+        %div{layout: 'row'}
+          .photo-container{flex: '30'}
+          .fields-container{flex: '70'}
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Primer Nombre
+                %input{:required => "true", :name => "first_name", "ng-model" => "courier.first_name"}
+                %div{"ng-messages" => "courierForm.first_name.$error"}
+                  %div{"ng-message" => "required"} requerido
+              %md-input-container{:flex => ""}
+                %label Apellido
+                %input{:required => "true", :name => "last_name", "ng-model" => "courier.last_name"}
+                %div{"ng-messages" => "courierForm.last_name.$error"}
+                  %div{"ng-message" => "required"} requerido
+            %div{layout: 'row'}
+              %md-select{:style => "margin-top: 21px;", :required => "true", :name => "id_document_type", "ng-model" => "courier.id_document_type", :placeholder => "Tipo de Documento",flex:""}
+                %md-option{:value => "CC"} CC
+                %md-option{:value => "CE"} CE
+                %md-option{:value => "NIT"} NIT
+              %md-input-container{:flex => ""}
+                %label Número de identificación
+                %input{:required => "true", :name => "id_document_number", "ng-model" => "courier.id_document_number"}
+                %div{"ng-messages" => "courierForm.id_document_number.$error"}
+                  %div{"ng-message" => "required"} requerido
+              %md-input-container{:flex => ""}
+                %label Teléfono
+                %input{:required => "true", :name => "phone_number", "ng-model" => "courier.phone_number", :placeholder => "(555) 555 5555"}
+                %div{"ng-messages" => "courierForm.phone_number.$error"}
+                  %div{"ng-message" => "required"} requerido
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Dirección
+                %input{:required => "true", :name => "address", "ng-model" => "courier.address", :placeholder => "CLL/CR 1 2 - 34"}
+                %div{"ng-messages" => "courierForm.address.$error"}
+                  %div{"ng-message" => "required"} requerido
+              %md-input-container{:flex => ""}
+                %label Nombre compañía
+                %input{:name => "company_name", "ng-model" => "courier.company_name", :placeholder => "Delivery Corp."}          
+              %md-input-container{:flex => ""}
+                %label NIT compañía
+                %input{:name => "nit_company_number", "ng-model" => "courier.nit_company_number", :placeholder => "900555555-6"}
+            %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
+              %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Cancel
+              %md-button.md-raised.btn-save{"ng-disabled" => "!courierForm.$valid || !saveBtnEnabled", :type => "submit"} Guardar
+          

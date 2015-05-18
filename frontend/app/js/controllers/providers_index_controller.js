@@ -43,7 +43,7 @@ angular.module('app').controller('ProvidersIndexCtrl', ['$scope', 'ProviderServi
     }
   ];
 
-  $scope.count = 4;
+  $scope.count = 10;
   $scope.pages = 0;
   ProviderService.retrieveProviders.query({per_page: $scope.count, page: 1}, (function(providers, headers) {
     var content = [];

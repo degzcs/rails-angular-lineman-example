@@ -8,7 +8,7 @@
 
       %md-input-container{:flex=>"33"}
         %label Ciudad
-        %input{"ng-model" => "pawnshops_origin_certificate.city", "type" => "text", :required=>""}
+        %input{"ng-model" => "pawnshops_origin_certificate.city.name", "type" => "text", :required=>""}
 
       %md-input-container{:flex=>"33"}
         %label Num. Certificado de Origen
@@ -45,7 +45,7 @@
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
         .button
-          %a.md-button.create-provider-button{'ng-href' => "#provider"}  crear proovedor
+          %a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proovedor
 
     ////-----------------------Buy and Sell Invoices section ------------------------------////////
 

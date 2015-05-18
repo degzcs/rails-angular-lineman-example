@@ -76,7 +76,9 @@ angular.module('app').directive('mdTableRucom', function () {
           }
         }
       };
-
+      $scope.comeBack = function() {
+        window.history.back();
+      };
       $scope.setProviderType = function (provider_type){
         if (provider_type === 'Barequero'){
           console.log("Type A");
@@ -90,6 +92,7 @@ angular.module('app').directive('mdTableRucom', function () {
         }
       };
     },
+
     //template: angular.element(document.querySelector('#md-table-template')).html()
     templateUrl: 'directives/md-table-rucom.html'
   };

@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state) ->
 
   $scope.tab = 3
 
@@ -96,3 +96,7 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
       console.log 'purchase canceled'
       $scope.message = 'El proceso ha sido cancelado '
       return
+
+  $scope.createProvider = ->
+    ProviderService.setCallerState('new_origin_certificate.authorized_miner')
+    $state.go('search_rucom',{type: 'provider'})

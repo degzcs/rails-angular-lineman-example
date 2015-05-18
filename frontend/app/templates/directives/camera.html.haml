@@ -1,4 +1,4 @@
-%secion.camera-directive
+%section.camera-directive
   %h3
     %md-select.camera-selector{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
       %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
@@ -7,13 +7,20 @@
       %video{:autoplay => ""}
       %canvas.taken-photo{"ng-class"=> "{{photoTaken ? 'show' : ''}}"}
       .camera-options.show{layout: "row"}
-        %button.md-raised.md-primary.md-button.md-default-theme{"ng-click" => "takeSnapshot()",flex:""} 
+        %button.md-button.btn-save{"ng-click" => "takeSnapshot()",flex:""} 
           Capturar
           %md-icon{"md-svg-icon"=>"image:camera_alt"}
       .camera-options-final{layout: "row"}
-        %md-button.md-accent.md-button.md-hue-2.md-primary.md-raised.md-button.md-default-theme{"ng-click" => "takeAgain()",flex:""} 
-          Tomar otra
-          %md-icon{"md-svg-icon"=>"navigation:refresh"}
-        %md-button.md-primary.md-raised{"ng-click" => "comeBack()",flex:""} 
-          Finalizar
-          %md-icon{"md-svg-icon"=>"action:done"}
+        .option-camera{flex: ""}
+          %md-button.md-accent.md-button.btn-cancel{"ng-click" => "takeAgain()"} 
+            Tomar otra
+            %md-icon{"md-svg-icon"=>"navigation:refresh"}
+        .option-camera{flex: ""}
+          %md-button.md-button.btn-save{"ng-click" => "comeBack()"} 
+            Finalizar
+            %md-icon{"md-svg-icon"=>"action:done"}
+  .camera-back-options
+    %md-button.md-button.btn-save{"ng-click" => "comeBack()"} 
+      Volver
+      %md-icon{"md-svg-icon"=>"navigation:arrow_back"}
+

@@ -90,6 +90,9 @@ angular.module('app').controller('SearchRucomCtrl', ['$scope', '$stateParams', '
         return true;
       }
     }
+  };
+  $scope.comeBack = function() {
+    window.history.back();
   };  
   
 }]);

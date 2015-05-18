@@ -71,9 +71,9 @@
         %md-input-container.row
           .photo
             %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
-              %md-tooltip{'md-direction'=> 'right'}
-                Tomar Foto
+              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
+              /%md-tooltip{'md-direction'=> 'right'}
+              /  Tomar Foto
 
   %section.uploader-certificate-form{layout: "row"}
     %div.md-padding{flex: ""}
@@ -103,13 +103,6 @@
           %div{flex: ''}
             .upload-oc{:flex => ''}
               .button-action.md-padding{:ng-switch => '', :on => 'origin_certificate_upload_type', :ng-if => "purchase.model.type == 'provider'"}
-                .by_upload{:ng-switch-when =>'by_upload'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
-                    %md-icon{"md-svg-icon"=>"file:file_upload"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Subir Certificado
-                      %span.ion-android-checkmark-circle
-
                 %md-input-container
                   %label Nombre del archivo
                   %input{"ng-model" => "purchase.model.origin_certificate_file[0].name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
@@ -118,23 +111,22 @@
                   / .preview
                   /   %img{:ngf-src=>"purchase.model.origin_certificate_file[0]"}
 
+                .by_upload{:ng-switch-when =>'by_upload'}
+                  %md-button.btn-save.md-button{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
+                    Subir Archivo
+                    %md-icon{"md-svg-icon"=>"file:file_upload"}
+          
 
                 .by_scan{:ng-switch-when =>'by_scan'}
-                  %md-button.md-fab.md-accent.md-default-theme{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
+                  %md-button.btn-save.md-button{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
+                    Usar Escaner
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                    %md-tooltip{"md-visible" => "demo.showTooltip"}
-                      Escanear Documento
-                      %span.ion-android-checkmark-circle
-
-
+                    
                 .by_photo{:ng-switch-when =>'by_photo'}
-                  .md-tile-left.cam
-                    %md-button.md-fab.md-accent.md-default-theme.cam{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
-                      %md-icon{"md-svg-icon" => "image:camera_alt"}
-                      %md-tooltip{"md-visible" => "demo.showTooltip"}
-                        Tomar Foto
-                        %span.ion-android-checkmark-circle
-
+                  %md-button.btn-save.md-button{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
+                    Escanear con Camara
+                    %md-icon{"md-svg-icon" => "image:camera_alt"}
+                    
               .button-action.md-padding{:ng-if => "purchase.model.type == 'trazoro'"}
                 .trazoro-origin-certificate
                   %md-input-container
@@ -143,5 +135,5 @@
 
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'provider'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
-    %md-button.md-primary.md-raised.md-accent{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'provider'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar

@@ -58,14 +58,14 @@
               %div{layout: "row"}
                 %md-input-container{flex: ""}
                   %label Nombre
-                  %input{:disabled => "disabled", "ng-model" => "selectedClient.first_name"}
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.first_name","readOnly"=>"true"}
                 %md-input-container{flex: ""}
                   %label Apellido
-                  %input{:disabled => "disabled", "ng-model" => "selectedClient.last_name"} 
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.last_name","readOnly"=>"true"} 
               %div.inventory-client-names{layout: "row"}
                 %md-input-container{flex: }
                   %label Cedula
-                  %input{:disabled => "disabled", "ng-model" => "selectedClient.id_document_number"}
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.id_document_number","readOnly"=>"true"}
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
           %br

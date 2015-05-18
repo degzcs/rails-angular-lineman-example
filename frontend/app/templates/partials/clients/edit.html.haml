@@ -1,61 +1,67 @@
 %div{"layout" => "row", "layout-align" => "center center"}
   %md-content{:flex => "100", "layout-margin" => "", "layout-padding" => ""}
     %form{:name => "clientEditionForm", "novalidate" => "novalidate"}
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default", :style => "font-size:1.2em"}
-        %md-input-container{:flex => ""}
-          %label Nombre
-          %input{:name => "first_name", "ng-model" => "currentClient.first_name", :readonly => "true"}
-        %md-input-container{:flex => ""}
-          %label Apellido
-          %input{:name => "last_name", "ng-model" => "currentClient.last_name", :readonly => "true"}
-        %md-input-container{:flex => "", "ng-if" => "currentClient.rucom.num_rucom"}
-          %label {{rucomIDField.label}}
-          %input{:readonly => "true", "ng-model" => "currentClient.rucom[rucomIDField.field]"}
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column"}
-        %md-input-container{:flex => "20"}
-          %label Tipo de Identificación
-          %input{:name => "id_document_type", "ng-model" => "currentClient.id_document_type", :placeholder => "Tipo de Identificación", :readonly => "true"}
-        %md-input-container{:flex => "40"}
-          %label Número de Identificación
-          %input{:name => "id_document_number", "ng-model" => "currentClient.id_document_number", :readonly => "true"}
-        %md-input-container{:flex => "40"}
-          %label Tipo de Cliente
-          %input{:name => "client_type", "ng-model" => "currentClient.client_type", :placeholder => "Client Type", :readonly => "true"}
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column"}
-        %md-input-container{:flex => ""}
-          %label Teléfono
-          %input{:name => "phone_number", "ng-model" => "currentClient.phone_number", :placeholder => "(555) 555 5555", :required => ""}
-          %div{"ng-messages" => "clientEditionForm.phone_number.$error"}
-            %div{"ng-message" => "required"} Este campo es requerido.
-        %md-input-container{:flex => ""}
-          %label Email
-          %input{:name => "email", "ng-model" => "currentClient.email", :type => "email", :required => ""}
-          %div{"ng-messages" => "clientEditionForm.email.$error"}
-            %div{"ng-message" => "required"} Este campo es requerido.
-            %div{"ng-message" => "email"} Ingrese un e-mail válido
-        %md-input-container{:flex => ""}
-          %label Dirección
-          %input{:name => "address", "ng-model" => "currentClient.address", :placeholder => "CLL/CR 1 22 - 33", :required => ""}
-          %div{"ng-messages" => "clientEditionForm.address.$error"}
-            %div{"ng-message" => "required"} Este campo es requerido.
-      %md-content.md-padding{:layout => "row", "layout-sm" => "column"}
-        %md-input-container{:flex => ""}
-          %label Nombre de la Compañía
-          %input{:name => "company_name", "ng-model" => "currentClient.company_name"}
-        %md-input-container{:flex => ""}
-          %label NIT de la Compañía
-          %input{:name => "nit_company_number", "ng-model" => "currentClient.nit_company_number"}          
-      %br
-      %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column"}
-        %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
-          %span{"md-highlight-text" => "searchState"} {{state.name}}
-        %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
-          %span{"md-highlight-text" => "searchCity"} {{city.name}}
-        %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
-          %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
-      %br
-      %div{:layout => "row", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}
-        %div{:layout => "row", :flex => "20", "layout-align" => "end center", "layout-margin" => "", "layout-sm" => "column"}        
-          %div{:layout => "row", :flex => "", "layout-align" => "space-between center"}
-            %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
-            %md-button{"ng-disabled" => "!clientEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "save()"} Guardar
+      .provider-info
+        %div{layout: 'row'}
+          .photo-container{flex: '30'}
+          .fields-container{flex: '70'}
+            %h3{style: "text-align: left;"} Datos personales:
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Nombre
+                %input{:name => "first_name", "ng-model" => "currentClient.first_name", :readonly => "true"}
+              %md-input-container{:flex => ""}
+                %label Apellido
+                %input{:name => "last_name", "ng-model" => "currentClient.last_name", :readonly => "true"}
+              %md-input-container{:flex => "", "ng-if" => "currentClient.rucom.num_rucom"}
+                %label {{rucomIDField.label}}
+                %input{:readonly => "true", "ng-model" => "currentClient.rucom[rucomIDField.field]"}
+            %div{layout: 'row'}
+
+              %md-input-container{:flex => ""}
+                %label Tipo de Identificación
+                %input{:name => "id_document_type", "ng-model" => "currentClient.id_document_type", :placeholder => "Tipo de Identificación", :readonly => "true"}
+              %md-input-container{:flex => ""}
+                %label Número de Identificación
+                %input{:name => "id_document_number", "ng-model" => "currentClient.id_document_number", :readonly => "true"}
+              %md-input-container{:flex => ""}
+                %label Tipo de Cliente
+                %input{:name => "client_type", "ng-model" => "currentClient.client_type", :placeholder => "Client Type", :readonly => "true"}
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Teléfono
+                %input{:name => "phone_number", "ng-model" => "currentClient.phone_number", :placeholder => "(555) 555 5555", :required => ""}
+                %div{"ng-messages" => "clientEditionForm.phone_number.$error"}
+                  %div{"ng-message" => "required"} Este campo es requerido.
+              %md-input-container{:flex => ""}
+                %label Email
+                %input{:name => "email", "ng-model" => "currentClient.email", :type => "email", :required => ""}
+                %div{"ng-messages" => "clientEditionForm.email.$error"}
+                  %div{"ng-message" => "required"} Este campo es requerido.
+                  %div{"ng-message" => "email"} Ingrese un e-mail válido
+              %md-input-container{:flex => ""}
+                %label Dirección
+                %input{:name => "address", "ng-model" => "currentClient.address", :placeholder => "CLL/CR 1 22 - 33", :required => ""}
+                %div{"ng-messages" => "clientEditionForm.address.$error"}
+                  %div{"ng-message" => "required"} Este campo es requerido.
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Nombre de la Compañía
+                %input{:name => "company_name", "ng-model" => "currentClient.company_name"}
+              %md-input-container{:flex => ""}
+                %label NIT de la Compañía
+                %input{:name => "nit_company_number", "ng-model" => "currentClient.nit_company_number"}          
+            %div{layout: 'row'}
+              %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
+                %span{"md-highlight-text" => "searchState"} {{state.name}}
+              %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
+                %span{"md-highlight-text" => "searchCity"} {{city.name}}
+              %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
+                %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
+            %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
+
+              %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Cancelar
+              %md-button.btn-save{"ng-disabled" => "!clientEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-accent", "ng-click" => "save()"} Guardar
+              
+
+    

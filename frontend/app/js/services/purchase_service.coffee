@@ -125,6 +125,13 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       console.log ids
       return $http.get('api/v1/purchases', params:
                 "purchase_list[]": ids)
+    flushModel: ->
+      service.model = {
+        type: 'provider'
+      }
+      sessionStorage.removeItem('purchaseService')
+      return
+
 
 
   #

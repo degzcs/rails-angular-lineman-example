@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $scope, PawnshopsOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService) ->
+angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $scope, PawnshopsOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state) ->
 
   $scope.tab = 2
 
@@ -114,3 +114,7 @@ angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $s
       console.log 'purchase canceled'
       $scope.message = 'El proceso ha sido cancelado '
       return
+
+  $scope.createProvider = ->
+    ProviderService.setCallerState('new_origin_certificate.pawnshops')
+    $state.go('search_rucom',{type: 'provider'})

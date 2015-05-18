@@ -2,9 +2,6 @@
 %form{:name => "purchaseForm"}
   %section{"class"=>"md-padding autocomplete"}
     .seller
-      %md-subheader
-        %span Ingresar Pesos
-
       .row{:layout => "", "layout-sm" => "column"}
         .select-law{'flex' => ''}
           %h5 Digite el numero de ley
@@ -87,8 +84,8 @@
                     %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>""}
 
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
-    %md-button.md-primary.md-raised.md-accent{ "ng-disabled" => 'purchaseForm.$invalid', flex: "20", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
+    %md-button.btn-save{ "ng-disabled" => 'purchaseForm.$invalid', flex: "20", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
 
 
 

@@ -64,6 +64,10 @@ md-input-container.md-default-theme .md-input {
   background: white;
   padding-left: 10px;
 }
+md-input-container.md-default-theme .md-input:read-only{
+  background: #eee!important;
+}
+
 
 a{
   color: #231f20!important;
@@ -117,4 +121,13 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-i
 
 .pdf-preview{
   width: 100%;
+}
+
+.fields-container{
+  md-input-container{
+    margin-right: 10px;
+  }
+  md-autocomplete{
+    margin-right: 15px;
+  }
 }
