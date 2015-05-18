@@ -293,12 +293,10 @@
                         Tomar Foto
                         %span.ion-android-checkmark-circle
 
-    %md-content.md-padding
-      %div{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-        %div{:layout => "row", :flex => "", "layout-align" => "start center"}
-          %md-button{"ng-if" => "formTabControl.selectedIndex > 0", "ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
-        %div{:layout => "row", :flex => "25", "layout-align" => "space-between right"}
-          %md-button{:class => "md-raised", "ng-click" => "back()"} Cancelar
-          %md-button{"ng-disabled" => "(!providerCreateForm.$valid || !saveBtnEnabled) && formTabControl.selectedIndex !== 2", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
-          %md-button{"ng-if" => "formTabControl.selectedIndex < 2", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+      %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
+        %md-button.btn-cancel{"ng-if" => "formTabControl.selectedIndex > 0", "ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
+        %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Cancelar
+        %md-button.btn-save{"ng-disabled" => "(!providerCreateForm.$valid || !saveBtnEnabled) && formTabControl.selectedIndex !== 1", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
+        %md-button.btn-save{"ng-if" => "formTabControl.selectedIndex < 1", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
+
 
