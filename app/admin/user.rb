@@ -31,14 +31,14 @@ ActiveAdmin.register User do
       f.input :first_name , label: "Nombre"
       f.input :last_name, label: "Apellido"
       f.input :document_number , label: "Numero de documento"
-      f.input :document_expedition_date, label: "fecha de expedicion" ,as: :datepicker, label: "Fecha de pago" 
+      f.input :document_expedition_date, label: "fecha de expedicion" ,as: :datepicker, label: "Fecha de expedicion documento" 
       f.input :phone_number, label: "Numero telefonico"
       f.input :address, label: "Direccion"
       f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)
       f.input :document_number_file, :as => :file , label: "PDF cedula"
       f.input :rut_file, :as => :file, label: "PDF Rut"
-      f.input :mining_register_file, :as => :file, label: "PDF refistro minero"
-      f.input :chamber_commerce_file, :as => :file, label: "PDF cedula"
+      f.input :mining_register_file, :as => :file, label: "PDF registro minero"
+      f.input :chamber_commerce_file, :as => :file, label: "PDF camara de comercio"
       f.input :company_info, label: "Compañia"
       f.input :rucom_id, label: "Id Rucom (Revisar campo 'Id' en la Tabla de Rucoms)" ,as: :number
       f.input :population_center, label: "Centro poblacional"
