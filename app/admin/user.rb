@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 3, label: 'Usuarios'
 
-  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :password, :document_number_file, :rut_file, :mining_register_file, :photo_file, :chamber_commerce_file, :company_info_id, :rucom_id, :population_center_id
+  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :document_number_file, :rut_file, :mining_register_file, :photo_file, :chamber_commerce_file, :company_info_id, :rucom_id, :population_center_id, :password
 
 
   index do
@@ -26,12 +26,18 @@ ActiveAdmin.register User do
   filter :phone_number
 
   form do |f|
+    if f.object.errors.size >= 1
+      f.inputs "Errors" do
+        f.object.errors.full_messages.join('|')
+      end
+    end
+
     f.inputs "User Details" do
       f.input :email 
       f.input :first_name , label: "Nombre"
       f.input :last_name, label: "Apellido"
       f.input :document_number , label: "Numero de documento"
-      f.input :document_expedition_date, label: "fecha de expedicion" ,as: :datepicker, label: "Fecha de expedicion documento" 
+      f.input :document_expedition_date, label: "fecha de expedicion" , label: "Fecha de expedicion documento" 
       f.input :phone_number, label: "Numero telefonico"
       f.input :address, label: "Direccion"
       f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)
@@ -42,6 +48,7 @@ ActiveAdmin.register User do
       f.input :company_info, label: "Compañia"
       f.input :rucom_id, label: "Id Rucom (Revisar campo 'Id' en la Tabla de Rucoms)" ,as: :number
       f.input :population_center, label: "Centro poblacional"
+      f.input :password, label: "Password (Minimo 8 caracteres)"
     end
     f.actions
   end
