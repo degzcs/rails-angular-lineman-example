@@ -262,9 +262,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.infoAlert = (title, content, error) ->
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK')).finally ->
-      if !error
-        $state.go 'index_inventory'
-      return
+      #if !error
+        #$state.go 'index_inventory'
+      #return
     return
 
   $scope.createProvider = ->
