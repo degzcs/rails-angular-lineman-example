@@ -51,8 +51,15 @@ class SalePDFService
 
   def carrier
     courier = Courier.find(@sale.courier_id)
+    
     {
-      name: courier.first_name
+      first_name: courier.first_name,
+      last_name: courier.last_name,
+      phone: courier.phone_number,
+      address: courier.address,
+      identification_number: courier.id_document_number,
+      company: courier.company_name,
+      nit: courier.nit_company_number
     }
 
   end
