@@ -208,7 +208,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       $scope.create(ev)
       # $scope.flushData()
       $scope.message = 'Su compra a sido registrada con exito'
-      PurchaseService.flushModel() #  =>  Flush the model
+      #PurchaseService.flushModel() #  =>  Flush the model
       return
     ), ->
       console.log 'purchase canceled'

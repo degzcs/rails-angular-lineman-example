@@ -27,7 +27,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       trazoro: ''
       sale_id: ''
       gold_batch: ''
-      barcode_html: ''
+      #barcode_html: ''
       code: ''
       rucom_id_field: ''
 
@@ -76,10 +76,12 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
             # window.response = data
             model = angular.fromJson(sessionStorage.purchaseService)
+            console.log(model)
             model.barcode_html = data.barcode_html
             model.code = data.code
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
+            #service.flushModel()
             $location.path('/purchases/show')
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image failed to load!!'

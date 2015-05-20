@@ -64,3 +64,9 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
 
     $scope.pdfContent = PdfService.createPurchaseInvoice(purchasePDF, providerForPDF, goldBatchForPDF, buyer)
 
+  
+  #
+  #
+  $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
+    PurchaseService.flushModel()
+    return
