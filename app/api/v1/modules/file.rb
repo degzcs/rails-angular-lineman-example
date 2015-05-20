@@ -655,7 +655,13 @@ module V1
                           phone: '10303039503'
                                 },
                       carrier: {
-                          name: 'hola'
+                          first_name: 'hola',
+                          last_name: 'hola',
+                          phone: '292929292',
+                          address: 'address phone',
+                          identification_number: '122322222323',
+                          company: 'compania servientrega',
+                          nit: '22020202002020'
                       },
                        purchase:{
                           price: 20202020202,

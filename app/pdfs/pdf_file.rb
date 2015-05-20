@@ -595,16 +595,16 @@ class PdfFile < Prawn::Document
 
     #transportador
     move_cursor_to 720
-    text_box "nombre del transportador", :at => [115,cursor], :width => 170
-    text_box "telefono del transportador", :at => [370,cursor], :width => 170
+    text_box "#{values[:carrier][:first_name]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:carrier][:phone]}", :at => [370,cursor], :width => 170
     move_cursor_to 702
-    text_box "apellido del transportador", :at => [115,cursor], :width => 170
-    text_box "direccion del transportador", :at => [370,cursor], :width => 170
+    text_box "#{values[:carrier][:last_name]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:carrier][:address]}", :at => [370,cursor], :width => 170
     move_cursor_to 682
-    text_box "cedula del transportador", :at => [115,cursor], :width => 170
-    text_box "compania del transportador", :at => [370,cursor], :width => 170
+    text_box "#{values[:carrier][:identification_number]}", :at => [115,cursor], :width => 170
+    text_box "#{values[:carrier][:company]}", :at => [370,cursor], :width => 170
     move_cursor_to 665
-    text_box "nit del transportador", :at => [115,cursor], :width => 170
+    text_box "#{values[:carrier][:nit]}", :at => [115,cursor], :width => 170
 
     #lotes seleccionados
 
