@@ -37,8 +37,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
       last_name: $scope.newProvider.last_name,
       email: $scope.newProvider.email,
       address: $scope.newProvider.address,
-      city: $scope.selectedCity,
-      state: $scope.selectedState,
+      city: $scope.newProvider.city || '',
+      state: $scope.newProvider.state || '',
       phone_number: $scope.newProvider.phone_number,
       photo_file: $scope.newProvider.photo_file || '',
       rucom: {
@@ -371,6 +371,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
   $scope.selectedStateChange = function(state) {
     if(state){
+      $scope.selectedState = state;
       console.log('State changed to ' + JSON.stringify(state));
       LocationService.getCitiesFromState.query({stateId: state.id}, function(cities) {
         $scope.cities = cities;
@@ -385,6 +386,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
   $scope.selectedCityChange = function(city) {
     if(city){
+      $scope.selectedCity = city;
       console.log('City changed to ' + JSON.stringify(city));
       LocationService.getPopulationCentersFromCity.query({cityId: city.id}, function(population_centers) {
         $scope.population_centers = population_centers;
@@ -403,6 +405,8 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
       $scope.newProvider.population_center.id = population_center.id;
       $scope.newProvider.population_center.name = population_center.name;
       $scope.newProvider.population_center.population_center_code = population_center.population_center_code;
+      $scope.newProvider.city = $scope.selectedCity.name;
+      $scope.newProvider.state = $scope.selectedState.name;
     } else {
       console.log('Population Center changed to none');
     }

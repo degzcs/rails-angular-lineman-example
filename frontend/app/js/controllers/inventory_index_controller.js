@@ -1,4 +1,4 @@
-angular.module('app').controller('InventoryIndexCtrl', function($scope, PurchaseService) {
+angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialog, PurchaseService) {
   
   // ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false;
@@ -84,6 +84,13 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, Purchase
   }).error(function(data, status, headers, config) {
     return $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud');
   });
+
+  $scope.infoAlert = function(title, content) {
+    $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'));
+    // .finally(function() {
+    //     $window.history.back();
+    //   });
+  };
   
 
   
