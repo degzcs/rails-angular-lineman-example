@@ -181,6 +181,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
                 "provider[address]":provider.address,
                 "provider[rucom_id]":provider.rucom.id,
                 "provider[email]":provider.email,
+                "provider[city]":provider.city,
+                "provider[state]":provider.state,
                 "provider[population_center_id]":provider.population_center.id
               }
               :
@@ -192,6 +194,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
                 "provider[address]":provider.address,
                 "provider[rucom_id]":provider.rucom.id,
                 "provider[email]":provider.email,
+                "provider[city]":provider.city,
+                "provider[state]":provider.state,
                 "provider[population_center_id]":provider.population_center.id,
                 "company_info[name]":provider.company_info.name,
                 "company_info[nit_number]":provider.company_info.nit_number,
@@ -299,6 +303,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
               "provider[phone_number]":provider.phone_number,
               "provider[address]":provider.address,
               "provider[email]":provider.email,
+              "provider[city]":provider.city,
+              "provider[state]":provider.state,
               "provider[population_center_id]":provider.population_center.id
             }
             :
@@ -306,6 +312,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
               "provider[phone_number]":provider.phone_number,
               "provider[address]":provider.address,
               "provider[email]":provider.email,
+              "provider[city]":provider.city,
+              "provider[state]":provider.state,
               "provider[population_center_id]":provider.population_center.id,
               "company_info[email]":provider.company_info.email,
               "company_info[phone_number]":provider.company_info.phone_number
@@ -326,6 +334,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
                   "provider[email]":provider.email,
+                  "provider[city]":provider.city,
+                  "provider[state]":provider.state,
                   "provider[population_center_id]":provider.population_center.id
                 }
                 :
@@ -333,6 +343,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
                   "provider[phone_number]":provider.phone_number,
                   "provider[address]":provider.address,
                   "provider[email]":provider.email,
+                  "provider[city]":provider.city,
+                  "provider[state]":provider.state,
                   "provider[population_center_id]":provider.population_center.id,
                   "company_info[email]":provider.company_info.email,
                   "company_info[phone_number]":provider.company_info.phone_number

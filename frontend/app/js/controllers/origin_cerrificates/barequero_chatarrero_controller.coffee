@@ -59,7 +59,7 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
         id: providers[i].id
         document_number: providers[i].document_number
         company_name: 'company name test'
-        document_type: 'nit'
+        document_type: 'CC'
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
@@ -72,8 +72,8 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: 'Popayan'
-        state: 'Cauca'
+        city: providers[i].city || 'Popayan'
+        state: providers[i].state || 'Cauca'
       provs.push prov
       i++
     provs

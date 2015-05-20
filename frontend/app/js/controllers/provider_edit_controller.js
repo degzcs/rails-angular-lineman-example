@@ -17,6 +17,8 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         last_name: provider.last_name,
         address: provider.address,
         email: provider.email,
+        city: provider.city,
+        state: provider.state,
         phone_number: provider.phone_number,
         photo_file: provider.photo_file || ('http://robohash.org/' + provider.id),
         identification_number_file: provider.identification_number_file,
@@ -148,6 +150,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
 
   $scope.selectedStateChange = function(state) {
     if(state){
+      $scope.selectedState = state;
       console.log('State changed to ' + JSON.stringify(state));
       LocationService.getCitiesFromState.query({stateId: state.id}, function(cities) {
         $scope.cities = cities;
@@ -162,6 +165,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
 
   $scope.selectedCityChange = function(city) {
     if(city){
+      $scope.selectedCity = city;
       console.log('City changed to ' + JSON.stringify(city));
       LocationService.getPopulationCentersFromCity.query({cityId: city.id}, function(population_centers) {
         $scope.population_centers = population_centers;
@@ -178,6 +182,8 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
     if(population_center){
       console.log('Population Center changed to ' + JSON.stringify(population_center));
       $scope.currentProvider.population_center.id = population_center.id;
+      $scope.currentProvider.city = $scope.selectedCity.name;
+      $scope.currentProvider.state = $scope.selectedState.name;
     } else {
       console.log('Population Center changed to none');
     }

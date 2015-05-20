@@ -12,7 +12,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.code = null
   $scope.origin_certificate_upload_type = null
 
-  $scope.rucomIDFiel0d =
+  $scope.rucomIDField =
     label: 'Número de RUCOM'
     field: 'num_rucom'
 
@@ -95,7 +95,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       prov =
         id: providers[i].id
         document_number: providers[i].nit || providers[i].document_number
-        company_name: 'company name test' # <-- TODO: migration
+        company_name: if providers[i].company_info then providers[i].company_info.name else providers[i].first_name + ' ' + providers[i].last_name #'company name test' # <-- TODO: migration
         document_type: 'NIT' # <-- TODO: migration
         first_name: providers[i].first_name
         last_name: providers[i].last_name
@@ -110,7 +110,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
         city: providers[i].city || 'Popayan'
-        state: 'Cauca'
+        state: providers[i].state || 'Cauca'
         address: providers[i].address
       $scope.allProviders.push prov
       i++
