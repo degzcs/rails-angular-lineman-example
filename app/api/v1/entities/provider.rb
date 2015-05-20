@@ -13,6 +13,8 @@ module V1
       expose :chamber_commerce_file, documentation: { type: "file", desc: "file", example: "..." } 
       expose :photo_file, documentation: { type: "file", desc: "file", example: "..." } 
       expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
+      expose :city, documentation: { type: "string", desc: "City name", example: "Medellín" }
+      expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
       expose :rucom do 
         expose :id, documentation: { type: "integer", desc: "Id of the Rucom", example: "4" } do |provider, options|
           provider.rucom.id
