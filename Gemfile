@@ -38,6 +38,7 @@ gem 'faker'
 gem 'sass'
 gem 'will_paginate', '~> 3.0.6'
 gem 'barby'
+gem 'country_select', github: 'stefanpenner/country_select'
 
 # upload files
 gem 'carrierwave'

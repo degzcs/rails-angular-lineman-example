@@ -28,7 +28,7 @@ class CompanyInfo < ActiveRecord::Base
   #validates :state, presence: true
   #validates :country, presence: true
   validates :legal_representative, presence: true
-  validates :id_type_legal_rep, presence: true
+  #validates :id_type_legal_rep, presence: true
   validates :id_number_legal_rep, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true

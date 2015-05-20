@@ -22,11 +22,11 @@ class SalePDFService
   def provider 
     user = @sale.user
     {
-      social: '',
+      social: user.company_info.name,
       name: user.first_name + user.last_name,
       type: 'Usuario trazoro',
       identification_number: user.document_number,
-      nit: '',
+      nit: user.company_info.nit_number,
       rucom: user.rucom.num_rucom || user.rucom.rucom_record,
       address: user.address,
       email: user.email,

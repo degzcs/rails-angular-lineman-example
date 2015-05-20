@@ -37,7 +37,7 @@ ActiveAdmin.register User do
       f.input :first_name , label: "Nombre"
       f.input :last_name, label: "Apellido"
       f.input :document_number , label: "Numero de documento"
-      f.input :document_expedition_date, label: "fecha de expedicion" , label: "Fecha de expedicion documento" 
+      f.input :document_expedition_date, label: "fecha de expedicion" , label: "Fecha de expedicion documento" , start_year: Date.today.year - 70
       f.input :phone_number, label: "Numero telefonico"
       f.input :address, label: "Direccion"
       f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)

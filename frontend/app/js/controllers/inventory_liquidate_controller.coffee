@@ -85,7 +85,13 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   #Submit a sale if the sale is valid
   #
   $scope.submitSale = ->
+    dialog = $mdDialog.alert()
+      .title('Generando Certificado ')
+      .content('Espere un momento...')
+      #.ok('hecho!')
+      duration: 2
 
+    $mdDialog.show dialog
     if $scope.selectedClient == null || $scope.selectedCourier == null
       $scope.infoAlert('Atencion', 'Por favor un transportador y un cliente')
       return
@@ -104,6 +110,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+        $mdDialog.cancel dialog
         SaleService.model.id = sale.id
         SaleService.model.courier_id = sale.courier_id
         SaleService.model.client_id = sale.client_id

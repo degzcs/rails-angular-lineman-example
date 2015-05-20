@@ -262,6 +262,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
      $mdDialog.show({
        parent: parentEl,
        targetEvent: $event,
+       disableParentScroll: false,
        template:
          '<md-dialog>' +
            '  <md-dialog-content>' +
@@ -289,7 +290,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
            }
          });
          scope.closeDialog = function() {
-           $mdDialog.hide();
+           $mdDialog.cancel();
            $scope.newProvider = {};
            ProviderService.setCurrentProv({});
            $scope.infoAlert('Crear nuevo proveedor', 'El registro ha sido exitoso', false);

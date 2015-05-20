@@ -12,7 +12,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.code = null
   $scope.origin_certificate_upload_type = null
 
-  $scope.rucomIDFiel0d =
+  $scope.rucomIDField =
     label: 'Número de RUCOM'
     field: 'num_rucom'
 
@@ -95,8 +95,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       prov =
         id: providers[i].id
         document_number: providers[i].nit || providers[i].document_number
-        company_name: 'company name test' # <-- TODO: migration
-        document_type: 'NIT' # <-- TODO: migration
+        company_name: providers[i].company_info.name # <-- TODO: migration
+        document_type: 'CC' # <-- TODO: migration
         first_name: providers[i].first_name
         last_name: providers[i].last_name
         address: providers[i].address
@@ -109,8 +109,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: providers[i].city || 'Popayan'
-        state: 'Cauca'
+        city: providers[i].company_info.city || 'Popayan'
+        state: providers[i].company_info.state || 'Cauca'
         address: providers[i].address
       $scope.allProviders.push prov
       i++
@@ -229,6 +229,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $mdDialog.show
       parent: parentEl
       targetEvent: ev
+      disableParentScroll: false
       template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
       controller: [
         'scope'
@@ -248,7 +249,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
             return
 
           scope.closeDialog = ->
-            $mdDialog.hide()
+            $mdDialog.cancel()
             # $scope.newProvider = {}
             # PurchaseService.setCurrentProv {}
             $scope.infoAlert 'Crear nueva compra', 'El registro ha sido exitoso', false
