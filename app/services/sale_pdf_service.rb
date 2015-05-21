@@ -82,10 +82,10 @@ class SalePDFService
       batches << {
         id_purchase: p.id,
         id_provider: p.provider.id,
-        social: '',
+        social: p.provider.first_name + ' ' + p.provider.last_name,
         certificate_number: p.origin_certificate_sequence,
-        rucom: '',
-        fine_grams: p.gold_batch.grams
+        rucom: p.provider.rucom.num_rucom || p.provider.rucom.rucom_record,
+        fine_grams: p.gold_batch.grams.round(2)
       }
     end
     batches
