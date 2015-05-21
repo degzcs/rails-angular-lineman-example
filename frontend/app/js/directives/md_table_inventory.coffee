@@ -20,6 +20,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
       $scope.selectedItems = []
       $scope.totalAmount = 0
       $scope.count = 0
+      $scope.showEmpty = true
       $scope.liquidate_selected_items = (ev)->
         
         if $scope.selectedItems.length == 0
@@ -293,10 +294,18 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           .content(message)
           .ariaLabel('Alert Dialog Demo').ok('Ok')
           .targetEvent(ev))
+      
       return
 
     
     templateUrl: 'directives/md-table-inventory.html'
     link: (scope, element, attrs)->
+
+      angular.element(element[0].querySelector('#hideButton')).on 'click', ->
+
+        result = document.getElementsByClassName('purchase-empty')
+        angular.element(result).toggleClass('hidden')
+      
+
 
   }

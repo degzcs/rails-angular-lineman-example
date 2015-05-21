@@ -3,6 +3,10 @@
     %md-button.md-raised.md-primary.btn-save{"ng-click"=>"liquidate_selected_items($event)"}
       Liquidar {{totalAmount}} Gramos
       %md-icon{:alt => "Alarm Icon", "md-svg-icon" =>"navigation:arrow_forward"}
+  %md-checkbox{id: "hideButton","aria-label" => "Checkbox 1", "ng-model" => "showEmpty"}
+    Mostrar compras sin gramos restantes  
+    
+    
   %md-content
     .table-container
       %table.md-table.inventory-index-table
