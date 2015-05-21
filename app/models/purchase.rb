@@ -59,6 +59,10 @@ class Purchase < ActiveRecord::Base
     Provider.find(self.provider_id)
   end
 
+  def user_provider
+    User.find(provider_id)
+  end
+
   # @return [Barby::HtmlOutputter] wiht the purchase code converted in a barcode
   def barcode_html
     barcode = Barby::EAN13.new(self.code)

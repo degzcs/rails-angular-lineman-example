@@ -40,6 +40,21 @@ module V1
          present current_user, with: V1::Entities::User
         end
 
+        desc 'returns one existent user by :id', {
+          entity: V1::Entities::User,
+          notes: <<-NOTES
+            Returns one existent user by :id
+          NOTES
+        }
+        params do
+          requires :id, type: Integer, desc: 'User ID'
+        end
+        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          user = ::User.find(params[:id])
+          present user, with: V1::Entities::User
+        end
+
         desc 'Update the current user', {
             notes: <<-NOTE
               ### Description

@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser) ->
+angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser,User) ->
   #Get the current inventory from the sessionStorage using the Inventory Service
   $scope.purchase = PurchaseService.restoreState()
   $scope.provider = null
@@ -25,6 +25,12 @@ angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,P
     
   #Get the provier using the api
 
-  ProviderService.retrieveProviderById.get {providerId: $scope.purchase.provider.id}, (provider)->
-    $scope.provider = provider
-  
+  #TODO: Refactor provider and user provider logic
+
+  if $scope.purchase.trazoro 
+    User.get($scope.purchase.provider.id).success (user)->
+      $scope.provider = user
+  else
+    ProviderService.retrieveProviderById.get {providerId: $scope.purchase.provider.id}, (provider)->
+      $scope.provider = provider
+    
