@@ -16,7 +16,7 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
     data.document_type = 'NIT'
     # set barequero chatarrero oc
     $scope.barequero_chatarrero_origin_certificate.buyer = data
-    $scope.barequero_chatarrero_origin_certificate.city = data.city
+    $scope.barequero_chatarrero_origin_certificate.city = data.city.name
 
 
   #
@@ -72,8 +72,8 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: providers[i].city.name || 'Popayan'
-        state: providers[i].state.name || 'Cauca'
+        city: providers[i].city || 'Popayan'
+        state: providers[i].state || 'Cauca'
       provs.push prov
       i++
     provs
