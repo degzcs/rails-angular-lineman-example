@@ -1,8 +1,10 @@
 angular.module('app').factory('ScannerService', function() {
 
-var pdf = new jsPDF();
+var pdf = new jsPDF_1();
 var filesarray=[];
 var consecutivo=0;
+var width=200;
+    var height=280;
     //Method to get the scanned files
     var getScanFiles=function(){
         return filesarray;
@@ -22,7 +24,7 @@ var consecutivo=0;
     };
 //Method to get the last file in pdf joining all the images
      var joinFile=function(images){
-     pdf=new jsPDF();    
+     pdf=new jsPDF_1();    
      filesarray=[];        
      consecutivo++;
       if(images && images.length>0){
@@ -31,10 +33,12 @@ var consecutivo=0;
             pdf.addPage();
             pdf.setPage(0);
         } 
-        pdf.addImage(images[i],"JPEG",5,5,200,280);
-        }
-     //   pdf.save("a.pdf");
+         pdf.addImage(images[i],"png",5,5,200,280);
+    
         var blob= pdf.getBlob();
+    //    pdf.addImage(images[i],'JPEG',30,5,150,150);
+        }
+     //   var blob= pdf.getBlob();
         blob.lastModifiedDate = new Date();
         blob.name = consecutivo+getDate()+'.pdf';;
         filesarray.push(blob);

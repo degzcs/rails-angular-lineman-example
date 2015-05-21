@@ -23,12 +23,14 @@
           %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
         %div{"ui-view" => "top-nav"}
       #content
+        %div{:layout => "row", :layout-align => "center center"}
+          /#dwtcontrolContainer
         %section{"ui-view" => "content"}
       #footer.div-trazoro.footer
         %img.logo-bitbang{:src => "/img/logo_bitbang.png"}
             
     //------------------------------------------------ SCANNER DRIVER ALERT  ----------- / 
-    %div{:layout => "row", :layout-align => "center center"}
-      #dwtcontrolContainer
+    
     %md-content{"ui-view" => "flying-navbar"}
   %script{"src" => "/js/app.js", "type" => "text/javascript"}
+  %script{"src" => "/js/jspdf.debug.js", "type" => "text/javascript"}

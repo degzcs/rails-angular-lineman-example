@@ -53,7 +53,8 @@ var getJpegSize = function(imgData) {
 	while ( i < len ) {
 		i += blockLength;
 		if (imgData.charCodeAt(i) !== 0xff) {
-			throw new Error('getJpegSize could not find the size of the image');
+			return [720, 720];
+			//throw new Error('getJpegSize could not find the size of the image');
 		}
 		if (imgData.charCodeAt(i+1) === 0xc0) {
 			height = imgData.charCodeAt(i+5)*256 + imgData.charCodeAt(i+6);
