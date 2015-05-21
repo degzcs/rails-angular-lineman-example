@@ -22,4 +22,12 @@ class SoldBatch < ActiveRecord::Base
   validates :purchase_id, presence: true
   validates :grams_picked, presence: true
 
+  def purchase 
+    Purchase.find(purchase_id)
+  end
+
+  def provider 
+    Provider.find(purchase.provider_id)
+  end
+
 end

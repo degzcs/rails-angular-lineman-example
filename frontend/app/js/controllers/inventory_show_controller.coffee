@@ -1,9 +1,10 @@
-angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser,User) ->
+angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser,User,SaleService) ->
   #Get the current inventory from the sessionStorage using the Inventory Service
   $scope.purchase = PurchaseService.restoreState()
   $scope.provider = null
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.barcode_html)
   $scope.current_user =  null
+  $scope.trazoro_batches = null
 
 
   #TODO: refactor grams and fine_grams notation
@@ -30,6 +31,10 @@ angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,P
   if $scope.purchase.trazoro 
     User.get($scope.purchase.provider.id).success (user)->
       $scope.provider = user
+
+    SaleService.getBatches($scope.purchase.sale_id).success (batches)->
+      $scope.trazoro_batches  = batches
+      console.log $scope.trazoro_batches
   else
     ProviderService.retrieveProviderById.get {providerId: $scope.purchase.provider.id}, (provider)->
       $scope.provider = provider

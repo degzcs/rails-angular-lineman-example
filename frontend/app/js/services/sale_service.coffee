@@ -34,6 +34,12 @@ angular.module('app').factory 'SaleService', ($http)->
     get_by_code: (code)->
       return $http.get("api/v1/sales/get_by_code/"+code)
 
+    get: (id)->
+      return $http.get("api/v1/sales/"+id)
+
+    getBatches: (id)->
+      return $http.get("api/v1/sales/"+id+"/batches")
+
     #setSaleInfo: function(sale_info){
     #  sessionStorage.setItem('saleInfo',JSON.stringify(sale_info));
     #  console.log(JSON.parse(sessionStorage.getItem('saleInfo')));
