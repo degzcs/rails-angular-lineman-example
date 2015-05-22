@@ -21,9 +21,9 @@
 
 require 'spec_helper'
 
-describe Client do
+describe ExternalClient do
   context "test factory" do
-    let(:client) {build(:client)}
+    let(:client) {build(:external_client)}
     it {expect(client.id_document_number).not_to be_nil }
     it {expect(client.id_document_type).not_to be_nil }
     it {expect(client.first_name).not_to be_nil}

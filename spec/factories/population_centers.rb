@@ -17,12 +17,12 @@
 FactoryGirl.define do
   factory :population_center, class: PopulationCenter do
     name { Faker::Address.city }
-	longitude { Faker::Address.longitude }
-	latitude { Faker::Address.latitude }
-	population_center_type { Faker::Hacker.abbreviation }
-	city_id {Random.rand(1...100)}
-	population_center_code { Faker::Number.number(6) } 
-	city_code { Faker::Number.number(6) }
+  	longitude { Faker::Address.longitude }
+  	latitude { Faker::Address.latitude }
+  	population_center_type { Faker::Hacker.abbreviation }
+  	city_id {Random.rand(1...100)}
+  	population_center_code { Faker::Number.number(6) } 
+  	city_code { Faker::Number.number(6) }
   end
 
 end

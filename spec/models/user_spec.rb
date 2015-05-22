@@ -9,38 +9,47 @@
 #  document_number          :string(255)
 #  document_expedition_date :date
 #  phone_number             :string(255)
+#  address                  :string(255)
+
 #  created_at               :datetime
 #  updated_at               :datetime
-#  password_digest          :string(255)
-#  available_credits        :float
-#  reset_token              :string(255)
-#  address                  :string(255)
+
 #  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  chamber_commerce_file    :string(255)
+#
 #  rucom_id                 :integer
-#  company_info_id          :integer
+#  company_id               :integer
 #  population_center_id     :integer
 #
+#  password_digest          :string(255)
+#  available_credits        :float
+#  reset_token              :string(255)
+#
+
 
 require 'spec_helper'
 
 describe  User do
   context 'test factory' do
     let(:user){ build(:user) }
-
-    it { expect(user.email).not_to be_nil }
-    it { expect(user.password).not_to be_nil }
-    it { expect(user.password_digest).not_to be_nil }
     it { expect(user.first_name).not_to be_nil }
     it { expect(user.last_name).not_to be_nil }
+    it { expect(user.email).not_to be_nil }
     it { expect(user.document_number).not_to be_nil }
     it { expect(user.document_expedition_date).not_to be_nil }
     it { expect(user.phone_number).not_to be_nil }
-    it { expect(user.available_credits).not_to be_nil }
     it { expect(user.address).not_to be_nil }
+    it { expect(user.document_number_file).not_to be_nil }
+    it { expect(user.rut_file).not_to be_nil }
+    it { expect(user.mining_register_file).not_to be_nil }
+    it { expect(user.photo_file).not_to be_nil }
+    it { expect(user.chamber_commerce_file).not_to be_nil }
+    it { expect(user.rucom).not_to be_nil }
+    it { expect(user.company).not_to be_nil }
+    it { expect(user.population_center).not_to be_nil }
   end
 
   context 'create user' do
@@ -50,7 +59,7 @@ describe  User do
       expect(user.save).to be true
     end 
 
-    it 'should not create a user because their password is incorrect' do
+    it 'should not create a user because his password is incorrect' do
       user = build(:user, password: 'nomatch', password_confirmation: 'paila')
       expect(user.save).to be false
     end 
@@ -59,13 +68,22 @@ describe  User do
       user = create(:user)
       expect(user.available_credits).to eq(0.0)
     end
-  
-    it 'should trigger save_client on save' do
-      user = build(:user, password: 'super_password', password_confirmation: 'super_password')
-      user.should_receive(:save_client)
-      user.save
-    end
 
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:document_number) }
+    it { should validate_presence_of(:document_expedition_date) }
+    it { should validate_presence_of(:phone_number) }
+    it { should validate_presence_of(:address) }
+    it { should validate_presence_of(:document_number_file) }
+    it { should validate_presence_of(:rut_file) }
+    it { should validate_presence_of(:mining_register_file) }
+    it { should validate_presence_of(:photo_file) }
+    it { should validate_presence_of(:chamber_commerce_file) }
+    it { should validate_presence_of(:rucom_id) }
+    it { should validate_presence_of(:company) }
+    it { should validate_presence_of(:population_center) }
   end
 
   context '#instance methods' do 

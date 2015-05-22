@@ -19,7 +19,7 @@
 #
 
 FactoryGirl.define do
-  factory :company_info, class: CompanyInfo do |f|
+  factory :company do |f|
     nit_number { Faker::Number.number(10) }
     name {Faker::Company.name}
     city {Faker::Address.city}

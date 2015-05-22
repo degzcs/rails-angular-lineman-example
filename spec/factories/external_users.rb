@@ -1,33 +1,29 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: external_users
 #
 #  id                       :integer          not null, primary key
+#  document_number          :string(255)
 #  first_name               :string(255)
 #  last_name                :string(255)
-#  email                    :string(255)
-#  document_number          :string(255)
-#  document_expedition_date :date
 #  phone_number             :string(255)
+#  address                  :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
-#  password_digest          :string(255)
-#  available_credits        :float
-#  reset_token              :string(255)
-#  address                  :string(255)
+#  rucom_id                 :integer
 #  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
-#  chamber_commerce_file    :string(255)
-#  rucom_id                 :integer
-#  company_id               :integer
+#  email                    :string(255)
 #  population_center_id     :integer
+#  chamber_commerce_file    :string(255)
+#  company_id               :integer
+#  document_expedition_date :date
 #
 
 FactoryGirl.define do
-
-  factory :user do |f|
+  factory :external_user  do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name}
     email { Faker::Internet.email }
@@ -43,7 +39,5 @@ FactoryGirl.define do
     rucom
     company
     population_center
-    password {'foobar'}
-    password_confirmation {'foobar'}
   end
 end

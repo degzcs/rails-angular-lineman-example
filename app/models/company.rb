@@ -18,9 +18,10 @@
 #  id_number_legal_rep  :string(255)
 #
 
-class CompanyInfo < ActiveRecord::Base
-  belongs_to :provider
-  has_one :user
+class Company < ActiveRecord::Base
+  
+  has_many :users
+  has_many :external_users
 
   validates :nit_number, presence: true
   validates :name, presence: true

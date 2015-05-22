@@ -55,6 +55,7 @@ gem 'rmagick'
  gem "hashie_rails"
  gem "hashie-forbidden_attributes"
 
+
 group :development do
   gem 'quiet_assets'
   gem 'annotate'

@@ -20,7 +20,7 @@
 #
 
 # this class is like User but wiht more fields, so why don't use Single-Table Inheritance (STI) instead create a new model?
-class Client < ActiveRecord::Base
+class ExternalClient < ActiveRecord::Base
 
   #
   # Instance Methods

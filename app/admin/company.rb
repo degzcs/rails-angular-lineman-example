@@ -12,7 +12,7 @@
 #  provider_id          :integer
 #  id_number_legal_rep  :string(255)
 #
-ActiveAdmin.register CompanyInfo do
+ActiveAdmin.register Company do
   menu priority: 2, label: 'Compañias'
 
   permit_params :nit_number, :name, :city, :state , :country , :legal_representative , :id_type_legal_rep , :email , :phone_number ,:id_number_legal_rep

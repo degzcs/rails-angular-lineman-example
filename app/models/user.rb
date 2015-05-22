@@ -21,7 +21,7 @@
 #  photo_file               :string(255)
 #  chamber_commerce_file    :string(255)
 #  rucom_id                 :integer
-#  company_info_id          :integer
+#  company_id               :integer
 #  population_center_id     :integer
 #
 
@@ -34,8 +34,9 @@ class User < ActiveRecord::Base
 	has_many :purchases
 	has_many :sales
 	has_many :credit_billings
+	
+	belongs_to :company 
 	belongs_to :rucom #  NOTE: this is temporal becauses we don't have access to the real Rucom table just by the scrapper in python.
-	belongs_to :company_info #TODO: this model will be renamed to Company so the association have to be renamed too.
 	belongs_to :population_center
 
 	has_secure_password
@@ -43,9 +44,21 @@ class User < ActiveRecord::Base
 	#
 	# Validations
 	#
-
+	validates :first_name , presence: true
+	validates :last_name , presence: true
+	validates :email, presence: true
+	validates :document_number , presence: true
+	validates :document_expedition_date, presence: true
+	validates :phone_number, presence: true
+	validates :address, presence: true
 	validates :rucom_id, presence: true
-	validates :company_info, presence: true
+	validates :document_number_file, presence: true
+	validates :rut_file, presence: true
+	validates :mining_register_file, presence: true
+	validates :photo_file, presence: true
+	validates :chamber_commerce_file, presence: true
+	validates :rucom_id, presence: true
+	validates :company, presence: true
 	validates :population_center, presence: true
 
 	#
@@ -53,9 +66,8 @@ class User < ActiveRecord::Base
 	#
 
 	after_initialize :init
-	before_create :save_client
-
-	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :company_info, :population_center
+	
+	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :company, :population_center
 
 	#
 	# fields for save files by carrierwave
@@ -71,7 +83,7 @@ class User < ActiveRecord::Base
 	#
 
 	def company_name
-		company_info.name 
+		company.name 
 	end
 
 	# TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
@@ -86,7 +98,7 @@ class User < ActiveRecord::Base
 
 	#IMPROVE:  this value introduce inconsistencies in the transactions!!
 	def nit
-		company_info.nit_number
+		company.nit_number
 	end
 
 	def rucom_record
@@ -121,30 +133,8 @@ class User < ActiveRecord::Base
 
 	protected
 
-	def init
-	  self.available_credits  ||= 0.0           #will set the default value only if it's nil
-	end
-
-	# NOTE: what is Client class for?... I think is better use a Single-Table Inheritance approach here!
-	# NOTE2: Also this client is created but without a implicit relation/association with the current user
-	  def save_client
-
-			client_hash = { "first_name" => self.first_name,
-											"last_name" => self.last_name,
-											"phone_number" => self.phone_number,
-											"id_document_type" => 'CC',
-											"id_document_number" => self.document_number,
-											"client_type" => 'Comercializador',
-											"email" => self.email,
-											"rucom_id"=>self.rucom_id}
-										#	"rucom_id" => 1, #provisional
-										#	"population_center_id" => 1} #provisional
-
-			client = Client.new(client_hash)
-
-			if !client.save
-				errors.add(:email,'Error al crear este usuario  como cliente')
-			end
+		def init
+		  self.available_credits  ||= 0.0           #will set the default value only if it's nil
 		end
 
 end
