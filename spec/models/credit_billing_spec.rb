@@ -46,6 +46,4 @@ describe CreditBilling  do
     end
 
   end
-
-
 end
