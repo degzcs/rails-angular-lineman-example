@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
 	#
 
 	has_many :purchases
+	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
+
 	has_many :sales
 	has_many :credit_billings
 	

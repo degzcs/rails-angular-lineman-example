@@ -28,7 +28,8 @@ class ExternalUser < ActiveRecord::Base
   #
   # Associations
   #
-
+  
+  has_many :purchases, as: :provider
   belongs_to :company
   belongs_to :rucom
   belongs_to :population_center

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522213342) do
+ActiveRecord::Schema.define(version: 20150522234458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20150522213342) do
     t.text     "code"
     t.boolean  "trazoro",                     default: false, null: false
     t.integer  "sale_id"
+    t.string   "provider_type"
   end
 
   create_table "rucoms", force: true do |t|

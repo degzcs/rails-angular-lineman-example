@@ -15,6 +15,7 @@
 #  code                        :text
 #  trazoro                     :boolean          default(FALSE), not null
 #  sale_id                     :integer
+#  provider_type               :string(255)
 #
 
 require 'barby'
@@ -28,7 +29,8 @@ class Purchase < ActiveRecord::Base
   #
 
   belongs_to :user
-  # belongs_to :provider
+  belongs_to :provider, polymorphic: true
+  
   belongs_to :gold_batch
   has_one :inventory
 
@@ -48,19 +50,9 @@ class Purchase < ActiveRecord::Base
   # Instance methods
   #
 
-  # This is the uniq code assigned to this purchase
+  # This is the unique code assigned to this purchase
   def reference_code
     Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
-  end
-
-  #Gets the provider of the purchase
-  # IMPROVE: I think this is an association like "belongs_to :provider" and in the provider model "has_many :purchases"
-  def provider
-    Provider.find(self.provider_id)
-  end
-
-  def user_provider
-    User.find(provider_id)
   end
 
   # @return [Barby::HtmlOutputter] wiht the purchase code converted in a barcode
