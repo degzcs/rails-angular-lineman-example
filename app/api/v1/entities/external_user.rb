@@ -7,7 +7,7 @@ module V1
       expose :last_name, documentation: { type: "string", desc: "Lastname", example: "Perez" }
       expose :phone_number, documentation: { type: "string", desc: "Phone number", example: "83333333" }
       expose :address, documentation: { type: "string", desc: "Address", example: "Calle falsa n#4233" }
-      expose :identification_number_file, documentation: { type: "file", desc: "file", example: "..." } 
+      expose :document_number_file, documentation: { type: "file", desc: "file", example: "..." } 
       expose :mining_register_file, documentation: { type: "file", desc: "file", example: "..." } 
       expose :rut_file, documentation: { type: "file", desc: "file", example: "..." } 
       expose :chamber_commerce_file, documentation: { type: "file", desc: "file", example: "..." } 
@@ -17,8 +17,7 @@ module V1
       expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
-      expose :population_center: {type: "hash", desc: "population center", example: ""}
-      end
+      expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
     end
   end
 end

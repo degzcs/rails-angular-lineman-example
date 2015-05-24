@@ -14,7 +14,6 @@
 #  phone_number         :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  provider_id          :integer
 #  id_number_legal_rep  :string(255)
 #
 

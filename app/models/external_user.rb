@@ -53,14 +53,12 @@ class ExternalUser < ActiveRecord::Base
   validates :document_expedition_date, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
-  validates :rucom_id, presence: true
   validates :document_number_file, presence: true
   validates :rut_file, presence: true
   validates :mining_register_file, presence: true
   validates :photo_file, presence: true
   validates :chamber_commerce_file, presence: true
   validates :rucom_id, presence: true
-  validates :company, presence: true
   validates :population_center, presence: true
 
   #
@@ -94,6 +92,15 @@ class ExternalUser < ActiveRecord::Base
 
   def type
     rucom.provider_type
+  end
+
+  #IMPROVE:  this value introduce inconsistencies in the transactions!!
+  def city
+    population_center.try(:city)
+  end
+
+  def state
+    population_center.try(:state)
   end
 
 end

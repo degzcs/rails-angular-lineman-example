@@ -30,7 +30,7 @@ require 'spec_helper'
 
 describe ExternalUser do
   context "test factory" do
-    let(:external_user) {build(:external_user)}
+    let(:external_user) { build(:external_user) }
     it { expect(external_user.first_name).not_to be_nil }
     it { expect(external_user.last_name).not_to be_nil }
     it { expect(external_user.email).not_to be_nil }
@@ -67,7 +67,6 @@ describe ExternalUser do
     it { should validate_presence_of(:photo_file) }
     it { should validate_presence_of(:chamber_commerce_file) }
     it { should validate_presence_of(:rucom_id) }
-    it { should validate_presence_of(:company) }
     it { should validate_presence_of(:population_center) }
   end
 
