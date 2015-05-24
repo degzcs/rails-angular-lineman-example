@@ -50,6 +50,7 @@ describe  User do
     it { expect(user.rucom).not_to be_nil }
     it { expect(user.company).not_to be_nil }
     it { expect(user.population_center).not_to be_nil }
+    it { expect(user.available_credits).not_to be_nil }
   end
 
   context 'create user' do
@@ -89,6 +90,23 @@ describe  User do
   context '#instance methods' do 
     it 'should create a JWT' do 
       expect(subject.create_token).not_to be_nil
+    end
+    context "discount_available_credits" do
+      let(:user) {create(:user, available_credits: 5000)}
+      it "should discount an amount of credits from the available_credits" do
+        user.discount_available_credits(400)
+        expect(user.available_credits).to eq 4600
+      end
+      it "should not allow to discount credits if the amount is less than 0" do
+        expect{user.discount_available_credits(10000)}.to raise_error(User::EmptyCredits)
+      end
+    end
+    context "add_available_credits" do
+      let(:user) {create(:user, available_credits: 5000)}
+      it "should discount an amount of credits from the available_credits" do
+        user.add_available_credits(400)
+        expect(user.available_credits).to eq 5400
+      end
     end
   end
 

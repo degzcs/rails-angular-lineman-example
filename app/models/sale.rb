@@ -12,6 +12,7 @@
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
 #  price                   :float
+#  client_type             :string(255)
 #
 
 #TODO: change field name from grams to fine_grams
@@ -24,8 +25,11 @@ class Sale < ActiveRecord::Base
   #
   # Associations
   #
-  has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :user
+  belongs_to :client, polymorphic: true
+  
+  belongs_to :courier
+  has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :gold_batch
   #
   # Callbacks

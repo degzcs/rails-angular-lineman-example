@@ -27,16 +27,18 @@
 
 class User < ActiveRecord::Base
 
+	class EmptyCredits < StandardError
+  end
 	#
 	# Associations
 	#
 
 	has_many :purchases
-	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
-
 	has_many :sales
-	has_many :credit_billings
+	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
+	has_many :sales_as_client, class_name: "Sale", as: :client
 	
+	has_many :credit_billings
 	belongs_to :company 
 	belongs_to :rucom #  NOTE: this is temporal becauses we don't have access to the real Rucom table just by the scrapper in python.
 	belongs_to :population_center
@@ -110,6 +112,8 @@ class User < ActiveRecord::Base
 	def office
 		'Trazoro Popayan'
 	end
+
+
 	# @return [String] whith the JWT to send the client
 	def create_token
 		payload = {
@@ -119,6 +123,19 @@ class User < ActiveRecord::Base
 		}
 		JWT.encode(payload, Rails.application.secrets.secret_key_base);
 	end
+
+	#discount available credits amount 
+  def discount_available_credits(credits)
+    new_amount = (available_credits - credits).round(2)
+    raise EmptyCredits if new_amount <= 0
+    update_attribute(:available_credits,new_amount)
+  end
+
+  #add available credits  
+  def add_available_credits(credits)
+    new_amount = (available_credits + credits).round(2)
+    update_attribute(:available_credits,new_amount)
+  end
 
 	#
 	# Class Methods

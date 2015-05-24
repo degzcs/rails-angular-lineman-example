@@ -2,13 +2,12 @@
 #
 # Table name: gold_batches
 #
-#  id             :integer          not null, primary key
-#  parent_batches :text
-#  grams          :float
-#  grade          :integer
-#  inventory_id   :integer
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id           :integer          not null, primary key
+#  fine_grams   :float
+#  grade        :integer
+#  inventory_id :integer
+#  created_at   :datetime
+#  updated_at   :datetime
 #
 
 require 'spec_helper'

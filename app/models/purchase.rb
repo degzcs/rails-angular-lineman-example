@@ -81,7 +81,7 @@ class Purchase < ActiveRecord::Base
   protected
     #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
     def create_inventory
-      Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.grams)
+      Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.fine_grams)
     end
 
     # Article about how setup ean13

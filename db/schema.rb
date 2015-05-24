@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522234458) do
+ActiveRecord::Schema.define(version: 20150524074251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,8 +147,7 @@ ActiveRecord::Schema.define(version: 20150522234458) do
   add_index "external_users", ["population_center_id"], name: "index_external_users_on_population_center_id", using: :btree
 
   create_table "gold_batches", force: true do |t|
-    t.text     "parent_batches"
-    t.float    "grams"
+    t.float    "fine_grams"
     t.integer  "grade"
     t.integer  "inventory_id"
     t.datetime "created_at"
@@ -219,6 +218,7 @@ ActiveRecord::Schema.define(version: 20150522234458) do
     t.datetime "updated_at"
     t.string   "origin_certificate_file"
     t.float    "price"
+    t.string   "client_type"
   end
 
   create_table "sold_batches", force: true do |t|

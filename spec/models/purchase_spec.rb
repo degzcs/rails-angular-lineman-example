@@ -33,6 +33,7 @@ describe Purchase do
     it {expect(purchase.price).not_to be_nil }
     it {expect(purchase.seller_picture).not_to be_nil}
     it {expect(purchase.trazoro).not_to be_nil}
+    it {expect(purchase.provider_type).not_to be_nil}
   end
  
   context "purchase creation" do
@@ -73,6 +74,16 @@ describe Purchase do
 
     it "should generate a barcode when the purchase is  is created" do
       expect(purchase.reload.barcode_html).not_to be_nil
+    end
+  end
+
+  context "test after creation callback methods" do
+    context "create_inventory" do
+      it 'creates a new inventory for the purchase with the same remaining_amount value of the gold_batch grams' do
+        new_gold_batch = create(:gold_batch, fine_grams: 3.5,  )
+        new_purchase = create(:purchase, gold_batch: new_gold_batch)
+        expect(new_purchase.inventory.remaining_amount).to be 3.5 
+      end
     end
   end
 

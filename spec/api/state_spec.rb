@@ -48,13 +48,8 @@ describe 'State', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to be 10
           end
-
         end
-
       end
-
     end
-
   end
-
 end

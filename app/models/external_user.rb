@@ -30,6 +30,8 @@ class ExternalUser < ActiveRecord::Base
   #
   
   has_many :purchases, as: :provider
+  has_many :sales, as: :client
+
   belongs_to :company
   belongs_to :rucom
   belongs_to :population_center

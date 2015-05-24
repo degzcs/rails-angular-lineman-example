@@ -36,15 +36,16 @@ RSpec.describe Inventory, type: :model do
     end
   end
 
-  context "test after creation callback methods" do
-    context "create_inventory" do
-      it 'creates a new inventory for the purchase with the same remaining_amount value of the gold_batch grams' do
-        new_gold_batch = create(:gold_batch, grams: 3.5,  )
-        new_purchase = create(:purchase, gold_batch_id: new_gold_batch.id)
-        expect(new_purchase.inventory.remaining_amount).to be 3.5 
+  context "instance methods" do
+    context "discount_remainig_amount" do
+      let(:purchase) {create(:purchase, gold_batch: create(:gold_batch, fine_grams: 300))}
+      it "should discount an amount of grams from the remaining_amount" do
+        purchase.inventory.discount_remainig_amount(130)
+        expect(purchase.inventory.remaining_amount).to eq 170
+      end
+      it "should not allow to discount grams if the amount is less than 0" do
+        expect{purchase.inventory.discount_remainig_amount(350)}.to raise_error(Inventory::EmptyInventory)
       end
     end
-
   end
-  
 end

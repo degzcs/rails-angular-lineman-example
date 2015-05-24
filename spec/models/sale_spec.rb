@@ -12,6 +12,7 @@
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
 #  price                   :float
+#  client_type             :string(255)
 #
 
 require 'spec_helper'
@@ -19,27 +20,42 @@ require 'spec_helper'
 describe Sale do
   context "test factory" do
     let(:sale) {build(:sale)}
-    it {expect(sale.courier_id).not_to be_nil }
-    it {expect(sale.client_id).not_to be_nil }
-    it {expect(sale.user_id).not_to be_nil}
-    it {expect(sale.gold_batch_id).not_to be_nil}
+    it {expect(sale.courier).not_to be_nil }
+    it {expect(sale.user).not_to be_nil}
+    it {expect(sale.client).not_to be_nil }
+    it {expect(sale.gold_batch).not_to be_nil}
     it {expect(sale.code).not_to be_nil}
+    it {expect(sale.origin_certificate_file).not_to be_nil}
+    it {expect(sale.price).not_to be_nil}
+    it {expect(sale.client_type).not_to be_nil}
   end
-  context "test creation" do
+  context "sale creation" do
     it "should create a new sale with valid data" do
       expect(build(:sale)).to be_valid
     end
 
-    it "should not allow to create a sale without a courier id" do
-      expect(build(:sale, courier_id: nil)).not_to be_valid
+    context "for a trazoro sale (user - user sale)" do
+      let!(:user1) { create(:user) }
+      let!(:user2) {create(:user)}
+      let(:sale) {create(:sale, user: user1, client: user2)}
+      it "expect to have the correct user" do
+        expect(sale.user).to eq user1
+      end
+      it "expect to have the correct client" do
+        expect(sale.client).to eq user2
+      end
     end
-
-    it "should not allow to create a sale without client id" do
-      expect(build(:sale, client_id: nil)).not_to be_valid
+    context "for an external client purchase" do
+      let!(:user1) { create(:user) }
+      let!(:external_user) {create(:external_user)}
+      let(:sale) {create(:sale, user: user1, client: external_user)}
+      it "expect to have the correct user" do
+        expect(sale.user).to eq user1
+      end
+      it "expect to have the correct client" do
+        expect(sale.client).to eq external_user
+      end
     end
-    #it "should not allow to create a sale without barcode" do
-      #expect(build(:sale, grams: nil)).not_to be_valid
-    #end
   end
 
   context "test barcode generations" do
