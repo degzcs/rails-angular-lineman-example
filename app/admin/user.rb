@@ -78,7 +78,7 @@ ActiveAdmin.register User do
         link_to "archivo PDF",u.chamber_commerce_file.url
       end
       row :company , label: "Compañia"do|u|
-        u.company_info.name
+        u.company.name
       end
       row :rucom do|u|
         link_to "Rucom: #{u.rucom.name}", admin_rucom_path(u.rucom.id)
