@@ -45,7 +45,7 @@ ActiveAdmin.register User do
       f.input :rut_file, :as => :file, label: "PDF Rut"
       f.input :mining_register_file, :as => :file, label: "PDF registro minero"
       f.input :chamber_commerce_file, :as => :file, label: "PDF camara de comercio"
-      f.input :company_info, label: "Compañia"
+      f.input :company, label: "Compañia"
       f.input :rucom_id, label: "Id Rucom (Revisar campo 'Id' en la Tabla de Rucoms)" ,as: :number
       f.input :population_center, label: "Centro poblacional"
       f.input :password, label: "Password (Minimo 8 caracteres)"
