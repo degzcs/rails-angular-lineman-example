@@ -25,10 +25,11 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
         mining_register_file: provider.mining_register_file,
         rut_file: provider.rut_file,
         rucom: {
+          id: provider.rucom.id,
           num_rucom: provider.rucom.num_rucom,
           rucom_record: provider.rucom.rucom_record,
           provider_type: provider.rucom.provider_type,
-          rucom_status: provider.rucom.status || 'No Inscrito',
+          rucom_status: provider.rucom.status ? provider.rucom.status : (provider.rucom.id ? 'Inscrito' : 'No Inscrito'),
           mineral: provider.rucom.mineral
         },
         population_center: {
