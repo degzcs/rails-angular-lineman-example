@@ -154,7 +154,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/providers/index.html"
-        controller: "ProvidersIndexCtrl"
+        controller: "ExternalUserIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"

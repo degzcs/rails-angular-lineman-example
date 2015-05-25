@@ -10,7 +10,6 @@ angular.module('app').directive('mdTableProvider', function () {
       customClass: '=customClass',
       thumbs:'=', 
       count: '=',
-      currentProvider: '=',
       queryName: '=',
       queryId: '=',
       queryFocus: '='
