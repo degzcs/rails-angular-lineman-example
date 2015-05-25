@@ -28,7 +28,7 @@ angular.module('app').controller('ProvidersEditCtrl', ['$scope', '$stateParams',
           num_rucom: provider.rucom.num_rucom,
           rucom_record: provider.rucom.rucom_record,
           provider_type: provider.rucom.provider_type,
-          rucom_status: provider.rucom.status,
+          rucom_status: provider.rucom.status || 'No Inscrito',
           mineral: provider.rucom.mineral
         },
         population_center: {

@@ -22,7 +22,7 @@
               %md-input-container{:flex => ""}
                 %label Apellido
                 %input{:readonly => "true", "ng-model" => "currentProvider.last_name"}
-              %md-input-container{:flex => ""}
+              %md-input-container{"ng-if" => "currentProvider.rucom.id", :flex => ""}
                 %label {{rucomIDField.label}}
                 %input{:readonly => "true", "ng-model" => "currentProvider.rucom[rucomIDField.field]"}
                 %md-tooltip{"md-direction" => "right", "md-visible" => "true"}
@@ -34,7 +34,7 @@
               %md-input-container{"ng-if" => "currentProvider.rucom.rucom_status", :flex => ""}
                 %label Estado del Rucom
                 %input{:readonly => "true", "ng-model" => "currentProvider.rucom.rucom_status"}
-              %md-input-container{:flex => ""}
+              %md-input-container{"ng-if" => "currentProvider.rucom.id", :flex => ""}
                 %label Tipo de Proveedor
                 %input{:readonly => "true", "ng-model" => "currentProvider.rucom.provider_type"}
             %div{layout: 'row'}

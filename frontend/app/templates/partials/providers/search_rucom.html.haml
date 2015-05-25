@@ -20,3 +20,8 @@
     %md-button.md-button.btn-save{"ng-click" => "comeBack()"} 
       Volver
       %md-icon{"md-svg-icon"=>"navigation:arrow_back"}
+    %md-button.md-button.btn-save{"ui-sref" => "create_client", "ng-if" => "type == 'client'"}
+      Usuario sin Rucom
+      %md-icon{"md-svg-icon"=>"content:add"}
+    %md-button.md-button.btn-save{"ui-sref" => "type_2", "ng-if" => "type == 'provider'"}
+      Usuario sin Rucom

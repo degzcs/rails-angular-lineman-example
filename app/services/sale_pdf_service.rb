@@ -27,7 +27,7 @@ class SalePDFService
       type: 'Usuario trazoro',
       identification_number: user.document_number,
       nit: user.company_info.nit_number,
-      rucom: user.rucom.num_rucom || user.rucom.rucom_record,
+      rucom: user.rucom.num_rucom || user.rucom.rucom_record || '',
       address: user.address,
       email: user.email,
       phone: user.phone_number
@@ -42,7 +42,7 @@ class SalePDFService
       type: 'Cliente trazoro',
       identification_number: client.id_document_number,
       nit: '',
-      rucom: client.rucom.num_rucom || client.rucom.rucom_record,
+      rucom: (client.rucom.num_rucom if client.rucom) || (client.rucom.rucom_record if client.rucom),
       address: client.address,
       email: client.email,
       phone: client.phone_number
@@ -78,13 +78,14 @@ class SalePDFService
     batches = []
     @sale.batches.each do|b|
       p = Purchase.find(b.purchase_id)
+      p.provider.rucom ? rucom = (p.provider.rucom.num_rucom || p.provider.rucom.rucom_record) : rucom = ''
 
       batches << {
         id_purchase: p.id,
         id_provider: p.provider.id,
         social: p.provider.first_name + ' ' + p.provider.last_name,
         certificate_number: p.origin_certificate_sequence,
-        rucom: p.provider.rucom.num_rucom || p.provider.rucom.rucom_record,
+        rucom: rucom,
         fine_grams: p.gold_batch.grams.round(2)
       }
     end
