@@ -20,8 +20,6 @@
       /    %md-button{"aria-label" => "Edit"}
       /      %i.ion-android-create
 .md-table-footer{:layout => "row"}
-  %span.md-table-count-info
-    Registros por página : {{count}}
   %span{:flex => "flex"}
   %span{"ng-show" => "nbOfPages() > 1"}
     %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "goToPage(tablePage-1, queryFocus)", "aria-label" => "Previous Page"}
