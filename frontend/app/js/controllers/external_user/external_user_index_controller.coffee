@@ -1,7 +1,7 @@
 angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog) ->
 
   ##****************************************  TABLE HEADERS and initial config variables *****************************************##
-  $scope.count = 5
+  $scope.count = 10
   $scope.content = []
   $scope.toggleSearch = false
   $scope.queryName = ''

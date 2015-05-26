@@ -145,7 +145,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         controller: "SessionsNewCtrl"
   )
 
-  #  --- Providers Routes ---- #
+  #  --- External User Routes ---- #
 
   .state("index_external_user",
     url: "/external_users",
@@ -174,7 +174,8 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   .state("show_external_user",
     url: "/external_user/:id",
     ncyBreadcrumb:
-      label: 'Edición de usuario externo'
+      label: 'Detalles usuario externo'
+      parent: 'index_external_user'
     views:
       'content':
         templateUrl: "partials/external_users/show.html"

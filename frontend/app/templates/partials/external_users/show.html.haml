@@ -63,7 +63,9 @@
                 %h2
                   %label Centro Poblado:
                   {{currentExternalUser.population_center.name}}
-            / %iframe{:frameborder => "0", :height => "450", :src => "https://www.google.com/maps/embed/v1/place?key=AIzaSyBSvGJkkB0CyXnEQsd16bgVBEeNm49tQZM&q=currentExternalUser.city", :style => "border:0", :width => "600"}
+
+            %div.external-user-map{"ng-bind-html"=>"map_iframe"}
+            
     /*************************************************** COMPANY INFO ******************************************************/
     %md-tab{"label"=>"Informacion Compañia","ng-if" => "company"}
       .provider-info{"ng-if" => "company"}
