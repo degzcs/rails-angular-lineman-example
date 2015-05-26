@@ -42,7 +42,7 @@ module V1
         end
 
         params :external_user do
-          requires :external_user, type: Hash do
+          optional :external_user, type: Hash do
             optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
             optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
             optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
@@ -199,7 +199,7 @@ module V1
           external_user = ::ExternalUser.find(params[:id])
           external_user_params = params[:external_user]
           external_user.company.update_attributes(params[:company]) if params[:company]
-          external_user.update_attributes(params[:external_user])
+          external_user.update_attributes(params[:external_user]) if params[:external_user]
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else

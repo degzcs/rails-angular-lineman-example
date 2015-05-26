@@ -171,12 +171,8 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
     
     ExternalUser.update_external_user($scope.currentExternalUser.id).success (data)->
       $mdDialog.cancel()
-      console.log data
+      $mdDialog.show $mdDialog.alert().title('Mensaje').content('Información actualizada correctamente.').ariaLabel('Alert Dialog Demo').ok('ok!')
 
-    # $resource = ProviderService.edit($scope.currentExternalUser)
-    # if $resource
-    #   $resource.update { id: $scope.currentExternalUser.id }, $scope.currentExternalUser
-    # $window.history.back()
     return
 
   $scope.back = ->

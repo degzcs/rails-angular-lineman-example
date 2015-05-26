@@ -3,7 +3,8 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
     #modelToCreate:
     modelToUpdate:
       company:
-        name: ''
+        phone_number: ''
+        email: ''
       external_user:
         phone_number: ''
         email: ''
@@ -11,7 +12,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         population_center_id: ''
 
     all: (per_page,page)->
-      $mdDialog.show(templateUrl: 'partials/loading.html')
+      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users'
                 method: 'GET'
@@ -20,21 +21,29 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
                   page: page || 1
                 }
     get: (id)->
-      $mdDialog.show(templateUrl: 'partials/loading.html')
+      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users/'+id
                 method: 'GET'
     
     update_external_user: (id)->
-      $mdDialog.show(templateUrl: 'partials/loading.html')
-      console.log service.modelToUpdate.external_user
+      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users/'+id
                 method: 'PUT'
                 data: {
                   external_user: service.modelToUpdate.external_user
                 }
-
+    
+    update_external_user_company: (id)->
+      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
+      return $http
+                url: 'api/v1/external_users/'+id
+                method: 'PUT'
+                data: {
+                  company: service.modelToUpdate.company
+                }
+    
     query_by_name: (name,per_page,page)->
       return $http
                 url: 'api/v1/external_users'

@@ -201,10 +201,37 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     url: "/external_user/:id/edit",
     ncyBreadcrumb:
       label: 'Edición de usuario externo'
+      parent: 'show_external_user'
     views:
       'content':
         templateUrl: "partials/external_users/edit.html"
         controller: "ExternalUserEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("edit_external_user_company",
+    url: "/external_user/:id/edit_company",
+    ncyBreadcrumb:
+      label: 'Edición de compañia'
+      parent: 'show_external_user'
+    views:
+      'content':
+        templateUrl: "partials/external_users/edit_company.html"
+        controller: "ExternalUserCompanyEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"

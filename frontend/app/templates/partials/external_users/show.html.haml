@@ -5,9 +5,8 @@
       .provider-info
         %div{layout: 'row'}
           .photo-container{flex: '30'}
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user({ id: currentExternalUser.id })"} Editar Información
             %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
-            %md-button.md-button.btn-save{"ui-sref"=>"edit_external_user({ id: currentExternalUser.id })"} Editar Información
-            
           .fields-container{flex: '70'}
             %h2{style: "text-align: left;"} 
               Datos personales:
@@ -69,45 +68,6 @@
 
             %div.external-user-map{"ng-bind-html"=>"map_iframe"}
             
-    /*************************************************** COMPANY INFO ******************************************************/
-    %md-tab{"label"=>"Informacion Compañia","ng-if" => "company"}
-      .provider-info{"ng-if" => "company"}
-        %div{layout: 'row'}
-          .photo-container{flex: '30'}
-            %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
-          .fields-container{flex: '70'}
-            %h3{style: "text-align: left;"} Datos de Compañia
-            %div{layout: 'row'}
-              %md-input-container{:flex => ""}
-                %label Nombre de la Compañía
-                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.name"}
-              %md-input-container{:flex => ""}
-                %label NIT
-                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.nit_number"}
-              %md-input-container{:flex => ""}
-                %label Representante Legal
-                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.legal_representative"}
-            %div{layout: 'row'}
-
-              %md-input-container{:flex => ""}
-                %label Identificación del Representante
-                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.id_number_legal_rep"}
-              %md-input-container
-                %label Tipo de Identificación del Rep. Legal
-                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.id_type_legal_rep"}
-            %div{layout: 'row'}
-              %md-input-container{:flex => ""}
-                %label Teléfono
-                %input{:required => "true", :name => "company_phone_number", "ng-model" => "currentExternalUser.company_info.phone_number", :placeholder => "(555) 555 5555"}
-                %div{"ng-messages" => "providerEditionForm.company_phone_number.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido
-              %md-input-container{:flex => ""}
-                %label E-mail
-                %input{:required => "true", :type => "email", :name => "company_email", "ng-model" => "currentExternalUser.company_info.email", :placeholder => "mail@example.com"}
-                %div{"ng-messages" => "providerEditionForm.company_email.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido
-                  %div{"ng-message" => "email"} Ingrese un e-mail válido
-    
     /*************************************************** DOCUMENTATION *********************************************/
     
     %md-tab{label: "Documentacion"}
@@ -129,3 +89,46 @@
           %md-button{"ng-show"=>"currentExternalUser.authorization_file.url", :class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.document_number_file.url}}", :target => "_blank"}  
             %p Autorización*
             %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.document_number_file.preview.url || 'img/pdf.png'}}"}
+
+    /*************************************************** COMPANY INFO ******************************************************/
+    %md-tab{"label"=>"Informacion Compañia","ng-if" => "company"}
+      .provider-info{"ng-if" => "company"}
+        %div{layout: 'row'}
+          .photo-container{flex: '30'}
+            /%img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user_company({ id: currentExternalUser.id })"} Editar Información
+          .fields-container{flex: '70'}
+            %h2{style: "text-align: left;"} Datos de Compañia
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label Nombre de la Compañía:
+                  {{currentExternalUser.company.name}}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label NIT:
+                  {{currentExternalUser.company.nit_number}}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label Representante Legal:
+                  {{currentExternalUser.company.legal_representative}}
+            
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label Identificación del Representante:
+                  {{currentExternalUser.company.id_number_legal_rep}}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label Tipo de Identificación del Rep. Legal:
+                  {{currentExternalUser.company.id_type_legal_rep}}
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label Teléfono:
+                  {{currentExternalUser.company.phone_number}}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label E-mail:
+                  {{currentExternalUser.company.email}}
+               
