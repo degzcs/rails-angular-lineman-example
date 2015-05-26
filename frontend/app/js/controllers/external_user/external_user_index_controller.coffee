@@ -1,7 +1,7 @@
 angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog) ->
 
   ##****************************************  TABLE HEADERS and initial config variables *****************************************##
-  $scope.count = 10
+  $scope.count = 5
   $scope.content = []
   $scope.toggleSearch = false
   $scope.queryName = ''
@@ -88,7 +88,7 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
         address: data[i].address
         email: data[i].email
         phone_number: data[i].phone_number
-        photo_file: data[i].photo_file or 'http://robohash.org/' + providers[i].id
+        photo_file: data[i].photo_file or 'http://robohash.org/' + data[i].id
         num_rucom: data[i].rucom.num_rucom
         rucom_record: data[i].rucom.rucom_record
         provider_type: data[i].rucom.provider_type

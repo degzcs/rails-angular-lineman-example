@@ -96,11 +96,13 @@ class ExternalUser < ActiveRecord::Base
 
   #IMPROVE:  this value introduce inconsistencies in the transactions!!
   def city
-    population_center.try(:city)
+    city_object = population_center.try(:city)
+    city_object.name if city_object
   end
 
   def state
-    population_center.try(:state)
+    state_object = population_center.try(:city).try(:state)
+    state_object.name if state_object
   end
 
 end

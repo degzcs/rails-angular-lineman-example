@@ -1,0 +1,126 @@
+%div{:layout => "column"}
+  %md-tabs{"md-selected" => "formTabControl.selectedIndex","ng-if"=>"currentExternalUser"}
+    /********************************************** PERSONAL DATA ******************************************************/
+    %md-tab{"label"=>"Datos Personales"}
+      .provider-info
+        %div{layout: 'row'}
+          .photo-container{flex: '30'}
+            %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+          .fields-container{flex: '70'}
+            %h2{style: "text-align: left;"} Datos personales:
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2 
+                  %label Nombre:
+                  {{currentExternalUser.first_name}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Apellido:
+                  {{currentExternalUser.last_name}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Número de Identificación:
+                  {{currentExternalUser.document_number}}
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Teléfono:
+                  {{currentExternalUser.phone_number}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label E-mail:
+                  {{currentExternalUser.email}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Dirección:
+                  {{currentExternalUser.address}}  
+            %h2{style: "text-align: left;"} Informacion de Rucom:
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label {{rucomIDField.label}}:
+                  {{currentExternalUser.rucom[rucomIDField.field]}}
+              
+              .external-info-container{flex: ""}
+                %h2
+                  %label Tipo:
+                  {{currentExternalUser.rucom.provider_type}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Estado:
+                  {{currentExternalUser.rucom.rucom_status}}
+            %h2{style: "text-align: left;"} Centro Poblado:
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Ciudad:
+                  {{currentExternalUser.city}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Departamento:
+                  {{currentExternalUser.state}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Centro Poblado:
+                  {{currentExternalUser.population_center.name}}
+            / %iframe{:frameborder => "0", :height => "450", :src => "https://www.google.com/maps/embed/v1/place?key=AIzaSyBSvGJkkB0CyXnEQsd16bgVBEeNm49tQZM&q=currentExternalUser.city", :style => "border:0", :width => "600"}
+    /*************************************************** COMPANY INFO ******************************************************/
+    %md-tab{"label"=>"Informacion Compañia","ng-if" => "company"}
+      .provider-info{"ng-if" => "company"}
+        %div{layout: 'row'}
+          .photo-container{flex: '30'}
+            %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+          .fields-container{flex: '70'}
+            %h3{style: "text-align: left;"} Datos de Compañia
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Nombre de la Compañía
+                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.name"}
+              %md-input-container{:flex => ""}
+                %label NIT
+                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.nit_number"}
+              %md-input-container{:flex => ""}
+                %label Representante Legal
+                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.legal_representative"}
+            %div{layout: 'row'}
+
+              %md-input-container{:flex => ""}
+                %label Identificación del Representante
+                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.id_number_legal_rep"}
+              %md-input-container
+                %label Tipo de Identificación del Rep. Legal
+                %input{:readonly => "true", "ng-model" => "currentExternalUser.company_info.id_type_legal_rep"}
+            %div{layout: 'row'}
+              %md-input-container{:flex => ""}
+                %label Teléfono
+                %input{:required => "true", :name => "company_phone_number", "ng-model" => "currentExternalUser.company_info.phone_number", :placeholder => "(555) 555 5555"}
+                %div{"ng-messages" => "providerEditionForm.company_phone_number.$error"}
+                  %div{"ng-message" => "required"} Este campo es requerido
+              %md-input-container{:flex => ""}
+                %label E-mail
+                %input{:required => "true", :type => "email", :name => "company_email", "ng-model" => "currentExternalUser.company_info.email", :placeholder => "mail@example.com"}
+                %div{"ng-messages" => "providerEditionForm.company_email.$error"}
+                  %div{"ng-message" => "required"} Este campo es requerido
+                  %div{"ng-message" => "email"} Ingrese un e-mail válido
+    
+    /*************************************************** DOCUMENTATION *********************************************/
+    
+    %md-tab{label: "Documentacion"}
+      %md-content.md-padding
+        %div{:layout => "row", "layout-align" => "space-around center", "layout-margin" => "", "layout-sm" => "column"}   
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.document_number_file.url}}", :target => "_blank"}  
+            %p Cédula de Ciudadanía
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.document_number_file.preview.url || 'img/pdf.png'}}"}
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.mining_register_file.url}}", :target => "_blank"}  
+            %p Registro minero
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.mining_register_file.preview.url || 'img/pdf.png'}}"}
+
+          %md-button{"ng-show"=>"currentExternalUser.chamber_commerce_file.url", :class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.chamber_commerce_file.url}}", :target => "_blank"}
+            %p Camara de comercio
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.rut_file.preview.url }}" } 
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.rut_file.url}}", :target => "_blank" }  
+            %p RUT
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.rut_file.preview.url || 'img/pdf.png'}}" } 
+          %md-button{"ng-show"=>"currentExternalUser.authorization_file.url", :class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.document_number_file.url}}", :target => "_blank"}  
+            %p Autorización*
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.document_number_file.preview.url || 'img/pdf.png'}}"}

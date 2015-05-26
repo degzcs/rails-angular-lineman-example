@@ -14,10 +14,34 @@ angular.module('app').directive('mdTableProvider', function () {
       queryId: '=',
       queryFocus: '='
     },
-    controller: function ($scope, $filter, $location, $window, $state, ProviderService) {
+    controller: function ($scope, $filter, $location, $window, $state, ProviderService,ExternalUser,$mdDialog) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
+      
+      format_index_data = function(data){
+        var content = [];
+        for (var i=0; i<data.length; i++) {
+          var prov = {
+            id: data[i].id,
+            document_number: data[i].document_number,
+            first_name: data[i].first_name,
+            last_name: data[i].last_name,
+            address: data[i].address,
+            email: data[i].email,
+            phone_number: data[i].phone_number,
+            photo_file: data[i].photo_file || ('http://robohash.org/' + data[i].id),
+            num_rucom: data[i].rucom.num_rucom,
+            rucom_record: data[i].rucom.rucom_record,
+            provider_type: data[i].rucom.provider_type,
+            rucom_status: data[i].rucom.status,
+            mineral: data[i].rucom.mineral
+            };
+          content.push(prov);
+        }
+        return content;
+      }
+
       $scope.nbOfPages = function () {
         return $scope.pages || 0;
       };
@@ -34,41 +58,26 @@ angular.module('app').directive('mdTableProvider', function () {
       };
       $scope.goToPage = function (pag, queryFocus) {
         $scope.tablePage = pag;
-        params = {per_page: $scope.count, page: (pag+1)};
         if (queryFocus && queryFocus === 'name') {
-          params.query_name = $scope.queryName;
+          var external_users_petition = ExternalUser.query_by_name($scope.queryName,$scope.count,pag+1);
         } else if (queryFocus && queryFocus === 'id') {
-          params.query_id = $scope.queryId;
+          var external_users_petition = ExternalUser.query_by_name($scope.queryId,$scope.count,pag+1);
+        } else{
+          var external_users_petition = ExternalUser.all($scope.count,pag+1);
         }
-        ProviderService.retrieveProviders.query(params, (function(providers, headers) {
-          var content = [];
-          for (var i=0; i<providers.length; i++) {
-            var prov = {
-              id: providers[i].id,
-              document_number: providers[i].document_number,
-              first_name: providers[i].first_name,
-              last_name: providers[i].last_name,
-              address: providers[i].address,
-              email: providers[i].email,
-              phone_number: providers[i].phone_number,
-              photo_file: providers[i].photo_file || ('http://robohash.org/' + providers[i].id),
-              num_rucom: providers[i].rucom.num_rucom,
-              rucom_record: providers[i].rucom.rucom_record,
-              provider_type: providers[i].rucom.provider_type,
-              rucom_status: providers[i].rucom.status,
-              mineral: providers[i].rucom.mineral
-            };
-            content.push(prov);
-          }
-          $scope.pages = parseInt(headers().total_pages);
-          return $scope.content = content;
-        }), function(error) {});
+        if(external_users_petition){
+          external_users_petition.success(function(data, status ,headers){
+            $mdDialog.cancel();
+            $scope.content = format_index_data(data);
+            $scope.pages = parseInt(headers().total_pages);
+          });
+        }
       };
-      $scope.setCurrentProv = function (provider) {
+      $scope.setCurrentProv = function (external_user) {
         //ProviderService.setCurrentProv(provider);
         //$scope.currentProvider = provider;
-        console.log('Setting current Provider: ' + JSON.stringify($scope.currentProvider));
-        $state.go("edit_provider", {providerId: provider.id});
+        //console.log('Setting current Provider: ' + JSON.stringify($scope.currentProvider));
+        $state.go("show_external_user", {id: external_user.id});
       };
     },
     //template: angular.element(document.querySelector('#md-table-template')).html()

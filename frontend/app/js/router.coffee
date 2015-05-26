@@ -147,13 +147,13 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
 
   #  --- Providers Routes ---- #
 
-  .state("providers",
-    url: "/provider",
+  .state("index_external_user",
+    url: "/external_users",
     ncyBreadcrumb:
-      label: 'Proveedores'
+      label: 'Usuarios Externos'
     views:
       'content':
-        templateUrl: "partials/providers/index.html"
+        templateUrl: "partials/external_users/index.html"
         controller: "ExternalUserIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
@@ -171,14 +171,39 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  .state("edit_provider",
-    url: "/provider/:providerId",
+  .state("show_external_user",
+    url: "/external_user/:id",
     ncyBreadcrumb:
-      label: 'Edición proovedor'
+      label: 'Edición de usuario externo'
     views:
       'content':
-        templateUrl: "partials/providers/edit.html"
-        controller: "ProvidersEditCtrl"
+        templateUrl: "partials/external_users/show.html"
+        controller: "ExternalUserShowCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("edit_external_user",
+    url: "/external_user/:id/edit",
+    ncyBreadcrumb:
+      label: 'Edición de usuario externo'
+    views:
+      'content':
+        templateUrl: "partials/external_users/edit.html"
+        controller: "ExternalUserEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
