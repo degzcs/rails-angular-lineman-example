@@ -6,8 +6,11 @@
         %div{layout: 'row'}
           .photo-container{flex: '30'}
             %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+            %md-button.md-button.btn-save{"ui-sref"=>"edit_external_user({ id: currentExternalUser.id })"} Editar Información
+            
           .fields-container{flex: '70'}
-            %h2{style: "text-align: left;"} Datos personales:
+            %h2{style: "text-align: left;"} 
+              Datos personales:
             %div{layout: 'row'}
               .external-info-container{flex: ""}
                 %h2 

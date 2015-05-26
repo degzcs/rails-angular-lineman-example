@@ -200,7 +200,6 @@ module V1
           external_user_params = params[:external_user]
           external_user.company.update_attributes(params[:company]) if params[:company]
           external_user.update_attributes(params[:external_user])
-
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else

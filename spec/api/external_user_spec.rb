@@ -171,7 +171,7 @@ describe 'ExternalUser', :type => :request do
             email: external_user.email,
           }
 
-          put "/api/v1/external_users/#{external_user.id}", {id: external_user.id, external_user: new_values, company: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
+          put "/api/v1/external_users/#{external_user.id}", {external_user: new_values, company: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
 
           expect(response.status).to eq 200
           expect(JSON.parse(response.body)).to include(expected_response.stringify_keys)

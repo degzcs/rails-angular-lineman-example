@@ -13,7 +13,7 @@
 
 FactoryGirl.define do
   factory :city , class: City do
-    name { Faker::Address.city }
+  name { Faker::Address.city }
 	state_id {Random.rand(1...100)} 
 	city_code { Faker::Number.number(6) }
 	state_code { Faker::Number.number(6) }
