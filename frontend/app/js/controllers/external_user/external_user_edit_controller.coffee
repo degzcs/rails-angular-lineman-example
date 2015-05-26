@@ -23,7 +23,7 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
 
 
   #****** Autocomplete for State, City and Population Center fields *****************
-
+  
   createFilterFor = (query) ->
     lowercaseQuery = angular.lowercase(query)
     (state) ->
@@ -51,6 +51,10 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
 
 
   $scope.states = []
+  LocationService.getStates.query {}, (states) ->
+    $scope.states = states
+    console.log 'States: ' + JSON.stringify(states)
+    return
   $scope.cities = []
   $scope.population_centers = []
   $scope.selectedState = null
