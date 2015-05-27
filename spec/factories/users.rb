@@ -23,6 +23,7 @@
 #  rucom_id                 :integer
 #  company_id               :integer
 #  population_center_id     :integer
+#  user_type                :integer          default(1), not null
 #
 
 FactoryGirl.define do
@@ -40,6 +41,7 @@ FactoryGirl.define do
     mining_register_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     chamber_commerce_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
+    user_type 1
     rucom
     company
     population_center

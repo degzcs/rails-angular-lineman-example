@@ -54,6 +54,40 @@ describe 'ExternalUser', :type => :request do
       end
 
       context 'POST' do
+        context "without rucom" do
+          it 'returns a representation of the new external user created and code 201' do
+            #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+
+            population_center = create(:population_center)
+            external_user = build(:external_user, population_center_id: population_center.id)
+
+            new_values = {
+              first_name: external_user.first_name,
+              last_name: external_user.last_name,
+              email: external_user.email,
+              document_number: external_user.document_number,
+              document_expedition_date: external_user.document_expedition_date,
+              phone_number: external_user.phone_number,
+              address: external_user.address,
+              population_center_id: population_center.id,
+              files: @files
+            }           
+            
+            expected_response = {
+              document_number: external_user.document_number,
+              first_name: external_user.first_name,
+              last_name: external_user.last_name,
+              phone_number: external_user.phone_number,
+              address: external_user.address,
+              email: external_user.email
+            }
+
+            post '/api/v1/external_users', {external_user: new_values}, { "Authorization" => "Barer #{@token}" }
+            expect(response.status).to eq 201
+            expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
+          end
+        end
         context "without company info" do
           it 'returns a representation of the new external user created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/test_images/image.png"

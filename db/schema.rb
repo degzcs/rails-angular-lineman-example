@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150524183503) do
+ActiveRecord::Schema.define(version: 20150527041021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20150524183503) do
     t.string   "chamber_commerce_file"
     t.integer  "company_id"
     t.date     "document_expedition_date"
+    t.integer  "user_type",                default: 1, null: false
   end
 
   add_index "external_users", ["company_id"], name: "index_external_users_on_company_id", using: :btree
@@ -258,6 +259,7 @@ ActiveRecord::Schema.define(version: 20150524183503) do
     t.integer  "rucom_id"
     t.integer  "company_id"
     t.integer  "population_center_id"
+    t.integer  "user_type",                default: 1, null: false
   end
 
 end

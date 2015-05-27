@@ -9,7 +9,22 @@
 #  document_number          :string(255)
 #  document_expedition_date :date
 #  phone_number             :string(255)
+#  created_at               :datetime
+#  updated_at               :datetime
+#  password_digest          :string(255)
+#  available_credits        :float
+#  reset_token              :string(255)
 #  address                  :string(255)
+#  document_number_file     :string(255)
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
+#  photo_file               :string(255)
+#  chamber_commerce_file    :string(255)
+#  rucom_id                 :integer
+#  company_id               :integer
+#  population_center_id     :integer
+#  user_type                :integer          default(1), not null
+#
 
 #  created_at               :datetime
 #  updated_at               :datetime
@@ -51,6 +66,7 @@ describe  User do
     it { expect(user.company).not_to be_nil }
     it { expect(user.population_center).not_to be_nil }
     it { expect(user.available_credits).not_to be_nil }
+    it { expect(user.user_type).not_to be_nil }
   end
 
   context 'create user' do

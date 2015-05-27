@@ -3,13 +3,25 @@
 # Table name: external_users
 #
 #  id                       :integer          not null, primary key
+#  document_number          :string(255)
 #  first_name               :string(255)
 #  last_name                :string(255)
-#  email                    :string(255)
-#  document_number          :string(255)
-#  document_expedition_date :date
 #  phone_number             :string(255)
 #  address                  :string(255)
+#  created_at               :datetime
+#  updated_at               :datetime
+#  rucom_id                 :integer
+#  document_number_file     :string(255)
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
+#  photo_file               :string(255)
+#  email                    :string(255)
+#  population_center_id     :integer
+#  chamber_commerce_file    :string(255)
+#  company_id               :integer
+#  document_expedition_date :date
+#  user_type                :integer          default(1), not null
+#
 
 #  created_at               :datetime
 #  updated_at               :datetime
@@ -46,6 +58,7 @@ describe ExternalUser do
     it { expect(external_user.rucom).not_to be_nil }
     it { expect(external_user.company).not_to be_nil }
     it { expect(external_user.population_center).not_to be_nil }
+    it { expect(external_user.user_type).not_to be_nil }
   end
 
   context "external user creation" do
@@ -66,7 +79,6 @@ describe ExternalUser do
     it { should validate_presence_of(:mining_register_file) }
     it { should validate_presence_of(:photo_file) }
     it { should validate_presence_of(:chamber_commerce_file) }
-    it { should validate_presence_of(:rucom_id) }
     it { should validate_presence_of(:population_center) }
   end
 

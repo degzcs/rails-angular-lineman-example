@@ -23,6 +23,7 @@
 #  rucom_id                 :integer
 #  company_id               :integer
 #  population_center_id     :integer
+#  user_type                :integer          default(1), not null
 #
 
 class User < ActiveRecord::Base
@@ -44,6 +45,15 @@ class User < ActiveRecord::Base
 	belongs_to :population_center
 
 	has_secure_password
+
+
+  #ENUM USER TYPES: 
+  # 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
+  # 4. Consumidor, 5. Titular , 6. Subcontrato de operación , 7. Inscrito
+
+  #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
+
+  enum user_type: [ :barequero, :comercializador, :solicitante, :beneficiario, :consumidor, :titular, :subcontrato, :inscrito]
 
 	#
 	# Validations
