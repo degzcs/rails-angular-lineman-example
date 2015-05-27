@@ -12,23 +12,22 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         rucom_id: ''
         population_center_id: ''
         user_type: ''
-        files:
-          document_number_file: ''
-          mining_register_file: ''
-          rut_file: ''
-          chamber_commerce_file: ''
-          photo_file: ''
-        company:
-          nit_number: ''
-          name: ''
-          city: ''
-          state: ''
-          country: ''
-          legal_representative: ''
-          id_type_legal_rep: ''
-          id_number_legal_rep: ''
-          email: ''
-          phone_number: ''
+        document_number_file: ''
+        mining_register_file: ''
+        rut_file: ''
+        chamber_commerce_file: ''
+        photo_file: ''
+      company:
+        nit_number: ''
+        name: ''
+        city: ''
+        state: ''
+        country: ''
+        legal_representative: ''
+        id_type_legal_rep: ''
+        id_number_legal_rep: ''
+        email: ''
+        phone_number: ''
 
     modelToUpdate:
       company:
@@ -101,4 +100,10 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
                   page: page || 1
                   query_rucomid: rucomid
                 }
+    saveModelToCreate: ->
+      sessionStorage.external_user_to_create = angular.toJson(service.modelToCreate)
+    restoreModelToCreate: ->
+      if(sessionStorage.external_user_to_create)
+        service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
+      return service.modelToCreate
   return service

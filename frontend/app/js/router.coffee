@@ -1,4 +1,4 @@
-angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
+ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
 
   #TODO: apply some 'universal resolve' approach to avoid boilerplate code here
   # see this link: http://spin.atomicobject.com/2014/10/04/javascript-angularjs-resolve-routes/
@@ -268,14 +268,15 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-    .state("create_external_user_type_1",
-      url: "/provider/type_1/rucom/:rucomId",
+    .state("create_external_user_type_a",
+      url: "/external_users/type_a",
       ncyBreadcrumb:
-        label: 'Nuevo proveedor'
+        label: 'Nuevo Usuario Externo: Formulario tipo A'
+        parent: 'index_external_user'
       views:
         'content':
-          templateUrl: "partials/providers/type_a.html"
-          controller: "ProvidersRucomCtrl"
+          templateUrl: "partials/external_users/type_a.html"
+          controller: "ExternalUserCreateCtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
@@ -293,14 +294,15 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.promise
     )
 
-    .state("create_external_user_type_2",
-      url: "/provider/type_2/rucom/:rucomId",
+    .state("create_external_user_type_b",
+      url: "/external_users/type_b",
       ncyBreadcrumb:
-        label: 'Nuevo proveedor'
+        label: 'Nuevo Usuario Externo: Formulario tipo B'
+        parent: 'index_external_user'
       views:
         'content':
-          templateUrl: "partials/providers/type_b.html"
-          controller: "ProvidersRucomCtrl"
+          templateUrl: "partials/external_users/type_b.html"
+          controller: "ExternalUserCreateCtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
