@@ -3,7 +3,7 @@
     %md-tabs{"md-selected"=>"tabIndex.selectedIndex"}
       
       /****************************   PERSONAL DATA ***********************************/
-      %md-tab{"aria-controls" => "tab1-content", label: "Datos Personales"}
+      %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales"}
         %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
             %legend
@@ -11,7 +11,7 @@
             %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
                 %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newExternalUser.external_user.photo_file || 'img/default-user.png'}}","ng-model" => "newExternalUser.photo_file",  "check-image" => ''}
+                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newExternalUser.photo_file || 'img/default-user.png'}}","ng-model" => "newExternalUser.photo_file",  "check-image" => ''}
                   %md-tooltip{'md-direction'=> 'bottom'}
                     Tomar Foto
           %fieldset.standard.fieldset-information{:flex => ""}
@@ -28,20 +28,12 @@
                 %input{:name => "last_name", "ng-model" => "newExternalUser.last_name", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.last_name.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-              %md-input-container{:flex => ""}
-                %label {{rucomIDField.label}}
-                %input{:readonly => "true", "ng-model" => "rucom[rucomIDField.field]"}
-                %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
-                  %span.ion-android-checkmark-circle &nbsp;válido
               %md-input-container{:flex => ""}
                 %label Número de Identificación
                 %input{:name => "document_number", "ng-model" => "newExternalUser.document_number", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-              %md-input-container{:flex => ""}
-                %label Tipo de Proveedor
-                %input{"ng-model" => "newExternalUser.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
+            
             %md-content.md-padding{:layout => "", "layout-sm" => "column"}
               %md-input-container{:flex => ""}
                 %label Teléfono
@@ -59,6 +51,18 @@
                 %input{:name => "address", "ng-model" => "newExternalUser.address", :placeholder => "CLL/CR 1 22 - 33", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.address.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
+
+            %h2 Rucom
+            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+              %md-input-container{:flex => ""}
+                %label {{rucomIDField.label}}
+                %input{:readonly => "true", "ng-model" => "rucom[rucomIDField.field]"}
+                %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+                  %span.ion-android-checkmark-circle &nbsp;válido
+              %md-input-container{:flex => ""}
+                %label Tipo de Proveedor
+                %input{"ng-model" => "newExternalUser.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
+            
             %br
             %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
               %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
@@ -69,7 +73,7 @@
                 %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
       
       /****************************   DOCUMENTATION ***********************************/
-      %md-tab{"aria-controls" => "tab3-content", label: "Documentacion"}
+      %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion"}
         #tab3-content{}
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
                          
@@ -84,12 +88,12 @@
                 .button-action.md-padding{:ng-switch => '', :on => 'identification_number_upload_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newExternalUser.external_user.document_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
+                    %input{"ng-model" => "newExternalUser.document_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
                     %div{"ng-messages" => "providerCreateForm.identification_number.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newExternalUser.external_user.document_number_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newExternalUser.document_number_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
                   
