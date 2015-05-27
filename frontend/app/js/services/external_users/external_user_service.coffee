@@ -1,6 +1,35 @@
 angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDialog) ->
   service =
-    #modelToCreate:
+    modelToCreate:
+      external_user:
+        first_name: ''
+        last_name: ''
+        email: ''
+        document_number: ''
+        document_expedition_date: ''
+        phone_number: ''
+        address: ''
+        rucom_id: ''
+        population_center_id: ''
+        user_type: ''
+        files:
+          document_number_file: ''
+          mining_register_file: ''
+          rut_file: ''
+          chamber_commerce_file: ''
+          photo_file: ''
+        company:
+          nit_number: ''
+          name: ''
+          city: ''
+          state: ''
+          country: ''
+          legal_representative: ''
+          id_type_legal_rep: ''
+          id_number_legal_rep: ''
+          email: ''
+          phone_number: ''
+
     modelToUpdate:
       company:
         phone_number: ''
@@ -10,6 +39,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         email: ''
         address: ''
         population_center_id: ''
+
 
     all: (per_page,page)->
       $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)

@@ -131,3 +131,13 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
         $scope.pages = parseInt(headers().total_pages)
       ).error (data, status, headers, config)->
       return
+
+  #Launch External user type selection
+  $scope.new_external_user = (ev) ->
+    $mdDialog.show
+      controller: 'ExternalUserTypeCtrl'
+      templateUrl: 'partials/user-type-selection.html'
+      targetEvent: ev
+    return
+
+

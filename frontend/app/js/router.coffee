@@ -268,7 +268,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-    .state("type_1",
+    .state("create_external_user_type_1",
       url: "/provider/type_1/rucom/:rucomId",
       ncyBreadcrumb:
         label: 'Nuevo proveedor'
@@ -293,7 +293,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.promise
     )
 
-    .state("type_2",
+    .state("create_external_user_type_2",
       url: "/provider/type_2/rucom/:rucomId",
       ncyBreadcrumb:
         label: 'Nuevo proveedor'
