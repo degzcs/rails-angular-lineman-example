@@ -80,7 +80,7 @@ class Provider < ActiveRecord::Base
   validates :last_name, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
-  validates :rucom_id , presence: true
+  #validates :rucom_id , presence: true
   validates :email, presence: true
   validates :population_center_id, presence: true
 

@@ -1,6 +1,6 @@
 angular.module('app').controller('ScannerController',  ['$scope','ScannerService', function($scope,ScannerService) {
 			$scope.Dynamsoft;
-        	$scope.images=[];	
+        	$scope.images=[];
 
 	$scope.init=function(){
 
@@ -22,7 +22,7 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft Support Team
 	* Version: 10.2.0.324
 	*/
@@ -187,9 +187,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -242,9 +242,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -256,9 +256,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -270,9 +270,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -284,9 +284,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -298,9 +298,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -312,9 +312,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -326,9 +326,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -340,9 +340,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: global
@@ -354,9 +354,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: plugin ( ie & noneie )
@@ -368,7 +368,7 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
 	* Version: 10.2.0.324
 	*
@@ -381,9 +381,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: plugin ( ie & noneie )
@@ -395,7 +395,7 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
 	* Version: 10.2.0.324
 	*
@@ -408,9 +408,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: htm5
@@ -422,9 +422,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -436,9 +436,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -450,7 +450,7 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
 	* Version: 10.2.0.324
 	*
@@ -463,9 +463,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -477,9 +477,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -491,9 +491,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -505,9 +505,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -519,9 +519,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: htm5
@@ -533,7 +533,7 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
 	* Version: 10.2.0.324
 	*
@@ -546,9 +546,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -560,9 +560,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -574,9 +574,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -588,9 +588,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -602,9 +602,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -616,9 +616,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -630,9 +630,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: html5
@@ -644,9 +644,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: htm5
@@ -658,9 +658,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 	* Product: Dynamsoft Web Twain
 	* Web Site: http://www.dynamsoft.com
 	*
-	* Copyright 2015, Dynamsoft Corporation 
+	* Copyright 2015, Dynamsoft Corporation
 	* Author: Dynamsoft R&D Department
-	* 
+	*
 	* Version: 10.2.0.324
 	*
 	* Module: launch
@@ -680,22 +680,23 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 		$scope.Dynamsoft.WebTwainEnv.Debug = true;
 
 };
-	/*		
+	/*
 	$scope.$on("$destroy", function(){
-	   var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
-			DWObject.Width = 1;  
+	   var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer');
+			DWObject.Width = 1;
 		DWObject.Height = 1;
 	});
 */
 	  $scope.finish=function(){
 	  	$scope.images=[];
-	  	var DWObject = $scope.Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
+	  	var DWObject = $scope.Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer');
+		if(DWObject && DWObject.HowManyImagesInBuffer){
 		for (var i = 0; i < DWObject.HowManyImagesInBuffer; i++) { // Loop through each of the images in the viewer.
-				DWObject.SelectedImagesCount = 1;        
+				DWObject.SelectedImagesCount = 1;
 		        DWObject.SetSelectedImageIndex(0, i);
 				DWObject.GetSelectedImagesSize(3);// Pre-calculate the size of the images:
 				// Encode the images into a base64 string:
-				var imagedata = DWObject.SaveSelectedImagesToBase64Binary(); 
+				var imagedata = DWObject.SaveSelectedImagesToBase64Binary();
 				var root="data:image/png;base64,";
 				imagedata = root.concat(imagedata);
 				$scope.images.push(imagedata);
@@ -706,29 +707,30 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 			ScannerService.joinFile($scope.images);
 			DWObject.RemoveAllSelectedImages();
 		}
+	}
 		window.history.back();
-	  };	
+	  };
 
 	  $scope.click=function(){
-	    var DWObject = $scope.Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer'); 
-	    DWObject.SelectSource();                        // Select a Data Source (a device like scanner) from the Data Source Manager.            
+	    var DWObject = $scope.Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer');
+	    DWObject.SelectSource();                        // Select a Data Source (a device like scanner) from the Data Source Manager.
 	    DWObject.OpenSource();                          // Open the source. You can set resolution, pixel type, etc. after this method. Please refer to the sample 'Scan' -> 'Custom Scan' for more info.
 	    DWObject.IfDisableSourceAfterAcquire = true;    // Source will be closed automatically after acquisition.
 	    DWObject.MaxImagesInBuffer = 100;
 	    DWObject.IfShowFileDialog =false;
 	    DWObject.IfShowUI = true;
-	    DWObject.IfFeederEnabled = true; 
+	    DWObject.IfFeederEnabled = true;
 		DWObject.XferCount = -1;
 	    DWObject.IfAutoFeed = true;   //auto feed
 	    DWObject.AcquireImage();
 
 	    DWObject.RegisterEvent('OnPostAllTransfers',function(){
-	/*	
+	/*
 		alert(DWObject.HowManyImagesInBuffer);
-	*/	
+	*/
 		});
 	    };
-               
+
 }]);
-                
+
 

@@ -17,22 +17,22 @@ module V1
       expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
       expose :rucom do 
         expose :id, documentation: { type: "integer", desc: "Id of the Rucom", example: "4" } do |provider, options|
-          provider.rucom.id
+          provider.rucom.id if provider.rucom
         end
         expose :status, documentation: { type: "string", desc: "status of the Rucom", example: "Active" } do |provider, options|
-          provider.rucom.status
+          provider.rucom.status if provider.rucom
         end
         expose :num_rucom, documentation: { type: "string", desc: "num_rucom", example: "Rucom213" } do |provider, options|
-          provider.rucom.num_rucom
+          provider.rucom.num_rucom if provider.rucom
         end
         expose :rucom_record, documentation: { type: "string", desc: "rucom_record", example: "Rucom record" } do |provider, options|
-          provider.rucom.rucom_record
+          provider.rucom.rucom_record if provider.rucom
         end
         expose :provider_type, documentation: { type: "string", desc: "provider_type", example: "1233" } do |provider, options|
-          provider.rucom.provider_type
+          provider.rucom.provider_type if provider.rucom
         end
         expose :mineral, documentation: { type: "string", desc: "mineral", example: "Oro" } do |provider, options|
-          provider.rucom.mineral
+          provider.rucom.mineral if provider.rucom
         end
       end
       expose :population_center do 

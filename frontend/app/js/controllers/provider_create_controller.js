@@ -25,13 +25,49 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   $scope.cityDisabled = true;
   $scope.populationCenterDisabled = true;
 
+  $scope.loadProviderLocation = function (provider) {
+    if(provider) {
+      LocationService.getPopulationCenterById.get({populationCenterId: provider.population_center.id}, function(populationCenter) {
+        $scope.selectedPopulationCenter = populationCenter;
+        $scope.searchPopulationCenter = populationCenter.name;
+        $scope.populationCenterDisabled = false;
+        console.log('Current Population Center: ' + JSON.stringify(populationCenter));
+
+        currentCity = null;
+        LocationService.getCityById.get({cityId: populationCenter.city_id}, function(city) {
+          currentCity = city;
+          $scope.selectedCity = currentCity;
+          $scope.searchCity = currentCity.name;
+          $scope.cityDisabled = false;
+          console.log('currentCity: ' + JSON.stringify(city));
+          LocationService.getPopulationCentersFromCity.query({cityId: currentCity.id}, function(population_centers) {
+            $scope.population_centers = population_centers;
+            console.log('Population Centers from ' + currentCity.name + ': ' + JSON.stringify(population_centers));
+          });
+
+          currentState = null;
+          LocationService.getStateById.get({stateId: currentCity.state_id}, function(state) {
+            currentState = state;
+            $scope.selectedState = currentState;
+            $scope.searchState = currentState.name;
+            console.log('currentState: ' + JSON.stringify(state));
+            LocationService.getCitiesFromState.query({stateId: currentState.id}, function(cities) {
+              $scope.cities = cities;
+              console.log('Cities from ' + currentState.name + ': ' + JSON.stringify(cities));
+            });
+          });
+        });
+      });
+    }
+  };
+
   var prov = {};
 
   if($stateParams.rucomId){
     console.log("$stateParams.rucomId: " + $stateParams.rucomId);
     RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
     $scope.companyName = rucom.name;
-    var prov = {
+    prov = {
       document_number: $scope.newProvider.document_number,
       first_name: $scope.newProvider.first_name? $scope.newProvider.first_name : rucom.name,
       last_name: $scope.newProvider.last_name,
@@ -104,8 +140,63 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     console.log('provider:' + prov);
     console.log(prov);
     });
-  }
+  } else {
+    prov = {
+      document_number: $scope.newProvider.document_number,
+      first_name: $scope.newProvider.first_name || '',
+      last_name: $scope.newProvider.last_name,
+      email: $scope.newProvider.email,
+      address: $scope.newProvider.address,
+      city: $scope.newProvider.city || '',
+      state: $scope.newProvider.state || '',
+      phone_number: $scope.newProvider.phone_number,
+      photo_file: $scope.newProvider.photo_file || '',
+      rucom: {
+        provider_type: $scope.newProvider.rucom ? $scope.newProvider.rucom.provider_type : '',
+        rucom_status: "No Inscrito",
+        mineral: "Oro"
+      },
+      population_center: {
+        id: $scope.newProvider.population_center ? $scope.newProvider.population_center.id : '',
+        name: $scope.newProvider.population_center ? $scope.newProvider.population_center.name : '',
+        population_center_code: $scope.newProvider.population_center ? $scope.newProvider.population_center.name : ''
+      },
+      company_info: {
+        name: '',
+        nit_number: '',
+        legal_representative: '',
+        id_type_legal_rep: '',
+        id_number_legal_rep: '',
+        email: '',
+        phone_number: ''
+      },
+      identification_number_file: $scope.newProvider.identification_number_file || '',
+      mining_register_file: $scope.newProvider.mining_register_file || '',
+      rut_file: $scope.newProvider.rut_file || '',
+      chamber_commerce_file: $scope.newProvider.chamber_commerce_file || ''
+    };
 
+    if($scope.newProvider.has_company) {
+      prov.has_company =  true;
+      prov.company_info = {
+       name: $scope.companyName,
+       nit_number: $scope.newProvider.company_info.nit_number,
+       legal_representative: $scope.newProvider.company_info.legal_representative,
+       id_type_legal_rep: $scope.newProvider.company_info.id_type_legal_rep,
+       id_number_legal_rep: $scope.newProvider.company_info.id_number_legal_rep,
+       email: $scope.newProvider.company_info.email,
+       phone_number: $scope.newProvider.company_info.phone_number
+      };
+      $scope.newProvider.company_info.name = prov.company_info.name;
+    }
+
+    $scope.newProvider = prov;
+    $scope.currentRucom = prov.rucom;
+    ProviderService.setCurrentProv(prov);
+    if ($scope.newProvider.population_center.id !== '') {
+      $scope.loadProviderLocation($scope.newProvider);
+    }  
+  }
 
   $scope.photo=CameraService.getLastScanImage();
   if(CameraService.getJoinedFile() && CameraService.getJoinedFile().length>0){
@@ -149,43 +240,6 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
     $scope.states = states;
     console.log('States: ' + JSON.stringify(states));
   });
-
-
-  $scope.loadProviderLocation = function (provider) {
-    if(provider) {
-      LocationService.getPopulationCenterById.get({populationCenterId: provider.population_center.id}, function(populationCenter) {
-        $scope.selectedPopulationCenter = populationCenter;
-        $scope.searchPopulationCenter = populationCenter.name;
-        $scope.populationCenterDisabled = false;
-        console.log('Current Population Center: ' + JSON.stringify(populationCenter));
-
-        currentCity = null;
-        LocationService.getCityById.get({cityId: populationCenter.city_id}, function(city) {
-          currentCity = city;
-          $scope.selectedCity = currentCity;
-          $scope.searchCity = currentCity.name;
-          $scope.cityDisabled = false;
-          console.log('currentCity: ' + JSON.stringify(city));
-          LocationService.getPopulationCentersFromCity.query({cityId: currentCity.id}, function(population_centers) {
-            $scope.population_centers = population_centers;
-            console.log('Population Centers from ' + currentCity.name + ': ' + JSON.stringify(population_centers));
-          });
-
-          currentState = null;
-          LocationService.getStateById.get({stateId: currentCity.state_id}, function(state) {
-            currentState = state;
-            $scope.selectedState = currentState;
-            $scope.searchState = currentState.name;
-            console.log('currentState: ' + JSON.stringify(state));
-            LocationService.getCitiesFromState.query({stateId: currentState.id}, function(cities) {
-              $scope.cities = cities;
-              console.log('Cities from ' + currentState.name + ': ' + JSON.stringify(cities));
-            });
-          });
-        });
-      });
-    }
-  };
 
   $scope.idTypeLegalRep = [
     { type: 1, name: 'CC' },
