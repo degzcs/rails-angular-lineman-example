@@ -78,8 +78,12 @@ class SalePDFService
     batches = []
     @sale.batches.each do|b|
       p = Purchase.find(b.purchase_id)
-      p.provider.rucom ? rucom = (p.provider.rucom.num_rucom || p.provider.rucom.rucom_record) : rucom = ''
-
+      if p.provider.rucom 
+        rucom = p.provider.rucom.num_rucom || p.provider.rucom.rucom_record
+      else
+        rucom  = ''
+      end
+      
       batches << {
         id_purchase: p.id,
         id_provider: p.provider.id,
