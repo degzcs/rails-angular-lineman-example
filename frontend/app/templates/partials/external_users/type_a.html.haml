@@ -1,10 +1,11 @@
 %div.{:layout => "column", :style => "padding-left:20px; padding-right:20px;"}
-  %form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
+  %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
     %md-tabs{"md-selected"=>"tabIndex.selectedIndex"}
       
       /****************************   PERSONAL DATA ***********************************/
+      
       %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales"}
-        %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
+        .md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
             %legend
               %h5 Tome una foto al proveedor
@@ -52,27 +53,31 @@
                 %div{"ng-messages" => "providerCreateForm.address.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
 
-            %h2 Rucom
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-              %md-input-container{:flex => ""}
-                %label {{rucomIDField.label}}
-                %input{:readonly => "true", "ng-model" => "rucom[rucomIDField.field]"}
-                %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
-                  %span.ion-android-checkmark-circle &nbsp;válido
-              %md-input-container{:flex => ""}
-                %label Tipo de Proveedor
-                %input{"ng-model" => "newExternalUser.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
+            .rucom-selection
+              %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom
+              //%h2.md-subhead Este usuario debe tener Rucom
+              %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+                %md-input-container{:flex => ""}
+                  %label {{rucomIDField.label}}
+                  %input{:readonly => "true", "ng-model" => "rucom[rucomIDField.field]"}
+                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+                  /  %span.ion-android-checkmark-circle &nbsp;válido
+                %md-input-container{:flex => ""}
+                  %label Tipo de Proveedor
+                  %input{"ng-model" => "newExternalUser.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
             
-            %br
-            %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
-              %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
-                %span{"md-highlight-text" => "searchState"} {{state.name}}
-              %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
-                %span{"md-highlight-text" => "searchCity"} {{city.name}}
-              %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
-                %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
+            .population-selection
+              %h2.md-subhead Centro Poblado:
+              %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
+                %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
+                  %span{"md-highlight-text" => "searchState"} {{state.name}}
+                %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
+                  %span{"md-highlight-text" => "searchCity"} {{city.name}}
+                %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
+                  %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
       
       /****************************   DOCUMENTATION ***********************************/
+      
       %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion"}
         #tab3-content{}
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
@@ -139,8 +144,7 @@
                       %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(3)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
-                       
-
+          
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '60'}
               %h4 Copia del RUT

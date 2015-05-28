@@ -1,6 +1,7 @@
 angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
   
   # ****** Tab directive variables and methods ********** #
+
   $scope.rucomIDField = {
     label: 'Número de RUCOM',
     field: 'num_rucom'
@@ -16,6 +17,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
 
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the ExternalUser model to check for pendind scaned files
+
   $scope.photo = CameraService.getLastScanImage()
   if CameraService.getJoinedFile() and CameraService.getJoinedFile().length > 0
     $scope.file = CameraService.getJoinedFile()
@@ -70,7 +72,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
 
   LocationService.getStates.query {}, (states) ->
     $scope.states = states
-    console.log 'States: ' + JSON.stringify(states)
+    #console.log 'States: ' + JSON.stringify(states)
     return
 
   createFilterFor = (query) ->
@@ -85,27 +87,27 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
         $scope.selectedPopulationCenter = populationCenter
         $scope.searchPopulationCenter = populationCenter.name
         $scope.populationCenterDisabled = false
-        console.log 'Current Population Center: ' + JSON.stringify(populationCenter)
+        #console.log 'Current Population Center: ' + JSON.stringify(populationCenter)
         currentCity = null
         LocationService.getCityById.get { cityId: populationCenter.city_id }, (city) ->
           currentCity = city
           $scope.selectedCity = currentCity
           $scope.searchCity = currentCity.name
           $scope.cityDisabled = false
-          console.log 'currentCity: ' + JSON.stringify(city)
+          #console.log 'currentCity: ' + JSON.stringify(city)
           LocationService.getPopulationCentersFromCity.query { cityId: currentCity.id }, (population_centers) ->
             $scope.population_centers = population_centers
-            console.log 'Population Centers from ' + currentCity.name + ': ' + JSON.stringify(population_centers)
+            #console.log 'Population Centers from ' + currentCity.name + ': ' + JSON.stringify(population_centers)
             return
           currentState = null
           LocationService.getStateById.get { stateId: currentCity.state_id }, (state) ->
             currentState = state
             $scope.selectedState = currentState
             $scope.searchState = currentState.name
-            console.log 'currentState: ' + JSON.stringify(state)
+            #console.log 'currentState: ' + JSON.stringify(state)
             LocationService.getCitiesFromState.query { stateId: currentState.id }, (cities) ->
               $scope.cities = cities
-              console.log 'Cities from ' + currentState.name + ': ' + JSON.stringify(cities)
+              #console.log 'Cities from ' + currentState.name + ': ' + JSON.stringify(cities)
               return
             return
           return
@@ -115,17 +117,14 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
 
   # It listens to state changes
   $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
-    # console.log('Changing state from: ' + JSON.stringify(fromState) + ' to: ' + JSON.stringify(toState));
-    # console.log('Params state from: ' + JSON.stringify(fromParams) + ' to: ' + JSON.stringify(toParams));
-    if toState.url != '/scanner' and toState.url != '/scanner1' and toState.url != '/camera'
+    if toState.url != '/scanner' and toState.url != '/scanner1' and toState.url != '/camera' and toState.url != '/rucoms'
       if !$scope.abortCreate
         event.preventDefault()
         confirm = undefined
         confirm = $mdDialog.confirm().title('Cancelar la creación del nuevo proveedor').content('¿Desea cancelar la operación actual? Los datos que no haya guardado se perderán').ariaLabel('Lucky day').ok('Aceptar').cancel('Cancelar').targetEvent(event)
         return $mdDialog.show(confirm).then((->
           $scope.abortCreate = true
-          ProviderService.setCurrentProv {}
-          console.log 'provider create: dismissing operation'
+          ExternalUser.clearModelToCreate()
           $state.go toState, toParams
           return
         ), ->
@@ -191,5 +190,16 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
 
   $scope.searchTextPopulationCenterChange = (text) ->
     return
+
+  #******************* RUCOM  variables ********************************** #
+
+  $scope.searchRucom = ->
+    $state.go 'search_rucom'
+
+  $scope.currentRucom = RucomService.getCurrentRucom()
+  if $scope.currentRucom 
+    $scope.newExternalUser.rucom_id = $scope.currentRucom.id
+    console.log $scope.newExternalUser
+  
 
       

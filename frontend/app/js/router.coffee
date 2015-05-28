@@ -250,7 +250,7 @@
   )
 
   .state("search_rucom",
-    url: "/rucoms/:type",
+    url: "/rucoms",
     ncyBreadcrumb:
       label: 'Buscar proveedor o cliente en el RUCOM'
     views:

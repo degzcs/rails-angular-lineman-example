@@ -1,3 +1,5 @@
+// TODO : FIX THE RUCOM SERVICEE!!!!!
+
 angular.module('app').factory('RucomService', function($resource) {
 
     var currentRucom = {};        

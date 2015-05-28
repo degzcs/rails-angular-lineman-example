@@ -31,3 +31,38 @@
   text-align: left;
   display: inherit;
 }
+
+.rucom-selection{
+  margin-top: 40px;
+  h2{
+    text-align: left;
+    margin-left: 20px;
+    display: inline-block;
+    font-weight: 300!important;
+    font-size: 20px;
+  }
+  .btn-rucom-selection{
+    margin-left: 20px;
+  }
+}
+
+.population-selection{
+  h2{
+    text-align: left;
+    margin-left: 20px;
+    display: inline-block;
+    font-weight: 300!important;
+    font-size: 20px;
+  }
+}
+.external-user-form{
+  padding: 20px;
+  .md-padding{
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+  }
+}
+
+.external-user-form-info{
+  margin-top: 20px;
+}

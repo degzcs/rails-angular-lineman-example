@@ -106,4 +106,37 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
       if(sessionStorage.external_user_to_create)
         service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
       return service.modelToCreate
+    clearModelToCreate: ->
+      sessionStorage.external_user_to_create = null
+      service.modelToCreate =
+        external_user:
+          first_name: ''
+          last_name: ''
+          email: ''
+          document_number: ''
+          document_expedition_date: ''
+          phone_number: ''
+          address: ''
+          rucom_id: ''
+          population_center_id: ''
+          user_type: ''
+          document_number_file: ''
+          mining_register_file: ''
+          rut_file: ''
+          chamber_commerce_file: ''
+          photo_file: ''
+        company:
+          nit_number: ''
+          name: ''
+          city: ''
+          state: ''
+          country: ''
+          legal_representative: ''
+          id_type_legal_rep: ''
+          id_number_legal_rep: ''
+          email: ''
+          phone_number: ''
+
+
+      console.log "Model clened"
   return service
