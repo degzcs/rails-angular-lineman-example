@@ -34,8 +34,16 @@ FactoryGirl.define do
     population_center_id {Random.rand(1...100)}
     rucom_id {Random.rand(1...100)}
     photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'provider_photo.png'),"image/jpeg") }
-    identification_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'identification_number_file.png'),"image/jpeg") }
+    identification_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'identification_number_file.jpeg'),"image/jpeg") }
     mining_register_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'mining_register_file.png'),"image/jpeg") }
     rut_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'rut_file.png'),"image/jpeg") }
+    factory :barequero do
+        photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', "photo_file_#{rand(1..7)}.jpeg"),"image/jpeg") }
+        identification_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'identification_number_file.jpeg'),"image/jpeg") }
+        mining_register_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'mining_register_file.pdf'),"image/jpeg") }
+        rut_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'rut_file.pdf'),"image/jpeg") }
+        company_info nil
+        rucom_id 1
+    end
   end
 end
