@@ -14,6 +14,8 @@
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
 #  id                 :integer          not null, primary key
+#  trazoro_user_id    :integer
+#  trazoro_user_type  :string(255)
 #
 
 require 'spec_helper'

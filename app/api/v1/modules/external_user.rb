@@ -145,8 +145,9 @@ module V1
             NOTE
           }
         params do
-          use :external_user
-          use :company
+          requires :external_user, type: Hash, desc: 'External user hash'
+          optional :rucom_id, type: Integer, desc: 'Rucom id'
+          optional :company, type: Hash, desc: 'Company'
         end
         post '/', http_codes: [
           [200, "Successful"],
@@ -169,6 +170,12 @@ module V1
           external_user_params = params[:external_user]
           external_user = ::ExternalUser.new(params[:external_user])
           external_user.build_company(params[:company]) if params[:company]
+          
+          if params[:rucom_id]
+            rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
+            external_user.rucom = rucom
+          end
+
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else

@@ -20,7 +20,6 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  chamber_commerce_file    :string(255)
-#  rucom_id                 :integer
 #  company_id               :integer
 #  population_center_id     :integer
 #  user_type                :integer          default(1), not null
@@ -98,9 +97,9 @@ describe  User do
     it { should validate_presence_of(:mining_register_file) }
     it { should validate_presence_of(:photo_file) }
     it { should validate_presence_of(:chamber_commerce_file) }
-    it { should validate_presence_of(:rucom_id) }
     it { should validate_presence_of(:company) }
     it { should validate_presence_of(:population_center) }
+
   end
 
   context '#instance methods' do 
@@ -141,4 +140,5 @@ describe  User do
       expect(User.valid?("#{@token}-invalid")).to be false
     end
   end
+
 end

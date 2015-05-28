@@ -95,7 +95,7 @@ describe 'ExternalUser', :type => :request do
 
             rucom = create(:rucom)
             population_center = create(:population_center)
-            external_user = build(:external_user,rucom_id: rucom.id, population_center_id: population_center.id)
+            external_user = build(:external_user,rucom: rucom, population_center_id: population_center.id)
 
             new_values = {
               first_name: external_user.first_name,
@@ -105,7 +105,6 @@ describe 'ExternalUser', :type => :request do
               document_expedition_date: external_user.document_expedition_date,
               phone_number: external_user.phone_number,
               address: external_user.address,
-              rucom_id: rucom.id,
               population_center_id: population_center.id,
               files: @files
             }           
@@ -119,7 +118,7 @@ describe 'ExternalUser', :type => :request do
               email: external_user.email
             }
 
-            post '/api/v1/external_users', {external_user: new_values}, { "Authorization" => "Barer #{@token}" }
+            post '/api/v1/external_users', {external_user: new_values, rucom_id: rucom.id}, { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
           end
@@ -132,7 +131,7 @@ describe 'ExternalUser', :type => :request do
 
             rucom = create(:rucom)
             population_center = create(:population_center)
-            external_user = build(:external_user,rucom_id: rucom.id, population_center_id: population_center.id)
+            external_user = build(:external_user,rucom: rucom, population_center_id: population_center.id)
             company = build(:company)
 
             new_values = {
@@ -143,7 +142,6 @@ describe 'ExternalUser', :type => :request do
               document_expedition_date: external_user.document_expedition_date,
               phone_number: external_user.phone_number,
               address: external_user.address,
-              rucom_id: rucom.id,
               population_center_id: population_center.id,
               files: @files
             }
@@ -170,7 +168,7 @@ describe 'ExternalUser', :type => :request do
               email: external_user.email,
             }
 
-            post '/api/v1/external_users', {external_user: new_values, company: new_company_values},
+            post '/api/v1/external_users', {external_user: new_values, rucom_id: rucom.id, company: new_company_values},
                                       { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
@@ -181,7 +179,7 @@ describe 'ExternalUser', :type => :request do
         it 'returns a representation of the updated external user and code 200' do
           rucom = create(:rucom)         
           population_center = create(:population_center)
-          external_user = create( :external_user,rucom_id: rucom.id, population_center_id: population_center.id)
+          external_user = create( :external_user,rucom: rucom, population_center_id: population_center.id)
 
           new_first_name = "A diferent first name"
           new_document_number = "1345676788"

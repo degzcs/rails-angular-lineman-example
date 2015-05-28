@@ -10,7 +10,6 @@
 #  address                  :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
-#  rucom_id                 :integer
 #  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
@@ -97,7 +96,7 @@ describe ExternalUser do
     context "rucom" do
       it "should return the rucom of the external_user" do
         rucom = create(:rucom)
-        external_user = build(:external_user, rucom_id: rucom.id)
+        external_user = build(:external_user,rucom: rucom) 
         expect(external_user.rucom).to eq(rucom)
       end
     end

@@ -14,12 +14,12 @@
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
 #  id                 :integer          not null, primary key
+#  trazoro_user_id    :integer
+#  trazoro_user_type  :string(255)
 #
 
 class Rucom < ActiveRecord::Base
 
-  has_one :provider
-  has_one :user # used when the user wants buy or sale gold
-
+  belongs_to :trazoro_user,  polymorphic: true
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527041021) do
+ActiveRecord::Schema.define(version: 20150528203505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,7 +130,6 @@ ActiveRecord::Schema.define(version: 20150527041021) do
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rucom_id"
     t.string   "document_number_file"
     t.string   "rut_file"
     t.string   "mining_register_file"
@@ -206,7 +205,11 @@ ActiveRecord::Schema.define(version: 20150527041021) do
     t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
+    t.integer  "trazoro_user_id"
+    t.string   "trazoro_user_type"
   end
+
+  add_index "rucoms", ["trazoro_user_id", "trazoro_user_type"], name: "index_rucoms_on_trazoro_user_id_and_trazoro_user_type", using: :btree
 
   create_table "sales", force: true do |t|
     t.integer  "courier_id"
@@ -256,7 +259,6 @@ ActiveRecord::Schema.define(version: 20150527041021) do
     t.string   "mining_register_file"
     t.string   "photo_file"
     t.string   "chamber_commerce_file"
-    t.integer  "rucom_id"
     t.integer  "company_id"
     t.integer  "population_center_id"
     t.integer  "user_type",                default: 1, null: false

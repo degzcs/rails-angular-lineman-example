@@ -20,7 +20,6 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  chamber_commerce_file    :string(255)
-#  rucom_id                 :integer
 #  company_id               :integer
 #  population_center_id     :integer
 #  user_type                :integer          default(1), not null

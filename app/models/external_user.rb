@@ -10,7 +10,6 @@
 #  address                  :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
-#  rucom_id                 :integer
 #  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
@@ -32,9 +31,9 @@ class ExternalUser < ActiveRecord::Base
   
   has_many :purchases, as: :provider
   has_many :sales, as: :client
+  has_one :rucom, as: :trazoro_user
 
   belongs_to :company
-  belongs_to :rucom
   belongs_to :population_center
 
   mount_uploader :document_number_file, PdfUploader
@@ -67,7 +66,7 @@ class ExternalUser < ActiveRecord::Base
   validates :photo_file, presence: true
   validates :chamber_commerce_file, presence: true
   validates :population_center, presence: true
-
+  
   #
   # Scopes
   #

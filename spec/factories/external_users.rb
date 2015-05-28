@@ -10,7 +10,6 @@
 #  address                  :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
-#  rucom_id                 :integer
 #  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)

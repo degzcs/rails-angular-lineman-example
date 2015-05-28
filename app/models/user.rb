@@ -20,7 +20,6 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  chamber_commerce_file    :string(255)
-#  rucom_id                 :integer
 #  company_id               :integer
 #  population_center_id     :integer
 #  user_type                :integer          default(1), not null
@@ -38,15 +37,14 @@ class User < ActiveRecord::Base
 	has_many :sales
 	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
 	has_many :sales_as_client, class_name: "Sale", as: :client
-	
+	has_one :rucom , as: :trazoro_user
+
 	has_many :credit_billings
 	belongs_to :company 
-	belongs_to :rucom #  NOTE: this is temporal becauses we don't have access to the real Rucom table just by the scrapper in python.
 	belongs_to :population_center
 
 	has_secure_password
-
-
+	
   #ENUM USER TYPES: 
   # 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
   # 4. Consumidor, 5. Titular , 6. Subcontrato de operación , 7. Inscrito
@@ -65,16 +63,14 @@ class User < ActiveRecord::Base
 	validates :document_expedition_date, presence: true
 	validates :phone_number, presence: true
 	validates :address, presence: true
-	validates :rucom_id, presence: true
 	validates :document_number_file, presence: true
 	validates :rut_file, presence: true
 	validates :mining_register_file, presence: true
 	validates :photo_file, presence: true
 	validates :chamber_commerce_file, presence: true
-	validates :rucom_id, presence: true
 	validates :company, presence: true
 	validates :population_center, presence: true
-
+	
 	#
 	# Calbacks
 	#
