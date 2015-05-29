@@ -36,9 +36,7 @@ describe 'Rucom', :type => :request do
         context '/:id' do
 
           it 'gets rucom by id' do 
-
             rucom = Rucom.last
-
             expected_response = {
               id: rucom.id,
               rucom_record: rucom.rucom_record,
@@ -56,13 +54,31 @@ describe 'Rucom', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to match expected_response.stringify_keys
           end
-
+          context "/check_if_available" do
+            context "if rucom is already in use by a user or external user" do
+              it "responds with an error" do
+                rucom = create(:rucom)
+                external_user = create(:external_user, rucom: rucom)
+                get "/api/v1/rucoms/#{rucom.id}/check_if_available",{},{ "Authorization" => "Barer #{@token}" }
+                expect(response.status).to eq 400
+              end
+            end
+            context "if rucom is available" do
+              it "responds with a rucom representation" do
+                rucom = create(:rucom)
+                get "/api/v1/rucoms/#{rucom.id}/check_if_available",{},{ "Authorization" => "Barer #{@token}" }
+                expect(response.status).to eq 200
+                expected_response = {
+                  id: rucom.id,
+                  rucom_record: rucom.rucom_record,
+                  name: rucom.name
+                }
+                expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+              end
+            end
+          end
         end
-
       end
-
     end
-
   end
-
 end

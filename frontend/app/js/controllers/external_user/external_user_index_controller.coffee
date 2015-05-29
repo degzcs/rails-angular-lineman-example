@@ -1,5 +1,4 @@
 angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog) ->
-
   ##****************************************  TABLE HEADERS and initial config variables *****************************************##
   $scope.count = 10
   $scope.content = []

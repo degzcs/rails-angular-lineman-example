@@ -5,6 +5,8 @@ module V1
       before_validation do
         authenticate!
       end
+      default_error_status 400
+          
 
       format :json
       content_type :json, 'application/json'
@@ -73,6 +75,25 @@ module V1
           content_type "text/json"
           rucom = ::Rucom.find(params[:id])
           present rucom, with: V1::Entities::Rucom
+        end
+        desc 'returns one existent rucom registry by :id', {
+          entity: V1::Entities::Rucom,
+          notes: <<-NOTES
+            Returns one existent rucoms by :id
+          NOTES
+        }
+        params do
+          use :id
+        end
+
+        get '/:id/check_if_available', http_codes: [ [200, "Successful"], [400, "Unauthorized"] ] do
+          content_type "text/json"
+          rucom = ::Rucom.find(params[:id])
+          if rucom.trazoro_user_id
+            error!  "Este rucom no esta disponible"
+          else
+            present rucom, with: V1::Entities::Rucom
+          end
         end
       end
     end
