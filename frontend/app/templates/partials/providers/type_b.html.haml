@@ -35,7 +35,7 @@
                 %div{"ng-messages" => "providerCreateForm.last_name.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
             %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-              %md-input-container{"ng-if"=> "$stateParams.rucomId", :flex => ""}
+              %md-input-container{"ng-if"=> "rucomId", :flex => ""}
                 %label {{rucomIDField.label}}
                 %input{:readonly => "true", "ng-model" => "newProvider.rucom[rucomIDField.field]"}
                 %md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
@@ -45,10 +45,10 @@
                 %input{:name => "document_number", "ng-model" => "newProvider.document_number", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-              %md-input-container{"ng-if"=> "$stateParams.rucomId", :flex => ""}
+              %md-input-container{"ng-if"=> "rucomId", :flex => ""}
                 %label Tipo de Proveedor
                 %input{"ng-model" => "newProvider.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
-              %md-select{"ng-if"=> "!$stateParams.rucomId", :style => "margin-top: 20px;", :flex => "", :required => "true", :name => "client_type", "ng-model" => "newProvider.rucom.provider_type", :placeholder => "Tipo de Proveedor"}
+              %md-select{"ng-if"=> "!rucomId", :style => "margin-top: 20px;", :flex => "", :required => "true", :name => "client_type", "ng-model" => "newProvider.rucom.provider_type", :placeholder => "Tipo de Proveedor"}
                 %md-option{:value => "Comercializadores"} Comercializadores
                 %md-option{:value => "Titular"} Titular
                 %md-option{:value => "Solicitante Legalización De Minería"} Solicitante Legalización De Minería

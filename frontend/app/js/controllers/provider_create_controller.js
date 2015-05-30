@@ -63,9 +63,11 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
 
   var prov = {};
 
-  if($stateParams.rucomId){
-    console.log("$stateParams.rucomId: " + $stateParams.rucomId);
-    RucomService.getRucom.get({id: $stateParams.rucomId}, function(rucom) {
+  $scope.rucomId = $stateParams.rucomId;
+
+  if($scope.rucomId){
+    console.log("$scope.rucomId: " + $scope.rucomId);
+    RucomService.getRucom.get({id: $scope.rucomId}, function(rucom) {
     $scope.companyName = rucom.name;
     prov = {
       document_number: $scope.newProvider.document_number,
