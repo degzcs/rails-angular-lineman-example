@@ -15,7 +15,6 @@
 #  code                        :text
 #  trazoro                     :boolean          default(FALSE), not null
 #  sale_id                     :integer
-#  provider_type               :string(255)
 #
 
 FactoryGirl.define do

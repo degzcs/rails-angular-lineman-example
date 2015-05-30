@@ -46,13 +46,13 @@ class User < ActiveRecord::Base
 	has_secure_password
 
 
-  #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
-
-  enum user_type: [ :barequero, :comercializador, :solicitante, :beneficiario, :consumidor, :titular, :subcontrato, :inscrito]
+  # #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
+  # enum user_type: [ :barequero, :comercializador, :solicitante, :beneficiario, :consumidor, :titular, :subcontrato, :inscrito]
 
 	#
 	# Validations
 	#
+
 	validates :first_name , presence: true
 	validates :last_name , presence: true
 	validates :email, presence: true
@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
 	validates :rut_file, presence: true
 	validates :mining_register_file, presence: true
 	validates :photo_file, presence: true
-	validates :office, presence: true
+	validates :office, presence: true, unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
 	validates :personal_rucom, presence: true, if: :external
 
