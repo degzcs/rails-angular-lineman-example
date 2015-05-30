@@ -21,7 +21,7 @@
 require 'spec_helper'
 
 describe Rucom  do
-  
+
   context "test factory" do
     let(:rucom) {build(:rucom)}
     it {expect(rucom.idrucom).not_to be_nil }
@@ -32,7 +32,6 @@ describe Rucom  do
     it {expect(rucom.location).not_to be_nil }
     it {expect(rucom.subcontract_number).not_to be_nil}
     it {expect(rucom.mining_permit).not_to be_nil}
-    it {expect(rucom.updated_at).not_to be_nil}
     it {expect(rucom.provider_type).not_to be_nil }
     it {expect(rucom.num_rucom).not_to be_nil}
   end
