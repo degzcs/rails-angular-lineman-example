@@ -94,7 +94,8 @@ class User < ActiveRecord::Base
 	end
 
 	def office
-		'Trazoro Popayan'
+		#'Trazoro Popayan'
+		''
 	end
 	# @return [String] whith the JWT to send the client
 	def create_token
