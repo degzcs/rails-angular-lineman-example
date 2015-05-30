@@ -27,7 +27,6 @@ describe Sale do
     it {expect(sale.code).not_to be_nil}
     it {expect(sale.origin_certificate_file).not_to be_nil}
     it {expect(sale.price).not_to be_nil}
-    it {expect(sale.client_type).not_to be_nil}
   end
   context "sale creation" do
     it "should create a new sale with valid data" do
@@ -36,13 +35,13 @@ describe Sale do
 
     context "for a trazoro sale (user - user sale)" do
       let!(:user1) { create(:user) }
-      let!(:user2) {create(:user)}
-      let(:sale) {create(:sale, user: user1, client: user2)}
+      let!(:client) {create(:user)}
+      let(:sale) {create(:sale, user: user1, client: client)}
       it "expect to have the correct user" do
         expect(sale.user).to eq user1
       end
       it "expect to have the correct client" do
-        expect(sale.client).to eq user2
+        expect(sale.client).to eq client
       end
     end
     context "for an external client purchase" do

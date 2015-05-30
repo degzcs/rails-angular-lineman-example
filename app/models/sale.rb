@@ -26,8 +26,8 @@ class Sale < ActiveRecord::Base
   # Associations
   #
   belongs_to :user
-  belongs_to :client, polymorphic: true
-  
+  belongs_to :client, class_name: "User"
+
   belongs_to :courier
   has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :gold_batch

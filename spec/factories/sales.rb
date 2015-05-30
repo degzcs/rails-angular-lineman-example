@@ -24,6 +24,5 @@ FactoryGirl.define do
     code       "12345677"
     price 123214521
     origin_certificate_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf'))}
-    client_type "ExternalUser"
   end
 end
