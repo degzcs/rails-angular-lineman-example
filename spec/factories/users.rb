@@ -20,8 +20,8 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
-#  user_type                :integer          default(1), not null
 #  office_id                :integer
+#  external                 :boolean          default(FALSE), not null
 #
 
 FactoryGirl.define do
@@ -38,11 +38,11 @@ FactoryGirl.define do
     rut_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     mining_register_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
-    user_type 1
-    rucom
+    personal_rucom {}
     office
     population_center
     password {'foobar'}
     password_confirmation {'foobar'}
+    external {false}
   end
 end

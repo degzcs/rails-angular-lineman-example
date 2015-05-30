@@ -22,4 +22,9 @@ class Rucom < ActiveRecord::Base
 
   belongs_to :rucomeable,  polymorphic: true
 
+ # this method is just for clarfy the user activity related with gold.
+  def activity
+    self.provider_type
+  end
+
 end

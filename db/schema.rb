@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530162603) do
+ActiveRecord::Schema.define(version: 20150530163751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,6 +266,7 @@ ActiveRecord::Schema.define(version: 20150530162603) do
     t.string   "photo_file"
     t.integer  "population_center_id"
     t.integer  "office_id"
+    t.boolean  "external",                 default: false, null: false
   end
 
 end

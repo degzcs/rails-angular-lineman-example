@@ -20,14 +20,14 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
-#  user_type                :integer          default(1), not null
 #  office_id                :integer
+#  external                 :boolean          default(FALSE), not null
 #
 
 class User < ActiveRecord::Base
 
 	class EmptyCredits < StandardError
-  end
+	end
 	#
 	# Associations
 	#
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 	has_many :sales
 	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
 	has_many :sales_as_client, class_name: "Sale", as: :client
-	has_one :rucom , as: :rucomeable
+	has_one :personal_rucom, class_name: "Rucom",  as: :rucomeable
 
 	has_many :credit_billings
 	belongs_to :office
@@ -45,9 +45,6 @@ class User < ActiveRecord::Base
 
 	has_secure_password
 
-  #ENUM USER TYPES:
-  # 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
-  # 4. Consumidor, 5. Titular , 6. Subcontrato de operación , 7. Inscrito
 
   #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
 
@@ -69,6 +66,18 @@ class User < ActiveRecord::Base
 	validates :photo_file, presence: true
 	validates :office, presence: true
 	validates :population_center, presence: true
+	validates :personal_rucom, presence: true, if: :external
+
+	#
+	# Delegates
+	#
+
+	#ENUM USER TYPES:
+	# 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
+	# 4. Consumidor, 5. Titular , 6. Subcontrato de operación , 7. Inscrito
+	def activity
+		self.external ? personal_rucom.activity :  company.rucom.activity
+	end
 
 	#
 	# Calbacks
@@ -76,7 +85,7 @@ class User < ActiveRecord::Base
 
 	after_initialize :init
 
-	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :office, :population_center
+	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :population_center
 
 	#
 	# fields for save files by carrierwave
@@ -113,6 +122,14 @@ class User < ActiveRecord::Base
 		rucom.rucom_record
 	end
 
+	def rucom
+		if user.extenal?
+			personal_rucom
+		else
+			office.company.rucom
+		end
+	end
+
 	# def office
 	# 	'Trazoro Popayan'
 	# end
@@ -129,17 +146,17 @@ class User < ActiveRecord::Base
 	end
 
 	#discount available credits amount
-  def discount_available_credits(credits)
-    new_amount = (available_credits - credits).round(2)
-    raise EmptyCredits if new_amount <= 0
-    update_attribute(:available_credits,new_amount)
-  end
+	def discount_available_credits(credits)
+	  new_amount = (available_credits - credits).round(2)
+	  raise EmptyCredits if new_amount <= 0
+	  update_attribute(:available_credits,new_amount)
+	end
 
-  #add available credits
-  def add_available_credits(credits)
-    new_amount = (available_credits + credits).round(2)
-    update_attribute(:available_credits,new_amount)
-  end
+	#add available credits
+	def add_available_credits(credits)
+	  new_amount = (available_credits + credits).round(2)
+	  update_attribute(:available_credits,new_amount)
+	end
 
 	#
 	# Class Methods

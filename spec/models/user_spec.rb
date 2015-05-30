@@ -20,8 +20,8 @@
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
-#  user_type                :integer          default(1), not null
 #  office_id                :integer
+#  external                 :boolean          default(FALSE), not null
 #
 
 #  created_at               :datetime
@@ -60,11 +60,9 @@ describe  User do
     it { expect(user.mining_register_file).not_to be_nil }
     it { expect(user.photo_file).not_to be_nil }
     # it { expect(user.chamber_commerce_file).not_to be_nil }
-    it { expect(user.rucom).not_to be_nil }
     # it { expect(user.company).not_to be_nil } TODO: use office model to access to company model
     it { expect(user.population_center).not_to be_nil }
     it { expect(user.available_credits).not_to be_nil }
-    it { expect(user.user_type).not_to be_nil }
   end
 
   context 'create user' do
@@ -102,16 +100,46 @@ describe  User do
   end
 
   context '#instance methods' do
-    it 'should return the company name' do
-      user = create(:user)
-      expect(user.company_name).to eq Company.last.name
+
+    context "company methods" do
+      it 'should return the company name' do
+        user = create(:user)
+        expect(user.company_name).to eq Company.last.name
+      end
+
+      it 'should returns the company nit' do
+        user = create(:user)
+        expect(user.nit).to eq Company.last.nit_number
+      end
     end
 
-    it 'should returns the company nit' do
-      user = create(:user)
-      expect(user.nit).to eq Company.last.nit_number
+    context "external users" do
+      it "should returns the user activity from rucom info" do
+        rucom = create(:rucom)
+        user = create(:user, external: true,  personal_rucom: rucom)
+        expect(user.activity).to eq rucom.activity
+      end
+
+      it "should validate the rucom called personal rucom" do
+        user = build(:user, external: true,  personal_rucom: nil)
+        expect(user).not_to be_valid
+      end
+
     end
 
+    context "normal users" do
+
+      it 'should returns the user activity trough company model' do
+        user = create(:user, external: false,  personal_rucom: nil)
+        rucom = user.company.rucom
+        expect(user.activity).to eq rucom.activity
+      end
+
+       it "should allows create a users without personal rucom" do
+        user = build(:user, external: false,  personal_rucom: nil)
+        expect(user).to be_valid
+      end
+    end
 
     it 'should create a JWT' do
       expect(subject.create_token).not_to be_nil
