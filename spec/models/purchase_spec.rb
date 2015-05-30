@@ -32,19 +32,18 @@ describe Purchase do
     it {expect(purchase.price).not_to be_nil }
     it {expect(purchase.seller_picture).not_to be_nil}
     it {expect(purchase.trazoro).not_to be_nil}
-    it {expect(purchase.provider_type).not_to be_nil}
   end
- 
+
   context "purchase creation" do
     context "for a trazoro purchase (user - user purchase)" do
       let!(:user1) { create(:user) }
-      let!(:user2) {create(:user)}
-      let(:purchase) {create(:purchase, user: user1, provider: user2)}
+      let!(:provider) {create(:user)}
+      let(:purchase) {create(:purchase, user: user1, provider: provider)}
       it "expect to have the correct user" do
         expect(purchase.user).to eq user1
       end
       it "expect to have the correct provider" do
-        expect(purchase.provider).to eq user2
+        expect(purchase.provider).to eq provider
       end
     end
     context "for an external provider purchase" do
@@ -59,7 +58,7 @@ describe Purchase do
       end
     end
   end
-  
+
   context "test barcode generation" do
     let(:purchase) {build(:purchase)}
     before :each do
@@ -81,7 +80,7 @@ describe Purchase do
       it 'creates a new inventory for the purchase with the same remaining_amount value of the gold_batch grams' do
         new_gold_batch = create(:gold_batch, fine_grams: 3.5,  )
         new_purchase = create(:purchase, gold_batch: new_gold_batch)
-        expect(new_purchase.inventory.remaining_amount).to be 3.5 
+        expect(new_purchase.inventory.remaining_amount).to be 3.5
       end
     end
   end

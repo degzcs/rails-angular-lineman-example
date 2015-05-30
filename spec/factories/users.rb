@@ -26,7 +26,7 @@
 
 FactoryGirl.define do
 
-  factory :user do |f|
+  factory :user, class: User do |f|
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name}
     email { Faker::Internet.email }
@@ -44,5 +44,10 @@ FactoryGirl.define do
     password {'foobar'}
     password_confirmation {'foobar'}
     external {false}
+
+    factory :external_user, class: User do
+        personal_rucom { create :rucom}
+        external {true}
+    end
   end
 end

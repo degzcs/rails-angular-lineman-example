@@ -28,8 +28,8 @@ class Purchase < ActiveRecord::Base
   #
 
   belongs_to :user
-  belongs_to :provider, polymorphic: true
-  
+  belongs_to :provider, class_name: "User"
+
   belongs_to :gold_batch
   has_one :inventory
 
