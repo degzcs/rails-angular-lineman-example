@@ -12,7 +12,7 @@
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
 #  price                   :float
-#  client_type             :string(255)
+#  trazoro                 :boolean
 #
 
 #TODO: change field name from grams to fine_grams
