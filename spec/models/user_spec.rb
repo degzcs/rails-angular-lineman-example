@@ -99,6 +99,18 @@ describe  User do
 
   end
 
+  context "scopes" do
+    before :each do
+      create_list(:user, 5 )
+      create_list(:external_user, 5)
+    end
+
+    it 'should return all extenal users' do
+      expect(User.external_users.count).to eq 5
+    end
+
+  end
+
   context '#instance methods' do
 
     context "company methods" do

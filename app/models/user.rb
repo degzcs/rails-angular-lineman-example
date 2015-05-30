@@ -69,8 +69,10 @@ class User < ActiveRecord::Base
 	validates :personal_rucom, presence: true, if: :external
 
 	#
-	# Delegates
+	# Scopes
 	#
+
+	scope :external_users, -> {where(external: true)}
 
 	#ENUM USER TYPES:
 	# 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
