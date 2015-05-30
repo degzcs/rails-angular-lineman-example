@@ -19,9 +19,9 @@ module V1
         end
 
         params :rucom_query do
-          optional :rucom_query, type: String
+          optional :query_rucom_number, type: String
           optional :query_provtype, type: String
-          optional :name_query, type: String
+          optional :query_name, type: String
         end
 
         params :id do
@@ -45,13 +45,16 @@ module V1
           content_type "text/json"
           page = params[:page] || 1
           per_page = params[:per_page] || 10
-          rucom_query = params[:rucom_query]
-          name_query = params[:name_query]
+          query_rucom_number = params[:query_rucom_number]
+          query_name = params[:query_name]
           query_provtype = params[:query_provtype]
-          if rucom_query and name_query
-            rucoms = ::Rucom.where("num_rucom LIKE :num_rucom AND lower(name) LIKE :rucom_name OR rucom_record LIKE :rucom_record AND lower(name) LIKE :rucom_name OR subcontract_number LIKE :subc_num AND lower(name) LIKE :rucom_name", 
-              {num_rucom: "%#{rucom_query.gsub('%', '\%').gsub('_', '\_')}%", rucom_record: "%#{rucom_query.gsub('%', '\%').gsub('_', '\_')}%", subc_num: "%#{rucom_query.gsub('%', '\%').gsub('_', '\_')}%", rucom_name: "%#{name_query.downcase.gsub('%', '\%').gsub('_', '\_')}%"})
-            #rucoms = rucoms.paginate(:page => page, :per_page => per_page)
+
+          if query_name
+            rucoms = ::Rucom.order("id DESC").where("lower(name) LIKE :name",
+              {name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
+          elsif query_rucom_number
+            rucoms = ::Rucom.where("num_rucom LIKE :num_rucom OR rucom_record LIKE :num_rucom OR subcontract_number LIKE :num_rucom", 
+            {num_rucom: "%#{query_rucom_number.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_provtype
             rucoms = ::Rucom.where("provider_type LIKE :provider_type", 
               {provider_type: "%#{query_provtype.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)

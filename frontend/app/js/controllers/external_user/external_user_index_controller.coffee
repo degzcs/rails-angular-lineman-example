@@ -88,11 +88,11 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
         email: data[i].email
         phone_number: data[i].phone_number
         photo_file: data[i].photo_file or 'http://robohash.org/' + data[i].id
-        num_rucom: data[i].rucom.num_rucom
-        rucom_record: data[i].rucom.rucom_record
-        provider_type: data[i].rucom.provider_type
-        rucom_status: data[i].rucom.status
-        mineral: data[i].rucom.mineral
+        num_rucom: data[i].rucom.num_rucom if data[i].rucom
+        rucom_record: data[i].rucom.rucom_record if data[i].rucom
+        provider_type: data[i].rucom.provider_type if data[i].rucom
+        rucom_status: data[i].rucom.status if data[i].rucom
+        mineral: data[i].rucom.mineral if data[i].rucom
       content.push external_user
       i++
     return content
@@ -104,7 +104,6 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
     $scope.pages = parseInt(headers().total_pages)
     
   ).error (data, status, headers, config)->
-    console.log data
     $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Compruebe su conexion a intenet.').ariaLabel('Alert Dialog ').ok('ok')
     return
 

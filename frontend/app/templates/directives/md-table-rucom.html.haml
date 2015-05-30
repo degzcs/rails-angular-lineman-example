@@ -17,24 +17,4 @@
       /    %md-button{"aria-label" => "Edit"}
       /      %i.ion-android-add-circle
 .md-table-footer{:layout => "row"}
-  %span.md-table-count-info
-    Registros por página :
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=5; goToPage(0);"} 5
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=10; goToPage(0);"} 10
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=25; goToPage(0);"} 25
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=50; goToPage(0);"} 50
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=100; goToPage(0);"} 100
-      (actualmente es {{count}})
-  %span{:flex => "flex"}
-  %span{"ng-show" => "nbOfPages() > 1"}
-    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "goToPage(tablePage-1)", "aria-label" => "Previous Page"}
-      %i.ion-chevron-left{:style => "font-size:12px;"}
-    %a{"ng-href" => "#/{{currentPath}}", "ng-repeat" => "i in getNumber(nbOfPages()) track by $index"}
-      %md-button.md-primary.md-hue-2.md-table-footer-item{"ng-click" => "goToPage($index)"}
-        %span{"ng-class" => "{ 'md-table-active-page': tablePage==$index}"} {{$index+1}}
-    %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==nbOfPages()-1", "ng-click" => "goToPage(tablePage+1)", "aria-label" => "Next Page"}
-      %i.ion-chevron-right{:style => "font-size:16px;"}
+  

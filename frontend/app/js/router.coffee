@@ -255,7 +255,7 @@
       label: 'Buscar proveedor o cliente en el RUCOM'
     views:
       'content':
-        templateUrl: "partials/providers/search_rucom.html"
+        templateUrl: "partials/rucoms/search_rucom.html"
         controller: "SearchRucomCtrl"
 
     resolve:

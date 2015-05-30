@@ -4,10 +4,10 @@
   %div.search-tool-header{:layout => "row"}
     %div{flex: "50"}
     %md-input-container{:flex => "", "md-no-float"=>""}
-      %input{"ng-model" => "searchRucom.rucom_record", :type => "text", :placeholder => "Filtrar numero"}
+      %input{"ng-model" => "queryRucomNum", :type => "text", :placeholder => "Filtrar numero"}
         %md-icon.search{"md-svg-icon"=>"action:search"}
     %md-input-container{:flex => "","md-no-float"=>""}
-      %input{"ng-model" => "searchRucom.name", :type => "text", :placeholder => "Filtrar Por Nombre"}
+      %input{"ng-model" => "queryName", :type => "text", :placeholder => "Filtrar Por Nombre"}
         %md-icon.search{"md-svg-icon"=>"action:search"}
 
   %form{:name => "rucomForm"}

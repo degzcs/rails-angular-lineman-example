@@ -8,10 +8,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
   };
   $scope.tabIndex =
     selectedIndex: 0
-  $scope.next = ->
-    $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 1) 
-  $scope.previous = ->
-    $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0)
+  
   goToDocumentation = ->
     $scope.tabIndex.selectedIndex = 1 
 
@@ -25,34 +22,37 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
     $scope.file = ScannerService.getScanFiles()
   
   if $scope.photo and CameraService.getTypeFile() == 1
-    ExternalUser.modelToCreate.external_user.photo_file = $scope.photo
+    ExternalUser.modelToCreate.files.photo_file = $scope.photo
     ExternalUser.saveModelToCreate()
     CameraService.clearData()
 
   if $scope.file
     if CameraService.getTypeFile() == 2
-      ExternalUser.modelToCreate.external_user.document_number_file = $scope.file
+      ExternalUser.modelToCreate.files.document_number_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 3
-      ExternalUser.modelToCreate.external_user.mining_register_file = $scope.file
+      ExternalUser.modelToCreate.files.mining_register_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 4
-      ExternalUser.modelToCreate.external_user.rut_file = $scope.file
+      ExternalUser.modelToCreate.files.rut_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 5
-      ExternalUser.modelToCreate.external_user.chamber_commerce_file = $scope.file
+      ExternalUser.modelToCreate.files.chamber_commerce_file = $scope.file
       goToDocumentation()
     ExternalUser.saveModelToCreate()
     CameraService.clearData()
     ScannerService.clearData()
   $scope.scanner = (type) ->
     CameraService.setTypeFile type
+    ExternalUser.modelToCreate.external_user = $scope.newExternalUser
+    ExternalUser.saveModelToCreate()
     return
 
   # **************************************************************************
 
   $scope.newExternalUser = ExternalUser.restoreModelToCreate().external_user
   $scope.newCompany = ExternalUser.restoreModelToCreate().company 
+  $scope.newFiles = ExternalUser.restoreModelToCreate().files 
 
   #******************* Population center variables ********************************** #
   $scope.states = [];
@@ -66,22 +66,8 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
   $scope.searchPopulationCenter = null;
   $scope.cityDisabled = true;
   $scope.populationCenterDisabled = true;
-  
-  if $scope.newExternalUser.population_center_id != ''
-      $scope.loadProviderLocation $scope.newExternalUser
 
-  LocationService.getStates.query {}, (states) ->
-    $scope.states = states
-    #console.log 'States: ' + JSON.stringify(states)
-    return
-
-  createFilterFor = (query) ->
-    lowercaseQuery = angular.lowercase(query)
-    (state) ->
-      state.name.toLowerCase().indexOf(lowercaseQuery) == 0
-
-
-  $scope.loadProviderLocation = (provider) ->
+  loadProviderLocation = (provider) ->
     if provider
       LocationService.getPopulationCenterById.get { populationCenterId: provider.population_center_id }, (populationCenter) ->
         $scope.selectedPopulationCenter = populationCenter
@@ -113,6 +99,19 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
           return
         return
     return
+  
+  if $scope.newExternalUser.population_center_id != ''
+    loadProviderLocation($scope.newExternalUser)
+
+  LocationService.getStates.query {}, (states) ->
+    $scope.states = states
+    #console.log 'States: ' + JSON.stringify(states)
+    return
+
+  createFilterFor = (query) ->
+    lowercaseQuery = angular.lowercase(query)
+    (state) ->
+      state.name.toLowerCase().indexOf(lowercaseQuery) == 0
 
 
   # It listens to state changes
@@ -172,13 +171,13 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
   $scope.selectedPopulationCenterChange = (population_center) ->
     if population_center
       $scope.newExternalUser.population_center_id = population_center.id
-      console.log $scope.newExternalUser
+      #console.log $scope.newExternalUser
     else
       #console.log 'Population Center changed to none'
     return
 
   $scope.searchTextStateChange = (text) ->
-    console.log 'Text changed to ' + text
+    #console.log 'Text changed to ' + text
     if text == ''
       flushFields 'state'
     return
@@ -195,11 +194,82 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
 
   $scope.searchRucom = ->
     $state.go 'search_rucom'
-
+    ExternalUser.modelToCreate.external_user = $scope.newExternalUser
+    ExternalUser.saveModelToCreate()
+  
   $scope.currentRucom = RucomService.getCurrentRucom()
   if $scope.currentRucom 
-    $scope.newExternalUser.rucom_id = $scope.currentRucom.id
-    console.log $scope.newExternalUser
-  
+    ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
+    ExternalUser.saveModelToCreate()
+    
+    #console.log ExternalUser.modelToCreate
 
-      
+  #************ Creation methods *************************#
+
+  $scope.createExternalUser = (ev)->
+    #$scope.validate_personal_fields()
+    $scope.validate_documentation()
+    
+  $scope.cancel= ()->
+    $state.go 'index_external_user'
+
+  $scope.validate_personal_fields= ()->
+    if $scope.newFiles.photo_file == '' 
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe tomar una foto al usuario que va a registrar').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == ''
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.newExternalUser.first_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.email ==  undefined || $scope.newExternalUser.document_number == undefined || $scope.newExternalUser.phone_number == undefined || $scope.newExternalUser.address == undefined
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.currentRucom == null
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
+    else
+      goToDocumentation()
+
+  $scope.validate_documentation=  ()->
+    if $scope.newExternalUser.user_type == 0
+      if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
+        $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+      else
+        ExternalUser.modelToCreate.external_user = $scope.newExternalUser
+        ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id 
+        ExternalUser.modelToCreate.files = $scope.newFiles 
+        ExternalUser.saveModelToCreate()
+        #console.log ExternalUser.modelToCreate
+        ExternalUser.create()
+        $scope.showUploadingDialog()
+
+    else 
+      if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == '' || $scope.chamber_commerce_file.rut_file == ''
+      else
+        console.log "VALIDADO"
+
+
+  $scope.showUploadingDialog = () ->
+    parentEl = angular.element(document.body)
+    $mdDialog.show
+      parent: parentEl
+      disableParentScroll: false
+      template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
+      controller: [
+        'scope'
+        '$mdDialog'
+        'ExternalUser'
+        (scope, $mdDialog, ExternalUser) ->
+          scope.progress = ExternalUser.uploadProgress
+          scope.message = 'Espere por favor...'
+          scope.$watch (->
+            ExternalUser.uploadProgress
+          ), (newVal, oldVal) ->
+            if typeof newVal != 'undefined'
+              console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
+              scope.progress = ExternalUser.uploadProgress
+              if scope.progress == 100
+                $mdDialog.cancel()
+            return
+
+          return
+      ]
+    return
+
+
+  

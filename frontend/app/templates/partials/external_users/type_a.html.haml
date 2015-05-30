@@ -12,9 +12,9 @@
             %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
                 %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newExternalUser.photo_file || 'img/default-user.png'}}","ng-model" => "newExternalUser.photo_file",  "check-image" => ''}
-                  %md-tooltip{'md-direction'=> 'bottom'}
-                    Tomar Foto
+                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newFiles.photo_file || 'img/default-user.png'}}","ng-model" => "newFiles.photo_file",  "check-image" => ''}
+                  /%md-tooltip{'md-direction'=> 'bottom'}
+                  /  Tomar Foto
           %fieldset.standard.fieldset-information{:flex => ""}
             %legend
               %h3 Información
@@ -53,19 +53,6 @@
                 %div{"ng-messages" => "providerCreateForm.address.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
 
-            .rucom-selection
-              %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom
-              //%h2.md-subhead Este usuario debe tener Rucom
-              %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-                %md-input-container{:flex => ""}
-                  %label {{rucomIDField.label}}
-                  %input{:readonly => "true", "ng-model" => "rucom[rucomIDField.field]"}
-                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
-                  /  %span.ion-android-checkmark-circle &nbsp;válido
-                %md-input-container{:flex => ""}
-                  %label Tipo de Proveedor
-                  %input{"ng-model" => "newExternalUser.rucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
-            
             .population-selection
               %h2.md-subhead Centro Poblado:
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
@@ -75,10 +62,27 @@
                   %span{"md-highlight-text" => "searchCity"} {{city.name}}
                 %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
                   %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
+
+            .rucom-selection
+              %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom
+              //%h2.md-subhead Este usuario debe tener Rucom
+              %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+                %md-input-container{:flex => ""}
+                  %label {{rucomIDField.label}}
+                  %input{:readonly => "true", "ng-model" => "currentRucom.num_rucom"}
+                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+                  /  %span.ion-android-checkmark-circle &nbsp;válido
+                %md-input-container{:flex => ""}
+                  %label Tipo de Proveedor
+                  %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
       
+        %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
+          %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
+          
+
       /****************************   DOCUMENTATION ***********************************/
       
-      %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion"}
+      %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion", "ng-click"=>"validate_personal_fields()"}
         #tab3-content{}
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
                          
@@ -93,12 +97,12 @@
                 .button-action.md-padding{:ng-switch => '', :on => 'identification_number_upload_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newExternalUser.document_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
+                    %input{"ng-model" => "newFiles.document_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
                     %div{"ng-messages" => "providerCreateForm.identification_number.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newExternalUser.document_number_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.document_number_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
                   
@@ -125,12 +129,12 @@
                 .button-action.md-padding{:ng-switch => '', :on => 'mining_register_upload_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newExternalUser.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register_file'}
+                    %input{"ng-model" => "newFiles.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register_file'}
                     %div{"ng-messages" => "providerCreateForm.mining_register_file.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el registro minero 
                   
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newExternalUser.mining_register_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.mining_register_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
                       
@@ -157,11 +161,11 @@
                 .button-action.md-padding{:ng-switch => '', :on => 'rut_upload_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newExternalUser.rut_file[0].name", :readOnly => 'true',:required => "", :name => 'rut_file'}
+                    %input{"ng-model" => "newFiles.rut_file[0].name", :readOnly => 'true',:required => "", :name => 'rut_file'}
                     %div{"ng-messages" => "providerCreateForm.rut_file.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el rut 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newExternalUser.rut_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.rut_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
                         
@@ -178,9 +182,7 @@
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
                         
 
-    %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-      %md-button.btn-cancel{"ng-if" => "formTabControl.selectedIndex > 0", "ng-disabled" => "!formTabControl.secondUnlocked", :class => "md-raised md-primary", "ng-click" => "previous()"} Anterior
-      %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Cancelar
-      %md-button.btn-save{"ng-disabled" => "(!providerCreateForm.$valid || !saveBtnEnabled) && formTabControl.selectedIndex !== 1", :class => "md-raised md-accent", "ng-click" => "createProvider($event)"} Guardar
-      %md-button.btn-save{"ng-if" => "formTabControl.selectedIndex < 1", :class => "md-raised md-primary", "ng-click" => "next()"} Siguiente
-
+        %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
+          %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
+          %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)"} Crear Usuario
+      

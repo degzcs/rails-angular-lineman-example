@@ -159,26 +159,31 @@ module V1
           content_type "text/json"
 
           # update params
-          files =params[:external_user].slice(:files)[:files]
+          files =params[:external_user].slice(:files_to_upload)[:files_to_upload]
           document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
-          params[:external_user].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file, chamber_commerce_file: chamber_commerce_file)
+          params[:external_user].except!(:files_to_upload).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file, chamber_commerce_file: chamber_commerce_file)
 
           external_user_params = params[:external_user]
           external_user = ::ExternalUser.new(params[:external_user])
           external_user.build_company(params[:company]) if params[:company]
           
+
           if params[:rucom_id]
             rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
             external_user.rucom = rucom
           end
 
+          #binding.pry
+          
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else
+            #binding.pry
+          
             error!(external_user.errors.inspect, 400)
           end
           Rails.logger.info(external_user.errors.inspect)

@@ -57,14 +57,14 @@ class ExternalUser < ActiveRecord::Base
   validates :last_name , presence: true
   validates :email, presence: true
   validates :document_number , presence: true
-  validates :document_expedition_date, presence: true
+  #validates :document_expedition_date, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
   validates :document_number_file, presence: true
   validates :rut_file, presence: true
   validates :mining_register_file, presence: true
   validates :photo_file, presence: true
-  validates :chamber_commerce_file, presence: true
+  #validates :chamber_commerce_file, presence: true
   validates :population_center, presence: true
   
   #
