@@ -1,4 +1,4 @@
-angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDialog,RucomService) ->
+angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDialog,RucomService,$state) ->
   service =
 
     
@@ -196,6 +196,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           $upload.upload(
             url: '/api/v1/external_users/'
             method: 'POST'
+            headers: { 'Content-Transfer-Encoding': 'utf-8' }
             fields: 
               "external_user[first_name]":external_user.first_name,
               "external_user[document_number]":external_user.document_number,
@@ -212,7 +213,8 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             return
           ).success (data, status, headers, config) ->
               $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
-      
+              $state.go "index_external_user"
+              service.clearModelToCreate()
             #uploadProgress = 0;
             # var model;
             # console.log('uploaded file ');

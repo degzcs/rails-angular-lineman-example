@@ -1,7 +1,7 @@
 angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
   
   # ****** Tab directive variables and methods ********** #
-
+  $scope.abortCreate = false
   $scope.rucomIDField = {
     label: 'Número de RUCOM',
     field: 'num_rucom'
@@ -129,7 +129,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
         ), ->
         )
     return
-  # end state change listener
+  
 
   $scope.stateSearch = (query) ->
     results = if query then $scope.states.filter(createFilterFor(query)) else []
@@ -207,8 +207,8 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
   #************ Creation methods *************************#
 
   $scope.createExternalUser = (ev)->
-    #$scope.validate_personal_fields()
-    $scope.validate_documentation()
+    
+    $scope.validate_documentation_and_create()
     
   $scope.cancel= ()->
     $state.go 'index_external_user'
@@ -225,7 +225,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
     else
       goToDocumentation()
 
-  $scope.validate_documentation=  ()->
+  $scope.validate_documentation_and_create=  ()->
     if $scope.newExternalUser.user_type == 0
       if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
         $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
@@ -249,7 +249,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
     $mdDialog.show
       parent: parentEl
       disableParentScroll: false
-      template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
+      templateUrl: 'partials/uploading_files.html'
       controller: [
         'scope'
         '$mdDialog'
@@ -257,14 +257,18 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
         (scope, $mdDialog, ExternalUser) ->
           scope.progress = ExternalUser.uploadProgress
           scope.message = 'Espere por favor...'
+          scope.mode = 'determinate'
           scope.$watch (->
             ExternalUser.uploadProgress
           ), (newVal, oldVal) ->
             if typeof newVal != 'undefined'
               console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
               scope.progress = ExternalUser.uploadProgress
+              scope.mode = 'indeterminate'
               if scope.progress == 100
-                $mdDialog.cancel()
+                $scope.abortCreate = true
+                scope.message = "La carga de archivos ha terminado, espere un momento..."
+
             return
 
           return
