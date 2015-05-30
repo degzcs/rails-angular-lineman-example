@@ -31,5 +31,6 @@ FactoryGirl.define do
     email {Faker::Internet.email}
     phone_number {Faker::PhoneNumber.phone_number}
     chamber_of_commerce_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
+    rucom
   end
 end

@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 	has_many :sales
 	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
 	has_many :sales_as_client, class_name: "Sale", as: :client
-	has_one :rucom , as: :trazoro_user
+	has_one :rucom , as: :rucomeable
 
 	has_many :credit_billings
 	belongs_to :office

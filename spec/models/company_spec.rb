@@ -47,6 +47,7 @@ describe Company  do
     it { should validate_presence_of(:id_number_legal_rep) }
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:phone_number) }
+    it { should validate_presence_of(:rucom) }
   end
 
 end

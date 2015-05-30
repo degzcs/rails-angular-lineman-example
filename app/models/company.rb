@@ -22,6 +22,7 @@ class Company < ActiveRecord::Base
 
   has_many :offices
   has_many :external_users
+  has_one :rucom, as: :rucomeable
 
  #
  # Validations
@@ -37,6 +38,7 @@ class Company < ActiveRecord::Base
   validates :email, presence: true
   validates :phone_number, presence: true
   validates :chamber_of_commerce_file, presence: true
+  validates :rucom, presence: true
 
   # uploaders
   mount_uploader :chamber_of_commerce_file, PdfUploader

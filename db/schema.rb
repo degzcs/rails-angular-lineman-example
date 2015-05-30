@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530160811) do
+ActiveRecord::Schema.define(version: 20150530162110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,11 +213,9 @@ ActiveRecord::Schema.define(version: 20150530160811) do
     t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
-    t.integer  "trazoro_user_id"
-    t.string   "trazoro_user_type"
+    t.string   "rucomeable_type"
+    t.integer  "rucomeable_id"
   end
-
-  add_index "rucoms", ["trazoro_user_id", "trazoro_user_type"], name: "index_rucoms_on_trazoro_user_id_and_trazoro_user_type", using: :btree
 
   create_table "sales", force: true do |t|
     t.integer  "courier_id"

@@ -14,12 +14,12 @@
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
 #  id                 :integer          not null, primary key
-#  trazoro_user_id    :integer
-#  trazoro_user_type  :string(255)
+#  rucomeable_type    :string(255)
+#  rucomeable_id      :integer
 #
 
 class Rucom < ActiveRecord::Base
 
-  belongs_to :trazoro_user,  polymorphic: true
+  belongs_to :rucomeable,  polymorphic: true
 
 end
