@@ -21,14 +21,13 @@
 FactoryGirl.define do
   factory :purchase do
     user
-    provider_id {FactoryGirl.create(:external_user).id}
+    provider_id {FactoryGirl.create(:user).id}
     origin_certificate_sequence {Faker::Code.isbn}
     gold_batch
     origin_certificate_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf'))}
     price 1000000
     seller_picture {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf'))}
-    trazoro false 
-    provider_type "ExternalUser"
+    trazoro false
   end
 
 end
