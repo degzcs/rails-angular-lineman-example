@@ -1,4 +1,4 @@
-module V1
+ module V1
   module Entities
     class CreditBilling < Grape::Entity
       expose :unit, documentation: { type: "String", desc: "Unit", example: '...' }
