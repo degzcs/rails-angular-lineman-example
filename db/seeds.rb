@@ -26,7 +26,7 @@ unless Rails.env.production?
   end
 
   rucoms.each do|rucom|
-    FactoryGirl.create(:external_user,rucom: rucom, population_center_id: PopulationCenter.first.id) #, population_center_id: population_center.id)
+    FactoryGirl.create(:external_user,personal_rucom: rucom, population_center_id: PopulationCenter.first.id) #, population_center_id: population_center.id)
   end
   
   FactoryGirl.create :user, email: 'diego@trazoro.com', password: '123456', password_confirmation: '123456' , population_center_id: PopulationCenter.first.id
