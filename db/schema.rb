@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530163751) do
+ActiveRecord::Schema.define(version: 20150530172321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,48 +103,6 @@ ActiveRecord::Schema.define(version: 20150530163751) do
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
-
-  create_table "external_clients", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone_number"
-    t.string   "company_name"
-    t.string   "address"
-    t.string   "nit_company_number"
-    t.string   "id_document_type"
-    t.string   "id_document_number"
-    t.string   "client_type"
-    t.string   "rucom_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "population_center_id"
-    t.string   "email"
-  end
-
-  add_index "external_clients", ["population_center_id"], name: "index_external_clients_on_population_center_id", using: :btree
-
-  create_table "external_users", force: true do |t|
-    t.string   "document_number"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone_number"
-    t.string   "address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "document_number_file"
-    t.string   "rut_file"
-    t.string   "mining_register_file"
-    t.string   "photo_file"
-    t.string   "email"
-    t.integer  "population_center_id"
-    t.string   "chamber_commerce_file"
-    t.integer  "company_id"
-    t.date     "document_expedition_date"
-    t.integer  "user_type",                default: 1, null: false
-  end
-
-  add_index "external_users", ["company_id"], name: "index_external_users_on_company_id", using: :btree
-  add_index "external_users", ["population_center_id"], name: "index_external_users_on_population_center_id", using: :btree
 
   create_table "gold_batches", force: true do |t|
     t.float    "fine_grams"
