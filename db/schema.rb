@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528203505) do
+ActiveRecord::Schema.define(version: 20150530160811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150528203505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "id_number_legal_rep"
+    t.string   "chamber_of_commerce_file"
   end
 
   create_table "couriers", force: true do |t|
@@ -162,6 +163,13 @@ ActiveRecord::Schema.define(version: 20150528203505) do
   end
 
   add_index "inventories", ["purchase_id"], name: "index_inventories_on_purchase_id", using: :btree
+
+  create_table "offices", force: true do |t|
+    t.string   "name"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "population_centers", force: true do |t|
     t.string   "name"
@@ -258,10 +266,9 @@ ActiveRecord::Schema.define(version: 20150528203505) do
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.string   "photo_file"
-    t.string   "chamber_commerce_file"
-    t.integer  "company_id"
     t.integer  "population_center_id"
     t.integer  "user_type",                default: 1, null: false
+    t.integer  "office_id"
   end
 
 end

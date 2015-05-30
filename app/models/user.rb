@@ -19,10 +19,9 @@
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
-#  chamber_commerce_file    :string(255)
-#  company_id               :integer
 #  population_center_id     :integer
 #  user_type                :integer          default(1), not null
+#  office_id                :integer
 #
 
 class User < ActiveRecord::Base
@@ -40,12 +39,13 @@ class User < ActiveRecord::Base
 	has_one :rucom , as: :trazoro_user
 
 	has_many :credit_billings
-	belongs_to :company 
+	belongs_to :office
+	has_one :company, through: :office
 	belongs_to :population_center
 
 	has_secure_password
-	
-  #ENUM USER TYPES: 
+
+  #ENUM USER TYPES:
   # 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
   # 4. Consumidor, 5. Titular , 6. Subcontrato de operación , 7. Inscrito
 
@@ -67,17 +67,16 @@ class User < ActiveRecord::Base
 	validates :rut_file, presence: true
 	validates :mining_register_file, presence: true
 	validates :photo_file, presence: true
-	validates :chamber_commerce_file, presence: true
-	validates :company, presence: true
+	validates :office, presence: true
 	validates :population_center, presence: true
-	
+
 	#
 	# Calbacks
 	#
 
 	after_initialize :init
-	
-	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :company, :population_center
+
+	accepts_nested_attributes_for :purchases, :sales, :credit_billings, :rucom, :office, :population_center
 
 	#
 	# fields for save files by carrierwave
@@ -86,14 +85,13 @@ class User < ActiveRecord::Base
 	mount_uploader :rut_file, PdfUploader
 	mount_uploader :mining_register_file, PdfUploader
 	mount_uploader :photo_file, PhotoUploader
-	mount_uploader :chamber_commerce_file, PdfUploader
 
 	#
 	# Instance Methods
 	#
 
 	def company_name
-		company.name 
+		company.name
 	end
 
 	# TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
@@ -115,9 +113,9 @@ class User < ActiveRecord::Base
 		rucom.rucom_record
 	end
 
-	def office
-		'Trazoro Popayan'
-	end
+	# def office
+	# 	'Trazoro Popayan'
+	# end
 
 
 	# @return [String] whith the JWT to send the client
@@ -130,14 +128,14 @@ class User < ActiveRecord::Base
 		JWT.encode(payload, Rails.application.secrets.secret_key_base);
 	end
 
-	#discount available credits amount 
+	#discount available credits amount
   def discount_available_credits(credits)
     new_amount = (available_credits - credits).round(2)
     raise EmptyCredits if new_amount <= 0
     update_attribute(:available_credits,new_amount)
   end
 
-  #add available credits  
+  #add available credits
   def add_available_credits(credits)
     new_amount = (available_credits + credits).round(2)
     update_attribute(:available_credits,new_amount)

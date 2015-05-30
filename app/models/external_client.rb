@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: clients
+# Table name: external_clients
 #
 #  id                   :integer          not null, primary key
 #  first_name           :string(255)

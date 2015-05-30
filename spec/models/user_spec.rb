@@ -19,10 +19,9 @@
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
 #  photo_file               :string(255)
-#  chamber_commerce_file    :string(255)
-#  company_id               :integer
 #  population_center_id     :integer
 #  user_type                :integer          default(1), not null
+#  office_id                :integer
 #
 
 #  created_at               :datetime
@@ -60,9 +59,9 @@ describe  User do
     it { expect(user.rut_file).not_to be_nil }
     it { expect(user.mining_register_file).not_to be_nil }
     it { expect(user.photo_file).not_to be_nil }
-    it { expect(user.chamber_commerce_file).not_to be_nil }
+    # it { expect(user.chamber_commerce_file).not_to be_nil }
     it { expect(user.rucom).not_to be_nil }
-    it { expect(user.company).not_to be_nil }
+    # it { expect(user.company).not_to be_nil } TODO: use office model to access to company model
     it { expect(user.population_center).not_to be_nil }
     it { expect(user.available_credits).not_to be_nil }
     it { expect(user.user_type).not_to be_nil }
@@ -73,12 +72,12 @@ describe  User do
     it 'should create a user' do
       user = build(:user, password: 'super_password', password_confirmation: 'super_password')
       expect(user.save).to be true
-    end 
+    end
 
     it 'should not create a user because his password is incorrect' do
       user = build(:user, password: 'nomatch', password_confirmation: 'paila')
       expect(user.save).to be false
-    end 
+    end
 
     it "should create a user with 0 available credits by default" do
       user = create(:user)
@@ -96,14 +95,25 @@ describe  User do
     it { should validate_presence_of(:rut_file) }
     it { should validate_presence_of(:mining_register_file) }
     it { should validate_presence_of(:photo_file) }
-    it { should validate_presence_of(:chamber_commerce_file) }
-    it { should validate_presence_of(:company) }
+    # it { should validate_presence_of(:chamber_commerce_file) }
+    it { should validate_presence_of(:office) }
     it { should validate_presence_of(:population_center) }
 
   end
 
-  context '#instance methods' do 
-    it 'should create a JWT' do 
+  context '#instance methods' do
+    it 'should return the company name' do
+      user = create(:user)
+      expect(user.company_name).to eq Company.last.name
+    end
+
+    it 'should returns the company nit' do
+      user = create(:user)
+      expect(user.nit).to eq Company.last.nit_number
+    end
+
+
+    it 'should create a JWT' do
       expect(subject.create_token).not_to be_nil
     end
     context "discount_available_credits" do
@@ -125,8 +135,8 @@ describe  User do
     end
   end
 
-  context '#Class methods' do 
-    before :each do 
+  context '#Class methods' do
+    before :each do
      @user =create :user
      @token = @user.create_token
     end
@@ -136,7 +146,7 @@ describe  User do
       expect(User.valid?(@token).last).to include({"typ"=>"JWT", "alg"=>"HS256"})
     end
 
-    it 'should retrun false because the token is invalid' do 
+    it 'should retrun false because the token is invalid' do
       expect(User.valid?("#{@token}-invalid")).to be false
     end
   end
