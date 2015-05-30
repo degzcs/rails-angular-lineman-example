@@ -19,10 +19,10 @@ module V1
       end
       expose :provider do
         expose :id , documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.provider.id 
+          purchase.provider.id
         end
         expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.trazoro ? purchase.user_provider.first_name : purchase.provider.first_name 
+          purchase.trazoro ? purchase.user_provider.first_name : purchase.provider.first_name
         end
         expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
           purchase.trazoro ? purchase.user_provider.last_name : purchase.provider.last_name
@@ -33,7 +33,7 @@ module V1
           purchase.gold_batch.id
         end
         expose :grams , documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
-          purchase.gold_batch.grams.round(2)
+          purchase.gold_batch.fine_grams.round(2)
         end
         expose :grade , documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
           purchase.gold_batch.grade
@@ -50,8 +50,8 @@ module V1
           purchase.inventory.remaining_amount.round(2)
         end
       end
-      expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" } 
-      expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 } 
+      expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" }
+      expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
     end
   end
 end
