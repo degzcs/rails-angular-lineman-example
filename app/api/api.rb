@@ -29,7 +29,6 @@ class API < Grape::API
   mount V1::Modules::CreditBilling
   mount V1::Modules::File
   mount V1::Modules::Courier
-  mount V1::Modules::Client
   mount V1::Modules::Sale
   mount V1::Modules::Inventory
 

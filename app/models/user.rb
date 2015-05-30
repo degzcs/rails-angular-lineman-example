@@ -43,9 +43,6 @@ class User < ActiveRecord::Base
 	has_one :company, through: :office
 	belongs_to :population_center
 
-	has_secure_password
-
-
   # #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
   # enum user_type: [ :barequero, :comercializador, :solicitante, :beneficiario, :consumidor, :titular, :subcontrato, :inscrito]
 
@@ -67,6 +64,10 @@ class User < ActiveRecord::Base
 	validates :office, presence: true, unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
 	validates :personal_rucom, presence: true, if: :external
+
+	has_secure_password validations: false
+	validates :password, presence: true, unless: :external
+
 
 	#
 	# Scopes
@@ -115,6 +116,10 @@ class User < ActiveRecord::Base
 		population_center.try(:city)
 	end
 
+	def state
+		city.try(:state)
+	end
+
 	#IMPROVE:  this value introduce inconsistencies in the transactions!!
 	def nit
 		company.nit_number
@@ -125,7 +130,7 @@ class User < ActiveRecord::Base
 	end
 
 	def rucom
-		if user.extenal?
+		if self.external?
 			personal_rucom
 		else
 			office.company.rucom

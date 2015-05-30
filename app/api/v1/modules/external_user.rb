@@ -76,15 +76,15 @@ module V1
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            external_users = ::ExternalUser.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
+            external_users = ::User.external_users.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
               {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_id
-            external_users = ::ExternalUser.order("id DESC").where("document_number LIKE :document_number",
+            external_users = ::User.external_users.order("id DESC").where("document_number LIKE :document_number",
               {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
-            external_users = ::ExternalUser.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+            external_users = ::User.external_users.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
-            external_users = ::ExternalUser.order("id DESC").paginate(:page => page, :per_page => per_page)
+            external_users = ::User.external_users.order("id DESC").paginate(:page => page, :per_page => per_page)
           end
           #binding.pry
           header 'total_pages', external_users.total_pages.to_s
@@ -132,7 +132,7 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          external_user = ::ExternalUser.find(params[:id])
+          external_user = ::User.external_users.find(params[:id])
           present external_user, with: V1::Entities::ExternalUser
         end
 
@@ -155,35 +155,38 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
-          #binding.pry
+          # binding.pry
           content_type "text/json"
 
           # update params
-          files =params[:external_user].slice(:files_to_upload)[:files_to_upload]
+          files =params[:external_user].slice(:files)[:files]
+          # files = params[:external_user][:files]
           document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
-          chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
+          # TODO: save this value in the correct model
+          # chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
-          params[:external_user].except!(:files_to_upload).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file, chamber_commerce_file: chamber_commerce_file)
+          params[:external_user].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
 
           external_user_params = params[:external_user]
-          external_user = ::ExternalUser.new(params[:external_user])
+          external_user = ::User.new(params[:external_user])
+          external_user.external = true
           external_user.build_company(params[:company]) if params[:company]
-          
+
 
           if params[:rucom_id]
             rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
-            external_user.rucom = rucom
+            external_user.personal_rucom = rucom
           end
 
           #binding.pry
-          
+
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else
-            #binding.pry
-          
+            binding.pry
+
             error!(external_user.errors.inspect, 400)
           end
           Rails.logger.info(external_user.errors.inspect)
@@ -208,7 +211,7 @@ module V1
           [404, "Entry not found"],
         ]  do
           content_type "text/json"
-          external_user = ::ExternalUser.find(params[:id])
+          external_user = ::User.external_users.find(params[:id])
           external_user_params = params[:external_user]
           external_user.company.update_attributes(params[:company]) if params[:company]
           external_user.update_attributes(params[:external_user]) if params[:external_user]
