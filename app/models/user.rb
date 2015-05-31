@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
 	validates :personal_rucom, presence: true, if: :external
 
 	has_secure_password validations: false
-	validates :password, presence: true, unless: :external
+	validates :password, presence: {on: :create} , unless: :external
 
 
 	#

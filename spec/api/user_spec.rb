@@ -20,7 +20,7 @@ describe 'Auth', :type => :request do
            "available_credits"=> @user.available_credits,
            "phone_number"=>@user.phone_number,
            "address"=>@user.address,
-           
+
           }
 
           get '/api/v1/users/me', {},{ "Authorization" => "Barer #{@token}" }
@@ -30,7 +30,7 @@ describe 'Auth', :type => :request do
 
       end
       context 'UPDATE' do
-        it 'should update user info' do 
+        it 'should update the current user info' do
           expected_response = {
            "id"=>1,
            "first_name"=>"Armando",
