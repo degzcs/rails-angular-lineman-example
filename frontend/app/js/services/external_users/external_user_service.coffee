@@ -200,10 +200,10 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
             service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
             return
-          ).success (data, status, headers, config) ->
-              $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
-              $state.go "index_external_user"
-              service.clearModelToCreate()
+          ).success( (data, status, headers, config)->
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
+            $state.go "index_external_user"
+            service.clearModelToCreate()
             #uploadProgress = 0;
             # var model;
             # console.log('uploaded file ');
@@ -213,7 +213,15 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             # sessionStorage.external_userService = angular.toJson(model);
             # return service.model = model;
             return
-
+          ).error (data, status, headers, config)->
+            #
+            #TODO: This message has to be validated in case of error
+            #
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
+            $state.go "index_external_user"
+            service.clearModelToCreate()
+            return
+            
         #Files Upload
         if filesRemaining <= 0
           uploadFiles()
