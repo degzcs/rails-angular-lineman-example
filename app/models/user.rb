@@ -78,12 +78,24 @@ class User < ActiveRecord::Base
 	scope :external_users, -> {where(external: true)}
 	scope :providers, -> {where('users.available_credits > ?', 0)}
 
-	#ENUM USER TYPES:
-	# 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
-	# 4. Consumidor, 5. Titular , 6. Subcontrato de operación , 7. Inscrito
-	def activity
-		self.external ? personal_rucom.activity :  company.rucom.activity
-	end
+	# Get external users activity
+	# these names are in spanish because is still not clear how handle these categories and if the names are correct
+	# 0. Barequero, 1. Chatarrero, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
+	# 4. Consumidor, 5. Titular , 6. Subcontrato de operación
+
+	scope :barequeros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Barequero')}
+	scope :chatarreros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Chatarrero')}
+	scope :solicitantes, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Solicitante Legalización De Minería')}
+	scope :beneficiarios, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial')}
+	scope :consumidor, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Consumidor')}
+	scope :mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Titular')}
+	scope :subcontratados, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'subcontrato')}
+	scope :barequeros_chatarreros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Barequero', 'Chatarrero')}
+	scope :beneficiarios_mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial', 'Titular')}
+
+	# Get users activiry
+	# 7. Comercializador -> traders, NOTE: I think this kind of users are all users that can login in the platform
+	scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializador')}
 
 	#
 	# Calbacks
@@ -104,6 +116,12 @@ class User < ActiveRecord::Base
 	#
 	# Instance Methods
 	#
+
+	#
+	# Get the user activity  based on rucom
+	def activity
+		self.external ? personal_rucom.activity :  company.rucom.activity
+	end
 
 	def company_name
 		company.try(:name)
