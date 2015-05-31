@@ -6,13 +6,13 @@ module V1
         authenticate!
       end
       default_error_status 400
-          
+
 
       format :json
       content_type :json, 'application/json'
 
       helpers do
-        
+
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -53,10 +53,10 @@ module V1
             rucoms = ::Rucom.order("id DESC").where("lower(name) LIKE :name",
               {name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucom_number
-            rucoms = ::Rucom.where("num_rucom LIKE :num_rucom OR rucom_record LIKE :num_rucom OR subcontract_number LIKE :num_rucom", 
+            rucoms = ::Rucom.where("num_rucom LIKE :num_rucom OR rucom_record LIKE :num_rucom OR subcontract_number LIKE :num_rucom",
             {num_rucom: "%#{query_rucom_number.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_provtype
-            rucoms = ::Rucom.where("provider_type LIKE :provider_type", 
+            rucoms = ::Rucom.where("provider_type LIKE :provider_type",
               {provider_type: "%#{query_provtype.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
             header 'total_pages', rucoms.total_pages.to_s
           else
@@ -92,7 +92,7 @@ module V1
         get '/:id/check_if_available', http_codes: [ [200, "Successful"], [400, "Unauthorized"] ] do
           content_type "text/json"
           rucom = ::Rucom.find(params[:id])
-          if rucom.trazoro_user_id
+          if rucom.rucomeable_id
             error!  "Este rucom no esta disponible"
           else
             present rucom, with: V1::Entities::Rucom
