@@ -12,8 +12,8 @@
 
 FactoryGirl.define do
   factory :sold_batch do
-    purchase_id 1
+    purchase
     grams_picked 2.5
-    sale_id 1
+    sale
   end
 end
