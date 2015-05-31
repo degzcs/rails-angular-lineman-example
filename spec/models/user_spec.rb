@@ -128,8 +128,8 @@ describe  User do
     context "external users" do
       it "should returns the user activity from rucom info" do
         rucom = create(:rucom)
-        user = create(:user, external: true,  personal_rucom: rucom)
-        expect(user.activity).to eq rucom.activity
+        external_user = create(:external_user, personal_rucom: rucom)
+        expect(external_user.activity).to eq rucom.activity
       end
 
       it "should validate the rucom called personal rucom" do

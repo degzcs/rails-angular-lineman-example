@@ -9,15 +9,15 @@ describe BuyGoldBatch do
   context 'non trazoro user (from externanl user) ' do
 
     before :each do
-      provider = create(:provider)
+      provider = create(:external_user)
       file_path = "#{Rails.root}/spec/support/test_images/image.png"
       seller_picture_path = "#{Rails.root}/spec/support/test_images/seller_picture.png"
       file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
       seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
       @gold_batch_hash ={
        "id" => 1,
-      "parent_batches" => "",
-      "grams" => 1.5,
+      # "parent_batches" => "",
+      "fine_grams" => 1.5,
       "grade" => 1,
       "inventory_id" => 1,
       }
@@ -30,10 +30,11 @@ describe BuyGoldBatch do
            "origin_certificate_file" => file,
             "seller_picture" => seller_picture,
            "origin_certificate_sequence"=>"123456789",
+           "trazoro" => false
       }
     end
     it 'should make a purchase and discount credits from de current user (buyer) available credits' do
-      expected_credits = 100 - @gold_batch_hash['grams'] # <-- this is a fine grams
+      expected_credits = 100 - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
       buy_gold_batch.from_non_trazoro_user!
       expect(buy_gold_batch.purchase.persisted?).to be true
       expect(user.reload.available_credits).to eq expected_credits
