@@ -155,7 +155,7 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
-          # binding.pry
+           #binding.pry
           content_type "text/json"
 
           # update params
@@ -180,12 +180,12 @@ module V1
             external_user.personal_rucom = rucom
           end
 
-          #binding.pry
+            #binding.pry
 
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else
-            binding.pry
+            #binding.pry
 
             error!(external_user.errors.inspect, 400)
           end

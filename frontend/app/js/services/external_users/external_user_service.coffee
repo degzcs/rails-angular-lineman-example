@@ -65,11 +65,11 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
       # Photo file
       external_user = service.modelToCreate.external_user
       company = service.modelToCreate.company
-      files = service.modelToCreate.files
+      files_to_upload = service.modelToCreate.files
       rucom_id = service.modelToCreate.rucom_id
       console.log rucom_id
 
-      blobUtil.imgSrcToBlob(files.photo_file).then (external_user_photo_file) ->
+      blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (external_user_photo_file) ->
         #external_user_photo_file = photo_file
         external_user_photo_file.name = 'photo_file.png'
         
@@ -77,15 +77,13 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         filesRemaining = 0;
 
         # Document Number File
-        if !(files.document_number_file[0] instanceof File)
-          files.document_number_file[0].name = 'document_number_file.pdf'
-          console.log("ALGO PASO")
+        if !(files_to_upload.document_number_file[0] instanceof File)
+          files_to_upload.document_number_file[0].name = 'document_number_file.pdf'
             
         else
-          document_number_file_copy = files.document_number_file
+          document_number_file_copy = files_to_upload.document_number_file
           document_number_reader = new FileReader
-          files.document_number_file = []
-          console.log("ALGO NOPASO")
+          files_to_upload.document_number_file = []
             
           document_number_reader.onload = ->
             `var i`
@@ -100,8 +98,8 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             while i < l
               array[i] = d.charCodeAt(i)
               i++
-            files.document_number_file.push new Blob([ array ], type: 'application/octet-stream')
-            files.document_number_file[0].name = 'document_number_file' + document_number_file_copy[0].name.substring(document_number_file_copy[0].name.lastIndexOf('.'))
+            files_to_upload.document_number_file.push new Blob([ array ], type: 'application/octet-stream')
+            files_to_upload.document_number_file[0].name = 'document_number_file' + document_number_file_copy[0].name.substring(document_number_file_copy[0].name.lastIndexOf('.'))
             --filesRemaining
             if filesRemaining <= 0
               uploadFiles()
@@ -111,12 +109,12 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           filesRemaining++
 
         # Mining register file
-        if !(files.mining_register_file[0] instanceof File)
-          files.mining_register_file[0].name = 'mining_register_file.pdf'
+        if !(files_to_upload.mining_register_file[0] instanceof File)
+          files_to_upload.mining_register_file[0].name = 'mining_register_file.pdf'
         else
-          mining_register_file_copy = files.mining_register_file
+          mining_register_file_copy = files_to_upload.mining_register_file
           mining_register_reader = new FileReader
-          files.mining_register_file = []
+          files_to_upload.mining_register_file = []
 
           mining_register_reader.onload = ->
             `var i`
@@ -131,8 +129,8 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             while i < l
               array[i] = d.charCodeAt(i)
               i++
-            files.mining_register_file.push new Blob([ array ], type: 'application/octet-stream')
-            files.mining_register_file[0].name = 'mining_register_file' + mining_register_file_copy[0].name.substring(mining_register_file_copy[0].name.lastIndexOf('.'))
+            files_to_upload.mining_register_file.push new Blob([ array ], type: 'application/octet-stream')
+            files_to_upload.mining_register_file[0].name = 'mining_register_file' + mining_register_file_copy[0].name.substring(mining_register_file_copy[0].name.lastIndexOf('.'))
             --filesRemaining
             if filesRemaining <= 0
               uploadFiles()
@@ -143,12 +141,12 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           filesRemaining++
 
         #Rut file
-        if !(files.rut_file[0] instanceof File)
-          files.rut_file[0].name = 'rut_file.pdf'
+        if !(files_to_upload.rut_file[0] instanceof File)
+          files_to_upload.rut_file[0].name = 'rut_file.pdf'
         else
-          rut_file_copy = files.rut_file
+          rut_file_copy = files_to_upload.rut_file
           rut_reader = new FileReader
-          files.rut_file = []
+          files_to_upload.rut_file = []
 
           rut_reader.onload = ->
             `var i`
@@ -163,8 +161,8 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             while i < l
               array[i] = d.charCodeAt(i)
               i++
-            files.rut_file.push new Blob([ array ], type: 'application/octet-stream')
-            files.rut_file[0].name = 'rut_file' + rut_file_copy[0].name.substring(rut_file_copy[0].name.lastIndexOf('.'))
+            files_to_upload.rut_file.push new Blob([ array ], type: 'application/octet-stream')
+            files_to_upload.rut_file[0].name = 'rut_file' + rut_file_copy[0].name.substring(rut_file_copy[0].name.lastIndexOf('.'))
             --filesRemaining
             if filesRemaining <= 0
               uploadFiles()
@@ -174,40 +172,31 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           rut_reader.readAsBinaryString rut_file_copy[0]
           filesRemaining++
 
-        files_to_upload = []
+        files = []
         
         uploadFiles = ->
+          files = [
+            files_to_upload.document_number_file[0]
+            files_to_upload.mining_register_file[0]
+            files_to_upload.rut_file[0]
+            external_user_photo_file
+          ]
 
-          if external_user.user_type != 0
-            files_to_upload = [
-              files.iddocument_number_file[0]
-              files.mining_register_file[0]
-              files.rut_file[0]
-              files.chamber_commerce_file[0]
-              external_user_photo_file
-            ]
-          else
-            files_to_upload = [
-              files.document_number_file[0]
-              files.mining_register_file[0]
-              files.rut_file[0]
-              external_user_photo_file
-            ]
           $upload.upload(
             url: '/api/v1/external_users/'
             method: 'POST'
-            headers: { 'Content-Transfer-Encoding': 'utf-8' }
+            headers: {'Content-Type': 'application/json'}
             fields: 
-              "external_user[first_name]":external_user.first_name,
-              "external_user[document_number]":external_user.document_number,
-              "external_user[last_name]":external_user.last_name,
-              "external_user[phone_number]":external_user.phone_number,
-              "external_user[address]":external_user.address,
-              "external_user[email]":external_user.email,
+              "external_user[first_name]": external_user.first_name,
+              "external_user[document_number]": external_user.document_number,
+              "external_user[last_name]": external_user.last_name,
+              "external_user[phone_number]": external_user.phone_number,
+              "external_user[address]": external_user.address,
+              "external_user[email]": external_user.email,
               "external_user[population_center_id]":external_user.population_center_id,
               "rucom_id": rucom_id
-            file: files_to_upload
-            fileFormDataName: 'external_user[files_to_upload][]').progress((evt) ->
+            file: files
+            fileFormDataName: 'external_user[files][]').progress((evt) ->
             console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
             service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
             return
