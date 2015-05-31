@@ -16,7 +16,7 @@ module V1
           optional :per_page, type: Integer
         end
 
-        params :external_user_query do
+        params :provider_query do
           optional :query_name, type: String
           optional :query_id, type: String
           optional :query_rucomid, type: String
@@ -41,8 +41,8 @@ module V1
           end
         end
 
-        params :external_user do
-          optional :external_user, type: Hash do
+        params :provider do
+          optional :provider, type: Hash do
             optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
             optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
             optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
@@ -56,8 +56,8 @@ module V1
 
       end
 
-      resource :external_users do
-        desc 'returns all existent external_users', {
+      resource :providers do
+        desc 'returns all existent providers', {
           entity: V1::Entities::Provider,
           notes: <<-NOTES
             Returns all existent sessions paginated
@@ -65,7 +65,7 @@ module V1
         }
         params do
           use :pagination
-          use :external_user_query
+          use :provider_query
         end
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
@@ -76,34 +76,34 @@ module V1
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            external_users = ::User.external_users.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
+            providers = ::User.providers.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
               {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_id
-            external_users = ::User.external_users.order("id DESC").where("document_number LIKE :document_number",
+            providers = ::User.providers.order("id DESC").where("document_number LIKE :document_number",
               {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
-            external_users = ::User.external_users.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+            providers = ::User.providers.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
-            external_users = ::User.external_users.order("id DESC").paginate(:page => page, :per_page => per_page)
+            providers = ::User.providers.order("id DESC").paginate(:page => page, :per_page => per_page)
           end
           #binding.pry
-          header 'total_pages', external_users.total_pages.to_s
-          present external_users, with: V1::Entities::Provider
+          header 'total_pages', providers.total_pages.to_s
+          present providers, with: V1::Entities::Provider
         end
 
-        desc 'returns all external_user by external_user_types', {
+        desc 'returns all provider by provider_types', {
           entity: V1::Entities::Provider,
           notes: <<-NOTES
-            Returns all external_user by external_user_types
+            Returns all provider by provider_types
           NOTES
         }
         params do
           # use :pagination
-          # requires :external_user_types
+          # requires :provider_types
         end
         get 'by_types'do
           # content_type "text/json"
-          external_users = case params[:types]
+          providers = case params[:types]
                                 when 'barequero_chatarrero'
                                  ::User.providers.barequeros_chatarreros
                                 when 'beneficiarios_mineros'
@@ -118,13 +118,13 @@ module V1
                                   ::User.providers.subcontratados
                               end
           # binding.pry
-          present external_users, with: V1::Entities::Provider
+          present providers, with: V1::Entities::Provider
         end
 
-        desc 'returns one existent external_user by :id', {
+        desc 'returns one existent provider by :id', {
           entity: V1::Entities::Provider,
           notes: <<-NOTES
-            Returns one existent external_user by :id
+            Returns one existent provider by :id
           NOTES
         }
         params do
@@ -132,20 +132,20 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          external_user = ::User.external_users.find(params[:id])
-          present external_user, with: V1::Entities::Provider
+          provider = ::User.providers.find(params[:id])
+          present provider, with: V1::Entities::Provider
         end
 
         # POST
-        desc 'creates a new external_user', {
+        desc 'creates a new provider', {
             entity: V1::Entities::Provider,
             notes: <<-NOTE
               ### Description
-              It creates a new external_user record and returns its current representation.
+              It creates a new provider record and returns its current representation.
             NOTE
           }
         params do
-          requires :external_user, type: Hash, desc: 'External user hash'
+          requires :provider, type: Hash, desc: 'External user hash'
           optional :rucom_id, type: Integer, desc: 'Rucom id'
           optional :company, type: Hash, desc: 'Company'
         end
@@ -159,49 +159,49 @@ module V1
           content_type "text/json"
 
           # update params
-          files =params[:external_user].slice(:files)[:files]
-          # files = params[:external_user][:files]
+          files =params[:provider].slice(:files)[:files]
+          # files = params[:provider][:files]
           document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           # TODO: save this value in the correct model
           # chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
-          params[:external_user].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
+          params[:provider].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
 
-          external_user_params = params[:external_user]
-          external_user = ::User.new(params[:external_user])
-          external_user.external = true
-          external_user.build_company(params[:company]) if params[:company]
+          provider_params = params[:provider]
+          provider = ::User.new(params[:provider])
+          provider.external = true
+          provider.build_company(params[:company]) if params[:company]
 
 
           if params[:rucom_id]
             rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
-            external_user.personal_rucom = rucom
+            provider.personal_rucom = rucom
           end
 
             #binding.pry
 
-          if external_user.save
-            present external_user, with: V1::Entities::Provider
+          if provider.save
+            present provider, with: V1::Entities::Provider
           else
             #binding.pry
 
-            error!(external_user.errors.inspect, 400)
+            error!(provider.errors.inspect, 400)
           end
-          Rails.logger.info(external_user.errors.inspect)
+          Rails.logger.info(provider.errors.inspect)
         end
         # PUT
-        desc 'updates a external_user', {
+        desc 'updates a provider', {
             entity: V1::Entities::Provider,
             notes: <<-NOTE
               ### Description
-              It updates a new external_user record and returns its current representation
+              It updates a new provider record and returns its current representation
             NOTE
           }
         params do
           requires :id
-          use :external_user
+          use :provider
           use :company
         end
         put '/:id', http_codes: [
@@ -211,14 +211,14 @@ module V1
           [404, "Entry not found"],
         ]  do
           content_type "text/json"
-          external_user = ::User.external_users.find(params[:id])
-          external_user_params = params[:external_user]
-          external_user.company.update_attributes(params[:company]) if params[:company]
-          external_user.update_attributes(params[:external_user]) if params[:external_user]
-          if external_user.save
-            present external_user, with: V1::Entities::Provider
+          provider = ::User.providers.find(params[:id])
+          provider_params = params[:provider]
+          provider.company.update_attributes(params[:company]) if params[:company]
+          provider.update_attributes(params[:provider]) if params[:provider]
+          if provider.save
+            present provider, with: V1::Entities::Provider
           else
-            error!(external_user.errors, 400)
+            error!(provider.errors, 400)
           end
         end
       end
