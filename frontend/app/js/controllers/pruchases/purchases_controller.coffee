@@ -51,6 +51,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
         $scope.purchase.model.provider = data.provider
+        if $scope.purchase.model.provider.num_rucom
+          $scope.rucomIDField.label = 'Número de RUCOM'
+          $scope.rucomIDField.field = 'num_rucom'
+          $scope.purchase.model.rucom_id_field = 'num_rucom'
+        else if $scope.purchase.model.provider.rucom_record
+          $scope.rucomIDField.label = 'Número de Expediente'
+          $scope.rucomIDField.field = 'rucom_record'
+          $scope.purchase.model.rucom_id_field = 'rucom_record'
 
   #
   #
@@ -67,7 +75,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.rucomIDField.field = 'rucom_record'
         $scope.purchase.model.rucom_id_field = 'rucom_record'
     else
-      console.log 'State changed to none'
+      console.log 'Provider changed to none'
 
   #
   #
