@@ -54,7 +54,7 @@ class Sale < ActiveRecord::Base
   end
 
   def grams
-    gold_batch.grams
+    gold_batch.fine_grams
   end
 
   def grade

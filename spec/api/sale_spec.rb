@@ -25,7 +25,7 @@ describe 'Sale', :type => :request do
 
       context 'POST' do
         it 'should create one complete sale' do
-          client = create(:client)
+          client = create(:external_user)
           courier = create(:courier)
 
           expected_response = {
@@ -39,8 +39,8 @@ describe 'Sale', :type => :request do
 
           new_gold_batch_values = {
             "id" => 1,
-            "parent_batches" => "",
-            "grams" => 1.5,
+            # "parent_batches" => "",
+            "fine_grams" => 1.5,
             "grade" => 1,
             "inventory_id" => 1,
           }
@@ -61,7 +61,7 @@ describe 'Sale', :type => :request do
 
       context "GET" do
         before(:all) do
-          create_list(:sale, 20)
+          create_list(:sale, 20, user: User.last)
         end
         context '/' do
           it 'verifies that response has the elements number specified in per_page param' do
@@ -95,7 +95,7 @@ describe 'Sale', :type => :request do
         context 'get_by_code/:code' do
           before :each do
             @sale = Sale.last
-            @sale.user.company_info = create(:company_info)
+            @sale.user.office.company = create(:company)
             @sale.user.rucom = create(:rucom)
             @sale.user.save
             file_path = "#{Rails.root}/spec/support/test_pdfs/origin_certificate_file.pdf"
@@ -113,9 +113,9 @@ describe 'Sale', :type => :request do
             provider_hash = {
             id: @sale.user.id,
             name: "#{@sale.user.first_name} #{@sale.user.last_name}",
-            company_name: @sale.user.company_info.name,
+            company_name: @sale.user.company.name,
             document_type: 'NIT',
-            document_number: @sale.user.company_info.nit_number,
+            document_number: @sale.user.company.nit_number,
             rucom_record:  @sale.user.rucom.rucom_record,
             rucom_status: @sale.user.rucom.status
           }
@@ -139,7 +139,7 @@ describe 'Sale', :type => :request do
           it 'verifies that response has the elements number specified in per_page param' do
             sale = Sale.last
             total_sold_batches = 30
-            list = create_list(:sold_batch,total_sold_batches,sale_id: sale.id)
+            list = create_list(:sold_batch, total_sold_batches,sale_id: sale.id)
 
             get "/api/v1/sales/#{sale.id}/batches", {} , { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200

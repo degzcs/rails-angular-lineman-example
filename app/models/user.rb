@@ -129,11 +129,21 @@ class User < ActiveRecord::Base
 		rucom.rucom_record
 	end
 
+	# Get rucom based on type of user
 	def rucom
 		if self.external?
 			personal_rucom
 		else
 			office.company.rucom
+		end
+	end
+
+	# Set rucom based on type of user
+	def rucom=(rucom)
+		if self.external?
+			personal_rucom=rucom
+		else
+			office.company.rucom=rucom
 		end
 	end
 

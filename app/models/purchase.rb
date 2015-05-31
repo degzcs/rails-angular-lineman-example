@@ -32,6 +32,7 @@ class Purchase < ActiveRecord::Base
 
   belongs_to :gold_batch
   has_one :inventory
+  has_many :sold_batches
 
   #
   # Callbacks
