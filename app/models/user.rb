@@ -76,6 +76,7 @@ class User < ActiveRecord::Base
 	#
 
 	scope :external_users, -> {where(external: true)}
+	scope :providers, -> {where('users.available_credits > ?', 0)}
 
 	#ENUM USER TYPES:
 	# 0. Barequero, 1. Comercializador, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
@@ -105,7 +106,7 @@ class User < ActiveRecord::Base
 	#
 
 	def company_name
-		company.name
+		company.try(:name)
 	end
 
 	# TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
@@ -124,11 +125,11 @@ class User < ActiveRecord::Base
 
 	#IMPROVE:  this value introduce inconsistencies in the transactions!!
 	def nit
-		company.nit_number
+		company.try(:nit_number)
 	end
 
 	def rucom_record
-		rucom.rucom_record
+		rucom.try(:rucom_record)
 	end
 
 	# IMPORTANT Get if the user or external user belongs to a company
@@ -136,7 +137,7 @@ class User < ActiveRecord::Base
 		unless self.company
 			personal_rucom
 		else
-			office.company.rucom
+			office.try(:company).try(:rucom)
 		end
 	end
 
@@ -145,7 +146,7 @@ class User < ActiveRecord::Base
 		if self.external?
 			personal_rucom=rucom
 		else
-			office.company.rucom=rucom
+			office.company.rucom = rucom if office.present?
 		end
 	end
 

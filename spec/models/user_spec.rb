@@ -106,14 +106,21 @@ describe  User do
 
   context "scopes" do
     before :each do
-      create_list(:user, 5 )
-      create_list(:external_user, 5)
+      users = create_list(:user, 5 )
+      external_users = create_list(:external_user, 5)
+
+      # add credits to buy gold
+      users.last.update_attribute(:available_credits, 2000)
+      external_users.last.update_attribute(:available_credits, 2000)
     end
 
     it 'should return all extenal users' do
       expect(User.external_users.count).to eq 5
     end
 
+    it 'should select all user that can provider gold (providers)' do
+      expect(User.providers.count).to eq 2
+    end
   end
 
   context '#instance methods' do
