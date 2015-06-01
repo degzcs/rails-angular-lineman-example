@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ProviderService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state) ->
 
   #
   # Instances
@@ -84,12 +84,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     (provider) ->
       provider.document_number.indexOf(lowercaseQuery) != -1
 
+  per_page = 100
+  page = 1
   #
   # all providers
-  ProviderService.retrieveProviders.query {
-    per_page: 100
-    page: 1
-  }, ((providers, headers) ->
+  ExternalUser.all(per_page,page).success( (providers)->
+    $mdDialog.cancel()
     i = 0
     while i < providers.length
       prov =
@@ -114,7 +114,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         address: providers[i].address
       $scope.allProviders.push prov
       i++
-  ), (error) ->
+  ).error ()->
 
   # Set the last picture that was took
   $scope.photo=CameraService.getLastScanImage()

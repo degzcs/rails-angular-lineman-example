@@ -1,4 +1,4 @@
-angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog) ->
+angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog,$state) ->
   ##****************************************  TABLE HEADERS and initial config variables *****************************************##
   $scope.count = 10
   $scope.content = []
@@ -132,6 +132,7 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
 
   #Launch External user type selection
   $scope.new_external_user = (ev) ->
+    #$state.go 'create_external_user_type_a'
     $mdDialog.show
       controller: 'ExternalUserTypeCtrl'
       templateUrl: 'partials/user-type-selection.html'

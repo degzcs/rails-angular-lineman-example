@@ -170,7 +170,8 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
     ExternalUser.modelToUpdate.external_user.address = $scope.currentExternalUser.address
     
     ExternalUser.update_external_user($scope.currentExternalUser.id).success (data)->
-      $mdDialog.cancel()
+      #$mdDialog.cancel()
+      $state.go "show_external_user", {id: $scope.currentExternalUser.id}
       $mdDialog.show $mdDialog.alert().title('Mensaje').content('Información actualizada correctamente.').ariaLabel('Alert Dialog Demo').ok('ok!')
 
     return

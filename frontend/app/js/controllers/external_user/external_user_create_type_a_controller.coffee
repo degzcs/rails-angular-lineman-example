@@ -1,4 +1,4 @@
-angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
+angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
   
   # ****** Tab directive variables and methods ********** #
   $scope.abortCreate = false
@@ -8,6 +8,8 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
   };
   $scope.tabIndex =
     selectedIndex: 0
+
+  $scope.pendingPost = false
   
   goToDocumentation = ->
     $scope.tabIndex.selectedIndex = 1 
@@ -39,7 +41,7 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
     if CameraService.getTypeFile() == 5
       ExternalUser.modelToCreate.files.chamber_commerce_file = $scope.file
       goToDocumentation()
-    ExternalUser.saveModelToCreate()
+    #ExternalUser.saveModelToCreate()
     CameraService.clearData()
     ScannerService.clearData()
   $scope.scanner = (type) ->
@@ -53,6 +55,8 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
   $scope.newExternalUser = ExternalUser.restoreModelToCreate().external_user
   $scope.newCompany = ExternalUser.restoreModelToCreate().company 
   $scope.newFiles = ExternalUser.restoreModelToCreate().files 
+
+  console.log ExternalUser.restoreModelToCreate()
 
   #******************* Population center variables ********************************** #
   $scope.states = [];
@@ -226,10 +230,10 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
       goToDocumentation()
 
   $scope.validate_documentation_and_create=  ()->
-    if $scope.newExternalUser.user_type == 0
       if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
         $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
       else
+        $scope.pendingPost = true
         ExternalUser.modelToCreate.external_user = $scope.newExternalUser
         ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id 
         ExternalUser.modelToCreate.files = $scope.newFiles 
@@ -238,10 +242,6 @@ angular.module('app').controller 'ExternalUserCreateCtrl', ($scope, $state, $sta
         ExternalUser.create()
         $scope.showUploadingDialog()
 
-    else 
-      if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == '' || $scope.chamber_commerce_file.rut_file == ''
-      else
-        console.log "VALIDADO"
 
 
   $scope.showUploadingDialog = () ->

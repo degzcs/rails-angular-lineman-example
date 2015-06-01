@@ -1,9 +1,8 @@
 angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDialog,RucomService,$state) ->
   service =
 
-    
     uploadProgress: 0
-
+    isCompany: false
     modelToCreate:
       rucom_id: ''
       external_user:
@@ -15,7 +14,6 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         phone_number: ''
         address: ''
         population_center_id: ''
-        user_type: ''
       company:
         nit_number: ''
         name: ''
@@ -230,7 +228,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
 
     
     update_external_user: (id)->
-      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
+      #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users/'+id
                 method: 'PUT'
@@ -276,10 +274,22 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
                 }
     saveModelToCreate: ->
       sessionStorage.external_user_to_create = angular.toJson(service.modelToCreate)
+
     restoreModelToCreate: ->
-      if(sessionStorage.external_user_to_create)
+      if sessionStorage.external_user_to_create != null
         service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
-      return service.modelToCreate
+        service.modelToCreate
+      else
+        service.modelToCreate
+      # if sessionStorage.external_user_to_create == null
+      #   service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
+      #   service.modelToCreate
+      # else
+      #   service.modelToCreate
+    
+
+     
+
     clearModelToCreate: ->
       RucomService.currentRucom = null
       sessionStorage.external_user_to_create = null
@@ -294,7 +304,6 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           phone_number: ''
           address: ''
           population_center_id: ''
-          user_type: ''
         files:
           document_number_file: ''
           mining_register_file: ''

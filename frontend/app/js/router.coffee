@@ -276,7 +276,7 @@
       views:
         'content':
           templateUrl: "partials/external_users/type_a.html"
-          controller: "ExternalUserCreateCtrl"
+          controller: "ExternalUserCreateTypeACtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
@@ -302,7 +302,7 @@
       views:
         'content':
           templateUrl: "partials/external_users/type_b.html"
-          controller: "ExternalUserCreateCtrl"
+          controller: "ExternalUserCreateTypeBCtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"

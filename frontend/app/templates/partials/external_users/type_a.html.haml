@@ -85,8 +85,7 @@
       %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion", "ng-click"=>"validate_personal_fields()"}
         #tab3-content{}
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-                         
-            %div{flex: '60'}
+            %div{flex: '30'}
               %h4 Subir documento de identificación
               %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
@@ -118,7 +117,7 @@
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
           
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{flex: '60'}
+            %div{flex: '30'}
               %h4 Registro Minero
               %md-select.uploader-selector{"ng-model" => "mining_register_upload_type", :placeholder => "Cargar Registro Minero", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
@@ -150,7 +149,7 @@
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
           
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{flex: '60'}
+            %div{flex: '30'}
               %h4 Copia del RUT
               %md-select.uploader-selector{"ng-model" => "rut_upload_type", :placeholder => "Cargar Copia del RUT", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
@@ -184,5 +183,5 @@
 
         %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
           %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
-          %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)"} Crear Usuario
+          %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)", "ng-disabled"=>"pendingPost"} Crear Proovedor
       

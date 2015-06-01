@@ -175,11 +175,9 @@ module V1
           external_user.build_company(params[:company]) if params[:company]
 
 
-          if params[:rucom_id]
-            rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
-            external_user.personal_rucom = rucom
-          end
-
+          rucom = ::Rucom.find(params[:rucom_id])
+          external_user.personal_rucom = rucom
+        
             #binding.pry
 
           if external_user.save
