@@ -178,16 +178,15 @@ module V1
           #If there is a company 
           if params[:company]
             company = Company.new(params[:company])
-            #binding.pry
             company.rucom = rucom
-            company.save!
-            external_user.build_office(name: "oficina 1",company_id: company.id) 
-            
+            external_user.build_office(name: "oficina 1", company: company) 
           else
+            #binding.pry
             external_user.personal_rucom = rucom
           end
 
           #binding.pry
+
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else

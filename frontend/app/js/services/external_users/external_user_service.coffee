@@ -192,6 +192,13 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
               "external_user[address]": external_user.address,
               "external_user[email]": external_user.email,
               "external_user[population_center_id]":external_user.population_center_id,
+              "company[name]":company.name if service.isCompany,
+              "company[nit_number]":company.nit_number if service.isCompany,
+              "company[legal_representative]":company.legal_representative if service.isCompany,
+              "company[id_number_legal_rep]":company.id_number_legal_rep if service.isCompany,
+              "company[email]":company.email if service.isCompany,
+              "company[phone_number]":company.phone_number if service.isCompany,
+              "company[id_type_legal_rep]":company.id_type_legal_rep if service.isCompany,
               "rucom_id": rucom_id
             file: files
             fileFormDataName: 'external_user[files][]').progress((evt) ->
@@ -293,6 +300,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
     clearModelToCreate: ->
       RucomService.currentRucom = null
       sessionStorage.external_user_to_create = null
+      service.isCompany= false
       service.modelToCreate =
         rucom_id: ''
         external_user:

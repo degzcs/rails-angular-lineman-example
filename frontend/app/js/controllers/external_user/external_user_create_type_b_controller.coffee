@@ -11,13 +11,15 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
     label: 'Número de RUCOM',
     field: 'num_rucom'
   };
+
+  $scope.pendingPost = false
+
   $scope.tabIndex =
     selectedIndex: 0
   
   goToDocumentation = ->
     $scope.tabIndex.selectedIndex = 1 
-  goToCompanyInfo = ->
-    $scope.tabIndex.selectedIndex = 2
+
 
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the ExternalUser model to check for pendind scaned files
@@ -46,6 +48,7 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
     if CameraService.getTypeFile() == 5
       ExternalUser.modelToCreate.files.chamber_commerce_file = $scope.file
       goToDocumentation()
+
     ExternalUser.saveModelToCreate()
     CameraService.clearData()
     ScannerService.clearData()
@@ -61,6 +64,7 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
   $scope.newCompany = ExternalUser.restoreModelToCreate().company 
   $scope.newFiles = ExternalUser.restoreModelToCreate().files 
 
+  console.log $scope.newCompany
   
   #******************* Population center variables ********************************** #
   $scope.states = [];
@@ -210,8 +214,6 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
   if $scope.currentRucom 
     ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
     ExternalUser.saveModelToCreate()
-    goToCompanyInfo() if $scope.isCompany
-    
     #console.log ExternalUser.modelToCreate
 
   #************ Creation methods *************************#
@@ -232,48 +234,38 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
     else if $scope.currentRucom == null && !$scope.isCompany
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.isCompany
+      $scope.validate_company_fields()
     else
       goToDocumentation()
 
-  $scope.validate_documentation=  ()->
-      if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
-        $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
-      else
-        console.log $scope.newFiles
-        goToCompanyInfo()
-        
-
-  $scope.createWithoutCompany = ()->
-    if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
-    else if $scope.currentRucom == null && !$scope.isCompany
+  $scope.validate_company_fields = ()->
+    if $scope.newCompany.name == '' || $scope.newCompany.nit_number == '' || $scope.newCompany.legal_representative == '' || $scope.newCompany.id_number_legal_rep == '' || $scope.newCompany.email == '' || $scope.newCompany.id_type_legal_rep == '' || $scope.newCompany.phone_number == ''
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos de la compañia').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.newCompany.name == undefined || $scope.newCompany.nit_number == undefined || $scope.newCompany.legal_representative == undefined || $scope.newCompany.id_number_legal_rep == undefined || $scope.newCompany.email == undefined || $scope.newCompany.id_type_legal_rep == undefined || $scope.newCompany.phone_number == undefined
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos de la compañia').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.currentRucom == null 
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
     else
+      goToDocumentation()
+
+  $scope.validate_documentation_and_create=  ()->
+    if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+    else
+      $scope.pendingPost = true
+      console.log $scope.newFiles
       ExternalUser.modelToCreate.external_user = $scope.newExternalUser
       ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id 
       ExternalUser.modelToCreate.files = $scope.newFiles 
+      ExternalUser.modelToCreate.company = $scope.newCompany if $scope.isCompany
       ExternalUser.saveModelToCreate()
       #console.log ExternalUser.modelToCreate
       ExternalUser.create()
       $scope.showUploadingDialog()
+        
 
-  $scope.createWithCompany = ()->
-    if $scope.newCompany.name == '' || $scope.newExternalUser.nit_number == '' || $scope.newExternalUser.legal_representative == '' || $scope.newExternalUser.id_number_legal_rep == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.id_type_legal_rep == '' || $scope.newExternalUser.phone_number == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
-    else if $scope.newCompany.name == '' || $scope.newExternalUser.nit_number == '' || $scope.newExternalUser.legal_representative == '' || $scope.newExternalUser.id_number_legal_rep == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.id_type_legal_rep == '' || $scope.newExternalUser.phone_number == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
-    else if $scope.currentRucom == null 
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
-    else
-      ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-      ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id 
-      ExternalUser.modelToCreate.files = $scope.newFiles 
-      ExternalUser.modelToCreate.company = $scope.company
-      ExternalUser.saveModelToCreate()
-      #console.log ExternalUser.modelToCreate
-      # ExternalUser.create()
-      # $scope.showUploadingDialog()
-      console.log ExternalUser.modelToCreate
+
 
   $scope.showUploadingDialog = () ->
     parentEl = angular.element(document.body)
@@ -307,6 +299,7 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
     return
 
   $scope.setIsCompany = ()->
+    $scope.tabIndex.selectedIndex = 0
     $scope.currentRucom = null
     console.log $scope.isCompany
     ExternalUser.isCompany = $scope.isCompany
