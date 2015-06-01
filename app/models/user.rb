@@ -61,9 +61,9 @@ class User < ActiveRecord::Base
 	validates :rut_file, presence: true
 	validates :mining_register_file, presence: true
 	validates :photo_file, presence: true
-	validates :office, presence: true, unless: :external # this field would be validated if user add some information related with company in the registration process.
+	validates :office, presence: true , unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
-	validates :personal_rucom, presence: true, if: :external
+	#validates :personal_rucom, presence: true, if: :external
 
 	has_secure_password validations: false
 	validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
@@ -131,9 +131,9 @@ class User < ActiveRecord::Base
 		rucom.rucom_record
 	end
 
-	# Get rucom based on type of user
+	# IMPORTANT Get if the user or external user belongs to a company
 	def rucom
-		if self.external?
+		unless self.company
 			personal_rucom
 		else
 			office.company.rucom

@@ -125,6 +125,27 @@ describe  User do
       end
     end
 
+    context "rucom" do
+      context "users or external users with company" do
+        it "should respond with the rucom's company" do
+          company = create(:company)
+          office = create(:office, company: company)
+          user = create(:user, office: office)
+          external_user = create(:external_user, office: office)
+          expect(user.rucom).to eq company.rucom
+          expect(external_user.rucom).to eq company.rucom
+        end
+      end
+
+      context "external user without company" do
+        it "should respond with the rucom's user" do
+          personal_rucom = create(:rucom)
+          external_user = create(:external_user, office: nil, personal_rucom: personal_rucom)
+          expect(external_user.personal_rucom).to eq personal_rucom
+        end
+      end
+    end
+
     context "external users" do
       it "should returns the user activity from rucom info" do
         rucom = create(:rucom)
@@ -132,7 +153,7 @@ describe  User do
         expect(external_user.activity).to eq rucom.activity
       end
 
-      it "should validate the rucom called personal rucom" do
+      xit "should validate the rucom called personal rucom" do
         user = build(:user, external: true,  personal_rucom: nil)
         expect(user).not_to be_valid
       end
@@ -147,10 +168,17 @@ describe  User do
         expect(user.activity).to eq rucom.activity
       end
 
-       it "should allows create a users without personal rucom" do
+      it "should allows create a users without personal rucom" do
         user = build(:user, external: false,  personal_rucom: nil)
         expect(user).to be_valid
       end
+
+      it "should not allow to create a user without office" do 
+        user = build(:user, external: false,  office: nil)
+        expect(user).not_to be_valid
+      end
+
+
     end
 
     it 'should create a JWT' do

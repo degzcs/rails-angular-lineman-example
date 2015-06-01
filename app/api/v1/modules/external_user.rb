@@ -172,14 +172,22 @@ module V1
           external_user_params = params[:external_user]
           external_user = ::User.new(params[:external_user])
           external_user.external = true
-          external_user.build_company(params[:company]) if params[:company]
 
 
           rucom = ::Rucom.find(params[:rucom_id])
-          external_user.personal_rucom = rucom
-        
+          #If there is a company 
+          if params[:company]
+            company = Company.new(params[:company])
             #binding.pry
+            company.rucom = rucom
+            company.save!
+            external_user.build_office(name: "oficina 1",company_id: company.id) 
+            
+          else
+            external_user.personal_rucom = rucom
+          end
 
+          #binding.pry
           if external_user.save
             present external_user, with: V1::Entities::ExternalUser
           else

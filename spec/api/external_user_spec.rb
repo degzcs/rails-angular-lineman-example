@@ -127,14 +127,14 @@ describe 'ExternalUser', :type => :request do
         end
 
         context "with company info" do
-          xit 'returns a representation of the new external user with his company created and code 201' do
+          it 'returns a representation of the new external user with his company created and code 201' do
 
             #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
-            rucom = create(:rucom)
+            rucom_company = create(:rucom)
             population_center = create(:population_center)
-            external_user = build(:external_user, personal_rucom: rucom, population_center_id: population_center.id)
+            external_user = build(:external_user, population_center_id: population_center.id)
             company = build(:company)
 
             new_values = {
@@ -171,10 +171,13 @@ describe 'ExternalUser', :type => :request do
               email: external_user.email,
             }
 
-            post '/api/v1/external_users', {external_user: new_values, rucom_id: rucom.id, company: new_company_values},
+            post '/api/v1/external_users', {external_user: new_values, rucom_id: rucom_company.id, company: new_company_values},
                                       { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
+            #binding.pry
+            expect(JSON.parse(response.body)['company']['name']).to eq company.name
+             expect(JSON.parse(response.body)['rucom']['id']).to eq rucom_company.id
           end
         end
       end

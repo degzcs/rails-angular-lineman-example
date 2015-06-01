@@ -37,7 +37,7 @@ class Company < ActiveRecord::Base
   validates :id_number_legal_rep, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true
-  validates :chamber_of_commerce_file, presence: true
+  #validates :chamber_of_commerce_file, presence: true
   validates :rucom, presence: true
 
   # uploaders
