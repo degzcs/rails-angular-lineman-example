@@ -308,7 +308,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.getQuery = (query)->
     ExternalUser.query_by_id(query).success( (providers)->
-      $mdDialog.cancel()
+      $scope.allProviders = []
+    
       i = 0
       while i < providers.length
         prov =
@@ -322,11 +323,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           email: providers[i].email
           phone_number: providers[i].phone_number || providers[i].phone
           photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-          num_rucom: providers[i].rucom.num_rucom
-          rucom_record: providers[i].rucom.rucom_record
-          provider_type: providers[i].rucom.provider_type
-          rucom_status: providers[i].rucom.status
-          mineral: providers[i].rucom.mineral
+          num_rucom: providers[i].rucom.num_rucom if providers[i].rucom
+          rucom_record: providers[i].rucom.rucom_record if providers[i].rucom
+          provider_type: providers[i].rucom.provider_type if providers[i].rucom
+          rucom_status: providers[i].rucom.status if providers[i].rucom
+          mineral: providers[i].rucom.mineral if providers[i].rucom
           name: providers[i].first_name + ' '+ providers[i].last_name
           city: providers[i].city || ''
           state: providers[i].state || ''

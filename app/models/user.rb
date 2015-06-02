@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
 	validates :photo_file, presence: true
 	validates :office, presence: true , unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
-	#validates :personal_rucom, presence: true, if: :external
+	validates :personal_rucom, presence: true, unless: :has_office # the rucom has to be present for any user if has no office asociated
 
 	has_secure_password validations: false
 	validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
@@ -194,6 +194,10 @@ class User < ActiveRecord::Base
 
 		def init
 		  self.available_credits  ||= 0.0           #will set the default value only if it's nil
+		end
+
+		def has_office
+			self.office  != nil
 		end
 
 end
