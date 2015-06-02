@@ -57,8 +57,8 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             "purchase[price]": purchase.price,
             "purchase[provider_id]": purchase.provider.id
             "purchase[sale_id]": purchase.sale_id
-            "gold_batch[parent_batches]": gold_batch.parent_batches
-            "gold_batch[grams]": gold_batch.total_fine_grams
+            #"gold_batch[parent_batches]": gold_batch.parent_batches
+            "gold_batch[fine_grams]": gold_batch.total_fine_grams
             "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
             "gold_batch[inventory_id]": gold_batch.inventory_id
             "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
