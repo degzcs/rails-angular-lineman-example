@@ -150,7 +150,7 @@
   .state("index_external_user",
     url: "/external_users",
     ncyBreadcrumb:
-      label: 'Usuarios Externos'
+      label: 'Proovedores'
     views:
       'content':
         templateUrl: "partials/external_users/index.html"
@@ -174,7 +174,7 @@
   .state("show_external_user",
     url: "/external_user/:id",
     ncyBreadcrumb:
-      label: 'Detalles usuario externo'
+      label: 'Detalles proovedor'
       parent: 'index_external_user'
     views:
       'content':
@@ -200,7 +200,7 @@
   .state("edit_external_user",
     url: "/external_user/:id/edit",
     ncyBreadcrumb:
-      label: 'Edición de usuario externo'
+      label: 'Edición de proovedor'
       parent: 'show_external_user'
     views:
       'content':
@@ -271,7 +271,7 @@
     .state("create_external_user_type_a",
       url: "/external_users/type_a",
       ncyBreadcrumb:
-        label: 'Nuevo Usuario Externo: Formulario tipo A'
+        label: 'Nuevo Proovedor: Formulario tipo A'
         parent: 'index_external_user'
       views:
         'content':
@@ -297,7 +297,7 @@
     .state("create_external_user_type_b",
       url: "/external_users/type_b",
       ncyBreadcrumb:
-        label: 'Nuevo Usuario Externo: Formulario tipo B'
+        label: 'Nuevo Proovedor: Formulario tipo B'
         parent: 'index_external_user'
       views:
         'content':
