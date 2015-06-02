@@ -283,8 +283,10 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
       sessionStorage.external_user_to_create = angular.toJson(service.modelToCreate)
 
     restoreModelToCreate: ->
+      files = service.modelToCreate.files
       if sessionStorage.external_user_to_create != null
         service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
+        service.modelToCreate.files = files
         service.modelToCreate
       else
         service.modelToCreate
