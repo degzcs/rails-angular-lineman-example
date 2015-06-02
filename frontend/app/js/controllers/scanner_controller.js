@@ -9,9 +9,9 @@ angular.module('app').controller('ScannerController',  ['$scope','ScannerService
 		///
 		$scope.Dynamsoft.WebTwainEnv.Containers = [{ContainerId:'dwtcontrolContainer', Width:300, Height:400}];
 		///
-		$scope.Dynamsoft.WebTwainEnv.ProductKey = '6A6443A21F8A13E3481FA8F8CC07B917F126642A3AE7EE3EB906464A509FC293F126642A3AE7EE3E117C70114BD72E54F126642A3AE7EE3ED18D9BC126A2AFDFF126642A3AE7EE3E6253B20629C595C9F126642A3AE7EE3E9C6718E02ACBA02EF126642A3AE7EE3EA29BDEA33CDF7D1C60000000',
+		$scope.Dynamsoft.WebTwainEnv.ProductKey = 'C9F0C3BFE2B9759CDFCD4DF20943D663408ADF75E1B082D875F0DFC27B46264F10000000',
 		///
-		$scope.Dynamsoft.WebTwainEnv.Trial = true;
+		$scope.Dynamsoft.WebTwainEnv.Trial = false;
 		///
 		$scope.Dynamsoft.WebTwainEnv.Debug = true;
 
