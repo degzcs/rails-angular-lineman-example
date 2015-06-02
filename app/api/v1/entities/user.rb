@@ -15,7 +15,9 @@ module V1
       expose :company_name, documentation: { type: "string", desc: "", example: "Trazoro." }
       expose :nit, documentation: { type: "string", desc: "", example: "12345617." }
       expose :rucom_record, documentation: { type: "string", desc: "", example: "7895465." }
-      expose :office, documentation: { type: "string", desc: "", example: "7895465." }
+      expose :office, documentation: { type: "string", desc: "", example: "7895465." } do |user, options|
+        user.office.name
+      end
       expose :city, documentation: { type: "string", desc: "", example: "user city" }
       expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }
       expose :photo_file, documentation: { type: "photo", desc: "photo file", example: "" }

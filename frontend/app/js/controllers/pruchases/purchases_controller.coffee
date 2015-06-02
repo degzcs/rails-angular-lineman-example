@@ -22,7 +22,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-
   window.s =  $scope
 
   #
@@ -333,6 +332,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           state: providers[i].state || ''
           address: providers[i].address
           nit: if providers[i].company then providers[i].company.nit_number else "--" # <-- TODO: migration
+
         $scope.allProviders.push prov
         i++
     ).error ()->
