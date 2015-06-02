@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 3, label: 'Usuarios'
 
-  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :document_number_file, :rut_file, :mining_register_file, :photo_file, :chamber_commerce_file, :company_info_id, :rucom_id, :population_center_id, :password
+  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :document_number_file, :rut_file, :mining_register_file, :photo_file, :chamber_commerce_file, :office_id, :population_center_id, :password
 
 
   index do
@@ -45,8 +45,7 @@ ActiveAdmin.register User do
       f.input :rut_file, :as => :file, label: "PDF Rut"
       f.input :mining_register_file, :as => :file, label: "PDF registro minero"
       f.input :chamber_commerce_file, :as => :file, label: "PDF camara de comercio"
-      f.input :company, label: "Compañia"
-      f.input :rucom_id, label: "Id Rucom (Revisar campo 'Id' en la Tabla de Rucoms)" ,as: :number
+      f.input :office, label: "Sucursal"
       f.input :population_center, label: "Centro poblacional"
       f.input :password, label: "Password (Minimo 8 caracteres)"
     end
