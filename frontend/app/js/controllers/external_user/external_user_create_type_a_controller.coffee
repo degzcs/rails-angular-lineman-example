@@ -31,15 +31,19 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   if $scope.file
     if CameraService.getTypeFile() == 2
       ExternalUser.modelToCreate.files.document_number_file = $scope.file
+      ExternalUser.saveModelToCreate()
       goToDocumentation()
     if CameraService.getTypeFile() == 3
       ExternalUser.modelToCreate.files.mining_register_file = $scope.file
+      ExternalUser.saveModelToCreate()
       goToDocumentation()
     if CameraService.getTypeFile() == 4
       ExternalUser.modelToCreate.files.rut_file = $scope.file
+      ExternalUser.saveModelToCreate()
       goToDocumentation()
     if CameraService.getTypeFile() == 5
       ExternalUser.modelToCreate.files.chamber_commerce_file = $scope.file
+      ExternalUser.saveModelToCreate()
       goToDocumentation()
     #ExternalUser.saveModelToCreate()
     CameraService.clearData()
