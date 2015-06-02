@@ -6,7 +6,7 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     {name: "Certificados de Origen", state: "new_origin_certificate", icon: 'action:pageview'}
     {name: "Inventario", state: "index_inventory", icon: 'action:assignment'}
     {name: "Clientes", state: "clients", icon: 'social:people_outline'}
-    {name: "Usuarios Externos" , state: "index_external_user", icon: 'social:people'}
+    {name: "Proovedores" , state: "index_external_user", icon: 'social:people'}
     # {name: "Transportadores", state: "new_courier", icon: 'maps:local_shipping'}
   ]
 
