@@ -314,7 +314,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       while i < providers.length
         prov =
           id: providers[i].id
-          document_number: providers[i].nit || providers[i].document_number
+          document_number: providers[i].document_number
           company_name: if providers[i].company then providers[i].company.name else 'Ninguna' #'company name test' # <-- TODO: migration
           document_type: if providers[i].company then 'NIT' else 'CC' # <-- TODO: migration
           first_name: providers[i].first_name
