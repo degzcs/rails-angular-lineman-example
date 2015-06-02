@@ -40,9 +40,9 @@ describe Company  do
       expect(build(:company)).to be_valid
     end
     it { should validate_presence_of(:nit_number) }
-    it { should validate_presence_of(:city) }
-    it { should validate_presence_of(:state) }
-    it { should validate_presence_of(:country) }
+    #it { should validate_presence_of(:city) }
+    #it { should validate_presence_of(:state) }
+    #it { should validate_presence_of(:country) }
     it { should validate_presence_of(:legal_representative) }
     it { should validate_presence_of(:id_number_legal_rep) }
     it { should validate_presence_of(:email) }
