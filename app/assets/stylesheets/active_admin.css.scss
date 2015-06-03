@@ -25,3 +25,20 @@
 .photo-user{
   width: 200px;
 }
+
+.formtastic.user{
+  label{
+    outline: none;
+  }
+  input{
+    outline: none;
+  }
+}
+.formtastic.user{
+  h2 ,h4{
+    margin-left: 10px;
+  }
+  h2{
+    margin-top: 20px;
+  }
+}
