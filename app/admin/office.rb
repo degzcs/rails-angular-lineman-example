@@ -10,7 +10,7 @@
 #
 
 ActiveAdmin.register Office do
-  menu priority: 2, label: 'Sucursales'
+  menu priority: 5, label: 'Sucursales'
 
   permit_params :name, :company_id
   belongs_to :company

@@ -1,5 +1,5 @@
 ActiveAdmin.register Rucom do
-  menu priority: 4, label: 'Rucoms'
+  menu priority: 3, label: 'Rucoms'
 
   actions :index, :show , :edit
   permit_params :idrucom, :num_rucom, :rucom_record, :provider_type, :name , :status , :mineral , :location , :subcontract_number , :mining_permit , :updated_at, :rucomeable_id , :rucomeable_type

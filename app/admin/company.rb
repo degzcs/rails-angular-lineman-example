@@ -13,7 +13,7 @@
 #  id_number_legal_rep  :string(255)
 #
 ActiveAdmin.register Company do
-  menu priority: 2, label: 'Compañias'
+  menu priority: 4, label: 'Compañias'
 
   permit_params :nit_number, :name, :city, :state , :country , :legal_representative , :id_type_legal_rep , :email , :phone_number ,:id_number_legal_rep
 
@@ -68,7 +68,7 @@ ActiveAdmin.register Company do
       f.input :id_number_legal_rep, label: "Id representante legal"
       f.input :email , label: "Email compañia"
       f.input :phone_number, label:"Telefono"
-      f.input :chamber_of_commerce_file, :as => :file, label: "PDF Camara de comercio", :hint => link_to(image_tag(f.object.chamber_of_commerce_file.preview.url),f.object.chamber_of_commerce_file.url, :target => "_blank" )
+      #f.input :chamber_of_commerce_file, :as => :file, label: "PDF Camara de comercio", :hint => link_to(image_tag(f.object.chamber_of_commerce_file.preview.url),f.object.chamber_of_commerce_file.url, :target => "_blank" )
     
     end
     f.actions
@@ -85,9 +85,9 @@ ActiveAdmin.register Company do
       row :id_number_legal_rep, label: "Cedula representante"
       row :phone_number, label: "Telefono"
      
-      row :chamber_of_commerce_file , label: "PDF camara de comercio"do|u|
-        link_to(image_tag(u.chamber_of_commerce_file.preview.url),u.chamber_of_commerce_file.url, :target => "_blank" )
-      end
+       row :chamber_of_commerce_file , label: "PDF camara de comercio"do|u|
+         link_to(image_tag(u.chamber_of_commerce_file.preview.url),u.chamber_of_commerce_file.url, :target => "_blank" ) if u.chamber_of_commerce_file
+       end
     end
     active_admin_comments
   end

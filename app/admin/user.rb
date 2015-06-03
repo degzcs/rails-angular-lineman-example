@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
 
-  menu priority: 3, label: 'Usuarios'
+  menu priority: 6, label: 'Usuarios'
 
   #belongs_to :office
 
