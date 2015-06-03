@@ -2,6 +2,8 @@ ActiveAdmin.register User do
 
   menu priority: 3, label: 'Usuarios'
 
+  #belongs_to :office
+
   permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :document_number_file, :rut_file, :mining_register_file, :photo_file, :office_id, :population_center_id, :password , :password_confirmation
 
   index do

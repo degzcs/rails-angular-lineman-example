@@ -22,7 +22,7 @@ active_admin_form_for resource , :url => resource ?  "/admin/users/ #{resource.i
     f.input :mining_register_file, :as => :file, label: "PDF registro minero", :hint => link_to(image_tag(f.object.mining_register_file.preview.url),f.object.mining_register_file.url, :target => "_blank" )
     f.input :population_center, label: "Centro poblacional"
     h2 "Informacion de compañia:"
-    f.input :office, label: "Sucursal"
+    f.input :office, label: "Sucursal" , :collection => Office.all.map{|o| ["#{o.company.name if o.company} - #{o.name}", o.id]}
     if resource
       h4  "Nota: este usuario no pertenece a una compañia" unless resource.office
     end
