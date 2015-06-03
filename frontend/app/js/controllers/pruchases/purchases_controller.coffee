@@ -22,7 +22,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-  window.s =  $scope
+  # window.s =  $scope
 
   #
   # Fuctions
@@ -52,6 +52,17 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
         $scope.purchase.model.provider = data.provider
+        # TODO: simplify this code
+        if data.provider.num_rucom
+          $scope.rucomIDField.label = 'Número de RUCOM'
+          $scope.rucomIDField.field = 'num_rucom'
+          $scope.purchase.model.rucom_id_field = 'num_rucom'
+        else if data.provider.rucom_record
+          $scope.rucomIDField.label = 'Número de Expediente'
+          $scope.rucomIDField.field = 'rucom_record'
+          $scope.purchase.model.rucom_id_field = 'rucom_record'
+        else
+          console.log 'State changed to none'
 
   #
   #
@@ -64,7 +75,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       #console.log provider.rucom
       #$scope.format_provider(provider)
       console.log provider.rucom
-      console.log $scope.purchase.model.provider 
+      console.log $scope.purchase.model.provider
       if provider.num_rucom
         $scope.rucomIDField.label = 'Número de RUCOM'
         $scope.rucomIDField.field = 'num_rucom'
@@ -76,7 +87,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     else
       console.log 'State changed to none'
     $scope.searchText = null
-    
+
 
   #
   #
@@ -241,7 +252,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $mdDialog.show(confirm).then (->
       $scope.create(ev)
       # $scope.flushData()
-      $scope.message = 'Su compra a sido registrada con exito'
+      $scope.message = 'Su compra esta siendo procesada ...'
       #PurchaseService.flushModel() #  =>  Flush the model
       return
     ), ->
@@ -286,7 +297,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
             $mdDialog.cancel()
             # $scope.newProvider = {}
             # PurchaseService.setCurrentProv {}
-            $scope.infoAlert 'Crear nueva compra', 'El registro ha sido exitoso', false
+            $scope.infoAlert 'Crear nueva compra', 'La compra esta siendo procesada ...', false
             # $scope.abortCreate = true
             # PurchaseService.currentTabProvCreation = 0
             return
@@ -309,7 +320,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.getQuery = (query)->
     ExternalUser.query_by_id(query).success( (providers)->
       $scope.allProviders = []
-    
+
       i = 0
       while i < providers.length
         prov =
@@ -323,11 +334,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           email: providers[i].email
           phone_number: providers[i].phone_number || providers[i].phone
           photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-          num_rucom: providers[i].rucom.num_rucom 
-          rucom_record: providers[i].rucom.rucom_record 
+          num_rucom: providers[i].rucom.num_rucom
+          rucom_record: providers[i].rucom.rucom_record
           provider_type: providers[i].rucom.provider_type
-          rucom_status: providers[i].rucom.status 
-          mineral: providers[i].rucom.mineral 
+          rucom_status: providers[i].rucom.status
+          mineral: providers[i].rucom.mineral
           name: providers[i].first_name + ' '+ providers[i].last_name
           city: providers[i].city || ''
           state: providers[i].state || ''

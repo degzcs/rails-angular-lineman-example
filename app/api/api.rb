@@ -22,6 +22,7 @@ class API < Grape::API
   mount V1::Modules::User
   mount V1::Modules::AccessToken
   mount V1::Modules::ExternalUser
+  mount V1::Modules::Provider
   mount V1::Modules::Rucom
   mount V1::Modules::State
   mount V1::Modules::City

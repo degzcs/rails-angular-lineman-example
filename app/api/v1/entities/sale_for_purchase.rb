@@ -18,6 +18,7 @@ module V1
           document_type: 'NIT',
           document_number: sale.user.company.nit_number,
           rucom_record:  sale.user.rucom.rucom_record,
+          num_rucom:  sale.user.rucom.num_rucom,
           rucom_status: sale.user.rucom.status
         }
       end

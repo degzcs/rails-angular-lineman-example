@@ -25,19 +25,21 @@ class BuyGoldBatch
 
   #
   # @return [...]
-  def from_non_trazoro_user!
+  def buy!
    # create purchase
     @purchase = buyer.purchases.build(purchase_hash)
     @purchase.build_gold_batch(gold_batch_hash)
 
-    # save purchase
-     purchase.save
+    if buyer.available_credits > 0
+      # save purchase
+       purchase.save
 
-    #discount available credits
-    buyer.available_credits = buyer.available_credits - gold_batch_hash['fine_grams'].to_f unless purchase.trazoro
-    buyer.save
+      #discount available credits
+      buyer.available_credits = buyer.available_credits - gold_batch_hash['fine_grams'].to_f unless purchase.trazoro
+      buyer.save
+    else
+      false
+    end
   end
 
-  def from_trazoro_user
-  end
 end

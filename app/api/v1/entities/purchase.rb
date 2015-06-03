@@ -22,10 +22,10 @@ module V1
           purchase.provider.id
         end
         expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.trazoro ? purchase.user_provider.first_name : purchase.provider.first_name
+          purchase.provider.first_name
         end
         expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.trazoro ? purchase.user_provider.last_name : purchase.provider.last_name
+          purchase.provider.last_name
         end
       end
       expose :gold_batch do
