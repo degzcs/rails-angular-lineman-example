@@ -76,13 +76,15 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
             # window.response = data
             model = angular.fromJson(sessionStorage.purchaseService)
-            console.log(model)
             model.barcode_html = data.barcode_html
             model.code = data.code
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
             #service.flushModel()
-            $location.path('/purchases/show')
+            if !data.status == 500
+              $location.path('/purchases/show')
+            else
+              # show an error message
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image failed to load!!'
           service.restoreState()

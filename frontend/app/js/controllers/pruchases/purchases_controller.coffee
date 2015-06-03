@@ -252,7 +252,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $mdDialog.show(confirm).then (->
       $scope.create(ev)
       # $scope.flushData()
-      $scope.message = 'Su compra a sido registrada con exito'
+      $scope.message = 'Su compra esta siendo procesada ...'
       #PurchaseService.flushModel() #  =>  Flush the model
       return
     ), ->
@@ -297,7 +297,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
             $mdDialog.cancel()
             # $scope.newProvider = {}
             # PurchaseService.setCurrentProv {}
-            $scope.infoAlert 'Crear nueva compra', 'El registro ha sido exitoso', false
+            $scope.infoAlert 'Crear nueva compra', 'La compra esta siendo procesada ...', false
             # $scope.abortCreate = true
             # PurchaseService.currentTabProvCreation = 0
             return
