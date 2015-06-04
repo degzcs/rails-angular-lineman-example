@@ -411,93 +411,83 @@ class PdfFile < Prawn::Document
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header
-    #move_down 60
-    move_cursor_to 775
-    text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80
-    move_cursor_to 715
+    move_cursor_to 778
+    text_box "#{date.year} / #{date.month} / #{date.day} ", :at => [420,cursor] , :width => 80, :size => 12 , :height =>  12
+    move_cursor_to 720
     barcode = Barby::EAN13.new(values[:purchase][:code])
     outputter = Barby::PrawnOutputter.new(barcode)
     outputter.annotate_pdf(self,options = {x:45 , y:cursor})
     font ("Courier") do
-      text_box "#{values[:purchase][:code]}" , :at => [45 , cursor] , :width => 240
+      text_box "#{values[:purchase][:code]}" , :at => [45 , cursor] , :width => 240, :size => 12 , :height =>  12
     end
-    #move_down 13
-    move_cursor_to 702
-    text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,757], :width => 80
 
-    #provider
-    move_cursor_to 666
-    text_box "#{values[:provider][:company_name]}", :at => [400,cursor], :width => 150 , :size => 10 , :height =>  10
-    #move_down 16
-    move_cursor_to 648
-    text_box "#{values[:provider][:nit]}", :at => [400,cursor], :width => 150, :size => 10 , :height =>  10
-    move_cursor_to 629
-    text_box "#{values[:provider][:name]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 611
-    text_box "#{values[:provider][:document_number]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 593
-    text_box "#{values[:provider][:rucom_record]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 575
-    text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 557
-    text_box "#{values[:provider][:phone]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10
+    move_cursor_to 760
+    text_box "#{date.hour}:#{date.min}:#{date.sec}" , :at => [420,cursor], :width => 80, :size => 12 , :height =>  12
 
     #buyer
-    move_cursor_to 666
-    text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 650
-    text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 630
-    text_box "#{values[:buyer][:rucom_record]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 612
-    text_box "#{values[:buyer][:first_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 593
-    text_box "#{values[:buyer][:office]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 575
-    text_box "#{values[:buyer][:address]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
-    move_cursor_to 557
-    text_box "#{values[:buyer][:phone]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10
+    move_cursor_to 644
+    text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:rucom_record]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 626
+    text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:first_name]} #{values[:buyer][:last_name]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 607
+    text_box "#{values[:buyer][:office]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:address]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 590
+    text_box "#{values[:buyer][:city]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:phone]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+
+
+    #provider
+    move_cursor_to 530
+    text_box "#{values[:provider][:company_name]}", :at => [130,cursor], :width => 150 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:name]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 512
+    text_box "#{values[:provider][:nit]}", :at => [130,cursor], :width => 150, :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:document_number]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 494
+    text_box "#{values[:provider][:rucom_record]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:phone]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 476
+    text_box "#{values[:provider][:city]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 459
+    text_box "population center", :at => [400,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
 
     if values[:gold_batch][:castellanos][:quantity] != 0
-      move_cursor_to 485
-      text_box "#{values[:gold_batch][:castellanos][:quantity].round(2)}" , :at => [355 , cursor] , :width => 100
+      move_cursor_to 398
+      text_box "#{values[:gold_batch][:castellanos][:quantity].round(2)}" , :at => [130 , cursor] , :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
       # text_box "#{values[:gold_batch][:castellanos][:grams]} grs", :at => [480 , cursor], :width => 100
     end
 
     if values[:gold_batch][:tomines][:quantity] != 0
-      move_cursor_to 466
-      text_box "#{values[:gold_batch][:tomines][:quantity].round(2)}" , :at => [355 , cursor] , :width => 100
+      move_cursor_to 380
+      text_box "#{values[:gold_batch][:tomines][:quantity].round(2)}" , :at => [130 , cursor] , :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
       # text_box "#{values[:gold_batch][:tomines][:grams]} grs", :at => [480 , cursor], :width => 100
     end
 
     if values[:gold_batch][:riales][:quantity] != 0
-      move_cursor_to 448
-      text_box "#{values[:gold_batch][:riales][:quantity].round(2)}" , :at => [355 , cursor] , :width => 100
+      move_cursor_to 362
+      text_box "#{values[:gold_batch][:riales][:quantity].round(2)}" , :at => [130 , cursor] , :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
       # text_box "#{values[:gold_batch][:riales][:grams]} grs", :at => [480 , cursor], :width => 100
     end
 
-    # if values[:gold_batch][:granos][:quantity] != 0
-    #   move_cursor_to 345
-    #   text_box "#{values[:gold_batch][:granos][:quantity].round(2)}" , :at => [280 , cursor] , :width => 100
-    #   text_box "#{values[:gold_batch][:granos][:unit_value]}", :at => [400 , cursor], :width => 100
-    # end
+    move_cursor_to 398
+    text_box "#{values[:gold_batch][:total_grams].round(2)} grs" , :at => [400 , cursor] , :width => 125 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+    move_cursor_to 379
+    text_box "#{values[:gold_batch][:grade]}" , :at => [400 , cursor] , :width => 125 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
 
-    move_cursor_to 412
-    text_box "#{values[:gold_batch][:total_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
-    move_cursor_to 394
-    text_box "#{values[:gold_batch][:grade]}" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
+    move_cursor_to 362
+    text_box "#{values[:gold_batch][:total_fine_grams].round(2)} grs" , :at => [400 , cursor] , :width => 125 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
 
-    move_cursor_to 375
-    text_box "#{values[:gold_batch][:total_fine_grams].round(2)} grs" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
-    move_cursor_to 357
-    text_box "#{values[:purchase][:price].round(2)} pesos" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
-    move_cursor_to 339
-    text_box "#{values[:purchase][:fine_gram_unit_price].round(2)} pesos" , :at => [300 , cursor] , :width => 150 , :size => 10 , :height =>  10
+    move_cursor_to 286
+    text_box "#{values[:purchase][:fine_gram_unit_price].round(2)} pesos" , :at => [140 , cursor] , :width => 100 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
 
-    # 
-    # move_cursor_to 105
-    # text_box "#{values[:purchase][:code]}" , :at => [70 , cursor] , :width => 150
+    move_cursor_to 286
+    text_box "#{values[:purchase][:price].round(2)} pesos" , :at => [400 , cursor] , :width => 100 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+
 
   end
 

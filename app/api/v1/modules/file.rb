@@ -117,6 +117,7 @@ module V1
 
            values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
            date = Time.now
+           puts values.as_json 
            pdf = ::PdfFile.new(values , date , 'purchase_report') #// corregir prueba para sales
            puts ' creating purchase report ... '
            header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
