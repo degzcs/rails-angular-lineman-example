@@ -19,6 +19,7 @@ describe 'ExternalUser', :type => :request do
            chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
            photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
            @files = [document_number_file, mining_register_file, rut_file, chamber_commerce_file, photo_file]
+           @files_without_company =[photo_file,document_number_file]
       end
 
       context 'GET' do
@@ -108,7 +109,7 @@ describe 'ExternalUser', :type => :request do
               phone_number: external_user.phone_number,
               address: external_user.address,
               population_center_id: population_center.id,
-              files: @files
+              files: @files_without_company
             }
 
             expected_response = {

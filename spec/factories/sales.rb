@@ -12,7 +12,7 @@
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
 #  price                   :float
-#  trazoro                 :boolean
+#  trazoro                 :boolean          default(FALSE), not null
 #
 
 FactoryGirl.define do

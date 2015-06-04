@@ -90,8 +90,8 @@ describe  User do
     it { should validate_presence_of(:phone_number) }
     it { should validate_presence_of(:address) }
     it { should validate_presence_of(:document_number_file) }
-    it { should validate_presence_of(:rut_file) }
-    it { should validate_presence_of(:mining_register_file) }
+    #it { should validate_presence_of(:rut_file) }
+    #it { should validate_presence_of(:mining_register_file) }
     it { should validate_presence_of(:photo_file) }
     # it { should validate_presence_of(:chamber_commerce_file) }
     it { should validate_presence_of(:office) }

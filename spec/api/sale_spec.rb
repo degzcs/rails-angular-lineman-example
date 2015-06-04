@@ -1,18 +1,3 @@
-# == Schema Information
-#
-# Table name: sales
-#
-#  id            :integer          not null, primary key
-#  courier_id    :integer
-#  client_id     :integer
-#  user_id       :integer
-#  gold_batch_id :integer
-#  grams         :float
-#  barcode       :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#
-
 describe 'Sale', :type => :request do
 
   describe :v1 do
@@ -34,7 +19,7 @@ describe 'Sale', :type => :request do
             "client_id"=>client.id,
             "user_id"=>@user.id,
             "gold_batch_id"=>1,
-            "grams"=>1.5,
+            "fine_grams"=>1.5,
           }
 
           new_gold_batch_values = {
@@ -82,7 +67,7 @@ describe 'Sale', :type => :request do
               client_id:  sale.client_id,
               user_id: sale.user_id,
               gold_batch_id: sale.gold_batch_id,
-              grams: sale.grams,
+              fine_grams: sale.fine_grams,
               code: sale.code,
               barcode_html: sale.barcode_html
             }
@@ -110,20 +95,21 @@ describe 'Sale', :type => :request do
           ###IMPROVE: this test was created provitionaly in order to convert the user in provider. Have to be refactored!!
             # provider_hash = sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date).stringify_keys
 
-            provider_hash = {
+          provider_hash = {
             id: @sale.user.id,
             name: "#{@sale.user.first_name} #{@sale.user.last_name}",
             company_name: @sale.user.company.name,
             document_type: 'NIT',
             document_number: @sale.user.company.nit_number,
             rucom_record:  @sale.user.rucom.rucom_record,
+            num_rucom: @sale.user.rucom.num_rucom,
             rucom_status: @sale.user.rucom.status
           }
 
             expected_response = {
               id:  @sale.id,
               gold_batch_id: @sale.gold_batch_id,
-              grams: @sale.grams,
+              fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: provider_hash.stringify_keys,
               origin_certificate_file: {"url"=>"#{Rails.root}/spec/uploads/sale/origin_certificate_file/#{@sale.id}/origin_certificate_file.pdf"}

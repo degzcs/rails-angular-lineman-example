@@ -44,12 +44,13 @@ FactoryGirl.define do
     password {'foobar'}
     password_confirmation {'foobar'}
     external {false}
-
+    
     factory :external_user, class: User do
         personal_rucom { create :rucom}
         external {true}
         password {nil}
         password_confirmation {nil}
+
     end
   end
 end

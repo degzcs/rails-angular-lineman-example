@@ -53,16 +53,17 @@ module V1
             [404, "Entry not found"],
           ] do
 
-              # update params
-              new_params = V1::Helpers::PurchaseHelper.format_params(params)
-              # TODO: change class name to GoldBatchBuyer
-              buy_gold_batch = BuyGoldBatch.new(new_params[:purchase], new_params[:gold_batch], current_user)
-              buy_gold_batch.buy!
-              if buy_gold_batch.purchase.code.present?
-                present buy_gold_batch.purchase , with: V1::Entities::Purchase
-              else
-                { message:  "Ocurrio un error y no se ha podido realizar la compra", status: 500}
-              end
+          # update params
+          new_params = V1::Helpers::PurchaseHelper.format_params(params)
+          # TODO: change class name to GoldBatchBuyer
+          buy_gold_batch = BuyGoldBatch.new(new_params[:purchase], new_params[:gold_batch], current_user)
+          buy_gold_batch.buy!
+          if buy_gold_batch.purchase.code.present?
+            present buy_gold_batch.purchase , with: V1::Entities::Purchase
+          else
+            { message:  "Ocurrio un error y no se ha podido realizar la compra", status: 500}
+          end
+
         end
 
         desc 'returns all existent purchases for the current user', {
