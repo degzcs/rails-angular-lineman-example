@@ -53,7 +53,7 @@
               %h3 
                 Seleccione un cliente
             %md-autocomplete{"md-selected-item"=>"selectedClient", "md-search-text"=> "searchClientText", "md-items" => "client in searchClients(searchClientText)", "md-no-cache" => "true", "md-item-text"=>"client.first_name", "placeholder" => "Buscar Clientes por Cedula","md-selected-item-change"=>"setSelectedClient(selectedClient)"}
-              %span{"md-highlight-text" => "searchClientText"} {{client.id_document_number}} - {{client.first_name}} {{ client.last_name}}
+              %span{"md-highlight-text" => "searchClientText"} {{client.document_number}} - {{client.first_name}} {{client.last_name}} 
             %div.fieldset-inputs
               %div{layout: "row"}
                 %md-input-container{flex: ""}
@@ -65,7 +65,7 @@
               %div.inventory-client-names{layout: "row"}
                 %md-input-container{flex: }
                   %label Cedula
-                  %input{:disabled => "disabled", "ng-model" => "selectedClient.id_document_number","readOnly"=>"true"}
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.document_number","readOnly"=>"true"}
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
           %br

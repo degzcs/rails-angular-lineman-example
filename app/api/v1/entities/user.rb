@@ -16,7 +16,7 @@ module V1
       expose :nit, documentation: { type: "string", desc: "", example: "12345617." }
       expose :rucom_record, documentation: { type: "string", desc: "", example: "7895465." }
       expose :office, documentation: { type: "string", desc: "", example: "7895465." } do |user, options|
-        user.office.name
+        user.office.name if user.office
       end
       expose :city, documentation: { type: "string", desc: "", example: "user city" }
       expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }

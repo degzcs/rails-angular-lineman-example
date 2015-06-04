@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService) ->
+angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService,User, $q) ->
   #
   # Redirects to The index inventory if there is no pendinigs liquidations
   #
@@ -32,29 +32,53 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   #
   # Seacrch clients by id
   #
+
+  query_for_clients = (query) ->
+    # perform some asynchronous operation, resolve or reject the promise when appropriate.
+    $q (resolve, reject) ->
+      User.query_by_id(query).success (clients,config)->
+        resolve clients
+      return
+
+
+
+
   $scope.searchClients = (query)->
     if query 
-      ClientService.retrieveClients.query {
-        query_id: query
-      }, ((clients, headers) ->
-        console.log clients
-        clients
-      ), (error) ->
+      promise = query_for_clients(query)
+      promise.then ((clients) ->
+        return clients
+        
+      ), (reason) ->
+        console.log 'Failed: ' + reason
+        return
     else 
       return []
+    
+
+    
 
   #
   # Seacrch couriers by id
   #
+
+
+  query_for_couriers = (query) ->
+    # perform some asynchronous operation, resolve or reject the promise when appropriate.
+    $q (resolve, reject) ->
+      CourierService.query_by_id(query).success (couriers,config)->
+        resolve couriers
+      return
+
   $scope.searchCouriers = (query)->
-    console.log query
     if query 
-      CourierService.retrieveCouriers.query {
-        id_document_number: query
-      }, ((couriers, headers) ->
-        console.log couriers
-        couriers
-      ), (error) ->
+      promise = query_for_couriers(query)
+      promise.then ((couriers) ->
+        return couriers
+        
+      ), (reason) ->
+        console.log 'Failed: ' + reason
+        return
     else 
       return []
 
@@ -97,8 +121,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
       return
     else
       gold_batch_params = {
-        parent_batches: "",
-        grams: $scope.totalAmount,
+        fine_grams: $scope.totalAmount,
         grade: $scope.selectedGrade
       }
 
@@ -116,7 +139,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         SaleService.model.client_id = sale.client_id
         SaleService.model.user_id = sale.user_id
         SaleService.model.gold_batch_id = sale.gold_batch_id
-        SaleService.model.grams = sale.grams
+        SaleService.model.fine_grams = sale.fine_grams
         SaleService.model.code = sale.code
         SaleService.model.barcode_html = sale.barcode_html
         SaleService.model.selectedPurchases = $scope.selectedPurchases

@@ -53,7 +53,7 @@ class Sale < ActiveRecord::Base
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
   end
 
-  def grams
+  def fine_grams
     gold_batch.fine_grams
   end
 
@@ -62,7 +62,7 @@ class Sale < ActiveRecord::Base
   end
 
   def fine_gram_unit_price
-    (price/grams)
+    (price/fine_grams)
   end
 
   protected

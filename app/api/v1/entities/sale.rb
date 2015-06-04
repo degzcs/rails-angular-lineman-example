@@ -7,7 +7,7 @@ module V1
       expose :client_id ,documentation: { type: "integer", desc: "client id", example: '1' }
       expose :user_id ,documentation: { type: "integer", desc: "user id", example: '1' }
       expose :gold_batch_id ,documentation: { type: "integer", desc: "gold batch id", example: '1' }
-      expose :grams ,documentation: { type: "float", desc: "grams", example: '239923' }
+      expose :fine_grams ,documentation: { type: "float", desc: "grams", example: '239923' }
       expose :code ,documentation: { type: "string", desc: "barcode", example: '123123asdfdaf' }
       expose :barcode_html ,documentation: { type: "string", desc: "barcode_html", example: 'TABLE' }
       expose :origin_certificate_file, documentation: { type: "string", desc: "origin_certificate_file", example: 'TABLE' }
