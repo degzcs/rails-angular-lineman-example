@@ -84,10 +84,15 @@ ActiveAdmin.register Company do
       row :legal_representative , label: "Representante legal"
       row :id_number_legal_rep, label: "Cedula representante"
       row :phone_number, label: "Telefono"
-     
-       row :chamber_of_commerce_file , label: "PDF camara de comercio"do|u|
-         link_to(image_tag(u.chamber_of_commerce_file.preview.url),u.chamber_of_commerce_file.url, :target => "_blank" ) 
-       end
+      row :chamber_of_commerce_file , label: "PDF camara de comercio"do|u|
+        link_to(image_tag(u.chamber_of_commerce_file.preview.url),u.chamber_of_commerce_file.url, :target => "_blank" ) 
+      end
+      row :rut_file , label: "PDF Rut"do|u|
+        link_to(image_tag(u.rut_file.preview.url),u.rut_file.url, :target => "_blank" ) if u.rut_file
+      end
+      row :mining_register_file , label: "PDF registro minero"do|u|
+        link_to(image_tag(u.mining_register_file.preview.url),u.mining_register_file.url, :target => "_blank" )
+      end
     end
     active_admin_comments
   end
