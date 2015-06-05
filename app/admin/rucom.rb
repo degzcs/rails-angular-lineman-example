@@ -13,7 +13,7 @@ ActiveAdmin.register Rucom do
 
   member_action :create_company , method: :post do
     rucom = Rucom.find(params[:rucom_id])
-    company = Company.new(params.require(:company).permit(:nit_number, :name, :country, :city ,:state , :legal_representative , :id_number_legal_rep , :email , :phone_number,:chamber_of_commerce_file))
+    company = Company.new(params.require(:company).permit(:nit_number, :name, :country, :city ,:state , :legal_representative , :id_number_legal_rep , :email , :phone_number,:chamber_of_commerce_file,:rut_file, :mining_register_file))
     company.rucom = rucom 
     if company.save
        redirect_to(admin_company_path(company), :notice => 'La compañia a sido creada correctamente')
