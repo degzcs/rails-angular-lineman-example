@@ -22,7 +22,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-  # window.s =  $scope
+  window.s =  $scope
 
   #
   # Fuctions
@@ -73,11 +73,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       promise = query_for_providers(query)
       promise.then ((providers) ->
         return providers
-        
+
       ), (reason) ->
         console.log 'Failed: ' + reason
         return
-    else 
+    else
       return []
 
 
@@ -93,7 +93,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.goldBatch.model.id = data.gold_batch_id
         $scope.goldBatch.model.grade = data.grade
         $scope.purchase.model.fine_gram_unit_price = data.fine_gram_unit_price
-        $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.grams, data.grade)
+        $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.fine_grams, data.grade)
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
         $scope.purchase.model.provider = data.provider
@@ -121,7 +121,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       #$scope.format_provider(provider)
       console.log provider.rucom
       console.log $scope.purchase.model.provider
-      
+
       if provider.num_rucom
         $scope.rucomIDField.label = 'Número de RUCOM'
         $scope.rucomIDField.field = 'num_rucom'
@@ -132,7 +132,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.rucom_id_field = 'rucom_record'
     else
       console.log 'State changed to none'
-    
+
 
   #
   #
@@ -394,4 +394,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         i++
     ).error ()->
 
+  $scope.user_has_enough_credits = ->
+    $scope.current_user.available_credits >= $scope.purchase.model.price
 
