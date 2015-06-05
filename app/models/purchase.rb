@@ -35,14 +35,27 @@ class Purchase < ActiveRecord::Base
   has_many :sold_batches
 
   #
+  # Validations
+  #
+
+  validates :user_id, presence: true
+  validates :provider_id, presence: true
+  validates :origin_certificate_sequence, presence: true
+  # validates :gold_batch_id, presence: true
+  validates :origin_certificate_file, presence: true
+  validates :price, presence: true
+
+  #
   # Callbacks
   #
+
   after_create :create_inventory
   before_save :generate_barcode
 
   #
   # Fields
   #
+
   mount_uploader :origin_certificate_file, PdfUploader
   mount_uploader :seller_picture, PhotoUploader
 
@@ -78,6 +91,7 @@ class Purchase < ActiveRecord::Base
   #
   # Protected methods
   #
+
   protected
     #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
     def create_inventory

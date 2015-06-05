@@ -221,11 +221,11 @@ ActiveRecord::Schema.define(version: 20150604215433) do
     t.string   "reset_token"
     t.string   "address"
     t.string   "document_number_file"
+    t.string   "rut_file"
     t.string   "photo_file"
     t.integer  "population_center_id"
     t.integer  "office_id"
     t.boolean  "external",                 default: false, null: false
-    t.string   "rut_file"
   end
 
 end

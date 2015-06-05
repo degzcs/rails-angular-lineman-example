@@ -30,13 +30,15 @@ class BuyGoldBatch
     @purchase = buyer.purchases.build(purchase_hash)
     @purchase.build_gold_batch(gold_batch_hash)
 
-    if buyer.available_credits > 0
+    if buyer.available_credits >= gold_batch_hash['fine_grams'].to_f # TODO: change to price
       # save purchase
-       purchase.save
+      purchase.save
 
       #discount available credits
-      buyer.available_credits = buyer.available_credits - gold_batch_hash['fine_grams'].to_f unless purchase.trazoro
-      buyer.save
+      unless purchase.trazoro
+        new_credits = buyer.available_credits - gold_batch_hash['fine_grams'].to_f
+        buyer.update_column(:available_credits, new_credits)
+      end
     else
       false
     end

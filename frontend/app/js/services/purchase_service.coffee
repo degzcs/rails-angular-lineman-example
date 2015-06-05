@@ -81,9 +81,9 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
             #service.flushModel()
-            if !data.status == 500
-              $location.path('/purchases/show')
-            else
+            # if !data.status == 500
+            $location.path('/purchases/show')
+            # else
               # show an error message
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image failed to load!!'

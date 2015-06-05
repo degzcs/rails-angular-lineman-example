@@ -161,10 +161,14 @@
         %td.md-table-td-more{colspan: 5}
           %md-input-container
             %span {{goldBatch.model.riales}}
+.error-message{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+  %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'provider'"}
+    El usario no tiene suficientes creditos para realizar esta compra!
 .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
   %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'provider'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
   %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'trazoro'", flex: "20", "ui-sref"=>"new_purchase.step1"} Volver
-  %md-button.btn-save{ flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
+  %md-button.btn-save{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'provider'", flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
+
 
 
 
