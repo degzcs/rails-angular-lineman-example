@@ -26,7 +26,7 @@ ActiveAdmin.register Purchase do
     column :user
     column :provider
     column(:gold_batch) do |purchase| 
-      purchase.gold_batch.grams 
+      purchase.gold_batch.fine_grams 
     end
     column :origin_certificate_file
     column :price
