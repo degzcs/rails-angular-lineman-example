@@ -1,5 +1,5 @@
-require 'capistrano/passenger'
-require 'capistrano/nginx'
+# require 'capistrano/passenger'
+# require 'capistrano/nginx'
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group
@@ -24,7 +24,7 @@ server 'trazoro-staging.cloudapp.net', user: 'deploy', roles: %w{web app db}, my
 
 
 namespace :deploy do
-   desc 'Restart application'
+  desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
@@ -37,22 +37,19 @@ namespace :deploy do
     on roles(fetch(:passenger_roles)), in: fetch(:passenger_restart_runner), wait: fetch(:passenger_restart_wait), limit: fetch(:passenger_restart_limit) do
       execute :touch, release_path.join('tmp/restart.txt')
     end
+    end
 
-      after :restart, :deploy_frontend do
+    after :restart, :deploy_frontend do
 
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      within "#{current_path}/frontend" do
-        execute :npm, 'install'
-        execute :lineman, "build"
-        execute  "mv #{current_path}/frontend/dist/* #{current_path}/public"
+      on roles(:web), in: :groups, limit: 3, wait: 10 do
+        puts 'test'
+        # Here we can do anything such as:
+        within "#{current_path}/frontend" do
+          execute :npm, 'install'
+          execute :lineman, "build"
+          execute  "mv #{current_path}/frontend/dist/* #{current_path}/public"
       end
     end
-  end
-
-
-
-
 
   end
 
