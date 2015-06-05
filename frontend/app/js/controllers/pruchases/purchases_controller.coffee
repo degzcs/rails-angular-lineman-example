@@ -31,10 +31,55 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   # Search one specific provider into the allProviders array
   # @return [Array] with the matched options with the query
+
+  query_for_providers = (query) ->
+    # perform some asynchronous operation, resolve or reject the promise when appropriate.
+    $q (resolve, reject) ->
+      ExternalUser.query_by_id(query).success (providers)->
+        $scope.allProviders = []
+
+        i = 0
+        while i < providers.length
+          prov =
+            id: providers[i].id
+            document_number: providers[i].document_number
+            company_name: if providers[i].company then providers[i].company.name else 'Ninguna' #'company name test' # <-- TODO: migration
+            document_type: if providers[i].company then 'NIT' else 'CC' # <-- TODO: migration
+            first_name: providers[i].first_name
+            last_name: providers[i].last_name
+            address: providers[i].address
+            email: providers[i].email
+            phone_number: providers[i].phone_number || providers[i].phone
+            photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
+            num_rucom: providers[i].rucom.num_rucom
+            rucom_record: providers[i].rucom.rucom_record
+            provider_type: providers[i].rucom.provider_type
+            rucom_status: providers[i].rucom.status
+            mineral: providers[i].rucom.mineral
+            name: providers[i].first_name + ' '+ providers[i].last_name
+            city: providers[i].city || ''
+            state: providers[i].state || ''
+            address: providers[i].address
+            nit: if providers[i].company then providers[i].company.nit_number else "--" # <-- TODO: migration
+
+          $scope.allProviders.push prov
+          i++
+        resolve $scope.allProviders
+
+      return
+
   $scope.searchProvider = (query)->
-    console.log 'query: ' + query
-    results = if query then $scope.allProviders.filter(createFilterFor(query)) else []
-    results
+    if query
+      promise = query_for_providers(query)
+      promise.then ((providers) ->
+        return providers
+        
+      ), (reason) ->
+        console.log 'Failed: ' + reason
+        return
+    else 
+      return []
+
 
   #
   # Search provider by sale code
@@ -76,6 +121,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       #$scope.format_provider(provider)
       console.log provider.rucom
       console.log $scope.purchase.model.provider
+      
       if provider.num_rucom
         $scope.rucomIDField.label = 'Número de RUCOM'
         $scope.rucomIDField.field = 'num_rucom'
@@ -86,8 +132,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.rucom_id_field = 'rucom_record'
     else
       console.log 'State changed to none'
-    $scope.searchText = null
-
+    
 
   #
   #

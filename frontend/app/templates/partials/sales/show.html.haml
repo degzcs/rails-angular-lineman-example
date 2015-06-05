@@ -12,10 +12,10 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Tipo
-              %input{:disabled => "disabled", "ng-model" => "currentClient.client_type"}
+              %input{:disabled => "disabled", "ng-model" => "currentClient.rucom.provider_type"}
             %md-input-container{flex: ""}
               %label Cedula
-              %input{:disabled => "disabled", "ng-model" => "currentClient.id_document_number"}
+              %input{:disabled => "disabled", "ng-model" => "currentClient.document_number"}
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Nombre
@@ -80,7 +80,7 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Tipo
-              %input{:disabled => "disabled"}
+              %input{:disabled => "disabled",  "ng-model" => "currentUser.rucom.provider_type"}
             %md-input-container{flex: ""}
               %label Cedula
               %input{:disabled => "disabled", "ng-model" => "currentUser.document_number"}
