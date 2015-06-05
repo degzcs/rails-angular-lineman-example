@@ -8,11 +8,6 @@ module V1
       expose :phone_number, documentation: { type: "string", desc: "Phone number", example: "83333333" }
       expose :address, documentation: { type: "string", desc: "Address", example: "Calle falsa n#4233" }
       expose :document_number_file, documentation: { type: "file", desc: "file", example: "..." }
-      expose :mining_register_file, documentation: { type: "file", desc: "file", example: "..." }
-      expose :rut_file, documentation: { type: "file", desc: "file", example: "..." }
-      expose :chamber_commerce_file, documentation: { type: "file", desc: "file", example: "..." } do |external_user, options|
-        external_user.company.chamber_of_commerce_file if external_user.company.present?
-      end
       expose :photo_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
       expose :city, documentation: { type: "string", desc: "City name", example: "Medellín" }

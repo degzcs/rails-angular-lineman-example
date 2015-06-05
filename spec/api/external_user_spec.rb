@@ -11,15 +11,15 @@ describe 'ExternalUser', :type => :request do
            document_number_file_path = "#{Rails.root}/spec/support/test_images/document_number_file.png"
            mining_register_file_path = "#{Rails.root}/spec/support/test_images/mining_register_file.png"
            rut_file_path = "#{Rails.root}/spec/support/test_images/rut_file.png"
-           chamber_commerce_file_path = "#{Rails.root}/spec/support/test_images/chamber_commerce_file.png"
+           chamber_commerce_file_path = "#{Rails.root}/spec/support/test_images/chamber_of_commerce_file.png"
            photo_file_path = "#{Rails.root}/spec/support/test_images/photo_file.png"
            document_number_file =  Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
            mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
            rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
            chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
            photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
-           @files = [document_number_file, mining_register_file, rut_file, chamber_commerce_file, photo_file]
-           @files_without_company =[photo_file,document_number_file]
+           @user_files = [photo_file,document_number_file]
+           @user_and_company_files = [photo_file,document_number_file, mining_register_file, rut_file, chamber_commerce_file]
       end
 
       context 'GET' do
@@ -109,7 +109,7 @@ describe 'ExternalUser', :type => :request do
               phone_number: external_user.phone_number,
               address: external_user.address,
               population_center_id: population_center.id,
-              files: @files_without_company
+              files: @user_files
             }
 
             expected_response = {
@@ -147,7 +147,7 @@ describe 'ExternalUser', :type => :request do
               phone_number: external_user.phone_number,
               address: external_user.address,
               population_center_id: population_center.id,
-              files: @files
+              files: @user_and_company_files
             }
 
             new_company_values = {
@@ -178,7 +178,7 @@ describe 'ExternalUser', :type => :request do
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
             #binding.pry
             expect(JSON.parse(response.body)['company']['name']).to eq company.name
-             expect(JSON.parse(response.body)['rucom']['id']).to eq rucom_company.id
+            expect(JSON.parse(response.body)['rucom']['id']).to eq rucom_company.id
           end
         end
       end

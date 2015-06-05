@@ -116,69 +116,7 @@
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
           
-          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{flex: '30'}
-              %h4 Registro Minero
-              %md-select.uploader-selector{"ng-model" => "mining_register_upload_type", :placeholder => "Cargar Registro Minero", :required => ''}
-                %md-option{:value => "by_upload"} Desde el PC
-                %md-option{:value => "by_scan"} Por Escaner
-                %md-option{:value => "by_photo"} por Camara
-            %div{flex: ''}
-              .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'mining_register_upload_type'}
-                  %md-input-container
-                    %label Nombre del archivo
-                    %input{"ng-model" => "newFiles.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register_file'}
-                    %div{"ng-messages" => "providerCreateForm.mining_register_file.$error"}
-                      %div{"ng-message" => "required"} * Debe seleccionar el registro minero 
-                  
-                  .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.mining_register_file'}
-                      Subir desde PC
-                      %md-icon{"md-svg-icon"=>"file:file_upload"}
-                      
-                  .by_scan{"ng-switch-when" =>'by_scan'}
-                    %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(3)"}
-                      Escanear 
-                      %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                  
-                  .by_photo{"ng-switch-when" =>'by_photo'}
-                    .md-tile-left.cam
-                      %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(3)"}
-                        Escanear con camara
-                        %md-icon{"md-svg-icon" => "image:camera_alt"}
-          
-          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{flex: '30'}
-              %h4 Copia del RUT
-              %md-select.uploader-selector{"ng-model" => "rut_upload_type", :placeholder => "Cargar Copia del RUT", :required => ''}
-                %md-option{:value => "by_upload"} Desde el PC
-                %md-option{:value => "by_scan"} Por Escaner
-                %md-option{:value => "by_photo"} por Camara
-            %div{flex: ''}
-              .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'rut_upload_type'}
-                  %md-input-container
-                    %label Nombre del archivo
-                    %input{"ng-model" => "newFiles.rut_file[0].name", :readOnly => 'true',:required => "", :name => 'rut_file'}
-                    %div{"ng-messages" => "providerCreateForm.rut_file.$error"}
-                      %div{"ng-message" => "required"} * Debe seleccionar el rut 
-                  .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.rut_file'}
-                      Subir desde PC
-                      %md-icon{"md-svg-icon"=>"file:file_upload"}
-                        
-                  .by_scan{"ng-switch-when" =>'by_scan'}
-                    %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(4)"}
-                      Escanear
-                      %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                        
-
-                  .by_photo{"ng-switch-when" =>'by_photo'}
-                    .md-tile-left.cam
-                      %md-button.btn-save{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(4)"}
-                        Escanear con camara
-                        %md-icon{"md-svg-icon" => "image:camera_alt"}
+ 
                         
 
         %div.info-buttons{layout: 'row', "layout-align"=> "end center"}

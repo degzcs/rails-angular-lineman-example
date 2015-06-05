@@ -16,6 +16,9 @@
 #  updated_at               :datetime
 #  id_number_legal_rep      :string(255)
 #  chamber_of_commerce_file :string(255)
+#  external                 :boolean          default(FALSE), not null
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
 #
 
 class Company < ActiveRecord::Base
@@ -37,9 +40,13 @@ class Company < ActiveRecord::Base
   validates :id_number_legal_rep, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true
-  #validates :chamber_of_commerce_file, presence: true
+  validates :chamber_of_commerce_file, presence: true
+  validates :rut_file, presence: true
+  validates :mining_register_file, presence: true
   validates :rucom, presence: true
 
   # uploaders
+  mount_uploader :rut_file, PdfUploader
+  mount_uploader :mining_register_file, PdfUploader
   mount_uploader :chamber_of_commerce_file, PdfUploader
 end

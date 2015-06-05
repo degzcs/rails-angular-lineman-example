@@ -16,12 +16,11 @@
 #  reset_token              :string(255)
 #  address                  :string(255)
 #  document_number_file     :string(255)
-#  rut_file                 :string(255)
-#  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
+#  rut_file                 :string(255)
 #
 
 #  created_at               :datetime
@@ -57,7 +56,6 @@ describe  User do
     it { expect(user.address).not_to be_nil }
     it { expect(user.document_number_file).not_to be_nil }
     it { expect(user.rut_file).not_to be_nil }
-    it { expect(user.mining_register_file).not_to be_nil }
     it { expect(user.photo_file).not_to be_nil }
     # it { expect(user.chamber_commerce_file).not_to be_nil }
     # it { expect(user.company).not_to be_nil } TODO: use office model to access to company model
@@ -90,10 +88,7 @@ describe  User do
     it { should validate_presence_of(:phone_number) }
     it { should validate_presence_of(:address) }
     it { should validate_presence_of(:document_number_file) }
-    #it { should validate_presence_of(:rut_file) }
-    #it { should validate_presence_of(:mining_register_file) }
     it { should validate_presence_of(:photo_file) }
-    # it { should validate_presence_of(:chamber_commerce_file) }
     it { should validate_presence_of(:office) }
     it { should validate_presence_of(:population_center) }
 

@@ -16,6 +16,9 @@
 #  updated_at               :datetime
 #  id_number_legal_rep      :string(255)
 #  chamber_of_commerce_file :string(255)
+#  external                 :boolean          default(FALSE), not null
+#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
 #
 
 require 'spec_helper'
@@ -33,6 +36,10 @@ describe Company  do
     it {expect(company.id_number_legal_rep).not_to be_nil}
     it {expect(company.email).not_to be_nil }
     it {expect(company.phone_number).not_to be_nil}
+    it { expect(company.chamber_of_commerce_file).not_to be_nil }
+    it { expect(company.rut_file).not_to be_nil }
+    it { expect(company.mining_register_file).not_to be_nil }
+
   end
 
   context "company creation" do
@@ -48,6 +55,9 @@ describe Company  do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:phone_number) }
     it { should validate_presence_of(:rucom) }
+    it { should validate_presence_of(:mining_register_file)}
+    it { should validate_presence_of(:rut_file)}
+    it { should validate_presence_of(:chamber_of_commerce_file)}
   end
 
 end

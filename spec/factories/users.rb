@@ -16,12 +16,11 @@
 #  reset_token              :string(255)
 #  address                  :string(255)
 #  document_number_file     :string(255)
-#  rut_file                 :string(255)
-#  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
+#  rut_file                 :string(255)
 #
 
 FactoryGirl.define do
@@ -36,7 +35,6 @@ FactoryGirl.define do
     address { Faker::Address.street_address}
     document_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     rut_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
-    mining_register_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     personal_rucom {}
     office

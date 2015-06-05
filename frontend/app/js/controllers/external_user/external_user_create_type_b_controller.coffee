@@ -46,7 +46,7 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
       ExternalUser.modelToCreate.files.rut_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 5
-      ExternalUser.modelToCreate.files.chamber_commerce_file = $scope.file
+      ExternalUser.modelToCreate.files.chamber_of_commerce_file = $scope.file
       goToDocumentation()
 
     ExternalUser.saveModelToCreate()
@@ -250,7 +250,9 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
       goToDocumentation()
 
   $scope.validate_documentation_and_create=  ()->
-    if $scope.newFiles.document_number_file == '' || $scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == ''
+    if $scope.isCompany &&  ($scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == '')
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.newFiles.document_number_file == ''
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
       $scope.pendingPost = true

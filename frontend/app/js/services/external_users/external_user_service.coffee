@@ -26,10 +26,10 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         email: ''
         phone_number: ''
       files: 
+        photo_file: ''
         document_number_file: ''
         mining_register_file: ''
-        chamber_commerce_file: ''
-        photo_file: ''
+        chamber_of_commerce_file: ''
         rut_file: ''
 
     modelToUpdate:
@@ -106,79 +106,122 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           document_number_reader.readAsBinaryString document_number_file_copy[0]
           filesRemaining++
 
-        # Mining register file
-        if !(files_to_upload.mining_register_file[0] instanceof File)
-          files_to_upload.mining_register_file[0].name = 'mining_register_file.pdf'
-        else
-          mining_register_file_copy = files_to_upload.mining_register_file
-          mining_register_reader = new FileReader
-          files_to_upload.mining_register_file = []
+        if service.isCompany
 
-          mining_register_reader.onload = ->
-            `var i`
-            i = undefined
-            l = undefined
-            d = undefined
-            array = undefined
-            d = @result
-            l = d.length
-            array = new Uint8Array(l)
-            i = 0
-            while i < l
-              array[i] = d.charCodeAt(i)
-              i++
-            files_to_upload.mining_register_file.push new Blob([ array ], type: 'application/octet-stream')
-            files_to_upload.mining_register_file[0].name = 'mining_register_file' + mining_register_file_copy[0].name.substring(mining_register_file_copy[0].name.lastIndexOf('.'))
-            --filesRemaining
-            if filesRemaining <= 0
-              uploadFiles()
-            # window.location.href = URL.createObjectURL(b);
-            return
+          # Mining register file
+          if !(files_to_upload.mining_register_file[0] instanceof File)
+            files_to_upload.mining_register_file[0].name = 'mining_register_file.pdf'
+          else
+            mining_register_file_copy = files_to_upload.mining_register_file
+            mining_register_reader = new FileReader
+            files_to_upload.mining_register_file = []
 
-          mining_register_reader.readAsBinaryString mining_register_file_copy[0]
-          filesRemaining++
+            mining_register_reader.onload = ->
+              `var i`
+              i = undefined
+              l = undefined
+              d = undefined
+              array = undefined
+              d = @result
+              l = d.length
+              array = new Uint8Array(l)
+              i = 0
+              while i < l
+                array[i] = d.charCodeAt(i)
+                i++
+              files_to_upload.mining_register_file.push new Blob([ array ], type: 'application/octet-stream')
+              files_to_upload.mining_register_file[0].name = 'mining_register_file' + mining_register_file_copy[0].name.substring(mining_register_file_copy[0].name.lastIndexOf('.'))
+              --filesRemaining
+              if filesRemaining <= 0
+                uploadFiles()
+              # window.location.href = URL.createObjectURL(b);
+              return
 
-        #Rut file
-        if !(files_to_upload.rut_file[0] instanceof File)
-          files_to_upload.rut_file[0].name = 'rut_file.pdf'
-        else
-          rut_file_copy = files_to_upload.rut_file
-          rut_reader = new FileReader
-          files_to_upload.rut_file = []
+            mining_register_reader.readAsBinaryString mining_register_file_copy[0]
+            filesRemaining++
 
-          rut_reader.onload = ->
-            `var i`
-            i = undefined
-            l = undefined
-            d = undefined
-            array = undefined
-            d = @result
-            l = d.length
-            array = new Uint8Array(l)
-            i = 0
-            while i < l
-              array[i] = d.charCodeAt(i)
-              i++
-            files_to_upload.rut_file.push new Blob([ array ], type: 'application/octet-stream')
-            files_to_upload.rut_file[0].name = 'rut_file' + rut_file_copy[0].name.substring(rut_file_copy[0].name.lastIndexOf('.'))
-            --filesRemaining
-            if filesRemaining <= 0
-              uploadFiles()
-            # window.location.href = URL.createObjectURL(b);
-            return
+          #Rut file
+          if !(files_to_upload.rut_file[0] instanceof File)
+            files_to_upload.rut_file[0].name = 'rut_file.pdf'
+          else
+            rut_file_copy = files_to_upload.rut_file
+            rut_reader = new FileReader
+            files_to_upload.rut_file = []
 
-          rut_reader.readAsBinaryString rut_file_copy[0]
-          filesRemaining++
+            rut_reader.onload = ->
+              `var i`
+              i = undefined
+              l = undefined
+              d = undefined
+              array = undefined
+              d = @result
+              l = d.length
+              array = new Uint8Array(l)
+              i = 0
+              while i < l
+                array[i] = d.charCodeAt(i)
+                i++
+              files_to_upload.rut_file.push new Blob([ array ], type: 'application/octet-stream')
+              files_to_upload.rut_file[0].name = 'rut_file' + rut_file_copy[0].name.substring(rut_file_copy[0].name.lastIndexOf('.'))
+              --filesRemaining
+              if filesRemaining <= 0
+                uploadFiles()
+              # window.location.href = URL.createObjectURL(b);
+              return
+
+            rut_reader.readAsBinaryString rut_file_copy[0]
+            filesRemaining++
+
+          # Chamber of commerce file
+          if !(files_to_upload.chamber_of_commerce_file[0] instanceof File)
+            files_to_upload.chamber_of_commerce_file[0].name = 'chamber_of_commerce_file.pdf'
+          else
+            chamber_of_commerce_file_copy = files_to_upload.chamber_of_commerce_file
+            chamber_of_commerce_reader = new FileReader
+            files_to_upload.chamber_of_commerce_file = []
+
+            chamber_of_commerce_reader.onload = ->
+              `var i`
+              i = undefined
+              l = undefined
+              d = undefined
+              array = undefined
+              d = @result
+              l = d.length
+              array = new Uint8Array(l)
+              i = 0
+              while i < l
+                array[i] = d.charCodeAt(i)
+                i++
+              files_to_upload.chamber_of_commerce_file.push new Blob([ array ], type: 'application/octet-stream')
+              files_to_upload.chamber_of_commerce_file[0].name = 'chamber_of_commerce_file' + chamber_of_commerce_file_copy[0].name.substring(chamber_of_commerce_file_copy[0].name.lastIndexOf('.'))
+              --filesRemaining
+              if filesRemaining <= 0
+                uploadFiles()
+              # window.location.href = URL.createObjectURL(b);
+              return
+
+            chamber_of_commerce_reader.readAsBinaryString chamber_of_commerce_file_copy[0]
+            filesRemaining++
 
         files = []
         
         uploadFiles = ->
-          files = [
-            files_to_upload.document_number_file[0]
-            files_to_upload.mining_register_file[0]
-            files_to_upload.rut_file[0]
-            external_user_photo_file
-          ]
+
+          if service.isCompany
+            files = [
+              external_user_photo_file
+              files_to_upload.document_number_file[0]
+              files_to_upload.mining_register_file[0]
+              files_to_upload.rut_file[0]
+              files_to_upload.chamber_of_commerce_file[0]
+            ]
+          else 
+            files = [
+              files_to_upload.document_number_file[0]
+              external_user_photo_file
+            ]
+            
 
           $upload.upload(
             url: '/api/v1/external_users/'
@@ -318,7 +361,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           document_number_file: ''
           mining_register_file: ''
           rut_file: ''
-          chamber_commerce_file: ''
+          chamber_of_commerce_file: ''
           photo_file: ''
         company:
           nit_number: ''

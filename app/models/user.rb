@@ -16,12 +16,11 @@
 #  reset_token              :string(255)
 #  address                  :string(255)
 #  document_number_file     :string(255)
-#  rut_file                 :string(255)
-#  mining_register_file     :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
+#  rut_file                 :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -59,7 +58,6 @@ class User < ActiveRecord::Base
 	validates :address, presence: true
 	validates :document_number_file, presence: true
 	#validates :rut_file, presence: true
-	#validates :mining_register_file, presence: true
 	validates :photo_file, presence: true
 	validates :office, presence: true , unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
@@ -109,10 +107,9 @@ class User < ActiveRecord::Base
 	# fields for save files by carrierwave
 	#
 	mount_uploader :document_number_file, PdfUploader
-	mount_uploader :rut_file, PdfUploader
-	mount_uploader :mining_register_file, PdfUploader
 	mount_uploader :photo_file, PhotoUploader
-
+	mount_uploader :rut_file, PdfUploader
+	
 	#
 	# Instance Methods
 	#
