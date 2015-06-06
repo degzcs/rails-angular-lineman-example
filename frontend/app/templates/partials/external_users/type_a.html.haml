@@ -1,4 +1,4 @@
-%div.{:layout => "column", :style => "padding-left:20px; padding-right:20px;"}
+%div.{:layout => "column", :style => "padding-left:20px; padding-right:20px;" , "ng-hide"=>"showLoading"}
   %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
     %md-tabs{"md-selected"=>"tabIndex.selectedIndex"}
       
@@ -123,3 +123,4 @@
           %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
           %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)", "ng-disabled"=>"pendingPost"} Crear Proovedor
       
+%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

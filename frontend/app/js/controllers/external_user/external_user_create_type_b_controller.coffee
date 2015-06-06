@@ -265,8 +265,6 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
       #console.log ExternalUser.modelToCreate
       ExternalUser.create()
       $scope.showUploadingDialog()
-        
-
 
 
   $scope.showUploadingDialog = () ->

@@ -1,5 +1,9 @@
 angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
-  
+  #*** Loading Variables **** #
+  $scope.showLoading = false
+  $scope.loadingMessage = "Cargando archivos ..."
+  $scope.loadingMode = "determinate"
+  $scope.loadingProgress = 0
   # ****** Tab directive variables and methods ********** #
   $scope.abortCreate = false
   $scope.rucomIDField = {
@@ -247,37 +251,47 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
         $scope.showUploadingDialog()
 
 
-
   $scope.showUploadingDialog = () ->
-    parentEl = angular.element(document.body)
-    $mdDialog.show
-      parent: parentEl
-      disableParentScroll: false
-      templateUrl: 'partials/uploading_files.html'
-      controller: [
-        'scope'
-        '$mdDialog'
-        'ExternalUser'
-        (scope, $mdDialog, ExternalUser) ->
-          scope.progress = ExternalUser.uploadProgress
-          scope.message = 'Espere por favor...'
-          scope.mode = 'determinate'
-          scope.$watch (->
-            ExternalUser.uploadProgress
-          ), (newVal, oldVal) ->
-            if typeof newVal != 'undefined'
-              console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
-              scope.progress = ExternalUser.uploadProgress
-              scope.mode = 'indeterminate'
-              if scope.progress == 100
-                $scope.abortCreate = true
-                scope.message = "La carga de archivos ha terminado, espere un momento..."
+    $scope.showLoading = true
+    $scope.loadingMessage = "Subiendo archivos ..."
+    $scope.$watch (->
+      ExternalUser.uploadProgress
+    ), (newVal, oldVal) ->
+      if typeof newVal != 'undefined'
+        $scope.loadingProgress = ExternalUser.uploadProgress
+        if $scope.loadingProgress == 100
+          $scope.abortCreate = true
+          $scope.loadingMessage = "Espere un momento ..."
+          $scope.loadingMode = "indeterminate"
+    # parentEl = angular.element(document.body)
+    # $mdDialog.show
+    #   parent: parentEl
+    #   disableParentScroll: false
+    #   templateUrl: 'partials/uploading_files.html'
+    #   controller: [
+    #     'scope'
+    #     '$mdDialog'
+    #     'ExternalUser'
+    #     (scope, $mdDialog, ExternalUser) ->
+    #       scope.progress = ExternalUser.uploadProgress
+    #       scope.message = 'Espere por favor...'
+    #       scope.mode = 'determinate'
+    #       scope.$watch (->
+    #         ExternalUser.uploadProgress
+    #       ), (newVal, oldVal) ->
+    #         if typeof newVal != 'undefined'
+    #           console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
+    #           scope.progress = ExternalUser.uploadProgress
+    #           scope.mode = 'indeterminate'
+    #           if scope.progress == 100
+    #             $scope.abortCreate = true
+    #             scope.message = "La carga de archivos ha terminado, espere un momento..."
 
-            return
+    #         return
 
-          return
-      ]
-    return
+    #       return
+    #   ]
+    # return
 
 
   

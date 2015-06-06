@@ -1,5 +1,5 @@
 angular.module('app').controller 'ExternalUserTypeCtrl', ($scope, $state , $mdDialog , ExternalUser) ->
-  
+  ExternalUser.clearModelToCreate()
   $scope.answer =(answer)->
     console.log answer
     #ExternalUser.modelToCreate.external_user.user_type = answer
