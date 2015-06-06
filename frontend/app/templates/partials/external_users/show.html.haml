@@ -1,12 +1,13 @@
-%div{:layout => "column"}
+%div{:layout => "column","ng-hide"=>"showLoading"}
   %md-tabs{"ng-if"=>"currentExternalUser"}
     /********************************************** PERSONAL DATA ******************************************************/
     %md-tab{"label"=>"Datos Personales"}
       .provider-info
         %div{layout: 'row'}
           .photo-container{flex: '30'}
-            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user({ id: currentExternalUser.id })"} Editar Información
             %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user({ id: currentExternalUser.id })"} Editar Información
+            
           .fields-container{flex: '70'}
             %h2{style: "text-align: left;"} 
               Datos personales:
@@ -130,4 +131,7 @@
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{company.rut_file.url}}", :target => "_blank" }  
             %p RUT
             %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{company.rut_file.preview.url || 'img/pdf.png'}}" } 
+
+%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+
          

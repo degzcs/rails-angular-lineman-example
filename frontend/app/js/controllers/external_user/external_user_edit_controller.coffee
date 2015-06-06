@@ -1,5 +1,9 @@
 
 angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog) ->
+  #*** Loading Variables **** #
+  $scope.showLoading = true
+  $scope.loadingMode = "indeterminate"
+  $scope.loadingMessage = "Cargando ..."
   # *********************************** VARIABLES **********************************#
   $scope.currentExternalUser = null
   $scope.companyInfo = null
@@ -10,7 +14,7 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
   # ********************************************************************************#
   if $stateParams.id
     ExternalUser.get($stateParams.id).success (data)->
-      $mdDialog.cancel()
+      $scope.showLoading = false
       $scope.currentExternalUser = data
       $scope.loadProviderLocation(data)
   

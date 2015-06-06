@@ -1,0 +1,13 @@
+%section.loading-view-message
+  %h2 {{message}}
+%section.loading-view-progress
+  %div{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column"}
+    %md-progress-circular{"md-mode" => "{{mode}}"}
+
+  / %md-dialog
+  / %md-dialog-content
+  /   %br
+  /   %div{:layout => "column", "layout-align" => "center center"}
+  /     %md-progress-circular{"md-mode" => "{{mode}}", :value => "{{progress}}"}
+  / .md-actions
+  /   %h3 {{message}}

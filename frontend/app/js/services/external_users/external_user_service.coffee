@@ -45,7 +45,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
 
 
     all: (per_page,page)->
-      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
+      #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users'
                 method: 'GET'
@@ -54,7 +54,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
                   page: page || 1
                 }
     get: (id)->
-      $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
+      #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users/'+id
                 method: 'GET'

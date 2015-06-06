@@ -1,4 +1,8 @@
 angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog,$state) ->
+  #*** Loading Variables **** #
+  $scope.showLoading = true
+  $scope.loadingMode = "indeterminate"
+  $scope.loadingMessage = "Cargando ..."
   ##****************************************  TABLE HEADERS and initial config variables *****************************************##
   $scope.count = 10
   $scope.content = []
@@ -6,6 +10,7 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
   $scope.queryName = ''
   $scope.queryId = ''
   $scope.queryFocus = ''
+
   $scope.headers = [
     {
       name: ''
@@ -74,6 +79,7 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
   ]
   $scope.thumbs = 'photo_file'
 
+
   # method to format the content acording the table headers
   formated_content = (data)->
     content = []
@@ -99,7 +105,8 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
   ##***************************************************************************************************************************##
 
   ExternalUser.all($scope.count).success( (data, status, headers)->
-    $mdDialog.cancel()
+    $scope.showLoading = false
+  
     $scope.content = formated_content(data)
     $scope.pages = parseInt(headers().total_pages)
     
