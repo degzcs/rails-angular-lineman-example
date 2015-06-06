@@ -84,7 +84,7 @@ class SalePDFService
         id_provider: p.provider.id,
         social: p.provider.first_name + ' ' + p.provider.last_name,
         certificate_number: p.origin_certificate_sequence,
-        rucom: p.provider.rucom.num_rucom || p.provider.rucom.rucom_record,
+        rucom: p.provider.rucom.num_rucom || p.provider.rucom.rucom_record,
         fine_grams: p.gold_batch.fine_grams.round(2)
       }
     end
