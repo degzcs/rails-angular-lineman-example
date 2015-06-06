@@ -8,7 +8,7 @@
           %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
         %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
       /%th.md-table-header
-  %tbody
+  %tbody{"style" => "overflow: hidden"}
     %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | limitTo: count", "ng-click" => "setCurrentProv(c)"}
       %td
         .md-table-thumbs{"ng-repeat" => "h in headers", "ng-if" => "h.field == thumbs"}

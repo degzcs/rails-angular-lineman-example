@@ -69,10 +69,12 @@ i {
 .md-table-thumbs {
   max-width: 104px;
   width: 104px;
-  padding: 16px 32px;
+  padding: 10px 10px;
+  text-align: center;
 }
 
 .md-table-thumbs div {
+  display: inline-block;
   overflow:hidden;
   width: 40px;
   height:40px;

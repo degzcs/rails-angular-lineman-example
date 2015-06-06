@@ -3,19 +3,24 @@
 .breadcrumb{
     list-style-type: none;
     text-align: center!important;
-    height: 40px;
     background: #ebeae5;
     color: darken(#8d8e8f, 10%);
     ol{
       display: inline-block;
-      padding: 12px;
+      padding: 5px;
+      max-height: 30px!important;
+    
     }
     li{
       display: inline-block;
       background-image: url("/img/ic_keyboard_arrow_right_white.png");
+      //background-size: 200px 200px;
       background-repeat: no-repeat;
       padding-right: 35px;  /* width of the image plus a little extra padding */
-      background-position: 100% -7px;
+      background-position: 100% -10px;
+      font-size: 12px;
+      height: 20px;
+
     }
     li:last-child{
       background-image: none;

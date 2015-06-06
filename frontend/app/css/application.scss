@@ -115,10 +115,19 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-i
   fill: rgb(237,176,57)!important;
 }
 
+
+
 .md-table tr:hover{
   background: rgba(#edb039, 0.2) !important;
 }
-
+.md-table tr{
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+.md-table td{
+  padding-top: 0px!important;
+  padding-bottom: 0px!important;
+}
 .pdf-preview{
   width: 100%;
 }

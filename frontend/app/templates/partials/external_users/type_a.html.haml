@@ -1,11 +1,12 @@
-%div.{:layout => "column", :style => "padding-left:20px; padding-right:20px;" , "ng-hide"=>"showLoading"}
+%div{:layout => "column"}
+
   %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
-    %md-tabs{"md-selected"=>"tabIndex.selectedIndex"}
+    %md-tabs{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>"bottom"}
       
       /****************************   PERSONAL DATA ***********************************/
       
       %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales"}
-        .md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
+        %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
             %legend
               %h5 Tome una foto al proveedor
@@ -76,14 +77,10 @@
                   %label Tipo de Proveedor
                   %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
       
-        %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-          %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
-          
-
       /****************************   DOCUMENTATION ***********************************/
       
       %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion", "ng-click"=>"validate_personal_fields()"}
-        #tab3-content{}
+        %md-contentmd.md-padding
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}
               %h4 Subir documento de identificación
@@ -120,7 +117,6 @@
                         
 
         %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-          %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
           %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)", "ng-disabled"=>"pendingPost"} Crear Proovedor
       
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

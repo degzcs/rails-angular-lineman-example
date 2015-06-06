@@ -52,11 +52,11 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
       field: 'provider_type'
       alternateField: 'provider_type'
     }
-    {
-      name: 'Última Transacción'
-      field: 'last_transaction_date'
-      alternateField: 'last_transaction_date'
-    }
+    # {
+    #   name: 'Última Transacción'
+    #   field: 'last_transaction_date'
+    #   alternateField: 'last_transaction_date'
+    # }
   ]
   $scope.custom =
     first_name: 'bold'

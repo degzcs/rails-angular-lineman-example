@@ -9,4 +9,5 @@ angular.module('app').controller 'ExternalUserTypeCtrl', ($scope, $state , $mdDi
     else
       $state.go 'create_external_user_type_b'
     return $mdDialog.cancel()
-    
+  $scope.cancel = ->
+    $mdDialog.cancel()
