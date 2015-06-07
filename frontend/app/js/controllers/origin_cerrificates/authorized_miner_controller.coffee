@@ -76,7 +76,7 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
       i++
     provs
 
-  window.s = $scope
+  # window.s = $scope
 
   #
   # confirm Dialog

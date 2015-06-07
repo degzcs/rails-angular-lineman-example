@@ -87,7 +87,8 @@ class User < ActiveRecord::Base
 	scope :beneficiarios, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial')}
 	scope :consumidor, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Consumidor')}
 	scope :mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Titular')}
-	scope :subcontratados, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'subcontrato')}
+	scope :subcontratados, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Subcontrato')}
+	scope :casas_compra_venta, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Casa de Compraventa')}
 	scope :barequeros_chatarreros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Barequero', 'Chatarrero')}
 	scope :beneficiarios_mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial', 'Titular')}
 

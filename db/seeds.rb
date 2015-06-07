@@ -49,6 +49,12 @@ bc_rucoms.each do|rucom|
     FactoryGirl.create(:external_user,personal_rucom: rucom, population_center_id: PopulationCenter.first.id, available_credits: rand(2000 .. 50000))
   end
 
+puts 'creating pawnshops providers ...'
+ccv_rucoms = FactoryGirl.create_list(:rucom, 10, provider_type: 'Casa de Compraventa')
+ccv_rucoms.each do|rucom|
+    FactoryGirl.create(:external_user,personal_rucom: rucom, population_center_id: PopulationCenter.first.id, available_credits: rand(2000 .. 50000))
+  end
+
 
 
 

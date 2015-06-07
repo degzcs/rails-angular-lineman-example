@@ -14,7 +14,7 @@ angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $s
     #IMPROVE: Set up Missing values to generate the Purchase invoice
     data.document_type = 'NIT'
     $scope.pawnshops_origin_certificate.buyer = data
-    $scope.pawnshops_origin_certificate.city = data.city
+    $scope.pawnshops_origin_certificate.city = data.city_name
 
   #
   #
@@ -49,7 +49,7 @@ angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $s
   ProviderService.retrieve.byTypes {
     per_page: 100
     page: 1
-    types: 'subcontratados'
+    types: 'casas_compra_venta'
   }, ((providers, headers) ->
       provs = setupAllProviders(providers)
       $timeout ->
@@ -87,7 +87,7 @@ angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $s
       i++
     provs
 
-  window.s = $scope
+  # window.s = $scope
 
   #
   # Set  Invoices in the model
