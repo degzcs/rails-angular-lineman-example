@@ -18,7 +18,7 @@ angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($ti
     data.document_type = 'NIT'
     # set beneficiation plant oc
     $scope.beneficiation_plant_origin_certificate.buyer = data
-    $scope.beneficiation_plant_origin_certificate.city = data.city
+    $scope.beneficiation_plant_origin_certificate.city = data.city_name
 
   #
   # Add mining operator field with empty values
@@ -87,8 +87,8 @@ angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($ti
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: providers[i].city || 'Popayan'
-        state: providers[i].state || 'Cauca'
+        city: providers[i].city_name || 'Popayan'
+        state: providers[i].state_name || 'Cauca'
       provs.push prov
       i++
     provs
@@ -133,7 +133,7 @@ angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($ti
       console.log 'purchase canceled'
       $scope.message = 'El proceso ha sido cancelado '
       return
-      
+
   $scope.createProvider = ->
     ProviderService.setCallerState('new_origin_certificate.barequero_chatarrero')
     $state.go('search_rucom',{type: 'provider'})
