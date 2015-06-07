@@ -16,7 +16,7 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
     data.document_type = 'NIT'
     # set barequero chatarrero oc
     $scope.barequero_chatarrero_origin_certificate.buyer = data
-    $scope.barequero_chatarrero_origin_certificate.city = data.city.name
+    $scope.barequero_chatarrero_origin_certificate.city = data.city_name
 
 
   #

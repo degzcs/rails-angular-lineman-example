@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
 	validates :first_name , presence: true
 	validates :last_name , presence: true
-	validates :email, presence: true
+	validates :email, presence: true, uniqueness: true
 	validates :document_number , presence: true
 	#validates :document_expedition_date, presence: true
 	validates :phone_number, presence: true
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
 	mount_uploader :document_number_file, PdfUploader
 	mount_uploader :photo_file, PhotoUploader
 	mount_uploader :rut_file, PdfUploader
-	
+
 	#
 	# Instance Methods
 	#
@@ -132,6 +132,10 @@ class User < ActiveRecord::Base
 	#IMPROVE:  this value introduce inconsistencies in the transactions!!
 	def city
 		population_center.try(:city)
+	end
+
+	def city_name
+		city.try(:name)
 	end
 
 	def state

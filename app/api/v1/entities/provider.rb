@@ -8,14 +8,14 @@ module V1
       expose :phone_number, documentation: { type: "string", desc: "Phone number", example: "83333333" }
       expose :address, documentation: { type: "string", desc: "Address", example: "Calle falsa n#4233" }
       expose :document_number_file, documentation: { type: "file", desc: "file", example: "..." }
-      expose :mining_register_file, documentation: { type: "file", desc: "file", example: "..." }
-      expose :rut_file, documentation: { type: "file", desc: "file", example: "..." }
+      # expose :mining_register_file, documentation: { type: "file", desc: "file", example: "..." }
+      # expose :rut_file, documentation: { type: "file", desc: "file", example: "..." }
       # expose :chamber_commerce_file, documentation: { type: "file", desc: "file", example: "..." } do | provider, options|
       #   provider.company.chamber_of_commerce_file if provider.company.present?
       # end
-      expose :photo_file, documentation: { type: "file", desc: "file", example: "..." }
+      # expose :photo_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
-      expose :city, documentation: { type: "string", desc: "City name", example: "Medellín" }
+      expose :city_name, documentation: { type: "string", desc: "City name", example: "Medellín" }
       expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
