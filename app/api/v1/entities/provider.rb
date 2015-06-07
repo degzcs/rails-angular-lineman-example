@@ -16,7 +16,7 @@ module V1
       # expose :photo_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
       expose :city_name, documentation: { type: "string", desc: "City name", example: "Medellín" }
-      expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
+      expose :state_name, documentation: { type: "string", desc: "State name", example: "Antioquia" }
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
       expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}

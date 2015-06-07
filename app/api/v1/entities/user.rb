@@ -19,6 +19,7 @@ module V1
         user.office.name if user.office
       end
       expose :city, documentation: { type: "string", desc: "", example: "user city" }
+      expose :city_name, documentation: { type: "string", desc: "", example: "user city" }
       expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }
       expose :photo_file, documentation: { type: "photo", desc: "photo file", example: "" }
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }

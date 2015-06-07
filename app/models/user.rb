@@ -142,6 +142,10 @@ class User < ActiveRecord::Base
 		city.try(:state)
 	end
 
+	def state_name
+		state.try(:name)
+	end
+
 	#IMPROVE:  this value introduce inconsistencies in the transactions!!
 	def nit
 		company.try(:nit_number)
