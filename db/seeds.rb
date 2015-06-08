@@ -21,7 +21,7 @@ unless Rails.env.production?
  :location=>"Hansenbury",
  :subcontract_number=>"37-0221157",
  :mining_permit=>"6789268195393",
- :updated_at=>Sun, 07 Jun 2015 21:44:41 UTC +00:00,
+ #:updated_at=>Sun, 07 Jun 2015 21:44:41 UTC +00:00,
  :provider_type=>"Barequero",
  :num_rucom=>"0828372893637",
  :id=>315,

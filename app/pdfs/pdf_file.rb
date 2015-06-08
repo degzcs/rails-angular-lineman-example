@@ -329,7 +329,7 @@ class PdfFile < Prawn::Document
     #move_down 140
     move_cursor_to 585
     text_box "#{values[:certificate_number]}", :at => [755,cursor], :width => 270, :height => 15, :overflow => :shrink_to_fit
-    text_box "#{values[:city][:name].capitalize}" , :at => [385 ,cursor] , :width => 200, :height => 15, :overflow => :shrink_to_fit
+    text_box "#{values[:city].capitalize}" , :at => [385 ,cursor] , :width => 200, :height => 15, :overflow => :shrink_to_fit
     #move_down 7
     move_cursor_to 577
     text_box "#{date.day}", :at => [150 , cursor] , :width => 85
@@ -435,7 +435,7 @@ class PdfFile < Prawn::Document
     text_box "#{values[:buyer][:office]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box "#{values[:buyer][:address]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 590
-    text_box "#{values[:buyer][:city]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:city][:name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box "#{values[:buyer][:phone]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
 
@@ -448,12 +448,12 @@ class PdfFile < Prawn::Document
     text_box "#{values[:provider][:document_number]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 494
     text_box "#{values[:provider][:rucom_record]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box "#{values[:provider][:phone]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:phone_number]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 476
-    text_box "#{values[:provider][:city]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box "#{values[:provider][:address]}", :at => [400,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:city][:name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:provider][:address]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 459
-    text_box "population center", :at => [400,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "population center", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
 
     if values[:gold_batch][:castellanos][:quantity] != 0
