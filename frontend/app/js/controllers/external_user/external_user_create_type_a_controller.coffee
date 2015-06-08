@@ -5,6 +5,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.loadingMode = "determinate"
   $scope.loadingProgress = 0
   # ****** Tab directive variables and methods ********** #
+  $scope.validPersonalData = false
   $scope.abortCreate = false
   $scope.rucomIDField = {
     label: 'Número de RUCOM',
@@ -217,6 +218,9 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     #console.log ExternalUser.modelToCreate
 
   #************ Creation methods *************************#
+  $scope.$watch  ->
+    $scope.validate_personal_fields()
+
 
   $scope.createExternalUser = (ev)->
     
@@ -225,17 +229,26 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.cancel= ()->
     $state.go 'index_external_user'
 
+
   $scope.validate_personal_fields= ()->
     if $scope.newFiles.photo_file == '' 
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe tomar una foto al usuario que va a registrar').ariaLabel('Alert Dialog Demo').ok('ok')
-    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' #|| $scope.newExternalUser.population_center_id == ''
+      $scope.validPersonalData = false
+      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.newExternalUser.first_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.email ==  undefined || $scope.newExternalUser.document_number == undefined || $scope.newExternalUser.phone_number == undefined || $scope.newExternalUser.address == undefined
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.currentRucom == null
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.tabIndex.selectedIndex = 0
     else
-      goToDocumentation()
+      $scope.validPersonalData = true
+      #goToDocumentation()
 
   $scope.validate_documentation_and_create=  ()->
       if $scope.newFiles.document_number_file == '' 
@@ -249,7 +262,6 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
         #console.log ExternalUser.modelToCreate
         ExternalUser.create()
         $scope.showUploadingDialog()
-
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true

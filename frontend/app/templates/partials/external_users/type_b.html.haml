@@ -1,12 +1,13 @@
-%div.{:layout => "column", :style => "padding-left:20px; padding-right:20px;"}
+
+%div{:layout => "column", :style => "padding-left:20px; padding-right:20px;","ng-hide"=>"showLoading"}
   %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
-    %md-checkbox{"aria-label" => "Checkbox 2", "ng-model" => "isCompany","ng-change"=> "setIsCompany()"}
+    %h2 Nuevo Proovedor
+    %md-checkbox.is-company-selector{"aria-label" => "Checkbox 2", "ng-model" => "isCompany","ng-change"=> "setIsCompany()"}
       Representa a una compañia
-    %md-tabs{"md-selected"=>"tabIndex.selectedIndex","md-align-tabs"=>"bottom"}
+    %md-tabs{"md-selected"=>"tabIndex.selectedIndex","md-align-tabs"=>"bottom","md-dynamic-height"=>""}
       
       /****************************   PERSONAL DATA ***********************************/
-      
-      %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales"}
+      %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales"}
         .md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
             %legend
@@ -106,11 +107,11 @@
                   %div{"ng-messages" => "providerCreateForm.legal_representative.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                 %md-input-container{:flex => ""}
-                  %label Identificación del Representante Legal
+                  %label Numero de Identificación 
                   %input{:name => "id_number_legal_rep", "ng-model" => "newCompany.id_number_legal_rep", :required => ""}
                   %div{"ng-messages" => "providerCreateForm.id_number_legal_rep.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
-                %md-select.layout-padding{:flex => "", :style => "margin-top: 20px;", "ng-model" => "newCompany.id_type_legal_rep", :placeholder => " Tipo Documento Representante"}
+                %md-select.layout-padding{:flex => "", "ng-model" => "newCompany.id_type_legal_rep", :placeholder => " Tipo Documento Representante"}
                   %md-option{"ng-repeat" => "type in idTypeLegalRep", "ng-value" => "type.name"} {{ type.name }}
             
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
@@ -135,14 +136,9 @@
                     %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
 
             
-      
-        %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-          %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
-          
-
       /****************************   DOCUMENTATION ***********************************/
-      
-      %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion", "ng-click"=>"validate_personal_fields()"}
+      %h2 Paso 2: Ingrese Documentacion
+      %md-tab{"aria-controls" => "tab3-content", label: "Paso 2: Documentacion",  "ng-disabled"=>"!validPersonalData"}
         #tab3-content{}
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
                          
@@ -280,5 +276,7 @@
           %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
             %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
             %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "validate_documentation_and_create($event)","ng-disabled"=>"pendingPost"} Crear Proovedor
-      
+
+%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+
      

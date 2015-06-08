@@ -1,11 +1,12 @@
-%div{:layout => "column"}
+%div{:layout => "column", "ng-hide"=>"showLoading"}
 
   %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
-    %md-tabs{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>"bottom"}
+    %h2 Nuevo Proovedor
+    %md-tabs.external-user-tab{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>"bottom"}
       
       /****************************   PERSONAL DATA ***********************************/
       
-      %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales"}
+      %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales"}
         %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
             %legend
@@ -78,8 +79,8 @@
                   %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
       
       /****************************   DOCUMENTATION ***********************************/
-      
-      %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion", "ng-click"=>"validate_personal_fields()"}
+      %h2 Paso 2: Ingrese Documentacion
+      %md-tab{"aria-controls" => "tab3-content", label: "Paso 2: Documentacion", "ng-disabled"=>"!validPersonalData"}
         %md-contentmd.md-padding
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}

@@ -9,7 +9,7 @@
         %div.fieldset-inputs
           %div{layout: "row"}
             %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
+              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
                 %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
                 
@@ -25,7 +25,10 @@
             2. Ingrese el codigo de barras
 
         %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedProviderChange(provider)","md-search-text-change"=>"getQuery(searchText)"}
-          %span{"md-highlight-text" => "searchText","md-delay"=>"3000"} {{provider.first_name}} {{provider.last_name}} - c.c. {{provider.document_number}}
+          %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{provider.first_name}} {{provider.last_name}} - c.c. {{provider.document_number}}
+          %md-not-found
+            No se encontraron proovedores
+          
 
         %div.fieldset-inputs
           %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}

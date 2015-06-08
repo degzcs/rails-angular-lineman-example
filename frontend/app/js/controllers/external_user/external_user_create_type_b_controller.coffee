@@ -1,6 +1,11 @@
 angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
-  
+  #*** Loading Variables **** #
+  $scope.showLoading = false
+  $scope.loadingMessage = "Cargando archivos ..."
+  $scope.loadingMode = "determinate"
+  $scope.loadingProgress = 0
   # ****** Tab directive variables and methods ********** #
+  $scope.validPersonalData = false
   $scope.idTypeLegalRep = [
     { type: 1, name: 'CC' },
     { type: 2, name: 'CE' }
@@ -218,6 +223,9 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
 
   #************ Creation methods *************************#
 
+  $scope.$watch  ->
+    $scope.validate_personal_fields()
+
   $scope.createExternalUser = (ev)->
     
     $scope.validate_documentation_and_create()
@@ -226,28 +234,36 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
     $state.go 'index_external_user'
 
   $scope.validate_personal_fields= ()->
-    if $scope.newFiles.photo_file == '' 
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe tomar una foto al usuario que va a registrar').ariaLabel('Alert Dialog Demo').ok('ok')
-    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+    if $scope.newFiles.photo_file == ''
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' || $scope.newExternalUser.population_center_id == ''
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.newExternalUser.first_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.email ==  undefined || $scope.newExternalUser.document_number == undefined || $scope.newExternalUser.phone_number == undefined || $scope.newExternalUser.address == undefined
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.currentRucom == null && !$scope.isCompany
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.isCompany
       $scope.validate_company_fields()
     else
-      goToDocumentation()
-
+      $scope.validPersonalData = true
+      
   $scope.validate_company_fields = ()->
     if $scope.newCompany.name == '' || $scope.newCompany.nit_number == '' || $scope.newCompany.legal_representative == '' || $scope.newCompany.id_number_legal_rep == '' || $scope.newCompany.email == '' || $scope.newCompany.id_type_legal_rep == '' || $scope.newCompany.phone_number == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos de la compañia').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.newCompany.name == undefined || $scope.newCompany.nit_number == undefined || $scope.newCompany.legal_representative == undefined || $scope.newCompany.id_number_legal_rep == undefined || $scope.newCompany.email == undefined || $scope.newCompany.id_type_legal_rep == undefined || $scope.newCompany.phone_number == undefined
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos de la compañia').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
     else if $scope.currentRucom == null 
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
     else
-      goToDocumentation()
+      $scope.validPersonalData = true
+      
 
   $scope.validate_documentation_and_create=  ()->
     if $scope.isCompany &&  ($scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == '')
@@ -268,34 +284,45 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
 
 
   $scope.showUploadingDialog = () ->
-    parentEl = angular.element(document.body)
-    $mdDialog.show
-      parent: parentEl
-      disableParentScroll: false
-      templateUrl: 'partials/uploading_files.html'
-      controller: [
-        'scope'
-        '$mdDialog'
-        'ExternalUser'
-        (scope, $mdDialog, ExternalUser) ->
-          scope.progress = ExternalUser.uploadProgress
-          scope.message = 'Espere por favor...'
-          scope.mode = 'determinate'
-          scope.$watch (->
-            ExternalUser.uploadProgress
-          ), (newVal, oldVal) ->
-            if typeof newVal != 'undefined'
-              console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
-              scope.progress = ExternalUser.uploadProgress
-              scope.mode = 'indeterminate'
-              if scope.progress == 100
-                $scope.abortCreate = true
-                scope.message = "La carga de archivos ha terminado, espere un momento..."
+    $scope.showLoading = true
+    $scope.loadingMessage = "Subiendo archivos ..."
+    $scope.$watch (->
+      ExternalUser.uploadProgress
+    ), (newVal, oldVal) ->
+      if typeof newVal != 'undefined'
+        $scope.loadingProgress = ExternalUser.uploadProgress
+        if $scope.loadingProgress == 100
+          $scope.abortCreate = true
+          $scope.loadingMessage = "Espere un momento ..."
+          $scope.loadingMode = "indeterminate"
+    # parentEl = angular.element(document.body)
+    # $mdDialog.show
+    #   parent: parentEl
+    #   disableParentScroll: false
+    #   templateUrl: 'partials/uploading_files.html'
+    #   controller: [
+    #     'scope'
+    #     '$mdDialog'
+    #     'ExternalUser'
+    #     (scope, $mdDialog, ExternalUser) ->
+    #       scope.progress = ExternalUser.uploadProgress
+    #       scope.message = 'Espere por favor...'
+    #       scope.mode = 'determinate'
+    #       scope.$watch (->
+    #         ExternalUser.uploadProgress
+    #       ), (newVal, oldVal) ->
+    #         if typeof newVal != 'undefined'
+    #           console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
+    #           scope.progress = ExternalUser.uploadProgress
+    #           scope.mode = 'indeterminate'
+    #           if scope.progress == 100
+    #             $scope.abortCreate = true
+    #             scope.message = "La carga de archivos ha terminado, espere un momento..."
 
-            return
+    #         return
 
-          return
-      ]
+    #       return
+    #   ]
     return
 
   $scope.setIsCompany = ()->

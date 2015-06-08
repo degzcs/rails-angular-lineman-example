@@ -66,3 +66,28 @@
 .external-user-form-info{
   margin-top: 20px;
 }
+
+md-tabs[md-align-tabs="bottom"] md-tabs-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  z-index: 99999;
+}
+md-tabs[md-dynamic-height] md-tabs-content-wrapper {
+
+  padding-bottom: 55px!important;
+}
+
+.external-user-form{
+  .md-tab{
+    color: black!important;
+    #background: #edb039!important;
+    padding: 10px;
+    margin-left: 2px;
+  }
+}
+.is-company-selector{
+  margin-left: 20px;
+}
