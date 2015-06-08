@@ -50,7 +50,8 @@ describe 'Client', :type => :request do
               last_name: client.last_name,
               phone_number: client.phone_number,
               address: client.address,
-              email: client.email
+              email: client.email,
+              activity: 'Joyero'
             }
 
             post '/api/v1/clients', {client: new_values, activity: 'Joyero'}, { "Authorization" => "Barer #{@token}" }

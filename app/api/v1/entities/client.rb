@@ -20,6 +20,8 @@ module V1
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
       expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
+      expose :activity, documentation: {type: "hash", desc: "can be Joyero | Comprador Ocasional | Exportacion", example: "Joyero"}
+
     end
   end
 end
