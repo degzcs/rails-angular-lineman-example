@@ -1,6 +1,9 @@
 %md-content.rucom-selection-container
   %h2.rucom-search-message
-    Seleccione el rucom que va a adjuntar
+    Seleccione el rucom que va a adjuntar, Debe ser un rucom tipo:
+    %br 
+    %strong {{user_type}}
+
   %div.search-tool-header.search-rucom-header{:layout => "row",layout-align: "center center"}
     %md-input-container{:flex => "40", "md-no-float"=>""}
       %input{"ng-model" => "queryRucomNum", :type => "text", :placeholder => "Buscar Por Numero"}

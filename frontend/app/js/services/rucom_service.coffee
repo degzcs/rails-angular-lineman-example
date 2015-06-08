@@ -2,6 +2,7 @@
 angular.module('app').factory 'RucomService', ($resource,$mdDialog, $http) ->
   service =
     currentRucom: null
+    user_type: ''
 
     setCurrentRucom: (rucom)->
       service.currentRucom = rucom

@@ -42,7 +42,7 @@
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
                 %md-input-container{:flex => ""}
                   %label Teléfono
-                  %input{:name => "phone_number", "ng-model" => "newExternalUser.phone_number", :placeholder => "(555) 555 5555", :required => ""}
+                  %input{:name => "phone_number", "ng-model" => "newExternalUser.phone_number", :required => ""}
                   %div{"ng-messages" => "providerCreateForm.phone_number.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                 %md-input-container{:flex => ""}
@@ -53,7 +53,7 @@
                     %div{"ng-message" => "email"} Ingrese un e-mail válido.
                 %md-input-container{:flex => ""}
                   %label Dirección
-                  %input{:name => "address", "ng-model" => "newExternalUser.address", :placeholder => "CLL/CR 1 22 - 33", :required => ""}
+                  %input{:name => "address", "ng-model" => "newExternalUser.address"}
                   %div{"ng-messages" => "providerCreateForm.address.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
 
@@ -78,7 +78,7 @@
                     /  %span.ion-android-checkmark-circle &nbsp;válido
                   %md-input-container{:flex => ""}
                     %label Tipo de Proveedor
-                    %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
+                    %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true"}
 
             
             %fieldset.standard.fieldset-information{"ng-show"=>"isCompany"}
@@ -97,7 +97,7 @@
                     %div{"ng-message" => "required"} Este campo es requerido. 
                 %md-input-container{:flex => ""}
                   %label Teléfono
-                  %input{:required => "true", :name => "company_phone_number", "ng-model" => "newCompany.phone_number", :placeholder => "(555) 555 5555"}
+                  %input{:required => "true", :name => "company_phone_number", "ng-model" => "newCompany.phone_number"}
                   %div{"ng-messages" => "providerCreateForm.company_phone_number.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
@@ -117,7 +117,7 @@
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
                 %md-input-container{:flex => "33"}
                   %label E-mail
-                  %input{:required => "true", :type => "email", :name => "company_email", "ng-model" => "newCompany.email", :placeholder => "mail@example.com"}
+                  %input{:required => "true", :type => "email", :name => "company_email", "ng-model" => "newCompany.email"}
                   %div{"ng-messages" => "providerCreateForm.company_email.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                     %div{"ng-message" => "email"} Ingrese un e-mail válido
@@ -133,7 +133,7 @@
                     /  %span.ion-android-checkmark-circle &nbsp;válido
                   %md-input-container{:flex => ""}
                     %label Tipo de Proveedor
-                    %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true", :placeholder => "Provider type"}
+                    %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true"}
 
             
       /****************************   DOCUMENTATION ***********************************/

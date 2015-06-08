@@ -43,15 +43,38 @@ angular.module('app').directive 'mdTableRucom', ->
           title = 'RUCOM'
           text = 'No es posible crear un proveedor con un estado de RUCOM \'Rechazado\''
           $mdDialog.show $mdDialog.alert().title(title).content(text).ok('OK')
+        else if rucom.provider_type != RucomService.user_type
+          title = 'RUCOM'
+          text = "El rucom seleccionado debe ser del tipo "+ RucomService.user_type
+          $mdDialog.show $mdDialog.alert().title(title).content(text).ok('OK')
         else
-          RucomService.check_if_available(rucom.id).success( (data, headers) ->
-            $mdDialog.cancel()
-            RucomService.setCurrentRucom(data)
-            $scope.comeBack()
-          ).error (data, status, headers, config)->
-            if status == 400
-              $mdDialog.show $mdDialog.alert().title('Hubo un problema').content('Este rucom ya esta asignado a un usuario').ariaLabel('Alert Dialog ').ok('ok')
-          return
+          rucom_name = "Nombre: "+rucom.name
+          rucom_num = "Numero: "+rucom.num_rucom
+          confirm = $mdDialog.confirm().parent(angular.element(document.body)).title("Esta seguro de seleccionar este rucom. "+rucom_name+", "+rucom_num).ariaLabel('Lucky day').ok('Estoy seguro').cancel('cancelar')
+          $mdDialog.show(confirm).then (->
+            console.log "ok"
+
+            RucomService.check_if_available(rucom.id).success( (data, headers) ->
+              $mdDialog.cancel()
+              RucomService.setCurrentRucom(data)
+              $scope.comeBack()
+            ).error (data, status, headers, config)->
+              if status == 400
+                $mdDialog.show $mdDialog.alert().title('Hubo un problema').content('Este rucom ya esta asignado a un usuario').ariaLabel('Alert Dialog ').ok('ok')
+            return
+          ), ->
+            $scope.alert = 'You decided to keep your debt.'
+            return
+
+
+          # RucomService.check_if_available(rucom.id).success( (data, headers) ->
+          #   $mdDialog.cancel()
+          #   RucomService.setCurrentRucom(data)
+          #   $scope.comeBack()
+          # ).error (data, status, headers, config)->
+          #   if status == 400
+          #     $mdDialog.show $mdDialog.alert().title('Hubo un problema').content('Este rucom ya esta asignado a un usuario').ariaLabel('Alert Dialog ').ok('ok')
+          # return
             # if (providers.length > 0) {
             #   var title = 'RUCOM';
             #   var text = 'Ya existe un proveedor asociado a este registro del RUCOM';

@@ -4,6 +4,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
     uploadProgress: 0
     isCompany: false
     modelToCreate:
+      user_type: ''
       rucom_id: ''
       external_user:
         first_name: ''
@@ -343,10 +344,12 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
      
 
     clearModelToCreate: ->
+      RucomService.user_type = ''
       RucomService.currentRucom = null
       sessionStorage.external_user_to_create = null
       service.isCompany= false
       service.modelToCreate =
+        user_type: ''
         rucom_id: ''
         external_user:
           first_name: ''

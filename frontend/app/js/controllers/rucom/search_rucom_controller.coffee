@@ -1,5 +1,14 @@
 angular.module('app').controller 'SearchRucomCtrl', ($scope, $stateParams, RucomService,$http,$mdDialog)->
   ##****************************************  TABLE HEADERS and initial config variables *****************************************##
+  #console.log RucomService.user_type 
+  #check if a user type is required
+  $scope.user_type = RucomService.user_type
+  if $scope.user_type == ''
+    window.history.back();
+  console.log 'LLEGO'
+    
+  console.log RucomService.user_type
+  
   $scope.toggleSearch = true
   $scope.query = ''
   $scope.content = []
@@ -38,6 +47,9 @@ angular.module('app').controller 'SearchRucomCtrl', ($scope, $stateParams, Rucom
   $scope.count = 5;  
 
   #********************************************************************************************
+  if $scope.user_type == 0
+    $scope.user_type_name = ""
+
   #Watchers for listen to changes in query fields
   $scope.$watch 'queryName', (newVal, oldVal) ->
     if oldVal and newVal != oldVal

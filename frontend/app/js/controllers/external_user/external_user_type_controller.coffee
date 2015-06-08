@@ -2,9 +2,9 @@ angular.module('app').controller 'ExternalUserTypeCtrl', ($scope, $state , $mdDi
   ExternalUser.clearModelToCreate()
   $scope.answer =(answer)->
     console.log answer
-    #ExternalUser.modelToCreate.external_user.user_type = answer
+    ExternalUser.modelToCreate.user_type = answer
     ExternalUser.saveModelToCreate()
-    if answer == 0
+    if answer == 'Barequero'
       $state.go 'create_external_user_type_a'
     else
       $state.go 'create_external_user_type_b'

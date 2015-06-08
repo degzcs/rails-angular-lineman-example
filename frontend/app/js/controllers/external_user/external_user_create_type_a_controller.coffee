@@ -64,8 +64,8 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.newExternalUser = ExternalUser.restoreModelToCreate().external_user
   $scope.newCompany = ExternalUser.restoreModelToCreate().company 
   $scope.newFiles = ExternalUser.restoreModelToCreate().files 
-
-  console.log ExternalUser.restoreModelToCreate()
+  $scope.user_type = ExternalUser.restoreModelToCreate().user_type 
+  #console.log ExternalUser.restoreModelToCreate()
 
   #******************* Population center variables ********************************** #
   $scope.states = [];
@@ -206,10 +206,11 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   #******************* RUCOM  variables ********************************** #
 
   $scope.searchRucom = ->
-    $state.go 'search_rucom'
+    RucomService.user_type = $scope.user_type
     ExternalUser.modelToCreate.external_user = $scope.newExternalUser
     ExternalUser.saveModelToCreate()
-  
+    $state.go 'search_rucom'
+    
   $scope.currentRucom = RucomService.getCurrentRucom()
   if $scope.currentRucom 
     ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
@@ -218,6 +219,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     #console.log ExternalUser.modelToCreate
 
   #************ Creation methods *************************#
+  #TODO: Imporove the watch method on the scope to improve performance
   $scope.$watch  ->
     $scope.validate_personal_fields()
 
