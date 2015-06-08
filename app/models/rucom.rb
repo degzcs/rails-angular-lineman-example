@@ -27,4 +27,23 @@ class Rucom < ActiveRecord::Base
     self.provider_type
   end
 
+  def self.create_trazoro(params)
+    rucom_attr = {
+      :idrucom=>"N/A",
+       :rucom_record=>"N/A",
+       :name=>"N/A",
+       :status=>"N/A",
+       :mineral=>"ORO",
+       :location=>"N/A",
+       :subcontract_number=> "N/A",
+       :mining_permit=> "N/A",
+       :num_rucom=>"N/A",
+       :rucomeable_type=>nil,
+       :rucomeable_id=>nil,
+       :provider_type=>params[:provider_type],
+       :trazoro => true,
+      }
+      self.create(rucom_attr)
+  end
+
 end
