@@ -1,5 +1,8 @@
 angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, CurrentUser, CreditBilling, $mdDialog, $log) ->
-  
+  #*** Loading Variables **** #
+  $scope.showLoading = true
+  $scope.loadingMode = "indeterminate"
+  $scope.loadingMessage = "Cargando datos personales ..."
   # Get the current user logged!
   
   $scope.newCreditBilling = {}
@@ -8,7 +11,7 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
     $scope.available_credits = Number(data.available_credits.toFixed(2))
-
+    $scope.showLoading = false
   
   # Shows a form that allows to the user choose an amount of credits
   $scope.showCreditBillingForm = (ev) ->
@@ -26,9 +29,10 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
   # Ask if the ammount chosen was correct and prevents an empty value 
   $scope.confirmCreditBilling = ->
     if($scope.unit != null)
+      price = $scope.unit * 500
       confirm = $mdDialog.confirm()
         .title('Confirmacion solicitud de creditos')
-        .content("Esta seguro de comprar #{$scope.unit} por un total de #{$scope.unit*500} pesos")
+        .content("Esta seguro de comprar #{$scope.unit} por un total de $#{price.formatMoney(2)} COP")
         .ariaLabel('Lucky day').ok('Solicitar Factura').cancel('Cancelar')
         
       $mdDialog.show(confirm).then (->
@@ -63,3 +67,6 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
       .ok('hecho!')
       duration: 2
     return
+
+  $scope.cancel = ->
+    $mdDialog.cancel()

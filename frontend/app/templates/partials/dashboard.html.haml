@@ -1,5 +1,5 @@
 /------------------- DASHBOARD VIEW -------------------/
-.dashboard-content
+.dashboard-content{"ng-hide"=>"showLoading"}
   .dashboard-user-info
     %div{layout: "row"}
       .user-photo-container
@@ -26,7 +26,7 @@
     %br
     %md-button.md-raised.md-primary.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
       Comprar Créditos
-
+%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 
 -#  %h3 Options
 -#  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
