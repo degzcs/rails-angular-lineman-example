@@ -33,7 +33,7 @@ ActiveAdmin.register Company do
         li link_to office.name, admin_company_office_path(company,office)
       end
     end
-    a link_to "Crear Officia", new_admin_company_office_path(company), class: "create_child_button"
+    a link_to "Crear oficina", new_admin_company_office_path(company), class: "create_child_button"
     a link_to "Ver lista con detalles", admin_company_offices_path(company) 
   
   end
