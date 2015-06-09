@@ -20,12 +20,17 @@ module V1
           optional :query_name, type: String
           optional :query_id, type: String
         end
+
+        params :id do
+          requires :id, type: Integer, desc: 'External User ID'
+        end
+
       end
 
 
       resource :clients do
         #GET
-          desc 'returns all existent cleints', {
+          desc 'returns all existent clients', {
           entity: V1::Entities::Client,
           notes: <<-NOTES
             Returns all existent cleints paginated
@@ -52,6 +57,21 @@ module V1
           #binding.pry
           header 'total_pages', clients.total_pages.to_s
           present clients, with: V1::Entities::Client
+        end
+
+       desc 'returns one existent client by :id', {
+          entity: V1::Entities::Client,
+          notes: <<-NOTES
+            Returns one existent client by :id
+          NOTES
+        }
+        params do
+          use :id
+        end
+        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          client = ::User.clients.find(params[:id])
+          present client, with: V1::Entities::Client
         end
 
         # POST
