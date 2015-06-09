@@ -134,7 +134,7 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
         confirm = $mdDialog.confirm().title('Cancelar la creación del nuevo proveedor').content('¿Desea cancelar la operación actual? Los datos que no haya guardado se perderán').ariaLabel('Lucky day').ok('Aceptar').cancel('Cancelar').targetEvent(event)
         return $mdDialog.show(confirm).then((->
           $scope.abortCreate = true
-          ExternalUser.clearModelToCreate()
+          ClientService.clearModelToCreate()
           $state.go toState, toParams
           return
         ), ->
