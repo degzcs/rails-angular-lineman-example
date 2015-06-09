@@ -13,7 +13,7 @@ module V1
       # expose :chamber_commerce_file, documentation: { type: "file", desc: "file", example: "..." } do | provider, options|
       #   provider.company.chamber_of_commerce_file if provider.company.present?
       # end
-      # expose :photo_file, documentation: { type: "file", desc: "file", example: "..." }
+      expose :photo_file, documentation: { type: "file", desc: "file", example: "..." }
       expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
       expose :city_name, documentation: { type: "string", desc: "City name", example: "Medellín" }
       expose :state_name, documentation: { type: "string", desc: "State name", example: "Antioquia" }
