@@ -30,17 +30,40 @@ describe 'Client', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be per_page
         end
+
+         context '/:id' do
+
+          it 'gets an client by id' do
+
+            client = User.clients.last
+
+            expected_response = {
+              id: client.id,
+              document_number: client.document_number,
+              first_name: client.first_name,
+              last_name: client.last_name,
+              phone_number: client.phone_number,
+              address: client.address,
+              email: client.email,
+            }
+
+            get "/api/v1/clients/#{client.id}",{},{ "Authorization" => "Barer #{@token}" }
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+          end
+        end
+
       end
 
       context 'POST' do
 
       context "without company info" do
-          it 'returns a representation of the new external user created and code 201' do
+          it 'returns a representation of the new client created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             population_center = create(:population_center)
-            client = build(:external_user, population_center_id: population_center.id)
+            client = build(:client_with_fake_rucom, population_center_id: population_center.id)
 
             new_values = {
               first_name: client.first_name,
@@ -71,24 +94,24 @@ describe 'Client', :type => :request do
         end
 
         context "with company info" do
-          xit 'returns a representation of the new external user with his company created and code 201' do
+          xit 'returns a representation of the new client with his company created and code 201' do
 
             #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom_company = create(:rucom)
             population_center = create(:population_center)
-            external_user = build(:external_user, population_center_id: population_center.id)
+            client = build(:client_with_fake_rucom, population_center_id: population_center.id)
             company = build(:company)
 
             new_values = {
-              first_name: external_user.first_name,
-              last_name: external_user.last_name,
-              email: external_user.email,
-              document_number: external_user.document_number,
-              document_expedition_date: external_user.document_expedition_date,
-              phone_number: external_user.phone_number,
-              address: external_user.address,
+              first_name: client.first_name,
+              last_name: client.last_name,
+              email: client.email,
+              document_number: client.document_number,
+              document_expedition_date: client.document_expedition_date,
+              phone_number: client.phone_number,
+              address: client.address,
               population_center_id: population_center.id,
               files: @user_and_company_files
             }
@@ -107,15 +130,15 @@ describe 'Client', :type => :request do
             }
 
             expected_response = {
-              document_number: external_user.document_number,
-              first_name: external_user.first_name,
-              last_name: external_user.last_name,
-              phone_number: external_user.phone_number,
-              address: external_user.address,
-              email: external_user.email,
+              document_number: client.document_number,
+              first_name: client.first_name,
+              last_name: client.last_name,
+              phone_number: client.phone_number,
+              address: client.address,
+              email: client.email,
             }
 
-            post '/api/v1/external_users', {external_user: new_values, rucom_id: rucom_company.id, company: new_company_values},
+            post '/api/v1/clients', {client: new_values, rucom_id: rucom_company.id, company: new_company_values},
                                       { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
@@ -126,6 +149,41 @@ describe 'Client', :type => :request do
         end
       end
 
+      context 'PUT' do
+        it 'returns a representation of the updated client and code 200' do
+          rucom = create(:rucom)
+          population_center = create(:population_center)
+          client = create( :client_with_fake_rucom,  population_center_id: population_center.id)
+
+          new_first_name = "A diferent first name"
+          new_document_number = "1345676788"
+          new_nit_number = "A direferent nit"
+
+          new_values = {
+            document_number: new_document_number,
+            first_name: new_first_name ,
+          }
+
+          new_company_info_values ={
+            nit_number: new_nit_number
+          }
+
+          expected_response = {
+            document_number: new_document_number,
+            first_name: new_first_name,
+            last_name: client.last_name,
+            phone_number: client.phone_number,
+            address: client.address,
+            email: client.email,
+          }
+
+          put "/api/v1/clients/#{client.id}", {client: new_values, company: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
+
+          expect(response.status).to eq 200
+          expect(JSON.parse(response.body)).to include(expected_response.stringify_keys)
+          expect(JSON.parse(response.body)['company']['nit_number']).to eq new_nit_number
+        end
+      end
 
     end
   end
