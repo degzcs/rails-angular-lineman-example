@@ -372,6 +372,30 @@
             deferred.resolve()
           deferred.promise
     )
+    .state("create_client_no_rucom",
+      url: "/clients/no_rucom_creation",
+      ncyBreadcrumb:
+        label: 'Nuevo Cliente'
+        parent: 'clients'
+      views:
+        'content':
+          templateUrl: "partials/clients/no_rucom.html"
+          controller: "ClientCreateNoRucomCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
 
     .state("show_client",
       url: "/clients/:id",
@@ -400,13 +424,13 @@
     )
 
     .state("edit_client",
-    url: "/client/:clientId",
+    url: "/client/:id",
     ncyBreadcrumb:
       label: 'Edición de cliente'
     views:
       'content':
         templateUrl: "partials/clients/edit.html"
-        controller: "ClientsEditCtrl"
+        controller: "ClientEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
