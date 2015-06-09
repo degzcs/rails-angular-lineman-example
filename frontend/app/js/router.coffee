@@ -329,7 +329,7 @@
     views:
       'content':
         templateUrl: "partials/clients/index.html"
-        controller: "ClientsIndexCtrl"
+        controller: "ClientIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
