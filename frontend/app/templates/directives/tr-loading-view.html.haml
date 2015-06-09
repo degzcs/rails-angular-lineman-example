@@ -2,7 +2,7 @@
   %h2 {{message}}
 %section.loading-view-progress
   %div{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column"}
-    %md-progress-circular{"md-mode" => "{{mode}}"}
+    %md-progress-circular{"md-mode" => "{{mode}}", "value"=>"{{progress}}"}
 
   / %md-dialog
   / %md-dialog-content
