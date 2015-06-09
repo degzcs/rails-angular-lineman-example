@@ -49,7 +49,7 @@ angular.module('app').directive 'mdTableRucom', ->
           $mdDialog.show $mdDialog.alert().title(title).content(text).ok('OK')
         else
           rucom_name = "Nombre: "+rucom.name
-          rucom_num = "Numero: "+rucom.num_rucom
+          rucom_num = if rucom.num_rucom then "Número: " + rucom.num_rucom else "Número: "+rucom.rucom_record
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title("Esta seguro de seleccionar este rucom. "+rucom_name+", "+rucom_num).ariaLabel('Lucky day').ok('Estoy seguro').cancel('cancelar')
           $mdDialog.show(confirm).then (->
             console.log "ok"

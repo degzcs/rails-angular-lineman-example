@@ -58,7 +58,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
             num_rucom: providers[i].rucom.num_rucom
             rucom_record: providers[i].rucom.rucom_record
             provider_type: providers[i].rucom.provider_type
-            rucom_status: providers[i].rucom.status
+            rucom_status: if providers[i].rucom.status then providers[i].rucom.status else (if providers[i].rucom.id then 'Inscrito' else 'No Inscrito')
             mineral: providers[i].rucom.mineral
             name: providers[i].first_name + ' '+ providers[i].last_name
             city: providers[i].city || ''

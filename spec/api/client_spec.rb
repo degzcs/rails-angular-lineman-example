@@ -6,7 +6,7 @@ describe 'Client', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        # FactoryGirl.create_list(:client, 20)
+        FactoryGirl.create_list(:client_with_fake_rucom, 20)
 
            document_number_file_path = "#{Rails.root}/spec/support/test_images/document_number_file.png"
            mining_register_file_path = "#{Rails.root}/spec/support/test_images/mining_register_file.png"
@@ -20,6 +20,16 @@ describe 'Client', :type => :request do
            photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
            @user_files = [photo_file,document_number_file]
            @user_and_company_files = [photo_file,document_number_file, rut_file, chamber_commerce_file]
+      end
+
+       context 'GET' do
+
+        it 'verifies that response has the elements number specified in per_page param' do
+          per_page = 5
+          get '/api/v1/clients', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
+          expect(response.status).to eq 200
+          expect(JSON.parse(response.body).count).to be per_page
+        end
       end
 
       context 'POST' do

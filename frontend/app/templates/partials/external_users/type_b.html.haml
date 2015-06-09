@@ -128,7 +128,7 @@
                 %md-content.md-padding{:layout => "", "layout-sm" => "column"}
                   %md-input-container{:flex => ""}
                     %label {{rucomIDField.label}}
-                    %input{:readonly => "true", "ng-model" => "currentRucom.num_rucom"}
+                    %input{:readonly => "true", "ng-model" => "currentRucom[rucomIDField.field]"}
                     /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
                     /  %span.ion-android-checkmark-circle &nbsp;válido
                   %md-input-container{:flex => ""}
