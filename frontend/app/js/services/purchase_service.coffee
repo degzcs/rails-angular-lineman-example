@@ -2,7 +2,7 @@
 # This service is in charge to manage the server requests related to Purchases
 #
 #TODO: make the remaining HTTP requests
-angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload , $http)->
+angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload , $http,$mdDialog)->
   service=
     #
     # Service impl
@@ -83,6 +83,8 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             #service.flushModel()
             # if !data.status == 500
             $location.path('/purchases/show')
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ariaLabel('Alert Dialog Demo').ok('ok')
+            
             # else
               # show an error message
         ).catch (err) ->

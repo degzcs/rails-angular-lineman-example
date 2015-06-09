@@ -1,5 +1,8 @@
 angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state) ->
-
+  #*** Loading Variables **** #
+  $scope.showLoading = false
+  $scope.loadingMode = "determinate"
+  $scope.loadingMessage = "Registrando su compra ..."
   #
   # Instances
   #
@@ -315,41 +318,55 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   # Show dialog displaying file uploading progress
   $scope.showUploadingDialog = (ev) ->
-    parentEl = angular.element(document.body)
-    $mdDialog.show
-      parent: parentEl
-      targetEvent: ev
-      disableParentScroll: false
-      template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
-      controller: [
-        'scope'
-        '$mdDialog'
-        'PurchaseService'
-        (scope, $mdDialog, PurchaseService) ->
-          scope.progress = PurchaseService.impl.uploadProgress
-          scope.message = 'Espere por favor...'
-          scope.$watch (->
-            PurchaseService.impl.uploadProgress
-          ), (newVal, oldVal) ->
-            if typeof newVal != 'undefined'
-              console.log 'Progress: ' + scope.progress + ' (' + PurchaseService.impl.uploadProgress + ')'
-              scope.progress = PurchaseService.impl.uploadProgress
-              if scope.progress == 100
-                scope.closeDialog()
-            return
+    $scope.showLoading = true
+    $scope.loadingMessage = "Subiendo archivos ..."
+    $scope.$watch (->
+      PurchaseService.impl.uploadProgress
+    ), (newVal, oldVal) ->
+      if typeof newVal != 'undefined'
+        $scope.loadingProgress = PurchaseService.impl.uploadProgress
+        if $scope.loadingProgress == 100
+          $scope.abortCreate = true
+          $scope.loadingMessage = "Espere un momento ..."
+          $scope.loadingMode = "indeterminate"
+      return
 
-          scope.closeDialog = ->
-            $mdDialog.cancel()
-            # $scope.newProvider = {}
-            # PurchaseService.setCurrentProv {}
-            $scope.infoAlert 'Crear nueva compra', 'La compra esta siendo procesada ...', false
-            # $scope.abortCreate = true
-            # PurchaseService.currentTabProvCreation = 0
-            return
+  
+    # parentEl = angular.element(document.body)
+    # $mdDialog.show
+    #   parent: parentEl
+    #   targetEvent: ev
+    #   disableParentScroll: false
+    #   template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
+    #   controller: [
+    #     'scope'
+    #     '$mdDialog'
+    #     'PurchaseService'
+    #     (scope, $mdDialog, PurchaseService) ->
+    #       scope.progress = PurchaseService.impl.uploadProgress
+    #       scope.message = 'Espere por favor...'
+    #       scope.$watch (->
+    #         PurchaseService.impl.uploadProgress
+    #       ), (newVal, oldVal) ->
+    #         if typeof newVal != 'undefined'
+    #           console.log 'Progress: ' + scope.progress + ' (' + PurchaseService.impl.uploadProgress + ')'
+    #           scope.progress = PurchaseService.impl.uploadProgress
+    #           if scope.progress == 100
+    #             scope.closeDialog()
+    #         return
 
-          return
-      ]
-    return
+    #       scope.closeDialog = ->
+    #         $mdDialog.cancel()
+    #         # $scope.newProvider = {}
+    #         # PurchaseService.setCurrentProv {}
+    #         $scope.infoAlert 'Crear nueva compra', 'La compra esta siendo procesada ...', false
+    #         # $scope.abortCreate = true
+    #         # PurchaseService.currentTabProvCreation = 0
+    #         return
+
+    #       return
+    #   ]
+    # return
 
   $scope.infoAlert = (title, content, error) ->
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK')).finally ->

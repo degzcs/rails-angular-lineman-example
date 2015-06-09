@@ -87,7 +87,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   # milliseconds to update the client data just for user interaction purposes
   #
   $scope.setSelectedClient = (selectedClient)->
-    $scope.searchClientText = null
+    #$scope.searchClientText = null
     $scope.selectedClient = selectedClient
     $scope.clientVerifiedProgress = true
     $timeout (->
@@ -97,7 +97,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
   # Same for the courier autocomplete field
   $scope.setSelectedCourier = (selectedCourier)->
-    $scope.searchCourierText = null
+    #$scope.searchCourierText = null
     $scope.selectedCourier = selectedCourier
     $scope.courierVerifiedProgress = true
     $timeout (->
