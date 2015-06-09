@@ -129,6 +129,26 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     (state) ->
       state.name.toLowerCase().indexOf(lowercaseQuery) == 0
 
+  flushFields = (level) ->
+    $scope.population_centers = []
+    $scope.selectedPopulationCenter = null
+    $scope.searchPopulationCenter = null
+    $scope.populationCenterDisabled = true
+    switch level
+      when 'state'
+        $scope.cities = []
+        $scope.selectedState = null
+        $scope.selectedCity = null
+        $scope.searchState = null
+        $scope.searchCity = null
+        $scope.cityDisabled = true
+      when 'city'
+        $scope.searchCity = null
+        $scope.selectedCity = null
+      else
+        break
+    return
+  
 
   # It listens to state changes
   $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
