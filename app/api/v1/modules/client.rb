@@ -25,6 +25,34 @@ module V1
           requires :id, type: Integer, desc: 'External User ID'
         end
 
+        params :company do
+          optional :company, type: Hash do
+            optional  :nit_number, type: String, desc: 'nit_number', documentation: { example: 'Rock' }
+            optional  :name, type: String, desc: 'name', documentation: { example: 'Rock' }
+            optional  :city, type: String, desc: 'city', documentation: { example: 'Rock' }
+            optional  :state, type: String, desc: 'state', documentation: { example: 'Rock' }
+            optional  :country , type: String, desc: 'country', documentation: { example: 'Rock' }
+            optional  :legal_representative, type: String, desc: 'legal_representative', documentation: { example: 'Rock' }
+            optional  :id_type_legal_rep, type: String, desc: 'id_type_legal_rep', documentation: { example: 'Rock' }
+            optional  :id_number_legal_rep, type: String, desc: 'id_number_legal_rep', documentation: { example: 'Rock' }
+            optional  :email, type: String, desc: 'email', documentation: { example: 'Rock' }
+            optional  :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
+          end
+        end
+
+        params :client do
+          optional :client, type: Hash do
+            optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
+            optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
+            optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
+            optional  :first_name, type: String, desc: 'first_name', documentation: { example: 'Rock' }
+            optional  :last_name, type: String, desc: 'last_name', documentation: { example: 'Rock' }
+            optional  :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
+            optional  :address , type: String, desc: 'address', documentation: { example: 'Rock' }
+            optional  :email , type: String, desc: 'email', documentation: { example: 'Rock' }
+          end
+        end
+
       end
 
 
@@ -120,8 +148,39 @@ module V1
           end
           Rails.logger.info(client.errors.inspect)
         end
-      end
 
+        # PUT
+        desc 'updates a client', {
+            entity: V1::Entities::Client,
+            notes: <<-NOTE
+              ### Description
+              It updates a new client record and returns its current representation
+            NOTE
+          }
+        params do
+          requires :id
+          use :client
+          use :company
+        end
+        put '/:id', http_codes: [
+          [200, "Successful"],
+          [400, "Invalid parameter in entry"],
+          [401, "Unauthorized"],
+          [404, "Entry not found"],
+        ]  do
+          content_type "text/json"
+          client = ::User.clients.find(params[:id])
+          client_params = params[:client]
+          client.company.update_attributes(params[:company]) if params[:company]
+          client.update_attributes(params[:client]) if params[:client]
+          if client.save
+            present client, with: V1::Entities::Client
+          else
+            error!(client.errors, 400)
+          end
+        end
+
+      end
     end
   end
 end

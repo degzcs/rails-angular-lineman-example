@@ -167,7 +167,7 @@ module V1
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           chamber_of_commerce_file = files.select{|file| file['filename'] =~ /chamber_of_commerce_file/}.first
-          
+
           params[:external_user].except!(:files).merge!(document_number_file: document_number_file, photo_file: photo_file)
 
           external_user_params = params[:external_user]
@@ -176,11 +176,11 @@ module V1
 
 
           rucom = ::Rucom.find(params[:rucom_id])
-          #If there is a company 
+          #If there is a company
           if params[:company]
             company = Company.new(params[:company].merge!(mining_register_file: mining_register_file, rut_file: rut_file, chamber_of_commerce_file: chamber_of_commerce_file))
             company.rucom = rucom
-            external_user.build_office(name: "oficina 1", company: company) 
+            external_user.build_office(name: "oficina 1", company: company)
           else
             #binding.pry
             external_user.personal_rucom = rucom
@@ -197,6 +197,7 @@ module V1
           end
           Rails.logger.info(external_user.errors.inspect)
         end
+
         # PUT
         desc 'updates a external_user', {
             entity: V1::Entities::ExternalUser,
