@@ -424,13 +424,13 @@
     )
 
     .state("edit_client",
-    url: "/client/:clientId",
+    url: "/client/:id",
     ncyBreadcrumb:
       label: 'Edición de cliente'
     views:
       'content':
         templateUrl: "partials/clients/edit.html"
-        controller: "ClientsEditCtrl"
+        controller: "ClientEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"

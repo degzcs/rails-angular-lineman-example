@@ -52,7 +52,7 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
     ScannerService.clearData()
   $scope.scanner = (type) ->
     CameraService.setTypeFile type
-    ClientService.modelToCreate.external_user = $scope.newClientService
+    ClientService.modelToCreate.external_user = $scope.newExternalUser
     ClientService.saveModelToCreate()
     return
 
@@ -62,6 +62,7 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
   $scope.newCompany = ClientService.restoreModelToCreate().company 
   $scope.newFiles = ClientService.restoreModelToCreate().files 
   $scope.user_type = ClientService.restoreModelToCreate().user_type 
+  console.log "LLEGO"
   console.log ClientService.restoreModelToCreate()
 
   #******************* Population center variables ********************************** #
@@ -200,27 +201,7 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
   $scope.searchTextPopulationCenterChange = (text) ->
     return
 
-  #******************* RUCOM  variables ********************************** #
-
-  $scope.searchRucom = ->
-    RucomService.user_type = $scope.user_type
-    ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-    ExternalUser.saveModelToCreate()
-    $state.go 'search_rucom'
-    
-  $scope.currentRucom = RucomService.getCurrentRucom()
-  if $scope.currentRucom 
-    ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
-    ExternalUser.saveModelToCreate()
-    if $scope.currentRucom.num_rucom
-      $scope.rucomIDField.label = 'Número de RUCOM'
-      $scope.rucomIDField.field = 'num_rucom'
-    else if $scope.currentRucom.rucom_record
-      $scope.rucomIDField.label = 'Número de Expediente'
-      $scope.rucomIDField.field = 'rucom_record'
-
-    
-    #console.log ExternalUser.modelToCreate
+  
 
   #************ Creation methods *************************#
   #TODO: Imporove the watch method on the scope to improve performance
@@ -248,10 +229,6 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
       $scope.validPersonalData = false
       #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.currentRucom == null
-      $scope.validPersonalData = false
-      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
-      $scope.tabIndex.selectedIndex = 0
     else
       $scope.validPersonalData = true
       #goToDocumentation()
@@ -261,22 +238,21 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
         $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
       else
         $scope.pendingPost = true
-        ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-        ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id 
-        ExternalUser.modelToCreate.files = $scope.newFiles 
-        ExternalUser.saveModelToCreate()
+        ClientService.modelToCreate.external_user = $scope.newExternalUser
+        ClientService.modelToCreate.files = $scope.newFiles 
+        ClientService.saveModelToCreate()
         #console.log ExternalUser.modelToCreate
-        ExternalUser.create()
+        ClientService.create()
         $scope.showUploadingDialog()
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true
     $scope.loadingMessage = "Subiendo archivos ..."
     $scope.$watch (->
-      ExternalUser.uploadProgress
+      ClientService.uploadProgress
     ), (newVal, oldVal) ->
       if typeof newVal != 'undefined'
-        $scope.loadingProgress = ExternalUser.uploadProgress
+        $scope.loadingProgress = ClientService.uploadProgress
         if $scope.loadingProgress == 100
           $scope.abortCreate = true
           $scope.loadingMessage = "Espere un momento ..."

@@ -140,6 +140,8 @@ module V1
             client.personal_rucom = rucom
           end
 
+          #binding.pry
+
           if client.save
             present client, with: V1::Entities::Client
           else

@@ -1,5 +1,5 @@
 angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
-  #*** Loading Variables **** #
+  # *** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMessage = "Cargando archivos ..."
   $scope.loadingMode = "determinate"
