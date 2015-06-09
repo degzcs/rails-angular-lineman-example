@@ -1,0 +1,12 @@
+%md-dialog.user-type-dialog{"aria-label" => "Mango (Fruit)"}
+  %form
+    %md-dialog-content.sticky-container
+      /%md-subheader.md-sticky-no-effect 
+      %h3 Seleccione el tipo de cliente que va a registrar
+      %md-button.btn-user-type{"ng-click" => "answer('Comercializadores')"} 1. Comercializadores
+      %md-button.btn-user-type{"ng-click" => "answer('Joyero')"} 2. Joyero
+      %md-button.btn-user-type{"ng-click" => "answer('Comprador Ocasional ')"} 3. Comprador Ocasional 
+      %md-button.btn-user-type{"ng-click" => "answer('Exportacion')"} 4. Exportacion
+      %br
+      %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
+

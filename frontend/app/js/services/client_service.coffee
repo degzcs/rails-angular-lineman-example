@@ -325,14 +325,17 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
                   query_rucomid: rucomid
                 }
     saveModelToCreate: ->
-      sessionStorage.external_user_to_create = angular.toJson(service.modelToCreate)
-
+      sessionStorage.client_to_create = angular.toJson(service.modelToCreate)
+      console.log "Cliente guardado"
+      console.log sessionStorage.client_to_create
     restoreModelToCreate: ->
       files = service.modelToCreate.files
-      if sessionStorage.external_user_to_create != null
-        service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
+      if sessionStorage.client_to_create != null
+        service.modelToCreate = angular.fromJson(sessionStorage.client_to_create)
         service.modelToCreate.files = files
         service.modelToCreate
+        console.log "DEvulviendo cliente"
+        console.log service.modelToCreate
       else
         service.modelToCreate
       # if sessionStorage.external_user_to_create == null
@@ -347,7 +350,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
     clearModelToCreate: ->
       RucomService.user_type = ''
       RucomService.currentRucom = null
-      sessionStorage.external_user_to_create = null
+      sessionStorage.client_to_create = null
       service.isCompany= false
       service.modelToCreate =
         activity: ''
