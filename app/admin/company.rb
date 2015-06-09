@@ -15,7 +15,7 @@
 ActiveAdmin.register Company do
   menu priority: 4, label: 'Compañias'
 
-  permit_params :nit_number, :name, :city, :state , :country , :legal_representative , :id_type_legal_rep , :email , :phone_number ,:id_number_legal_rep ,:chamber_of_commerce_file
+  permit_params :nit_number, :name, :city, :state , :country , :legal_representative , :id_type_legal_rep , :email , :phone_number ,:id_number_legal_rep ,:chamber_of_commerce_file, :rut_file, :mining_register_file
 
   controller do
     # This code is evaluated within the controller class
@@ -69,7 +69,8 @@ ActiveAdmin.register Company do
       f.input :email , label: "Email compañia"
       f.input :phone_number, label:"Telefono"
       f.input :chamber_of_commerce_file, :as => :file, label: "PDF Camara de comercio", :hint => link_to(image_tag(f.object.chamber_of_commerce_file.preview.url),f.object.chamber_of_commerce_file.url, :target => "_blank" )
-    
+      f.input :rut_file, :as => :file, label: "PDF RUT", :hint => link_to(image_tag(f.object.rut_file.preview.url),f.object.rut_file.url, :target => "_blank" )
+      f.input :mining_register_file, :as => :file, label: "PDF Registro minero", :hint => link_to(image_tag(f.object.mining_register_file.preview.url),f.object.mining_register_file.url, :target => "_blank" )
     end
     f.actions
   end
