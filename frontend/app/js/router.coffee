@@ -373,6 +373,32 @@
           deferred.promise
     )
 
+    .state("show_client",
+      url: "/clients/:id",
+      ncyBreadcrumb:
+        label: 'Detalles cliente'
+        parent: 'clients'
+      views:
+        'content':
+          templateUrl: "partials/clients/show.html"
+          controller: "ClientShowCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
+
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
+
     .state("edit_client",
     url: "/client/:clientId",
     ncyBreadcrumb:
