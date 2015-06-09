@@ -19,7 +19,7 @@ active_admin_form_for resource , :url => resource ?  "/admin/users/ #{resource.i
     f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)
     f.input :document_number_file, :as => :file , label: "PDF cedula" , :hint => link_to(image_tag(f.object.document_number_file.preview.url),f.object.document_number_file.url, :target => "_blank" )
     f.input :rut_file, :as => :file, label: "PDF Rut", :hint => link_to(image_tag(f.object.rut_file.preview.url),f.object.rut_file.url, :target => "_blank" )
-    f.input :population_center, label: "Centro poblacional"
+    f.input :population_center, label: "Centro poblacional", :collection => PopulationCenter.all.map{|o| ["#{o.city.name if o.city} - #{o.name}", o.id]}
     h2 "Informacion de compañia:"
     f.input :office, label: "Sucursal" , :collection => Office.all.map{|o| ["#{o.company.name if o.company} - #{o.name}", o.id]}
     if resource
