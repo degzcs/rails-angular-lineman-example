@@ -9,8 +9,8 @@ module V1
       format :json
       content_type :json, 'application/json'
 
+
       helpers do
-        
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -19,37 +19,49 @@ module V1
         params :client_query do
           optional :query_name, type: String
           optional :query_id, type: String
-          optional :query_rucomid, type: String
         end
 
         params :id do
-          requires :id, type: Integer, desc: 'User ID'
+          requires :id, type: Integer, desc: 'External User ID'
+        end
+
+        params :company do
+          optional :company, type: Hash do
+            optional  :nit_number, type: String, desc: 'nit_number', documentation: { example: 'Rock' }
+            optional  :name, type: String, desc: 'name', documentation: { example: 'Rock' }
+            optional  :city, type: String, desc: 'city', documentation: { example: 'Rock' }
+            optional  :state, type: String, desc: 'state', documentation: { example: 'Rock' }
+            optional  :country , type: String, desc: 'country', documentation: { example: 'Rock' }
+            optional  :legal_representative, type: String, desc: 'legal_representative', documentation: { example: 'Rock' }
+            optional  :id_type_legal_rep, type: String, desc: 'id_type_legal_rep', documentation: { example: 'Rock' }
+            optional  :id_number_legal_rep, type: String, desc: 'id_number_legal_rep', documentation: { example: 'Rock' }
+            optional  :email, type: String, desc: 'email', documentation: { example: 'Rock' }
+            optional  :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
+          end
         end
 
         params :client do
-          requires :client, type: Hash do
+          optional :client, type: Hash do
             optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
             optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
-            optional  :id_document_number, type: String, desc: 'id_document_number', documentation: { example: 'Rock' }
-            optional  :id_document_type, type: String, desc: 'id_document_type', documentation: { example: 'Rock' }
+            optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
             optional  :first_name, type: String, desc: 'first_name', documentation: { example: 'Rock' }
             optional  :last_name, type: String, desc: 'last_name', documentation: { example: 'Rock' }
             optional  :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
             optional  :address , type: String, desc: 'address', documentation: { example: 'Rock' }
             optional  :email , type: String, desc: 'email', documentation: { example: 'Rock' }
-            optional  :client_type, type: String, desc: 'client_type', documentation: { example: 'Rock' }
-            optional  :company_name, type: String, desc: 'client_type', documentation: { example: 'Rock' }
-            optional  :nit_company_number, type: String, desc: 'client_type', documentation: { example: 'Rock' }
           end
         end
 
       end
 
+
       resource :clients do
-        desc 'returns all existent clients', {
+        #GET
+          desc 'returns all existent clients', {
           entity: V1::Entities::Client,
           notes: <<-NOTES
-            Returns all existent sessions paginated
+            Returns all existent cleints paginated
           NOTES
         }
         params do
@@ -62,24 +74,20 @@ module V1
           per_page = params[:per_page] || 10
           query_name = params[:query_name]
           query_id = params[:query_id]
-          query_rucomid = params[:query_rucomid]
           #binding.pry
-          if query_name
-            clients = ::Client.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name", 
-              {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
-          elsif query_id
-            clients = ::Client.order("id DESC").where("id_document_number LIKE :id_document_number", 
-              {id_document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
-          elsif query_rucomid
-            clients = ::Client.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
-          else
-            clients = ::Client.order("id DESC").paginate(:page => page, :per_page => per_page)
-          end
+          clients =  if query_name
+                            ::User.clients.order_by_id.find_by_name(query_name).paginate(:page => page, :per_page => per_page)
+                          elsif query_id
+                            ::User.clients.order_by_id.find_by_document_number(query_id).paginate(:page => page, :per_page => per_page)
+                          else
+                            ::User.clients.order_by_id.paginate(:page => page, :per_page => per_page)
+                          end
           #binding.pry
           header 'total_pages', clients.total_pages.to_s
           present clients, with: V1::Entities::Client
         end
-        desc 'returns one existent client by :id', {
+
+       desc 'returns one existent client by :id', {
           entity: V1::Entities::Client,
           notes: <<-NOTES
             Returns one existent client by :id
@@ -90,9 +98,10 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          client = ::Client.find(params[:id])
+          client = ::User.clients.find(params[:id])
           present client, with: V1::Entities::Client
         end
+
         # POST
         desc 'creates a new client', {
             entity: V1::Entities::Client,
@@ -102,7 +111,6 @@ module V1
             NOTE
           }
         params do
-          use :client
         end
         post '/', http_codes: [
           [200, "Successful"],
@@ -110,18 +118,37 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
-          #binding.pry
+           #binding.pry
           content_type "text/json"
-          
+
+          # update params
+          files =params[:client].slice(:files)[:files]
+          document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
+          # mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
+          rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
+          photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
+          params[:client].except!(:files).merge!(document_number_file: document_number_file, rut_file: rut_file, photo_file: photo_file)
+
           client_params = params[:client]
-          client = ::Client.new(params[:client])
+          client = ::User.new(params[:client])
+          client.external = true
+          client.build_company(params[:company]) if params[:company]
+
+
+          if params[:activity].present?
+            rucom = ::Rucom.create_trazoro(provider_type: params[:activity])
+            client.personal_rucom = rucom
+          end
+
           if client.save
             present client, with: V1::Entities::Client
           else
+
             error!(client.errors.inspect, 400)
           end
           Rails.logger.info(client.errors.inspect)
         end
+
         # PUT
         desc 'updates a client', {
             entity: V1::Entities::Client,
@@ -133,6 +160,7 @@ module V1
         params do
           requires :id
           use :client
+          use :company
         end
         put '/:id', http_codes: [
           [200, "Successful"],
@@ -141,16 +169,17 @@ module V1
           [404, "Entry not found"],
         ]  do
           content_type "text/json"
-          client = ::Client.find(params[:id])
+          client = ::User.clients.find(params[:id])
           client_params = params[:client]
-          client.update_attributes(params[:client])
-
+          client.company.update_attributes(params[:company]) if params[:company]
+          client.update_attributes(params[:client]) if params[:client]
           if client.save
             present client, with: V1::Entities::Client
           else
             error!(client.errors, 400)
           end
         end
+
       end
     end
   end

@@ -4,7 +4,7 @@ describe 'Purchase', :type => :request do
     context '#purchases' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password', available_credits: 20000
         @token = @user.create_token
          file_path = "#{Rails.root}/spec/support/test_images/image.png"
         seller_picture_path = "#{Rails.root}/spec/support/test_images/seller_picture.png"
@@ -14,8 +14,8 @@ describe 'Purchase', :type => :request do
       end
 
       context 'POST' do
-        it 'should create one complete purchase even its origin cetificate file' do
-          provider = create(:provider)
+        it 'should create one complete purchase with its all attached files' do
+          provider = create(:external_user)
           expected_response = {
            "id"=>1,
            "user_id"=>1,
@@ -37,13 +37,19 @@ describe 'Purchase', :type => :request do
               "id"=> 1,
               "status" => true,
               "remaining_amount" => 1.5
-           }
+           },
+           # "created_at"=> '',
+           # "barcode_html" => '',
+           # "code" => '',
+           # "access_token" =>'',
+           "trazoro" => false,
+           # "sale_id" => nil
           }
 
           new_gold_batch_values = {
             "id" => 1,
-            "parent_batches" => "",
-            "grams" => 1.5,
+            # "parent_batches" => "",
+            "fine_grams" => 1.5,
             "grade" => 1,
             "inventory_id" => 1,
           }
@@ -59,12 +65,13 @@ describe 'Purchase', :type => :request do
           }
           post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_purchase_values},{ "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 201
+          # binding.pry
           expect(JSON.parse(response.body)).to include expected_response
         end
       end
       context "GET" do
         before(:all) do
-          provider = create(:provider)
+          provider = create(:external_user)
           create_list(:purchase, 20, user_id: @user.id, provider_id: provider.id)
         end
         context "/" do

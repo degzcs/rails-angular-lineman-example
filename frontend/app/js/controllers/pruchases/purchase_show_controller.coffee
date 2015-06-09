@@ -58,7 +58,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       grade: $scope.goldBatch.model.grade
 
     providerForPDF = purchase.provider
-
+    
     purchasePDF =  purchase
     # purchasePDF.provider=[]
 

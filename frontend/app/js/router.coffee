@@ -1,4 +1,4 @@
-angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
+ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
 
   #TODO: apply some 'universal resolve' approach to avoid boilerplate code here
   # see this link: http://spin.atomicobject.com/2014/10/04/javascript-angularjs-resolve-routes/
@@ -145,16 +145,16 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         controller: "SessionsNewCtrl"
   )
 
-  #  --- Providers Routes ---- #
+  #  --- External User Routes ---- #
 
-  .state("providers",
-    url: "/provider",
+  .state("index_external_user",
+    url: "/external_users",
     ncyBreadcrumb:
-      label: 'Proveedores'
+      label: 'Proovedores'
     views:
       'content':
-        templateUrl: "partials/providers/index.html"
-        controller: "ProvidersIndexCtrl"
+        templateUrl: "partials/external_users/index.html"
+        controller: "ExternalUserIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -171,14 +171,67 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-  .state("edit_provider",
-    url: "/provider/:providerId",
+  .state("show_external_user",
+    url: "/external_user/:id",
     ncyBreadcrumb:
-      label: 'Edición proovedor'
+      label: 'Detalles proovedor'
+      parent: 'index_external_user'
     views:
       'content':
-        templateUrl: "partials/providers/edit.html"
-        controller: "ProvidersEditCtrl"
+        templateUrl: "partials/external_users/show.html"
+        controller: "ExternalUserShowCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("edit_external_user",
+    url: "/external_user/:id/edit",
+    ncyBreadcrumb:
+      label: 'Edición de proovedor'
+      parent: 'show_external_user'
+    views:
+      'content':
+        templateUrl: "partials/external_users/edit.html"
+        controller: "ExternalUserEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("edit_external_user_company",
+    url: "/external_user/:id/edit_company",
+    ncyBreadcrumb:
+      label: 'Edición de compañia'
+      parent: 'show_external_user'
+    views:
+      'content':
+        templateUrl: "partials/external_users/edit_company.html"
+        controller: "ExternalUserCompanyEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -197,12 +250,12 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
   )
 
   .state("search_rucom",
-    url: "/rucoms/:type",
+    url: "/rucoms",
     ncyBreadcrumb:
       label: 'Buscar proveedor o cliente en el RUCOM'
     views:
       'content':
-        templateUrl: "partials/providers/search_rucom.html"
+        templateUrl: "partials/rucoms/search_rucom.html"
         controller: "SearchRucomCtrl"
 
     resolve:
@@ -215,14 +268,15 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
         deferred.promise
   )
 
-    .state("type_1",
-      url: "/provider/type_1/rucom/:rucomId",
+    .state("create_external_user_type_a",
+      url: "/external_users/type_a",
       ncyBreadcrumb:
-        label: 'Nuevo proveedor'
+        label: 'Nuevo Proovedor: Formulario tipo A'
+        parent: 'index_external_user'
       views:
         'content':
-          templateUrl: "partials/providers/type_a.html"
-          controller: "ProvidersRucomCtrl"
+          templateUrl: "partials/external_users/type_a.html"
+          controller: "ExternalUserCreateTypeACtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
@@ -240,14 +294,15 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           deferred.promise
     )
 
-    .state("type_2",
-      url: "/provider/type_2/rucom/:rucomId",
+    .state("create_external_user_type_b",
+      url: "/external_users/type_b",
       ncyBreadcrumb:
-        label: 'Nuevo proveedor'
+        label: 'Nuevo Proovedor: Formulario tipo B'
+        parent: 'index_external_user'
       views:
         'content':
-          templateUrl: "partials/providers/type_b.html"
-          controller: "ProvidersRucomCtrl"
+          templateUrl: "partials/external_users/type_b.html"
+          controller: "ExternalUserCreateTypeBCtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
@@ -274,7 +329,7 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
     views:
       'content':
         templateUrl: "partials/clients/index.html"
-        controller: "ClientsIndexCtrl"
+        controller: "ClientIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -307,6 +362,32 @@ angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider)
           templateUrl: "partials/flying-navbar.html"
           controller: "SidebarCtrl"
 
+
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
+
+    .state("show_client",
+      url: "/clients/:id",
+      ncyBreadcrumb:
+        label: 'Detalles cliente'
+        parent: 'clients'
+      views:
+        'content':
+          templateUrl: "partials/clients/show.html"
+          controller: "ClientShowCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
 
       resolve:
         authenticated: ($q, $location, $auth) ->

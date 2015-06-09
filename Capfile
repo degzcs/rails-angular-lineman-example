@@ -21,6 +21,10 @@ require 'capistrano/rbenv'
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
+# NOTE: in order to use capistrono to push to production, please comment out the next two lines.
+require 'capistrano/passenger'
+require 'capistrano/nginx'
+
 require 'capistrano/postgresql'
 require 'capistrano/nodenv'
 

@@ -31,13 +31,10 @@ module V1
         post 'login' do
           user = ::User.where(email: params[:email]).last
           if user.authenticate(params[:password])
-
             {
               access_token: user.create_token,
               expires_in: Time.now.tomorrow
             }
-          else
-            error!
           end
         end
 

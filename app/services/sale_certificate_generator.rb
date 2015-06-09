@@ -20,7 +20,7 @@ class SaleCertificateGenerator
   def pupulate_origin_certificate_files
     @sale.batches.each do|batch|
       purchase = Purchase.find(batch.purchase_id)
-      @certificate_files << Rails.root.join("public"+purchase.origin_certificate_file.url).to_s
+      @certificate_files << Rails.root.join("public"+purchase.origin_certificate_file.url).to_s 
     end
   end
 

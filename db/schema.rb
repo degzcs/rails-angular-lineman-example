@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509030126) do
+ActiveRecord::Schema.define(version: 20150608012703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,26 +60,7 @@ ActiveRecord::Schema.define(version: 20150509030126) do
 
   add_index "cities", ["state_id"], name: "index_cities_on_state_id", using: :btree
 
-  create_table "clients", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone_number"
-    t.string   "company_name"
-    t.string   "address"
-    t.string   "nit_company_number"
-    t.string   "id_document_type"
-    t.string   "id_document_number"
-    t.string   "client_type"
-    t.string   "rucom_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "population_center_id"
-    t.string   "email"
-  end
-
-  add_index "clients", ["population_center_id"], name: "index_clients_on_population_center_id", using: :btree
-
-  create_table "company_infos", force: true do |t|
+  create_table "companies", force: true do |t|
     t.string   "nit_number"
     t.string   "name"
     t.string   "city"
@@ -91,8 +72,11 @@ ActiveRecord::Schema.define(version: 20150509030126) do
     t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "provider_id"
     t.string   "id_number_legal_rep"
+    t.string   "chamber_of_commerce_file"
+    t.boolean  "external",                 default: false, null: false
+    t.string   "rut_file"
+    t.string   "mining_register_file"
   end
 
   create_table "couriers", force: true do |t|
@@ -124,8 +108,7 @@ ActiveRecord::Schema.define(version: 20150509030126) do
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
 
   create_table "gold_batches", force: true do |t|
-    t.text     "parent_batches"
-    t.float    "grams"
+    t.float    "fine_grams"
     t.integer  "grade"
     t.integer  "inventory_id"
     t.datetime "created_at"
@@ -142,6 +125,13 @@ ActiveRecord::Schema.define(version: 20150509030126) do
 
   add_index "inventories", ["purchase_id"], name: "index_inventories_on_purchase_id", using: :btree
 
+  create_table "offices", force: true do |t|
+    t.string   "name"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "population_centers", force: true do |t|
     t.string   "name"
     t.decimal  "longitude"
@@ -155,28 +145,6 @@ ActiveRecord::Schema.define(version: 20150509030126) do
   end
 
   add_index "population_centers", ["city_id"], name: "index_population_centers_on_city_id", using: :btree
-
-  create_table "providers", force: true do |t|
-    t.string   "document_number"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone_number"
-    t.string   "address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "rucom_id"
-    t.string   "identification_number_file"
-    t.string   "rut_file"
-    t.string   "mining_register_file"
-    t.string   "photo_file"
-    t.string   "email"
-    t.integer  "population_center_id"
-    t.string   "city"
-    t.string   "state"
-    t.string   "chamber_commerce_file"
-  end
-
-  add_index "providers", ["population_center_id"], name: "index_providers_on_population_center_id", using: :btree
 
   create_table "purchases", force: true do |t|
     t.integer  "user_id"
@@ -205,6 +173,9 @@ ActiveRecord::Schema.define(version: 20150509030126) do
     t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
+    t.string   "rucomeable_type"
+    t.integer  "rucomeable_id"
+    t.boolean  "trazoro",                       default: false,   null: false
   end
 
   create_table "sales", force: true do |t|
@@ -217,6 +188,7 @@ ActiveRecord::Schema.define(version: 20150509030126) do
     t.datetime "updated_at"
     t.string   "origin_certificate_file"
     t.float    "price"
+    t.boolean  "trazoro",                 default: false, null: false
   end
 
   create_table "sold_batches", force: true do |t|
@@ -251,12 +223,10 @@ ActiveRecord::Schema.define(version: 20150509030126) do
     t.string   "address"
     t.string   "document_number_file"
     t.string   "rut_file"
-    t.string   "mining_register_file"
     t.string   "photo_file"
-    t.string   "chamber_commerce_file"
-    t.integer  "rucom_id"
-    t.integer  "company_info_id"
     t.integer  "population_center_id"
+    t.integer  "office_id"
+    t.boolean  "external",                 default: false, null: false
   end
 
 end

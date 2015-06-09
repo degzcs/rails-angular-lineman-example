@@ -1,6 +1,6 @@
 %md-dialog
-  %md-content.sticky-container
-    %md-subheader.md-sticky-no-effect.md-toolbar.md-primary Por favor Seleccione los creditos que desea comprar
+  %md-content.sticky-container.md-padding
+    %h4 Por favor Seleccione los creditos que desea comprar
     .dialog-content
       %form{:name => "creditBillingForm","ng-submit"=> "confirmCreditBilling()"}
         %md-content.md-padding
@@ -16,6 +16,9 @@
             %md-option{:value => "9000"} 9000
             %md-option{:value => "10000"} 10000
           %br
-          %md-button.login-button.md-raised.md-default-theme.credits_buy_button{type: "submit"}
-            ok
+          %div{layout: "row"}
+            %md-button{"ng-click"=>"cancel()",flex:""} Cancelar
+        
+            %md-button.login-button.md-raised.md-default-theme.credits_buy_button{type: "submit",flex:""}
+              Solicitar
 

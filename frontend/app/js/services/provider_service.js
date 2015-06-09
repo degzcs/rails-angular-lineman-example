@@ -117,7 +117,6 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
           }
           
   
-          files = [];
           if (provider.rucom.provider_type === "Comercializadores") {
             if (!(provider.chamber_commerce_file[0] instanceof File)) {
               provider.chamber_commerce_file[0].name = 'chamber_commerce_file.pdf';
@@ -148,6 +147,8 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
             //provider.chamber_commerce_file[0].name = 'chamber_commerce_file.pdf';          
           }
 
+          files = [];
+          
           if(filesRemaining <= 0) {
             uploadFiles();
           }

@@ -15,11 +15,14 @@ module V1
       expose :company_name, documentation: { type: "string", desc: "", example: "Trazoro." }
       expose :nit, documentation: { type: "string", desc: "", example: "12345617." }
       expose :rucom_record, documentation: { type: "string", desc: "", example: "7895465." }
-      expose :office, documentation: { type: "string", desc: "", example: "7895465." }
+      expose :office, documentation: { type: "string", desc: "", example: "7895465." } do |user, options|
+        user.office.name if user.office
+      end
       expose :city, documentation: { type: "string", desc: "", example: "user city" }
+      expose :city_name, documentation: { type: "string", desc: "", example: "user city" }
       expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }
       expose :photo_file, documentation: { type: "photo", desc: "photo file", example: "" }
-      expose :company_info, documentation: { type: "hash", desc: "company_info", example: "" }
+      expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
     end
   end

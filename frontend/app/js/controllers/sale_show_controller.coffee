@@ -1,4 +1,4 @@
-angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,ClientService,CourierService,ProviderService,PurchaseService,$sce,PdfService) ->
+angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,User,CourierService,ProviderService,PurchaseService,$sce,PdfService) ->
   #
   # Deletes the last liquidation  
   LiquidationService.deleteState()
@@ -30,15 +30,12 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   
   #
   # get Client
-  $scope.client = ClientService.retrieveClientById.get {clientId: currentSale.client_id}, (client)->
-    console.log "CLIENTE: "
-    console.log(client)
+  User.get(currentSale.client_id).success (client)->
     $scope.currentClient = client
+
   #
   # get current user info
   CurrentUser.get().success (user) ->
-    console.log "USUARIO: "
-    console.log user
     $scope.currentUser = user
   #
   # get Courier

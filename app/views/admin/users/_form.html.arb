@@ -1,0 +1,36 @@
+# app/views/admin/posts/_form.html.arb
+
+if resource.external 
+  h2 "Usuario Externo"
+else
+  h2 "Usuario Trazoro"
+end
+  
+active_admin_form_for resource , :url => resource ?  "/admin/users/ #{resource.id}" : '/admin/users/'   do |f|
+  f.inputs :name => "Basic" do
+    f.semantic_errors *f.object.errors.keys
+    f.input :email
+    f.input :first_name , label: "Nombre"
+    f.input :last_name, label: "Apellido"
+    f.input :document_number , label: "Numero de documento"
+    f.input :document_expedition_date, label: "fecha de expedicion" , label: "Fecha de expedicion documento" , start_year: Date.today.year - 70
+    f.input :phone_number, label: "Numero telefonico"
+    f.input :address, label: "Direccion"
+    f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)
+    f.input :document_number_file, :as => :file , label: "PDF cedula" , :hint => link_to(image_tag(f.object.document_number_file.preview.url),f.object.document_number_file.url, :target => "_blank" )
+    f.input :rut_file, :as => :file, label: "PDF Rut", :hint => link_to(image_tag(f.object.rut_file.preview.url),f.object.rut_file.url, :target => "_blank" )
+    f.input :population_center, label: "Centro poblacional"
+    h2 "Informacion de compañia:"
+    f.input :office, label: "Sucursal" , :collection => Office.all.map{|o| ["#{o.company.name if o.company} - #{o.name}", o.id]}
+    if resource
+      h4  "Nota: este usuario no pertenece a una compañia" unless resource.office
+    end
+    unless resource.external 
+      h2 "Password:"
+      f.input :password, label: "Password (Minimo 8 caracteres)"
+      f.input :password_confirmation, label: "Vuelva a escribir el password"
+    end
+  end
+  actions
+end
+

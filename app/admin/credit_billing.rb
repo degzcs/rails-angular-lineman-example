@@ -1,6 +1,6 @@
 ActiveAdmin.register CreditBilling do
 
-  menu priority: 5, label: 'Facturacion de Usuarios'
+  menu priority: 8, label: 'Facturacion de Usuarios'
 
   # Member actions , This methods create new actions under the admin credit billing controller
   # every action has a route od /admin/credit_bilings/:id/<Action> and it will render a template

@@ -28,19 +28,34 @@ class Purchase < ActiveRecord::Base
   #
 
   belongs_to :user
-  # belongs_to :provider
+  belongs_to :provider, class_name: "User"
+
   belongs_to :gold_batch
   has_one :inventory
+  has_many :sold_batches
+
+  #
+  # Validations
+  #
+
+  validates :user_id, presence: true
+  validates :provider_id, presence: true
+  validates :origin_certificate_sequence, presence: true
+  # validates :gold_batch_id, presence: true
+  validates :origin_certificate_file, presence: true
+  validates :price, presence: true
 
   #
   # Callbacks
   #
+
   after_create :create_inventory
   before_save :generate_barcode
 
   #
   # Fields
   #
+
   mount_uploader :origin_certificate_file, PdfUploader
   mount_uploader :seller_picture, PhotoUploader
 
@@ -48,19 +63,9 @@ class Purchase < ActiveRecord::Base
   # Instance methods
   #
 
-  # This is the uniq code assigned to this purchase
+  # This is the unique code assigned to this purchase
   def reference_code
     Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
-  end
-
-  #Gets the provider of the purchase
-  # IMPROVE: I think this is an association like "belongs_to :provider" and in the provider model "has_many :purchases"
-  def provider
-    Provider.find(self.provider_id)
-  end
-
-  def user_provider
-    User.find(provider_id)
   end
 
   # @return [Barby::HtmlOutputter] wiht the purchase code converted in a barcode
@@ -86,10 +91,11 @@ class Purchase < ActiveRecord::Base
   #
   # Protected methods
   #
+
   protected
     #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
     def create_inventory
-      Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.grams)
+      Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.fine_grams)
     end
 
     # Article about how setup ean13

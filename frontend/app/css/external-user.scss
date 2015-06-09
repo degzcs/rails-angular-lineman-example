@@ -1,0 +1,93 @@
+/********** External user styles ************/
+.external-info-container{
+  h2{
+    text-align: left!important;
+    font-size: 1.2em!important;
+    font-weight: lighter;
+  }
+  label{
+    font-size: 0.8em!important;
+    color: darken(#eee, 20%)!important;
+    font-weight: bold!important;
+  }
+}
+
+.external-user-map{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-extenal-user-update{
+  
+}
+
+.user-type-dialog{
+  max-width: 550px;
+  padding: 50px;
+}
+
+.btn-user-type{
+  width: 100%;
+  text-align: left;
+  display: inherit;
+}
+
+.rucom-selection{
+  margin-top: 40px;
+  h2{
+    text-align: left;
+    margin-left: 20px;
+    display: inline-block;
+    font-weight: 300!important;
+    font-size: 20px;
+  }
+  .btn-rucom-selection{
+    margin-left: 20px;
+  }
+}
+
+.population-selection{
+  h2{
+    text-align: left;
+    margin-left: 20px;
+    display: inline-block;
+    font-weight: 300!important;
+    font-size: 20px;
+  }
+}
+.external-user-form{
+  padding: 20px;
+  .md-padding{
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+  }
+}
+
+.external-user-form-info{
+  margin-top: 20px;
+}
+
+md-tabs[md-align-tabs="bottom"] md-tabs-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  z-index: 99999;
+}
+md-tabs[md-dynamic-height] md-tabs-content-wrapper {
+
+  padding-bottom: 55px!important;
+}
+
+.external-user-form{
+  .md-tab{
+    color: black!important;
+    #background: #edb039!important;
+    padding: 10px;
+    margin-left: 2px;
+  }
+}
+.is-company-selector{
+  margin-left: 20px;
+}

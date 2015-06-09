@@ -12,6 +12,7 @@
 #  updated_at              :datetime
 #  origin_certificate_file :string(255)
 #  price                   :float
+#  trazoro                 :boolean          default(FALSE), not null
 #
 
 #TODO: change field name from grams to fine_grams
@@ -24,8 +25,11 @@ class Sale < ActiveRecord::Base
   #
   # Associations
   #
-  has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :user
+  belongs_to :client, class_name: "User"
+
+  belongs_to :courier
+  has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :gold_batch
   #
   # Callbacks
@@ -49,8 +53,8 @@ class Sale < ActiveRecord::Base
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
   end
 
-  def grams
-    gold_batch.grams
+  def fine_grams
+    gold_batch.fine_grams
   end
 
   def grade
@@ -58,14 +62,35 @@ class Sale < ActiveRecord::Base
   end
 
   def fine_gram_unit_price
-    (price/grams)
+    (price/fine_grams)
   end
 
   protected
     #Before the sale is saved generate a barcode and its html representation
     def generate_barcode
-      new_id = Sale.count + 1
-      code = new_id.to_s.rjust(12, '0')
+      # new_id = Sale.count + 1
+      # code = new_id.to_s.rjust(12, '0')
+      # self.code = code
+
+      # Number System: 3 digits
+      # this is Colombia code:
+      number_system = "770"
+
+      # Manufacturer Code: 5 digits
+      # this is the office code:
+      mfg_code =  self.client_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+                                                    # In puchases mfg_code uses the user id. Using client_id in sales for 
+                                                    # ensuring uniqueness (?)
+
+      # Product Code: 4 digits
+      # This is the goldbach code:
+      product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+                                                          # (!) This doesn't guarantee the product code to be unique once 
+                                                          # the gold_batch id sequence reaches the 9999 value, does it?
+
+      # Check Digit: 1 digit
+      # this is calculated by Barby (gem)
+      code = "#{number_system}#{mfg_code}#{product_code}"
       self.code = code
     end
 end

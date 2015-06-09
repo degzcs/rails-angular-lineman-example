@@ -46,14 +46,16 @@ pre {
   border: 4px solid transparent;
 }
 
+.btn-save{
+  min-width: 200px!important;
+}
+
 .btn-save:enabled{
   background: #edb039!important;
   border: 4px solid #ffcb34;
   font-weight: bold;
-  width: 200px;
 } 
 
 .btn-save:disabled{
   border: 4px solid transparent;
-  width: 200px;
 }

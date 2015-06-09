@@ -15,7 +15,13 @@ class Inventory < ActiveRecord::Base
   validates :purchase_id , presence: true
   validates :remaining_amount , presence: true
 
-  def update_remainig_amount(amount_picked)
-    update_attribute(:remaining_amount,(remaining_amount - amount_picked).round(2) )
+  class EmptyInventory < StandardError
+  end
+
+  #updates inventory remaingin amount
+  def discount_remainig_amount(amount_picked)
+    new_amount = (remaining_amount - amount_picked).round(2)
+    raise EmptyInventory if new_amount <= 0
+    update_attribute(:remaining_amount,new_amount)
   end
 end

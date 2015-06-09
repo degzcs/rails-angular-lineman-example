@@ -22,12 +22,12 @@ class SalePDFService
   def provider 
     user = @sale.user
     {
-      social: user.company_info.name,
+      social: user.company.try(:name),
       name: user.first_name + user.last_name,
-      type: 'Usuario trazoro',
+      type: user.rucom.try(:provider_type),
       identification_number: user.document_number,
-      nit: user.company_info.nit_number,
-      rucom: user.rucom.num_rucom || user.rucom.rucom_record || '',
+      nit: user.company.try(:nit_number),
+      rucom: user.rucom.num_rucom || user.rucom.rucom_record,
       address: user.address,
       email: user.email,
       phone: user.phone_number
@@ -35,14 +35,14 @@ class SalePDFService
   end
 
   def buyer
-    client = Client.find(@sale.client_id)
+    client = User.find(@sale.client_id)
     {
-      social: '',
+      social: client.company.try(:name),
       name: client.first_name + client.last_name,
-      type: 'Cliente trazoro',
-      identification_number: client.id_document_number,
-      nit: '',
-      rucom: (client.rucom.num_rucom if client.rucom) || (client.rucom.rucom_record if client.rucom),
+      type: client.rucom.try(:provider_type),
+      identification_number: client.document_number,
+      nit: client.company.try(:nit_number),
+      rucom: client.rucom.num_rucom || client.rucom.rucom_record,
       address: client.address,
       email: client.email,
       phone: client.phone_number
@@ -68,8 +68,8 @@ class SalePDFService
     {
       price: @sale.price,
       law: @sale.grade ,
-      grams: @sale.grams * 999 / @sale.grade,
-      fine_grams: @sale.grams,
+      grams: @sale.fine_grams * 999 / @sale.grade,
+      fine_grams: @sale.fine_grams,
       code: @sale.code
     }
   end
@@ -78,19 +78,15 @@ class SalePDFService
     batches = []
     @sale.batches.each do|b|
       p = Purchase.find(b.purchase_id)
-      if p.provider.rucom 
-        rucom = p.provider.rucom.num_rucom || p.provider.rucom.rucom_record
-      else
-        rucom  = ''
-      end
+    
       
       batches << {
         id_purchase: p.id,
         id_provider: p.provider.id,
         social: p.provider.first_name + ' ' + p.provider.last_name,
         certificate_number: p.origin_certificate_sequence,
-        rucom: rucom,
-        fine_grams: p.gold_batch.grams.round(2)
+        rucom: p.provider.rucom.num_rucom || p.provider.rucom.rucom_record,
+        fine_grams: p.gold_batch.fine_grams.round(2)
       }
     end
     batches

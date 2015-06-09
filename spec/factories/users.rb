@@ -16,30 +16,43 @@
 #  reset_token              :string(255)
 #  address                  :string(255)
 #  document_number_file     :string(255)
-#  rut_file                 :string(255)
-#  mining_register_file     :string(255)
 #  photo_file               :string(255)
-#  chamber_commerce_file    :string(255)
-#  rucom_id                 :integer
-#  company_info_id          :integer
 #  population_center_id     :integer
+#  office_id                :integer
+#  external                 :boolean          default(FALSE), not null
+#  rut_file                 :string(255)
 #
 
 FactoryGirl.define do
 
-  factory :user, class: User  do |f|
-
+  factory :user, class: User do |f|
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name}
     email { Faker::Internet.email }
-    password {'foobar'}
-    password_confirmation {'foobar'}
     document_number { Faker::Number.number(10) }
-    document_expedition_date { Faker::Time.between(2.days.ago, Time.now) }
+    document_expedition_date 50.years.ago
     phone_number { Faker::PhoneNumber.cell_phone }
     address { Faker::Address.street_address}
-    company_info
+    document_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
+    rut_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
+    photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
+    personal_rucom {}
+    office
     population_center
-    rucom
+    password {'foobar'}
+    password_confirmation {'foobar'}
+    external {false}
+
+    factory :external_user, class: User do
+        personal_rucom { create :rucom}
+        external {true}
+        password {nil}
+        password_confirmation {nil}
+
+        factory :client_with_fake_rucom, class: User do
+            personal_rucom { create(:rucom, :for_clients)}
+        end
+    end
+
   end
 end

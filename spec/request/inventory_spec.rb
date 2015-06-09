@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe "Inventory:", :type => :request do
-  
+
   before :context do
     @user = create(:user)
     @token = @user.create_token
@@ -11,7 +11,7 @@ RSpec.describe "Inventory:", :type => :request do
     before(:all) do
       @user2 = create(:user)
       gold_batch = create(:gold_batch)
-      provider = create(:provider)
+      provider = create(:external_user)
       @number_of_purchases_user_1 = 10
       @number_of_purchases_user_2 = 5
       create_list(:purchase, @number_of_purchases_user_1, user_id: @user.id, gold_batch_id: gold_batch.id, provider_id: provider.id)

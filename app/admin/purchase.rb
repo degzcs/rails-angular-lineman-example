@@ -15,7 +15,7 @@
 #
 
 ActiveAdmin.register Purchase do
-  menu priority: 6, label: 'Purchases'
+  menu priority: 7, label: 'Purchases'
 
   actions :index, :show
   permit_params :user_id, :provider_id, :origin_certificate_sequence, :gold_batch_id, :origin_certificate_file , :price 
@@ -26,7 +26,7 @@ ActiveAdmin.register Purchase do
     column :user
     column :provider
     column(:gold_batch) do |purchase| 
-      purchase.gold_batch.grams 
+      purchase.gold_batch.fine_grams 
     end
     column :origin_certificate_file
     column :price

@@ -14,7 +14,7 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
     data.document_type = 'NIT'
     # set authorized miner oc
     $scope.authorized_miner_origin_certificate.buyer = data
-    $scope.authorized_miner_origin_certificate.city = data.city
+    $scope.authorized_miner_origin_certificate.city = data.city_name
 
   #
   # Search one specific provider into the allProviders array
@@ -70,13 +70,13 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: providers[i].city || 'Popayan'
-        state: providers[i].state || 'Cauca'
+        city: providers[i].city_name || 'Popayan'
+        state: providers[i].state_name || 'Cauca'
       provs.push prov
       i++
     provs
 
-  window.s = $scope
+  # window.s = $scope
 
   #
   # confirm Dialog

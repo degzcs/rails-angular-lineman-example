@@ -1,4 +1,4 @@
-angular.module('app').controller('SearchRucomCtrl', ['$scope', '$stateParams', 'RucomService' ,function($scope, $stateParams, RucomService){
+angular.module('app').controller('SearchRucomCtrlOld', ['$scope', '$stateParams', 'RucomService' ,function($scope, $stateParams, RucomService){
   
   $scope.toggleSearch = true;  
   $scope.query = '';

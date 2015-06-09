@@ -38,9 +38,11 @@
 }
 
 .credits_select_bar{
-  width: 100%;
-  margin-bottom: 20px;
+  width: 100%!important;
   .md-option{
+    width: 100%!important;
+  }
+  md-select-label{
     width: 100%;
   }
 }

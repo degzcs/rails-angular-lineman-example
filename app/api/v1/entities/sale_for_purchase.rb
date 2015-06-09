@@ -3,7 +3,7 @@ module V1
     class SaleForPurchase < Grape::Entity
       expose :id ,documentation: { type: "integer", desc: "Sale id", example: '1' }
       expose :gold_batch_id ,documentation: { type: "integer", desc: "gold batch id", example: '1' }
-      expose :grams ,documentation: { type: "float", desc: "grams", example: '239923' }
+      expose :fine_grams ,documentation: { type: "float", desc: "grams", example: '239923' }
       expose :grade ,documentation: { type: "float", desc: "grade", example: '999' }
       expose :fine_gram_unit_price ,documentation: { type: "float", desc: "price per fine gram", example: '4654789' }
       expose :code ,documentation: { type: "string", desc: "number user to create a barcode", example: '123123asdfdaf' }
@@ -14,10 +14,11 @@ module V1
         user_transformed_to_provider = {
           id: sale.user.id,
           name: "#{sale.user.first_name} #{sale.user.last_name}",
-          company_name: sale.user.company_info.name,
+          company_name: sale.user.company.name,
           document_type: 'NIT',
-          document_number: sale.user.company_info.nit_number,
+          document_number: sale.user.company.nit_number,
           rucom_record:  sale.user.rucom.rucom_record,
+          num_rucom:  sale.user.rucom.num_rucom,
           rucom_status: sale.user.rucom.status
         }
       end

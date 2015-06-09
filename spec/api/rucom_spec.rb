@@ -21,9 +21,9 @@ describe 'Rucom', :type => :request do
 
         it 'retrieves rucom registries matching rucom_query' do
           rucom_query = 'ARE_PLU-08141'
-          get '/api/v1/rucoms', { rucom_query: rucom_query, name_query: '' } , { "Authorization" => "Barer #{@token}" }
+          get '/api/v1/rucoms', { query_rucom_number: rucom_query, query_name: '' } , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 20
+          expect(JSON.parse(response.body).count).to be 10
         end
 
         it 'retrieves all rucom registries' do
@@ -32,13 +32,11 @@ describe 'Rucom', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be 40
         end
-  
+
         context '/:id' do
 
-          it 'gets rucom by id' do 
-
+          it 'gets rucom by id' do
             rucom = Rucom.last
-
             expected_response = {
               id: rucom.id,
               rucom_record: rucom.rucom_record,
@@ -56,13 +54,31 @@ describe 'Rucom', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to match expected_response.stringify_keys
           end
-
+          context "/check_if_available" do
+            context "if rucom is already in use by a user or external user" do
+              it "responds with an error" do
+                rucom = create(:rucom)
+                external_user = create(:external_user, personal_rucom: rucom)
+                get "/api/v1/rucoms/#{rucom.id}/check_if_available",{},{ "Authorization" => "Barer #{@token}" }
+                expect(response.status).to eq 400
+              end
+            end
+            context "if rucom is available" do
+              it "responds with a rucom representation" do
+                rucom = create(:rucom)
+                get "/api/v1/rucoms/#{rucom.id}/check_if_available",{},{ "Authorization" => "Barer #{@token}" }
+                expect(response.status).to eq 200
+                expected_response = {
+                  id: rucom.id,
+                  rucom_record: rucom.rucom_record,
+                  name: rucom.name
+                }
+                expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+              end
+            end
+          end
         end
-
       end
-
     end
-
   end
-
 end

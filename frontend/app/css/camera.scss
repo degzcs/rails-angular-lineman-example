@@ -34,17 +34,18 @@
   width: 400px;
   margin-bottom: 20px;
   display: none;
-  margin-top: 20px
+  
 }
 
 .camera-options-final{
   display: none;
-  margin-top: 20px;
-  width: 400px;
   .md-button{
-    width: 50%;
     display: inline-block;
-    float: left;
+    width: 90%!important;
+  }
+  .btn-save{
+    min-width: 100%!important;
+    display: inline-block;
   }
 }
 
@@ -59,4 +60,10 @@ canvas.taken-photo{
 
 .show{
   display: inline-block!important;
+}
+
+.camera-selector{
+  md-select{
+    display: inline-block;
+  }
 }

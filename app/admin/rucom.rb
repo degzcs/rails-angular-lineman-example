@@ -1,8 +1,24 @@
 ActiveAdmin.register Rucom do
-  menu priority: 4, label: 'Rucoms'
+  menu priority: 3, label: 'Rucoms'
 
-  actions :index, :show
-  permit_params :idrucom, :num_rucom, :rucom_record, :provider_type, :name , :status , :mineral , :location , :subcontract_number , :mining_permit , :updated_at
+  actions :index, :show , :edit
+  permit_params :idrucom, :num_rucom, :rucom_record, :provider_type, :name , :status , :mineral , :location , :subcontract_number , :mining_permit , :updated_at, :rucomeable_id , :rucomeable_type
+
+  
+  # renders a template where the admin can register a company using a rucom
+  member_action :new_company do
+    @company = Company.new
+    @rucom = Rucom.find(params[:id])
+  end
+
+  member_action :create_company , method: :post do
+    rucom = Rucom.find(params[:rucom_id])
+    company = Company.new(params.require(:company).permit(:nit_number, :name, :country, :city ,:state , :legal_representative , :id_number_legal_rep , :email , :phone_number,:chamber_of_commerce_file,:rut_file, :mining_register_file))
+    company.rucom = rucom 
+    if company.save
+       redirect_to(admin_company_path(company), :notice => 'La compañia a sido creada correctamente')
+     end
+  end
 
   index do
     selectable_column
@@ -18,7 +34,28 @@ ActiveAdmin.register Rucom do
     column :subcontract_number
     column :mining_permit
     column :updated_at
-    actions
+
+    column("Estado",:rucom_status) do |rucom| 
+      if rucom.rucomeable 
+        if rucom.rucomeable_type == "User"
+          rucom.rucomeable.external ? status_tag( "Usuario Externo", :warn) : status_tag( "Usuario", :ok )
+        else
+          status_tag( "Compañia", :ok ) 
+        end
+      else
+        status_tag( "Sin usar" )
+      end
+    end
+
+
+    actions defaults: false, dropdown: true do |rucom|
+      if rucom.rucomeable
+        item "Ver Compañia", admin_company_path(rucom.rucomeable_id) if rucom.rucomeable_type == "Company"
+        item "Ver Usuario", admin_user_path(rucom.rucomeable_id) if rucom.rucomeable_type == "User"
+      else
+        item "Registrar Compañia", new_company_admin_rucom_path(rucom.id) 
+      end
+    end
   end
 
   #filter :idrucom

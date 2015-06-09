@@ -61,5 +61,5 @@ namespace :db do
   end
 end
 
-namespace :deploy do
-end
+# namespace :deploy do
+# end

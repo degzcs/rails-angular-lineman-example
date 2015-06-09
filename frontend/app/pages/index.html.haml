@@ -6,20 +6,79 @@
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
   %body
+    .m-app-loading{"ng-animate-children" => ""}
+      /
+        HACKY CODE WARNING: I'm putting Style block inside directive so that it
+        will be removed from the DOM when we remove the directive container.
+      :css
+        div.m-app-loading {
+            position: fixed ;
+        }
+
+        div.m-app-loading div.animated-container {
+            background-color: #333333 ;
+            bottom: 0px ;
+            left: 0px ;
+            opacity: 1.0 ;
+            position: fixed ;
+            right: 0px ;
+            top: 0px ;
+            z-index: 99999999 ;
+        }
+
+        /* Used to initialize the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave {
+            opacity: 1.0 ;
+            transition: all linear 200ms ;
+                -webkit-transition: all linear 200ms ;
+        }
+
+        /* Used to set the end properties of the ng-leave animation state. */
+        div.m-app-loading div.animated-container.ng-leave-active {
+            opacity: 0 ;
+        }
+
+        div.m-app-loading div.messaging {
+            color: #FFFFFF ;
+            font-family: monospace ;
+            left: 0px ;
+            margin-top: -37px ;
+            position: absolute ;
+            right: 0px ;
+            text-align: center ;
+            top: 50% ;
+        }
+
+        div.m-app-loading h1 {
+            font-size: 26px ;
+            line-height: 35px ;
+            margin: 0px 0px 20px 0px ;
+        }
+
+        div.m-app-loading p {
+            font-size: 18px ;
+            line-height: 14px ;
+            margin: 0px 0px 0px 0px ;
+        }
+      /  Actual animated container.
+      .animated-container
+        .messaging
+          .loading-gif
+      
     .main-container{layout: "row"} 
-      /----------------- SIDEBAR -------------------------/
-      %section.sidebar{flex: "0","ng-controller"=>"SidebarCtrl"}
-        %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left"}
-          %md-content.logo
-            %h1.md-toolbar-tools
-              %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
-          %md-content.sidebar-options{"layout" => "column"}
-            %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", icon: "option.icon", "ng-click" =>"setSection(option.name)"}
-            %md-button{"ng-click"=>"logout()"} Cerrar Session
+      / /----------------- SIDEBAR -------------------------/
+      / %section.sidebar{flex: "0","ng-controller"=>"SidebarCtrl"}
+      /   %md-sidenav.md-sidenav-left.md-whiteframe-z2{"md-component-id" => "left"}
+      /     %md-content.logo
+      /       %h1.md-toolbar-tools
+      /         %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
+      /     %md-content.sidebar-options{"layout" => "column"}
+      /       %tr-nav-button{"ng-repeat"=> "option in options", name: "option.name" , state:"option.state", icon: "option.icon", "ng-click" =>"setSection(option.name)"}
+      /       %md-button{"ng-click"=>"logout()"} Cerrar Session
     /----------------- PAGE CONTENT -------------------------/
     #wrapper
       #header
-        .mini-top-bar
+        .mini-top-bar{"ng-controller"=>"SidebarCtrl"}
           %img.trazoro-icon-small{:src => "/img/trazoro_icon_small.png"}
         %div{"ui-view" => "top-nav"}
       #content

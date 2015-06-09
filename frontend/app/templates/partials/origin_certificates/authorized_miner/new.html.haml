@@ -41,7 +41,7 @@
 
               %md-input-container{flex: ""}
                 %label Ciudad
-                %input{"ng-model" => "authorized_miner_origin_certificate.provider.city.name",  :name => 'provider_name', :readOnly => 'true'}
+                %input{"ng-model" => "authorized_miner_origin_certificate.provider.city",  :name => 'provider_name', :readOnly => 'true'}
 
               %md-content{ :flex=>""}
                 %md-select{"ng-model" => "authorized_miner_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
@@ -78,11 +78,11 @@
                 %input{"ng-model" => "authorized_miner_origin_certificate.mineral.measure_unit", "type" => "text", "readOnly"=>"true"}
 
               %md-input-container{:flex=>""}
-                %label Departamento(s) 
+                %label Departamento(s)
                 %input{"ng-model" => "authorized_miner_origin_certificate.mineral.state", "type" => "text", :required=>""}
 
               %md-input-container{:flex=>""}
-                %label Municipio(s) 
+                %label Municipio(s)
                 %input{"ng-model" => "authorized_miner_origin_certificate.mineral.city", "type" => "text", :required=>""}
 
 

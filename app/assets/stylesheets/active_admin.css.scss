@@ -25,3 +25,37 @@
 .photo-user{
   width: 200px;
 }
+
+.formtastic.user{
+  label{
+    outline: none;
+  }
+  input{
+    outline: none;
+  }
+}
+.formtastic.user{
+  h2 ,h4{
+    margin-left: 10px;
+  }
+  h2{
+    margin-top: 20px;
+  }
+}
+
+.create_child_button{
+  border-radius: 200px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.0em;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 12px;
+  margin-right: 3px;
+  padding: 7px 16px 6px;
+  text-decoration: none!important;
+  background-color: #838a90;
+  background-image: linear, 180deg, #838a90, #414549;
+  text-shadow: black 0 1px 0!important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px;
+  color: white!important;
+}

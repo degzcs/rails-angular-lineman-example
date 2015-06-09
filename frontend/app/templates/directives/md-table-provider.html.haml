@@ -8,7 +8,7 @@
           %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
         %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
       /%th.md-table-header
-  %tbody
+  %tbody{"style" => "overflow: hidden"}
     %tr.md-table-content-row{"ng-repeat" => "c in content | filter:filters | limitTo: count", "ng-click" => "setCurrentProv(c)"}
       %td
         .md-table-thumbs{"ng-repeat" => "h in headers", "ng-if" => "h.field == thumbs"}
@@ -20,18 +20,6 @@
       /    %md-button{"aria-label" => "Edit"}
       /      %i.ion-android-create
 .md-table-footer{:layout => "row"}
-  %span.md-table-count-info
-    Registros por página :
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=5; goToPage(0, queryFocus);"} 5
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=10; goToPage(0, queryFocus);"} 10
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=25; goToPage(0, queryFocus);"} 25
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=50; goToPage(0, queryFocus);"} 50
-      ,
-      %a{"ng-href" => "#/{{currentPath}}", "ng-click" => "count=100; goToPage(0, queryFocus);"} 100
-      (actualmente es {{count}})
   %span{:flex => "flex"}
   %span{"ng-show" => "nbOfPages() > 1"}
     %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "goToPage(tablePage-1, queryFocus)", "aria-label" => "Previous Page"}

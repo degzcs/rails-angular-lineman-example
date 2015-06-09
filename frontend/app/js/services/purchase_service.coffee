@@ -2,7 +2,7 @@
 # This service is in charge to manage the server requests related to Purchases
 #
 #TODO: make the remaining HTTP requests
-angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload , $http)->
+angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload , $http,$mdDialog)->
   service=
     #
     # Service impl
@@ -57,8 +57,8 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             "purchase[price]": purchase.price,
             "purchase[provider_id]": purchase.provider.id
             "purchase[sale_id]": purchase.sale_id
-            "gold_batch[parent_batches]": gold_batch.parent_batches
-            "gold_batch[grams]": gold_batch.total_fine_grams
+            #"gold_batch[parent_batches]": gold_batch.parent_batches
+            "gold_batch[fine_grams]": gold_batch.total_fine_grams
             "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
             "gold_batch[inventory_id]": gold_batch.inventory_id
             "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
@@ -76,13 +76,17 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
             # window.response = data
             model = angular.fromJson(sessionStorage.purchaseService)
-            console.log(model)
             model.barcode_html = data.barcode_html
             model.code = data.code
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
             #service.flushModel()
+            # if !data.status == 500
             $location.path('/purchases/show')
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ariaLabel('Alert Dialog Demo').ok('ok')
+            
+            # else
+              # show an error message
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image failed to load!!'
           service.restoreState()

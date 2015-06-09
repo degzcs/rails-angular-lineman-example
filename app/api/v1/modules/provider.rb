@@ -23,11 +23,11 @@ module V1
         end
 
         params :id do
-          requires :id, type: Integer, desc: 'User ID'
+          requires :id, type: Integer, desc: 'External User ID'
         end
 
-        params :company_info do
-          optional :company_info, type: Hash do
+        params :company do
+          optional :company, type: Hash do
             optional  :nit_number, type: String, desc: 'nit_number', documentation: { example: 'Rock' }
             optional  :name, type: String, desc: 'name', documentation: { example: 'Rock' }
             optional  :city, type: String, desc: 'city', documentation: { example: 'Rock' }
@@ -42,7 +42,7 @@ module V1
         end
 
         params :provider do
-          requires :provider, type: Hash do
+          optional :provider, type: Hash do
             optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
             optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
             optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
@@ -76,15 +76,15 @@ module V1
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            providers = ::Provider.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
+            providers = ::User.providers.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
               {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_id
-            providers = ::Provider.order("id DESC").where("document_number LIKE :document_number",
+            providers = ::User.providers.order("id DESC").where("document_number LIKE :document_number",
               {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
-            providers = ::Provider.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+            providers = ::User.providers.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
-            providers = ::Provider.order("id DESC").paginate(:page => page, :per_page => per_page)
+            providers = ::User.providers.order("id DESC").paginate(:page => page, :per_page => per_page)
           end
           #binding.pry
           header 'total_pages', providers.total_pages.to_s
@@ -105,17 +105,19 @@ module V1
           # content_type "text/json"
           providers = case params[:types]
                                 when 'barequero_chatarrero'
-                                 ::Provider.barequeros_chatarreros
+                                 ::User.providers.barequeros_chatarreros
                                 when 'beneficiarios_mineros'
-                                  ::Provider.mineros
+                                  ::User.providers.mineros
                                 when 'mineros'
-                                  ::Provider.mineros
+                                  ::User.providers.mineros
                                 when 'beneficiarios'
-                                  ::Provider.beneficiarios
+                                  ::User.providers.beneficiarios
                                 when 'solicitantes'
-                                  ::Provider.solicitantes
+                                  ::User.providers.solicitantes
                                 when 'subcontratados'
-                                  ::Provider.subcontratados
+                                  ::User.providers.subcontratados
+                                when 'casas_compra_venta'
+                                  ::User.providers.casas_compra_venta
                               end
           # binding.pry
           present providers, with: V1::Entities::Provider
@@ -132,7 +134,7 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          provider = ::Provider.find(params[:id])
+          provider = ::User.providers.find(params[:id])
           present provider, with: V1::Entities::Provider
         end
 
@@ -145,8 +147,9 @@ module V1
             NOTE
           }
         params do
-          use :provider
-          use :company_info
+          requires :provider, type: Hash, desc: 'External user hash'
+          optional :rucom_id, type: Integer, desc: 'Rucom id'
+          optional :company, type: Hash, desc: 'Company'
         end
         post '/', http_codes: [
           [200, "Successful"],
@@ -154,24 +157,38 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
-          #binding.pry
+           #binding.pry
           content_type "text/json"
 
           # update params
           files =params[:provider].slice(:files)[:files]
-          identification_number_file = files.select{|file| file['filename'] =~ /identification_number_file/}.first
+          # files = params[:provider][:files]
+          document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
-          chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
-          photo_file = files.select{|file| file['filename'] =~ /provider_photo/}.first
-          params[:provider].except!(:files).merge!(identification_number_file: identification_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file, chamber_commerce_file: chamber_commerce_file)
+          # TODO: save this value in the correct model
+          # chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
+          photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
+          params[:provider].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
 
           provider_params = params[:provider]
-          provider = ::Provider.new(params[:provider])
-          provider.build_company_info(params[:company_info]) if params[:company_info]
+          provider = ::User.new(params[:provider])
+          provider.external = true
+          provider.build_company(params[:company]) if params[:company]
+
+
+          if params[:rucom_id]
+            rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
+            provider.personal_rucom = rucom
+          end
+
+            #binding.pry
+
           if provider.save
             present provider, with: V1::Entities::Provider
           else
+            #binding.pry
+
             error!(provider.errors.inspect, 400)
           end
           Rails.logger.info(provider.errors.inspect)
@@ -187,7 +204,7 @@ module V1
         params do
           requires :id
           use :provider
-          use :company_info
+          use :company
         end
         put '/:id', http_codes: [
           [200, "Successful"],
@@ -196,11 +213,10 @@ module V1
           [404, "Entry not found"],
         ]  do
           content_type "text/json"
-          provider = ::Provider.find(params[:id])
+          provider = ::User.providers.find(params[:id])
           provider_params = params[:provider]
-          provider.company_info.update_attributes(params[:company_info]) if params[:company_info]
-          provider.update_attributes(params[:provider])
-
+          provider.company.update_attributes(params[:company]) if params[:company]
+          provider.update_attributes(params[:provider]) if params[:provider]
           if provider.save
             present provider, with: V1::Entities::Provider
           else

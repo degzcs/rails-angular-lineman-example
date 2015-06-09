@@ -29,13 +29,10 @@ angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,P
   #TODO: Refactor provider and user provider logic
 
   if $scope.purchase.trazoro 
-    User.get($scope.purchase.provider.id).success (user)->
-      $scope.provider = user
-
     SaleService.getBatches($scope.purchase.sale_id).success (batches)->
       $scope.trazoro_batches  = batches
       console.log $scope.trazoro_batches
-  else
-    ProviderService.retrieveProviderById.get {providerId: $scope.purchase.provider.id}, (provider)->
-      $scope.provider = provider
-    
+
+  User.get($scope.purchase.provider.id).success (user)->
+    $scope.provider = user
+

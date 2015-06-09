@@ -381,9 +381,7 @@ angular.module('app').controller('ProvidersRucomCtrl', ['$scope', '$state', '$st
   }, true);
 
   // end watchers
-
-
-
+  
   // It listens to state changes
   $scope.$on('$stateChangeStart',
     function(event, toState, toParams, fromState, fromParams){

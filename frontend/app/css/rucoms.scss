@@ -9,3 +9,26 @@
   top: 74px;
   left: 22px;
 }
+
+.search-rucom-header{
+  text-align: center!important;
+  input{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  md-icon.search{
+    margin-left: 15px!important;
+  }
+  input:hover, input:focus{
+    border: 2px solid #edb039!important;
+  }
+  input:focus{
+    border: 3px solid #edb039!important;
+  }
+
+}
+
+.rucom-search-message{
+  margin-top: 40px;
+  font-weight: 500;
+}

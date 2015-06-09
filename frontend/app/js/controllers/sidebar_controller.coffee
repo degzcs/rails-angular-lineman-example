@@ -1,4 +1,4 @@
-angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $auth, $state) ->
+angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $auth, $state, $mdDialog) ->
   #  Here just add the sidebar navigation options with their state
   $scope.options = [
     {name: "Dashboard", state: "dashboard", icon: 'action:dashboard'}
@@ -6,7 +6,8 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     {name: "Certificados de Origen", state: "new_origin_certificate", icon: 'action:pageview'}
     {name: "Inventario", state: "index_inventory", icon: 'action:assignment'}
     {name: "Clientes", state: "clients", icon: 'social:people_outline'}
-    {name: "Provedores" , state: "providers", icon: 'social:people'}
+    {name: "Proovedores" , state: "index_external_user", icon: 'social:people'}
+    # {name: "Cerrar Sesi" , state: "index_external_user", icon: 'social:people'}
     # {name: "Transportadores", state: "new_courier", icon: 'maps:local_shipping'}
   ]
 
@@ -27,6 +28,8 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
       # $log.debug 'toggle LEFT is done'
       return
     return
+
+
   $scope.logout = ->
     if !$auth.isAuthenticated()
       return

@@ -16,5 +16,13 @@
 
 class PopulationCenter < ActiveRecord::Base
   belongs_to :city
-  has_many :user
+  has_many :users
+  has_many :external_users
+  def city_name
+    #city.name if city
+  end
+
+  def state_name
+    #city.state.name if city.state
+  end
 end

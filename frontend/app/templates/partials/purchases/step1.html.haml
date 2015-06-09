@@ -9,7 +9,7 @@
         %div.fieldset-inputs
           %div{layout: "row"}
             %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type',:placeholder => "Tipo de compra"}
+              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
                 %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
                 
@@ -24,8 +24,11 @@
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             2. Ingrese el codigo de barras
 
-        %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedProviderChange(provider)"}
-          %span{"md-highlight-text" => "searchText"} {{provider.name}} - c.c. {{provider.document_number}}
+        %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedProviderChange(provider)","md-search-text-change"=>"getQuery(searchText)"}
+          %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{provider.first_name}} {{provider.last_name}} - c.c. {{provider.document_number}}
+          %md-not-found
+            No se encontraron proovedores
+          
 
         %div.fieldset-inputs
           %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
@@ -33,7 +36,7 @@
               %label Numero de codigo de barras de la Venta
               %input{"ng-model" => "code", :name => 'provider_name'}
             %md-input-container{flex: 30}
-              %a.md-button..md-raised.md-primary.find-provider-button{:ng-click =>"searchProviderByCode(code)"}  Buscar
+              %a.md-button.md-raised.md-primary.find-provider-button{:ng-click =>"searchProviderByCode(code)"}  Buscar
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Nombre Proovedor
@@ -42,9 +45,9 @@
               %label Nombre de la Compania
               %input{"ng-model" => "purchase.model.provider.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
           %div{layout: "row"}
-            %md-input-container{flex: "20"}
-              %label tipo doc.
-              %input{"ng-model" => "purchase.model.provider.document_type", :required => "", :name => 'provider_document_type', :readOnly => 'true'}
+            / %md-input-container{flex: "20"}
+            /   %label tipo doc.
+            /   %input{"ng-model" => "purchase.model.provider.document_type", :required => "", :name => 'provider_document_type', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Numero de Documento
               %input{"ng-model" => "purchase.model.provider.document_number", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
