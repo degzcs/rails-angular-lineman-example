@@ -1,6 +1,6 @@
 module V1
   module Entities
-    class Provider < Grape::Entity
+    class Client < Grape::Entity
       expose :id, documentation: { type: "integer", desc: "id of the user", example: '1' }
       expose :document_number, documentation: { type: "string", desc: "Document number of the provider", example: "1968353479" }
       expose :first_name, documentation: { type: "string", desc: "Firstname", example: "Juan" }
@@ -20,6 +20,8 @@ module V1
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
       expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
+      expose :activity, documentation: {type: "hash", desc: "can be Joyero | Comprador Ocasional | Exportacion", example: "Joyero"}
+
     end
   end
 end

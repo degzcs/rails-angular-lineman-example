@@ -3,7 +3,7 @@
 class PdfUploader < CarrierWave::Uploader::Base
 
   #Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
+  include CarrierWave::RMagick if APP_CONFIG[:enabled_rmagick]
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
@@ -23,16 +23,17 @@ class PdfUploader < CarrierWave::Uploader::Base
     end
   end
 
-  version :preview do
-    process :cover
-    process :resize_to_fill => [310, 200]
-    process :convert => :jpg
+  if APP_CONFIG[:enabled_rmagick]
+    version :preview do
+      process :cover
+      process :resize_to_fill => [310, 200]
+      process :convert => :jpg
 
-    def full_filename (for_file = model.source.file)
-      super.chomp(File.extname(super)) + '.jpg'
+      def full_filename (for_file = model.source.file)
+        super.chomp(File.extname(super)) + '.jpg'
+      end
     end
   end
-
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:

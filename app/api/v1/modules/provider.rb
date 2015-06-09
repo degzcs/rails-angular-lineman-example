@@ -116,6 +116,8 @@ module V1
                                   ::User.providers.solicitantes
                                 when 'subcontratados'
                                   ::User.providers.subcontratados
+                                when 'casas_compra_venta'
+                                  ::User.providers.casas_compra_venta
                               end
           # binding.pry
           present providers, with: V1::Entities::Provider

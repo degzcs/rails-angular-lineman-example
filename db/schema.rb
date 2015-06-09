@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150604215433) do
+ActiveRecord::Schema.define(version: 20150608012703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 20150604215433) do
     t.string   "num_rucom"
     t.string   "rucomeable_type"
     t.integer  "rucomeable_id"
+    t.boolean  "trazoro",                       default: false,   null: false
   end
 
   create_table "sales", force: true do |t|

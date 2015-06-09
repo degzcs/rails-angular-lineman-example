@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
 	validates :first_name , presence: true
 	validates :last_name , presence: true
-	validates :email, presence: true
+	validates :email, presence: true, uniqueness: true
 	validates :document_number , presence: true
 	#validates :document_expedition_date, presence: true
 	validates :phone_number, presence: true
@@ -87,7 +87,8 @@ class User < ActiveRecord::Base
 	scope :beneficiarios, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial')}
 	scope :consumidor, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Consumidor')}
 	scope :mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Titular')}
-	scope :subcontratados, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'subcontrato')}
+	scope :subcontratados, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Subcontrato')}
+	scope :casas_compra_venta, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Casa de Compraventa')}
 	scope :barequeros_chatarreros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Barequero', 'Chatarrero')}
 	scope :beneficiarios_mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial', 'Titular')}
 
@@ -109,7 +110,7 @@ class User < ActiveRecord::Base
 	mount_uploader :document_number_file, PdfUploader
 	mount_uploader :photo_file, PhotoUploader
 	mount_uploader :rut_file, PdfUploader
-	
+
 	#
 	# Instance Methods
 	#
@@ -134,8 +135,16 @@ class User < ActiveRecord::Base
 		population_center.try(:city)
 	end
 
+	def city_name
+		city.try(:name)
+	end
+
 	def state
 		city.try(:state)
+	end
+
+	def state_name
+		state.try(:name)
 	end
 
 	#IMPROVE:  this value introduce inconsistencies in the transactions!!
