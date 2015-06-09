@@ -172,6 +172,38 @@
                       %md-button.btn-save{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
+
+          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+            %div{flex: '30'}
+              %h4 Subir Registro minero del usuario
+              %md-select.uploader-selector{"ng-model" => "external_user_mining_register_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
+                %md-option{:value => "by_upload"} Desde el PC
+                %md-option{:value => "by_scan"} Por Escaner
+                %md-option{:value => "by_photo"} por Camara
+            %div{flex: ''}
+              .upload-oc{:flex => ''}
+                .button-action.md-padding{:ng-switch => '', :on => 'external_user_mining_register_type'}
+                  %md-input-container
+                    %label Nombre del archivo
+                    %input{"ng-model" => "newFiles.external_user_mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'external_user_mining_register'}
+                    %div{"ng-messages" => "providerCreateForm.external_user_mining_register.$error"}
+                      %div{"ng-message" => "required"} * Debe seleccionar el documento de registro minero
+
+                  .by_upload{"ng-switch-when" =>'by_upload'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.external_user_mining_register_file'}
+                      Subir desde PC
+                      %md-icon{"md-svg-icon"=>"file:file_upload"}
+                  
+                  .by_scan{"ng-switch-when" =>'by_scan'}
+                    %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
+                      Escanear
+                      %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
+                     
+                  .by_photo{"ng-switch-when" =>'by_photo'}
+                    .md-tile-left.cam
+                      %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
+                        Escanear con camara
+                        %md-icon{"md-svg-icon" => "image:camera_alt"}
           
           .company-fields{"ng-show"=>"isCompany"}
             %h2 Documentacion de la compañia
