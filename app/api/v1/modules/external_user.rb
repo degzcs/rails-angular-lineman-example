@@ -75,17 +75,15 @@ module V1
           query_id = params[:query_id]
           query_rucomid = params[:query_rucomid]
           #binding.pry
-          if query_name
-            external_users = ::User.external_users.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
-              {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
-          elsif query_id
-            external_users = ::User.external_users.order("id DESC").where("document_number LIKE :document_number",
-              {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
-          elsif query_rucomid
-            external_users = ::User.external_users.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
-          else
-            external_users = ::User.external_users.order("id DESC").paginate(:page => page, :per_page => per_page)
-          end
+          external_users = if query_name
+                                        ::User.external_users.order_by_id.find_by_name(query_name).paginate(:page => page, :per_page => per_page)
+                                      elsif query_id
+                                        ::User.external_users.order_by_id.find_by_document_number(query_id).paginate(:page => page, :per_page => per_page)
+                                      elsif query_rucomid
+                                        ::User.external_users.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+                                      else
+                                        ::User.external_users.order_by_id.paginate(:page => page, :per_page => per_page)
+                                      end
           #binding.pry
           header 'total_pages', external_users.total_pages.to_s
           present external_users, with: V1::Entities::ExternalUser

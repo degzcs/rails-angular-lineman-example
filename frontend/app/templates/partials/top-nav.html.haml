@@ -1,8 +1,8 @@
 /--------------- NAVBAR ----------------------------/
 %md-content.md-padding.div-trazoro.gold.navigation
-  .side-button-options{"ng-controller"=>"SidebarCtrl"}
-    %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
-      %md-icon{"md-svg-icon"=>"action:reorder"}
+  / .side-button-options{"ng-controller"=>"SidebarCtrl"}
+  /   %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
+  /     %md-icon{"md-svg-icon"=>"action:reorder"}
   %section.top-nav-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
     .btn-cont
       %md-button.md-fab.top-nav-button{"aria-label" => "dashboard","ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
@@ -28,6 +28,9 @@
       %md-button.md-fab.top-nav-button{"aria-label" => "providers","ng-class"=>"getNavigationClass('index_external_user')","ui-sref" => "index_external_user"}
         %md-icon{"md-svg-icon"=>"social:group"}
       %h6 Proovedores
+    .btn-cont{"ng-controller"=>"SidebarCtrl"}
+      %md-button.top-nav-button{"aria-label" => "providers","ng-click"=>"logout()"}
+        %h6 Cerrar Sesión
 .breadcrumb{"flex" => 80, "hide-sm" => ""}
   .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
 
