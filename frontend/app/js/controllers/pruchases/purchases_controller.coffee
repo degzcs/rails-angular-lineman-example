@@ -101,6 +101,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
         $scope.purchase.model.provider = data.provider
+
         # TODO: simplify this code
         if data.provider.num_rucom
           $scope.rucomIDField.label = 'Número de RUCOM'
@@ -112,6 +113,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.purchase.model.rucom_id_field = 'rucom_record'
         else
           console.log 'State changed to none'
+
 
   #
   #
@@ -135,7 +137,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.rucomIDField.field = 'rucom_record'
         $scope.purchase.model.rucom_id_field = 'rucom_record'
     else
-      console.log 'State changed to none'
+      console.log 'Provider changed to none'
 
 
   #

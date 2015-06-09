@@ -172,6 +172,7 @@ class User < ActiveRecord::Base
 		rucom.try(:rucom_record)
 	end
 
+
 	# IMPORTANT Get if the user or external user belongs to a company
 	def rucom
 		unless self.company

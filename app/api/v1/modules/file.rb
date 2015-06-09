@@ -24,10 +24,9 @@ module V1
         post 'download_p_b_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
 
           values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
-          # binding.pry
+
           date = Date.today
           pdf = ::PdfFile.new(values , date , 'p_b_certificate')
-          #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificado_plantas_beneficio_#{date.month}_#{date.day}.pdf"
           env['api.format'] = :pdf
           body pdf.render
@@ -46,13 +45,10 @@ module V1
 
 
         post 'download_b_c_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-
+          
           date = Date.today  #fecha
-
           values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
-          # binding.pry
           pdf = ::PdfFile.new(values , date , 'b_c_certificate')
-          #puts pdf.render
           header['Content-Disposition'] = "attachment; filename=certificado_barequeros_chatarreros_#{date.month}_#{date.day}.pdf"
           env['api.format'] = :pdf
           body pdf.render
