@@ -21,7 +21,8 @@ module V1
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
       expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
       expose :activity, documentation: {type: "hash", desc: "can be Joyero | Comprador Ocasional | Exportacion", example: "Joyero"}
-
+      expose :city, documentation: { type: "string", desc: "", example: "user city" }
+      expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
     end
   end
 end
