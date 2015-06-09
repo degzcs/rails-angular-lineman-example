@@ -32,6 +32,15 @@ FactoryGirl.define do
     # Provider Types
     #1) chatarrero, 2) barequero, 3) titular minero, 4) beneficiario de area de reserva especial, 5) solicitante de legalizacion, 6) subcontrato de formalizaion
     provider_type {["Comercializadores", "Titular", "Solicitante Legalización De Minería", "Beneficiario Área Reserva Especial", "Barequero", "Chatarrero", "Casa de Compraventa"].sample}
+
+      trait :for_clients do
+        after(:build) do |rucom, eval|
+            rucom.trazoro = true
+            rucom.provider_type= ['Joyero','Comprador Ocasional', 'Exportacion'].sample
+        end
+      end
+
   end
+
 
 end
