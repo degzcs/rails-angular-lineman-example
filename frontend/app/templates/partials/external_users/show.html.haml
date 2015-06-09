@@ -78,6 +78,10 @@
             %p Cédula de Ciudadanía
             %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.document_number_file.preview.url || 'img/pdf.png'}}"}
 
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentExternalUser.mining_register_file.url}}", :target => "_blank"}  
+            %p Registro Minero del Usuario
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentExternalUser.mining_register_file.preview.url || 'img/pdf.png'}}"}
+
 
     /*************************************************** COMPANY INFO ******************************************************/
     %md-tab{"label"=>"Informacion Compañia","ng-if" => "company"}

@@ -29,6 +29,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
       files: 
         photo_file: ''
         document_number_file: ''
+        external_user_mining_register_file: ''
         mining_register_file: ''
         chamber_of_commerce_file: ''
         rut_file: ''
@@ -106,6 +107,38 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             return
           document_number_reader.readAsBinaryString document_number_file_copy[0]
           filesRemaining++
+
+        # External User's mining register file
+        if !(files_to_upload.external_user_mining_register_file[0] instanceof File)
+          files_to_upload.external_user_mining_register_file[0].name = 'ext_user_mining_register_file.pdf'
+        else
+          external_user_mining_register_file_copy = files_to_upload.external_user_mining_register_file
+          external_user_mining_register_reader = new FileReader
+          files_to_upload.external_user_mining_register_file = []
+
+          external_user_mining_register_reader.onload = ->
+            `var i`
+            i = undefined
+            l = undefined
+            d = undefined
+            array = undefined
+            d = @result
+            l = d.length
+            array = new Uint8Array(l)
+            i = 0
+            while i < l
+              array[i] = d.charCodeAt(i)
+              i++
+            files_to_upload.external_user_mining_register_file.push new Blob([ array ], type: 'application/octet-stream')
+            files_to_upload.external_user_mining_register_file[0].name = 'ext_user_mining_register_file' + external_user_mining_register_file_copy[0].name.substring(external_user_mining_register_file_copy[0].name.lastIndexOf('.'))
+            --filesRemaining
+            if filesRemaining <= 0
+              uploadFiles()
+            # window.location.href = URL.createObjectURL(b);
+            return
+
+          external_user_mining_register_reader.readAsBinaryString external_user_mining_register_file_copy[0]
+          filesRemaining++  
 
         if service.isCompany
 
@@ -222,7 +255,9 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
               files_to_upload.document_number_file[0]
               external_user_photo_file
             ]
-            
+          
+          if files_to_upload.external_user_mining_register_file[0]
+              files.push files_to_upload.external_user_mining_register_file[0]  
 
           $upload.upload(
             url: '/api/v1/external_users/'
@@ -365,6 +400,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
           mining_register_file: ''
           rut_file: ''
           chamber_of_commerce_file: ''
+          external_user_mining_register_file: ''
           photo_file: ''
         company:
           nit_number: ''

@@ -161,12 +161,13 @@ module V1
           # user files
           photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
           document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
+          ext_user_mining_register_file = files.select{|file| file['filename'] =~ /ext_user_mining_register_file/}.first
           # company files
           mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           chamber_of_commerce_file = files.select{|file| file['filename'] =~ /chamber_of_commerce_file/}.first
 
-          params[:external_user].except!(:files).merge!(document_number_file: document_number_file, photo_file: photo_file)
+          params[:external_user].except!(:files).merge!(document_number_file: document_number_file, photo_file: photo_file, mining_register_file: ext_user_mining_register_file)
 
           external_user_params = params[:external_user]
           external_user = ::User.new(params[:external_user])
