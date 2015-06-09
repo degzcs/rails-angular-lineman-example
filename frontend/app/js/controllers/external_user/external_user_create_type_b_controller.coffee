@@ -12,10 +12,10 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
   ]
   $scope.isCompany = ExternalUser.isCompany
   $scope.abortCreate = false
-  $scope.rucomIDField = {
-    label: 'Número de RUCOM',
+  $scope.rucomIDField = 
+    label: 'Número de RUCOM'
     field: 'num_rucom'
-  };
+  
 
   $scope.pendingPost = false
 
@@ -221,6 +221,12 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
   if $scope.currentRucom 
     ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
     ExternalUser.saveModelToCreate()
+    if $scope.currentRucom.num_rucom
+      $scope.rucomIDField.label = 'Número de RUCOM'
+      $scope.rucomIDField.field = 'num_rucom'
+    else if $scope.currentRucom.rucom_record
+      $scope.rucomIDField.label = 'Número de Expediente'
+      $scope.rucomIDField.field = 'rucom_record'
     #console.log ExternalUser.modelToCreate
 
   #************ Creation methods *************************#

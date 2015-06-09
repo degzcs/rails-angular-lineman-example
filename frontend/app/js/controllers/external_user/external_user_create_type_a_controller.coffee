@@ -7,10 +7,10 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   # ****** Tab directive variables and methods ********** #
   $scope.validPersonalData = false
   $scope.abortCreate = false
-  $scope.rucomIDField = {
-    label: 'Número de RUCOM',
+  $scope.rucomIDField =
+    label: 'Número de RUCOM'
     field: 'num_rucom'
-  };
+  
   $scope.tabIndex =
     selectedIndex: 0
 
@@ -215,6 +215,13 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   if $scope.currentRucom 
     ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
     ExternalUser.saveModelToCreate()
+    if $scope.currentRucom.num_rucom
+      $scope.rucomIDField.label = 'Número de RUCOM'
+      $scope.rucomIDField.field = 'num_rucom'
+    else if $scope.currentRucom.rucom_record
+      $scope.rucomIDField.label = 'Número de Expediente'
+      $scope.rucomIDField.field = 'rucom_record'
+
     
     #console.log ExternalUser.modelToCreate
 
