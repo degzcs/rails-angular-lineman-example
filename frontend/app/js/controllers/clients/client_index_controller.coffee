@@ -1,4 +1,4 @@
-angular.module('app').controller 'ClientIndexCtrl', ($scope,Client,$mdDialog,$state) ->
+angular.module('app').controller 'ClientIndexCtrl', ($scope,ClientService,$mdDialog,$state) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -104,7 +104,7 @@ angular.module('app').controller 'ClientIndexCtrl', ($scope,Client,$mdDialog,$st
     return content
   ##***************************************************************************************************************************##
 
-  Client.all($scope.count).success( (data, status, headers)->
+  ClientService.all($scope.count).success( (data, status, headers)->
     $scope.showLoading = false
   
     $scope.content = formated_content(data)
@@ -119,7 +119,7 @@ angular.module('app').controller 'ClientIndexCtrl', ($scope,Client,$mdDialog,$st
   $scope.$watch 'queryName', (newVal, oldVal) ->
     if oldVal and newVal != oldVal
       $scope.queryFocus = 'name'
-      Client.query_by_name($scope.queryName).success( (data, status, headers) ->
+      ClientService.query_by_name($scope.queryName).success( (data, status, headers) ->
         $mdDialog.cancel()
         $scope.content = formated_content(data)
         $scope.pages = parseInt(headers().total_pages)
@@ -130,7 +130,7 @@ angular.module('app').controller 'ClientIndexCtrl', ($scope,Client,$mdDialog,$st
   $scope.$watch 'queryId', (newVal, oldVal) ->
     if oldVal and newVal != oldVal
       $scope.queryFocus = 'id'
-      Client.query_by_id($scope.queryId).success( (data, status, headers) ->
+      ClientService.query_by_id($scope.queryId).success( (data, status, headers) ->
         $mdDialog.cancel()
         $scope.content = formated_content(data)
         $scope.pages = parseInt(headers().total_pages)

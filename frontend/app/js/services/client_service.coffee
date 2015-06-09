@@ -1,4 +1,4 @@
-angular.module('app').factory 'Client', ($resource, $upload, $http, $mdDialog,RucomService,$state) ->
+angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDialog,RucomService,$state) ->
   service =
 
     uploadProgress: 0

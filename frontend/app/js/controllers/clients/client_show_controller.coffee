@@ -1,4 +1,4 @@
-angular.module('app').controller 'ClientShowCtrl', ($scope,$sce, $state, $stateParams, $window, Client, RucomService, LocationService,$mdDialog) ->
+angular.module('app').controller 'ClientShowCtrl', ($scope,$sce, $state, $stateParams, $window, ClientService, RucomService, LocationService,$mdDialog) ->
   # *** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -11,7 +11,7 @@ angular.module('app').controller 'ClientShowCtrl', ($scope,$sce, $state, $stateP
     field: 'num_rucom'
   # ******************************************************************************** #
   if $stateParams.id
-    Client.get($stateParams.id).success (data)->
+    ClientService.get($stateParams.id).success (data)->
       console.log data
       # 1. Cancel loading map
       $scope.showLoading = false
