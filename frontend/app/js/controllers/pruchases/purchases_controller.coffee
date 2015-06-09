@@ -3,6 +3,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.showLoading = false
   $scope.loadingMode = "determinate"
   $scope.loadingMessage = "Registrando su compra ..."
+  $scope.loadingProgress = 0
   #
   # Instances
   #
