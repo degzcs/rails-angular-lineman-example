@@ -26,7 +26,7 @@ module V1
       resource :clients do
         #GET
           desc 'returns all existent cleints', {
-          entity: V1::Entities::ExternalUser,
+          entity: V1::Entities::Client,
           notes: <<-NOTES
             Returns all existent cleints paginated
           NOTES
