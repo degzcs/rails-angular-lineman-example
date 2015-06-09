@@ -51,7 +51,7 @@
               .external-info-container{flex: ""}
                 %h2
                   %label Estado:
-                  {{currentExternalUser.rucom.rucom_status}}
+                  {{currentExternalUser.rucom.status ? currentExternalUser.rucom.status : 'Inscrito'}}
             %h2{style: "text-align: left;"} Centro Poblado:
             %div{layout: 'row'}
               .external-info-container{flex: ""}
