@@ -53,6 +53,9 @@ angular.module('app').controller 'ExternalUserCreateTypeBCtrl', ($scope, $state,
     if CameraService.getTypeFile() == 5
       ExternalUser.modelToCreate.files.chamber_of_commerce_file = $scope.file
       goToDocumentation()
+    if CameraService.getTypeFile() == 6
+      ExternalUser.modelToCreate.files.external_user_mining_register_file = $scope.file
+      goToDocumentation()
 
     ExternalUser.saveModelToCreate()
     CameraService.clearData()

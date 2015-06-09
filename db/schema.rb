@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608012703) do
+ActiveRecord::Schema.define(version: 20150609142204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,7 @@ ActiveRecord::Schema.define(version: 20150608012703) do
     t.integer  "population_center_id"
     t.integer  "office_id"
     t.boolean  "external",                 default: false, null: false
+    t.string   "mining_register_file"
   end
 
 end
