@@ -73,6 +73,12 @@ class User < ActiveRecord::Base
 	# Scopes
 	#
 
+	scope :order_by_id, -> {order("users.id DESC")}
+	scope :find_by_name, ->(name){where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
+              {first_name: "%#{name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{name.downcase.gsub('%', '\%').gsub('_', '\_')}%"})}
+	scope :find_by_document_number, -> (document_number){where("document_number LIKE :document_number",
+              {document_number: "%#{document_number.gsub('%', '\%').gsub('_', '\_')}%"})}
+
 	scope :external_users, -> {where(external: true)}
 	scope :providers, -> {where('users.available_credits > ?', 0)}
 

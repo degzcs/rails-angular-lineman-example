@@ -15,9 +15,45 @@ module V1
           optional :page, type: Integer
           optional :per_page, type: Integer
         end
+
+        params :client_query do
+          optional :query_name, type: String
+          optional :query_id, type: String
+        end
       end
 
+
       resource :clients do
+        #GET
+          desc 'returns all existent cleints', {
+          entity: V1::Entities::ExternalUser,
+          notes: <<-NOTES
+            Returns all existent cleints paginated
+          NOTES
+        }
+        params do
+          use :pagination
+          use :client_query
+        end
+        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          query_name = params[:query_name]
+          query_id = params[:query_id]
+          #binding.pry
+          clients =  if query_name
+                            ::User.clients.order_by_id.find_by_name(query_name).paginate(:page => page, :per_page => per_page)
+                          elsif query_id
+                            ::User.clients.order_by_id.find_by_document_number(query_id).paginate(:page => page, :per_page => per_page)
+                          else
+                            ::User.clients.order_by_id.paginate(:page => page, :per_page => per_page)
+                          end
+          #binding.pry
+          header 'total_pages', clients.total_pages.to_s
+          present clients, with: V1::Entities::Client
+        end
+
         # POST
         desc 'creates a new client', {
             entity: V1::Entities::Client,
