@@ -66,9 +66,8 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
       external_user = service.modelToCreate.external_user
       company = service.modelToCreate.company
       files_to_upload = service.modelToCreate.files
-      rucom_id = service.modelToCreate.rucom_id
-      console.log rucom_id
-
+      activity = service.modelToCreate.activity
+      
       blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (external_user_photo_file) ->
         #external_user_photo_file = photo_file
         external_user_photo_file.name = 'photo_file.png'
@@ -226,17 +225,17 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
             
 
           $upload.upload(
-            url: '/api/v1/external_users/'
+            url: '/api/v1/clients/'
             method: 'POST'
             headers: {'Content-Type': 'application/json'}
             fields: 
-              "external_user[first_name]": external_user.first_name,
-              "external_user[document_number]": external_user.document_number,
-              "external_user[last_name]": external_user.last_name,
-              "external_user[phone_number]": external_user.phone_number,
-              "external_user[address]": external_user.address,
-              "external_user[email]": external_user.email,
-              "external_user[population_center_id]":external_user.population_center_id,
+              "client[first_name]": external_user.first_name,
+              "client[document_number]": external_user.document_number,
+              "client[last_name]": external_user.last_name,
+              "client[phone_number]": external_user.phone_number,
+              "client[address]": external_user.address,
+              "client[email]": external_user.email,
+              "client[population_center_id]":external_user.population_center_id,
               "company[name]":company.name if service.isCompany,
               "company[nit_number]":company.nit_number if service.isCompany,
               "company[legal_representative]":company.legal_representative if service.isCompany,
@@ -244,14 +243,14 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
               "company[email]":company.email if service.isCompany,
               "company[phone_number]":company.phone_number if service.isCompany,
               "company[id_type_legal_rep]":company.id_type_legal_rep if service.isCompany,
-              "rucom_id": rucom_id
+              "activity": activity
             file: files
-            fileFormDataName: 'external_user[files][]').progress((evt) ->
+            fileFormDataName: 'client[files][]').progress((evt) ->
             console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
             service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
             return
           ).success( (data, status, headers, config)->
-            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El client ha sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
             $state.go "index_external_user"
             service.clearModelToCreate()
             #uploadProgress = 0;
@@ -267,7 +266,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
             #
             #TODO: This message has to be validated in case of error
             #
-            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El cliente ha sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
             $state.go "index_external_user"
             service.clearModelToCreate()
             return
@@ -282,7 +281,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
     update_external_user: (id)->
       #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
-                url: 'api/v1/external_users/'+id
+                url: 'api/v1/clients/'+id
                 method: 'PUT'
                 data: {
                   external_user: service.modelToUpdate.external_user
@@ -299,7 +298,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
     
     query_by_name: (name,per_page,page)->
       return $http
-                url: 'api/v1/external_users'
+                url: 'api/v1/clients'
                 method: 'GET'
                 params: {
                   per_page: per_page || 10
@@ -308,7 +307,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
                 }
     query_by_id: (id,per_page,page)->
       return $http
-                url: 'api/v1/external_users'
+                url: 'api/v1/clients'
                 method: 'GET'
                 params: {
                   per_page: per_page || 10
@@ -317,7 +316,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
                 }
     query_by_rucom_id: (rucomid,per_page,page)->
       return $http
-                url: 'api/v1/external_users'
+                url: 'api/v1/clients'
                 method: 'GET'
                 params: {
                   per_page: per_page || 10
@@ -325,14 +324,17 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
                   query_rucomid: rucomid
                 }
     saveModelToCreate: ->
-      sessionStorage.external_user_to_create = angular.toJson(service.modelToCreate)
-
+      sessionStorage.client_to_create = angular.toJson(service.modelToCreate)
+      console.log "Cliente guardado"
+      console.log sessionStorage.client_to_create
     restoreModelToCreate: ->
       files = service.modelToCreate.files
-      if sessionStorage.external_user_to_create != null
-        service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
+      if sessionStorage.client_to_create != null
+        service.modelToCreate = angular.fromJson(sessionStorage.client_to_create)
         service.modelToCreate.files = files
-        service.modelToCreate
+        return service.modelToCreate
+        # console.log "DEvulviendo cliente"
+        # console.log service.modelToCreate
       else
         service.modelToCreate
       # if sessionStorage.external_user_to_create == null
@@ -347,7 +349,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
     clearModelToCreate: ->
       RucomService.user_type = ''
       RucomService.currentRucom = null
-      sessionStorage.external_user_to_create = null
+      sessionStorage.client_to_create = null
       service.isCompany= false
       service.modelToCreate =
         activity: ''

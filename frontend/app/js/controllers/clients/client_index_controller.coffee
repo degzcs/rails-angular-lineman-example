@@ -141,8 +141,8 @@ angular.module('app').controller 'ClientIndexCtrl', ($scope,ClientService,$mdDia
   $scope.new_external_user = (ev) ->
     #$state.go 'create_external_user_type_a'
     $mdDialog.show
-      controller: 'ExternalUserTypeCtrl'
-      templateUrl: 'partials/user-type-selection.html'
+      controller: 'ClientTypeCtrl'
+      templateUrl: 'partials/client-type-selection.html'
       targetEvent: ev
     return
 

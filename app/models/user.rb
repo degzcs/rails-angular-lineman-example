@@ -80,7 +80,9 @@ class User < ActiveRecord::Base
 	scope :find_by_document_number, -> (document_number){where("document_number LIKE :document_number",
               {document_number: "%#{document_number.gsub('%', '\%').gsub('_', '\_')}%"})}
 
-	scope :external_users, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+	#scope :external_users, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+	scope :external_users, -> {where('(users.external IS TRUE)')}
+	
 	scope :providers, -> {where('users.available_credits > ?', 0)}
 
 	# Get external users activity
