@@ -49,7 +49,7 @@ FactoryGirl.define do
         password {nil}
         password_confirmation {nil}
 
-        factory :client, class: User do
+        factory :client_with_fake_rucom, class: User do
             personal_rucom { create(:rucom, :for_clients)}
         end
     end

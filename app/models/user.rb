@@ -77,7 +77,8 @@ class User < ActiveRecord::Base
 	scope :providers, -> {where('users.available_credits > ?', 0)}
 
 	# Get external users activity
-	# these names are in spanish because is still not clear how handle these categories and if the names are correct
+	# NOTE: these names are in spanish because it is not clear yet how handle these categories and if the names are correct
+	# I think all category names can be formatted when are entered by the scrapper , or eventually, when are get them directly from DB
 	# 0. Barequero, 1. Chatarrero, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
 	# 4. Consumidor, 5. Titular , 6. Subcontrato de operación
 
@@ -92,9 +93,18 @@ class User < ActiveRecord::Base
 	scope :barequeros_chatarreros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Barequero', 'Chatarrero')}
 	scope :beneficiarios_mineros, -> {joins(:personal_rucom).where('rucoms.provider_type = ? OR rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial', 'Titular')}
 
-	# Get users activiry
+	# Get users activity
 	# 7. Comercializador -> traders, NOTE: I think this kind of users are all users that can login in the platform
 	scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializador')}
+
+	# all external users but without rucom and that just buy gold, they are called clients, they are:
+	# 8. Joyero, 9. Comprador Ocasional y 10. Exportacion
+	scope :clients_with_fake_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion'])}
+
+	# Finally, this scope gets all users that can be logged in the platform
+	scope :system_users, -> { where('users.password_digest IS NOT NULL')}
+
+	scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
 
 	#
 	# Calbacks

@@ -92,7 +92,7 @@ describe  User do
     it { should validate_presence_of(:office) }
     it { should validate_presence_of(:population_center) }
 
-    it "should not allow to create an external user without personal_rucom if does not have office" do 
+    it "should not allow to create an external user without personal_rucom if does not have office" do
       external_user = build(:external_user, personal_rucom: nil, office: nil)
       expect(external_user).not_to be_valid
     end
@@ -101,12 +101,17 @@ describe  User do
 
   context "scopes" do
     before :each do
-      users = create_list(:user, 5 )
+      users = create_list(:user, 5)
       external_users = create_list(:external_user, 5)
+      clients_with_fake_rucom = create_list(:client_with_fake_rucom, 6)
 
       # add credits to buy gold
       users.last.update_attribute(:available_credits, 2000)
       external_users.last.update_attribute(:available_credits, 2000)
+    end
+
+    it 'should return all system users, it means, all uses that be logged in the platform' do
+      expect(User.system_users.count).to eq 5
     end
 
     it 'should return all extenal users' do
@@ -115,6 +120,19 @@ describe  User do
 
     it 'should select all user that can provider gold (providers)' do
       expect(User.providers.count).to eq 2
+    end
+
+    it 'should select all users with fake rucom' do
+      expect(User.clients_with_fake_rucom.count).to be 6
+    end
+
+    xit 'should select all users that are comercializadores' do
+      #NOTE:we have to ask to the client if all users that can register in the platform have associated (by their company) to one rucom which its provider is the type 'Comercializador'
+      expect(User.comercializadores.count).to be 5
+    end
+
+    it 'should select all users called clients (see User Model for more info)' do
+      expect(User.clients.count).to eq  11
     end
   end
 
@@ -180,7 +198,7 @@ describe  User do
         expect(user).to be_valid
       end
 
-      it "should not allow to create a user without office" do 
+      it "should not allow to create a user without office" do
         user = build(:user, external: false,  office: nil)
         expect(user).not_to be_valid
       end
