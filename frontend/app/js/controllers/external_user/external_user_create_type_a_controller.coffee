@@ -80,6 +80,26 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.cityDisabled = true;
   $scope.populationCenterDisabled = true;
 
+  flushFields = (level) ->
+    $scope.population_centers = []
+    $scope.selectedPopulationCenter = null
+    $scope.searchPopulationCenter = null
+    $scope.populationCenterDisabled = true
+    switch level
+      when 'state'
+        $scope.cities = []
+        $scope.selectedState = null
+        $scope.selectedCity = null
+        $scope.searchState = null
+        $scope.searchCity = null
+        $scope.cityDisabled = true
+      when 'city'
+        $scope.searchCity = null
+        $scope.selectedCity = null
+      else
+        break
+    return
+
   loadProviderLocation = (provider) ->
     if provider
       LocationService.getPopulationCenterById.get { populationCenterId: provider.population_center_id }, (populationCenter) ->
