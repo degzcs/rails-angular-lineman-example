@@ -173,7 +173,7 @@
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
 
-          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column", "ng-if"=>"!isCompany"}
             %div{flex: '30'}
               %h4 Subir Registro minero del usuario
               %md-select.uploader-selector{"ng-model" => "external_user_mining_register_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
