@@ -427,7 +427,7 @@ class PdfFile < Prawn::Document
     #buyer
     move_cursor_to 644
     text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box "#{values[:buyer][:rucom_record]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:rucom][:num_rucom] || values[:buyer][:rucom][:rucom_record] }", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 626
     text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box "#{values[:buyer][:first_name]} #{values[:buyer][:last_name]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit

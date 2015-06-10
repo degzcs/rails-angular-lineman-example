@@ -20,7 +20,7 @@
               %td.md-table-td-more
                 Rucom:
               %td.md-table-td-more.value
-                {{current_user.rucom_record}}
+                {{current_user.rucom.num_rucom || current_user.rucom.rucom_record}}
             %tr
               %td.md-table-td-more
                 Nombre de usuario:
