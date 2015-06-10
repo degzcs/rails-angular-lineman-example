@@ -94,12 +94,11 @@ describe 'Client', :type => :request do
         end
 
         context "with company info" do
-          xit 'returns a representation of the new client with his company created and code 201' do
+          it 'returns a representation of the new client with his company created and code 201' do
 
             #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
-            rucom_company = create(:rucom)
             population_center = create(:population_center)
             client = build(:client_with_fake_rucom, population_center_id: population_center.id)
             company = build(:company)
@@ -138,13 +137,13 @@ describe 'Client', :type => :request do
               email: client.email,
             }
 
-            post '/api/v1/clients', {client: new_values, rucom_id: rucom_company.id, company: new_company_values},
+            post '/api/v1/clients', {client: new_values, company: new_company_values, activity: 'Joyero' },
                                       { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
             #binding.pry
             expect(JSON.parse(response.body)['company']['name']).to eq company.name
-            expect(JSON.parse(response.body)['rucom']['id']).to eq rucom_company.id
+            # expect(JSON.parse(response.body)['rucom']['id']).to eq rucom_company.id
           end
         end
       end

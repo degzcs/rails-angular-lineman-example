@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 	validates :photo_file, presence: true
 	validates :office, presence: true , unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
-	validates :personal_rucom, presence: true, unless: :has_office # the rucom has to be present for any user if has no office asociated
+	validates :personal_rucom, presence: true, unless: :has_office # the rucom has to be present for any user if he-she has no office asociated
 
 	has_secure_password validations: false
 	validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
 	#
 	# Get the user activity  based on rucom
 	def activity
-		self.external ? personal_rucom.activity :  company.rucom.activity
+		self.external  && self.office.nil? ? personal_rucom.activity :  company.rucom.activity
 	end
 
 	def company_name
@@ -174,10 +174,10 @@ class User < ActiveRecord::Base
 
 	# IMPORTANT Get if the user or external user belongs to a company
 	def rucom
-		unless self.company
-			personal_rucom
+		if self.office.present?
+			self.office.company.try(:rucom)
 		else
-			office.try(:company).try(:rucom)
+			self.try(:personal_rucom)
 		end
 	end
 
