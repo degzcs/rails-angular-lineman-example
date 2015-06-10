@@ -14,7 +14,7 @@ angular.module('app').directive('mdTableClient', function () {
       queryId: '=',
       queryFocus: '='
     },
-    controller: function ($scope, $filter, $location, $window, $state, ProviderService,ExternalUser,$mdDialog) {
+    controller: function ($scope, $filter, $location, $window, $state, ProviderService,ClientService,$mdDialog) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
@@ -59,11 +59,11 @@ angular.module('app').directive('mdTableClient', function () {
       $scope.goToPage = function (pag, queryFocus) {
         $scope.tablePage = pag;
         if (queryFocus && queryFocus === 'name') {
-          var external_users_petition = Client.query_by_name($scope.queryName,$scope.count,pag+1);
+          var external_users_petition = ClientService.query_by_name($scope.queryName,$scope.count,pag+1);
         } else if (queryFocus && queryFocus === 'id') {
-          var external_users_petition = Client.query_by_name($scope.queryId,$scope.count,pag+1);
+          var external_users_petition = ClientService.query_by_name($scope.queryId,$scope.count,pag+1);
         } else{
-          var external_users_petition = Client.all($scope.count,pag+1);
+          var external_users_petition = ClientService.all($scope.count,pag+1);
         }
         if(external_users_petition){
           external_users_petition.success(function(data, status ,headers){
