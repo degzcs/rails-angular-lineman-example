@@ -7,10 +7,13 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
   # ****** Tab directive variables and methods ********** #
   $scope.validPersonalData = false
   $scope.abortCreate = false
-  
+  $scope.idTypeLegalRep = [
+    { type: 1, name: 'CC' },
+    { type: 2, name: 'CE' }
+  ]
+  $scope.isCompany = ClientService.isCompany
   $scope.tabIndex =
     selectedIndex: 0
-
   $scope.pendingPost = false
   
   goToDocumentation = ->
@@ -218,32 +221,54 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
 
 
   $scope.validate_personal_fields= ()->
-    if $scope.newFiles.photo_file == '' 
+    if $scope.newFiles.photo_file == ''
       $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' #|| $scope.newExternalUser.population_center_id == ''
+    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' || $scope.newExternalUser.population_center_id == ''
       $scope.validPersonalData = false
-      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
     else if $scope.newExternalUser.first_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.email ==  undefined || $scope.newExternalUser.document_number == undefined || $scope.newExternalUser.phone_number == undefined || $scope.newExternalUser.address == undefined
       $scope.validPersonalData = false
-      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.currentRucom == null && !$scope.isCompany
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.isCompany
+      $scope.validate_company_fields()
+    else
+      $scope.validPersonalData = true
+      
+  $scope.validate_company_fields = ()->
+    if $scope.newCompany.name == '' || $scope.newCompany.nit_number == '' || $scope.newCompany.legal_representative == '' || $scope.newCompany.id_number_legal_rep == '' || $scope.newCompany.email == '' || $scope.newCompany.id_type_legal_rep == '' || $scope.newCompany.phone_number == ''
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.newCompany.name == undefined || $scope.newCompany.nit_number == undefined || $scope.newCompany.legal_representative == undefined || $scope.newCompany.id_number_legal_rep == undefined || $scope.newCompany.email == undefined || $scope.newCompany.id_type_legal_rep == undefined || $scope.newCompany.phone_number == undefined
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.currentRucom == null 
+      $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
     else
       $scope.validPersonalData = true
-      #goToDocumentation()
+      
 
   $scope.validate_documentation_and_create=  ()->
-      if $scope.newFiles.document_number_file == '' 
-        $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
-      else
-        $scope.pendingPost = true
-        ClientService.modelToCreate.external_user = $scope.newExternalUser
-        ClientService.modelToCreate.files = $scope.newFiles 
-        ClientService.saveModelToCreate()
-        #console.log ExternalUser.modelToCreate
-        ClientService.create()
-        $scope.showUploadingDialog()
+    if $scope.isCompany &&  ($scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == '')
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.newFiles.document_number_file == ''
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+    else
+      $scope.pendingPost = true
+      console.log $scope.newFiles
+      ClientService.modelToCreate.external_user = $scope.newExternalUser
+      ClientService.modelToCreate.files = $scope.newFiles 
+      ClientService.modelToCreate.company = $scope.newCompany if $scope.isCompany
+      ClientService.saveModelToCreate()
+      #console.log ExternalUser.modelToCreate
+      ClientService.create()
+      $scope.showUploadingDialog()
+
+
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true
@@ -286,6 +311,13 @@ angular.module('app').controller 'ClientCreateNoRucomCtrl', ($scope, $state, $st
     #       return
     #   ]
     # return
+
+  $scope.setIsCompany = ()->
+    $scope.tabIndex.selectedIndex = 0
+    console.log $scope.isCompany
+    ClientService.isCompany = $scope.isCompany
+
+
 
 
   

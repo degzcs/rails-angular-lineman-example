@@ -250,8 +250,8 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
             service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
             return
           ).success( (data, status, headers, config)->
-            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El client ha sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
-            $state.go "index_external_user"
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El cliente ha sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
+            $state.go "clients"
             service.clearModelToCreate()
             #uploadProgress = 0;
             # var model;
@@ -267,7 +267,7 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
             #TODO: This message has to be validated in case of error
             #
             $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El cliente ha sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
-            $state.go "index_external_user"
+            $state.go "clients"
             service.clearModelToCreate()
             return
             
