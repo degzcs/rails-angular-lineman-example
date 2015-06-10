@@ -94,6 +94,7 @@ ActiveAdmin.register Company do
       row :mining_register_file , label: "PDF registro minero"do|u|
         link_to(image_tag(u.mining_register_file.preview.url),u.mining_register_file.url, :target => "_blank" )
       end
+      row :rucom ,label: "Rucom de compañia"
     end
     active_admin_comments
   end
