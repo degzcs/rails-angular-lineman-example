@@ -178,7 +178,7 @@ describe  User do
     context "external users" do
       it "should returns the user activity from rucom info" do
         rucom = create(:rucom)
-        external_user = create(:external_user, personal_rucom: rucom)
+        external_user = create(:external_user, personal_rucom: rucom, office: nil)
         expect(external_user.activity).to eq rucom.activity
       end
 
