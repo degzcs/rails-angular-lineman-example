@@ -284,13 +284,13 @@ angular.module('app').factory 'ClientService', ($resource, $upload, $http, $mdDi
                 url: 'api/v1/clients/'+id
                 method: 'PUT'
                 data: {
-                  external_user: service.modelToUpdate.external_user
+                  client: service.modelToUpdate.external_user
                 }
     
     update_external_user_company: (id)->
       $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
-                url: 'api/v1/external_users/'+id
+                url: 'api/v1/clients/'+id
                 method: 'PUT'
                 data: {
                   company: service.modelToUpdate.company

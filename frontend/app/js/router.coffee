@@ -321,7 +321,7 @@
     )
 
 #  --- Clients Routes ---- #
-
+  #TODO: Rename client states
     .state("clients",
     url: "/clients",
     ncyBreadcrumb:
@@ -424,9 +424,10 @@
     )
 
     .state("edit_client",
-    url: "/client/:id",
+    url: "/clients/:id/edit",
     ncyBreadcrumb:
       label: 'Edición de cliente'
+      parent: 'show_client'
     views:
       'content':
         templateUrl: "partials/clients/edit.html"
@@ -448,7 +449,31 @@
           deferred.resolve()
         deferred.promise
     )
+    .state("edit_client_company",
+      url: "/clients/:id/edit_company",
+      ncyBreadcrumb:
+        label: 'Edición de compañia'
+        parent: 'show_client'
+      views:
+        'content':
+          templateUrl: "partials/clients/edit_company.html"
+          controller: "ClientCompanyEditCtrl"
+        'top-nav':
+          templateUrl: "partials/top-nav.html"
+          controller: "SidebarCtrl"
+        'flying-navbar':
+          templateUrl: "partials/flying-navbar.html"
+          controller: "SidebarCtrl"
 
+      resolve:
+        authenticated: ($q, $location, $auth) ->
+          deferred = $q.defer()
+          unless $auth.isAuthenticated()
+            $location.path "/login"
+          else
+            deferred.resolve()
+          deferred.promise
+    )
 
 
   #  --- Batches Routes ---- #

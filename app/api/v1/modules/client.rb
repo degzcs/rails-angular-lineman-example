@@ -175,6 +175,7 @@ module V1
           client_params = params[:client]
           client.company.update_attributes(params[:company]) if params[:company]
           client.update_attributes(params[:client]) if params[:client]
+
           if client.save
             present client, with: V1::Entities::Client
           else

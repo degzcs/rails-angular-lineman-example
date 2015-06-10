@@ -179,7 +179,7 @@ module V1
           if params[:company]
             company = Company.new(params[:company].merge!(mining_register_file: mining_register_file, rut_file: rut_file, chamber_of_commerce_file: chamber_of_commerce_file))
             company.rucom = rucom
-            external_user.build_office(name: "oficina 1", company: company)
+            external_user.build_office(name: "N/A", company: company)
           else
             #binding.pry
             external_user.personal_rucom = rucom

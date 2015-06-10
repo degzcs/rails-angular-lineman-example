@@ -6,7 +6,7 @@
         %div{layout: 'row'}
           .photo-container{flex: '30'}
             %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
-            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_client({ id: currentExternalUser.id })"} Editar Información
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_client({ id: currentExternalUser.id })","ng-if"=>"currentExternalUser.external"} Editar Información
             
           .fields-container{flex: '70'}
             %h2{style: "text-align: left;"} 
@@ -85,7 +85,7 @@
         %div{layout: 'row'}
           .photo-container{flex: '30'}
             /%img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
-            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user_company({ id: currentExternalUser.id })"} Editar Información
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_client_company({ id: currentExternalUser.id })","ng-if"=>"currentExternalUser.external"} Editar Información
           .fields-container{flex: '70'}
             %h2{style: "text-align: left;"} Datos de Compañia
             %div{layout: 'row'}

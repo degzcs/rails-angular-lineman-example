@@ -23,6 +23,7 @@ module V1
       expose :activity, documentation: {type: "hash", desc: "can be Joyero | Comprador Ocasional | Exportacion", example: "Joyero"}
       expose :city, documentation: { type: "string", desc: "", example: "user city" }
       expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
+      expose :external, documentation: { type: "boolean", desc: "External flag", example: "true" }
     end
   end
 end
