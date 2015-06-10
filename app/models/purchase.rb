@@ -40,7 +40,7 @@ class Purchase < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :provider_id, presence: true
-  validates :origin_certificate_sequence, presence: true
+  #validates :origin_certificate_sequence, presence: true
   # validates :gold_batch_id, presence: true
   validates :origin_certificate_file, presence: true
   validates :price, presence: true
