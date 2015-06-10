@@ -192,6 +192,7 @@ class PdfFile < Prawn::Document
         text_box "X" , :at => [548,cursor] , :width => 150
       else
     end
+    text_box "X" , :at => [380,cursor] , :width => 150
     #move_down 36
     move_cursor_to 144
     text_box "#{values[:buyer][:nit] }" , :at => [290,cursor] , :width => 310, :height => 15, :overflow => :shrink_to_fit
