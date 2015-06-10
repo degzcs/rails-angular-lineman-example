@@ -51,12 +51,12 @@
                 %td.md-table-td-more
                   Razon social:
                 %td.md-table-td-more.value
-                  {{provider.company_info ? provider.company_info.name : provider.first_name + ' ' + provider.last_name}}
+                  {{provider.company ? provider.company.name : provider.first_name + ' ' + provider.last_name}}
               %tr
                 %td.md-table-td-more
                   Nit:
                 %td.md-table-td-more.value
-                  {{provider.company_info.nit_number}}
+                  {{provider.nit}}
               %tr
                 %td.md-table-td-more
                   Rucom:
