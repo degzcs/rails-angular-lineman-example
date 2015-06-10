@@ -194,10 +194,10 @@ class PdfFile < Prawn::Document
     end
     #move_down 36
     move_cursor_to 144
-    text_box "#{values[:buyer][:document_number]}" , :at => [290,cursor] , :width => 310, :height => 15, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:nit] }" , :at => [290,cursor] , :width => 310, :height => 15, :overflow => :shrink_to_fit
     move_cursor_to 110
     #move_down 35
-    text_box "#{values[:buyer][:rucom_record]}" , :at => [300,cursor] , :width => 280, :height => 15, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:rucom][:num_rucom] || values[:buyer][:rucom][:rucom_record]}" , :at => [300,cursor] , :width => 280, :height => 15, :overflow => :shrink_to_fit
 
   end
 
