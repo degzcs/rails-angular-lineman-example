@@ -49,4 +49,5 @@ class Company < ActiveRecord::Base
   mount_uploader :rut_file, PdfUploader
   mount_uploader :mining_register_file, PdfUploader
   mount_uploader :chamber_of_commerce_file, PdfUploader
+
 end
