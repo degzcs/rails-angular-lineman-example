@@ -129,9 +129,9 @@
             %p Registro minero
             %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{company.mining_register_file.preview.url || 'img/pdf.png'}}"}
 
-          %md-button{ :class => "md-raised", :flex => "15", "ng-href" => "{{company.chamber_commerce_file.url}}", :target => "_blank"}
+          %md-button{ :class => "md-raised", :flex => "15", "ng-href" => "{{company.chamber_of_commerce_file.url}}", :target => "_blank"}
             %p Camara de comercio
-            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{company.rut_file.preview.url }}" } 
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{company.chamber_of_commerce_file.preview.url }}" } 
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{company.rut_file.url}}", :target => "_blank" }  
             %p RUT
             %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{company.rut_file.preview.url || 'img/pdf.png'}}" } 
