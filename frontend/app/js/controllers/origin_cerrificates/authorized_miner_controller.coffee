@@ -15,6 +15,8 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
     # set authorized miner oc
     $scope.authorized_miner_origin_certificate.buyer = data
     $scope.authorized_miner_origin_certificate.city = data.city_name
+    $scope.authorized_miner_origin_certificate.buyer.type = "Comercializador"
+  
 
   #
   # Search one specific provider into the allProviders array
