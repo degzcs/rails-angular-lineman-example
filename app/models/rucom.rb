@@ -16,6 +16,7 @@
 #  id                 :integer          not null, primary key
 #  rucomeable_type    :string(255)
 #  rucomeable_id      :integer
+#  trazoro            :boolean          default(FALSE), not null
 #
 
 class Rucom < ActiveRecord::Base

@@ -124,10 +124,14 @@ module V1
           # update params
           files =params[:client].slice(:files)[:files]
           document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
-          # mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
+          ext_user_mining_register_file = files.select{|file| file['filename'] =~ /ext_user_mining_register_file/}.first
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
           params[:client].except!(:files).merge!(document_number_file: document_number_file, rut_file: rut_file, photo_file: photo_file)
+           # company files
+          mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.first
+          rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
+          chamber_of_commerce_file = files.select{|file| file['filename'] =~ /chamber_of_commerce_file/}.first
 
           client_params = params[:client]
           client = ::User.new(params[:client])
@@ -135,7 +139,7 @@ module V1
 
           if params[:company].present? &&  params[:activity].present?
             fake_rucom = ::Rucom.create_trazoro(provider_type: params[:activity])
-            company_with_fake_rucom = Company.new(params[:company].merge(rucom: fake_rucom))
+            company_with_fake_rucom = Company.new(params[:company].merge!(mining_register_file: mining_register_file, rut_file: rut_file, chamber_of_commerce_file: chamber_of_commerce_file, rucom: fake_rucom))
             company_with_fake_rucom.save(validate: false) # NOTE: we have to put this because the client asked us to don't use validations when the users are clients
             office_for_company_with_fake_rucom = Office.create(name: 'N/A', company: company_with_fake_rucom)
             client.office = office_for_company_with_fake_rucom
