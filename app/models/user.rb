@@ -80,9 +80,15 @@ class User < ActiveRecord::Base
 	scope :find_by_document_number, -> (document_number){where("document_number LIKE :document_number",
               {document_number: "%#{document_number.gsub('%', '\%').gsub('_', '\_')}%"})}
 
-	scope :external_users, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
-	#scope :external_users, -> {where('(users.external IS TRUE)')}
-	
+
+	scope :external_user_ids_with_personal_rucom, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom).pluck(:id)}
+	scope :external_user_ids_with_company_rucom, -> {includes(office: [{company: :rucom}]).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:office).pluck(:id)}
+
+	def self.external_users
+		ids = [external_user_ids_with_company_rucom, external_user_ids_with_personal_rucom].flatten.compact.uniq
+		User.where(id: ids)
+	end
+
 	scope :providers, -> {where('users.available_credits > ?', 0)}
 
 	# Get external users activity
@@ -108,12 +114,25 @@ class User < ActiveRecord::Base
 
 	# all external users but without rucom and that just buy gold, they are called clients, they are:
 	# 8. Joyero, 9. Comprador Ocasional y 10. Exportacion
-	scope :clients_with_fake_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion'])}
+	scope :client_ids_with_fake_personal_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion']).pluck(:id)}
+	scope :client_ids_with_fake_company_rucom, -> {includes(office: [{company: :rucom}]).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:office).pluck(:id)}
+
+	# IMPROVE: this class method is just temporal solucition to retrieve all clients
+	def self.clients_with_fake_rucom
+		ids = [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom].flatten.compact.uniq
+		User.where(id: ids)
+	end
 
 	# Finally, this scope gets all users that can be logged in the platform
 	scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
-	scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+	scope :system_user_ids, -> { where('users.password_digest IS NOT NULL').pluck(:id)}
+
+	# scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+	def self.clients
+		ids =  [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom, system_user_ids].flatten.compact.uniq
+		User.where(id: ids)
+	end
 
 	#
 	# Calbacks

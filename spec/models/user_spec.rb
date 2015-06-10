@@ -101,29 +101,33 @@ describe  User do
 
   context "scopes" do
     before :each do
-      users = create_list(:user, 5)
-      external_users = create_list(:external_user, 5)
-      clients_with_fake_rucom = create_list(:client_with_fake_rucom, 6)
+      @users = create_list(:user, 5) # or internal traders
+
+      @external_users_with_any_rucom = create_list(:external_user, 5)
+      @external_traders =  create_list(:user, 6, password: nil, password_confirmation: nil, external: true)
+
+      @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)
+      @clients_with_fake_rucom = create_list(:client_with_fake_rucom, 6)
 
       # add credits to buy gold
-      users.last.update_attribute(:available_credits, 2000)
-      external_users.last.update_attribute(:available_credits, 2000)
+     @users.last.update_attribute(:available_credits, 2000)
+     @external_users_with_any_rucom.last.update_attribute(:available_credits, 2000)
     end
 
     it 'should return all system users, it means, all uses that be logged in the platform' do
-      expect(User.system_users.count).to eq 5
+      expect(User.system_users.count).to eq @users.count
     end
 
-    it 'should return all extenal users' do
-      expect(User.external_users.count).to eq 5
+    it 'should return all extenal users, they can have one of the next personal_rucom or company rucom' do
+      expect(User.external_users.count).to eq [@external_users_with_any_rucom, @external_traders].flatten.compact.uniq.count
     end
 
     it 'should select all user that can provider gold (providers)' do
-      expect(User.providers.count).to eq 2
+      expect(User.providers.count).to eq  2
     end
 
     it 'should select all users with fake rucom' do
-      expect(User.clients_with_fake_rucom.count).to be 6
+      expect(User.clients_with_fake_rucom.count).to be [@clients_with_fake_personal_rucom, @clients_with_fake_rucom].flatten.compact.uniq.count
     end
 
     xit 'should select all users that are comercializadores' do
@@ -132,7 +136,7 @@ describe  User do
     end
 
     it 'should select all users called clients (see User Model for more info)' do
-      expect(User.clients.count).to eq  11
+      expect(User.clients.count).to eq  [@users, @comercializadores, @clients_with_fake_personal_rucom, @clients_with_fake_rucom].flatten.compact.uniq.count
     end
   end
 

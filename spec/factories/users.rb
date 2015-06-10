@@ -49,8 +49,14 @@ FactoryGirl.define do
         password {nil}
         password_confirmation {nil}
 
-        factory :client_with_fake_rucom, class: User do
+        factory :client_with_fake_personal_rucom, class: User do
             personal_rucom { create(:rucom, :for_clients)}
+            office nil
+        end
+
+        factory :client_with_fake_rucom, class: User do
+            personal_rucom nil
+            office { create(:office, :with_fake_rucom)}
         end
     end
 

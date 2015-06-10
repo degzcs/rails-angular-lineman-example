@@ -133,7 +133,7 @@ module V1
           client = ::User.new(params[:client])
           client.external = true
 
-          if params[:company] .present? &&  params[:activity].present?
+          if params[:company].present? &&  params[:activity].present?
             fake_rucom = ::Rucom.create_trazoro(provider_type: params[:activity])
             company_with_fake_rucom = Company.new(params[:company].merge(rucom: fake_rucom))
             company_with_fake_rucom.save(validate: false) # NOTE: we have to put this because the client asked us to don't use validations when the users are clients
@@ -141,7 +141,7 @@ module V1
             client.office = office_for_company_with_fake_rucom
           end
 
-          if params[:activity].present? && params[:company].try(:empty?)
+          if params[:activity].present? && params[:company].nil?
             rucom = ::Rucom.create_trazoro(provider_type: params[:activity])
             client.personal_rucom = rucom
           end
