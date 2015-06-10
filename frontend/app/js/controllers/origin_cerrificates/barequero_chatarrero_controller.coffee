@@ -66,7 +66,7 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
         email: providers[i].email
         phone_number: providers[i].phone_number
         photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-        num_rucom: providers[i].rucom.num_rucom
+        num_rucom: providers[i].rucom.num_rucom 
         rucom_record: providers[i].rucom.rucom_record
         provider_type: providers[i].rucom.provider_type
         rucom_status: providers[i].rucom.status
