@@ -55,10 +55,15 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
     provs = []
     i = 0
     while i < providers.length
+      #TODO: obtain company name for providers
+      if providers[i].company
+        company_name = providers[i].company.name
+      else
+        company_name  = providers[i].first_name + " " + providers[i].last_name
       prov =
         id: providers[i].id
         document_number: providers[i].document_number
-        company_name: 'company name test'
+        company_name: company_name
         document_type: 'NIT'
         first_name: providers[i].first_name
         last_name: providers[i].last_name
