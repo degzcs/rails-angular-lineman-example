@@ -16,11 +16,12 @@
 #  reset_token              :string(255)
 #  address                  :string(255)
 #  document_number_file     :string(255)
+#  rut_file                 :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
-#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -56,13 +57,13 @@ class User < ActiveRecord::Base
 	#validates :document_expedition_date, presence: true
 	validates :phone_number, presence: true
 	validates :address, presence: true
-	validates :document_number_file, presence: true
+	validates :document_number_file, presence: true, unless: :external
 	#validates :rut_file, presence: true
-	#validates :mining_register_file, presence: true
-	validates :photo_file, presence: true
+	# validates :mining_register_file, presence: true
+	validates :photo_file, presence: true, unless: :external
 	validates :office, presence: true , unless: :external # this field would be validated if user add some information related with company in the registration process.
 	validates :population_center, presence: true
-	validates :personal_rucom, presence: true, unless: :has_office # the rucom has to be present for any user if has no office asociated
+	validates :personal_rucom, presence: true, unless: :has_office # the rucom has to be present for any user if he-she has no office asociated
 
 	has_secure_password validations: false
 	validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
@@ -80,9 +81,15 @@ class User < ActiveRecord::Base
 	scope :find_by_document_number, -> (document_number){where("document_number LIKE :document_number",
               {document_number: "%#{document_number.gsub('%', '\%').gsub('_', '\_')}%"})}
 
-	#scope :external_users, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
-	scope :external_users, -> {where('(users.external IS TRUE)')}
-	
+
+	scope :external_user_ids_with_personal_rucom, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom).pluck(:id)}
+	scope :external_user_ids_with_company_rucom, -> {includes(office: [{company: :rucom}]).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:office).pluck(:id)}
+
+	def self.external_users
+		ids = [external_user_ids_with_company_rucom, external_user_ids_with_personal_rucom].flatten.compact.uniq
+		User.where(id: ids)
+	end
+
 	scope :providers, -> {where('users.available_credits > ?', 0)}
 
 	# Get external users activity
@@ -104,16 +111,29 @@ class User < ActiveRecord::Base
 
 	# Get users activity
 	# 7. Comercializador -> traders, NOTE: I think this kind of users are all users that can login in the platform
-	scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializador')}
+	scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializadores')}
 
 	# all external users but without rucom and that just buy gold, they are called clients, they are:
 	# 8. Joyero, 9. Comprador Ocasional y 10. Exportacion
-	scope :clients_with_fake_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion'])}
+	scope :client_ids_with_fake_personal_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).pluck(:id)}
+	scope :client_ids_with_fake_company_rucom, -> {includes(office: [{company: :rucom}]).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).references(:office).pluck(:id)}
+
+	# IMPROVE: this class method is just temporal solucition to retrieve all clients
+	def self.clients_with_fake_rucom
+		ids = [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom].flatten.compact.uniq
+		User.where(id: ids)
+	end
 
 	# Finally, this scope gets all users that can be logged in the platform
 	scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
-	scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+	scope :system_user_ids, -> { where('users.password_digest IS NOT NULL').pluck(:id)}
+
+	# scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+	def self.clients
+		ids =  [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom, system_user_ids].flatten.compact.uniq
+		User.where(id: ids)
+	end
 
 	#
 	# Calbacks
@@ -138,7 +158,7 @@ class User < ActiveRecord::Base
 	#
 	# Get the user activity  based on rucom
 	def activity
-		self.external ? personal_rucom.activity :  company.rucom.activity
+		self.external  && self.office.nil? ? personal_rucom.activity :  company.rucom.activity
 	end
 
 	def company_name
@@ -179,10 +199,10 @@ class User < ActiveRecord::Base
 
 	# IMPORTANT Get if the user or external user belongs to a company
 	def rucom
-		unless self.company
-			personal_rucom
+		if self.office.present?
+			self.office.company.try(:rucom)
 		else
-			office.try(:company).try(:rucom)
+			self.try(:personal_rucom)
 		end
 	end
 

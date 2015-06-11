@@ -61,7 +61,7 @@
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
-      %a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", "ng-click"=>"createProvider()"}  crear proovedor
+      /%a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", "ng-click"=>"createProvider()"}  crear proovedor
     %div{flex: ""}
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
@@ -91,7 +91,7 @@
         %div{layout: "row"}
           %md-input-container{flex: '40'}
             %label Numero Certificado de Origen
-            %input.origin-certificate-number{"ng-model" => "purchase.model.origin_certificate_sequence", :required => "", :name => 'origin_certificate_sequence'}
+            %input.origin-certificate-number{"ng-model" => "purchase.model.origin_certificate_sequence", :name => 'origin_certificate_sequence'}
             %div{"ng-messages" => "purchaseForm.origin_certificate_sequence.$error"}
               %div{"ng-message" => "required"} * Este campo es requerido.
 

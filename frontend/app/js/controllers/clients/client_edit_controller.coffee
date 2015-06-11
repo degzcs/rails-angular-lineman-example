@@ -14,9 +14,13 @@ angular.module('app').controller 'ClientEditCtrl', ($scope, $state, $stateParams
   # ********************************************************************************#
   if $stateParams.id
     ClientService.get($stateParams.id).success (data)->
-      $scope.showLoading = false
-      $scope.currentExternalUser = data
-      $scope.loadProviderLocation(data)
+      #TODO: Find another way to redirect if user is external
+      if data.external 
+        $scope.showLoading = false
+        $scope.currentExternalUser = data
+        $scope.loadProviderLocation(data)
+      else
+        $state.go "clients"
   
   #****** Watchers for listen to changes in editable fields *************************
   $scope.$watch 'currentExternalUser', ((newVal, oldVal) ->

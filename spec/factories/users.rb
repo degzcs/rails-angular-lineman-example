@@ -16,11 +16,12 @@
 #  reset_token              :string(255)
 #  address                  :string(255)
 #  document_number_file     :string(255)
+#  rut_file                 :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
-#  rut_file                 :string(255)
+#  mining_register_file     :string(255)
 #
 
 FactoryGirl.define do
@@ -49,8 +50,14 @@ FactoryGirl.define do
         password {nil}
         password_confirmation {nil}
 
-        factory :client_with_fake_rucom, class: User do
+        factory :client_with_fake_personal_rucom, class: User do
             personal_rucom { create(:rucom, :for_clients)}
+            office nil
+        end
+
+        factory :client_with_fake_rucom, class: User do
+            personal_rucom nil
+            office { create(:office, :with_fake_rucom)}
         end
     end
 

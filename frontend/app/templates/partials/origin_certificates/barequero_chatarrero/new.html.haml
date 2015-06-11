@@ -8,7 +8,7 @@
 
       %md-input-container{"flex"=>"66"}
         %label Ciudad
-        %input{"ng-model" => "barequero_chatarrero_origin_certificate.population_center", "type" => "text", :readOnly=>"true"}
+        %input{"ng-model" => "barequero_chatarrero_origin_certificate.city", "type" => "text", :readOnly=>"true"}
 
     %section{flex: "", layout: "row"}
       ////-----------------------Provider section ------------------------------////////
@@ -22,7 +22,7 @@
           %div.fieldset-inputs
             %div{layout: "row"}
               %md-input-container{flex: ""}
-                %md-radio-group{"ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :required => "", :name => 'provider_type',:placeholder => "Explotador  Minero Autorizado"}
+                %md-radio-group{"ng-model" => "barequero_chatarrero_origin_certificate.provider.type", :required => "", :name => 'provider_type'}
                   %md-radio-button{:value => "barequero"} Barequero
                   %md-radio-button{:value => "chatarrero"} Chatarrero
             %div{layout: "row"}
@@ -45,7 +45,7 @@
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
         .button
-          %a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proovedor
+          /%a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proovedor
         ////-----------------------Mineral section ------------------------------////////
       %div.origin-certificate-padding{flex: "30"}
         %fieldset.standard.tr-fieldset.mineral{:layout => "column"}
@@ -88,7 +88,7 @@
 
               %md-input-container{"flex"=>""}
                 %label Numero de Indentificacion
-                %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.document_number", "type" => "text"}
+                %input{"readonly" => "true", "ng-model" => "barequero_chatarrero_origin_certificate.buyer.company.nit_number", "type" => "text"}
 
     %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
       %md-button.md-primary.md-hue-2{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "", "ng-click" => "showConfirm($event, 'barequero_chatarrero')"} Generar Certificado de Origen

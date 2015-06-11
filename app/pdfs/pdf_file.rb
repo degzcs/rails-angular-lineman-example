@@ -92,9 +92,9 @@ class PdfFile < Prawn::Document
       else
     end
     move_cursor_to 149
-    text_box "#{values[:buyer][:document_number]}" , :at => [300,cursor] , :width => 300, :height => 15 , :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:nit] || values[:buyer][:document_number]}" , :at => [300,cursor] , :width => 300, :height => 15 , :overflow => :shrink_to_fit
     move_cursor_to 112
-    text_box "#{values[:buyer][:rucom_record]}" , :at => [350,cursor] , :width => 300, :height => 15 , :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:rucom][:num_rucom] || values[:buyer][:rucom][:rucom_record]}" , :at => [350,cursor] , :width => 300, :height => 15 , :overflow => :shrink_to_fit
   end
 
   # Generar certificado explotador minero autorizado
@@ -185,19 +185,21 @@ class PdfFile < Prawn::Document
     end
     #move_down 36
     move_cursor_to 180
-    case values[:buyer][:type].downcase
-      when 'trader'
-        text_box "X" , :at => [380,cursor] , :width => 150
-      when 'consumer'
-        text_box "X" , :at => [548,cursor] , :width => 150
-      else
-    end
+
+    #case values[:buyer][:type].downcase
+    #  when 'trader'
+    #    text_box "X" , :at => [380,cursor] , :width => 150
+    #  when 'consumer'
+    #    text_box "X" , :at => [548,cursor] , :width => 150
+    #  else
+    #end
+    text_box "X" , :at => [380,cursor] , :width => 150
     #move_down 36
     move_cursor_to 144
-    text_box "#{values[:buyer][:document_number]}" , :at => [290,cursor] , :width => 310, :height => 15, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:nit] }" , :at => [290,cursor] , :width => 310, :height => 15, :overflow => :shrink_to_fit
     move_cursor_to 110
     #move_down 35
-    text_box "#{values[:buyer][:rucom_record]}" , :at => [300,cursor] , :width => 280, :height => 15, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:rucom][:num_rucom] || values[:buyer][:rucom][:rucom_record]}" , :at => [300,cursor] , :width => 280, :height => 15, :overflow => :shrink_to_fit
 
   end
 
@@ -220,18 +222,18 @@ class PdfFile < Prawn::Document
 
     #header
     #move_down 140
-    move_cursor_to 710
+    move_cursor_to 699
     text_box "#{values[:certificate_number]}", :at => [750,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 703
+    move_cursor_to 691
     text_box "#{date.day}", :at => [240,cursor] , :width => 85
     text_box "#{date.month}", :at => [345,cursor] , :width => 85
     text_box "#{date.year}" , :at => [430,cursor], :width => 85
 
-    move_cursor_to 628
+    move_cursor_to 616
     text_box "#{values[:provider][:name]}", :at => [750,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 603
+    move_cursor_to 591
     text_box "#{values[:provider][:rucom_record]}", :at => [780 ,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 575
+    move_cursor_to 561
     case  values[:provider][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
@@ -243,19 +245,19 @@ class PdfFile < Prawn::Document
         text_box "X" , :at => [1100,cursor] , :width => 150
       else
     end
-    move_cursor_to 547
+    move_cursor_to 535
     text_box "#{values[:provider][:document_number]}", :at => [750,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     # dynamic  information about explotadores mineros autorizados
 
-    move_cursor_to 465
+    move_cursor_to 452
     mining_operator_group.each do |operator|
 
      case operator[:type]
        when 'titular'
-         text_box "X" , :at => [82,cursor] , :width => 80
+         text_box "X" , :at => [83,cursor] , :width => 80
        when 'are_beneficiary'
-         text_box "X" , :at => [170,cursor] , :width => 80
+         text_box "X" , :at => [169,cursor] , :width => 80
        when 'legalization_applicant'
          text_box "X" , :at => [267,cursor] , :width => 80
        when 'formalization_subcontract'
@@ -265,9 +267,9 @@ class PdfFile < Prawn::Document
     end
 
 
-    move_cursor_to 470
+    move_cursor_to 452
     mining_operator_group.each do |operator|
-      text_box "#{operator[:origin_certificate_number]}", :at => [405,cursor], :width => 80, :height => 15, :overflow => :shrink_to_fit
+      text_box "#{operator[:origin_certificate_number]}", :at => [405,cursor], :width => 79, :height => 15, :overflow => :shrink_to_fit
       text_box "#{operator[:name]}", :at => [500,cursor], :width => 200, :height => 15, :overflow => :shrink_to_fit
       text_box "#{operator[:document_type]}", :at => [740,cursor], :width => 80, :height => 15, :overflow => :shrink_to_fit
       text_box "#{operator[:document_number]}", :at => [825,cursor], :width => 90, :height => 15, :overflow => :shrink_to_fit
@@ -282,11 +284,11 @@ class PdfFile < Prawn::Document
 
     # body buyer
 
-    move_cursor_to 225
+    move_cursor_to 212
     text_box "#{values[:total_amount]}", :at => [750,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 200
+    move_cursor_to 187
     text_box "#{values[:buyer][:company_name]}", :at => [750,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 167  #32
+    move_cursor_to 154  #32
     case values[:buyer][:document_type].downcase
       when 'nit'
         text_box "X" , :at => [775,cursor] , :width => 150
@@ -298,9 +300,9 @@ class PdfFile < Prawn::Document
         text_box "X" , :at => [1100,cursor] , :width => 150
       else
     end
-    move_cursor_to 137
+    move_cursor_to 124
     text_box "#{values[:buyer][:document_number]}", :at => [750,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 109
+    move_cursor_to 96
     text_box "#{values[:buyer][:rucom_record]}", :at => [780,cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
 
@@ -427,7 +429,7 @@ class PdfFile < Prawn::Document
     #buyer
     move_cursor_to 644
     text_box "#{values[:buyer][:company_name]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box "#{values[:buyer][:rucom_record]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box "#{values[:buyer][:rucom][:num_rucom] || values[:buyer][:rucom][:rucom_record] }", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 626
     text_box "#{values[:buyer][:nit]}", :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box "#{values[:buyer][:first_name]} #{values[:buyer][:last_name]}", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit

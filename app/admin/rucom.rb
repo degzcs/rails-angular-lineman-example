@@ -1,7 +1,7 @@
 ActiveAdmin.register Rucom do
   menu priority: 3, label: 'Rucoms'
 
-  actions :index, :show , :edit
+  actions :index, :show , :edit, :create, :new,:update
   permit_params :idrucom, :num_rucom, :rucom_record, :provider_type, :name , :status , :mineral , :location , :subcontract_number , :mining_permit , :updated_at, :rucomeable_id , :rucomeable_type
 
   
@@ -72,7 +72,7 @@ ActiveAdmin.register Rucom do
 
   form do |f|
     f.inputs "Rucom Details" do
-      #f.input :idrucom
+      f.input :idrucom
       f.input :num_rucom
       f.input :rucom_record
       f.input :provider_type
@@ -80,9 +80,9 @@ ActiveAdmin.register Rucom do
       f.input :status
       f.input :mineral
       f.input :location
-      f.input :subcontract_number
-      f.input :mining_permit
-      f.input :updated_at
+      #f.input :subcontract_number
+      #f.input :mining_permit
+      #f.input :updated_at
     end
     f.actions
   end

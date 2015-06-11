@@ -44,15 +44,15 @@
                 %input{"ng-model" => "authorized_miner_origin_certificate.provider.city",  :name => 'provider_name', :readOnly => 'true'}
 
               %md-content{ :flex=>""}
-                %md-select{"ng-model" => "authorized_miner_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
+                %md-select{"ng-model" => "authorized_miner_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado",required: ""}
                   %md-option{:value => "titular"} Titular
-                  %md-option{:value => "are_beneficiary"} Beneficiario de Are
+                  %md-option{:value => "are_beneficiary"} Beneficiario Area de Reserva Especial
                   %md-option{:value => "legalization_applicant"} Solicitante de Legalizacion
                   %md-option{:value => "formalization_subcontract"} Subcontrato de Formalizacion
               %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
                 %md-progress-circular{"md-mode" => "indeterminate"}
         .button
-          %a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proovedor
+          /%a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proovedor
 
 
     ////-----------------------Mineral section ------------------------------////////
@@ -106,11 +106,14 @@
 
               %md-input-container{:flex=>""}
                 %label Numero de Indentificacion
-                %input{:readonly => "true", "ng-model" => "authorized_miner_origin_certificate.buyer.document_number", "type" => "text"}
+                %input{:readonly => "true", "ng-model" => "authorized_miner_origin_certificate.buyer.company.nit_number", "type" => "text"}
 
-              %md-select{"ng-model" => "authorized_miner_origin_certificate.buyer.type", :placeholder => "Explotador  Minero Autorizado"}
-                %md-option{:value => "trader"} Comercializador
-                %md-option{:value => "consumer"} Consumidor
+              %md-input-container{:flex=>""}
+                %label Explotador Minero Autorizado
+                %input{:readonly => "true", "ng-model" => "authorized_miner_origin_certificate.buyer.type", "type" => "text"}
+              / %md-select{"ng-model" => "authorized_miner_origin_certificate.buyer.type", :placeholder => "Explotador  Minero Autorizado"}
+              /   %md-option{:value => "trader"} Comercializador
+              /   %md-option{:value => "consumer"} Consumidor
 
     // ---------------------- Generate Origin Certificate button----------------------------------///
     %md-button.md-primary.md-hue-2{flex: "", "ng-disabled" => 'originCertificateForm.$invalid', "ng-click" => "showConfirm($event, 'authorized_miner')"} Generar Certificado de Origen

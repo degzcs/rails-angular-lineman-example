@@ -15,6 +15,8 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
     # set authorized miner oc
     $scope.authorized_miner_origin_certificate.buyer = data
     $scope.authorized_miner_origin_certificate.city = data.city_name
+    $scope.authorized_miner_origin_certificate.buyer.type = "Comercializador"
+  
 
   #
   # Search one specific provider into the allProviders array
@@ -53,10 +55,14 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
     provs = []
     i = 0
     while i < providers.length
+      #TODO: obtain company name for providers
+      company_name  = providers[i].first_name + " " + providers[i].last_name
+      if providers[i].company
+        company_name = providers[i].company.name
       prov =
         id: providers[i].id
         document_number: providers[i].document_number
-        company_name: 'company name test'
+        company_name: company_name
         document_type: 'NIT'
         first_name: providers[i].first_name
         last_name: providers[i].last_name

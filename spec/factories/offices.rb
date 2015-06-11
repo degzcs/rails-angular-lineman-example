@@ -15,4 +15,11 @@ FactoryGirl.define do
     company
   end
 
+  trait :with_fake_rucom do
+    after :build do |office|
+      rucom = create(:rucom, :for_clients)
+      office.company = create(:company, rucom: rucom)
+    end
+  end
+
 end
