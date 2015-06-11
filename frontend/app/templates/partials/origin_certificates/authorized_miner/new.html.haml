@@ -44,7 +44,7 @@
                 %input{"ng-model" => "authorized_miner_origin_certificate.provider.city",  :name => 'provider_name', :readOnly => 'true'}
 
               %md-content{ :flex=>""}
-                %md-select{"ng-model" => "authorized_miner_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado"}
+                %md-select{"ng-model" => "authorized_miner_origin_certificate.provider.type", :placeholder => "Explotador  Minero Autorizado",required: ""}
                   %md-option{:value => "titular"} Titular
                   %md-option{:value => "are_beneficiary"} Beneficiario Area de Reserva Especial
                   %md-option{:value => "legalization_applicant"} Solicitante de Legalizacion
