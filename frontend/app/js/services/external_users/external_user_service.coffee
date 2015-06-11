@@ -138,8 +138,8 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
               # window.location.href = URL.createObjectURL(b);
               return
 
-          external_user_mining_register_reader.readAsBinaryString external_user_mining_register_file_copy[0]
-          filesRemaining++  
+            external_user_mining_register_reader.readAsBinaryString external_user_mining_register_file_copy[0]
+            filesRemaining++  
 
         if service.isCompany
 
