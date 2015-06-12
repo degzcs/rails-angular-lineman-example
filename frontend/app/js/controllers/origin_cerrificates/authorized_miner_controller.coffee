@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state) ->
+angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state, $q, ExternalUser) ->
 
   $scope.tab = 3
 
@@ -21,10 +21,37 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
   #
   # Search one specific provider into the allProviders array
   # @return [Array] with the matched options with the query
+
+
+  query_for_providers = (query) ->
+    # perform some asynchronous operation, resolve or reject the promise when appropriate.
+    $q (resolve, reject) ->
+      ExternalUser.query_by_id(query).success (providers)->
+        $scope.allProviders = []
+
+        provs = $scope.setupAllProviders(providers)
+        $scope.allProviders = provs
+        resolve $scope.allProviders
+
+      return
+
   $scope.searchProvider = (query)->
-    console.log 'query: ' + query
-    results = if query then $scope.allProviders.filter(createFilterFor(query)) else []
-    results
+    if query
+      promise = query_for_providers(query)
+      promise.then ((providers) ->
+        return providers
+
+      ), (reason) ->
+        console.log 'Failed: ' + reason
+        return
+    else
+      return []
+
+
+  # $scope.searchProvider = (query)->
+  #   console.log 'query: ' + query
+  #   results = if query then $scope.allProviders.filter(createFilterFor(query)) else []
+  #   results
 
   #
   # Create filter function for a query string, just filte by document number field
@@ -37,21 +64,21 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
 
     #
   # all providers
-  ProviderService.retrieve.byTypes {
-    per_page: 100
-    page: 1
-    types: 'solicitantes'
-  }, ((providers, headers) ->
-      provs = setupAllProviders(providers)
-      $timeout ->
-        $scope.$apply ->
-          $scope.allProviders = provs
-  ), (error) ->
-    console.log 'Error in Providers query'
+  # ProviderService.retrieve.byTypes {
+  #   per_page: 100
+  #   page: 1
+  #   types: 'solicitantes'
+  # }, ((providers, headers) ->
+  #     provs = setupAllProviders(providers)
+  #     $timeout ->
+  #       $scope.$apply ->
+  #         $scope.allProviders = provs
+  # ), (error) ->
+  #   console.log 'Error in Providers query'
 
   #
   # Set all retrieved providers to the current scope
-  setupAllProviders =(providers)->
+  $scope.setupAllProviders =(providers)->
     provs = []
     i = 0
     while i < providers.length
