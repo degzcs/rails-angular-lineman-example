@@ -98,8 +98,8 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
         rucom_status: providers[i].rucom.status
         mineral: providers[i].rucom.mineral
         name: providers[i].first_name + ' '+ providers[i].last_name
-        city: providers[i].city_name || 'Popayan'
-        state: providers[i].state_name || 'Cauca'
+        city: providers[i].city.name || 'Popayan'
+        state: providers[i].state.name || 'Cauca'
       provs.push prov
       i++
     provs
