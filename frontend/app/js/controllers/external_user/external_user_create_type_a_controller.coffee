@@ -286,7 +286,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     if $scope.newFiles.photo_file == '' 
       $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' #|| $scope.newExternalUser.population_center_id == ''
+    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' || $scope.newExternalUser.population_center_id == ''
       $scope.validPersonalData = false
       #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
