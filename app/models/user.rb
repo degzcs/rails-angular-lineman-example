@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
 	validates :first_name , presence: true
 	validates :last_name , presence: true
-	validates :email, presence: true, uniqueness: true
+	validates :email, presence: true, uniqueness: true, unless: :external
 	validates :document_number , presence: true
 	#validates :document_expedition_date, presence: true
 	validates :phone_number, presence: true
