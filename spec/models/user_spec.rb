@@ -94,8 +94,13 @@ describe  User do
     it { should validate_presence_of(:population_center) }
 
     it "should not allow to create an external user without personal_rucom if does not have office" do
-      external_user = build(:external_user, personal_rucom: nil, office: nil)
+      external_user = build(:external_user, personal_rucom: nil, office: nil, email: nil)
       expect(external_user).not_to be_valid
+    end
+
+    it "should allow create an external user without email" do
+      external_user = build(:external_user, email: nil)
+      expect(external_user).to be_valid
     end
 
   end
