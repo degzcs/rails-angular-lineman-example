@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.1.3"
+ruby "2.3.0"
 
 gem 'rails', '4.1.9'
 
@@ -54,7 +54,7 @@ gem 'rmagick'
  gem 'grape-swagger-rails',  '~> 0.0.10'
  gem "hashie_rails"
  gem "hashie-forbidden_attributes"
- 
+
 
 group :development do
   gem 'quiet_assets'
