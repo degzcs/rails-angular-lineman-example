@@ -10,7 +10,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 set :nodenv_type, :user # or :system, depends on your nodenv setup
-set :nodenv_node, '0.10.32'
+set :nodenv_node, '5.7.1'
 set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:nodenv_node)} #{fetch(:nodenv_path)}/bin/nodenv exec"
 set :nodenv_map_bins, %w{node npm lineman}
 set :nodenv_roles, :all # default value
