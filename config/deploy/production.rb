@@ -11,6 +11,12 @@ role :db,  %w{ec2-user@52.9.190.76}
 set :branch, 'production'
 set :deploy_to, '/home/ec2-user/code/trazoro'
 
+set :ssh_options, {
+  user: "ec2-user",
+  keys: %w(~/.ssh/trazpro-key-pair-uswest-calfornia.pem),
+  forward_agent: false,
+}
+
 
 # Extended Server Syntax
 # ======================
