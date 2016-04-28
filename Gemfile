@@ -74,7 +74,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pry-rails'
+  gem 'jazz_fingers'
   gem 'pry-rescue'
   gem 'rspec-rails'
   gem 'rubocop'
