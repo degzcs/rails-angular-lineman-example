@@ -8,6 +8,9 @@ gem 'rails', '4.1.9'
 gem 'prawn','1.0.0.rc2'
 gem 'pdf-reader', '~> 1.3.3'
 
+# config
+gem 'dotenv-rails', require: 'dotenv/rails-now'
+
 # DB
 gem 'pg'
 gem 'bcrypt'
@@ -55,8 +58,6 @@ gem 'rmagick'
  gem "hashie_rails"
  gem "hashie-forbidden_attributes"
 
- # config
- gem 'dotenv-rails'
 
 
 group :development do
