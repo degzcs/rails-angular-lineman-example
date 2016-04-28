@@ -25,7 +25,7 @@ require 'capistrano/rails/migrations'
 require 'capistrano/passenger'
 require 'capistrano/nginx'
 
-require 'capistrano/postgresql'
+# require 'capistrano/postgresql'
 require 'capistrano/nodenv'
 
 # Load custom tasks from `lib/capistrano/tasks' if you have any defined
