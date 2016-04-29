@@ -17,6 +17,8 @@ gem 'active_attr'
 
 gem 'sass-rails', '~> 4.0.3'
 
+gem 'execjs'
+gem 'therubyracer'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'coffee-rails', '~> 4.0.0'
@@ -64,7 +66,7 @@ group :development do
   gem 'quiet_assets'
   gem 'annotate'
   # Capistrano
-  gem 'capistrano', '~> 3.1'
+  gem 'capistrano', '~> 3.4'
   gem 'capistrano-rbenv', '~> 2.0'
   gem 'capistrano-rails', '~> 1.1.1'
   gem 'capistrano-bundler'
