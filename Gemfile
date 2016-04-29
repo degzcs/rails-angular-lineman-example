@@ -9,7 +9,6 @@ gem 'prawn','1.0.0.rc2'
 gem 'pdf-reader', '~> 1.3.3'
 
 # config
-gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 # DB
 gem 'pg'
@@ -47,17 +46,18 @@ gem 'country_select', github: 'stefanpenner/country_select'
 gem 'carrierwave'
 gem 'rmagick'
 
- # API
- gem 'jwt'
- gem 'httparty'
- gem 'grape', '0.8.0'#github: 'intridea/grape'
- gem 'grape-entity', '~> 0.4.0'
- gem 'rack-contrib', '~> 1.1.0'
- gem 'grape-swagger', '~> 0.7.2'
- gem 'grape-swagger-rails',  '~> 0.0.10'
- gem "hashie_rails"
- gem "hashie-forbidden_attributes"
+# API
+gem 'jwt'
+gem 'httparty'
+gem 'grape', '0.8.0'#github: 'intridea/grape'
+gem 'grape-entity', '~> 0.4.0'
+gem 'rack-contrib', '~> 1.1.0'
+gem 'grape-swagger', '~> 0.7.2'
+gem 'grape-swagger-rails',  '~> 0.0.10'
+gem "hashie_rails"
+gem "hashie-forbidden_attributes"
 
+gem 'dotenv-rails'#, require: 'dotenv/rails-now'
 
 
 group :development do
@@ -71,7 +71,7 @@ group :development do
   gem 'capistrano-postgresql', '~> 3.0'
   gem 'capistrano-passenger'
   gem 'capistrano3-nginx', '~> 2.0'
-  gem 'capistrano-nodenv', '~> 1.0'
+  gem 'capistrano-nodenv', '~> 1.1.0'
 end
 
 group :development, :test do
