@@ -14,14 +14,14 @@ set :nodenv_node, File.read('.node-version').strip
 set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:nodenv_node)} #{fetch(:nodenv_path)}/bin/nodenv exec"
 set :nodenv_map_bins, %w{node npm lineman}
 set :nodenv_roles, :all # default value
-set :keep_releases '5'
+set :keep_releases, '5'
 
 # set :stages, %w[staging production]
 # set :default_stage, 'staging'
 
 # dirs we want symlinked to the shared folder
 # during deployment
-set :linked_dirs, %w{uploads bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_dirs, %w{uploads log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml config/.env}
 
 # Default deploy_to directory is /var/www/my_app_name
