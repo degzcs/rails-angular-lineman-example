@@ -77,8 +77,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'jazz_fingers'
-  gem 'pry-rescue'
+  gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'rspec-rails'
   gem 'rubocop'
 end
