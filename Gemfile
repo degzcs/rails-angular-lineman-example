@@ -47,7 +47,7 @@ gem 'country_select', github: 'stefanpenner/country_select'
 # upload files
 gem 'fog', require: 'fog/aws'
 gem 'carrierwave'
-gem 'rmagick'
+gem 'mini_magick'
 
 # API
 gem 'jwt'
