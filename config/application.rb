@@ -27,6 +27,13 @@ module Trazoro
     # Auto-load API and its subdirectories
     config.paths.add File.join('app', 'api'), :glob => File.join('**', '*.rb')
     config.autoload_paths = Dir[File.join(Rails.root, 'app', 'api', '*')]
+
+    # Concerns
+    config.paths.add File.join('lib', 'concerns'), :glob => File.join('**', '*.rb')
+    Dir[File.join(Rails.root, 'lib', 'concerns', '*')].each do |file|
+        config.autoload_paths << file
+    end
+    Dir[Rails.root.join('lib/concerns/**/*.rb')].each { |f| require f }
   end
 end
 
