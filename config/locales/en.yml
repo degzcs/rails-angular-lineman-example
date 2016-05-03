@@ -19,5 +19,24 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
+# NOTE: I will use this as a spanish version while I get translate the rest of the application and then I will user the locales/ es.yml file instead this.
 en:
-  hello: "Hello world"
+  first_name: 'Nombre'
+  last_name: 'Apellido'
+  document_number: 'Número de documento'
+  document_expedition_date: 'Fecha de expedición'
+  phone_number: 'Número telefónico'
+  address: 'Dirección'
+  photo_file: 'Foto usuario'
+  document_file: "Cedula"
+  rut_file: 'Rut'
+  population_center: 'Centro poblacional'
+  office: 'Sucursal'
+  password: 'Contraseña (Minimo 8 caracteres)'
+  password_confirmation: 'Vuelva a escribir la contraseña'
+  admin:
+    users:
+      form:
+        company_header: 'Información de compañía:'
+        password_header: 'Contraseña:'
+        office_hint: 'Nota: este usuario no pertenece a una compañía'

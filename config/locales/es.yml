@@ -1,0 +1,5 @@
+es:
+  admin:
+    users:
+      form:
+        document_file: "Adjuntar Cedula"
