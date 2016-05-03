@@ -6,7 +6,7 @@ class PdfUploader < CarrierWave::Uploader::Base
   include CarrierWave::CleanUpFolders
 
   # Choose what kind of storage to use for this uploader:
-  if Rails.env.production? || Rails.env.staging?
+  if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
     storage :fog
   else
     storage :file

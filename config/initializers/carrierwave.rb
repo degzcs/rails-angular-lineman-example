@@ -1,4 +1,4 @@
-if Rails.env.production? || Rails.env.staging?
+if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
   CarrierWave.configure do |config|
     config.fog_provider = 'fog/aws'                        # required
     config.fog_credentials = {
@@ -13,10 +13,13 @@ if Rails.env.production? || Rails.env.staging?
     config.fog_public     = false                                        # optional, defaults to true
     config.fog_attributes = { 'Cache-Control' => "max-age=#{365.day.to_i}" } # optional, defaults to {}
   end
-elsif Rails.env.test? || Rails.env.cucumber?
+
+else
+
   CarrierWave.configure do |config|
     config.storage = :file
     config.enable_processing = false
+    config.base_path = ''
   end
 
   class PdfUploader < CarrierWave::Uploader::Base
@@ -33,9 +36,5 @@ elsif Rails.env.test? || Rails.env.cucumber?
       "#{Rails.root}/spec/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
   end
-
-  # CarrierWave.configure do |config|
-  #   config.base_path = ''
-  # end
 
 end
