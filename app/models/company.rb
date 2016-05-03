@@ -24,9 +24,9 @@ class Company < ActiveRecord::Base
   has_many :external_users
   has_one :rucom, as: :rucomeable
 
- #
- # Validations
- #
+  #
+  # Validations
+  #
 
   validates :nit_number, presence: true
   validates :name, presence: true
@@ -39,11 +39,13 @@ class Company < ActiveRecord::Base
   validates :mining_register_file, presence: true
   validates :rucom, presence: true
 
-  # uploaders
+  #
+  # Uploaders
+  #
+
   mount_uploader :rut_file, PdfUploader
   mount_uploader :mining_register_file, PdfUploader
   mount_uploader :chamber_of_commerce_file, PdfUploader
 
   #TODO: avoid destroy company if there are users associated to it.
-
 end

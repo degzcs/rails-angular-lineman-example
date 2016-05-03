@@ -74,6 +74,9 @@ ActiveRecord::Schema.define(version: 20160503224603) do
     t.boolean  "external",                 default: false, null: false
     t.string   "rut_file"
     t.string   "mining_register_file"
+    t.string   "country"
+    t.string   "state"
+    t.string   "city"
   end
 
   create_table "countries", force: true do |t|
