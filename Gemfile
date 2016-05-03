@@ -59,9 +59,6 @@ gem 'grape-swagger-rails',  '~> 0.0.10'
 gem "hashie_rails"
 gem "hashie-forbidden_attributes"
 
-gem 'dotenv-rails', require: 'dotenv/rails-now'
-
-
 group :development do
   gem 'quiet_assets'
   gem 'annotate'
