@@ -5,9 +5,6 @@
 #  id                       :integer          not null, primary key
 #  nit_number               :string(255)
 #  name                     :string(255)
-#  city                     :string(255)
-#  state                    :string(255)
-#  country                  :string(255)
 #  legal_representative     :string(255)
 #  id_type_legal_rep        :string(255)
 #  email                    :string(255)

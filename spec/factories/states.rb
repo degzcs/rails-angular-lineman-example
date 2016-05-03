@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  state_code :string(255)      not null
+#  country_id :integer
 #
 
 FactoryGirl.define do

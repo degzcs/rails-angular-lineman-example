@@ -7,6 +7,7 @@
 #  company_id :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  city_id    :integer
 #
 
 # require 'rails_helper'
