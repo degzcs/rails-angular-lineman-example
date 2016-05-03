@@ -25,7 +25,7 @@ ActiveAdmin.register Office do
   end
 
   sidebar "Lista de usuarios", only: [:show, :edit] do
-    
+
     ul do
       office.users.each do |user|
         li link_to user.first_name, admin_user_path(user)
@@ -33,8 +33,8 @@ ActiveAdmin.register Office do
     end
 
     # a link_to "Crear Usuario", new_admin_office_user_path(office), class: "create_child_button"
-    # a link_to "Ver lista con detalles", admin_office_users_path(office) 
-  
+    # a link_to "Ver lista con detalles", admin_office_users_path(office)
+
   end
 
 
@@ -42,13 +42,13 @@ ActiveAdmin.register Office do
     selectable_column
     id_column
     column :name
-    column :company 
+    column :company
     actions
   end
 
   filter :name
   filter :company
-  
+
 
   form do |f|
     f.inputs "Informacion de sucursal" do

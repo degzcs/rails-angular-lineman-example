@@ -23,7 +23,7 @@
 
 class Company < ActiveRecord::Base
 
-  has_many :offices
+  has_many :offices, dependent: :destroy
   has_many :external_users
   has_one :rucom, as: :rucomeable
 
@@ -49,5 +49,7 @@ class Company < ActiveRecord::Base
   mount_uploader :rut_file, PdfUploader
   mount_uploader :mining_register_file, PdfUploader
   mount_uploader :chamber_of_commerce_file, PdfUploader
+
+  #TODO: avoid destroy company if there are users associated to it.
 
 end

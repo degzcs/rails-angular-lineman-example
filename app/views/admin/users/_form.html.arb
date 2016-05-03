@@ -21,7 +21,7 @@ active_admin_form_for resource , :url => resource ?  "/admin/users/#{resource.id
 		f.input :rut_file, :as => :file, label: t('rut_file'), :hint => link_to(image_tag(f.object.rut_file.try(:preview).try(:url)),f.object.rut_file.url, :target => "_blank" )
 		f.input :population_center, label: t('population_center'), :collection => PopulationCenter.all.map{|o| ["#{o.city.name if o.city} - #{o.name}", o.id]}
 		h2 t('.company_header')
-		f.input :office, label: t('.office') , :collection => Office.all.map{|o| ["#{o.company.name if o.company} - #{o.name}", o.id]}
+		f.input :office, label: t('office') , :collection => Office.all.map{|o| ["#{o.company.name if o.company} - #{o.name}", o.id]}
 		if resource
 			h4 t('.office_hint') unless resource.office
 		end

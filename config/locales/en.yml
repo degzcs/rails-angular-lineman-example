@@ -29,7 +29,7 @@ en:
   address: 'Dirección'
   photo_file: 'Foto usuario'
   document_file: "Cedula"
-  rut_file: 'Rut'
+  rut_file: 'RUT'
   population_center: 'Centro poblacional'
   office: 'Sucursal'
   password: 'Contraseña (Minimo 8 caracteres)'
