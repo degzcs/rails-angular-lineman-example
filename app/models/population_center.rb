@@ -15,14 +15,32 @@
 #
 
 class PopulationCenter < ActiveRecord::Base
-  belongs_to :city
+
+  #
+  # Associations
+  #
+
   has_many :users
   has_many :external_users
-  def city_name
-    #city.name if city
-  end
+  belongs_to :city
+
+  #
+  # Delegation
+  #
+
+  delegate :name, to: :city, prefix: :city
+
+  #
+  # Validation
+  #
+
+  validates :city, presence: true
+
+  #
+  # Instance Methods
+  #
 
   def state_name
-    #city.state.name if city.state
+    city.state.name if city.state
   end
 end

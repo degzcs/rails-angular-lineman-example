@@ -11,4 +11,6 @@
 
 class State < ActiveRecord::Base
 	has_many :cities
+  # TODO: comment out when is created the countries table
+  # belongs_to :country
 end

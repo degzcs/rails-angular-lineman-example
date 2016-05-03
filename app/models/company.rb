@@ -21,6 +21,7 @@
 #  mining_register_file     :string(255)
 #
 
+# TODO: remove city, state and country fields from this table, instead save city id on offices
 class Company < ActiveRecord::Base
 
   has_many :offices, dependent: :destroy
@@ -33,9 +34,9 @@ class Company < ActiveRecord::Base
 
   validates :nit_number, presence: true
   validates :name, presence: true
-  #validates :city, presence: true
-  #validates :state, presence: true
-  #validates :country, presence: true
+  # validates :city, presence: true
+  # validates :state, presence: true
+  # validates :country, presence: true
   validates :legal_representative, presence: true
   validates :id_number_legal_rep, presence: true
   validates :email, presence: true
