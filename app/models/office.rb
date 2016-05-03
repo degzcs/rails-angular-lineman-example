@@ -9,7 +9,6 @@
 #  updated_at :datetime
 #
 
-# TODO: add city_id and associate this with city model
 class Office < ActiveRecord::Base
 
   #
@@ -18,6 +17,7 @@ class Office < ActiveRecord::Base
 
   has_many :users
   belongs_to :company
+  belongs_to :city
 
   #
   # Validations

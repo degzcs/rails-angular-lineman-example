@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503224120) do
+ActiveRecord::Schema.define(version: 20160503224603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,12 @@ ActiveRecord::Schema.define(version: 20160503224120) do
     t.boolean  "external",                 default: false, null: false
     t.string   "rut_file"
     t.string   "mining_register_file"
+  end
+
+  create_table "countries", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "couriers", force: true do |t|
@@ -204,6 +210,7 @@ ActiveRecord::Schema.define(version: 20160503224120) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state_code", null: false
+    t.integer  "country_id"
   end
 
   create_table "users", force: true do |t|
