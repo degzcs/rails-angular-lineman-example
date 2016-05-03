@@ -1,6 +1,6 @@
 if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
   CarrierWave.configure do |config|
-    config.fog_provider = 'fog/aws'                        # required
+    # config.fog_provider = 'fog/aws'                        # required
     config.fog_credentials = {
       provider:              'AWS',                        # required
       aws_access_key_id:     APP_CONFIG[:AWS_S3_ACCESS_KEY_ID],                        # required

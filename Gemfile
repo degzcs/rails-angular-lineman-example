@@ -45,9 +45,9 @@ gem 'barby'
 gem 'country_select', github: 'stefanpenner/country_select'
 
 # upload files
+gem 'fog', require: 'fog/aws'
 gem 'carrierwave'
 gem 'rmagick'
-gem 'fog-aws'
 
 # API
 gem 'jwt'
