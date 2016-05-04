@@ -1,14 +1,37 @@
   # TODO: use the DANE xls file to import thsi states and cities
   puts 'Creating population centers ...'
-  state = FactoryGirl.create(:state, name: 'Antíoquia', code: '05')
-  city = FactoryGirl.create(:city, name: 'Medellín', state: state, code: '001' )
-  population_center = FactoryGirl.create(:population_center, name: 'Trazoro', city: city, code: '<000></000>')
+
+    country = Country.find_or_create_by(name: 'Colombia')
+    state = State.find_or_create_by(name: 'Antíoquia', code: '05', country: country)
+    city = City.find_or_create_by(name: 'Medellín', state: state, code: '001' )
+
+    population_center = PopulationCenter.find_or_create_by(name: 'Distrito de la innovación', city: city, code: '000')
+  begin
+    # TODO: add the real files to this company (rut, nit, etc.)
+    company = FactoryGirl.create(:company,
+                                  name: 'Trazoro',
+                                  city: city.name,
+                                  state: state.name,
+                                  country: country.name,
+                                  legal_representative: 'Diego Caicedo',
+                                  id_type_legal_rep: 'NIT',
+                                  id_number_legal_rep: '123456789',
+                                  nit_number: '123456789',
+                                  email: 'soport@trazoro.co',
+                                  phone_number: '3004322618',
+                                )
+  rescue
+    company = Company.find_by(nit_number: '123456789')
+    puts 'Company already created!'
+  end
+
+  office = company.offices.first
 
   puts 'Creating basic users ...'
   begin
-  AdminUser.create(email:'soporte@trazoro.co',password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4')
-  FactoryGirl.create :user, email: 'diego.gomez@trazoro.co', password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4' , population_center: population_center
-  FactoryGirl.create :user, email: 'jesus.munoz@trazoro.co', password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4', population_center: population_center
+    AdminUser.create(email:'soporte@trazoro.co',password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4')
+    FactoryGirl.create :user, email: 'diego.gomez@trazoro.co', password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4' , population_center: population_center, office: office
+    FactoryGirl.create :user, email: 'jesus.munoz@trazoro.co', password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4', population_center: population_center, office: office
   rescue
     puts 'There is something wrong!!!'
   end

@@ -41,6 +41,7 @@ class PopulationCenter < ActiveRecord::Base
   #
 
   validates :city, presence: true
+  validates_uniqueness_of :code
 
   #
   # Instance Methods
