@@ -1,4 +1,3 @@
-if Rails.env.production?
   # TODO: use the DANE xls file to import thsi states and cities
   puts 'Creating population centers ...'
   state = FactoryGirl.create(:state, name: 'Antíoquia', code: '05')
@@ -14,7 +13,7 @@ if Rails.env.production?
     puts 'There is something wrong!!!'
   end
 
-
+unless Rails.env.production?
   # Rucoms for User as clients
    # {:idrucom=>"8704649770448",
    # :rucom_record=>"1405799154764",
