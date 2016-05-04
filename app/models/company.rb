@@ -28,7 +28,7 @@ class Company < ActiveRecord::Base
   #
 
   has_many :offices, dependent: :destroy
-  has_many :external_users
+  # has_many :external_users # TODO: check this association asap
   has_one :rucom, as: :rucomeable
 
   #
@@ -77,7 +77,7 @@ class Company < ActiveRecord::Base
 
   # Double check that the company is empty. if not raise an error and avoid delete this company
   def check_empty_company
-    errors.add(:external_users, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos un usuario EXTERNO') if external_users.present?
+    # errors.add(:users, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos un usuario EXTERNO') if self.external_users.present?
     errors.add(:users, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos un usuario') if offices.map(&:users).flatten.compact.present?
   end
 end

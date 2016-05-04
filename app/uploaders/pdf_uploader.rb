@@ -2,7 +2,7 @@
 
 class PdfUploader < CarrierWave::Uploader::Base
 
-  include CarrierWave::MiniMagick
+  include CarrierWave::RMagick
   include CarrierWave::CleanUpFolders
 
   # Choose what kind of storage to use for this uploader:
@@ -17,7 +17,7 @@ class PdfUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{base_store_dir}/#{mounted_as}/#{model.id}"
+    "#{base_store_dir}/#{mounted_as[0,5]}/#{model.id}"
   end
 
   def base_store_dir
@@ -27,7 +27,7 @@ class PdfUploader < CarrierWave::Uploader::Base
 
   def cover
     manipulate! do |frame, index|
-      frame if index.zero? # take only the first page of the file
+      frame if index.try(:zero?) # take only the first page of the file
     end
   end
 
