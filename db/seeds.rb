@@ -30,8 +30,23 @@
   puts 'Creating basic users ...'
   begin
     AdminUser.create(email:'soporte@trazoro.co',password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4')
-    FactoryGirl.create :user, email: 'diego.gomez@trazoro.co', password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4' , population_center: population_center, office: office
-    FactoryGirl.create :user, email: 'jesus.munoz@trazoro.co', password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4', population_center: population_center, office: office
+    FactoryGirl.create(:user,
+          first_name: 'Diego',
+          last_name: 'Gomez',
+          email: 'diego.gomez@trazoro.co',
+          password: 'A7l(?/]03tal9-%g4',
+          password_confirmation: 'A7l(?/]03tal9-%g4' ,
+          population_center: population_center,
+          office: office,)
+
+    FactoryGirl.create(:user,
+          first_name: 'Jesus',
+          last_name: 'Munoz',
+          email: 'jesus.munoz@trazoro.co',
+          password: 'A7l(?/]03tal9-%g4',
+          password_confirmation: 'A7l(?/]03tal9-%g4',
+          population_center: population_center,
+          office: office,)
   rescue
     puts 'There is something wrong!!!'
   end
