@@ -7,16 +7,13 @@
 #  state_id   :integer
 #  created_at :datetime
 #  updated_at :datetime
-#  state_code :string(255)      not null
-#  city_code  :string(255)      not null
+#  code       :string(255)
 #
 
 FactoryGirl.define do
   factory :city , class: City do
-  name { Faker::Address.city }
-	state_id {Random.rand(1...100)} 
-	city_code { Faker::Number.number(6) }
-	state_code { Faker::Number.number(6) }
+    sequence(:name) { |n| "city-#{n}" }
+    state
+    code { Faker::Number.number(6) }
   end
-
 end

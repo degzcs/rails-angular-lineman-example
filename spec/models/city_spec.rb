@@ -7,8 +7,7 @@
 #  state_id   :integer
 #  created_at :datetime
 #  updated_at :datetime
-#  state_code :string(255)      not null
-#  city_code  :string(255)      not null
+#  code       :string(255)
 #
 
 require 'spec_helper'

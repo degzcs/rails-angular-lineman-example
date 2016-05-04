@@ -16,6 +16,9 @@
 #  external                 :boolean          default(FALSE), not null
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
+#  country                  :string(255)
+#  state                    :string(255)
+#  city                     :string(255)
 #
 
 class Company < ActiveRecord::Base

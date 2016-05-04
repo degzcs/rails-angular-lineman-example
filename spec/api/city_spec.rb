@@ -14,19 +14,19 @@ describe 'City', :type => :request do
         it 'retrieves all city registries' do
           get '/api/v1/cities', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 20
+          expect(JSON.parse(response.body).count).to be 21 # 20 + 1 created with the user
         end
-  
+
         context '/:id' do
 
-          it 'gets city by id' do 
+          it 'gets city by id' do
 
             city = City.last
 
             expected_response = {
               id: city.id,
               name: city.name,
-              city_code: city.city_code,
+              city_code: city.code, # TODO: Upgrade the end-point and chenge this name
               state_id: city.state_id,
               state_code: city.state_code,
             }
@@ -40,9 +40,9 @@ describe 'City', :type => :request do
 
         context '/:id/population_centers' do
 
-          it 'gets all population centers from a city' do 
+          it 'gets all population centers from a city' do
             city = create(:city)
-            population_centers = create_list(:population_center, 10, city_id: city.id, city_code: city.city_code)
+            population_centers = create_list(:population_center, 10, city: city)
 
             expected_response = population_centers
 

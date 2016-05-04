@@ -6,8 +6,8 @@
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-#  state_code :string(255)      not null
 #  country_id :integer
+#  code       :string(255)
 #
 
 class State < ActiveRecord::Base
@@ -18,4 +18,10 @@ class State < ActiveRecord::Base
 
 	has_many :cities
   belongs_to :country
+
+  #
+  # Validations
+  #
+
+  validates_uniqueness_of :name
 end

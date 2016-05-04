@@ -26,5 +26,5 @@ class Office < ActiveRecord::Base
 
   validates :name, presence: true
   validates :company, presence: true
-  validates :city, presence: true
+  # validates :city, presence: true
 end

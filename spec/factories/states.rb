@@ -6,13 +6,13 @@
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-#  state_code :string(255)      not null
 #  country_id :integer
+#  code       :string(255)
 #
 
 FactoryGirl.define do
   factory :state , class: State do
-    name { Faker::Address.state }
-    state_code { Faker::Number.number(6) }
+    sequence(:name) { |n| "state-#{n}" }
+    code { Faker::Number.number(6) }
   end
 end

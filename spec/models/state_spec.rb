@@ -6,8 +6,8 @@
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
-#  state_code :string(255)      not null
 #  country_id :integer
+#  code       :string(255)
 #
 
 require 'spec_helper'

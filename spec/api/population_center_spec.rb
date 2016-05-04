@@ -16,20 +16,20 @@ describe 'PopulationCenter', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be 21 #Plus 1 of the user created
         end
-  
+
         context '/:id' do
 
-          it 'gets population center by id' do 
+          it 'gets population center by id' do
 
             population_center = PopulationCenter.last
 
             expected_response = {
               id: population_center.id,
               name: population_center.name,
-              population_center_code: population_center.population_center_code,
+              population_center_code: population_center.code,
               latitude: population_center.latitude.to_s,
               longitude: population_center.longitude.to_s,
-              population_center_type: population_center.population_center_type,
+              population_center_type: population_center.type,
               city_id: population_center.city_id,
               city_code: population_center.city_code,
             }

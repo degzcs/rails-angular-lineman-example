@@ -12,7 +12,7 @@
 
 FactoryGirl.define do
   factory :office do
-    name "Office name"
+    sequence(:name) { |n| "office-#{n}" }
     company
   end
 

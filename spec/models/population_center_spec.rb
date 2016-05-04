@@ -2,20 +2,29 @@
 #
 # Table name: population_centers
 #
-#  id                     :integer          not null, primary key
-#  name                   :string(255)
-#  longitude              :decimal(, )
-#  latitude               :decimal(, )
-#  population_center_type :string(255)
-#  city_id                :integer
-#  created_at             :datetime
-#  updated_at             :datetime
-#  population_center_code :string(255)      not null
-#  city_code              :string(255)      not null
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  longitude  :decimal(, )
+#  latitude   :decimal(, )
+#  city_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  type       :string(255)
+#  code       :string(255)
 #
 
 require 'spec_helper'
 
-RSpec.describe PopulationCenter, type: :model do
-  #pending "add some examples to (or delete) #{__FILE__}"
+describe PopulationCenter do
+  subject(:population_center){build :population_center}
+
+  context 'factory' do
+    it 'has a valid factory' do
+      expect(population_center).to be_valid
+    end
+  end
+
+  context 'associations' do
+    it { should belong_to :city}
+  end
 end

@@ -10,7 +10,7 @@
 
 FactoryGirl.define do
   factory :country do
-    name "MyString"
+    name "Colombia"
   end
 
 end

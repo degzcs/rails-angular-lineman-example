@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503224603) do
+ActiveRecord::Schema.define(version: 20160504022709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,8 +54,7 @@ ActiveRecord::Schema.define(version: 20160503224603) do
     t.integer  "state_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state_code", null: false
-    t.string   "city_code",  null: false
+    t.string   "code"
   end
 
   add_index "cities", ["state_id"], name: "index_cities_on_state_id", using: :btree
@@ -63,6 +62,9 @@ ActiveRecord::Schema.define(version: 20160503224603) do
   create_table "companies", force: true do |t|
     t.string   "nit_number"
     t.string   "name"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
     t.string   "legal_representative"
     t.string   "id_type_legal_rep"
     t.string   "email"
@@ -74,9 +76,6 @@ ActiveRecord::Schema.define(version: 20160503224603) do
     t.boolean  "external",                 default: false, null: false
     t.string   "rut_file"
     t.string   "mining_register_file"
-    t.string   "country"
-    t.string   "state"
-    t.string   "city"
   end
 
   create_table "countries", force: true do |t|
@@ -143,12 +142,11 @@ ActiveRecord::Schema.define(version: 20160503224603) do
     t.string   "name"
     t.decimal  "longitude"
     t.decimal  "latitude"
-    t.string   "population_center_type"
     t.integer  "city_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "population_center_code", null: false
-    t.string   "city_code",              null: false
+    t.string   "type"
+    t.string   "code"
   end
 
   add_index "population_centers", ["city_id"], name: "index_population_centers_on_city_id", using: :btree
@@ -212,8 +210,8 @@ ActiveRecord::Schema.define(version: 20160503224603) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state_code", null: false
     t.integer  "country_id"
+    t.string   "code"
   end
 
   create_table "users", force: true do |t|

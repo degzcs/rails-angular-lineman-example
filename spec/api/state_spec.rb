@@ -14,19 +14,19 @@ describe 'State', :type => :request do
         it 'retrieves all state registries' do
           get '/api/v1/states', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 20
+          expect(JSON.parse(response.body).count).to be 21 # one more created in the user factory
         end
-  
+
         context '/:id' do
 
-          it 'gets state by id' do 
+          it 'gets state by id' do
 
             state = State.last
 
             expected_response = {
               id: state.id,
               name: state.name,
-              state_code: state.state_code
+              state_code: state.code
             }
 
             get "/api/v1/states/#{state.id}",{},{ "Authorization" => "Barer #{@token}" }
@@ -38,9 +38,9 @@ describe 'State', :type => :request do
 
         context '/:id/cities' do
 
-          it 'gets all cities from a state' do 
+          it 'gets all cities from a state' do
             state = create(:state)
-            cities = create_list(:city, 10, state_id: state.id, state_code: state.state_code)
+            cities = create_list(:city, 10, state: state)
 
             expected_response = cities
 
