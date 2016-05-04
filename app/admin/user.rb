@@ -16,7 +16,7 @@ ActiveAdmin.register User do
     column :document_expedition_date
     column :phone_number
     column :address
-    column("Tipo usuario",:external) do |credit| 
+    column("Tipo usuario",:external) do |credit|
       !credit.external? ? status_tag( "trazoro", :ok ) : status_tag( "externo", :warn )
     end
     actions
@@ -43,21 +43,21 @@ ActiveAdmin.register User do
   #   end
 
   #   f.inputs "User Details" do
-  #     f.input :email 
+  #     f.input :email
   #     f.input :first_name , label: "Nombre"
   #     f.input :last_name, label: "Apellido"
   #     f.input :document_number , label: "Numero de documento"
   #     f.input :document_expedition_date, label: "fecha de expedicion" , label: "Fecha de expedicion documento" , start_year: Date.today.year - 70
   #     f.input :phone_number, label: "Numero telefonico"
   #     f.input :address, label: "Direccion"
-  #     f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.thumb.url)
+  #     f.input :photo_file, :as => :file , label: "Foto Usuario" , :hint => image_tag(f.object.photo_file.try(:thumb).try(:url))
   #     f.input :document_number_file, :as => :file , label: "PDF cedula"
   #     f.input :rut_file, :as => :file, label: "PDF Rut"
   #     f.input :mining_register_file, :as => :file, label: "PDF registro minero"
   #     f.input :office, label: "Sucursal"
   #     f.input :population_center, label: "Centro poblacional"
   #     f.input :password, label: "Password (Minimo 8 caracteres)", :if => f.object.external
-  #   end
+  # end
   #   f.actions
   # end
 
@@ -71,13 +71,13 @@ ActiveAdmin.register User do
       row :phone_number , label: "Numero telefonico"
       row :address, label: "Direccion"
       row :photo_file, label: "Foto usuario" do|u|
-        image_tag u.photo_file.thumb.url , class: "photo-user"
+        image_tag u.photo_file.try(:thumb).try(:url) , class: "photo-user"
       end
       row :document_number_file , label: "PDF cedula"do|u|
-        link_to(image_tag(u.document_number_file.preview.url),u.document_number_file.url, :target => "_blank" )
+        link_to(image_tag(u.document_number_file.try(:preview).try(:url)),u.document_number_file.url, :target => "_blank" )
       end
       row :rut_file , label: "PDF Rut"do|u|
-        link_to(image_tag(u.rut_file.preview.url),u.rut_file.url, :target => "_blank" ) if u.rut_file
+        link_to(image_tag(u.rut_file.try(:preview).try(:url)),u.rut_file.url, :target => "_blank" ) if u.rut_file
       end
 
       row :company , label: "Compañia" do|u|
@@ -91,7 +91,7 @@ ActiveAdmin.register User do
       end
       row :population_center, label: "Centro poblado"  do|u|
         u.population_center.name
-      end 
+      end
     end
     active_admin_comments
   end
