@@ -1,10 +1,11 @@
   # TODO: use the DANE xls file to import thsi states and cities
 puts 'Creating population centers ...'
 
-  country = Country.find_or_create_by(name: 'colombia')
-  state = State.find_or_create_by(name: 'antioquia', code: '05', country: country)
-  city = City.find_or_create_by(name: 'medellin', state: state, code: '001' )
-
+  importer = Importers::DaneCsvImporter.new
+  importer.call(file_path: '../res/legal/codigos-departamentos-municipios-dane-v1.0.csv' )
+  country = Country.find_by(name: 'COLOMBIA')
+  city = City.find_by(name: 'MEDELLIN')
+  state = State.find_by(name: 'ANTIOQUIA')
   population_center = PopulationCenter.find_or_create_by(name: 'Distrito de la innovación', city: city, code: '000')
 begin
   # TODO: add the real files to this company (rut, nit, etc.)
