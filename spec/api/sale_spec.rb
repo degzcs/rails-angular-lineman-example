@@ -90,8 +90,6 @@ describe 'Sale', :type => :request do
           end
 
           it 'gets purchase by code' do
-
-
           ###IMPROVE: this test was created provitionaly in order to convert the user in provider. Have to be refactored!!
             # provider_hash = sale.user.attributes.symbolize_keys.except(:created_at, :updated_at, :password_digest, :reset_token, :document_expedition_date).stringify_keys
 
@@ -112,7 +110,7 @@ describe 'Sale', :type => :request do
               fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: provider_hash.stringify_keys,
-              origin_certificate_file: {"url"=>"#{Rails.root}/spec/uploads/sale/origin_certificate_file/#{@sale.id}/origin_certificate_file.pdf"}
+              origin_certificate_file: {"url"=>"/uploads/documents/sale/origin_certificate_file/#{@sale.id}/origin_certificate_file.pdf"}
             }
 
             get "/api/v1/sales/get_by_code/#{@sale.code}",{},{ "Authorization" => "Barer #{@token}" }

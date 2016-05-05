@@ -25,8 +25,8 @@ describe 'Purchase', :type => :request do
               "last_name" => provider.last_name
            },
            "price" => 1.5,
-           "origin_certificate_file" => {'url' => "#{Rails.root}/spec/uploads/purchase/origin_certificate_file/1/image.png"},
-           "seller_picture" => {'url' => "#{Rails.root}/spec/uploads/purchase/seller_picture/1/seller_picture.png"},
+           "origin_certificate_file" => {'url' => "/uploads/documents/purchase/origin_certificate_file/1/image.png"},
+           "seller_picture" => {'url' => "/uploads/photos/purchase/seller_picture/1/seller_picture.png"},
            "origin_certificate_sequence"=>"123456789",
            "gold_batch"=> {
               "id"=>1,
@@ -65,7 +65,6 @@ describe 'Purchase', :type => :request do
           }
           post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_purchase_values},{ "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 201
-          # binding.pry
           expect(JSON.parse(response.body)).to include expected_response
         end
       end

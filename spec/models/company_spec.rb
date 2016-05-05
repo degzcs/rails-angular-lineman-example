@@ -55,7 +55,7 @@ describe Company  do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:phone_number) }
     it { should validate_presence_of(:rucom) }
-    it { should validate_presence_of(:mining_register_file)}
+    # it { should validate_presence_of(:mining_register_file)}
     it { should validate_presence_of(:rut_file)}
     it { should validate_presence_of(:chamber_of_commerce_file)}
   end
