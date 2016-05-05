@@ -1,9 +1,9 @@
   # TODO: use the DANE xls file to import thsi states and cities
 puts 'Creating population centers ...'
 
-  country = Country.find_or_create_by(name: 'Colombia')
-  state = State.find_or_create_by(name: 'Antíoquia', code: '05', country: country)
-  city = City.find_or_create_by(name: 'Medellín', state: state, code: '001' )
+  country = Country.find_or_create_by(name: 'colombia')
+  state = State.find_or_create_by(name: 'antioquia', code: '05', country: country)
+  city = City.find_or_create_by(name: 'medellin', state: state, code: '001' )
 
   population_center = PopulationCenter.find_or_create_by(name: 'Distrito de la innovación', city: city, code: '000')
 begin
