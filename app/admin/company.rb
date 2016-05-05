@@ -13,9 +13,9 @@
 #  id_number_legal_rep  :string(255)
 #
 ActiveAdmin.register Company do
-  menu priority: 4, label: 'Compañias'
+  menu false #priority: 4, label: 'Compañias'
 
-  permit_params :nit_number, :name, :city, :state , :country , :legal_representative , :id_type_legal_rep , :email , :phone_number ,:id_number_legal_rep ,:chamber_of_commerce_file, :rut_file, :mining_register_file
+  permit_params :nit_number, :name, :city, :state , :country , :legal_representative , :id_type_legal_rep , :email , :phone_number ,:id_number_legal_rep ,:chamber_of_commerce_file, :rut_file
 
   controller do
     # This code is evaluated within the controller class
@@ -61,16 +61,16 @@ ActiveAdmin.register Company do
     f.inputs "Informacion de compañia" do
       f.input :nit_number , label: "NIT"
       f.input :name, label: "Nombre"
-      f.input :country, label: "Pais", collection: Country.all.map{|country| ["#{country.name}", country.id]}
-      f.input :state, label: "Departamento", collection: State.all.map{|state| ["#{state.name}", state.id]}
-      f.input :city, label: "Ciudad", collection: City.all.map{|city| ["#{city.name}", city.id]}
+      f.input :country, label: "Pais", collection: Country.all.map{|country| country.name}
+      f.input :state, label: "Departamento", collection: State.all.map{|state| state.name}
+      f.input :city, label: "Ciudad", collection: City.all.map{|city| city.name}
       f.input :legal_representative, label: "Representante legal"
       f.input :id_number_legal_rep, label: "Id representante legal"
       f.input :email , label: "Email compañia"
       f.input :phone_number, label:"Telefono"
       f.input :chamber_of_commerce_file, :as => :file, label: "PDF Camara de comercio", :hint => link_to(image_tag(f.object.chamber_of_commerce_file.try(:preview).try(:url)),f.object.chamber_of_commerce_file.url, :target => "_blank" )
       f.input :rut_file, :as => :file, label: "PDF RUT", :hint => link_to(image_tag(f.object.rut_file.try(:preview).try(:url)),f.object.rut_file.url, :target => "_blank" )
-      f.input :mining_register_file, :as => :file, label: "PDF Registro minero", :hint => link_to(image_tag(f.object.mining_register_file.try(:preview).try(:url)),f.object.mining_register_file.url, :target => "_blank" )
+      # f.input :mining_register_file, :as => :file, label: "PDF Registro minero", :hint => link_to(image_tag(f.object.mining_register_file.try(:preview).try(:url)),f.object.mining_register_file.url, :target => "_blank" )
     end
     f.actions
   end

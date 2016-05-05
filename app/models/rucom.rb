@@ -19,11 +19,16 @@
 #  trazoro            :boolean          default(FALSE), not null
 #
 
+# NOTE[DIEGO.GOMEZ]: This table was implemented thinking that Trazoro will have access
+# to the RUCOM DB and then we won't need this table anymore.
+# But after all this time, I think that it is better have this table here and replicate the
+# rucom information even if they give us access to the DB, This way we can handle the rucom
+# data in a better way and to improve the app performance as well.
 class Rucom < ActiveRecord::Base
 
   belongs_to :rucomeable,  polymorphic: true
 
- # this method is just for clarfy the user activity related with gold.
+ # This method is just for clarfy the user activity related with gold.
   def activity
     self.provider_type
   end

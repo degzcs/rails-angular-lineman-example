@@ -45,7 +45,8 @@ class Company < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :chamber_of_commerce_file, presence: true
   validates :rut_file, presence: true
-  validates :mining_register_file, presence: true
+  # TODO: this mining_register_file field has to be deleted, it not make sense here
+  # validates :mining_register_file, presence: true
   validates :rucom, presence: true
   validates_uniqueness_of :nit_number
 
