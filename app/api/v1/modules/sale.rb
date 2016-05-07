@@ -66,16 +66,12 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-            selectedPurchases = params[:selected_purchases]
+            selected_purchases = params[:selected_purchases]
             sale = current_user.sales.build(params[:sale])
             sale.build_gold_batch(params[:gold_batch])
             sale.save!
-            # ----- TODO: Unify all Services ------- #
-            #Service Sale registration methods
-            ::SaleRegistration.update_inventories(selectedPurchases) if selectedPurchases
-            ::SaleRegistration.register_sold_batches(sale,selectedPurchases) if selectedPurchases
-            SaleCertificateGenerator.new(sale).generate_certificate
-            
+            ::Sale::Registration.new.call(sale: sale, selected_purchases: selected_purchases)
+
             present sale, with: V1::Entities::Sale
             Rails.logger.info(sale.errors.inspect)
         end

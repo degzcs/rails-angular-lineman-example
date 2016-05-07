@@ -45,7 +45,7 @@ module V1
 
 
         post 'download_b_c_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          
+
           date = Date.today  #fecha
           values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
           pdf = ::PdfFile.new(values , date , 'b_c_certificate')
@@ -58,7 +58,7 @@ module V1
         post 'download_purchase_report' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
            values = (JSON.parse env["api.request.body"]).deep_symbolize_keys!
            date = Time.now
-           puts values.as_json 
+           puts values.as_json
            pdf = ::PdfFile.new(values , date , 'purchase_report') #// corregir prueba para sales
            puts ' creating purchase report ... '
            header['Content-Disposition'] = "attachment; filename=certificado_de_compra_#{date.month}_#{date.day}.pdf"
@@ -70,7 +70,7 @@ module V1
         # download_sales_report
         get 'download_sales_report/:sale_id' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           sale_id = params[:sale_id]
-          sale = SalePDFService.new(sale_id)
+          sale = ::Sale::PDFService.new(sale_id)
 
           values = sale.values
           #binding.pry

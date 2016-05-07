@@ -1,13 +1,12 @@
 #This Generator get all the necesary values for the pdf service in order to create a sale report
-
-class SalePDFService
+class Sale::PDFService
   def initialize(sale_id)
     @sale =  ::Sale.find(sale_id)
   end
 
 
   def values
-    { 
+    {
       provider: provider,
       buyer: buyer,
       carrier: carrier,
@@ -19,7 +18,7 @@ class SalePDFService
 
  private
 
-  def provider 
+  def provider
     user = @sale.user
     {
       social: user.company.try(:name),
@@ -51,7 +50,7 @@ class SalePDFService
 
   def carrier
     courier = Courier.find(@sale.courier_id)
-    
+
     {
       first_name: courier.first_name,
       last_name: courier.last_name,
@@ -78,8 +77,8 @@ class SalePDFService
     batches = []
     @sale.batches.each do|b|
       p = Purchase.find(b.purchase_id)
-    
-      
+
+
       batches << {
         id_purchase: p.id,
         id_provider: p.provider.id,
