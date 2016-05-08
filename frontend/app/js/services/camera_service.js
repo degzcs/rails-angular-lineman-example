@@ -21,11 +21,11 @@ angular.module('app').factory('CameraService', function($window) {
     };
     var getDate=function(){
         var today = new Date();
-        var min = today.getMinutes(); 
-        var hrs = today.getHours(); 
-        var dd = today.getDate(); 
-        var mm = today.getMonth()+1; 
-        var yyyy = today.getFullYear();      
+        var min = today.getMinutes();
+        var hrs = today.getHours();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
         return yyyy+"-"+mm+"-"+dd+"-"+hrs+"-"+min;
     };
 //mehtod to add scan files
@@ -37,12 +37,12 @@ angular.module('app').factory('CameraService', function($window) {
 //Method to remove scan files
     var removeScanFile= function(){
         if(images && images.length>0){
-           images.splice(images.length-1,1);     
+           images.splice(images.length-1,1);
         }
         if(files && files.length>0){
-           files.splice(files.length-1,1);     
+           files.splice(files.length-1,1);
         }
-    };  
+    };
 //Method to get the scanned files
     var getScanFiles=function(){
         console.log("files"+files);
@@ -82,7 +82,7 @@ angular.module('app').factory('CameraService', function($window) {
          if(i>0){
             pdf.addPage();
             pdf.setPage(y);
-        } 
+        }
         pdf.addImage(images[i],'JPEG',30,5,width,height);
         }
         var blob= pdf.getBlob();
@@ -102,18 +102,23 @@ angular.module('app').factory('CameraService', function($window) {
     var getMediaSources=function(){
         $options=[];
         var n=0;
-     MediaStreamTrack.getSources(function(sourceInfos) {
-     for (var i = 0; i !== sourceInfos.length; ++i) {
-        var sourceInfo = sourceInfos[i];
-        var option = {value:'', text:''};
-        option.value = sourceInfo.id;
-         if (sourceInfo.kind === 'video') {
+     navigator.mediaDevices.enumerateDevices()
+     .then(function(devices) {
+        devices.forEach(function(device) {
+          var sourceInfo = device;
+          var option = {value:'', text:''};
+          option.value = sourceInfo.deviceId;
+          if (sourceInfo.kind === 'videoinput') {
             n++;
-          option.text = sourceInfo.label || ' Cámara ' + n;
-          $options.push(option);
-        } 
-      }
-     });
+            option.text = sourceInfo.label || ' Cámara ' + n;
+            $options.push(option);
+          }
+        });
+      })
+     .catch(function(err) {
+          console.log(err.name + ": " + err.message);
+        });
+
      return $options;
     };
 // Method to select source and play it
@@ -134,7 +139,7 @@ angular.module('app').factory('CameraService', function($window) {
     var onFailure = function(err) {
         console.error(err);
     };
-         
+
     constraints={
     video: {
         optional:[{
@@ -149,7 +154,7 @@ angular.module('app').factory('CameraService', function($window) {
     },
     audio: false
     };
-    
+
     navigator.getUserMedia(constraints, onSuccess, onFailure);
 };
 // convert base64/URLEncoded data component to File
