@@ -10,6 +10,9 @@ require 'active_attr/rspec'
 require 'shoulda/matchers'
 require 'carrierwave/test/matchers'
 
+#include seeds
+require "#{Rails.root}/db/seeds.rb"
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

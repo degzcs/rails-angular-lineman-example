@@ -19,10 +19,10 @@ FactoryGirl.define do
   factory :sale do
     courier
     user
-    client_id {FactoryGirl.create(:external_user).id}
+    client { FactoryGirl.create(:external_user) }
     gold_batch
-    code "12345677"
+    code "123456789"
     price { 100 }
-    origin_certificate_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf'))}
+    origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf')) }
   end
 end
