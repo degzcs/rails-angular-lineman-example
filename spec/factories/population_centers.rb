@@ -19,7 +19,7 @@ FactoryGirl.define do
   	longitude { Faker::Address.longitude }
   	latitude { Faker::Address.latitude }
   	type { Faker::Hacker.abbreviation }
-  	city { create :city }
+  	city { City.all.sample }
   	code { Faker::Number.number(6) }
   end
 

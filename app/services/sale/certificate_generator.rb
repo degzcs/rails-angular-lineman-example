@@ -7,6 +7,7 @@ class Sale::CertificateGenerator
   end
 
   def call(options={})
+    raise 'you should set the sale option' if options[:sale].blank?
     @sale = options[:sale]
     @certificate_files = options[:certificate_files] || []
 

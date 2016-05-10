@@ -12,8 +12,8 @@
 
 FactoryGirl.define do
   factory :inventory do
-    purchase_id 1
-    remaining_amount 1.5
+    purchase
+    remaining_amount { rand(1..2) }
     status false
   end
 end

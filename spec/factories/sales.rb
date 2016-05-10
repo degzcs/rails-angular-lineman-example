@@ -21,8 +21,8 @@ FactoryGirl.define do
     user
     client_id {FactoryGirl.create(:external_user).id}
     gold_batch
-    code       "12345677"
-    price 123214521
+    code "12345677"
+    price { 100 }
     origin_certificate_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf'))}
   end
 end
