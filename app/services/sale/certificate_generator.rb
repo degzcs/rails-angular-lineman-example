@@ -12,14 +12,14 @@ class Sale::CertificateGenerator
     @certificate_files = options[:certificate_files] || []
 
     pupulate_origin_certificate_files
-    temporal_file_location = exec_command!
+    temporal_file_location = exec_command!(options[:timestamp])
     sale.origin_certificate_file = open(temporal_file_location)
     sale.save!
   end
 
   # @return [ String ] with the temporal file location
-  def exec_command!
-    temporal_file_name = "certificate-#{Time.now.to_i}.pdf"
+  def exec_command!(timestamp=Time.now.to_i)
+    temporal_file_name = "certificate-#{timestamp}.pdf"
     temporal_file_location = "#{Rails.root}/tmp/#{temporal_file_name}"
     # NOTE: if it is needed you can add  -density 50 to the next command
     system <<-COMMAND

@@ -24,5 +24,14 @@ FactoryGirl.define do
     code "123456789"
     price { 100 }
     origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf')) }
+
+    trait :with_batches do
+      ignore do
+        number_of_batches { 3 }
+      end
+      after :create do |sale, e|
+        create_list(:sold_batch, e.number_of_batches, sale: sale)
+      end
+    end
   end
 end
