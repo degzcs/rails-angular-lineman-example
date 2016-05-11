@@ -122,7 +122,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     console.log "Seleccionado"
     if provider
       #console.log 'Provider changed to ' + JSON.stringify(provider)
-      #console.log "Proovedor!"
+      #console.log "Proveedor!"
       #console.log provider.rucom
       #$scope.format_provider(provider)
       console.log provider.rucom
@@ -334,7 +334,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.loadingMode = "indeterminate"
       return
 
-  
+
     # parentEl = angular.element(document.body)
     # $mdDialog.show
     #   parent: parentEl

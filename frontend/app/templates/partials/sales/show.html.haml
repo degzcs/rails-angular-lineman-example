@@ -1,7 +1,7 @@
 %md-content.md-padding.sale-show-content
   %h1 Reporte - Remision
   %div{layout: "row"}
-    /------------------------ CLIENT CARD ---------------------/      
+    /------------------------ CLIENT CARD ---------------------/
     %md-card.sell-card-info{flex:""}
       %md-toolbar
         .md-toolbar-tools
@@ -35,7 +35,7 @@
               %label Correo
               %input{:disabled => "disabled", "ng-model" => "currentClient.email"}
 
-    /------------------------ COURIER CARD ---------------------/ 
+    /------------------------ COURIER CARD ---------------------/
     %md-card.sell-card-info{flex: ""}
       %md-toolbar
         .md-toolbar-tools
@@ -69,7 +69,7 @@
               %label Placas/Numero de Vuelo
               %input{:disabled => "disabled", "ng-model" => "currentCourier.nit_company_number"}
   %div{layout: "row"}
-    /------------------------ USER CARD ---------------------/ 
+    /------------------------ USER CARD ---------------------/
     %md-card.sell-card-info{flex: ""}
       %md-toolbar
         .md-toolbar-tools
@@ -102,7 +102,7 @@
             %md-input-container{flex: ""}
               %label Email
               %input{:disabled => "disabled", "ng-model" => "currentUser.email"}
-          /------------------------ PURCHASES CARD ---------------------/ 
+          /------------------------ PURCHASES CARD ---------------------/
     %md-card.sell-card-info{flex: ""}
       %md-toolbar
         .md-toolbar-tools
@@ -113,8 +113,8 @@
           %table.sale-table
             %tr.table-head
               %th ID Compra
-              %th ID Proovedor
-              %th Nombre Proovedor
+              %th ID Proveedor
+              %th Nombre Proveedor
               %th Gramos (Finos)
             %tr.stripped{"ng-repeat"=>"purchase in purchases"}
               %th {{purchase.id}}
@@ -125,11 +125,11 @@
               %td
               %td
               %td
-              %td 
+              %td
                 %h2
                   %strong
                     Gramos Totales:
-                    %br 
+                    %br
                     {{totalAmount}} gr
                 %h2
                   %strong
@@ -140,13 +140,13 @@
 
   %div{layout: "row"}
     %div{flex: ""}
-      %h2 
+      %h2
         %a.md-button{href: "{{origin_certificate_file.url}}", :target => "_blank"}
           Certificados de origen adjuntos
       %h1
         %a.md-button{"ng-click"=>"getSalePDF()"}
           Generar Reporte de Venta
-        
+
     %div{flex: ""}
       /%h2{style: "text-align: left;"} Codigo de venta
       %div{"ng-bind-html"=>"barcode_html"}

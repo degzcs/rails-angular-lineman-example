@@ -131,7 +131,7 @@
             %td.md-table-td-more
               %md-input-container
                 $ {{ price | number:2}}
-    
+
     %div{"ng-if"=>"purchase.trazoro"}
       %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
         %h4 Detalle Compra Trazoro
@@ -140,11 +140,11 @@
           %thead
             %tr.md-table-headers-row
               %th.md-table-header
-                ID Proovedor
+                ID Proveedor
               /%th.md-table-header
-              /  Rucom Proovedor
+              /  Rucom Proveedor
               %th.md-table-header
-                Nombre Proovedor
+                Nombre Proveedor
               %th.md-table-header
                 Gramos seleccionados
 
@@ -155,13 +155,13 @@
                   {{batch.provider.id}}
               /%td.md-table-td-more
               /  %md-input-container
-              /    {{batch.provider.rucom.rucom_record}} 
+              /    {{batch.provider.rucom.rucom_record}}
               %td.md-table-td-more
                 %md-input-container
                   {{batch.provider.first_name}} {{batch.provider.last_name }}
               %td.md-table-td-more
                 %md-input-container
                   {{batch.grams_picked}} gr
-          
+
     %a.md-button{"target"=> "_blank" , href: "{{purchase.origin_certificate_file.url}}"}
       Certificados de origen adjuntos

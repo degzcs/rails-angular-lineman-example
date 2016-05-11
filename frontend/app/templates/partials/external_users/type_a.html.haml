@@ -1,11 +1,11 @@
 %div{:layout => "column", "ng-hide"=>"showLoading"}
 
-  %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
+  %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}
     %h2 Registro de usuario externo
     %md-tabs.external-user-tab{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>"bottom"}
-      
+
       /****************************   PERSONAL DATA ***********************************/
-      
+
       %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales"}
         %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
@@ -36,7 +36,7 @@
                 %input{:name => "document_number", "ng-model" => "newExternalUser.document_number", :required => ""}
                 %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-            
+
             %md-content.md-padding{:layout => "", "layout-sm" => "column"}
               %md-input-container{:flex => ""}
                 %label Teléfono
@@ -72,12 +72,12 @@
                 %md-input-container{:flex => ""}
                   %label {{rucomIDField.label}}
                   %input{:readonly => "true", "ng-model" => "currentRucom[rucomIDField.field]"}
-                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"}
                   /  %span.ion-android-checkmark-circle &nbsp;válido
                 %md-input-container{:flex => ""}
                   %label Tipo de Proveedor
                   %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true"}
-      
+
       /****************************   DOCUMENTATION ***********************************/
       %h2 Paso 2: Ingrese Documentacion
       %md-tab{"aria-controls" => "tab3-content", label: "Paso 2: Documentacion", "ng-disabled"=>"!validPersonalData"}
@@ -102,18 +102,18 @@
                     %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.document_number_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
-                  
+
                   .by_scan{"ng-switch-when" =>'by_scan'}
                     %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
                       Escanear
                       %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                     
+
                   .by_photo{"ng-switch-when" =>'by_photo'}
                     .md-tile-left.cam
                       %md-button.btn-save{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
-          
+
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}
               %h4 Subir Registro minero del usuario
@@ -134,21 +134,21 @@
                     %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.external_user_mining_register_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
-                  
+
                   .by_scan{"ng-switch-when" =>'by_scan'}
                     %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
                       Escanear
                       %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                     
+
                   .by_photo{"ng-switch-when" =>'by_photo'}
                     .md-tile-left.cam
                       %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
- 
-                        
+
+
 
         %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-          %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)", "ng-disabled"=>"pendingPost"} Crear Proovedor
-      
+          %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "createExternalUser($event)", "ng-disabled"=>"pendingPost"} Crear Proveedor
+
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

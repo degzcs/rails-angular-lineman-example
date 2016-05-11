@@ -12,7 +12,7 @@
               %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
                 %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
                 %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
-                
+
 
   %section{layout: "row"}
     // ---------------------- Provider info ------------------- ///
@@ -20,15 +20,15 @@
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3{:ng-if => "purchase.model.type == 'provider'"}
-            2. Seleccione un Proovedor
+            2. Seleccione un Proveedor
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             2. Ingrese el codigo de barras
 
         %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedProviderChange(provider)","md-search-text-change"=>"getQuery(searchText)"}
           %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{provider.first_name}} {{provider.last_name}} - c.c. {{provider.document_number}}
           %md-not-found
-            No se encontraron proovedores
-          
+            No se encontraron proveedores
+
 
         %div.fieldset-inputs
           %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
@@ -39,7 +39,7 @@
               %a.md-button.md-raised.md-primary.find-provider-button{:ng-click =>"searchProviderByCode(code)"}  Buscar
           %div{layout: "row"}
             %md-input-container{flex: ""}
-              %label Nombre Proovedor
+              %label Nombre Proveedor
               %input{"ng-model" => "purchase.model.provider.name", :required => "", :name => 'provider_name', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Nombre de la Compania
@@ -61,7 +61,7 @@
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
-      /%a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", "ng-click"=>"createProvider()"}  crear proovedor
+      /%a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", "ng-click"=>"createProvider()"}  crear proveedor
     %div{flex: ""}
       // ---------------------- Provider photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
@@ -110,7 +110,7 @@
                   %label Nombre del archivo
                   %input{"ng-model" => "purchase.model.origin_certificate_file[0].name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
                   %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
-                    %div{"ng-message" => "required"} * Debe cargar el certificado de origen 
+                    %div{"ng-message" => "required"} * Debe cargar el certificado de origen
                   / .preview
                   /   %img{:ngf-src=>"purchase.model.origin_certificate_file[0]"}
 
@@ -118,18 +118,18 @@
                   %md-button.btn-save.md-button{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
                     Subir Archivo
                     %md-icon{"md-svg-icon"=>"file:file_upload"}
-          
+
 
                 .by_scan{:ng-switch-when =>'by_scan'}
                   %md-button.btn-save.md-button{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
                     Usar Escaner
                     %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                    
+
                 .by_photo{:ng-switch-when =>'by_photo'}
                   %md-button.btn-save.md-button{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
                     Escanear con Camara
                     %md-icon{"md-svg-icon" => "image:camera_alt"}
-                    
+
               .button-action.md-padding{:ng-if => "purchase.model.type == 'trazoro'"}
                 .trazoro-origin-certificate
                   %md-input-container

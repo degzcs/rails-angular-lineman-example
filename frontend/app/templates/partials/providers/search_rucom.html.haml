@@ -1,6 +1,6 @@
 %md-content.rucom-selection-container
   %h2
-    Seleccione el Rucom del proovedor/cliente que va a registrar
+    Seleccione el Rucom del proveedor/cliente que va a registrar
   %div.search-tool-header{:layout => "row"}
     %div{flex: "50"}
     %md-input-container{:flex => "", "md-no-float"=>""}
@@ -17,7 +17,7 @@
       %md-table-rucom{:headers => "headers", :content => "content", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :count => "count", :type => "type", :style => "padding-left:20px; padding-right:20px;"}
 
   .rucom-selection-options
-    %md-button.md-button.btn-save{"ng-click" => "comeBack()"} 
+    %md-button.md-button.btn-save{"ng-click" => "comeBack()"}
       Volver
       %md-icon{"md-svg-icon"=>"navigation:arrow_back"}
     %md-button.md-button.btn-save{"ui-sref" => "create_client", "ng-if" => "type == 'client'"}

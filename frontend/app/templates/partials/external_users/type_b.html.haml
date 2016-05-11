@@ -1,11 +1,11 @@
 
 %div{:layout => "column", :style => "padding-left:20px; padding-right:20px;","ng-hide"=>"showLoading"}
-  %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}  
+  %form.external-user-form{:name => "providerCreateForm", "novalidate" => "novalidate"}
     %h2 Registro de usuario externo
     %md-checkbox.is-company-selector{"aria-label" => "Checkbox 2", "ng-model" => "isCompany","ng-change"=> "setIsCompany()"}
       Representa a una compañia
     %md-tabs{"md-selected"=>"tabIndex.selectedIndex","md-align-tabs"=>"bottom","md-dynamic-height"=>""}
-      
+
       /****************************   PERSONAL DATA ***********************************/
       %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales"}
         .md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
@@ -38,7 +38,7 @@
                   %input{:name => "document_number", "ng-model" => "newExternalUser.document_number", :required => ""}
                   %div{"ng-messages" => "providerCreateForm.document_number.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
-              
+
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
                 %md-input-container{:flex => ""}
                   %label Teléfono
@@ -68,33 +68,33 @@
                     %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
 
               .rucom-selection{"ng-hide"=>"isCompany"}
-                %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom de Proovedor
+                %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom de Proveedor
                 //%h2.md-subhead Este usuario debe tener Rucom
                 %md-content.md-padding{:layout => "", "layout-sm" => "column"}
                   %md-input-container{:flex => ""}
                     %label {{rucomIDField.label}}
                     %input{:readonly => "true", "ng-model" => "currentRucom[rucomIDField.field]"}
-                    /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+                    /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"}
                     /  %span.ion-android-checkmark-circle &nbsp;válido
                   %md-input-container{:flex => ""}
                     %label Tipo de Proveedor
                     %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true"}
 
-            
+
             %fieldset.standard.fieldset-information{"ng-show"=>"isCompany"}
               %legend
-                %h4 Información de Compañia        
+                %h4 Información de Compañia
               %md-content.md-padding{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
                 %md-input-container{:flex => ""}
                   %label Nombre del Compañía
                   %input{:name => "company_info_name", "ng-model" => "newCompany.name", :required => ""}
                   %div{"ng-messages" => "providerCreateForm.company_info_name.$error"}
-                    %div{"ng-message" => "required"} Este campo es requerido. 
+                    %div{"ng-message" => "required"} Este campo es requerido.
                 %md-input-container{:flex => ""}
                   %label NIT
                   %input{:name => "nit_number", "ng-model" => "newCompany.nit_number", :required => ""}
                   %div{"ng-messages" => "providerCreateForm.nit_number.$error"}
-                    %div{"ng-message" => "required"} Este campo es requerido. 
+                    %div{"ng-message" => "required"} Este campo es requerido.
                 %md-input-container{:flex => ""}
                   %label Teléfono
                   %input{:required => "true", :name => "company_phone_number", "ng-model" => "newCompany.phone_number"}
@@ -107,13 +107,13 @@
                   %div{"ng-messages" => "providerCreateForm.legal_representative.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                 %md-input-container{:flex => ""}
-                  %label Numero de Identificación 
+                  %label Numero de Identificación
                   %input{:name => "id_number_legal_rep", "ng-model" => "newCompany.id_number_legal_rep", :required => ""}
                   %div{"ng-messages" => "providerCreateForm.id_number_legal_rep.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                 %md-select.layout-padding{:flex => "", "ng-model" => "newCompany.id_type_legal_rep", :placeholder => " Tipo Documento Representante"}
                   %md-option{"ng-repeat" => "type in idTypeLegalRep", "ng-value" => "type.name"} {{ type.name }}
-            
+
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
                 %md-input-container{:flex => "33"}
                   %label E-mail
@@ -121,7 +121,7 @@
                   %div{"ng-messages" => "providerCreateForm.company_email.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                     %div{"ng-message" => "email"} Ingrese un e-mail válido
-          
+
               .rucom-selection{"ng-show"=>"isCompany"}
                 %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom de Compañia
                 //%h2.md-subhead Este usuario debe tener Rucom
@@ -129,19 +129,19 @@
                   %md-input-container{:flex => ""}
                     %label {{rucomIDField.label}}
                     %input{:readonly => "true", "ng-model" => "currentRucom[rucomIDField.field]"}
-                    /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"} 
+                    /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"}
                     /  %span.ion-android-checkmark-circle &nbsp;válido
                   %md-input-container{:flex => ""}
                     %label Tipo de Proveedor
                     %input{"ng-model" => "currentRucom.provider_type", "ng-readonly" => "true"}
 
-            
+
       /****************************   DOCUMENTATION ***********************************/
       %h2 Paso 2: Ingrese Documentacion
       %md-tab{"aria-controls" => "tab3-content", label: "Paso 2: Documentacion",  "ng-disabled"=>"!validPersonalData"}
         #tab3-content{}
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-                         
+
             %div{flex: '30'}
               %h4 Subir documento de identificación
               %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
@@ -161,12 +161,12 @@
                     %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.document_number_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
-                  
+
                   .by_scan{"ng-switch-when" =>'by_scan'}
                     %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
                       Escanear
                       %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                     
+
                   .by_photo{"ng-switch-when" =>'by_photo'}
                     .md-tile-left.cam
                       %md-button.btn-save{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
@@ -193,21 +193,21 @@
                     %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.external_user_mining_register_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
-                  
+
                   .by_scan{"ng-switch-when" =>'by_scan'}
                     %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
                       Escanear
                       %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                     
+
                   .by_photo{"ng-switch-when" =>'by_photo'}
                     .md-tile-left.cam
                       %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
-          
+
           .company-fields{"ng-show"=>"isCompany"}
             %h2 Documentacion de la compañia
-          
+
             %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
               %div{flex: '30'}
                 %h4 Registro Minero
@@ -222,24 +222,24 @@
                       %label Nombre del archivo
                       %input{"ng-model" => "newFiles.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register_file'}
                       %div{"ng-messages" => "providerCreateForm.mining_register_file.$error"}
-                        %div{"ng-message" => "required"} * Debe seleccionar el registro minero 
-                    
+                        %div{"ng-message" => "required"} * Debe seleccionar el registro minero
+
                     .by_upload{"ng-switch-when" =>'by_upload'}
                       %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.mining_register_file'}
                         Subir desde PC
                         %md-icon{"md-svg-icon"=>"file:file_upload"}
-                        
+
                     .by_scan{"ng-switch-when" =>'by_scan'}
                       %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(3)"}
-                        Escanear 
+                        Escanear
                         %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                    
+
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
                         %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(3)"}
                           Escanear con camara
                           %md-icon{"md-svg-icon" => "image:camera_alt"}
-            
+
             %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
               %div{flex: '30'}
                 %h4 Copia del RUT
@@ -254,17 +254,17 @@
                       %label Nombre del archivo
                       %input{"ng-model" => "newFiles.rut_file[0].name", :readOnly => 'true',:required => "", :name => 'rut_file'}
                       %div{"ng-messages" => "providerCreateForm.rut_file.$error"}
-                        %div{"ng-message" => "required"} * Debe seleccionar el rut 
+                        %div{"ng-message" => "required"} * Debe seleccionar el rut
                     .by_upload{"ng-switch-when" =>'by_upload'}
                       %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.rut_file'}
                         Subir desde PC
                         %md-icon{"md-svg-icon"=>"file:file_upload"}
-                          
+
                     .by_scan{"ng-switch-when" =>'by_scan'}
                       %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(4)"}
                         Escanear
                         %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                          
+
 
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
@@ -291,24 +291,23 @@
                       %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.chamber_of_commerce_file'}
                         Subir desde PC
                         %md-icon{"md-svg-icon"=>"file:file_upload"}
-                          
+
                     .by_scan{"ng-switch-when" =>'by_scan'}
                       %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(5)"}
                         Escanear
                         %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-                          
+
 
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
                         %md-button.btn-save{"aria-label" => "chamber_of_commece", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(5)"}
                           Escanear con camara
                           %md-icon{"md-svg-icon" => "image:camera_alt"}
-                                                  
+
 
           %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
             %md-button.btn-cancel{:class => "md-raised", "ng-click" => "cancel()"} Cancelar
-            %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "validate_documentation_and_create($event)","ng-disabled"=>"pendingPost"} Crear Proovedor
+            %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "validate_documentation_and_create($event)","ng-disabled"=>"pendingPost"} Crear Proveedor
 
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 
-     

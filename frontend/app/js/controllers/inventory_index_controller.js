@@ -1,5 +1,5 @@
 angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialog, PurchaseService) {
-  
+
   // ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false;
   //Headers of the table
@@ -11,7 +11,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
       name: 'ID Compra',
       field: 'id'
     },{
-      name: 'Proovedor',
+      name: 'Proveedor',
       field: 'provider_name'
     }, {
       name: 'Gramos Finos',
@@ -24,7 +24,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
       field: 'inventory_remaining_amount'
     }
   ];
-  //Filters 
+  //Filters
   $scope.sortable = ['created_at','provider_name', 'gold_batch_grams', 'price', 'inventory_remaining_amount'];
   //Variables configuration
   $scope.selectall = false;
@@ -73,7 +73,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
         provider_name: purchases[i].provider.first_name + " " + purchases[i].provider.last_name,
         inventory_remaining_amount: purchases[i].inventory.remaining_amount,
         gold_batch_grams: purchases[i].gold_batch.grams,
-        
+
       };
       content.push(purchase);
       i++;
@@ -91,9 +91,9 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
     //     $window.history.back();
     //   });
   };
-  
 
-  
+
+
   return $scope.show = function(item) {
     console.log('selecciona item' + item.selected);
     return InventoryService.setItem(item);
