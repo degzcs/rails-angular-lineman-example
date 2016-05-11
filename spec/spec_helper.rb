@@ -72,7 +72,7 @@ RSpec.configure do |config|
 
   # Database Cleaner config
 
-  static_info_tables = %w[]
+  static_info_tables = %w[cities states countries]
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation, {except: static_info_tables}
