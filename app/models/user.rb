@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
 	# validates :mining_register_file, presence: true
 	validates :photo_file, presence: true, unless: :external
 	validates :office, presence: true , unless: :external # this field would be validated if user add some information related with company in the registration process.
-	validates :population_center, presence: true
+	# validates :population_center, presence: true
 	validates :personal_rucom, presence: true, unless: :has_office # the rucom has to be present for any user if he-she has no office asociated
 
 	has_secure_password validations: false

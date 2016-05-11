@@ -9,6 +9,14 @@
 #
 
 
-RSpec.describe Country, type: :model do
+describe Country, type: :model do
+  let(:country){ build :country}
 
+  it 'has a valid factory' do
+      should be_valid
+  end
+
+  context 'validations' do
+    it { have_many :state }
+  end
 end

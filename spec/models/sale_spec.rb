@@ -19,7 +19,7 @@ require 'spec_helper'
 
 describe Sale do
   context "test factory" do
-    let(:sale) {build(:sale)}
+    let(:sale) { build(:sale) }
     it {expect(sale.courier).not_to be_nil }
     it {expect(sale.user).not_to be_nil}
     it {expect(sale.client).not_to be_nil }

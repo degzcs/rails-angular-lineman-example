@@ -12,6 +12,14 @@
 
 require 'spec_helper'
 
-RSpec.describe State, type: :model do
-  #pending "add some examples to (or delete) #{__FILE__}"
+describe State, type: :model do
+  let(:state){ build :state}
+
+  it 'has a valid factory' do
+      should be_valid
+  end
+
+  context 'associations' do
+    it { belong_to :country }
+  end
 end

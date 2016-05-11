@@ -19,7 +19,7 @@ FactoryGirl.define do
   factory :sale do
     courier
     user
-    client { FactoryGirl.create(:external_user) }
+    client { create(:external_user) }
     gold_batch
     code "123456789"
     price { 100 }

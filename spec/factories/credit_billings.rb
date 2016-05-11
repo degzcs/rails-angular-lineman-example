@@ -22,7 +22,6 @@ FactoryGirl.define do
     payment_flag true
     payment_date Time.now
     discount_percentage 1.3
-    user_id {FactoryGirl.create(:user).id}
+    user { FactoryGirl.create(:user) }
   end
-
 end

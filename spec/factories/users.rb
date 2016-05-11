@@ -39,7 +39,7 @@ FactoryGirl.define do
     photo_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_images', 'photo_file.png'),"image/jpeg") }
     personal_rucom {}
     office
-    population_center
+    # population_center
     password { 'foobar' }
     password_confirmation { 'foobar' }
     external { false }

@@ -48,6 +48,9 @@ require 'spec_helper'
 describe  User do
   context 'test factory' do
     let(:user){ build(:user) }
+    it 'has a valid factory' do
+      expect(user).to be_valid
+    end
     it { expect(user.first_name).not_to be_nil }
     it { expect(user.last_name).not_to be_nil }
     it { expect(user.email).not_to be_nil }
@@ -60,7 +63,7 @@ describe  User do
     it { expect(user.photo_file).not_to be_nil }
     # it { expect(user.chamber_commerce_file).not_to be_nil }
     # it { expect(user.company).not_to be_nil } TODO: use office model to access to company model
-    it { expect(user.population_center).not_to be_nil }
+    # it { expect(user.population_center).not_to be_nil }
     it { expect(user.available_credits).not_to be_nil }
   end
 
@@ -91,7 +94,7 @@ describe  User do
     it { should validate_presence_of(:document_number_file) }
     it { should validate_presence_of(:photo_file) }
     it { should validate_presence_of(:office) }
-    it { should validate_presence_of(:population_center) }
+    # it { should validate_presence_of(:population_center) }
 
     it "should not allow to create an external user without personal_rucom if does not have office" do
       external_user = build(:external_user, personal_rucom: nil, office: nil, email: nil)

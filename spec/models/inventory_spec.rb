@@ -15,6 +15,9 @@ require 'spec_helper'
 RSpec.describe Inventory, type: :model do
   context "test factory" do
     let(:inventory) {build(:inventory)}
+    it 'has a valid factory' do
+      expect(inventory).to be_valid
+    end
     it {expect(inventory.purchase_id).not_to be_nil }
     it {expect(inventory.remaining_amount).not_to be_nil}
     it {expect(inventory.status).not_to be_nil}

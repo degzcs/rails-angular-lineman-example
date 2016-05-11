@@ -24,6 +24,9 @@ describe Purchase do
 
   context "test factory" do
     let(:purchase) { build :purchase }
+    it 'has a valid factory' do
+      expect(purchase).to be_valid
+    end
     it {expect(purchase.user).not_to be_nil }
     it {expect(purchase.provider).not_to be_nil }
     it {expect(purchase.origin_certificate_sequence).not_to be_nil}
