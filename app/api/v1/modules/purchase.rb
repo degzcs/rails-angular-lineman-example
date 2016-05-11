@@ -56,7 +56,7 @@ module V1
           # update params
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
           # TODO: change class name to GoldBatchBuyer
-          buy_gold_batch = BuyGoldBatch.new(new_params[:purchase], new_params[:gold_batch], current_user)
+          buy_gold_batch = Purchase::GoldBatchBuyer.new(new_params[:purchase], new_params[:gold_batch], current_user)
           buy_gold_batch.buy!
           if buy_gold_batch.purchase.code.present?
             present buy_gold_batch.purchase , with: V1::Entities::Purchase

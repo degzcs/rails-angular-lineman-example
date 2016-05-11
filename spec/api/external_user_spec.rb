@@ -8,11 +8,11 @@ describe 'ExternalUser', :type => :request do
         @token = @user.create_token
         FactoryGirl.create_list(:external_user, 20)
 
-           document_number_file_path = "#{Rails.root}/spec/support/test_images/document_number_file.png"
-           mining_register_file_path = "#{Rails.root}/spec/support/test_images/mining_register_file.png"
-           rut_file_path = "#{Rails.root}/spec/support/test_images/rut_file.png"
-           chamber_commerce_file_path = "#{Rails.root}/spec/support/test_images/chamber_of_commerce_file.png"
-           photo_file_path = "#{Rails.root}/spec/support/test_images/photo_file.png"
+           document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
+           mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
+           rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
+           chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
+           photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
            document_number_file =  Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
            mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
            rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
@@ -58,7 +58,7 @@ describe 'ExternalUser', :type => :request do
 
         context "without rucom" do
           xit 'returns a representation of the new external user created and code 201' do
-            #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             population_center = create(:population_center)
@@ -93,7 +93,7 @@ describe 'ExternalUser', :type => :request do
 
         context "without company info" do
           it 'returns a representation of the new external user created and code 201' do
-            #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom = create(:rucom)
@@ -130,7 +130,7 @@ describe 'ExternalUser', :type => :request do
         context "with company info" do
           it 'returns a representation of the new external user with his company created and code 201' do
 
-            #   file_path = "#{Rails.root}/spec/support/test_images/image.png"
+            #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
             rucom_company = create(:rucom)

@@ -6,7 +6,6 @@ describe 'City', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        FactoryGirl.create_list(:city, 20)
       end
 
       context 'GET' do
@@ -14,7 +13,7 @@ describe 'City', :type => :request do
         it 'retrieves all city registries' do
           get '/api/v1/cities', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 21 # 20 + 1 created with the user
+          expect(JSON.parse(response.body).count).to be 585
         end
 
         context '/:id' do
@@ -41,7 +40,7 @@ describe 'City', :type => :request do
         context '/:id/population_centers' do
 
           it 'gets all population centers from a city' do
-            city = create(:city)
+            city = City.last
             population_centers = create_list(:population_center, 10, city: city)
 
             expected_response = population_centers

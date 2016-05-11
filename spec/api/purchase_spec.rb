@@ -6,8 +6,8 @@ describe 'Purchase', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password', available_credits: 20000
         @token = @user.create_token
-         file_path = "#{Rails.root}/spec/support/test_images/image.png"
-        seller_picture_path = "#{Rails.root}/spec/support/test_images/seller_picture.png"
+         file_path = "#{Rails.root}/spec/support/images/image.png"
+        seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
         file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
         seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
         @files = [file, seller_picture]
@@ -79,7 +79,7 @@ describe 'Purchase', :type => :request do
               per_page = 5
               get '/api/v1/purchases', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
               expect(response.status).to eq 200
-              expect(JSON.parse(response.body).count).to be per_page
+              expect(JSON.parse(response.body).count).to eq per_page
             end
           end
           context "whit purchase_list param" do
@@ -87,7 +87,7 @@ describe 'Purchase', :type => :request do
               id_list = [1,2,3,4,5,6,7,8]
               get '/api/v1/purchases', { purchase_list: id_list } , { "Authorization" => "Barer #{@token}" }
               expect(response.status).to eq 200
-              expect(JSON.parse(response.body).count).to be 8
+              expect(JSON.parse(response.body).count).to eq 8
             end
           end
         end

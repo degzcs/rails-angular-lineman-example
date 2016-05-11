@@ -4,7 +4,7 @@ describe 'Sale', :type => :request do
     context '#sales' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user
         @token = @user.create_token
       end
 
@@ -12,18 +12,25 @@ describe 'Sale', :type => :request do
         it 'should create one complete sale' do
           client = create(:external_user)
           courier = create(:courier)
+          purchases = create_list(:purchase, 2, user: @user)
+          selected_purchases = purchases.map do |purchase|
+            {
+              'purchase_id' => purchase.id,
+              'amount_picked' => 1
+            }
+          end
 
           expected_response = {
             "id"=>1,
             "courier_id"=>1,
             "client_id"=>client.id,
             "user_id"=>@user.id,
-            "gold_batch_id"=>1,
+            "gold_batch_id"=>3,
             "fine_grams"=>1.5,
           }
 
           new_gold_batch_values = {
-            "id" => 1,
+            "id" => 3,
             # "parent_batches" => "",
             "fine_grams" => 1.5,
             "grade" => 1,
@@ -38,7 +45,7 @@ describe 'Sale', :type => :request do
             "gold_batch_id" => new_gold_batch_values["id"]
           }
 
-          post '/api/v1/sales/', {gold_batch: new_gold_batch_values, sale: new_values},{"Authorization" => "Barer #{@token}"}
+          post '/api/v1/sales/', {gold_batch: new_gold_batch_values, sale: new_values, selected_purchases: selected_purchases },{"Authorization" => "Barer #{@token}"}
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end
@@ -83,7 +90,7 @@ describe 'Sale', :type => :request do
             @sale.user.office.company = create(:company)
             @sale.user.rucom = create(:rucom)
             @sale.user.save
-            file_path = "#{Rails.root}/spec/support/test_pdfs/origin_certificate_file.pdf"
+            file_path = "#{Rails.root}/spec/support/pdfs/origin_certificate_file.pdf"
             File.open(file_path){|f|  @sale.origin_certificate_file = f}
             @sale.save
             @sale.reload

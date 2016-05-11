@@ -22,7 +22,7 @@ class Sale::Registration
   def update_inventories(selected_purchases)
     selected_purchases.each do |item|
       purchase = Purchase.find(item['purchase_id'])
-      amount_picked = item['amount_picked']
+      amount_picked = item['amount_picked'].to_f
       new_remaining_amount = purchase.inventory.remaining_amount - amount_picked
       purchase.inventory.update_attribute(:remaining_amount, new_remaining_amount)
     end

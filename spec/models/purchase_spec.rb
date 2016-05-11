@@ -67,10 +67,10 @@ describe Purchase do
   end
 
   context "test barcode generation" do
-    let(:purchase) {build(:purchase)}
+    let(:purchase) { build(:purchase) }
     before :each do
       purchase.save
-      @code ="770#{purchase.user.id.to_s.rjust(5, '0') }#{ purchase.gold_batch_id.to_s.rjust(4, '0')}"
+      @code ="770#{purchase.provider.id.to_s.rjust(5, '0') }#{ purchase.gold_batch_id.to_s.rjust(4, '0')}"
     end
 
     it "should generate a barcode when the purchase is  is created" do

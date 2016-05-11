@@ -6,7 +6,6 @@ describe 'State', :type => :request do
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        FactoryGirl.create_list(:state, 20)
       end
 
       context 'GET' do
@@ -14,7 +13,7 @@ describe 'State', :type => :request do
         it 'retrieves all state registries' do
           get '/api/v1/states', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 21 # one more created in the user factory
+          expect(JSON.parse(response.body).count).to be 53
         end
 
         context '/:id' do
@@ -39,14 +38,14 @@ describe 'State', :type => :request do
         context '/:id/cities' do
 
           it 'gets all cities from a state' do
-            state = create(:state)
-            cities = create_list(:city, 10, state: state)
+            state = State.find_by(name: 'ANTIOQUIA')
+            cities = state.cities
 
             expected_response = cities
 
             get "/api/v1/states/#{state.id}/cities",{},{ "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
-            expect(JSON.parse(response.body).count).to be 10
+            expect(JSON.parse(response.body).count).to be 125
           end
         end
       end

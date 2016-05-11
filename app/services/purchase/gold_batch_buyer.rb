@@ -4,7 +4,7 @@
 # 2. when the current user (buyer) buy gold from provider who is  an active user in the plataform
 # the provider types under this category are: ""
 #
-class BuyGoldBatch
+class Purchase::GoldBatchBuyer
   attr_accessor :buyer
   attr_accessor :seller
   attr_accessor :purchase
