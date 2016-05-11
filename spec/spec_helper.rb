@@ -77,10 +77,13 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation, {except: static_info_tables}
     DatabaseCleaner.start
-    DatabaseCleaner.clean
-
   end
-  config.before(:context) do |example|
+
+  config.after(:suite) do
+    DatabaseCleaner.clean
+  end
+
+  config.after(:context) do |example|
     DatabaseCleaner.clean
   end
 

@@ -29,7 +29,7 @@ end
 begin
   office = company.offices.first
 rescue => e
-  puts 'There is not Office or the Campany was no created properly'
+  puts "There is not Office or the Campany was no created properly. ERROR: #{ e }"
 end
 
 puts 'Creating basic users ...'
@@ -62,7 +62,7 @@ begin
         population_center: population_center,
         office: office,)
 rescue => e
-  puts 'There is something wrong!!!, perhaps the users were already created.'
+  puts "There is something wrong!!!, perhaps the users were already created. ERROR: #{ e }"
 end
 
 puts 'Associating trazoro users ...'

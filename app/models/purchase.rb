@@ -56,7 +56,7 @@ class Purchase < ActiveRecord::Base
   # Fields
   #
 
-  mount_uploader :origin_certificate_file, PdfUploader
+  mount_uploader :origin_certificate_file, DocumentUploader
   mount_uploader :seller_picture, PhotoUploader
 
   #
@@ -107,7 +107,7 @@ class Purchase < ActiveRecord::Base
 
       # Manufacturer Code: 5 digits
       # this is the office code:
-      mfg_code =  self.user.id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+      mfg_code =  self.provider.id.to_s.rjust(5, '0') #TODO: provider.officce.reference_code
 
       # Product Code: 4 digits
       # This is the goldbach code:

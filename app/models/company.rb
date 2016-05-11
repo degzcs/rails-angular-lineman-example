@@ -61,9 +61,9 @@ class Company < ActiveRecord::Base
   # Uploaders
   #
 
-  mount_uploader :rut_file, PdfUploader
-  mount_uploader :mining_register_file, PdfUploader
-  mount_uploader :chamber_of_commerce_file, PdfUploader
+  mount_uploader :rut_file, DocumentUploader
+  mount_uploader :mining_register_file, DocumentUploader
+  mount_uploader :chamber_of_commerce_file, DocumentUploader
 
   # TODO: avoid destroy company if there are users associated to it.
 

@@ -27,7 +27,6 @@ class Importers::DaneCsvImporter
     @file_path = options[:file_path]
     # open csv file and iterate over it.
     CSV.foreach(file_path, headers: true) do |row_data|
-      printf '.'
       normalized_row = normalize_data(row_data.to_hash.symbolize_keys!.slice(*ALLOWED_FIELDS))
 
       country = Country.find_or_create_by(name: 'COLOMBIA')

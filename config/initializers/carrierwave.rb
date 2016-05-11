@@ -22,7 +22,7 @@ else
     config.base_path = ''
   end
 
-  class PdfUploader < CarrierWave::Uploader::Base
+  class DocumentUploader < CarrierWave::Uploader::Base
     storage :file
     def store_dir
       "#{Rails.root}/public/uploads/documents/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"

@@ -20,7 +20,7 @@ FactoryGirl.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     phone_number { Faker::PhoneNumber.phone_number }
-    company_name {Faker::Company.name}
+    company_name { Faker::Company.name }
     address { Faker::Address.street_address}
     nit_company_number { Faker::Number.number(10) }
     id_document_type { Faker::Hacker.abbreviation }

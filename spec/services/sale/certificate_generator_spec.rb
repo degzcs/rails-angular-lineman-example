@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe  Sale::CertificateGenerator do
   let(:service){ Sale::CertificateGenerator.new }
-  let(:purchase){ create(:purchase) }
-  let(:seller) { create(:user) }
-  let(:external_user) {create(:external_user)}
-  let(:sale) {create(:sale, :with_batches, user: seller, client: external_user)}
+  let(:sale) { create(:sale, :with_batches, origin_certificate_file: nil) }
 
   context 'PDFs' do
     it 'should create both the sale billing and the collection of all origin certifacate' do

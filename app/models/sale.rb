@@ -39,7 +39,7 @@ class Sale < ActiveRecord::Base
   #
   # Uploaders
   #
-  mount_uploader :origin_certificate_file, PdfUploader
+  mount_uploader :origin_certificate_file, DocumentUploader
 
   #
   # Validations
@@ -79,13 +79,13 @@ class Sale < ActiveRecord::Base
       # Manufacturer Code: 5 digits
       # this is the office code:
       mfg_code =  self.client_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
-                                                    # In puchases mfg_code uses the user id. Using client_id in sales for 
+                                                    # In puchases mfg_code uses the user id. Using client_id in sales for
                                                     # ensuring uniqueness (?)
 
       # Product Code: 4 digits
       # This is the goldbach code:
       product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
-                                                          # (!) This doesn't guarantee the product code to be unique once 
+                                                          # (!) This doesn't guarantee the product code to be unique once
                                                           # the gold_batch id sequence reaches the 9999 value, does it?
 
       # Check Digit: 1 digit

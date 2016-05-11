@@ -18,19 +18,23 @@
 FactoryGirl.define do
   factory :sale do
     courier
-    user
-    client { create(:external_user) }
-    gold_batch
+    user { User.where(email: 'jesus.munoz@trazoro.co').first || create(:user) } # Seller
+    client { User.where(email: 'diego.gomez@trazoro.co').first || create(:external_user) } # Buyer
+    gold_batch # bought gold in this transaction.
     code "123456789"
     price { 100 }
-    origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'test_pdfs', 'origin_certificate_file.pdf')) }
+    origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf')) }
 
     trait :with_batches do
       ignore do
         number_of_batches { 3 }
       end
       after :create do |sale, e|
-        create_list(:sold_batch, e.number_of_batches, sale: sale)
+        provider = User.where(email: 'tech@trazoro.co').first || create(:external_user)
+        e.number_of_batches.times do |index|
+          purchase = create(:purchase, user: sale.user, provider: provider)
+          create(:sold_batch, sale: sale, purchase: purchase )
+        end
       end
     end
   end

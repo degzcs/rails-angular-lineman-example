@@ -1,9 +1,11 @@
 # encoding: utf-8
+require 'carrierwave/processing/mime_types'
 
-class PdfUploader < CarrierWave::Uploader::Base
+class DocumentUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::RMagick
   include CarrierWave::CleanUpFolders
+  include CarrierWave::MimeTypes
 
   # Choose what kind of storage to use for this uploader:
   if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
@@ -12,7 +14,18 @@ class PdfUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
+  #
+  # Process
+  #
+
+  process :set_content_type
+  process :preview
+
   after :remove, :delete_empty_upstream_dirs
+
+  def set_content_type
+    super
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -32,9 +45,9 @@ class PdfUploader < CarrierWave::Uploader::Base
   end
 
   version :preview do
+    process :convert => :jpg
     process :cover
     process :resize_to_fill => [310, 200]
-    process :convert => :jpg
 
     def full_filename (for_file = model.source.file)
       super.chomp(File.extname(super)) + '.jpg'
