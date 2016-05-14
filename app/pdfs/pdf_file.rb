@@ -409,7 +409,7 @@ class PdfFile < Prawn::Document
 
   # Generar certificado de compra
   def generate_purchase_report(values,date)
-    file = File.open(File.join(Rails.root, 'vendor','pdfs','reporte_de_compra.pdf'))
+    file = File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_compra.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header
@@ -489,8 +489,6 @@ class PdfFile < Prawn::Document
 
     move_cursor_to 286
     text_box "#{values[:purchase][:price].round(2)} pesos" , :at => [400 , cursor] , :width => 100 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
-
-
   end
 
 
@@ -524,7 +522,7 @@ class PdfFile < Prawn::Document
 
   def generate_sales_report(values,gold_group,date,counter)
 
-    file = File.open(File.join(Rails.root, 'vendor','pdfs','reporte_de_venta.pdf'))
+    file = File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_venta.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header
