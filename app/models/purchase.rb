@@ -27,12 +27,13 @@ class Purchase < ActiveRecord::Base
   # Associations
   #
 
-  belongs_to :user
+  belongs_to :user # TODO: change name to buyer.
   belongs_to :provider, class_name: "User"
 
   belongs_to :gold_batch
   has_one :inventory
   has_many :sold_batches
+  has_one :proof_of_purchase, class_name: "Document", as: :documentable # NOTE: this name is the most close to the real meaning of this field, because it is not always an invoice, most of the time it will be a equivalent-document.
 
   #
   # Validations
