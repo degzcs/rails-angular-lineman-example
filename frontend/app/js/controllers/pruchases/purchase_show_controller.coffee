@@ -8,6 +8,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
+  window.scope = $scope
   CurrentUser.get().success (data) ->
     $scope.current_user = data
 
@@ -25,6 +26,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       provider: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
+      proof_of_purchase_file_url: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
       barcode_html: ''
@@ -58,13 +60,13 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       grade: $scope.goldBatch.model.grade
 
     providerForPDF = purchase.provider
-    
+
     purchasePDF =  purchase
     # purchasePDF.provider=[]
 
     $scope.pdfContent = PdfService.createPurchaseInvoice(purchasePDF, providerForPDF, goldBatchForPDF, buyer)
 
-  
+
   #
   #
   $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->

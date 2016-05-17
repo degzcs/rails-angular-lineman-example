@@ -14,6 +14,7 @@ module V1
               origin_certificate_file = Sale.find( params[:purchase][:sale_id] ).origin_certificate_file
               trazoro = true
             end
+            params[:gold_batch][:extra_info] = JSON.parse(params[:gold_batch][:extra_info])
 
             params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture, trazoro: trazoro)
           end

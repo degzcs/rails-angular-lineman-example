@@ -20,6 +20,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       provider: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
+      proof_of_purchase_file_url: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
       barcode_html: ''
@@ -62,6 +63,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
             "gold_batch[inventory_id]": gold_batch.inventory_id
             "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
+            "gold_batch[extra_info]": { grams: gold_batch.total_grams }
           file: files
           fileFormDataName: 'purchase[files][]')
 
@@ -74,17 +76,17 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
 
         .success (data, status, headers, config) ->
             console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
-            # window.response = data
             model = angular.fromJson(sessionStorage.purchaseService)
             model.barcode_html = data.barcode_html
             model.code = data.code
+            model.proof_of_purchase_file_url = data.proof_of_purchase_file_url
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
             #service.flushModel()
             # if !data.status == 500
             $location.path('/purchases/show')
             $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ariaLabel('Alert Dialog Demo').ok('ok')
-            
+
             # else
               # show an error message
         ).catch (err) ->

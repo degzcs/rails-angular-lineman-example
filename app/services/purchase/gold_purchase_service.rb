@@ -39,14 +39,15 @@ class Purchase::GoldPurchaseService
   # user as well.
   def buy!
    # Build purchase
-    @purchase = buyer.purchases.build(purchase_hash)
-    @purchase.build_gold_batch(gold_batch_hash)
     response = {}
 
     if can_buy?(buyer, gold_batch_hash['fine_grams'])
       ActiveRecord::Base.transaction do
-        response[:success] = purchase.save!
-        response[:errors] = purchase.errors.full_messages
+        gold_batch = GoldBatch.new(gold_batch_hash.deep_symbolize_keys)
+        gold_batch.save!
+        @purchase = buyer.purchases.build(purchase_hash.merge(gold_batch_id: gold_batch.id))
+        response[:success] = @purchase.save!
+        response[:errors] = @purchase.errors.full_messages
         discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
         response = ::Purchase::ProofOfPurchaseGeneration.new.call(purchase: purchase) if response[:success]
       end

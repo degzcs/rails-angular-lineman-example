@@ -168,5 +168,5 @@
               %md-input-container
                 %span {{goldBatch.model.riales}}
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-      %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"show_purchase", "ng-click" => "createPDF(purchase.model, goldBatch.model, current_user)"} Exportar a PDF
-      %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step1",  "ng-click" => 'flushData()'} Nueva compra
+      %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-href" =>"{{purchase.model.proof_of_purchase_file_url}}", 'target' => '_blank'} Exportar a PDF
+      %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => 'flushData()'} Nueva compra
