@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504022709) do
+ActiveRecord::Schema.define(version: 20160514215147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,12 +112,24 @@ ActiveRecord::Schema.define(version: 20160504022709) do
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree
 
+  create_table "documents", force: true do |t|
+    t.string   "file"
+    t.string   "type"
+    t.string   "documentable_id"
+    t.string   "documentable_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "documents", ["documentable_id"], name: "index_documents_on_documentable_id", using: :btree
+
   create_table "gold_batches", force: true do |t|
     t.float    "fine_grams"
     t.integer  "grade"
     t.integer  "inventory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "extra_info"
   end
 
   create_table "inventories", force: true do |t|
@@ -167,7 +179,7 @@ ActiveRecord::Schema.define(version: 20160504022709) do
   end
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                   null: false
+    t.string   "idrucom",            limit: 90,                                 null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -175,12 +187,12 @@ ActiveRecord::Schema.define(version: 20160504022709) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: "now()"
+    t.datetime "updated_at",                    default: '2016-05-07 03:27:53'
     t.string   "provider_type"
     t.string   "num_rucom"
     t.string   "rucomeable_type"
     t.integer  "rucomeable_id"
-    t.boolean  "trazoro",                       default: false,   null: false
+    t.boolean  "trazoro",                       default: false,                 null: false
   end
 
   create_table "sales", force: true do |t|
