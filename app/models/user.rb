@@ -24,6 +24,11 @@
 #  mining_register_file     :string(255)
 #
 
+# TODO: change name from document_number_file to identification_document_file or id_document_file
+# TODO: define a new name for mining_register_file, because this will contain one of these:
+# 1. barequero ID file, 2. miner register file or
+# 3. a resolution to garantee that he can commercialize gold
+# I think it could be miner_authorization_document and add another field to select the document type
 class User < ActiveRecord::Base
 
 	class EmptyCredits < StandardError
@@ -35,6 +40,9 @@ class User < ActiveRecord::Base
 	has_many :purchases
 	has_many :sales
 	has_many :purchases_as_provider , class_name: "Purchase", as: :provider
+	# TODO: urgent refactor this association and all logic associate with it.
+	# The solution for all this kind of issues is create user roles and add cancancan to give access
+	# and select this role when the sale will be done on the sale module/service
 	has_many :sales_as_client, class_name: "Sale", as: :client
 	has_one :personal_rucom, class_name: "Rucom",  as: :rucomeable
 

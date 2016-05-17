@@ -51,7 +51,6 @@ class Sale::CertificateGenerator
     end
   end
 
-
   private
 
   # @param folder_path [ String ] where the files will be saved temporarily
@@ -104,5 +103,15 @@ class Sale::CertificateGenerator
   # @return [ Array ] of file paths
   def origin_certificate_files_from_local_machine
     sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate_file.path).to_s }
+  end
+
+  def files_for_purchase(purchase)
+    # origin certificate
+    purchase.origin_certificate_file.path
+    # ID
+    purchase.user.document_number_file
+    # barequero id OR miner register OR resolution
+    purchase.user.mining_register_file
+    # purchase equivalent document
   end
 end

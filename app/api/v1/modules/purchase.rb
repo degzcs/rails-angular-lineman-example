@@ -55,11 +55,10 @@ module V1
 
           # update params
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
-          # TODO: change class name to GoldBatchBuyer
-          buy_gold_batch = ::Purchase::GoldBatchBuyer.new(new_params[:purchase], new_params[:gold_batch], current_user)
-          buy_gold_batch.buy!
-          if buy_gold_batch.purchase.code.present?
-            present buy_gold_batch.purchase , with: V1::Entities::Purchase
+          gold_purchase_service = ::Purchase::GoldPurchaseService.new
+          gold_purchase_service.call(purchase_hash: new_params[:purchase], gold_batch_hash: new_params[:gold_batch], buyer: current_user)
+          if gold_purchase_service.purchase.code.present?
+            present gold_purchase_service.purchase , with: V1::Entities::Purchase
           else
             { message:  "Ocurrio un error y no se ha podido realizar la compra", status: 500}
           end

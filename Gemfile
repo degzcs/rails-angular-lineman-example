@@ -4,7 +4,7 @@ ruby "2.3.0"
 
 gem 'rails', '4.1.9'
 
-#generate pdf files
+# PDF
 gem 'prawn','1.0.0.rc2'
 gem 'pdf-reader', '~> 1.3.3'
 
@@ -13,6 +13,8 @@ gem 'pdf-reader', '~> 1.3.3'
 # DB
 gem 'pg'
 gem 'bcrypt'
+
+# Model and active POROs
 gem 'active_attr'
 
 gem 'sass-rails', '~> 4.0.3'

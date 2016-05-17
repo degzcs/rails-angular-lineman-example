@@ -8,6 +8,7 @@
 #  inventory_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime
+#  extra_info   :text
 #
 
 require 'spec_helper'

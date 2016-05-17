@@ -1,44 +1,67 @@
 require 'spec_helper'
 
-describe Purchase::GoldBatchBuyer do
+describe Purchase::GoldPurchaseService do
 
-  let(:user){create(:user, available_credits: 100)}
+  let(:user){ create(:user, available_credits: 100) }
 
-  subject(:service){ Purchase::GoldBatchBuyer.new(@purchase_hash, @gold_batch_hash, user)}
+  subject(:service){ Purchase::GoldPurchaseService.new }
 
   context 'non trazoro user (from externanl user) ' do
 
     before :each do
       provider = create(:external_user)
-      file_path = "#{Rails.root}/spec/support/images/image.png"
+      file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"
+      file = Rack::Test::UploadedFile.new(file_path, "application/pdf")
+
       seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
-      file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
       seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
       @gold_batch_hash ={
        "id" => 1,
       # "parent_batches" => "",
       "fine_grams" => 1.5,
-      "grade" => 1,
+      "grade" => 999,
       "inventory_id" => 1,
+      "extra_info" => { 'grams' => 1.5 }
       }
       @purchase_hash ={
-             "id"=>1,
+           "id"=>1,
            "user_id"=>1,
            "provider_id"=>provider.id,
            "gold_batch_id" => @gold_batch_hash["id"],
            "price" => 1.5,
            "origin_certificate_file" => file,
-            "seller_picture" => seller_picture,
+           "seller_picture" => seller_picture,
            "origin_certificate_sequence"=>"123456789",
            "trazoro" => false
       }
     end
     it 'should make a purchase and discount credits from de current user (buyer) available credits' do
       expected_credits = 100 - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
-      service.buy!
+      service.call(
+        purchase_hash: @purchase_hash,
+        gold_batch_hash: @gold_batch_hash,
+        buyer: user
+        )
       expect(service.purchase.persisted?).to be true
       expect(user.reload.available_credits).to eq expected_credits
       # binding.pry
+    end
+  end
+
+  context 'errors' do
+    before :each do
+      @gold_batch_hash ={ fine_grams: 'invalid' }
+      @purchase_hash ={ price: 'invalid' }
+    end
+
+    it 'raise errors' do
+      expect do
+        service.call(
+        purchase_hash: @purchase_hash,
+        gold_batch_hash: @gold_batch_hash,
+        buyer: user
+        )
+      end.to raise_error
     end
   end
 end
