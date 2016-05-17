@@ -9,16 +9,20 @@ class ProofOfPurchasePresenter < BasePresenter
     date.strftime("%H:%M:%S")
   end
 
-  def buyer
+  def ymd_time
+    date.strftime("%Y/%m/%d")
+  end
+
+  def buyer_presenter
     @buyer ||= UserPresenter.new(user, h)
   end
 
-  def provider
-    @provider ||= UserPresenter.new(user, h)
+  def provider_presenter
+    @provider ||= UserPresenter.new(provider, h)
   end
 
-  def gold_batch
-    @gold_batch = GoldBatchPresenter.new(gold_batch, h)
+  def gold_batch_presenter
+    @gold_batch ||= GoldBatchPresenter.new(gold_batch, h)
   end
 
   def fine_gram_price
