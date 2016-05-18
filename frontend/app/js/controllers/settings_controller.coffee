@@ -4,14 +4,12 @@ angular.module('app').controller 'SettingsCtrl', (CurrentUser, $scope) ->
   # Model
   #
 
-
   $scope.currentUser = null
-  $scope.PERSON_TYPE_MAPPING = [
-    { key: 'Persona Natural', value: 'natural'},
-    { key: 'Persona Juridica', value: 'legal'}
+  $scope.RUCOM_TYPES_MAPPING = [
+    { key: 'Personal', value: 'personal'},
+    { key: 'Empresa', value: 'company'}
   ]
-  $scope.personType = null
-  window.scope = $scope
+  $scope.rucomType = 'company'
 
   #
   #  Functions
@@ -22,10 +20,10 @@ angular.module('app').controller 'SettingsCtrl', (CurrentUser, $scope) ->
     $scope.currentUser = data
 
   # Getter
-  $scope.personType = CurrentUser.settings.get('personType')
+  $scope.rucomType = CurrentUser.settings.get('rucomType')
 
   # Setter
-  $scope.$watch '[personType]', ->
-    CurrentUser.settings.set({ personType: $scope.personType })
+  $scope.$watch '[rucomType]', ->
+    CurrentUser.settings.set({ rucomType: $scope.rucomType })
 
 

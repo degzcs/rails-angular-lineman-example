@@ -84,8 +84,8 @@
           .mini-top-bar{'flex' => '80' }
             %img.trazoro-icon-small{ :src => "/img/trazoro_icon_small.png" }
           .type-of-person{ 'flex' => '20', "ng-controller"=>"SettingsCtrl" }
-            %md-select{ 'ng-model' => 'personType'}
-              %md-option{ 'ng-repeat' => " type in PERSON_TYPE_MAPPING", 'value' => "{{ type.value }}" }
+            %md-select{ 'ng-model' => 'rucomType'}
+              %md-option{ 'ng-repeat' => " type in RUCOM_TYPE_MAPPING", 'value' => "{{ type.value }}" }
                 {{ type.key }}
         %div{"ui-view" => "top-nav"}
       #content

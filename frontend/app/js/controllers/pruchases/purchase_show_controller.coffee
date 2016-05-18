@@ -10,7 +10,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-
+    $scope.current_user.personType = CurrentUser.settings.get('personType')
   #
   # Fuctions
   #
@@ -45,7 +45,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
 
     console.log 'deleting sessionStorage ...'
 
-  #
+  #  DEPRECATED: in favor to use the files already created in Purchase::GoldPurchaseService.
   #  Send calculated values to create a Purchase Renport in PDF format
   $scope.createPDF =  (purchase, goldBatch, buyer)->
     goldBatchForPDF=
