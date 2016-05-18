@@ -43,8 +43,6 @@ angular.module('app').factory( 'SessionService', ($resource, $http, $q, $locatio
       .error ->
         console.log 'errors!'
 
-
-
   #
   # Return service
   #

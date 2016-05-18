@@ -8,7 +8,6 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
-  window.scope = $scope
   CurrentUser.get().success (data) ->
     $scope.current_user = data
 
