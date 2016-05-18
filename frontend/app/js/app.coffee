@@ -69,7 +69,7 @@ angular.module("app", [
     '500': 'edb039'
   });
   $mdThemingProvider.definePalette('goldYellow', goldYellow);
-  
+
   $mdThemingProvider.theme('default')
     .primaryPalette('goldYellow')
     .accentPalette('orange');
@@ -84,15 +84,15 @@ angular.module("app", [
 .config [
   'httpBatchConfigProvider'
   (httpBatchConfigProvider) ->
-    httpBatchConfigProvider.setAllowedBatchEndpoint 'http://localhost:3000', 
-    'http://localhost:3000/api/v1/inventories/:id', 
+    httpBatchConfigProvider.setAllowedBatchEndpoint 'http://localhost:3000',
+    'http://localhost:3000/api/v1/inventories/:id',
     {
       maxBatchedRequestPerCall: 20
     }
     return
 ]
 
-
+# TODO: figure it out why is this here!!
 #GLOBAL METHODS
 Number::formatMoney = (c, d, t) ->
   `var t`

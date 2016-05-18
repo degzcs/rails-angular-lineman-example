@@ -26,7 +26,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-  window.s =  $scope
 
   #
   # Fuctions
