@@ -1,22 +1,26 @@
   # TODO: use the DANE xls file to import thsi states and cities
-puts 'Creating population centers ...'
+puts 'Creating cities and states ...'
 
   importer = Importers::DaneCsvImporter.new
   importer.call(file_path: '../res/legal/codigos-departamentos-municipios-dane-v1.0.csv' )
   country = Country.find_by(name: 'COLOMBIA')
   city = City.find_by(name: 'MEDELLIN')
   state = State.find_by(name: 'ANTIOQUIA')
-  population_center = PopulationCenter.find_or_create_by(name: 'Distrito de la innovación', city: city, code: '000')
 begin
   # TODO: add the real files to this company (rut, nit, etc.)
+  legal_representative = FactoryGirl.build(:user,
+        first_name: 'Diego',
+        last_name: 'Caicedo',
+        email: 'dcm@trazoro.co',
+        password: 'A7l(?/]03tal9-%g4',
+        password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        office: nil, legal_representative:  true)
   company = FactoryGirl.create(:company,
                                 name: 'Trazoro',
                                 city: city.name,
                                 state: state.name,
                                 country: country.name,
-                                legal_representative: 'Diego Caicedo',
-                                id_type_legal_rep: 'NIT',
-                                id_number_legal_rep: '123456789',
+                                legal_representative: legal_representative,
                                 nit_number: '123456789',
                                 email: 'soport@trazoro.co',
                                 phone_number: '3004322618',
@@ -41,7 +45,6 @@ begin
         email: 'tech@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
-        population_center: population_center,
         office: office,)
 
   FactoryGirl.create(:user,
@@ -50,7 +53,6 @@ begin
         email: 'diego.gomez@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
-        population_center: population_center,
         office: office,)
 
   FactoryGirl.create(:user,
@@ -59,7 +61,6 @@ begin
         email: 'jesus.munoz@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4',
-        population_center: population_center,
         office: office,)
 rescue => e
   puts "There is something wrong!!!, perhaps the users were already created. ERROR: #{ e }"

@@ -28,6 +28,7 @@ class Company < ActiveRecord::Base
   has_many :offices, dependent: :destroy
   # has_many :external_users # TODO: check this association asap
   has_one :rucom, as: :rucomeable
+  belongs_to :legal_representative, class_name: 'User'
 
   #
   # Validations
@@ -38,7 +39,6 @@ class Company < ActiveRecord::Base
   validates :nit_number, presence: true
   validates :name, presence: true
   validates :legal_representative, presence: true
-  validates :id_number_legal_rep, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true
   validates :chamber_of_commerce_file, presence: true
@@ -64,6 +64,19 @@ class Company < ActiveRecord::Base
   mount_uploader :chamber_of_commerce_file, DocumentUploader
 
   # TODO: avoid destroy company if there are users associated to it.
+
+  #
+  # Instance Methods
+  #
+
+  # NOTE: These methods are temporal, created in order to don't break the app.
+  def id_number_legal_rep
+    legal_representative.document_number
+  end
+
+  def id_type_legal_rep
+    'CC'
+  end
 
   private
 

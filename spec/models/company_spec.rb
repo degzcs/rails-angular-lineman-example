@@ -23,17 +23,17 @@ require 'spec_helper'
 
 describe Company  do
   context "test factory" do
-    let(:company) {build(:company)}
-    it {expect(company.nit_number).not_to be_nil }
-    it {expect(company.name).not_to be_nil }
-    it {expect(company.city).not_to be_nil}
-    it {expect(company.state).not_to be_nil}
-    it {expect(company.country).not_to be_nil}
-    it {expect(company.legal_representative).not_to be_nil}
-    it {expect(company.id_type_legal_rep).not_to be_nil}
-    it {expect(company.id_number_legal_rep).not_to be_nil}
-    it {expect(company.email).not_to be_nil }
-    it {expect(company.phone_number).not_to be_nil}
+    let(:company) { build(:company) }
+    it { expect(company.nit_number).not_to be_nil }
+    it { expect(company.name).not_to be_nil }
+    it { expect(company.city).not_to be_nil}
+    it { expect(company.state).not_to be_nil}
+    it { expect(company.country).not_to be_nil}
+    it { expect(company.legal_representative).not_to be_nil}
+    it { expect(company.id_type_legal_rep).not_to be_nil}
+    it { expect(company.id_number_legal_rep).not_to be_nil}
+    it { expect(company.email).not_to be_nil }
+    it { expect(company.phone_number).not_to be_nil}
     it { expect(company.chamber_of_commerce_file).not_to be_nil }
     it { expect(company.rut_file).not_to be_nil }
     it { expect(company.mining_register_file).not_to be_nil }
@@ -49,7 +49,6 @@ describe Company  do
     #it { should validate_presence_of(:state) }
     #it { should validate_presence_of(:country) }
     it { should validate_presence_of(:legal_representative) }
-    it { should validate_presence_of(:id_number_legal_rep) }
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:phone_number) }
     it { should validate_presence_of(:rucom) }
