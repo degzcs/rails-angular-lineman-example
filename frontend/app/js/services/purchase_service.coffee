@@ -55,7 +55,6 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           url: '/api/v1/purchases/'
           method: 'POST'
           fields:
-            "rucom[type]": 'company', # TODO: CurrentUser.settings.get('rucomType')
             "purchase[price]": purchase.price,
             "purchase[provider_id]": purchase.provider.id
             "purchase[sale_id]": purchase.sale_id

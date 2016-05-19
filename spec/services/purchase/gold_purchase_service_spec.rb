@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Purchase::GoldPurchaseService do
 
-  let(:user){ create(:user, available_credits: 100) }
+  let(:legal_representative){ create(:user, available_credits: 100) }
+  let(:company){ create :company, legal_representative: legal_representative}
 
   subject(:service){ Purchase::GoldPurchaseService.new }
 
@@ -35,16 +36,20 @@ describe Purchase::GoldPurchaseService do
            "trazoro" => false
       }
     end
-    it 'should make a purchase and discount credits from de current user (buyer) available credits' do
+    it 'should to make a purchase and discount credits from de company' do
       expected_credits = 100 - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
-      service.call(
+      response = service.call(
         purchase_hash: @purchase_hash,
         gold_batch_hash: @gold_batch_hash,
-        buyer: user
+        current_user: legal_representative, # TODO: worker
         )
+      expect(response[:success]).to be true
       expect(service.purchase.persisted?).to be true
-      expect(user.reload.available_credits).to eq expected_credits
+      expect(company.reload.available_credits).to eq expected_credits
       # binding.pry
+    end
+
+    it 'should to make a purchas and discount credits to the current user' do
     end
   end
 

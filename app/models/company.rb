@@ -56,6 +56,12 @@ class Company < ActiveRecord::Base
   before_destroy :check_empty_company
 
   #
+  # Delagates
+  #
+
+  delegate :available_credits, to: :legal_representative
+
+  #
   # Uploaders
   #
 

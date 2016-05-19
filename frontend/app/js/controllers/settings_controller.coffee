@@ -5,25 +5,25 @@ angular.module('app').controller 'SettingsCtrl', (CurrentUser, $scope) ->
   #
 
   $scope.currentUser = null
-  $scope.RUCOM_TYPES_MAPPING = [
-    { key: 'Personal', value: 'personal'},
-    { key: 'Empresa', value: 'company'}
-  ]
-  $scope.rucomType = 'company'
+  # $scope.RUCOM_TYPES_MAPPING = [
+  #   { key: 'Personal', value: 'personal'},
+  #   { key: 'Empresa', value: 'company'}
+  # ]
+  # $scope.rucomType = 'company'
 
   #
   #  Functions
   #
 
-  # Gets the current logged in user
-  CurrentUser.get().success (data) ->
-    $scope.currentUser = data
+  # # Gets the current logged in user
+  # CurrentUser.get().success (data) ->
+  #   $scope.currentUser = data
 
-  # Getter
-  $scope.rucomType = CurrentUser.settings.get('rucomType')
+  # # Getter
+  # $scope.rucomType = CurrentUser.settings.get('rucomType')
 
-  # Setter
-  $scope.$watch '[rucomType]', ->
-    CurrentUser.settings.set({ rucomType: $scope.rucomType })
+  # # Setter
+  # $scope.$watch '[rucomType]', ->
+  #   CurrentUser.settings.set({ rucomType: $scope.rucomType })
 
 

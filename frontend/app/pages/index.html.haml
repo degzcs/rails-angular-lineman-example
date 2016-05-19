@@ -81,12 +81,8 @@
     #wrapper
       #header
         %md-content{ "flex"=>"", "class"=>"", "layout"=>"row" }
-          .mini-top-bar{'flex' => '80' }
+          .mini-top-bar{'flex' => '' }
             %img.trazoro-icon-small{ :src => "/img/trazoro_icon_small.png" }
-          .type-of-person{ 'flex' => '20', "ng-controller"=>"SettingsCtrl" }
-            %md-select{ 'ng-model' => 'rucomType'}
-              %md-option{ 'ng-repeat' => " type in RUCOM_TYPE_MAPPING", 'value' => "{{ type.value }}" }
-                {{ type.key }}
         %div{"ui-view" => "top-nav"}
       #content
         %div{:layout => "row", :layout-align => "center center"}

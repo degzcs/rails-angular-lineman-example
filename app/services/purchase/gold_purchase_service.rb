@@ -10,7 +10,6 @@ class Purchase::GoldPurchaseService
   attr_accessor :purchase
   attr_accessor :purchase_hash
   attr_accessor :gold_batch_hash
-  attr_accessor :rucom_type
 
   #
   # @params purchase_hash  [Hash]
@@ -26,12 +25,10 @@ class Purchase::GoldPurchaseService
     raise 'You must to provide a buyer option' if options[:buyer].blank?
     raise 'You must to provide a purchase_hash option' if options[:purchase_hash].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
-    raise 'You must to provide a rucom_type option' if options[:rucom_type].blank?
     # seller is the gold provider
-    @buyer = options[:buyer]
+    @buyer = buyer_from(options[:current_user])
     @purchase_hash = options[:purchase_hash]
     @gold_batch_hash = options[:gold_batch_hash]
-    @rucom_type = options[:rucom_type]
     buy!
   end
 
@@ -55,9 +52,21 @@ class Purchase::GoldPurchaseService
         response = ::Purchase::ProofOfPurchaseGeneration.new.call(purchase: purchase) if response[:success]
       end
     else
-      false
+      response[:success] = false
+      response[:errors] = 'You can not enough creditis to buy'
     end
     response
+  end
+
+  # Decides if the current user is who will be buyer or if it is just a worker for a company.
+  # @param current_user [ User ]
+  # @retrurn [ User ]
+  def buyer_from(current_user)
+    if current_user.has_office?
+      current_user.office.company.legal_representative
+    else
+      current_user
+    end
   end
 
   def can_buy?(buyer, rucom_type, buyed_fine_grams)
