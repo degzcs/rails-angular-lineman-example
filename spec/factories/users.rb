@@ -22,6 +22,7 @@
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
 #  mining_register_file     :string(255)
+#  legal_representative     :boolean          default(FALSE)
 #
 
 FactoryGirl.define do

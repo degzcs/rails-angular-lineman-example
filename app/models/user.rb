@@ -22,6 +22,7 @@
 #  office_id                :integer
 #  external                 :boolean          default(FALSE), not null
 #  mining_register_file     :string(255)
+#  legal_representative     :boolean          default(FALSE)
 #
 
 # TODO: change name from document_number_file to identification_document_file or id_document_file
@@ -37,8 +38,6 @@ class User < ActiveRecord::Base
   #
   # Virtual Attributes
   #
-
-  attr_accessor :legal_representative
 
   #
   # Associations
