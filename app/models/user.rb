@@ -271,15 +271,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def has_office?
+    self.office.present?
+  end
   protected
+
 
   def init
     self.available_credits  ||= 0.0 #will set the default value only if it's nil
   end
 
-  def has_office?
-    self.office.present?
-  end
 
   def validate_office?
     !(self.external || self.legal_representative)
