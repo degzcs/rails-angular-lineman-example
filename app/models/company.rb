@@ -56,6 +56,10 @@ class Company < ActiveRecord::Base
   before_destroy :check_empty_company
 
   #
+  # Scopes
+  #
+
+  #
   # Delagates
   #
 
@@ -74,6 +78,12 @@ class Company < ActiveRecord::Base
   #
   # Instance Methods
   #
+
+  # Gets the main office associated to this company
+  # @return [ Office ]
+  def main_office
+    self.offices.where(name: 'principal').first
+  end
 
   # NOTE: These methods are temporal, created in order to don't break the app.
   def id_number_legal_rep
