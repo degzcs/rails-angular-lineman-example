@@ -2,7 +2,7 @@
 puts 'Creating cities and states ...'
 
   importer = Importers::DaneCsvImporter.new
-  importer.call(file_path: '../res/legal/codigos-departamentos-municipios-dane-v1.0.csv' )
+  importer.call(file_path: File.join(Rails.root, 'spec', 'support', 'csvs', 'codigos-departamentos-municipios-dane-v1.0.csv'))
   country = Country.find_by(name: 'COLOMBIA')
   city = City.find_by(name: 'MEDELLIN')
   state = State.find_by(name: 'ANTIOQUIA')
