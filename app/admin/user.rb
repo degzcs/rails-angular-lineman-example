@@ -89,9 +89,6 @@ ActiveAdmin.register User do
       row :rucom do|u|
         link_to "#{u.office ? 'Rucom de empresa' : 'Rucom personal'}: #{u.rucom.name} - Numero: #{u.rucom.num_rucom}", admin_rucom_path(u.rucom.id)
       end
-      row :population_center, label: "Centro poblado"  do|u|
-        u.population_center.name
-      end
     end
     active_admin_comments
   end
