@@ -29,6 +29,7 @@ class Company < ActiveRecord::Base
   # has_many :external_users # TODO: check this association asap
   has_one :rucom, as: :rucomeable
   belongs_to :legal_representative, class_name: 'User'
+  accepts_nested_attributes_for :legal_representative
 
   #
   # Validations

@@ -16,12 +16,8 @@ class Company::Registration
 
     @legal_representative = create_legal_representative_from(options[:legal_representative_data])
     @company = create_company_from(options[:company_data], legal_representative, options[:rucom])
-    if legal_representative.present? && company.present?
-      # associate legal representative with the main company office
-      legal_representative.update_column(:office_id, company.main_office.id)
-    else
-      raise 'user or company not created!'
-    end
+    # associate legal representative with the main company office
+    legal_representative.update_column(:office_id, company.main_office.id) if legal_representative.persisted? && company.persisted?
     @response
   end
 
