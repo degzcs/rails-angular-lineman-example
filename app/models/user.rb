@@ -184,7 +184,7 @@ class User < ActiveRecord::Base
     phone_number
   end
 
-  #IMPROVE:  this value introduce inconsistencies in the transactions!!
+  #IMPROVE: this value introduce inconsistencies in the transactions!!
   def city
     population_center.try(:city)
   end
@@ -201,7 +201,7 @@ class User < ActiveRecord::Base
     state.try(:name)
   end
 
-  #IMPROVE:  this value introduce inconsistencies in the transactions!!
+  #IMPROVE: this value introduce inconsistencies in the transactions!!
   def nit
     company.try(:nit_number)
   end
@@ -275,14 +275,13 @@ class User < ActiveRecord::Base
   end
   protected
 
-
   def init
-    self.available_credits  ||= 0.0 #will set the default value only if it's nil
+    self.available_credits ||= 0.0 #will set the default value only if it's nil
   end
 
-
+  # NOTE: all users marked as an external are users which will belong to the client role.
   def validate_office?
-    !(self.external || self.legal_representative)
+    self.external
   end
 
   def validate_personal_rucom?
