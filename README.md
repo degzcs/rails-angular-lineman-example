@@ -28,7 +28,17 @@ cd path/to/project/trazoro-web
 bundle install
 ```
 
-Setup the database
+### Setup
+
+You have to copy&paste the next cofiguration files and replace their values for the correct ones.
+
+```sh
+cp config/database.yml.example config/database.yml
+cp config/app_config.yml.example config/app_config.yml
+
+```
+Create the database and run the seeds
+
 ```sh
 rake db:create
 rake db:setup
