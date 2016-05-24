@@ -1,8 +1,10 @@
   # TODO: use the DANE xls file to import thsi states and cities
 puts 'Creating cities and states ...'
 
+if ENV['CREATE_LOCATIONS'] == 'yes'
   importer = Importers::DaneCsvImporter.new
   importer.call(file_path: File.join(Rails.root, 'spec', 'support', 'csvs', 'codigos-departamentos-municipios-dane-v1.0.csv'))
+end
   country = Country.find_by(name: 'COLOMBIA')
   city = City.find_by(name: 'MEDELLIN')
   state = State.find_by(name: 'ANTIOQUIA')
