@@ -35,15 +35,28 @@ FactoryGirl.define do
     document_expedition_date 50.years.ago
     phone_number { Faker::PhoneNumber.cell_phone }
     address { Faker::Address.street_address}
-    document_number_file {Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf") }
+    document_number_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf") }
     rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf") }
     photo_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
     personal_rucom {}
-    office
+    office {}
     # population_center
     password { 'foobar' }
     password_confirmation { 'foobar' }
     external { false }
+    legal_representative { false }
+
+    trait :with_personal_rucom do
+      before :create do |user, e|
+        user.personal_rucom = create(:rucom)
+      end
+    end
+
+    trait :with_company do
+      before :create do |user, e|
+        user.office = create(:office)
+      end
+    end
 
     factory :external_user, class: User do
         personal_rucom { create :rucom}

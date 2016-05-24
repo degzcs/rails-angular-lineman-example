@@ -4,28 +4,36 @@ describe 'Auth', :type => :request do
     context '#me' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = FactoryGirl.create :user, :with_personal_rucom
         @token = @user.create_token
       end
 
       context 'GET' do
-        it 'show the user info' do
+        it 'show the user info, this user dont have company' do
           expected_response = {
-            "id"=>1,
-           "first_name"=>@user.first_name,
-           "last_name"=>@user.last_name,
-           "email"=>"elcho.esquillas@fake.com",
-           "document_number"=>@user.document_number,
+           "id"=> @user.id,
+           "first_name" => @user.first_name,
+           "last_name" => @user.last_name,
+           "nit" => nil, # NOTE: This field is not mandatory because not all barequeros have this document, they should but they dont have it.
+           "email" => @user.email,
+           "document_number" => @user.document_number,
            #"access_token"=> @token,
-           "available_credits"=> @user.available_credits,
-           "phone_number"=>@user.phone_number,
-           "address"=>@user.address,
-
+           "available_credits" => @user.available_credits,
+           "phone_number" => @user.phone_number,
+           "address" => @user.address,
+           "office" => nil,
+           "company_name" => nil,
+           "company" => nil,
+           "photo_file" => {
+             "url" => "/uploads/photos/user/photo_file/5/photo_file.png"
+            },
           }
 
           get '/api/v1/users/me', {},{ "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body)).to include expected_response
+          expected_response.each do |key, value|
+            expect(JSON.parse(response.body)[key]).to eq value
+          end
         end
 
       end
