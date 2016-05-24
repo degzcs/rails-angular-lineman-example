@@ -41,7 +41,7 @@ Create the database and run the seeds
 
 ```sh
 rake db:create
-rake db:setup
+CREATE_LOCATIONS=yes rake db:setup
 ```
 
 ## Front-end
@@ -56,7 +56,22 @@ Go to frontend folder and install node dependencies and run lineman command, as 
 
 ## Tests
 
+Prepare test environment, as follows:
+
+```sh
+RAILS_ENV=test CREATE_LOCATIONS=yes rake db:setup
+```
+and then run
+
+```sh
+rspec spec
+```
+
 ## Deploy
+
+```sh
+cap production deploy
+```
 
 ## Issues (Ubuntu 16.04)
 
