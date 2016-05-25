@@ -13,8 +13,8 @@ ActiveAdmin.register CreditBilling do
 
     credit_billing_params = params.require(:credit_billing).permit(:payment_flag, :payment_date, :discount_percentage)
 
-    credit_billing_registration = CreditBilling::Acceptance.new
-    response = credit_billing_registration.call(
+    credit_billing_acceptance = CreditBilling::Acceptance.new
+    response = credit_billing_acceptance.call(
       credit_billing: @credit_billing,
       new_credit_billing_values: credit_billing_params,
       )
