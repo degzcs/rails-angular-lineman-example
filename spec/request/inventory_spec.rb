@@ -3,13 +3,13 @@ require "spec_helper"
 RSpec.describe "Inventory:", :type => :request do
 
   before :context do
-    @user = create(:user)
+    @user = create(:user, :with_company)
     @token = @user.create_token
   end
 
   context "View inventory," do
     before(:all) do
-      @user2 = create(:user)
+      @user2 = create(:user, :with_company)
       gold_batch = create(:gold_batch)
       provider = create(:external_user)
       @number_of_purchases_user_1 = 10

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Purchase::ProofOfPurchaseGeneration do
-  let(:buyer){ create :user }
+  let(:buyer){ create :user, :with_company }
   let(:gold_batch){ create(:gold_batch, fine_grams: 10, grade: 999, extra_info: { grams: 10 }) }
   let(:purchase){ create :purchase, user: buyer, gold_batch: gold_batch }
   let(:service){ Purchase::ProofOfPurchaseGeneration.new }

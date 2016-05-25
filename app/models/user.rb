@@ -171,9 +171,9 @@ class User < ActiveRecord::Base
   #
 
   #
-  # Get the user activity  based on rucom
+  # Get the user activity based on rucom
   def activity
-    self.external  && self.office.nil? ? personal_rucom.activity :  company.rucom.activity
+    self.external && self.office.blank? ? personal_rucom.activity : company.rucom.activity
   end
 
   def company_name

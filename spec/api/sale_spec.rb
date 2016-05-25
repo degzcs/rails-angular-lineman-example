@@ -4,13 +4,13 @@ describe 'Sale', :type => :request do
     context '#sales' do
 
       before :context do
-        @user = create :user
+        @user = create :user, :with_company
         @token = @user.create_token
       end
 
       context 'POST' do
         it 'should create one complete sale' do
-          client = create(:external_user)
+          client = create(:external_user, :with_company)
           courier = create(:courier)
           purchases = create_list(:purchase, 2, user: @user)
           selected_purchases = purchases.map do |purchase|

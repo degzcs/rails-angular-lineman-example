@@ -18,7 +18,7 @@
 FactoryGirl.define do
   factory :sale do
     courier
-    user { User.where(email: 'jesus.munoz@trazoro.co').first || create(:user) } # Seller
+    user { User.where(email: 'jesus.munoz@trazoro.co').first || create(:user, :with_company) } # Seller
     client { User.where(email: 'diego.gomez@trazoro.co').first || create(:external_user) } # Buyer
     gold_batch # bought gold in this transaction.
     code "123456789"

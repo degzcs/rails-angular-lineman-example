@@ -4,7 +4,7 @@ describe 'Purchase', :type => :request do
     context '#purchases' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password', available_credits: 20000
+        @user = FactoryGirl.create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password', available_credits: 20000
         @token = @user.create_token
          file_path = "#{Rails.root}/spec/support/images/image.png"
         seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"

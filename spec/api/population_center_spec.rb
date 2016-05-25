@@ -1,7 +1,7 @@
 describe 'PopulationCenter', :type => :request do
 
   describe :v1 do
-    context 'population_centers' do
+    xcontext 'population_centers (These specs will be remove in favor to use cities and states insteate population centers)' do
 
       before :context do
         @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'

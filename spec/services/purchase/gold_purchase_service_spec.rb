@@ -10,7 +10,7 @@ describe Purchase::GoldPurchaseService do
   context 'non trazoro user (from externanl user) ' do
 
     before :each do
-      provider = create(:external_user)
+      provider = create(:external_user, :with_company)
       file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"
       file = Rack::Test::UploadedFile.new(file_path, "application/pdf")
 

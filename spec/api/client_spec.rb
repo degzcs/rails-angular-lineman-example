@@ -4,9 +4,9 @@ describe 'Client', :type => :request do
     context 'client' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company
         @token = @user.create_token
-        FactoryGirl.create_list(:client_with_fake_rucom, 20)
+        create_list(:client_with_fake_rucom, 20)
 
            document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
            mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
@@ -55,7 +55,7 @@ describe 'Client', :type => :request do
 
       end
 
-      context 'POST' do
+      xcontext 'POST (Deprecated: clints will be created in another way)' do
 
       context "without company info" do
           it 'returns a representation of the new client created and code 201' do

@@ -4,7 +4,7 @@ describe 'City', :type => :request do
     context 'cities' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
       end
 
@@ -13,7 +13,7 @@ describe 'City', :type => :request do
         it 'retrieves all city registries' do
           get '/api/v1/cities', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 585
+          expect(JSON.parse(response.body).count).to be 565
         end
 
         context '/:id' do

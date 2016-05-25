@@ -4,20 +4,20 @@ describe 'ExternalUser', :type => :request do
     context 'external user' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        FactoryGirl.create_list(:external_user, 20)
+        create_list(:external_user, 20)
 
            document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
            mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
            rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
            chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
            photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
-           document_number_file =  Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
-           mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
-           rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
+           document_number_file = Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
+           mining_register_file = Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
+           rut_file = Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
            chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
-           photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
+           photo_file = Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
            @user_files = [photo_file,document_number_file]
            @user_and_company_files = [photo_file,document_number_file, mining_register_file, rut_file, chamber_commerce_file]
       end

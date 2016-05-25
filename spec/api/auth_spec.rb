@@ -4,7 +4,7 @@ describe 'Auth', :type => :request do
     context '#login' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
       end
 
       context 'POST' do

@@ -4,7 +4,7 @@ describe 'Courier', :type => :request do
     context 'couriers' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
         FactoryGirl.create_list(:courier, 20)
         FactoryGirl.create(:courier, id_document_number: '1234567890')
@@ -25,10 +25,10 @@ describe 'Courier', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be 1
         end
-        
+
         context '/:id' do
 
-          it 'gets courier by id' do 
+          it 'gets courier by id' do
 
             courier = Courier.last
 
@@ -64,8 +64,8 @@ describe 'Courier', :type => :request do
             address: courier.address,
             nit_company_number: courier.nit_company_number,
             company_name: courier.company_name
-          }           
-          
+          }
+
           expected_response = {
             id_document_number: courier.id_document_number,
             id_document_type: courier.id_document_type,
@@ -91,7 +91,7 @@ describe 'Courier', :type => :request do
           new_first_name = "A diferent first name"
           new_id_document_number = "1345676788"
           new_nit_company_number = "A direferent nit"
-          
+
           new_values = {
             id_document_number: new_id_document_number,
             first_name: new_first_name,

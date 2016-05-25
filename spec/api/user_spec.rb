@@ -3,9 +3,9 @@ describe 'Auth', :type => :request do
   describe :v1 do
     context '#me' do
       context 'GET' do
-        user = FactoryGirl.create :user, :with_personal_rucom, nit_number: nil
-        token = user.create_token
         it 'show the user info, this user dont have company' do
+          user = create :user, :with_personal_rucom, nit_number: nil
+          token = user.create_token
           expected_response = {
            "id"=> user.id,
            "first_name" => user.first_name,
@@ -34,7 +34,7 @@ describe 'Auth', :type => :request do
 
         it 'should to check if a user belonging to a company is showing a correct information' do
 
-          user = FactoryGirl.create :user, :with_company, available_credits: 0
+          user = create :user, :with_company, available_credits: 0
           company = user.company
           company.legal_representative.update_column :available_credits, 100
           company.reload
@@ -94,7 +94,7 @@ describe 'Auth', :type => :request do
         end
 
         it 'should to check if the legal representative inforamtion is correct' do
-          user = FactoryGirl.create :user, legal_representative: true, office: nil, available_credits: 100
+          user = create :user, legal_representative: true, office: nil, available_credits: 100
           company = create :company, legal_representative: user
           user.update_column :office_id, company.main_office.id
           user.reload
@@ -156,7 +156,7 @@ describe 'Auth', :type => :request do
 
       context 'UPDATE' do
         it 'should update the current user info' do
-          user = FactoryGirl.create :user, :with_personal_rucom
+          user = create :user, :with_personal_rucom
           token = user.create_token
 
           expected_response = {
