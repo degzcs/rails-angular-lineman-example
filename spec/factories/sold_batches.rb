@@ -12,7 +12,7 @@
 
 FactoryGirl.define do
   factory :sold_batch do
-    purchase
+    purchase { create :purchase, :with_proof_of_purchase_file }
     grams_picked 2.5
     sale
   end

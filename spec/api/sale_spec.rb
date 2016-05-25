@@ -12,7 +12,7 @@ describe 'Sale', :type => :request do
         it 'should create one complete sale' do
           client = create(:external_user, :with_company)
           courier = create(:courier)
-          purchases = create_list(:purchase, 2, user: @user)
+          purchases = create_list(:purchase, 2, :with_proof_of_purchase_file, user: @user)
           selected_purchases = purchases.map do |purchase|
             {
               'purchase_id' => purchase.id,
@@ -130,7 +130,7 @@ describe 'Sale', :type => :request do
           it 'verifies that response has the elements number specified in per_page param' do
             sale = Sale.last
             total_sold_batches = 30
-            list = create_list(:sold_batch, total_sold_batches,sale_id: sale.id)
+            list = create_list(:sold_batch, total_sold_batches, sale_id: sale.id)
 
             get "/api/v1/sales/#{sale.id}/batches", {} , { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200

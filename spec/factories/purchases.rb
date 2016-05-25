@@ -19,8 +19,8 @@
 
 FactoryGirl.define do
   factory :purchase do
-    user
-    provider { create(:user) }
+    user { create(:user, :with_company) }
+    provider { create(:user, :with_company) }
     origin_certificate_sequence { Faker::Code.isbn }
     gold_batch { create(:gold_batch) }
     origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf'),"application/pdf") }
