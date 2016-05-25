@@ -8,7 +8,7 @@ describe 'Purchase', :type => :request do
         legal_representative = @user.company.legal_representative
         legal_representative.update_column :available_credits, 20000
         @token = @user.create_token
-         file_path = "#{ Rails.root }/spec/support/images/image.png"
+        file_path = "#{ Rails.root }/spec/support/images/image.png"
         seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
         file = Rack::Test::UploadedFile.new(file_path, "image/jpeg")
         seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
@@ -66,7 +66,6 @@ describe 'Purchase', :type => :request do
            "files" => @files,
            "origin_certificate_sequence"=>"123456789",
           }
-          binding.pry
           post '/api/v1/purchases/',
             {
               gold_batch: new_gold_batch_values,
@@ -75,10 +74,8 @@ describe 'Purchase', :type => :request do
             {
               "Authorization" => "Barer #{@token}"
             }
-          binding.pry
           expect(response.status).to eq 201
           expected_response.each do |key, value|
-            ap key
             expect(JSON.parse(response.body)[key]).to eq value
           end
         end
@@ -88,7 +85,7 @@ describe 'Purchase', :type => :request do
 
         before(:all) do
           provider = create(:external_user)
-          create_list(:purchase, 20, user_id: @user.id, provider_id: provider.id)
+          create_list(:purchase, 20, :with_proof_of_purchase_file, user_id: @user.id, provider_id: provider.id)
         end
 
         context "/" do

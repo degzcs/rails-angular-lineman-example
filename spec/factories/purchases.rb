@@ -27,6 +27,16 @@ FactoryGirl.define do
     price 1000000
     seller_picture { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
     trazoro false
+
+    trait :with_proof_of_purchase_file do
+      after :create do |purchase, e|
+        purchase.build_proof_of_purchase(
+        file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_compra.pdf')),
+        type: 'equivalent_document',
+        )
+        purchase.save!
+      end
+    end
   end
 
 end
