@@ -29,10 +29,17 @@ describe CreditBilling  do
   end
 
   context "credit billing creation" do
-    
+
     it "should not allow to create without user_id" do
       credit_billing = build(:credit_billing,user_id: nil)
       expect(credit_billing).to_not be_valid
+    end
+
+    it 'raise an error if the user is not a legal representative user' do
+      user = create :user, :with_company, available_credits: 0, legal_representative: false
+      legal_representative = user.company.legal_representative
+      credit_billing = build(:credit_billing, user: user)
+      expect { credit_billing.save! }.to raise_error #'Este usuario no esta autorizado para comprar creditos'
     end
 
     it "should not allow to create without unit" do

@@ -39,6 +39,7 @@ class CreditBilling < ActiveRecord::Base
   validates :unit, presence: true
   validates :per_unit_value, presence: true
   validates :discount_percentage, presence: { message: "El porcentaje de descuento debe ser un valor entre 0 y 100" },  :inclusion => 0..100
+  before_validation :can_buy?
 
   #
   # => Instance methods
@@ -54,16 +55,25 @@ class CreditBilling < ActiveRecord::Base
 
   protected
 
-    # Initialize values when a new credit_billing is build
-    def init
-      self.per_unit_value = 500
-    end
+  # Initialize values when a new credit_billing is build
+  def init
+    self.per_unit_value = 500
+  end
 
-    # Before save a new credit_billing calculate the discount and the total
-    def calculate_total
-      subtotal = self.unit * self.per_unit_value
-      discount = subtotal * self.discount_percentage/100
-      self.discount = discount
-      self.total_amount = subtotal - discount
+  # Only the user who are legal representative or those user that buy gold as a natural
+  # person can buy credits. Those users that are working for a company and buy with the
+  # company rucom, they cannot buy credits.
+  def can_buy?
+    if self.user && !self.user.legal_representative? && self.user.has_office?
+      self.errors.add :user, 'Este usuario no esta autorizado para comprar creditos'
     end
+  end
+
+  # Before save a new credit_billing calculate the discount and the total
+  def calculate_total
+    subtotal = self.unit * self.per_unit_value
+    discount = subtotal * self.discount_percentage/100
+    self.discount = discount
+    self.total_amount = subtotal - discount
+  end
 end
