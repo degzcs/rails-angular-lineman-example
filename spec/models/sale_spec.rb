@@ -34,8 +34,8 @@ describe Sale do
     end
 
     context "for a trazoro sale (user - user sale)" do
-      let!(:user1) { create(:user) }
-      let!(:client) {create(:user)}
+      let!(:user1) { create(:user, :with_company) }
+      let!(:client) {create(:user, :with_company)}
       let(:sale) {create(:sale, user: user1, client: client, trazoro: true)}
       it "expect to have the correct user" do
         expect(sale.trazoro).to be true
@@ -47,7 +47,7 @@ describe Sale do
       end
     end
     context "for an external client purchase" do
-      let!(:user1) { create(:user) }
+      let!(:user1) { create(:user, :with_company) }
       let!(:external_user) {create(:external_user)}
       let(:sale) {create(:sale, user: user1, client: external_user)}
       it "expect to have the correct user" do

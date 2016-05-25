@@ -39,8 +39,8 @@ describe Purchase do
 
   context "purchase creation" do
     context "for a trazoro purchase (user - user purchase)" do
-      let!(:user1) { create(:user) }
-      let!(:provider) {create(:user)}
+      let!(:user1) { create(:user, :with_company) }
+      let!(:provider) { create(:user, :with_company) }
       let(:purchase) {create(:purchase, user: user1, provider: provider, trazoro: true)}
       it "expect to have the correct user" do
         expect(purchase.trazoro).to be true
@@ -52,7 +52,7 @@ describe Purchase do
       end
     end
     context "for an external provider purchase" do
-      let!(:user1) { create(:user) }
+      let!(:user1) { create(:user, :with_company) }
       let!(:external_user) {create(:external_user)}
       let(:purchase) {create(:purchase, user: user1, provider: external_user)}
       it "expect to have the correct user" do
