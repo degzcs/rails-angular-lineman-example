@@ -24,6 +24,7 @@
 #  legal_representative     :boolean          default(FALSE)
 #  id_document_file         :text
 #  nit_number               :string(255)
+#  city_id                  :integer
 #
 
 #  created_at               :datetime

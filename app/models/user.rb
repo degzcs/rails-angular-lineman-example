@@ -24,6 +24,7 @@
 #  legal_representative     :boolean          default(FALSE)
 #  id_document_file         :text
 #  nit_number               :string(255)
+#  city_id                  :integer
 #
 
 # TODO: define a new name for mining_register_file, because this will contain one of these:
@@ -56,6 +57,9 @@ class User < ActiveRecord::Base
   has_many :credit_billings
   belongs_to :office
   has_one :company, through: :office
+  belongs_to :city
+  has_one :state, through: :city
+  # TODO: create migration to remote this field
   belongs_to :population_center
 
   # #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
@@ -168,6 +172,12 @@ class User < ActiveRecord::Base
   mount_uploader :mining_register_file, DocumentUploader
 
   #
+  # Delegates
+  #
+
+  delegate :name, to: :city, prefix: :city
+  delegate :name, to: :state, prefix: :state
+  #
   # Instance Methods
   #
 
@@ -184,23 +194,6 @@ class User < ActiveRecord::Base
   # TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
   def phone
     phone_number
-  end
-
-  #IMPROVE: this value introduce inconsistencies in the transactions!!
-  def city
-    population_center.try(:city)
-  end
-
-  def city_name
-    city.try(:name)
-  end
-
-  def state
-    city.try(:state)
-  end
-
-  def state_name
-    state.try(:name)
   end
 
   # TODO: this nit is completely different to company nit so fix it into the frontend asap!!
@@ -291,7 +284,7 @@ class User < ActiveRecord::Base
 
   # NOTE: all users marked as an external are users which will belong to the client role.
   def validate_office?
-    self.external
+    self.external && !self.personal_rucom
   end
 
   def validate_personal_rucom?

@@ -22,7 +22,7 @@ class Purchase::GoldPurchaseService
 
   # @return [ Hash ] with the success or errors
   def call(options={})
-    raise 'You must to provide a buyer option' if options[:buyer].blank?
+    raise 'You must to provide a current_user option' if options[:current_user].blank?
     raise 'You must to provide a purchase_hash option' if options[:purchase_hash].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
     # seller is the gold provider
@@ -41,7 +41,7 @@ class Purchase::GoldPurchaseService
    # Build purchase
     response = {}
 
-    if can_buy?(buyer, rucom_type, gold_batch_hash['fine_grams'])
+    if can_buy?(buyer, gold_batch_hash['fine_grams'])
       ActiveRecord::Base.transaction do
         gold_batch = GoldBatch.new(gold_batch_hash.deep_symbolize_keys)
         gold_batch.save!
@@ -53,7 +53,7 @@ class Purchase::GoldPurchaseService
       end
     else
       response[:success] = false
-      response[:errors] = 'You can not enough creditis to buy'
+      response[:errors] = 'No tienes los suficientes creditos para hacer esta compra'
     end
     response
   end
@@ -69,24 +69,17 @@ class Purchase::GoldPurchaseService
     end
   end
 
-  def can_buy?(buyer, rucom_type, buyed_fine_grams)
-    case rucom_type
-    when 'personal'
-      user_can_buy?(buyer, buyed_fine_grams)
-    when 'company'
-      company_can_buy?(buyer, buyed_fine_grams)
-    else
-      raise 'There is not rucom_type option'
-    end
+  def can_buy?(buyer, buyed_fine_grams)
+    user_can_buy?(buyer, buyed_fine_grams)
   end
 
   def user_can_buy?(buyer, buyed_fine_grams)
     buyer.available_credits >= buyed_fine_grams.to_f # TODO: change to price
   end
 
-  def company_can_buy?(buyer, buyed_fine_grams)
-    buyer.company.available_credits >= buyed_fine_grams.to_f
-  end
+  # def company_can_buy?(buyer, buyed_fine_grams)
+  #   buyer.company.available_credits >= buyed_fine_grams.to_f
+  # end
 
   def discount_credits_to!(buyer, buyed_fine_grams)
     new_credits = buyer.available_credits - buyed_fine_grams.to_f

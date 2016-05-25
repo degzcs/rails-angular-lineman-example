@@ -24,6 +24,7 @@
 #  legal_representative     :boolean          default(FALSE)
 #  id_document_file         :text
 #  nit_number               :string(255)
+#  city_id                  :integer
 #
 
 FactoryGirl.define do
@@ -43,6 +44,7 @@ FactoryGirl.define do
     personal_rucom {}
     office {}
     # population_center
+    city { City.all.sample }
     password { 'foobar' }
     password_confirmation { 'foobar' }
     external { false }

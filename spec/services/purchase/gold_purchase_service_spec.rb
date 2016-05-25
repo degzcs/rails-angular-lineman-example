@@ -49,7 +49,7 @@ describe Purchase::GoldPurchaseService do
       # binding.pry
     end
 
-    it 'should to make a purchas and discount credits to the current user' do
+    it 'should to make a purchase and discount credits to the current user' do
     end
   end
 

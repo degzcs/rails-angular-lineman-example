@@ -4,9 +4,9 @@ describe 'PopulationCenter', :type => :request do
     xcontext 'population_centers (These specs will be remove in favor to use cities and states insteate population centers)' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
-        @token = @user.create_token
-        FactoryGirl.create_list(:population_center, 20)
+        # @user = create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        # @token = @user.create_token
+        # create_list(:population_center, 20)
       end
 
       xcontext 'GET' do
@@ -38,13 +38,8 @@ describe 'PopulationCenter', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to match expected_response.stringify_keys
           end
-
         end
-
       end
-
     end
-
   end
-
 end

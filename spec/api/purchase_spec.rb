@@ -4,11 +4,13 @@ describe 'Purchase', :type => :request do
     context '#purchases' do
 
       before :context do
-        @user = create :user, :with_company, available_credits: 20000
+        @user = create :user, :with_company
+        legal_representative = @user.company.legal_representative
+        legal_representative.update_column :available_credits, 20000
         @token = @user.create_token
-         file_path = "#{Rails.root}/spec/support/images/image.png"
-        seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
-        file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+         file_path = "#{ Rails.root }/spec/support/images/image.png"
+        seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
+        file = Rack::Test::UploadedFile.new(file_path, "image/jpeg")
         seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
         @files = [file, seller_picture]
       end
@@ -18,7 +20,7 @@ describe 'Purchase', :type => :request do
           provider = create(:external_user)
           expected_response = {
            "id"=>1,
-           "user_id"=>1,
+           "user_id"=>@user.company.legal_representative.id,
            "provider"=>{
               "id"=> provider.id,
               "first_name"=> provider.first_name,
@@ -52,20 +54,33 @@ describe 'Purchase', :type => :request do
             "fine_grams" => 1.5,
             "grade" => 1,
             "inventory_id" => 1,
+            "extra_info" => { 'grams' => 1.5 }.to_json
           }
 
           new_purchase_values ={
            "id"=>1,
-           "user_id"=>1,
+           "user_id"=>@user.id,
            "provider_id"=>provider.id,
            "gold_batch_id" => new_gold_batch_values["id"],
            "price" => 1.5,
            "files" => @files,
            "origin_certificate_sequence"=>"123456789",
           }
-          post '/api/v1/purchases/', {gold_batch: new_gold_batch_values, purchase: new_purchase_values},{ "Authorization" => "Barer #{@token}" }
+          binding.pry
+          post '/api/v1/purchases/',
+            {
+              gold_batch: new_gold_batch_values,
+              purchase: new_purchase_values
+            },
+            {
+              "Authorization" => "Barer #{@token}"
+            }
+          binding.pry
           expect(response.status).to eq 201
-          expect(JSON.parse(response.body)).to include expected_response
+          expected_response.each do |key, value|
+            ap key
+            expect(JSON.parse(response.body)[key]).to eq value
+          end
         end
       end
 
