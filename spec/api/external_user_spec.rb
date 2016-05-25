@@ -4,7 +4,7 @@ describe 'ExternalUser', :type => :request do
     context 'external user' do
 
       before :context do
-        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company
         @token = @user.create_token
         create_list(:external_user, 20)
 
@@ -54,9 +54,9 @@ describe 'ExternalUser', :type => :request do
         end
       end
 
-      context 'POST' do
+      xcontext 'POST (this is deprecated, the external users will be created from the backend)' do
 
-        context "without rucom" do
+        xcontext "without rucom" do
           xit 'returns a representation of the new external user created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
@@ -91,8 +91,8 @@ describe 'ExternalUser', :type => :request do
           end
         end
 
-        context "without company info" do
-          it 'returns a representation of the new external user created and code 201' do
+        xcontext "without company info" do
+          xit 'returns a representation of the new external user created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
 
@@ -127,8 +127,8 @@ describe 'ExternalUser', :type => :request do
           end
         end
 
-        context "with company info" do
-          it 'returns a representation of the new external user with his company created and code 201' do
+        xcontext "with company info" do
+          xit 'returns a representation of the new external user with his company created and code 201' do
 
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
@@ -183,7 +183,7 @@ describe 'ExternalUser', :type => :request do
         end
       end
 
-      context 'PUT' do
+      xcontext 'PUT (This is deprecated, the external user will be updated from the backend)' do
         it 'returns a representation of the updated external user and code 200' do
           rucom = create(:rucom)
           population_center = create(:population_center)

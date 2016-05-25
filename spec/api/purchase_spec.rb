@@ -4,7 +4,7 @@ describe 'Purchase', :type => :request do
     context '#purchases' do
 
       before :context do
-        @user = FactoryGirl.create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password', available_credits: 20000
+        @user = create :user, :with_company, available_credits: 20000
         @token = @user.create_token
          file_path = "#{Rails.root}/spec/support/images/image.png"
         seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
@@ -68,11 +68,14 @@ describe 'Purchase', :type => :request do
           expect(JSON.parse(response.body)).to include expected_response
         end
       end
+
       context "GET" do
+
         before(:all) do
           provider = create(:external_user)
           create_list(:purchase, 20, user_id: @user.id, provider_id: provider.id)
         end
+
         context "/" do
           context "without purchase_list param" do
             it 'verifies that response has the elements number specified in per_page param' do
@@ -82,6 +85,7 @@ describe 'Purchase', :type => :request do
               expect(JSON.parse(response.body).count).to eq per_page
             end
           end
+
           context "whit purchase_list param" do
             it 'verifies that response has the elements number specified in per_page param' do
               id_list = [1,2,3,4,5,6,7,8]
@@ -91,10 +95,9 @@ describe 'Purchase', :type => :request do
             end
           end
         end
+
         context '/:id' do
-
           it 'gets purchase by id' do
-
             purchase = Purchase.last
 
             expected_response = {

@@ -6,8 +6,8 @@ describe 'Rucom', :type => :request do
       before :context do
         @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
-        FactoryGirl.create_list(:rucom, 20, rucom_record: 'ARE_PLU-08141')
-        FactoryGirl.create_list(:rucom, 20)
+        create_list(:rucom, 20, rucom_record: 'ARE_PLU-08141')
+        create_list(:rucom, 20)
       end
 
       context 'GET' do

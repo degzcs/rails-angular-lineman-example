@@ -8,21 +8,21 @@ describe 'Client', :type => :request do
         @token = @user.create_token
         create_list(:client_with_fake_rucom, 20)
 
-           document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
-           mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
-           rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
-           chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
-           photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
-           document_number_file =  Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
-           # mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
-           rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
-           chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
-           photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
-           @user_files = [photo_file,document_number_file]
-           @user_and_company_files = [photo_file,document_number_file, rut_file, chamber_commerce_file]
+        document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
+        mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
+        rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
+        chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
+        photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
+        document_number_file =  Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
+        # mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
+        rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
+        chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
+        photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
+        @user_files = [photo_file,document_number_file]
+        @user_and_company_files = [photo_file,document_number_file, rut_file, chamber_commerce_file]
       end
 
-       context 'GET' do
+      context 'GET' do
 
         it 'verifies that response has the elements number specified in per_page param' do
           per_page = 5
@@ -31,10 +31,8 @@ describe 'Client', :type => :request do
           expect(JSON.parse(response.body).count).to be per_page
         end
 
-         context '/:id' do
-
+        context '/:id' do
           it 'gets an client by id' do
-
             client = User.clients.last
 
             expected_response = {
@@ -52,12 +50,11 @@ describe 'Client', :type => :request do
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
         end
-
       end
 
       xcontext 'POST (Deprecated: clints will be created in another way)' do
 
-      context "without company info" do
+        xcontext "without company info" do
           it 'returns a representation of the new client created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
@@ -93,7 +90,7 @@ describe 'Client', :type => :request do
           end
         end
 
-        context "with company info" do
+        xcontext "with company info" do
           it 'returns a representation of the new client with his company created and code 201' do
 
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
@@ -148,7 +145,7 @@ describe 'Client', :type => :request do
         end
       end
 
-      context 'PUT' do
+      xcontext 'PUT (This is Deprecated, the client will be updated in another way)' do
         it 'returns a representation of the updated client and code 200' do
           rucom = create(:rucom)
           population_center = create(:population_center)
@@ -183,8 +180,6 @@ describe 'Client', :type => :request do
           expect(JSON.parse(response.body)['company']['nit_number']).to eq new_nit_number
         end
       end
-
     end
   end
-
 end

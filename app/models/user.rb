@@ -128,7 +128,8 @@ class User < ActiveRecord::Base
   # 7. Comercializador -> traders, NOTE: I think this kind of users are all users that can login in the platform
   scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializadores')}
 
-  # all external users but without rucom and that just buy gold, they are called clients, they are:
+  # NOTE: the next definition is deprecated and all this users have to be upgrade to the new way to categorize them by roles.
+  # NOTE: the external user who don't have rucom and only buy gold, he is called clients, they are:
   # 8. Joyero, 9. Comprador Ocasional y 10. Exportacion
   scope :client_ids_with_fake_personal_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).pluck(:id)}
   scope :client_ids_with_fake_company_rucom, -> {includes(office: [{company: :rucom}]).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).references(:office).pluck(:id)}

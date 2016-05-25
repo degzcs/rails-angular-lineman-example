@@ -51,7 +51,7 @@ describe 'Courier', :type => :request do
         end
       end
 
-      context 'POST' do
+      xcontext 'POST (This is deprecated the trasporter will be created in the backend)' do
         it 'returns a representation of the new courier created and code 201' do
           courier = build(:courier)
 
@@ -83,7 +83,8 @@ describe 'Courier', :type => :request do
           expect(JSON.parse(response.body).except('id')).to match(expected_response.stringify_keys)
         end
       end
-      context 'PUT' do
+
+      xcontext 'PUT(This is deprecated, the carrier will be updated in anoter way)' do
         it 'returns a representation of the updated courier and code 200' do
           courier = create(:courier)
 
@@ -116,7 +117,5 @@ describe 'Courier', :type => :request do
         end
       end
     end
-
   end
-
 end

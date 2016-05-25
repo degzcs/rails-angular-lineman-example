@@ -9,7 +9,7 @@ describe 'PopulationCenter', :type => :request do
         FactoryGirl.create_list(:population_center, 20)
       end
 
-      context 'GET' do
+      xcontext 'GET' do
 
         xit 'retrieves all population center registries' do
           get '/api/v1/population_centers', {} , { "Authorization" => "Barer #{@token}" }
