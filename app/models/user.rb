@@ -15,7 +15,6 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
-#  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
@@ -23,13 +22,15 @@
 #  external                 :boolean          default(FALSE), not null
 #  mining_register_file     :string(255)
 #  legal_representative     :boolean          default(FALSE)
+#  id_document_file         :text
+#  nit_number               :string(255)
 #
 
-# TODO: change name from document_number_file to identification_document_file or id_document_file
 # TODO: define a new name for mining_register_file, because this will contain one of these:
-# 1. barequero ID file, 2. miner register file or
-# 3. a resolution to garantee that he can commercialize gold
-# I think it could be miner_authorization_document and add another field to select the document type
+# 1. barequero ID file,
+# 2. miner register file or
+# 3. a resolution to guarantee that he/she can commercialize gold
+# So, I think it could be named as mining_authorization_document and add another field to select the document type
 class User < ActiveRecord::Base
 
   class EmptyCredits < StandardError
@@ -71,7 +72,7 @@ class User < ActiveRecord::Base
   #validates :document_expedition_date, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
-  validates :document_number_file, presence: true, unless: :external
+  validates :id_document_file, presence: true, unless: :external
   #validates :rut_file, presence: true
   # validates :mining_register_file, presence: true
   validates :photo_file, presence: true, unless: :external
@@ -160,7 +161,7 @@ class User < ActiveRecord::Base
   #
   # fields for save files by carrierwave
   #
-  mount_uploader :document_number_file, DocumentUploader
+  mount_uploader :id_document_file, DocumentUploader
   mount_uploader :photo_file, PhotoUploader
   mount_uploader :rut_file, DocumentUploader
   mount_uploader :mining_register_file, DocumentUploader
@@ -201,9 +202,9 @@ class User < ActiveRecord::Base
     state.try(:name)
   end
 
-  #IMPROVE: this value introduce inconsistencies in the transactions!!
+  # TODO: this nit is completely different to company nit so fix it into the frontend asap!!
   def nit
-    company.try(:nit_number)
+    self.nit_number
   end
 
   def rucom_record
@@ -229,11 +230,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # def office
-  #   'Trazoro Popayan'
-  # end
-
-
   # @return [String] whith the JWT to send the client
   def create_token
     payload = {
@@ -255,6 +251,11 @@ class User < ActiveRecord::Base
   def add_available_credits(credits)
     new_amount = (available_credits + credits).round(2)
     update_attribute(:available_credits,new_amount)
+  end
+
+  # NOTE: This method is just and alias to avoid break the app, this field was removed and it will be deleted from the rest of the project asap.
+  def document_number_file
+    self.id_document_file
   end
 
   #

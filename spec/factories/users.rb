@@ -15,7 +15,6 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
-#  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
@@ -23,6 +22,8 @@
 #  external                 :boolean          default(FALSE), not null
 #  mining_register_file     :string(255)
 #  legal_representative     :boolean          default(FALSE)
+#  id_document_file         :text
+#  nit_number               :string(255)
 #
 
 FactoryGirl.define do
@@ -32,10 +33,11 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name}
     email { Faker::Internet.email }
     document_number { Faker::Number.number(10) }
-    document_expedition_date 50.years.ago
+    document_expedition_date 50.years.ago # NOTE : this field is useless.
+    nit_number { Faker::Number.number(10) }
     phone_number { Faker::PhoneNumber.cell_phone }
     address { Faker::Address.street_address}
-    document_number_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf") }
+    id_document_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf") }
     rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf") }
     photo_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
     personal_rucom {}
@@ -59,10 +61,10 @@ FactoryGirl.define do
     end
 
     factory :external_user, class: User do
-        personal_rucom { create :rucom}
-        external {true}
-        password {nil}
-        password_confirmation {nil}
+        personal_rucom { create :rucom }
+        external { true }
+        password { nil }
+        password_confirmation { nil }
 
         factory :client_with_fake_personal_rucom, class: User do
             personal_rucom { create(:rucom, :for_clients)}

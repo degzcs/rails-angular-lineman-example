@@ -15,7 +15,6 @@
 #  available_credits        :float
 #  reset_token              :string(255)
 #  address                  :string(255)
-#  document_number_file     :string(255)
 #  rut_file                 :string(255)
 #  photo_file               :string(255)
 #  population_center_id     :integer
@@ -23,6 +22,8 @@
 #  external                 :boolean          default(FALSE), not null
 #  mining_register_file     :string(255)
 #  legal_representative     :boolean          default(FALSE)
+#  id_document_file         :text
+#  nit_number               :string(255)
 #
 
 #  created_at               :datetime

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519041109) do
+ActiveRecord::Schema.define(version: 20160524234414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,7 +239,6 @@ ActiveRecord::Schema.define(version: 20160519041109) do
     t.float    "available_credits"
     t.string   "reset_token"
     t.string   "address"
-    t.string   "document_number_file"
     t.string   "rut_file"
     t.string   "photo_file"
     t.integer  "population_center_id"
@@ -247,6 +246,8 @@ ActiveRecord::Schema.define(version: 20160519041109) do
     t.boolean  "external",                 default: false, null: false
     t.string   "mining_register_file"
     t.boolean  "legal_representative",     default: false
+    t.text     "id_document_file"
+    t.string   "nit_number"
   end
 
 end
