@@ -13,7 +13,7 @@ describe 'State', :type => :request do
         it 'retrieves all state registries' do
           get '/api/v1/states', {} , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
-          expect(JSON.parse(response.body).count).to be 53
+          expect(JSON.parse(response.body).count).to be 33
         end
 
         context '/:id' do

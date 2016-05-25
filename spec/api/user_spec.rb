@@ -21,7 +21,7 @@ describe 'Auth', :type => :request do
            "company_name" => nil,
            "company" => nil,
            "photo_file" => {
-             "url" => "/uploads/photos/user/photo_file/5/photo_file.png"
+             "url" => "/uploads/photos/user/photo_file/#{ user.id }/photo_file.png"
             },
           }
 
