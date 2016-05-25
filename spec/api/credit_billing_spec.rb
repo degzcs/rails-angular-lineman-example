@@ -1,12 +1,84 @@
 describe 'Credit Billing', :type => :request do
 
   describe :v1 do
-    context 'credit_billings' do
+    context 'natural person' do
+      before :context do
+        @user = create(:user, :with_personal_rucom)
+        @token = @user.create_token
+      end
+
+      context 'POST' do
+        context "with company info" do
+          it 'returns a representation of the new credit billing created and code 201' do
+
+            per_unit_value = 500.0
+            new_values = {
+              user_id: @user.id,
+              unit: 200
+            }
+
+            expected_response = {
+              unit: 200,
+              per_unit_value: per_unit_value,
+              iva_value: 200 * per_unit_value * 0.16,
+              discount: 0.0,
+              total_amount: 200 * per_unit_value,
+              payment_flag: false,
+              payment_date: nil,
+              discount_percentage: 0.0
+            }
+
+            post '/api/v1/credit_billings', {credit_billing: new_values}, { "Authorization" => "Barer #{@token}" }
+
+            expect(response.status).to eq 201
+            expect(JSON.parse(response.body)).to match(expected_response.stringify_keys)
+          end
+        end
+      end
+    end
+
+    context 'company worker' do
+      before :context do
+        @user = create(:user, :with_company)
+        @token = @user.create_token
+      end
+
+      context 'POST' do
+        context "with company info" do
+          it 'returns a representation of the new credit billing created and code 201' do
+
+            per_unit_value = 500.0
+            new_values = {
+              user_id: @user.id,
+              unit: 200
+            }
+
+            expected_response = {
+              unit: 200,
+              per_unit_value: per_unit_value,
+              iva_value: 200 * per_unit_value * 0.16,
+              discount: 0.0,
+              total_amount: 200 * per_unit_value,
+              payment_flag: false,
+              payment_date: nil,
+              discount_percentage: 0.0
+            }
+
+            post '/api/v1/credit_billings', {credit_billing: new_values}, { "Authorization" => "Barer #{@token}" }
+
+            expect(response.status).to eq 400
+            expect(JSON.parse(response.body)['error']).to match 'Este usuario no esta autorizado para comprar creditos'
+          end
+        end
+      end
+    end
+
+    context 'legal representative' do
 
       before :context do
-        @user = FactoryGirl.create :user, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create(:company).legal_representative
         @token = @user.create_token
-        FactoryGirl.create_list(:credit_billing, 20, user_id: @user.id)
+        create_list(:credit_billing, 20, user_id: @user.id)
       end
 
       context 'GET' do
@@ -17,10 +89,10 @@ describe 'Credit Billing', :type => :request do
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be per_page
         end
-        
+
         context '/:id' do
 
-          it 'gets a credit billing by id' do 
+          it 'gets a credit billing by id' do
 
             credit_billing = CreditBilling.last
 
@@ -45,7 +117,7 @@ describe 'Credit Billing', :type => :request do
       context 'POST' do
         context "with company info" do
           it 'returns a representation of the new credit billing created and code 201' do
-            
+
             per_unit_value = 500.0
             new_values = {
               user_id: @user.id,
