@@ -9,12 +9,8 @@ module V1
       expose :access_token, documentation: { type: "string", desc: "email", example: "lourdezastre@test.com" } do |user, options|
         user.create_token
       end
-      expose :available_credits , documentation: { type: "float", desc: "Available credits", example: 0.0 } do |user, options|
-        if user.has_office? # TODO: move this info to model
-          user.office.company.legal_representative.available_credits
-        else
-          user.available_credits
-        end
+      expose :available_credits , documentation: { type: "float", desc: "Available credits", example: 0.0 } do |user,options|
+        user.available_credits_based_on_user_role
       end
       expose :phone_number , documentation: { type: "string", desc: "Phone number", example: "312344626" }
       expose :address , documentation: { type: "string", desc: "Address", example: "Calle falsa 123" }

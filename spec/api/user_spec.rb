@@ -32,10 +32,12 @@ describe 'Auth', :type => :request do
           end
         end
 
-        it 'should to check if a user belonging to a company work is showing a correct information' do
+        it 'should to check if a user belonging to a company is showing a correct information' do
 
-          user = FactoryGirl.create :user, :with_company
+          user = FactoryGirl.create :user, :with_company, available_credits: 0
           company = user.company
+          company.legal_representative.update_column :available_credits, 100
+          company.reload
           token = user.create_token
 
           expected_company = {
@@ -92,7 +94,7 @@ describe 'Auth', :type => :request do
         end
 
         it 'should to check if the legal representative inforamtion is correct' do
-          user = FactoryGirl.create :user, legal_representative: true, office: nil
+          user = FactoryGirl.create :user, legal_representative: true, office: nil, available_credits: 100
           company = create :company, legal_representative: user
           user.update_column :office_id, company.main_office.id
           user.reload
@@ -127,7 +129,7 @@ describe 'Auth', :type => :request do
            "email" => user.email,
            "document_number" => user.document_number,
            #"access_token"=> token,
-           "available_credits" => user.available_credits,
+           "available_credits" => company.available_credits,
            "phone_number" => user.phone_number,
            "address" => user.address,
            "office" => user.office.name,

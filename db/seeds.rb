@@ -16,26 +16,26 @@ begin
         email: 'dcm@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
-        office: nil, legal_representative:  true)
+        office: nil, legal_representative: true)
   company = FactoryGirl.create(:company,
                                 name: 'Trazoro',
                                 city: city.name,
                                 state: state.name,
                                 country: country.name,
                                 legal_representative: legal_representative,
-                                nit_number: '123456789',
+                                nit_number: 'temp_number',
                                 email: 'soport@trazoro.co',
                                 phone_number: '3004322618',
                               )
-rescue
-  company = Company.find_by(nit_number: '123456789')
-  puts 'There was something wrong!'
+rescue => e
+  company = Company.find_by(nit_number: 'temp_number')
+  puts "There was something wrong!. ERROR: #{ e }"
 end
 
 begin
   office = company.offices.first
 rescue => e
-  puts "There is not Office or the Campany was no created properly. ERROR: #{ e }"
+  puts "There is not Office or the Company was no created properly. ERROR: #{ e }"
 end
 
 puts 'Creating basic users ...'

@@ -211,6 +211,13 @@ class User < ActiveRecord::Base
     rucom.try(:rucom_record)
   end
 
+  def available_credits_based_on_user_role
+    if has_office?
+      self.office.company.legal_representative.available_credits
+    else
+     self.available_credits
+    end
+  end
 
   # IMPORTANT Get if the user or external user belongs to a company
   def rucom
@@ -274,6 +281,7 @@ class User < ActiveRecord::Base
   def has_office?
     self.office.present?
   end
+
   protected
 
   def init
