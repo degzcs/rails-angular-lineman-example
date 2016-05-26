@@ -5,9 +5,11 @@ if ENV['CREATE_LOCATIONS'] == 'yes'
   importer = Importers::DaneCsvImporter.new
   importer.call(file_path: File.join(Rails.root, 'spec', 'support', 'csvs', 'codigos-departamentos-municipios-dane-v1.0.csv'))
 end
-  country = Country.find_by(name: 'COLOMBIA')
-  city = City.find_by(name: 'MEDELLIN')
-  state = State.find_by(name: 'ANTIOQUIA')
+
+country = Country.find_by(name: 'COLOMBIA')
+city = City.find_by(name: 'MEDELLIN')
+state = State.find_by(name: 'ANTIOQUIA')
+
 begin
   # TODO: add the real files to this company (rut, nit, etc.)
   legal_representative = FactoryGirl.build(:user,
@@ -16,6 +18,7 @@ begin
         email: 'dcm@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        city: city,
         office: nil, legal_representative: true)
   company = FactoryGirl.create(:company,
                                 name: 'Trazoro',
@@ -35,26 +38,32 @@ end
 begin
   office = company.offices.first
 rescue => e
-  puts "There is not Office or the Company was no created properly. ERROR: #{ e }"
+  puts "There is not Office or the Company was not created properly. ERROR: #{ e }"
 end
 
 puts 'Creating basic users ...'
 begin
-  AdminUser.create(email:'soporte@trazoro.co',password: 'A7l(?/]03tal9-%g4', password_confirmation: 'A7l(?/]03tal9-%g4')
+  AdminUser.create(
+    email:'soporte@trazoro.co',
+    password: 'A7l(?/]03tal9-%g4',
+    password_confirmation: 'A7l(?/]03tal9-%g4',
+    )
+
   FactoryGirl.create(:user,
         first_name: 'Tech',
         last_name: 'Trazoro',
         email: 'tech@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        city: city,
         office: office,)
-
   FactoryGirl.create(:user,
         first_name: 'Diego',
         last_name: 'Gomez',
         email: 'diego.gomez@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        city: city,
         office: office,)
 
   FactoryGirl.create(:user,
@@ -63,6 +72,7 @@ begin
         email: 'jesus.munoz@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4',
+        city: city,
         office: office,)
 rescue => e
   puts "There is something wrong!!!, perhaps the users were already created. ERROR: #{ e }"
