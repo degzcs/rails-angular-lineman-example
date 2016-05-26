@@ -56,14 +56,13 @@
                   %div{"ng-message" => "required"} Este campo es requerido.
 
             .population-selection
-              %h2.md-subhead Centro Poblado:
+              %h2.md-subhead Ubicacion:
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
-                %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
+                %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
                   %span{"md-highlight-text" => "searchState"} {{state.name}}
-                %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
+
+                %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
                   %span{"md-highlight-text" => "searchCity"} {{city.name}}
-                %md-autocomplete{:required => "true", :flex => "30", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
-                  %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
 
             .rucom-selection
               %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"searchRucom()"} Buscar Rucom

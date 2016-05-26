@@ -89,7 +89,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }
   validates_presence_of     :password_confirmation, if: lambda { |m| m.password.present? }
 
-
   #
   # Scopes
   #

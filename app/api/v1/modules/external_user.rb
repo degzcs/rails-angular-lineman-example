@@ -167,7 +167,8 @@ module V1
           rut_file = files.select{|file| file['filename'] =~ /rut_file/}.first
           chamber_of_commerce_file = files.select{|file| file['filename'] =~ /chamber_of_commerce_file/}.first
 
-          params[:external_user].except!(:files).merge!(document_number_file: document_number_file, photo_file: photo_file, mining_register_file: ext_user_mining_register_file)
+          # NOTE: This endpoint is about to be deprecated, but in order to continue its working, I update the document_number_file field name to id_document_file
+          params[:external_user].except!(:files).merge!(id_document_file: document_number_file, photo_file: photo_file, mining_register_file: ext_user_mining_register_file)
 
           external_user_params = params[:external_user]
           external_user = ::User.new(params[:external_user])
@@ -181,20 +182,14 @@ module V1
             company.rucom = rucom
             external_user.build_office(name: "N/A", company: company)
           else
-            #binding.pry
             external_user.personal_rucom = rucom
           end
 
-          #binding.pry
-
-          if external_user.save
+          if external_user.save!
             present external_user, with: V1::Entities::ExternalUser
           else
-            #binding.pry
-
             error!(external_user.errors.inspect, 400)
           end
-          Rails.logger.info(external_user.errors.inspect)
         end
 
         # PUT

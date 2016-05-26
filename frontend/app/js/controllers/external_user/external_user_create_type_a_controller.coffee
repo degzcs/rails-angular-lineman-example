@@ -10,14 +10,14 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.rucomIDField =
     label: 'Número de RUCOM'
     field: 'num_rucom'
-  
+
   $scope.tabIndex =
     selectedIndex: 0
 
   $scope.pendingPost = false
-  
+
   goToDocumentation = ->
-    $scope.tabIndex.selectedIndex = 1 
+    $scope.tabIndex.selectedIndex = 1
 
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the ExternalUser model to check for pendind scaned files
@@ -27,7 +27,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     $scope.file = CameraService.getJoinedFile()
   else if ScannerService.getScanFiles() and ScannerService.getScanFiles().length > 0
     $scope.file = ScannerService.getScanFiles()
-  
+
   if $scope.photo and CameraService.getTypeFile() == 1
     ExternalUser.modelToCreate.files.photo_file = $scope.photo
     ExternalUser.saveModelToCreate()
@@ -65,9 +65,9 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   # **************************************************************************
 
   $scope.newExternalUser = ExternalUser.restoreModelToCreate().external_user
-  $scope.newCompany = ExternalUser.restoreModelToCreate().company 
-  $scope.newFiles = ExternalUser.restoreModelToCreate().files 
-  $scope.user_type = ExternalUser.restoreModelToCreate().user_type 
+  $scope.newCompany = ExternalUser.restoreModelToCreate().company
+  $scope.newFiles = ExternalUser.restoreModelToCreate().files
+  $scope.user_type = ExternalUser.restoreModelToCreate().user_type
   #console.log ExternalUser.restoreModelToCreate()
 
   #******************* Population center variables ********************************** #
@@ -135,7 +135,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
           return
         return
     return
-  
+
   if $scope.newExternalUser.population_center_id != ''
     loadProviderLocation($scope.newExternalUser)
 
@@ -168,7 +168,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
       else
         break
     return
-  
+
 
   # It listens to state changes
   $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
@@ -185,7 +185,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
         ), ->
         )
     return
-  
+
 
   $scope.stateSearch = (query) ->
     results = if query then $scope.states.filter(createFilterFor(query)) else []
@@ -213,11 +213,12 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.selectedCityChange = (city) ->
     if city
       $scope.selectedCity = city
-      #console.log 'City changed to ' + JSON.stringify(city)
-      LocationService.getPopulationCentersFromCity.query { cityId: city.id }, (population_centers) ->
-        $scope.population_centers = population_centers
-        #console.log 'Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers)
-        return
+      $scope.newExternalUser.city_id = city.id
+      #LocationService.getPopulationCentersFromCity.query { cityId: city.id }, (population_centers) ->
+      #  $scope.population_centers = population_centers
+      #  #console.log 'Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers)
+      #  return
+      $scope.population_centers = []
       $scope.populationCenterDisabled = false
     else
       #console.log 'City changed to none'
@@ -253,9 +254,9 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     ExternalUser.modelToCreate.external_user = $scope.newExternalUser
     ExternalUser.saveModelToCreate()
     $state.go 'search_rucom'
-    
+
   $scope.currentRucom = RucomService.getCurrentRucom()
-  if $scope.currentRucom 
+  if $scope.currentRucom
     ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
     ExternalUser.saveModelToCreate()
     if $scope.currentRucom.num_rucom
@@ -265,7 +266,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
       $scope.rucomIDField.label = 'Número de Expediente'
       $scope.rucomIDField.field = 'rucom_record'
 
-    
+
     #console.log ExternalUser.modelToCreate
 
   #************ Creation methods *************************#
@@ -275,18 +276,18 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
 
 
   $scope.createExternalUser = (ev)->
-    
+
     $scope.validate_documentation_and_create()
-    
+
   $scope.cancel= ()->
     $state.go 'index_external_user'
 
 
   $scope.validate_personal_fields= ()->
-    if $scope.newFiles.photo_file == '' 
+    if $scope.newFiles.photo_file == ''
       $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == '' || $scope.newExternalUser.population_center_id == ''
+    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == ''
       $scope.validPersonalData = false
       #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
@@ -303,13 +304,13 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
       #goToDocumentation()
 
   $scope.validate_documentation_and_create=  ()->
-      if $scope.newFiles.document_number_file == '' 
+      if $scope.newFiles.document_number_file == ''
         $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
       else
         $scope.pendingPost = true
         ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-        ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id 
-        ExternalUser.modelToCreate.files = $scope.newFiles 
+        ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
+        ExternalUser.modelToCreate.files = $scope.newFiles
         ExternalUser.saveModelToCreate()
         #console.log ExternalUser.modelToCreate
         ExternalUser.create()
@@ -358,4 +359,4 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     # return
 
 
-  
+

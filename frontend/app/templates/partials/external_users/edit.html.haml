@@ -51,8 +51,6 @@
               %span{"md-highlight-text" => "searchState"} {{state.name}}
             %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
               %span{"md-highlight-text" => "searchCity"} {{city.name}}
-            %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
-              %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
 
           %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
             %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Volver

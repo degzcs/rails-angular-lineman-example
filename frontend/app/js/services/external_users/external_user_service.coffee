@@ -14,7 +14,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         document_expedition_date: ''
         phone_number: ''
         address: ''
-        population_center_id: ''
+        city_id: ''
       company:
         nit_number: ''
         name: ''
@@ -26,7 +26,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
         id_number_legal_rep: ''
         email: ''
         phone_number: ''
-      files: 
+      files:
         photo_file: ''
         document_number_file: ''
         external_user_mining_register_file: ''
@@ -63,28 +63,28 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
 
     create: ()->
       # Photo file
+
       external_user = service.modelToCreate.external_user
       company = service.modelToCreate.company
       files_to_upload = service.modelToCreate.files
       rucom_id = service.modelToCreate.rucom_id
-      console.log rucom_id
 
       blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (external_user_photo_file) ->
         #external_user_photo_file = photo_file
         external_user_photo_file.name = 'photo_file.png'
-        
+
         # Other Files
         filesRemaining = 0;
 
         # Document Number File
         if !(files_to_upload.document_number_file[0] instanceof File)
           files_to_upload.document_number_file[0].name = 'document_number_file.pdf'
-            
+
         else
           document_number_file_copy = files_to_upload.document_number_file
           document_number_reader = new FileReader
           files_to_upload.document_number_file = []
-            
+
           document_number_reader.onload = ->
             `var i`
             i = undefined
@@ -139,7 +139,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
               return
 
             external_user_mining_register_reader.readAsBinaryString external_user_mining_register_file_copy[0]
-            filesRemaining++  
+            filesRemaining++
 
         if service.isCompany
 
@@ -240,7 +240,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             filesRemaining++
 
         files = []
-        
+
         uploadFiles = ->
 
           if service.isCompany
@@ -251,27 +251,27 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
               files_to_upload.rut_file[0]
               files_to_upload.chamber_of_commerce_file[0]
             ]
-          else 
+          else
             files = [
               files_to_upload.document_number_file[0]
               external_user_photo_file
             ]
-          
+
           if files_to_upload.external_user_mining_register_file[0]
-              files.push files_to_upload.external_user_mining_register_file[0]  
+              files.push files_to_upload.external_user_mining_register_file[0]
 
           $upload.upload(
             url: '/api/v1/external_users/'
             method: 'POST'
             headers: {'Content-Type': 'application/json'}
-            fields: 
+            fields:
               "external_user[first_name]": external_user.first_name,
               "external_user[document_number]": external_user.document_number,
               "external_user[last_name]": external_user.last_name,
               "external_user[phone_number]": external_user.phone_number,
               "external_user[address]": external_user.address,
               "external_user[email]": external_user.email,
-              "external_user[population_center_id]":external_user.population_center_id,
+              "external_user[city_id]":external_user.city_id,
               "company[name]":company.name if service.isCompany,
               "company[nit_number]":company.nit_number if service.isCompany,
               "company[legal_representative]":company.legal_representative if service.isCompany,
@@ -306,14 +306,14 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
             $state.go "index_external_user"
             service.clearModelToCreate()
             return
-            
+
         #Files Upload
         if filesRemaining <= 0
           uploadFiles()
           console.log "SUBIENDO"
 
 
-    
+
     update_external_user: (id)->
       #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
@@ -322,7 +322,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
                 data: {
                   external_user: service.modelToUpdate.external_user
                 }
-    
+
     update_external_user_company: (id)->
       $mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
@@ -331,7 +331,7 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
                 data: {
                   company: service.modelToUpdate.company
                 }
-    
+
     query_by_name: (name,per_page,page)->
       return $http
                 url: 'api/v1/external_users'
@@ -375,9 +375,6 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
       #   service.modelToCreate
       # else
       #   service.modelToCreate
-    
-
-     
 
     clearModelToCreate: ->
       RucomService.user_type = ''
