@@ -17,13 +17,14 @@ describe Company::Registration do
       password_confirmation: 'this_is_my_password',
       available_credits: 0,
       address: 'Street fake 123',
-      document_number_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf"),
+      id_document_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf"),
       rut_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf"), # this is need because this rut has to confirm that this person is a legal representative
       photo_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg"),
       office_id: nil, # This will be updated after create both user and company records
       external: false,
       mining_register_file: nil, # TODO: ask for it?
       legal_representative: true,
+      city_id: City.last.id,
     }
 
     @company_data = {
@@ -42,8 +43,8 @@ describe Company::Registration do
   end
 
   it 'should create a company and its legal representative' do
-    reponse = service.call(legal_representative_data: @legal_representative_data, company_data: @company_data, rucom: @rucom)
-    expect(reponse[:success]).to be true
+    response = service.call(legal_representative_data: @legal_representative_data, company_data: @company_data, rucom: @rucom)
+    expect(response[:success]).to be true
     expect(service.company).to be_persisted
     expect(service.legal_representative).to be_persisted
   end

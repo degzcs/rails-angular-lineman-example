@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UserResetPassword do
 
-  let(:user){create(:user)}
+  let(:user){ create(:user, :with_personal_rucom) }
 
   subject(:user_reset_password){ UserResetPassword.new user}
 

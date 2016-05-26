@@ -2,8 +2,12 @@ require 'spec_helper'
 
 describe Purchase::GoldPurchaseService do
 
-  let(:legal_representative){ create(:user, available_credits: 100) }
-  let(:company){ create :company, legal_representative: legal_representative}
+  let(:company){ create :company}
+  let(:legal_representative) do
+    user = company.legal_representative
+    user.update_column :available_credits, 100
+    user
+  end
 
   subject(:service){ Purchase::GoldPurchaseService.new }
 
