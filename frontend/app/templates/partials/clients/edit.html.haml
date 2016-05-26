@@ -1,61 +1,61 @@
-%div{:layout => "column", "ng-if"=>"currentExternalUser","ng-hide"=>"showLoading"}
-  %form{:name => "providerEditionForm", "novalidate" => "novalidate"}
-    .provider-info
-      %div{layout: 'row'}
-        .photo-container{flex: '30'}
-          %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
-        .fields-container{flex: '70'}
-          %h3{style: "text-align: left;"} Datos personales:
-          %div{layout: 'row'}
-            %md-input-container{:flex => ""}
-              %label Nombre
-              %input{:readonly => "true", "ng-model" => "currentExternalUser.first_name"}
-            %md-input-container{:flex => ""}
-              %label Apellido
-              %input{:readonly => "true", "ng-model" => "currentExternalUser.last_name"}
-            %md-input-container{:flex => ""}
-              %label {{rucomIDField.label}}
-              %input{:readonly => "true", "ng-model" => "currentExternalUser.rucom[rucomIDField.field]"}
-              / %md-tooltip{"md-direction" => "right", "md-visible" => "true"}
-              /   %span.ion-android-checkmark-circle &nbsp;válido
-          %div{layout: 'row'}
-            %md-input-container{:flex => ""}
-              %label Número de Identificación
-              %input{:readonly => "true", "ng-model" => "currentExternalUser.document_number"}
-            %md-input-container{"ng-if" => "currentExternalUser.rucom.rucom_status", :flex => ""}
-              %label Estado del Rucom
-              %input{:readonly => "true", "ng-model" => "currentExternalUser.rucom.rucom_status"}
-            %md-input-container{:flex => ""}
-              %label Tipo de Proveedor
-              %input{:readonly => "true", "ng-model" => "currentExternalUser.rucom.provider_type"}
-          %div{layout: 'row'}
-            %md-input-container{:flex => ""}
-              %label Teléfono
-              %input{:required => "true", :name => "phone_number", "ng-model" => "currentExternalUser.phone_number", :placeholder => "(555) 555 5555"}
-              %div{"ng-messages" => "providerEditionForm.phone_number.$error"}
-                %div{"ng-message" => "required"} Este campo es requerido
-            %md-input-container{:flex => ""}
-              %label E-mail
-              %input{:required => "true", :type => "email", :name => "email", "ng-model" => "currentExternalUser.email", :placeholder => "mail@example.com"}
-              %div{"ng-messages" => "providerEditionForm.email.$error"}
-                %div{"ng-message" => "required"} Este campo es requerido
-                %div{"ng-message" => "email"} Ingrese un e-mail válido
-            %md-input-container{:flex => ""}
-              %label Dirección
-              %input{:required => "true", :name => "address", "ng-model" => "currentExternalUser.address", :placeholder => "CLL/CR 1 2 - 34"}
-              %div{"ng-messages" => "providerEditionForm.address.$error"}
-                %div{"ng-message" => "required"} Este campo es requerido
-          %h3{style: "text-align: left;"} Centro Poblado:
-          %div{layout: 'row'}
-            %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
-              %span{"md-highlight-text" => "searchState"} {{state.name}}
-            %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
-              %span{"md-highlight-text" => "searchCity"} {{city.name}}
-            %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
-              %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
-          
-          %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-            %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Volver
-            %md-button.btn-save{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar Cambios
-              
-%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+/ %div{:layout => "column", "ng-if"=>"currentExternalUser","ng-hide"=>"showLoading"}
+/   %form{:name => "providerEditionForm", "novalidate" => "novalidate"}
+/     .provider-info
+/       %div{layout: 'row'}
+/         .photo-container{flex: '30'}
+/           %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+/         .fields-container{flex: '70'}
+/           %h3{style: "text-align: left;"} Datos personales:
+/           %div{layout: 'row'}
+/             %md-input-container{:flex => ""}
+/               %label Nombre
+/               %input{:readonly => "true", "ng-model" => "currentExternalUser.first_name"}
+/             %md-input-container{:flex => ""}
+/               %label Apellido
+/               %input{:readonly => "true", "ng-model" => "currentExternalUser.last_name"}
+/             %md-input-container{:flex => ""}
+/               %label {{rucomIDField.label}}
+/               %input{:readonly => "true", "ng-model" => "currentExternalUser.rucom[rucomIDField.field]"}
+/               / %md-tooltip{"md-direction" => "right", "md-visible" => "true"}
+/               /   %span.ion-android-checkmark-circle &nbsp;válido
+/           %div{layout: 'row'}
+/             %md-input-container{:flex => ""}
+/               %label Número de Identificación
+/               %input{:readonly => "true", "ng-model" => "currentExternalUser.document_number"}
+/             %md-input-container{"ng-if" => "currentExternalUser.rucom.rucom_status", :flex => ""}
+/               %label Estado del Rucom
+/               %input{:readonly => "true", "ng-model" => "currentExternalUser.rucom.rucom_status"}
+/             %md-input-container{:flex => ""}
+/               %label Tipo de Proveedor
+/               %input{:readonly => "true", "ng-model" => "currentExternalUser.rucom.provider_type"}
+/           %div{layout: 'row'}
+/             %md-input-container{:flex => ""}
+/               %label Teléfono
+/               %input{:required => "true", :name => "phone_number", "ng-model" => "currentExternalUser.phone_number", :placeholder => "(555) 555 5555"}
+/               %div{"ng-messages" => "providerEditionForm.phone_number.$error"}
+/                 %div{"ng-message" => "required"} Este campo es requerido
+/             %md-input-container{:flex => ""}
+/               %label E-mail
+/               %input{:required => "true", :type => "email", :name => "email", "ng-model" => "currentExternalUser.email", :placeholder => "mail@example.com"}
+/               %div{"ng-messages" => "providerEditionForm.email.$error"}
+/                 %div{"ng-message" => "required"} Este campo es requerido
+/                 %div{"ng-message" => "email"} Ingrese un e-mail válido
+/             %md-input-container{:flex => ""}
+/               %label Dirección
+/               %input{:required => "true", :name => "address", "ng-model" => "currentExternalUser.address", :placeholder => "CLL/CR 1 2 - 34"}
+/               %div{"ng-messages" => "providerEditionForm.address.$error"}
+/                 %div{"ng-message" => "required"} Este campo es requerido
+/           %h3{style: "text-align: left;"} Centro Poblado:
+/           %div{layout: 'row'}
+/             %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
+/               %span{"md-highlight-text" => "searchState"} {{state.name}}
+/             %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
+/               %span{"md-highlight-text" => "searchCity"} {{city.name}}
+/             %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
+/               %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
+
+/           %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
+/             %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Volver
+/             %md-button.btn-save{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar Cambios
+
+/ %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

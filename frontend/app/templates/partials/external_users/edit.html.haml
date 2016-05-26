@@ -53,9 +53,9 @@
               %span{"md-highlight-text" => "searchCity"} {{city.name}}
             %md-autocomplete{:required => "true", :flex => "", "md-item-text" => "populationCenter.name", "md-items" => "populationCenter in populationCenterSearch(searchPopulationCenter)", "md-no-cache" => "true", "md-search-text" => "searchPopulationCenter", "md-search-text-change" => "searchTextPopulationCenterChange(searchPopulationCenter)", "md-selected-item" => "selectedPopulationCenter", "md-selected-item-change" => "selectedPopulationCenterChange(populationCenter)", "ng-disabled" => "populationCenterDisabled", :placeholder => "Centro Poblado"}
               %span{"md-highlight-text" => "searchPopulationCenter"} {{populationCenter.name}}
-          
+
           %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
             %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Volver
             %md-button.btn-save{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar Cambios
-              
+
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
