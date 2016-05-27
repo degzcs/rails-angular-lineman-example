@@ -22,7 +22,26 @@ FactoryGirl.define do
     gold_batch # bought gold in this transaction.
     code "123456789"
     price { 100 }
-    origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf')) }
+
+    trait :with_proof_of_sale_file do
+      after :create do |sale, e|
+        sale.build_proof_of_sale(
+        file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
+        type: 'equivalent_document',
+        )
+        sale.save!
+      end
+    end
+
+    trait :with_purchase_files_collection_file do
+      after :create do |sale, e|
+        sale.build_purchase_files_collection(
+        file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
+        type: 'purchase_files_collection',
+        )
+        sale.save!
+      end
+    end
 
     trait :with_batches do
       transient do

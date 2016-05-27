@@ -24,9 +24,9 @@ describe Sale do
     it {expect(sale.client).not_to be_nil }
     it {expect(sale.gold_batch).not_to be_nil}
     it {expect(sale.code).not_to be_nil}
-    it {expect(sale.origin_certificate_file).not_to be_nil}
     it {expect(sale.price).not_to be_nil}
   end
+
   context "sale creation" do
     it "should create a new sale with valid data" do
       expect(build(:sale)).to be_valid
@@ -34,7 +34,7 @@ describe Sale do
 
     context "for a trazoro sale (user - user sale)" do
       let!(:user1) { create(:user, :with_company) }
-      let!(:client) {create(:user, :with_company)}
+      let!(:client) { create(:user, :with_company) }
       let(:sale) {create(:sale, user: user1, client: client, trazoro: true)}
       it "expect to have the correct user" do
         expect(sale.trazoro).to be true
@@ -45,6 +45,7 @@ describe Sale do
         expect(sale.client).to eq client
       end
     end
+
     context "for an external client purchase" do
       let!(:user1) { create(:user, :with_company) }
       let!(:external_user) {create(:external_user)}
@@ -57,6 +58,18 @@ describe Sale do
         expect(sale.trazoro).to be false
         expect(sale.client).to eq external_user
       end
+    end
+  end
+
+  context 'documentation' do
+    it 'should create a sale with proof of sale file' do
+      sale = create :sale, :with_proof_of_sale_file
+      expect(sale.proof_of_sale.file.filename).to match(/documento_equivalente_de_venta.pdf/)
+    end
+
+    it 'should create a sale with purchase files collection file' do
+      sale = create :sale, :with_purchase_files_collection_file
+      expect(sale.purchase_files_collection.file.filename).to match(/documento_equivalente_de_venta.pdf/)
     end
   end
 

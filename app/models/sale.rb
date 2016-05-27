@@ -19,9 +19,11 @@ require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
 
 class Sale < ActiveRecord::Base
+
   #
   # Associations
   #
+
   belongs_to :user
   belongs_to :client, class_name: "User"
 
@@ -39,7 +41,6 @@ class Sale < ActiveRecord::Base
   #
   # Uploaders
   #
-  mount_uploader :origin_certificate_file, DocumentUploader
 
   #
   # Validations
