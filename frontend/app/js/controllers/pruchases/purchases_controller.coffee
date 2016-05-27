@@ -26,11 +26,35 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    window.scope = $scope
+    $scope.buyer_data = buyer_data_from($scope.current_user)
 
   #
   # Fuctions
   #
+
+  buyer_data_from = (current_user)->
+    if current_user.company
+      {
+        company_name: current_user.company.name,
+        office: current_user.office,
+        nit: current_user.company.nit_number,
+        rucom_record: current_user.company.rucom.rucom_record,
+        first_name: current_user.company.legal_representative.first_name,
+        last_name: current_user.company.legal_representative.last_name,
+        address: current_user.address, # TODO: this address must to be the company address
+        phone: current_user.company.phone_number,
+      }
+    else
+      {
+        company_name: 'NA',
+        office: 'NA',
+        nit: current_user.nit,
+        rucom_record: current_user.rucom.num_rucom || current_user.rucom.rucom_record,
+        first_name: current_user.first_name,
+        last_name: current_user.last_name,
+        address: current_user.address,
+        phone: current_user.phone_number,
+      }
 
   #
   # Search one specific provider into the allProviders array
@@ -90,8 +114,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # @ sale_code [Integer] is the generated code when the sale is created
   # @return [Array] with the matched options with the query
   $scope.searchProviderByCode = (sale_code)->
-    console.log 'query: ' + sale_code
-
     SaleService.get_by_code(sale_code).success (data)->
       if data
         $scope.goldBatch.model.id = data.gold_batch_id
@@ -121,13 +143,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.selectedProviderChange = (provider) ->
     console.log "Seleccionado"
     if provider
-      #console.log 'Provider changed to ' + JSON.stringify(provider)
-      #console.log "Proveedor!"
-      #console.log provider.rucom
-      #$scope.format_provider(provider)
-      console.log provider.rucom
-      console.log $scope.purchase.model.provider
-
       if provider.num_rucom
         $scope.rucomIDField.label = 'Número de RUCOM'
         $scope.rucomIDField.field = 'num_rucom'
@@ -157,35 +172,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   per_page = 100
   page = 1
-  #
-  # all providers
-  # ExternalUser.all(per_page,page).success( (providers)->
-  #   $mdDialog.cancel()
-  #   i = 0
-  #   while i < providers.length
-  #     prov =
-  #       id: providers[i].id
-  #       document_number: providers[i].nit || providers[i].document_number
-  #       company_name: if providers[i].company_info then providers[i].company_info.name else providers[i].first_name + ' ' + providers[i].last_name #'company name test' # <-- TODO: migration
-  #       document_type: 'CC' # <-- TODO: migration
-  #       first_name: providers[i].first_name
-  #       last_name: providers[i].last_name
-  #       address: providers[i].address
-  #       email: providers[i].email
-  #       phone_number: providers[i].phone_number || providers[i].phone
-  #       photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-  #       num_rucom: providers[i].rucom.num_rucom
-  #       rucom_record: providers[i].rucom.rucom_record
-  #       provider_type: providers[i].rucom.provider_type
-  #       rucom_status: providers[i].rucom.status
-  #       mineral: providers[i].rucom.mineral
-  #       name: providers[i].first_name + ' '+ providers[i].last_name
-  #       city: providers[i].city || 'Popayan'
-  #       state: providers[i].state || 'Cauca'
-  #       address: providers[i].address
-  #     $scope.allProviders.push prov
-  #     i++
-  # ).error ()->
 
   $scope.format_provider = (provider)->
     console.log "el rucom"
@@ -333,43 +319,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.loadingMessage = "Espere un momento ..."
           $scope.loadingMode = "indeterminate"
       return
-
-
-    # parentEl = angular.element(document.body)
-    # $mdDialog.show
-    #   parent: parentEl
-    #   targetEvent: ev
-    #   disableParentScroll: false
-    #   template: '<md-dialog>' + '  <md-dialog-content>' + '    <div layout="column" layout-align="center center">' + '      <p>{{message}}</p>' + '      <md-progress-circular md-mode="determinate" value="{{progress}}"></md-progress-circular>' + '    </div>' + '  </md-dialog-content>' + '  <div class="md-actions">' + '    <md-button ng-click="closeDialog()" ng-if="progress === 100" class="md-primary">' + '      Cerrar' + '    </md-button>' + '  </div>' + '</md-dialog>'
-    #   controller: [
-    #     'scope'
-    #     '$mdDialog'
-    #     'PurchaseService'
-    #     (scope, $mdDialog, PurchaseService) ->
-    #       scope.progress = PurchaseService.impl.uploadProgress
-    #       scope.message = 'Espere por favor...'
-    #       scope.$watch (->
-    #         PurchaseService.impl.uploadProgress
-    #       ), (newVal, oldVal) ->
-    #         if typeof newVal != 'undefined'
-    #           console.log 'Progress: ' + scope.progress + ' (' + PurchaseService.impl.uploadProgress + ')'
-    #           scope.progress = PurchaseService.impl.uploadProgress
-    #           if scope.progress == 100
-    #             scope.closeDialog()
-    #         return
-
-    #       scope.closeDialog = ->
-    #         $mdDialog.cancel()
-    #         # $scope.newProvider = {}
-    #         # PurchaseService.setCurrentProv {}
-    #         $scope.infoAlert 'Crear nueva compra', 'La compra esta siendo procesada ...', false
-    #         # $scope.abortCreate = true
-    #         # PurchaseService.currentTabProvCreation = 0
-    #         return
-
-    #       return
-    #   ]
-    # return
 
   $scope.infoAlert = (title, content, error) ->
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK')).finally ->

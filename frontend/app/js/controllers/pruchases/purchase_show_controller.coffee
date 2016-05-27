@@ -11,7 +11,8 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    $scope.buyer_data = buyer_data_from = (current_user)
+    $scope.buyer_data = buyer_data_from($scope.current_user)
+    window.scope = $scope
 
   #
   # Fuctions
@@ -21,24 +22,24 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
     if current_user.company
       {
         company_name: current_user.company.name,
+        office: current_user.office,
         nit: current_user.company.nit_number,
         rucom_record: current_user.company.rucom_record,
-        first_name: current_user.first_name,
-        office: current_user.office,
+        first_name: current_user.company.legal_representative.first_name,
+        last_name: current_user.company.legal_representative.last_name,
         address: current_user.address, # TODO: this address must to be the company address
-        first_name: current_user.first_name,
         phone: current_user.company.phone_number,
       }
     else
       {
-        company_name: current_user.company.name,
-        nil: current_user.company.nit,
-        rucom_record: current_user.company.rucom_record,
+        company_name: 'NA',
+        office: 'NA',
+        nit: current_user.nit,
+        rucom_record: current_user.rucom.rucom_record,
         first_name: current_user.first_name,
-        office: current_user.office,
-        address: current_user.address, # TODO: this address must to be the company address
-        first_name: current_user.first_name,
-        phone: current_user.company.phone_number,
+        last_name: current_user.last_name,
+        address: current_user.address,
+        phone: current_user.phone_number,
       }
 
 

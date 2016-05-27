@@ -4,16 +4,16 @@ angular.module('app').controller('CameraScannerController',  ['$scope','$q','$ti
                 $scope.isForCamera='';
                 $scope.number=0;
                 $scope.image1='';
-                
+
                 $scope.changeCamera=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
                     CameraService.playVideo(dimensions,option);
-                    console.log($scope.optionSelected);
+                    // console.log($scope.optionSelected);
                 };
                 $scope.changeParameter=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
                     CameraService.playVideo(dimensions,option);
-                  
+
                 };
                 $scope.takeSnapshot = function() {
                     var canvas  = document.querySelector('canvas'),
@@ -42,7 +42,7 @@ angular.module('app').controller('CameraScannerController',  ['$scope','$q','$ti
                         });
                         });
 
-                    
+
                 };
 
                 $scope.takeAgain = function(){
@@ -52,8 +52,8 @@ angular.module('app').controller('CameraScannerController',  ['$scope','$q','$ti
                     if($scope.image) {
                         CameraService.addScanFile($scope.image1);
                         $scope.number++;
-                        console.log("image added "+ $scope.image1);
-                        console.log("image added "+ $scope.image);
+                        // console.log("image added "+ $scope.image1);
+                        // console.log("image added "+ $scope.image);
                     }
                 };
                 $scope.removeScanFile=function(){

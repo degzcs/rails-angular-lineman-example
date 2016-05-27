@@ -5,7 +5,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                 $scope.isForCamera='Foto';
                 $scope.number=0;
                 $scope.image1='';
-                
+
                 showCanvas = function(){
                     var canvas = angular.element( document.querySelector('canvas') );
                     var options = angular.element(document.querySelector('.camera-options'));
@@ -26,12 +26,12 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                 $scope.changeCamera=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
                     CameraService.playVideo(dimensions,option);
-                    console.log($scope.optionSelected);
+                    // console.log($scope.optionSelected);
                 };
                 $scope.changeParameter=function(option){
                     dimensions={w1:$scope.w1,h1:$scope.h1};
                     CameraService.playVideo(dimensions,option);
-                  
+
                 };
                 $scope.takeSnapshot = function() {
                     showCanvas();
@@ -61,7 +61,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                         });
                         });
 
-                    
+
                 };
 
                 $scope.takeAgain = function(){
@@ -71,8 +71,8 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     if($scope.image) {
                         CameraService.addScanFile($scope.image1);
                         $scope.number++;
-                        console.log("image added "+ $scope.image1);
-                        console.log("image added "+ $scope.image);
+                        // console.log("image added "+ $scope.image1);
+                        // console.log("image added "+ $scope.image);
                     }
                 };
                 $scope.removeScanFile=function(){
