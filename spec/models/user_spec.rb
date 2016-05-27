@@ -48,7 +48,7 @@
 
 require 'spec_helper'
 
-describe  User do
+describe  User, type: :model do
   context 'test factory' do
     let(:user){ create(:user, :with_personal_rucom ) }
     it 'has a valid factory' do
@@ -65,9 +65,11 @@ describe  User do
     it { expect(user.rut_file).not_to be_nil }
     it { expect(user.photo_file).not_to be_nil }
     # it { expect(user.chamber_commerce_file).not_to be_nil }
-    # it { expect(user.company).not_to be_nil } TODO: use office model to access to company model
-    # it { expect(user.population_center).not_to be_nil }
     it { expect(user.available_credits).not_to be_nil }
+  end
+
+  context 'associations' do
+    it { should have_and_belong_to_many :roles }
   end
 
   context 'create user' do

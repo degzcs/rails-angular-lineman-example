@@ -1,4 +1,9 @@
-  # TODO: use the DANE xls file to import thsi states and cities
+puts 'creating roles...'
+role_names = %w(trader client trasporter)
+role_names.each do |role_name|
+  Role.create name: role_name
+end
+
 puts 'Creating cities and states ...'
 
 if ENV['CREATE_LOCATIONS'] == 'yes'

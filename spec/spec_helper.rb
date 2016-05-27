@@ -102,4 +102,7 @@ RSpec.configure do |config|
   # API
   config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: /spec\/api/ }
 
+  config.include Shoulda::Matchers::ActiveModel, type: :model
+  config.include Shoulda::Matchers::ActiveRecord, type: :model
+
 end

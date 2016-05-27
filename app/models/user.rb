@@ -83,11 +83,12 @@ class User < ActiveRecord::Base
   validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :city, presence: true
   validates :personal_rucom, presence: true, unless: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
+  has_and_belongs_to_many :roles
 
   has_secure_password validations: false
   validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }
-  validates_presence_of     :password_confirmation, if: lambda { |m| m.password.present? }
+  validates_presence_of :password_confirmation, if: lambda { |m| m.password.present? }
 
   #
   # Scopes
