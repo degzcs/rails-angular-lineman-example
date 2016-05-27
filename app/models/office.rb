@@ -8,6 +8,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  city_id    :integer
+#  address    :string(255)
 #
 
 class Office < ActiveRecord::Base

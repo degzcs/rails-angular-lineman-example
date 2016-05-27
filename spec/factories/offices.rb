@@ -8,12 +8,14 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  city_id    :integer
+#  address    :string(255)
 #
 
 FactoryGirl.define do
   factory :office do
     sequence(:name) { |n| "office-#{n}" }
     company
+    address { Fake::Address.street_address }
   end
 
   trait :with_fake_rucom do
