@@ -86,6 +86,11 @@ class Company < ActiveRecord::Base
     self.offices.where(name: 'principal').first
   end
 
+  # @return [ String ] with the address
+  def address
+    main_office.address
+  end
+
   # NOTE: These methods are temporal, created in order to don't break the app.
   def id_number_legal_rep
     legal_representative.document_number
@@ -101,7 +106,8 @@ class Company < ActiveRecord::Base
 
   def as_indexed_json(options={})
     as_json(
-      include:[:rucom, :legal_representative]
+      include:[:rucom, :legal_representative],
+      methods: [:address]
       )
   end
 

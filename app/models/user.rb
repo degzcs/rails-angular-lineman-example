@@ -176,6 +176,7 @@ class User < ActiveRecord::Base
 
   delegate :name, to: :city, prefix: :city
   delegate :name, to: :state, prefix: :state
+
   #
   # Instance Methods
   #

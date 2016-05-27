@@ -27,7 +27,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
         rucom_record: current_user.company.rucom.rucom_record,
         first_name: current_user.company.legal_representative.first_name,
         last_name: current_user.company.legal_representative.last_name,
-        address: current_user.address, # TODO: this address must to be the company address
+        address: current_user.company.address,
         phone: current_user.company.phone_number,
       }
     else
