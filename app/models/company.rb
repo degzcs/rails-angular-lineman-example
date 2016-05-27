@@ -95,6 +95,16 @@ class Company < ActiveRecord::Base
     'CC'
   end
 
+  def as_json(params={})
+    super(params)
+  end
+
+  def as_indexed_json(options={})
+    as_json(
+      include:[:rucom]
+      )
+  end
+
   private
 
   # This ensure that every company has at least one office after is created or saved

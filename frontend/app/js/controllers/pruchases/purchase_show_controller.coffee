@@ -3,6 +3,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   #
   # Instances
   #
+
   PurchaseService.restoreState()
   GoldBatchService.restoreState()
   $scope.purchase = PurchaseService
@@ -10,10 +11,36 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.model.barcode_html)
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    $scope.current_user.personType = CurrentUser.settings.get('personType')
+    $scope.buyer_data = buyer_data_from = (current_user)
+
   #
   # Fuctions
   #
+
+  buyer_data_from = (current_user)->
+    if current_user.company
+      {
+        company_name: current_user.company.name,
+        nit: current_user.company.nit_number,
+        rucom_record: current_user.company.rucom_record,
+        first_name: current_user.first_name,
+        office: current_user.office,
+        address: current_user.address, # TODO: this address must to be the company address
+        first_name: current_user.first_name,
+        phone: current_user.company.phone_number,
+      }
+    else
+      {
+        company_name: current_user.company.name,
+        nil: current_user.company.nit,
+        rucom_record: current_user.company.rucom_record,
+        first_name: current_user.first_name,
+        office: current_user.office,
+        address: current_user.address, # TODO: this address must to be the company address
+        first_name: current_user.first_name,
+        phone: current_user.company.phone_number,
+      }
+
 
   $scope.flushData =->
     PurchaseService.deleteState()
@@ -45,29 +72,10 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
 
     console.log 'deleting sessionStorage ...'
 
-  #  DEPRECATED: in favor to use the files already created in Purchase::GoldPurchaseService.
-  #  Send calculated values to create a Purchase Renport in PDF format
-  $scope.createPDF =  (purchase, goldBatch, buyer)->
-    goldBatchForPDF=
-      castellanos: {quantity: $scope.goldBatch.model.castellanos} #TODO: add grams
-      tomines: {quantity: $scope.goldBatch.model.tomines}
-      riales: {quantity: $scope.goldBatch.model.riales}
-      ozs: {quantity: $scope.goldBatch.model.riales}
-      grams: {quantity: $scope.goldBatch.model.grams}
-      total_grams:  $scope.goldBatch.model.total_grams
-      total_fine_grams:  $scope.goldBatch.model.total_fine_grams
-      grade: $scope.goldBatch.model.grade
-
-    providerForPDF = purchase.provider
-
-    purchasePDF =  purchase
-    # purchasePDF.provider=[]
-
-    $scope.pdfContent = PdfService.createPurchaseInvoice(purchasePDF, providerForPDF, goldBatchForPDF, buyer)
-
-
   #
+  # Flush data on change state
   #
+
   $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
     PurchaseService.flushModel()
     return
