@@ -2,7 +2,6 @@
 #
 # Table name: rucoms
 #
-#  id                 :integer          not null, primary key
 #  idrucom            :string(90)       not null
 #  rucom_record       :text
 #  name               :text
@@ -11,9 +10,10 @@
 #  location           :text
 #  subcontract_number :text
 #  mining_permit      :text
-#  updated_at         :datetime         default(2016-05-19 03:52:01 UTC)
+#  updated_at         :datetime
 #  provider_type      :string(255)
 #  num_rucom          :string(255)
+#  id                 :integer          not null, primary key
 #  rucomeable_type    :string(255)
 #  rucomeable_id      :integer
 #  trazoro            :boolean          default(FALSE), not null

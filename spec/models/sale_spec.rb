@@ -2,17 +2,16 @@
 #
 # Table name: sales
 #
-#  id                      :integer          not null, primary key
-#  courier_id              :integer
-#  client_id               :integer
-#  user_id                 :integer
-#  gold_batch_id           :integer
-#  code                    :string(255)
-#  created_at              :datetime
-#  updated_at              :datetime
-#  origin_certificate_file :string(255)
-#  price                   :float
-#  trazoro                 :boolean          default(FALSE), not null
+#  id            :integer          not null, primary key
+#  courier_id    :integer
+#  client_id     :integer
+#  user_id       :integer
+#  gold_batch_id :integer
+#  code          :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  price         :float
+#  trazoro       :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'

@@ -2,21 +2,18 @@
 #
 # Table name: sales
 #
-#  id                      :integer          not null, primary key
-#  courier_id              :integer
-#  client_id               :integer
-#  user_id                 :integer
-#  gold_batch_id           :integer
-#  code                    :string(255)
-#  created_at              :datetime
-#  updated_at              :datetime
-#  origin_certificate_file :string(255)
-#  price                   :float
-#  trazoro                 :boolean          default(FALSE), not null
+#  id            :integer          not null, primary key
+#  courier_id    :integer
+#  client_id     :integer
+#  user_id       :integer
+#  gold_batch_id :integer
+#  code          :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  price         :float
+#  trazoro       :boolean          default(FALSE), not null
 #
 
-#TODO: change field name from grams to fine_grams
-# however I think the grams or fine_grams is a delegate method like I do with grade
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
@@ -31,6 +28,9 @@ class Sale < ActiveRecord::Base
   belongs_to :courier
   has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :gold_batch
+  has_one :proof_of_sale, class_name: "Document", as: :documentable # NOTE: this will containe either the equivalent document or the invoice.
+  has_one :purchase_files_collection, class_name: "Document", as: :documentable
+
   #
   # Callbacks
   #
