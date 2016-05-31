@@ -10,15 +10,22 @@
 
 class Role < ActiveRecord::Base
 
-#
-# Associations
-#
 
-has_and_belongs_to_many :users
+  #
+  # Constants
+  #
 
-#
-# Validations
-#
+  TYPES = %w(trader final_client trasporter authorized_producer)
 
-validates :name, presence: true
+  #
+  # Associations
+  #
+
+  has_and_belongs_to_many :users
+
+  #
+  # Validations
+  #
+
+  validates :name, presence: true
 end

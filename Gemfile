@@ -8,8 +8,6 @@ gem 'rails', '4.1.9'
 gem 'prawn','1.0.0.rc2'
 gem 'pdf-reader', '~> 1.3.3'
 
-# config
-
 # DB
 gem 'pg'
 gem 'bcrypt'
@@ -39,6 +37,7 @@ gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
+gem 'cancancan'
 gem 'factory_girl_rails'
 gem 'faker'
 gem 'sass'

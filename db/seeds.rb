@@ -1,5 +1,5 @@
 puts 'creating roles...'
-User::ROLE_TYPES.each do |role_name|
+Role::TYPES.each do |role_name|
   Role.create name: role_name
 end
 
@@ -85,7 +85,7 @@ end
 
 puts 'Associating trazoro users ...'
 # Add to the trazoro Office
-trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co'])
+trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co', 'dcm@trazoro.co'])
 trazoro_users.update_all(office_id: office.id)
 
 puts 'Setting user roles ...'
