@@ -10,8 +10,11 @@ module V1
       expose :fine_grams ,documentation: { type: "float", desc: "grams", example: '239923' }
       expose :code ,documentation: { type: "string", desc: "barcode", example: '123123asdfdaf' }
       expose :barcode_html ,documentation: { type: "string", desc: "barcode_html", example: 'TABLE' }
-      expose :origin_certificate_file, documentation: { type: "string", desc: "origin_certificate_file", example: 'TABLE' }
-      expose :price, documentation: { type: "float", desc: "price", example: '123399' } 
+      expose :origin_certificate_file, documentation: { type: "string", desc: "origin_certificate_file", example: 'TABLE' } do |sale, options|
+       # NOTE: this field must to be changed in the front-end
+       sale.purchase_files_collection.file
+      end
+      expose :price, documentation: { type: "float", desc: "price", example: '123399' }
     end
   end
 end
