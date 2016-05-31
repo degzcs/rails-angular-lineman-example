@@ -190,6 +190,8 @@ ActiveRecord::Schema.define(version: 20160527204755) do
     t.integer "role_id"
   end
 
+  add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id", unique: true, using: :btree
+
   create_table "rucoms", force: true do |t|
     t.string   "idrucom",            limit: 90,                   null: false
     t.text     "rucom_record"

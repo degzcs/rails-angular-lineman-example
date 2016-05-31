@@ -88,8 +88,8 @@ puts 'Associating trazoro users ...'
 trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co'])
 trazoro_users.update_all(office_id: office.id)
 
-puts 'Assingning roles to user'
-trade_role = Role.fin_by(name: 'trader')
+puts 'Setting user roles ...'
+trade_role = Role.find_by(name: 'trader')
 trazoro_users.each do |user|
   user.roles << trade_role
 end
