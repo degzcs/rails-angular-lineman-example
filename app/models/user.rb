@@ -38,8 +38,10 @@ class User < ActiveRecord::Base
   end
 
   #
-  # Virtual Attributes
+  # Constants
   #
+
+  ROLE_TYPES = %w(trader final_client trasporter authorized_producer)
 
   #
   # Associations

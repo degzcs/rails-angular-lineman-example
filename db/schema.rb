@@ -186,8 +186,8 @@ ActiveRecord::Schema.define(version: 20160527204755) do
   end
 
   create_table "roles_users", force: true do |t|
-    t.string "user_id"
-    t.string "role_id"
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   create_table "rucoms", force: true do |t|

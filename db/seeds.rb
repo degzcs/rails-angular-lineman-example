@@ -1,6 +1,5 @@
 puts 'creating roles...'
-role_names = %w(trader client trasporter)
-role_names.each do |role_name|
+User::ROLE_TYPES.each do |role_name|
   Role.create name: role_name
 end
 
@@ -62,6 +61,7 @@ begin
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
         city: city,
         office: office,)
+
   FactoryGirl.create(:user,
         first_name: 'Diego',
         last_name: 'Gomez',
@@ -87,6 +87,12 @@ puts 'Associating trazoro users ...'
 # Add to the trazoro Office
 trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co'])
 trazoro_users.update_all(office_id: office.id)
+
+puts 'Assingning roles to user'
+trade_role = Role.fin_by(name: 'trader')
+trazoro_users.each do |user|
+  user.roles << trade_role
+end
 
 unless Rails.env.production?
   # Rucoms for User as clients
