@@ -36,6 +36,7 @@ class Sale < ActiveRecord::Base
   #
   # Callbacks
   #
+
   before_save :generate_barcode
 
   #
@@ -45,9 +46,15 @@ class Sale < ActiveRecord::Base
   #
   # Validations
   #
+
   validates :courier_id, presence: true
   validates :client_id, presence: true
   validates :user_id, presence: true
+
+  # NOTE: temporal method to avoid break up the app. It must to be removes asap.
+  def origin_certificate_file
+    self.purchase_files_collection.file
+  end
 
   def barcode_html
     barcode = Barby::EAN13.new(self.code)
@@ -67,31 +74,32 @@ class Sale < ActiveRecord::Base
   end
 
   protected
-    #Before the sale is saved generate a barcode and its html representation
-    def generate_barcode
-      # new_id = Sale.count + 1
-      # code = new_id.to_s.rjust(12, '0')
-      # self.code = code
 
-      # Number System: 3 digits
-      # this is Colombia code:
-      number_system = "770"
+  #Before the sale is saved generate a barcode and its html representation
+  def generate_barcode
+    # new_id = Sale.count + 1
+    # code = new_id.to_s.rjust(12, '0')
+    # self.code = code
 
-      # Manufacturer Code: 5 digits
-      # this is the office code:
-      mfg_code =  self.client_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
-                                                    # In puchases mfg_code uses the user id. Using client_id in sales for
-                                                    # ensuring uniqueness (?)
+    # Number System: 3 digits
+    # this is Colombia code:
+    number_system = "770"
 
-      # Product Code: 4 digits
-      # This is the goldbach code:
-      product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
-                                                          # (!) This doesn't guarantee the product code to be unique once
-                                                          # the gold_batch id sequence reaches the 9999 value, does it?
+    # Manufacturer Code: 5 digits
+    # this is the office code:
+    mfg_code =  self.client_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+                                                  # In puchases mfg_code uses the user id. Using client_id in sales for
+                                                  # ensuring uniqueness (?)
 
-      # Check Digit: 1 digit
-      # this is calculated by Barby (gem)
-      code = "#{number_system}#{mfg_code}#{product_code}"
-      self.code = code
-    end
+    # Product Code: 4 digits
+    # This is the goldbach code:
+    product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+                                                        # (!) This doesn't guarantee the product code to be unique once
+                                                        # the gold_batch id sequence reaches the 9999 value, does it?
+
+    # Check Digit: 1 digit
+    # this is calculated by Barby (gem)
+    code = "#{number_system}#{mfg_code}#{product_code}"
+    self.code = code
+  end
 end

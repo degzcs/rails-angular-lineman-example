@@ -53,7 +53,7 @@ describe 'Sale', :type => :request do
 
       context "GET" do
         before(:all) do
-          create_list(:sale, 20, user: User.last)
+          create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, user: User.last)
         end
         context '/' do
           it 'verifies that response has the elements number specified in per_page param' do
@@ -91,7 +91,10 @@ describe 'Sale', :type => :request do
             @sale.user.rucom = create(:rucom)
             @sale.user.save
             file_path = "#{Rails.root}/spec/support/pdfs/origin_certificate_file.pdf"
-            File.open(file_path){|f|  @sale.origin_certificate_file = f}
+            @sale.build_purchase_files_collection(
+              file: File.open(file_path),
+              type: 'purchase_files_collection'
+            )
             @sale.save
             @sale.reload
           end
@@ -117,7 +120,7 @@ describe 'Sale', :type => :request do
               fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: provider_hash.stringify_keys,
-              origin_certificate_file: {"url"=>"/uploads/documents/sale/origin_certificate_file/#{@sale.id}/origin_certificate_file.pdf"}
+              origin_certificate_file: {"url"=>"/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/origin_certificate_file.pdf"}
             }
 
             get "/api/v1/sales/get_by_code/#{@sale.code}",{},{ "Authorization" => "Barer #{@token}" }

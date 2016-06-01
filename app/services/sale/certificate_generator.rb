@@ -18,8 +18,10 @@ class Sale::CertificateGenerator
                               @certificate_files = origin_certificate_files_from_local_machine
                               exec_commands_on_local_machine!(options[:timestamp])
                             end
-
-    sale.purchase_files_collection.file = open(temporal_file_location)
+    sale.build_purchase_files_collection(
+      file: open(temporal_file_location),
+      type: 'purchase_files_collection'
+      )
     sale.save!
   end
 
