@@ -51,7 +51,7 @@ class Sale < ActiveRecord::Base
   validates :client_id, presence: true
   validates :user_id, presence: true
 
-  # NOTE: temporal method to avoid break up the app. It must to be removes asap.
+  # NOTE: temporal method to avoid   break the app. It must to be removed asap.
   def origin_certificate_file
     self.purchase_files_collection.file
   end

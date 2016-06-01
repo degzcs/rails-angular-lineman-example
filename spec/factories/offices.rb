@@ -15,6 +15,7 @@ FactoryGirl.define do
   factory :office do
     sequence(:name) { |n| "office-#{n}" }
     company
+    city
     address { Faker::Address.street_address }
   end
 

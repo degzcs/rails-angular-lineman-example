@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527204755) do
+ActiveRecord::Schema.define(version: 20160601201435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160527204755) do
     t.string   "rut_file"
     t.string   "mining_register_file"
     t.integer  "legal_representative_id"
+    t.string   "address"
   end
 
   add_index "companies", ["legal_representative_id"], name: "index_companies_on_legal_representative_id", using: :btree

@@ -58,7 +58,7 @@ FactoryGirl.define do
 
     trait :with_company do
       before :create do |user, e|
-        user.office = create(:office)
+        user.office = create(:company).main_office
       end
     end
 
@@ -75,7 +75,7 @@ FactoryGirl.define do
 
         factory :client_with_fake_rucom, class: User do
             personal_rucom nil
-            office { create(:office, :with_fake_rucom)}
+            office { create(:company).main_office }
         end
     end
 

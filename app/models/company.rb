@@ -87,9 +87,9 @@ class Company < ActiveRecord::Base
   end
 
   # @return [ String ] with the address
-  def address
-    main_office.address
-  end
+  # def address
+  #   main_office.address
+  # end
 
   # NOTE: These methods are temporal, created in order to don't break the app.
   def id_number_legal_rep
@@ -117,7 +117,7 @@ class Company < ActiveRecord::Base
   # To have consistency this office is called PRINCIPAL and it is located in the same
   # place where the company was registered.
   def create_basic_office!
-    self.offices.create(name: 'principal', city: City.find_by(name: city)) if self.offices.blank?
+    self.offices.create(name: 'principal', city: City.find_by(name: city), address: self.address) if self.offices.blank?
   end
 
   # Double check that the company is empty. if not raise an error and avoid delete this company

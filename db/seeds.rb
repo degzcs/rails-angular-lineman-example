@@ -33,6 +33,7 @@ begin
                                 nit_number: 'temp_number',
                                 email: 'soport@trazoro.co',
                                 phone_number: '3004322618',
+                                address: 'carrera 44 # 19 A 20',
                               )
 rescue => e
   company = Company.find_by(nit_number: 'temp_number')

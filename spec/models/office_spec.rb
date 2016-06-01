@@ -17,7 +17,7 @@ require 'spec_helper'
 
 describe Office  do
   context "test factory" do
-    let(:office) {build(:office)}
+    let(:office) { build(:office) }
     it {expect(office.name).not_to be_nil }
     it {expect(office.company).not_to be_nil }
   end

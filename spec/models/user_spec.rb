@@ -172,10 +172,8 @@ describe  User, type: :model do
     context "rucom" do
       context "users or external users with company" do
         it "should respond with the rucom's company" do
-          company = create(:company)
-          office = create(:office, company: company)
-          user = create(:user, office: office)
-          external_user = create(:external_user, office: office)
+          user = create(:user, :with_company)
+          external_user = create(:external_user, :with_company)
           expect(user.rucom).to eq company.rucom
           expect(external_user.rucom).to eq company.rucom
         end

@@ -25,7 +25,7 @@ module V1
       expose :phone, documentation: { type: "string", desc: "Phone number", example: "312344626" }
       expose :photo_file, documentation: { type: "photo", desc: "photo file", example: "" }
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" } do |user, e|
-        user.company.as_indexed_json
+        user.company.as_indexed_json if user.has_office?
       end
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
     end

@@ -30,8 +30,8 @@ describe Company::Registration do
     @company_data = {
       nit_number: '654321987',
       name: 'Fake Company SAS',
-      city: 'ATIOQUIA',
-      state: 'MEDELLIN',
+      state: 'ATIOQUIA',
+      city: 'MEDELLIN',
       country: 'COLOMBIA',
       email: 'fake.company@thecompany.com',
       phone_number: '3001112233',
@@ -39,6 +39,7 @@ describe Company::Registration do
       external: false, #?
       rut_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf"),
       mining_register_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'),"application/pdf"),
+      address: 'Street 123'
     }
   end
 
