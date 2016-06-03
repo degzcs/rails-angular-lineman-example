@@ -1,21 +1,21 @@
 #This Generator joins all sold batches in one unique pdf.
-class Sale::CertificateGenerator
-  attr_accessor :sale, :certificate_files
+class Sale::PruchaseFilesGenerator
+  attr_accessor :sale, :files
 
   def initialize(options={})
-    @certificate_files = []
+    @files = []
   end
 
   def call(options={})
     raise 'You must to set the sale option' if options[:sale].blank?
     @sale = options[:sale]
-    @certificate_files = options[:certificate_files] || []
+    @files = options[:files] || []
 
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
-                              @certificate_files = origin_certificate_files_from_aws_s3
+                              @files = origin_files_from_aws_s3
                               exec_commands_on_aws_s3!(options[:timestamp])
                             else
-                              @certificate_files = origin_certificate_files_from_local_machine
+                              @files = purchase_files_from_local_machine
                               exec_commands_on_local_machine!(options[:timestamp])
                             end
     sale.build_purchase_files_collection(
@@ -31,7 +31,7 @@ class Sale::CertificateGenerator
     folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
 
     if create_temporal_folder(folder_path)
-      join_files(folder_path, certificate_files, final_temporal_file_name)
+      join_files(folder_path, files, final_temporal_file_name)
     else
       raise 'The folder was not creted!'
     end
@@ -107,14 +107,18 @@ class Sale::CertificateGenerator
     sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate_file.path).to_s }
   end
 
-  def purchase_files_from(purchase)
-    # origin certificate
-    purchase.origin_certificate_file.path
+  # @param purhcase [ Purchase ]
+  # @return [ Array ] with all document paths belonging to the  given purchase
+  def purchase_files_from_local_machine(purchase)
+    file_paths = []
+    # Origin certificate
+    file_paths << Rails.root.join(purchase.origin_certificate_file.path)
     # ID
-    purchase.user.id_document_file
+    file_paths << Rails.root.join(purchase.user.id_document_file.path)
     # barequero id OR miner register OR resolution
-    purchase.user.mining_register_file
+    file_paths << Rails.root.join(purchase.user.mining_register_file.path)
     # purchase equivalent document
-    purchase.proof_of_purchase.file
+    file_paths << Rails.root.join(purchase.proof_of_purchase.file.path)
+    file_paths
   end
 end

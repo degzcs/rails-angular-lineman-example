@@ -13,7 +13,7 @@ class Sale::Registration
     ActiveRecord::Base.transaction do
       update_inventories(selected_purchases)
       register_sold_batches(sale, selected_purchases)
-      ::Sale::CertificateGenerator.new.call(sale: sale)
+      ::Sale::PruchaseFilesGenerator.new.call(sale: sale)
     end
   end
 
