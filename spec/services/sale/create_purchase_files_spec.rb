@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Sale::PurchaseFilesGenerator do
-  let(:service){ Sale::PurchaseFilesGenerator.new }
+describe Sale::CreatePurchaseFilesCollection do
+  let(:service){ Sale::CreatePurchaseFilesCollection.new }
   let(:sale) { create(:sale, :with_batches, purchase_files_collection: nil) }
 
   context 'PDFs' do

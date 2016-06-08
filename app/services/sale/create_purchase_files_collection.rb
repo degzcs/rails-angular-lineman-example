@@ -1,5 +1,5 @@
 #This Generator joins all sold batches in one unique pdf.
-class Sale::PurchaseFilesGenerator
+class Sale::CreatePurchaseFilesCollection
   attr_accessor :sale, :response
 
   def initialize(options={})
@@ -9,14 +9,15 @@ class Sale::PurchaseFilesGenerator
     raise 'You must to set the sale option' if options[:sale].blank?
     @sale = options[:sale]
     files = options[:files] || []
+    timestamp = options[:timestamp] || Time.now.to_i
     @response = {}
 
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
                               file_paths = purchase_files_from_aws_s3(sale.batches.map(&:purchase))
-                              exec_commands_on_aws_s3!(options[:timestamp], file_paths)
+                              exec_commands_on_aws_s3!(timestamp, file_paths)
                             else
                               files = purchase_files_from_local_machine(sale.batches.map(&:purchase))
-                              exec_commands_on_local_machine!(options[:timestamp], files)
+                              exec_commands_on_local_machine!(timestamp, files)
                             end
 
     @response = generate_file_for!(sale, temporal_file_location)
@@ -28,7 +29,7 @@ class Sale::PurchaseFilesGenerator
   # @param file [ File ]
   # @return [ Hash ] with the response
   def generate_file_for!(sale, file)
-    sale.build_purchase_files_collection(
+    sale.documents.build(
       file: open(file),
       type: 'purchase_files_collection'
       )
@@ -36,7 +37,7 @@ class Sale::PurchaseFilesGenerator
   end
 
   #
-  def exec_commands_on_local_machine!(timestamp=Time.now.to_i, file_paths)
+  def exec_commands_on_local_machine!(timestamp, file_paths)
     final_temporal_file_name = "certificate-#{ timestamp }.pdf"
     folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
 
@@ -50,7 +51,7 @@ class Sale::PurchaseFilesGenerator
   # TODO: check if it is better to use AWS Lambda instead to download
   # all files to the EC2 instance.
   # @return [ String ] with the temporal file location
-  def exec_commands_on_aws_s3!(timestamp=Time.now.to_i, files)
+  def exec_commands_on_aws_s3!(timestamp, files)
     final_temporal_file_name = "certificate-#{ timestamp }.pdf"
     folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
 

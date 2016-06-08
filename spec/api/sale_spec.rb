@@ -12,7 +12,8 @@ describe 'Sale', :type => :request do
         it 'should create one complete sale' do
           client = create(:external_user, :with_company)
           courier = create(:courier)
-          purchases = create_list(:purchase, 2, :with_proof_of_purchase_file, user: @user)
+          purchases = create_list(:purchase, 2, :with_proof_of_purchase_file, user: @user) # this @user is the buyer
+
           selected_purchases = purchases.map do |purchase|
             {
               'purchase_id' => purchase.id,
@@ -25,27 +26,34 @@ describe 'Sale', :type => :request do
             "courier_id"=>1,
             "client_id"=>client.id,
             "user_id"=>@user.id,
-            "gold_batch_id"=>3,
+            "gold_batch_id"=> GoldBatch.last.id + 1,
             "fine_grams"=>1.5,
           }
 
           new_gold_batch_values = {
-            "id" => 3,
+            # "id" => expected_response['gold_batch_id'],
             # "parent_batches" => "",
             "fine_grams" => 1.5,
             "grade" => 1,
             "inventory_id" => 1,
           }
 
-          new_values ={
-            "id"=>1,
-            "courier_id"=>courier.id,
-            "client_id"=>client.id,
-            "user_id"=>@user.id,
-            "gold_batch_id" => new_gold_batch_values["id"]
+          new_sale_values ={
+            # "id"=>1,
+            "courier_id"=> courier.id,
+            "client_id"=> client.id,
+            "user_id"=> @user.id,
+            "price" => 180
+            # "gold_batch_id" => expected_response['gold_batch_id']
           }
 
-          post '/api/v1/sales/', {gold_batch: new_gold_batch_values, sale: new_values, selected_purchases: selected_purchases },{"Authorization" => "Barer #{@token}"}
+          post '/api/v1/sales/', {
+            gold_batch: new_gold_batch_values,
+            sale: new_sale_values,
+            selected_purchases: selected_purchases
+            },
+            {"Authorization" => "Barer #{ @token }"}
+
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end

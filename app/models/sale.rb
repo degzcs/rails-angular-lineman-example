@@ -30,8 +30,7 @@ class Sale < ActiveRecord::Base
   belongs_to :courier
   has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   belongs_to :gold_batch
-  has_one :proof_of_sale, class_name: "Document", as: :documentable # NOTE: this will containe either the equivalent document or the invoice.
-  has_one :purchase_files_collection, class_name: "Document", as: :documentable
+  has_many :documents, class_name: "Document", as: :documentable
 
   #
   # Callbacks
@@ -54,6 +53,15 @@ class Sale < ActiveRecord::Base
   # NOTE: temporal method to avoid   break the app. It must to be removed asap.
   def origin_certificate_file
     self.purchase_files_collection.file
+  end
+
+  # NOTE: this will containe either the equivalent document or the invoice.
+  def purchase_files_collection
+    documents.where(type: 'purchase_files_collection').first
+  end
+
+  def proof_of_sale
+    documents.where(type: 'proof_of_sale').first
   end
 
   def barcode_html

@@ -66,14 +66,16 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-            selected_purchases = params[:selected_purchases]
-            sale = current_user.sales.build(params[:sale])
-            sale.build_gold_batch(params[:gold_batch])
-            sale.save!
-            ::Sale::Registration.new.call(sale: sale, selected_purchases: selected_purchases)
+            registration_service = ::Sale::RegistrationService.new
+            response = registration_service.call(
+              sale_values: params[:sale],
+              seller: current_user,
+              gold_batch_values: params[:gold_batch],
+              selected_purchases: params[:selected_purchases],
+              )
 
-            present sale, with: V1::Entities::Sale
-            Rails.logger.info(sale.errors.inspect)
+            present registration_service.sale, with: V1::Entities::Sale
+            Rails.logger.info(response)
         end
 
         desc 'returns all existent sale for the current user', {
