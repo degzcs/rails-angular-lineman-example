@@ -55,13 +55,17 @@ class Sale < ActiveRecord::Base
     self.purchase_files_collection.file
   end
 
-  # NOTE: this will containe either the equivalent document or the invoice.
+  # It is the collection of all origin certificates, buyer IDs,
+  # equivalente documents or invoices, barequero Id or miner register documents.
+  # @return [ Document ]
   def purchase_files_collection
     documents.where(type: 'purchase_files_collection').first
   end
 
+  # It could be a equivalent_document or invoice, for now it is using the first one only.
+  # @return [ Document ]
   def proof_of_sale
-    documents.where(type: 'proof_of_sale').first
+    documents.where(type: 'equivalent_document').first
   end
 
   def barcode_html
