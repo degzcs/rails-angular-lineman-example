@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Purchase::GoldPurchaseService do
+describe Purchase::BuyGoldService do
 
   let(:company){ create :company}
   let(:legal_representative) do
@@ -9,7 +9,7 @@ describe Purchase::GoldPurchaseService do
     user
   end
 
-  subject(:service){ Purchase::GoldPurchaseService.new }
+  subject(:service){ Purchase::BuyGoldService.new }
 
   context 'non trazoro user (from externanl user) ' do
 

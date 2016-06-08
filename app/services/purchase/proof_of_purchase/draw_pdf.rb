@@ -2,7 +2,7 @@ require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/prawn_outputter'
 
-class Purchase::PdfGenerator < Prawn::Document
+class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
   attr_accessor :base_file
 

@@ -1,6 +1,6 @@
-class Purchase::ProofOfPurchaseGeneration
+class Purchase::ProofOfPurchase::GenerationService
 
-  attr_accessor :purchase_presenter, :pdf_generator_service_class
+  attr_accessor :purchase_presenter, :draw_pdf_service_class
 
   def intiliaze(options={})
   end
@@ -9,7 +9,7 @@ class Purchase::ProofOfPurchaseGeneration
   def call(options={})
     raise "You must to provide a purchase param" if options[:purchase].blank?
     @purchase_presenter = ProofOfPurchasePresenter.new(options[:purchase], nil)
-    @pdf_generator_service_class = options[:pdf_generator_service] || Purchase::PdfGenerator
+    @draw_pdf_service_class = options[:draw_pdf_service] || ::Purchase::ProofOfPurchase::DrawPDF
     timestamp = options[:timestamp] || Time.now.to_i
     response = {}
 
@@ -30,7 +30,7 @@ class Purchase::ProofOfPurchaseGeneration
   private
 
   def generate_file_for(purchase_presenter, temporal_file_path, document_type)
-    file = pdf_generator_service_class.new.call(purchase_presenter: purchase_presenter)
+    file = draw_pdf_service_class.new.call(purchase_presenter: purchase_presenter)
     file.render_file(temporal_file_path)
     purchase_presenter.build_proof_of_purchase(
       file: File.open(temporal_file_path),

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Purchase::ProofOfPurchaseGeneration do
+describe Purchase::ProofOfPurchase::GenerationService do
   let(:buyer){ create :user, :with_company }
   let(:gold_batch){ create(:gold_batch, fine_grams: 10, grade: 999, extra_info: { grams: 10 }) }
   let(:purchase){ create :purchase, user: buyer, gold_batch: gold_batch }
-  let(:service){ Purchase::ProofOfPurchaseGeneration.new }
+  let(:service){ Purchase::ProofOfPurchase::GenerationService.new }
   context 'check process' do
     it 'should to create a pdf file with the correct information' do
       response = service.call(purchase: purchase)

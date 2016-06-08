@@ -4,7 +4,7 @@
 # 2. when the current user (buyer) buy gold from provider who is  an active user in the plataform
 # the provider types under this category are: ""
 #
-class Purchase::GoldPurchaseService
+class Purchase::BuyGoldService
   attr_accessor :buyer
   attr_accessor :seller
   attr_accessor :purchase
@@ -49,7 +49,7 @@ class Purchase::GoldPurchaseService
         response[:success] = @purchase.save!
         response[:errors] = @purchase.errors.full_messages
         discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
-        response = ::Purchase::ProofOfPurchaseGeneration.new.call(purchase: purchase) if response[:success]
+        response = ::Purchase::ProofOfPurchase::GenerationService.new.call(purchase: purchase) if response[:success]
       end
     else
       response[:success] = false

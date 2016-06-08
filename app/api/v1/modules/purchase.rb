@@ -55,7 +55,7 @@ module V1
 
           # update params
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
-          gold_purchase_service = ::Purchase::GoldPurchaseService.new
+          gold_purchase_service = ::Purchase::BuyGoldService.new
           response = gold_purchase_service.call(purchase_hash: new_params[:purchase], gold_batch_hash: new_params[:gold_batch], current_user: current_user)
           if response[:success]
             present gold_purchase_service.purchase , with: V1::Entities::Purchase
