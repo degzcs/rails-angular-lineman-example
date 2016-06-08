@@ -15,7 +15,7 @@ class Role < ActiveRecord::Base
   # Constants
   #
 
-  TYPES = %w(trader final_client trasporter authorized_producer)
+  TYPES = %w(trader final_client transporter authorized_producer)
 
   #
   # Associations

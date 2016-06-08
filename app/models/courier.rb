@@ -15,9 +15,20 @@
 #  updated_at         :datetime
 #
 
+# TODO: This model has to evolve in order to allow create many user per company and be more realistic
+# SEE: http://preciousmetaltax.com/transporting-metals-internationally/
 class Courier < ActiveRecord::Base
+
+  #
+  # validations
+  #
+
   has_many :sales
-  
+
+  #
+  # Validations
+  #
+
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :phone_number, presence: true

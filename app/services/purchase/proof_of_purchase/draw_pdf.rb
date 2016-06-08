@@ -56,6 +56,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
 
     # Provider
+    # TODO: use seller instead provider to represent this kind of user
     provider_presenter = purchase_presenter.provider_presenter
     move_cursor_to 530
     text_box provider_presenter.company_name, :at => [130,cursor], :width => 150 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
