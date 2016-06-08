@@ -1,5 +1,5 @@
 #This Generator joins all sold batches in one unique pdf.
-class Sale::PruchaseFilesGenerator
+class Sale::PurchaseFilesGenerator
   attr_accessor :sale, :files
 
   def initialize(options={})
@@ -15,7 +15,7 @@ class Sale::PruchaseFilesGenerator
                               @files = origin_files_from_aws_s3
                               exec_commands_on_aws_s3!(options[:timestamp])
                             else
-                              @files = purchase_files_from_local_machine
+                              @files = purchase_files_from_local_machine(sale.batches.map(&:purchase))
                               exec_commands_on_local_machine!(options[:timestamp])
                             end
     sale.build_purchase_files_collection(
@@ -107,10 +107,11 @@ class Sale::PruchaseFilesGenerator
     sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate_file.path).to_s }
   end
 
-  # @param purhcase [ Purchase ]
+  # @param purhcase [ Array ] with all Purchase realted with the current sale
   # @return [ Array ] with all document paths belonging to the  given purchase
-  def purchase_files_from_local_machine(purchase)
+  def purchase_files_from_local_machine(purchases)
     file_paths = []
+    purchases.each do |purchase|
     # Origin certificate
     file_paths << Rails.root.join(purchase.origin_certificate_file.path)
     # ID
@@ -119,6 +120,7 @@ class Sale::PruchaseFilesGenerator
     file_paths << Rails.root.join(purchase.user.mining_register_file.path)
     # purchase equivalent document
     file_paths << Rails.root.join(purchase.proof_of_purchase.file.path)
+    end
     file_paths
   end
 end

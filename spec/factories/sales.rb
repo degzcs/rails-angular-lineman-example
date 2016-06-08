@@ -50,7 +50,7 @@ FactoryGirl.define do
       after :create do |sale, e|
         provider = User.where(email: 'tech@trazoro.co').first || create(:external_user)
         e.number_of_batches.times do |index|
-          purchase = create(:purchase, user: sale.user, provider: provider)
+          purchase = create(:purchase, :with_proof_of_purchase_file, user: sale.user, provider: provider)
           create(:sold_batch, sale: sale, purchase: purchase )
         end
       end
