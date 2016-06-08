@@ -17,6 +17,7 @@
 #  rut_file                 :string(255)
 #  mining_register_file     :string(255)
 #  legal_representative_id  :integer
+#  address                  :string(255)
 #
 
 require 'spec_helper'

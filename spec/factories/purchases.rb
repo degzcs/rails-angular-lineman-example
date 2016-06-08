@@ -3,10 +3,7 @@
 # Table name: purchases
 #
 #  id                          :integer          not null, primary key
-#  user_id                     :integer
-#  provider_id                 :integer
 #  origin_certificate_sequence :string(255)
-#  gold_batch_id               :integer
 #  origin_certificate_file     :string(255)
 #  created_at                  :datetime
 #  updated_at                  :datetime
@@ -14,7 +11,8 @@
 #  seller_picture              :string(255)
 #  code                        :text
 #  trazoro                     :boolean          default(FALSE), not null
-#  sale_id                     :integer
+#  seller_id                   :integer
+#  inventory_id                :integer
 #
 
 FactoryGirl.define do

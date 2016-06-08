@@ -3,11 +3,11 @@
 # Table name: inventories
 #
 #  id               :integer          not null, primary key
-#  purchase_id      :integer
 #  remaining_amount :float            not null
 #  status           :boolean          default(TRUE), not null
 #  created_at       :datetime
 #  updated_at       :datetime
+#  user_id          :integer
 #
 
 FactoryGirl.define do

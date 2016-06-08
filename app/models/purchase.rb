@@ -3,10 +3,7 @@
 # Table name: purchases
 #
 #  id                          :integer          not null, primary key
-#  user_id                     :integer
-#  provider_id                 :integer
 #  origin_certificate_sequence :string(255)
-#  gold_batch_id               :integer
 #  origin_certificate_file     :string(255)
 #  created_at                  :datetime
 #  updated_at                  :datetime
@@ -14,7 +11,8 @@
 #  seller_picture              :string(255)
 #  code                        :text
 #  trazoro                     :boolean          default(FALSE), not null
-#  sale_id                     :integer
+#  seller_id                   :integer
+#  inventory_id                :integer
 #
 
 require 'barby'
@@ -27,10 +25,10 @@ class Purchase < ActiveRecord::Base
   # Associations
   #
 
-  belongs_to :user # TODO: change name to buyer.
+  has_one :user, through: :inventory # TODO: change name to buyer.
   belongs_to :provider, class_name: "User"
 
-  belongs_to :gold_batch
+  has_one :gold_batch
   has_one :inventory
   has_many :sold_batches
   has_one :proof_of_purchase, class_name: "Document", as: :documentable # NOTE: this name is the most close to the real meaning of this field, because it is not always an invoice, most of the time it will be a equivalent-document.

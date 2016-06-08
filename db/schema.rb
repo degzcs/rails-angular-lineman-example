@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601201435) do
+ActiveRecord::Schema.define(version: 20160608231710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,17 +131,21 @@ ActiveRecord::Schema.define(version: 20160601201435) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "extra_info"
+    t.string   "goldomable_type"
+    t.integer  "goldomable_id"
   end
 
+  add_index "gold_batches", ["goldomable_id"], name: "index_gold_batches_on_goldomable_id", using: :btree
+
   create_table "inventories", force: true do |t|
-    t.integer  "purchase_id"
     t.float    "remaining_amount",                null: false
     t.boolean  "status",           default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
-  add_index "inventories", ["purchase_id"], name: "index_inventories_on_purchase_id", using: :btree
+  add_index "inventories", ["user_id"], name: "index_inventories_on_user_id", using: :btree
 
   create_table "offices", force: true do |t|
     t.string   "name"
@@ -166,10 +170,7 @@ ActiveRecord::Schema.define(version: 20160601201435) do
   add_index "population_centers", ["city_id"], name: "index_population_centers_on_city_id", using: :btree
 
   create_table "purchases", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "provider_id"
     t.string   "origin_certificate_sequence"
-    t.integer  "gold_batch_id"
     t.string   "origin_certificate_file"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -177,8 +178,11 @@ ActiveRecord::Schema.define(version: 20160601201435) do
     t.string   "seller_picture"
     t.text     "code"
     t.boolean  "trazoro",                     default: false, null: false
-    t.integer  "sale_id"
+    t.integer  "seller_id"
+    t.integer  "inventory_id"
   end
+
+  add_index "purchases", ["seller_id"], name: "index_purchases_on_seller_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -212,15 +216,17 @@ ActiveRecord::Schema.define(version: 20160601201435) do
 
   create_table "sales", force: true do |t|
     t.integer  "courier_id"
-    t.integer  "client_id"
-    t.integer  "user_id"
-    t.integer  "gold_batch_id"
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "price"
-    t.boolean  "trazoro",       default: false, null: false
+    t.boolean  "trazoro",      default: false, null: false
+    t.integer  "inventory_id"
+    t.integer  "buyer_id"
   end
+
+  add_index "sales", ["buyer_id"], name: "index_sales_on_buyer_id", using: :btree
+  add_index "sales", ["inventory_id"], name: "index_sales_on_inventory_id", using: :btree
 
   create_table "sold_batches", force: true do |t|
     t.integer  "purchase_id"

@@ -41,22 +41,23 @@ class User < ActiveRecord::Base
   # Associations
   #
 
-  has_many :purchases
-  has_many :sales
-  has_many :purchases_as_provider , class_name: "Purchase", as: :provider
+  has_one :inventory, dependent: :destroy
+  has_many :purchases, through: :inventory
+  has_many :sales, through: :inventory
   # TODO: urgent refactor this association and all logic associate with it.
   # The solution for all this kind of issues is create user roles and add cancancan gem to give access
   # and select this role when the sale will be done on the sale module/service
-  has_many :sales_as_client, class_name: "Sale", as: :client
+  # has_many :purchases_as_provider , class_name: "Purchase", as: :provider
+  # has_many :sales_as_client, class_name: "Sale", as: :client
   has_one :personal_rucom, class_name: "Rucom",  as: :rucomeable
 
-  has_many :credit_billings
+  has_many :credit_billings, dependent: :destroy
   belongs_to :office
   has_one :company, through: :office
   belongs_to :city
   has_one :state, through: :city
   # TODO: create migration to remote this field
-  belongs_to :population_center
+  # belongs_to :population_center
 
   # #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
   # enum user_type: [ :barequero, :comercializador, :solicitante, :beneficiario, :consumidor, :titular, :subcontrato, :inscrito]

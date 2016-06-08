@@ -2,13 +2,15 @@
 #
 # Table name: gold_batches
 #
-#  id           :integer          not null, primary key
-#  fine_grams   :float
-#  grade        :integer
-#  inventory_id :integer
-#  created_at   :datetime
-#  updated_at   :datetime
-#  extra_info   :text
+#  id              :integer          not null, primary key
+#  fine_grams      :float
+#  grade           :integer
+#  inventory_id    :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  extra_info      :text
+#  goldomable_type :string(255)
+#  goldomable_id   :integer
 #
 
 # NOTE: the fine_grams are the resulting from grams*grade/999 (999 is the maximun gold purity percentage)
@@ -34,8 +36,7 @@ class GoldBatch < ActiveRecord::Base
   # Associations
   #
 
-  has_many :purchases
-  has_many :sales
+  belongs_to :goldomable, polymorphic: true
 
   #
   # Instance Methods
