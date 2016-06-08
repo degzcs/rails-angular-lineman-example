@@ -11,7 +11,6 @@ class Sale::CreatePurchaseFilesCollection
     files = options[:files] || []
     timestamp = options[:timestamp] || Time.now.to_i
     @response = {}
-
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
                               file_paths = purchase_files_from_aws_s3(sale.batches.map(&:purchase))
                               exec_commands_on_aws_s3!(timestamp, file_paths)

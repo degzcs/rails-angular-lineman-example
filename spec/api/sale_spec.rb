@@ -99,7 +99,7 @@ describe 'Sale', :type => :request do
             @sale.user.rucom = create(:rucom)
             @sale.user.save
             file_path = "#{Rails.root}/spec/support/pdfs/origin_certificate_file.pdf"
-            @sale.build_purchase_files_collection(
+            @sale.documents.build(
               file: File.open(file_path),
               type: 'purchase_files_collection'
             )
@@ -128,8 +128,9 @@ describe 'Sale', :type => :request do
               fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: provider_hash.stringify_keys,
-              origin_certificate_file: {"url"=>"/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/origin_certificate_file.pdf"}
+              origin_certificate_file: {"url"=>"/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/documento_equivalente_de_venta.pdf"}
             }
+            # TODO: upgrade Front end with proof_of_sale and purchase_files_collections files
 
             get "/api/v1/sales/get_by_code/#{@sale.code}",{},{ "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 200
