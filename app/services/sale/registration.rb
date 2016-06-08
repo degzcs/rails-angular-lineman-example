@@ -1,5 +1,5 @@
 class Sale::Registration
-  attr_accessor :sale, :selected_purchases
+  attr_accessor :sale, :selected_purchases. :response
 
   def initialize
   end
@@ -9,11 +9,12 @@ class Sale::Registration
     raise 'You must to provide a selected_purchases option' if options[:selected_purchases].blank?
     @sale = options[:sale]
     @selected_purchases = options[:selected_purchases]
+    @response = {}
 
     ActiveRecord::Base.transaction do
       update_inventories(selected_purchases)
       register_sold_batches(sale, selected_purchases)
-      ::Sale::PruchaseFilesGenerator.new.call(sale: sale)
+      @response = ::Sale::PruchaseFilesGenerator.new.call(sale: sale)
     end
   end
 

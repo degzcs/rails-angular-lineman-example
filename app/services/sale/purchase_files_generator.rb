@@ -1,6 +1,6 @@
 #This Generator joins all sold batches in one unique pdf.
 class Sale::PurchaseFilesGenerator
-  attr_accessor :sale
+  attr_accessor :sale, :response
 
   def initialize(options={})
   end
@@ -9,6 +9,7 @@ class Sale::PurchaseFilesGenerator
     raise 'You must to set the sale option' if options[:sale].blank?
     @sale = options[:sale]
     files = options[:files] || []
+    @response = {}
 
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
                               file_paths = purchase_files_from_aws_s3(sale.batches.map(&:purchase))
@@ -17,11 +18,21 @@ class Sale::PurchaseFilesGenerator
                               files = purchase_files_from_local_machine(sale.batches.map(&:purchase))
                               exec_commands_on_local_machine!(options[:timestamp], files)
                             end
+
+    @response = generate_file_for!(sale, temporal_file_location)
+  end
+
+  private
+
+  # @param sale [ Sale ]
+  # @param file [ File ]
+  # @return [ Hash ] with the response
+  def generate_file_for!(sale, file)
     sale.build_purchase_files_collection(
-      file: open(temporal_file_location),
+      file: open(file),
       type: 'purchase_files_collection'
       )
-    sale.save!
+    { success: sale.save, errors: sale.errors.full_messages }
   end
 
   #
@@ -52,7 +63,6 @@ class Sale::PurchaseFilesGenerator
     end
   end
 
-  private
 
   # @param folder_path [ String ] where the files will be saved temporarily
   # @param temporal_files [ Array ] of Hashes

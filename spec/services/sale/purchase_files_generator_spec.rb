@@ -9,6 +9,7 @@ describe Sale::PurchaseFilesGenerator do
       timestamp = Time.now.to_i
       service.call(sale: sale, timestamp: timestamp)
       expect(sale.purchase_files_collection.file.filename).to eq "certificate-#{timestamp}.pdf"
+      expect(service.response[:success]).to be true
     end
   end
 end
