@@ -35,5 +35,5 @@ class Courier < ActiveRecord::Base
   validates :address, presence: true
   validates :id_document_type, presence: true
   validates :id_document_number, presence: true
-
 end
+

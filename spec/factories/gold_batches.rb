@@ -18,6 +18,5 @@ FactoryGirl.define do
   factory :gold_batch do
     fine_grams { 100 }
     grade { 850 }
-    # inventory
   end
 end

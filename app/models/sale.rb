@@ -25,11 +25,11 @@ class Sale < ActiveRecord::Base
 
   belongs_to :inventory
   has_one :user, through: :inventory
-  belongs_to :client, class_name: "User"
+  belongs_to :buyer, class_name: "User"
 
   belongs_to :courier
   has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
-  has_one :gold_batch
+  has_one :gold_batch, class_name: 'GoldBatch', as: :goldomable
   has_many :documents, class_name: "Document", as: :documentable
 
   #
@@ -47,8 +47,8 @@ class Sale < ActiveRecord::Base
   #
 
   validates :courier_id, presence: true
-  validates :client_id, presence: true
-  validates :user_id, presence: true
+  validates :buyer_id, presence: true
+  validates :inventory_id, presence: true
 
   # NOTE: temporal method to avoid   break the app. It must to be removed asap.
   def origin_certificate_file
@@ -99,19 +99,19 @@ class Sale < ActiveRecord::Base
 
     # Manufacturer Code: 5 digits
     # this is the office code:
-    mfg_code =  self.client_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
-                                                  # In puchases mfg_code uses the user id. Using client_id in sales for
+    mfg_code =  self.buyer_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+                                                  # In puchases mfg_code uses the user id. Using buyer_id in sales for
                                                   # ensuring uniqueness (?)
 
     # Product Code: 4 digits
     # This is the goldbach code:
-    product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+    product_code= self.gold_batch.id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
                                                         # (!) This doesn't guarantee the product code to be unique once
                                                         # the gold_batch id sequence reaches the 9999 value, does it?
 
     # Check Digit: 1 digit
     # this is calculated by Barby (gem)
-    code = "#{number_system}#{mfg_code}#{product_code}"
+    code = "#{ number_system }#{ mfg_code }#{ product_code }"
     self.code = code
   end
 end
