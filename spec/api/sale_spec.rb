@@ -4,30 +4,24 @@ describe 'Sale', :type => :request do
     context '#sales' do
 
       before :context do
-        @user = create :user, :with_company
-        @token = @user.create_token
+        @seller = create :user, :with_company
+        @token = @seller.create_token
       end
 
       context 'POST' do
         it 'should create one complete sale' do
-          client = create(:external_user, :with_company)
+          buyer = create(:external_user, :with_company)
           courier = create(:courier)
-          purchases = create_list(:purchase, 2, :with_proof_of_purchase_file, user: @user) # this @user is the buyer
-
-          selected_purchases = purchases.map do |purchase|
-            {
-              'purchase_id' => purchase.id,
-              'amount_picked' => 1
-            }
-          end
+          purchases = create_list(:purchase, 2, :with_proof_of_purchase_file, user: @seller)
+          selected_purchase_ids = purchases.map(&:id)
 
           expected_response = {
-            "id"=>1,
-            "courier_id"=>1,
-            "client_id"=>client.id,
-            "user_id"=>@user.id,
-            "gold_batch_id"=> GoldBatch.last.id + 1,
-            "fine_grams"=>1.5,
+            "id" => 1,
+            "courier_id" => 1,
+            "buyer_id" => buyer.id,
+            "user_id" => @seller.id,
+            # "gold_batch_id" => GoldBatch.last.id + 1,
+            "fine_grams" => 1.5,
           }
 
           new_gold_batch_values = {
@@ -35,14 +29,14 @@ describe 'Sale', :type => :request do
             # "parent_batches" => "",
             "fine_grams" => 1.5,
             "grade" => 1,
-            "inventory_id" => 1,
+            # "inventory_id" => 1,
           }
 
           new_sale_values ={
             # "id"=>1,
             "courier_id"=> courier.id,
-            "client_id"=> client.id,
-            "user_id"=> @user.id,
+            "buyer_id"=> buyer.id,
+            # "user_id"=> @seller.id,
             "price" => 180
             # "gold_batch_id" => expected_response['gold_batch_id']
           }
@@ -50,7 +44,7 @@ describe 'Sale', :type => :request do
           post '/api/v1/sales/', {
             gold_batch: new_gold_batch_values,
             sale: new_sale_values,
-            selected_purchases: selected_purchases
+            selected_purchase_ids: selected_purchase_ids
             },
             {"Authorization" => "Barer #{ @token }"}
 
@@ -79,7 +73,7 @@ describe 'Sale', :type => :request do
             expected_response = {
               id:  sale.id,
               courier_id: sale.courier_id,
-              client_id:  sale.client_id,
+              buyer_id:  sale.buyer_id,
               user_id: sale.user_id,
               gold_batch_id: sale.gold_batch_id,
               fine_grams: sale.fine_grams,

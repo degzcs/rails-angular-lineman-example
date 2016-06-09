@@ -58,8 +58,9 @@ module V1
         params do
            requires :sale, type: Hash
            requires :gold_batch, type: Hash
-           optional :selected_purchases, type: Array
+           optional :selected_purchase_ids, type: Array
         end
+
         post '/', http_codes: [
             [200, "Successful"],
             [400, "Invalid parameter"],
@@ -68,10 +69,10 @@ module V1
           ] do
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(
-              sale_values: params[:sale],
-              seller: current_user,
-              gold_batch_values: params[:gold_batch],
-              selected_purchases: params[:selected_purchases],
+              sale_hash: params[:sale],
+              current_user: current_user,
+              gold_batch_hash: params[:gold_batch],
+              selected_purchase_ids: params[:selected_purchase_ids],
               )
 
             present registration_service.sale, with: V1::Entities::Sale

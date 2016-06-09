@@ -3,7 +3,7 @@ module V1
     class Purchase < Grape::Entity
       expose :id, documentation: { type: "string", desc: "id of the purchase", example: '1' }
       expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" } do |purchase, options|
-        purchase.user.id # NOTE: temporal fix to avoid break the app
+        purchase.user.id # TODO: remove this temporal fix
       end
       expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do|purchase, options|
         purchase.price.round(2)
@@ -22,7 +22,7 @@ module V1
       expose :access_token, documentation: { type: "string", desc: "authentication token", example: "sjahdkfjhasdfhaskdj" } do |purchase, options|
         purchase.user.create_token
       end
-      expose :provider do
+      expose :seller do
         expose :id , documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
           purchase.seller.id # TODO: change provider for saller in the front end
         end

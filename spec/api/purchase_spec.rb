@@ -21,7 +21,7 @@ describe 'Purchase', :type => :request do
           expected_response = {
            "id" => 1,
            "user_id" => @buyer.company.legal_representative.id,
-           "provider" =>{ # TODO: change front end variable name from provider to seller
+           "seller" =>{ # TODO: change front end variable name from provider to seller
               "id" => seller.id,
               "first_name" => seller.first_name,
               "last_name" => seller.last_name
@@ -84,15 +84,22 @@ describe 'Purchase', :type => :request do
       context "GET" do
 
         before(:all) do
-          provider = create(:external_user)
-          create_list(:purchase, 20, :with_proof_of_purchase_file, user_id: @buyer.id, provider_id: provider.id)
+          seller = create(:external_user, :with_personal_rucom)
+          create_list(
+                      :purchase, 20,
+                      :with_proof_of_purchase_file,
+                      inventory_id: @buyer.inventory.id,
+                      seller_id: seller.id
+                      )
         end
 
         context "/" do
           context "without purchase_list param" do
             it 'verifies that response has the elements number specified in per_page param' do
               per_page = 5
-              get '/api/v1/purchases', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
+              get '/api/v1/purchases',
+                { per_page: per_page } ,
+                { "Authorization" => "Barer #{ @token }" }
               expect(response.status).to eq 200
               expect(JSON.parse(response.body).count).to eq per_page
             end
@@ -100,8 +107,10 @@ describe 'Purchase', :type => :request do
 
           context "whit purchase_list param" do
             it 'verifies that response has the elements number specified in per_page param' do
-              id_list = [1,2,3,4,5,6,7,8]
-              get '/api/v1/purchases', { purchase_list: id_list } , { "Authorization" => "Barer #{@token}" }
+              id_list = [10, 12, 3, 4, 5, 6, 7, 8]
+              get '/api/v1/purchases',
+                { purchase_list: id_list } ,
+                { "Authorization" => "Barer #{ @token }" }
               expect(response.status).to eq 200
               expect(JSON.parse(response.body).count).to eq 8
             end
