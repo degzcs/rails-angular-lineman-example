@@ -26,7 +26,7 @@ class Purchase < ActiveRecord::Base
   #
 
   has_one :user, through: :inventory # TODO: change name to buyer.
-  belongs_to :provider, class_name: "User", foreign_key: 'seller_id'
+  belongs_to :seller, class_name: "User"
 
   has_one :gold_batch, class_name: "GoldBatch", as: :goldomable
   belongs_to :inventory
@@ -119,7 +119,7 @@ class Purchase < ActiveRecord::Base
 
     # Manufacturer Code: 5 digits
     # this is the office code:
-    mfg_code =  self.provider.id.to_s.rjust(5, '0') #TODO: provider.officce.reference_code
+    mfg_code =  self.seller.id.to_s.rjust(5, '0') #TODO: seller.officce.reference_code
 
     # Product Code: 4 digits
     # This is the goldbach code:

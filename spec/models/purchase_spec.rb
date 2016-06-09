@@ -26,7 +26,7 @@ describe Purchase do
       expect(purchase).to be_valid
     end
     it {expect(purchase.inventory).not_to be_nil }
-    it {expect(purchase.provider).not_to be_nil }
+    it {expect(purchase.seller).not_to be_nil }
     it {expect(purchase.origin_certificate_sequence).not_to be_nil}
     it {expect(purchase.gold_batch).not_to be_nil}
     it {expect(purchase.origin_certificate_file).not_to be_nil}
@@ -38,28 +38,28 @@ describe Purchase do
   context "purchase creation" do
     context "for a trazoro purchase (user - user purchase)" do
       let!(:user1) { create(:user, :with_company) }
-      let!(:provider) { create(:user, :with_company) }
-      let(:purchase) {create(:purchase, user: user1, provider: provider, trazoro: true)}
+      let!(:seller) { create(:user, :with_company) }
+      let(:purchase) {create(:purchase, user: user1, seller: seller, trazoro: true)}
       it "expect to have the correct user" do
         expect(purchase.trazoro).to be true
         expect(purchase.user).to eq user1
       end
-      it "expect to have the correct provider" do
+      it "expect to have the correct seller" do
         expect(purchase.trazoro).to be true
-        expect(purchase.provider).to eq provider
+        expect(purchase.seller).to eq seller
       end
     end
-    context "for an external provider purchase" do
+    context "for an external seller purchase" do
       let!(:user1) { create(:user, :with_company) }
-      let!(:external_user) {create(:external_user)}
-      let(:purchase) {create(:purchase, user: user1, provider: external_user)}
+      let!(:external_user) { create(:external_user) }
+      let(:purchase) {create(:purchase, user: user1, seller: external_user)}
       it "expect to have the correct user" do
         expect(purchase.trazoro).to be false
         expect(purchase.user).to eq user1
       end
-      it "expect to have the correct provider" do
+      it "expect to have the correct seller" do
         expect(purchase.trazoro).to be false
-        expect(purchase.provider).to eq external_user
+        expect(purchase.seller).to eq external_user
       end
     end
   end
@@ -68,7 +68,7 @@ describe Purchase do
     let(:purchase) { build(:purchase) }
     before :each do
       purchase.save
-      @code ="770#{purchase.provider.id.to_s.rjust(5, '0') }#{ purchase.gold_batch.id.to_s.rjust(4, '0')}"
+      @code ="770#{purchase.seller.id.to_s.rjust(5, '0') }#{ purchase.gold_batch.id.to_s.rjust(4, '0')}"
     end
 
     it "should generate a barcode when the purchase is  is created" do

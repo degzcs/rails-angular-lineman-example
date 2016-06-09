@@ -23,7 +23,8 @@ class Sale < ActiveRecord::Base
   # Associations
   #
 
-  belongs_to :user
+  belongs_to :inventory
+  has_one :user, through: :inventory
   belongs_to :client, class_name: "User"
 
   belongs_to :courier
