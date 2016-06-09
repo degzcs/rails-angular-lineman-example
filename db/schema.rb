@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608232728) do
+ActiveRecord::Schema.define(version: 20160609033854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,7 +127,6 @@ ActiveRecord::Schema.define(version: 20160608232728) do
   create_table "gold_batches", force: true do |t|
     t.float    "fine_grams"
     t.integer  "grade"
-    t.integer  "inventory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "extra_info"
@@ -207,7 +206,7 @@ ActiveRecord::Schema.define(version: 20160608232728) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2016-05-19 03:52:01'
+    t.datetime "updated_at",                    default: '2016-05-19 03:51:59'
     t.string   "provider_type"
     t.string   "num_rucom"
     t.string   "rucomeable_type"
