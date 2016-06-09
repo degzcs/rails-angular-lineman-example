@@ -43,9 +43,8 @@ class Purchase::BuyGoldService
 
     if can_buy?(buyer, gold_batch_hash['fine_grams'])
       ActiveRecord::Base.transaction do
-        gold_batch = GoldBatch.new(gold_batch_hash.deep_symbolize_keys)
-        gold_batch.save!
-        @purchase = buyer.purchases.build(purchase_hash.merge(gold_batch_id: gold_batch.id))
+        @purchase = buyer.inventory.purchases.build(purchase_hash)
+        @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
         response[:success] = @purchase.save!
         response[:errors] = @purchase.errors.full_messages
         discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro

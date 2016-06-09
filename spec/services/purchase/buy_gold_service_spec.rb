@@ -14,25 +14,25 @@ describe Purchase::BuyGoldService do
   context 'non trazoro user (from externanl user) ' do
 
     before :each do
-      provider = create(:external_user, :with_company)
+      seller = create(:external_user, :with_company)
       file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"
       file = Rack::Test::UploadedFile.new(file_path, "application/pdf")
 
-      seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
+      seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
       seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
       @gold_batch_hash ={
-       "id" => 1,
+       # "id" => 1,
       # "parent_batches" => "",
       "fine_grams" => 1.5,
       "grade" => 999,
-      "inventory_id" => 1,
+      # "inventory_id" => 1,
       "extra_info" => { 'grams' => 1.5 }
       }
       @purchase_hash ={
-           "id"=>1,
-           "user_id"=>1,
-           "provider_id"=>provider.id,
-           "gold_batch_id" => @gold_batch_hash["id"],
+           # "id"=>1,
+           # "user_id"=>1,
+           "seller_id" => seller.id,
+           # "gold_batch_id" => @gold_batch_hash["id"],
            "price" => 1.5,
            "origin_certificate_file" => file,
            "seller_picture" => seller_picture,
@@ -40,6 +40,7 @@ describe Purchase::BuyGoldService do
            "trazoro" => false
       }
     end
+
     it 'should to make a purchase and discount credits from de company' do
       expected_credits = 100 - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
       response = service.call(

@@ -32,7 +32,7 @@ class Purchase::ProofOfPurchase::GenerationService
   def generate_file_for(purchase_presenter, temporal_file_path, document_type)
     file = draw_pdf_service_class.new.call(purchase_presenter: purchase_presenter)
     file.render_file(temporal_file_path)
-    purchase_presenter.build_proof_of_purchase(
+    purchase_presenter.documents.build(
       file: File.open(temporal_file_path),
       type: document_type,
       )

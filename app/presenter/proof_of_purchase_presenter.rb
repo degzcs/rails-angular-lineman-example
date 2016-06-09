@@ -17,8 +17,8 @@ class ProofOfPurchasePresenter < BasePresenter
     @buyer ||= UserPresenter.new(user, h)
   end
 
-  def provider_presenter
-    @provider ||= UserPresenter.new(provider, h)
+  def seller_presenter
+    @seller ||= UserPresenter.new(seller, h)
   end
 
   def gold_batch_presenter

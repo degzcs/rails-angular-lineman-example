@@ -17,7 +17,7 @@ class Inventory < ActiveRecord::Base
   #
 
   belongs_to :user
-  has_many :purchase, dependent: :destroy
+  has_many :purchases, dependent: :destroy
   has_many :sales, dependent: :destroy
 
   #

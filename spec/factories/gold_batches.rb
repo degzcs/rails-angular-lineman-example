@@ -5,7 +5,6 @@
 #  id              :integer          not null, primary key
 #  fine_grams      :float
 #  grade           :integer
-#  inventory_id    :integer
 #  created_at      :datetime
 #  updated_at      :datetime
 #  extra_info      :text
