@@ -60,6 +60,10 @@ class Purchase < ActiveRecord::Base
   # Fields
   #
 
+  # TODO: change this mount uplaod for
+  # def origin_certicate_file
+  #   documents.where(type: 'origin_certificate_file').first
+  # end
   mount_uploader :origin_certificate_file, DocumentUploader
   mount_uploader :seller_picture, PhotoUploader
 
@@ -70,7 +74,7 @@ class Purchase < ActiveRecord::Base
   # For now it is selcting the equivalente document.
   # TODO: upgrade to select the correct invoice or equivalent document
   def proof_of_purchase
-    documents.where(trype: 'equivalent_document').first
+    documents.where(type: 'equivalent_document').first
   end
 
   # This is the unique code assigned to this purchase
