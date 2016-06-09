@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608231710) do
+ActiveRecord::Schema.define(version: 20160608232728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20160608231710) do
     t.text     "extra_info"
     t.string   "goldomable_type"
     t.integer  "goldomable_id"
+    t.boolean  "sold",            default: false
   end
 
   add_index "gold_batches", ["goldomable_id"], name: "index_gold_batches_on_goldomable_id", using: :btree

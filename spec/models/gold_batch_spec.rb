@@ -11,6 +11,7 @@
 #  extra_info      :text
 #  goldomable_type :string(255)
 #  goldomable_id   :integer
+#  sold            :boolean          default(FALSE)
 #
 
 require 'spec_helper'

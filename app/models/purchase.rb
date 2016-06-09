@@ -18,29 +18,31 @@
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
-#TODO: extract origin_certicated* fields to a single table and make the association
-#TODO: change field name from grams to fine_grams
+# TODO: extract origin_certicated* fields to a single table and make the association
+# TODO: the origin_certificate_files in a trazoro transaction will be the collection of the old purchase files so this name has to be changed to something similar to 'mineral_documentation'
 class Purchase < ActiveRecord::Base
   #
   # Associations
   #
 
   has_one :user, through: :inventory # TODO: change name to buyer.
-  belongs_to :provider, class_name: "User"
+  belongs_to :provider, class_name: "User", foreign_key: 'seller_id'
 
-  has_one :gold_batch
-  has_one :inventory
-  has_many :sold_batches
-  has_one :proof_of_purchase, class_name: "Document", as: :documentable # NOTE: this name is the most close to the real meaning of this field, because it is not always an invoice, most of the time it will be a equivalent-document.
+  has_one :gold_batch, class_name: "GoldBatch", as: :goldomable
+  belongs_to :inventory
+  has_many :sold_batches, dependent: :destroy
+  has_one :documents, class_name: "Document", as: :documentable, dependent: :destroy
+
+  # NOTE: this name is the most close to the real meaning of this field, because it is not always an invoice, most of the time it will be a equivalent-document.
 
   #
   # Validations
   #
 
-  validates :user_id, presence: true
-  validates :provider_id, presence: true
+  validates :inventory_id, presence: true
+  validates :seller_id, presence: true
   #validates :origin_certificate_sequence, presence: true
-  validates :gold_batch_id, presence: true
+  # validates :gold_batch_id, presence: true
   validates :origin_certificate_file, presence: true
   validates :price, presence: true
 
@@ -50,8 +52,9 @@ class Purchase < ActiveRecord::Base
   # Callbacks
   #
 
-  after_create :create_inventory
+
   before_save :generate_barcode
+  after_create :update_inventory_amount
 
   #
   # Fields
@@ -63,6 +66,12 @@ class Purchase < ActiveRecord::Base
   #
   # Instance methods
   #
+
+  # For now it is selcting the equivalente document.
+  # TODO: upgrade to select the correct invoice or equivalent document
+  def proof_of_purchase
+    documents.where(trype: 'equivalent_document').first
+  end
 
   # This is the unique code assigned to this purchase
   def reference_code
@@ -94,30 +103,32 @@ class Purchase < ActiveRecord::Base
   #
 
   protected
-    #After create the purchase it creates its own inventory with the remaining_amount value equals to the gold batch amount buyed
-    def create_inventory
-      Inventory.create(purchase_id: self.id, remaining_amount: self.gold_batch.fine_grams)
-    end
 
-    # Article about how setup ean13
-    # http://www.barcodeisland.com/ean13.phtml
-    def generate_barcode
-      # Number System: 3 digits
-      # this is Colombia code:
-      number_system = "770"
+  # TODO: to improve this method make a touch method that trigger the inventory and
+  # re-calculate the correct amount based on the gold batches that have not been sold yet
+  def update_inventory_amount
+    self.inventory.update_attributes(remaining_amount: self.gold_batch.fine_grams)
+  end
 
-      # Manufacturer Code: 5 digits
-      # this is the office code:
-      mfg_code =  self.provider.id.to_s.rjust(5, '0') #TODO: provider.officce.reference_code
+  # Article about how setup ean13
+  # http://www.barcodeisland.com/ean13.phtml
+  def generate_barcode
+    # Number System: 3 digits
+    # this is Colombia code:
+    number_system = "770"
 
-      # Product Code: 4 digits
-      # This is the goldbach code:
-      product_code= self.gold_batch_id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+    # Manufacturer Code: 5 digits
+    # this is the office code:
+    mfg_code =  self.provider.id.to_s.rjust(5, '0') #TODO: provider.officce.reference_code
 
-      # Check Digit: 1 digit
-      # this is calculated by Barby (gem)
-      code = "#{number_system}#{mfg_code}#{product_code}"
-      self.code = code
-    end
+    # Product Code: 4 digits
+    # This is the goldbach code:
+    product_code= self.gold_batch.id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+
+    # Check Digit: 1 digit
+    # this is calculated by Barby (gem)
+    code = "#{number_system}#{mfg_code}#{product_code}"
+    self.code = code
+  end
 
 end

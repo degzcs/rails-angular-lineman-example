@@ -21,11 +21,11 @@ describe Purchase do
 
 
   context "test factory" do
-    let(:purchase) { build :purchase }
+    let(:purchase) { create :purchase }
     it 'has a valid factory' do
       expect(purchase).to be_valid
     end
-    it {expect(purchase.user).not_to be_nil }
+    it {expect(purchase.inventory).not_to be_nil }
     it {expect(purchase.provider).not_to be_nil }
     it {expect(purchase.origin_certificate_sequence).not_to be_nil}
     it {expect(purchase.gold_batch).not_to be_nil}
@@ -68,7 +68,7 @@ describe Purchase do
     let(:purchase) { build(:purchase) }
     before :each do
       purchase.save
-      @code ="770#{purchase.provider.id.to_s.rjust(5, '0') }#{ purchase.gold_batch_id.to_s.rjust(4, '0')}"
+      @code ="770#{purchase.provider.id.to_s.rjust(5, '0') }#{ purchase.gold_batch.id.to_s.rjust(4, '0')}"
     end
 
     it "should generate a barcode when the purchase is  is created" do
@@ -83,7 +83,7 @@ describe Purchase do
   context "test after creation callback methods" do
     context "create_inventory" do
       it 'creates a new inventory for the purchase with the same remaining_amount value of the gold_batch grams' do
-        new_gold_batch = create(:gold_batch, fine_grams: 3.5,  )
+        new_gold_batch = create(:gold_batch, fine_grams: 3.5 )
         new_purchase = create(:purchase, gold_batch: new_gold_batch)
         expect(new_purchase.inventory.remaining_amount).to be 3.5
       end

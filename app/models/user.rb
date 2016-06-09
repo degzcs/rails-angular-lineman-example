@@ -157,8 +157,9 @@ class User < ActiveRecord::Base
   #
 
   after_initialize :init
+  after_create :create_inventory
 
-  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :population_center
+  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office
 
   #
   # fields for save files by carrierwave
@@ -275,6 +276,11 @@ class User < ActiveRecord::Base
   end
 
   protected
+
+  # After create the user it creates its own inventory with the remaining_amount value equals to 0
+  def create_inventory
+    self.create_inventory!(remaining_amount: 0) if self.inventory.blank?
+  end
 
   def init
     self.available_credits ||= 0.0 #will set the default value only if it's nil

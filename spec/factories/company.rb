@@ -21,7 +21,7 @@
 FactoryGirl.define do
   factory :company do |f|
     nit_number { Faker::Number.number(10) }
-    name {Faker::Company.name}
+    name { Faker::Company.name }
     city { City.first.name }
     state { State.first.name }
     country { Country.first.name }

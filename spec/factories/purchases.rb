@@ -17,10 +17,10 @@
 
 FactoryGirl.define do
   factory :purchase do
-    user { create(:user, :with_company) }
-    provider { create(:user, :with_company) }
-    origin_certificate_sequence { Faker::Code.isbn }
+    provider { create(:user, :with_company) } # seller
+    inventory_id { create(:inventory).id }
     gold_batch { create(:gold_batch) }
+    origin_certificate_sequence { Faker::Code.isbn }
     origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf'),"application/pdf") }
     price 1000000
     seller_picture { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
@@ -28,7 +28,7 @@ FactoryGirl.define do
 
     trait :with_proof_of_purchase_file do
       after :create do |purchase, e|
-        purchase.build_proof_of_purchase(
+        purchase.documents.build(
         file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_compra.pdf')),
         type: 'equivalent_document',
         )

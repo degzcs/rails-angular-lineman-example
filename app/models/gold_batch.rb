@@ -11,6 +11,7 @@
 #  extra_info      :text
 #  goldomable_type :string(255)
 #  goldomable_id   :integer
+#  sold            :boolean          default(FALSE)
 #
 
 # NOTE: the fine_grams are the resulting from grams*grade/999 (999 is the maximun gold purity percentage)

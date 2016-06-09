@@ -12,8 +12,8 @@
 
 FactoryGirl.define do
   factory :inventory do
-    purchase
-    remaining_amount { rand(1..2) }
+    user { create(:user, :with_company) }
+    remaining_amount { 0 }
     status false
   end
 end
