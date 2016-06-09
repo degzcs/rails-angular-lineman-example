@@ -2,7 +2,9 @@ module V1
   module Entities
     class Purchase < Grape::Entity
       expose :id, documentation: { type: "string", desc: "id of the purchase", example: '1' }
-      expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" }
+      expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" } do |purchase, options|
+        purchase.user.id # NOTE: temporal fix to avoid break the app
+      end
       expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do|purchase, options|
         purchase.price.round(2)
       end
@@ -22,13 +24,13 @@ module V1
       end
       expose :provider do
         expose :id , documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.provider.id
+          purchase.seller.id # TODO: change provider for saller in the front end
         end
         expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.provider.first_name
+          purchase.seller.first_name
         end
         expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.provider.last_name
+          purchase.seller.last_name
         end
       end
       expose :gold_batch do
@@ -54,7 +56,7 @@ module V1
         end
       end
       expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" }
-      expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
+      # expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
     end
   end
 end

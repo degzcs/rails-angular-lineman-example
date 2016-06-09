@@ -1,13 +1,13 @@
 describe 'Purchase', :type => :request do
 
   describe :v1 do
-    context '#purchases' do
+    context '#purchases (buyer is not the company legal representative)' do
 
       before :context do
-        @user = create :user, :with_company
-        legal_representative = @user.company.legal_representative
-        legal_representative.update_column :available_credits, 20000
-        @token = @user.create_token
+        @buyer = create :user, :with_company
+        @legal_representative = @buyer.company.legal_representative
+        @legal_representative.update_column :available_credits, 20000
+        @token = @buyer.create_token
         file_path = "#{ Rails.root }/spec/support/images/image.png"
         seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
         file = Rack::Test::UploadedFile.new(file_path, "image/jpeg")
@@ -17,26 +17,26 @@ describe 'Purchase', :type => :request do
 
       context 'POST' do
         it 'should create one complete purchase with its all attached files' do
-          provider = create(:external_user)
+          seller = create(:external_user, :with_company)
           expected_response = {
-           "id"=>1,
-           "user_id"=>@user.company.legal_representative.id,
-           "provider"=>{
-              "id"=> provider.id,
-              "first_name"=> provider.first_name,
-              "last_name" => provider.last_name
+           "id" => 1,
+           "user_id" => @buyer.company.legal_representative.id,
+           "provider" =>{ # TODO: change front end variable name from provider to seller
+              "id" => seller.id,
+              "first_name" => seller.first_name,
+              "last_name" => seller.last_name
            },
            "price" => 1.5,
            "origin_certificate_file" => {'url' => "/uploads/documents/purchase/origin_certificate_file/1/image.png"},
            "seller_picture" => {'url' => "/uploads/photos/purchase/seller_picture/1/seller_picture.png"},
            "origin_certificate_sequence"=>"123456789",
            "gold_batch"=> {
-              "id"=>1,
-              "grams"=>1.5,
-              "grade"=>1
+              "id" => 1,
+              "grams" => 1.5,
+              "grade" => 1
            },
            "inventory" => {
-              "id"=> 1,
+              "id"=> @buyer.company.legal_representative.inventory.id,
               "status" => true,
               "remaining_amount" => 1.5
            },
@@ -49,19 +49,19 @@ describe 'Purchase', :type => :request do
           }
 
           new_gold_batch_values = {
-            "id" => 1,
+            # "id" => 1,
             # "parent_batches" => "",
             "fine_grams" => 1.5,
             "grade" => 1,
-            "inventory_id" => 1,
+            # "inventory_id" => 1,
             "extra_info" => { 'grams' => 1.5 }.to_json
           }
 
           new_purchase_values ={
-           "id"=>1,
-           "user_id"=>@user.id,
-           "provider_id"=>provider.id,
-           "gold_batch_id" => new_gold_batch_values["id"],
+           # "id"=>1,
+           # "user_id"=>@buyer.id,
+           "seller_id"=>seller.id,
+           # "gold_batch_id" => new_gold_batch_values["id"],
            "price" => 1.5,
            "files" => @files,
            "origin_certificate_sequence"=>"123456789",
@@ -72,7 +72,7 @@ describe 'Purchase', :type => :request do
               purchase: new_purchase_values
             },
             {
-              "Authorization" => "Barer #{@token}"
+              "Authorization" => "Barer #{ @token }"
             }
           expect(response.status).to eq 201
           expected_response.each do |key, value|
@@ -85,7 +85,7 @@ describe 'Purchase', :type => :request do
 
         before(:all) do
           provider = create(:external_user)
-          create_list(:purchase, 20, :with_proof_of_purchase_file, user_id: @user.id, provider_id: provider.id)
+          create_list(:purchase, 20, :with_proof_of_purchase_file, user_id: @buyer.id, provider_id: provider.id)
         end
 
         context "/" do
