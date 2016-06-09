@@ -26,7 +26,7 @@ describe 'Client', :type => :request do
 
         it 'verifies that response has the elements number specified in per_page param' do
           per_page = 5
-          get '/api/v1/clients', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
+          get '/api/v1/clients', { per_page: per_page } , { "Authorization" => "Barer #{ @token }" }
           expect(response.status).to eq 200
           expect(JSON.parse(response.body).count).to be per_page
         end
