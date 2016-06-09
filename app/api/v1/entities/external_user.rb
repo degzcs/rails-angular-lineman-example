@@ -15,7 +15,7 @@ module V1
       expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
-      expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
+      # expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
     end
   end
 end
