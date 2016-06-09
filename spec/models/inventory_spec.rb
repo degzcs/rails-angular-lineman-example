@@ -18,7 +18,7 @@ RSpec.describe Inventory, type: :model do
     it 'has a valid factory' do
       expect(inventory).to be_valid
     end
-    it {expect(inventory.purchase_id).not_to be_nil }
+    it {expect(inventory.user_id).not_to be_nil }
     it {expect(inventory.remaining_amount).not_to be_nil}
     it {expect(inventory.status).not_to be_nil}
   end
@@ -29,8 +29,8 @@ RSpec.describe Inventory, type: :model do
       expect(build(:inventory)).to be_valid
     end
 
-    it "should not allow to create a inventory without a purchase id" do
-      expect(build(:inventory, purchase_id: nil)).not_to be_valid
+    it "should not allow to create a inventory without a user id" do
+      expect(build(:inventory, user_id: nil)).not_to be_valid
     end
 
     it "should not allow to create a provider without remaining_amount" do

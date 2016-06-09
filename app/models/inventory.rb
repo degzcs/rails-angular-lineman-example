@@ -25,6 +25,7 @@ class Inventory < ActiveRecord::Base
   #
 
   validates :remaining_amount , presence: true
+  validates :user , presence: true
 
   class EmptyInventory < StandardError
   end
