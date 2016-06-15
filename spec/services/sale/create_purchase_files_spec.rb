@@ -9,7 +9,7 @@ describe Sale::CreatePurchaseFilesCollection do
       timestamp = Time.now.to_i
       service.call(sale: sale, timestamp: timestamp)
       expect(service.response[:success]).to be true
-      expect(sale.purchase_files_collection.file.path).to match(/certificate-#{timestamp}.pdf/)
+      expect(sale.purchase_files_collection.file.path).to match(/purchase-files-#{timestamp}.pdf/)
     end
   end
 end
