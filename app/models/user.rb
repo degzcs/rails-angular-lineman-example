@@ -70,11 +70,11 @@ class User < ActiveRecord::Base
   validates :last_name , presence: true
   validates :email, presence: true, uniqueness: true, unless: :external
   validates :document_number , presence: true
-  #validates :document_expedition_date, presence: true
+  # validates :document_expedition_date, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
   validates :id_document_file, presence: true, unless: :external
-  #validates :rut_file, presence: true
+  # validates :rut_file, presence: true
   # validates :mining_register_file, presence: true
   validates :photo_file, presence: true, unless: :external
   validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
@@ -92,6 +92,7 @@ class User < ActiveRecord::Base
   #
 
   scope :order_by_id, -> {order("users.id DESC")}
+  # TODO: the scraper must to format all the information incoming in order to avoid this kind of queries.
   scope :find_by_name, ->(name){where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
               {first_name: "%#{name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{name.downcase.gsub('%', '\%').gsub('_', '\_')}%"})}
   scope :find_by_document_number, -> (document_number){where("document_number LIKE :document_number",
@@ -106,6 +107,7 @@ class User < ActiveRecord::Base
     User.where(id: ids)
   end
 
+  # TODO: this name no make sense here. Update it asap!!!
   scope :providers, -> {where('users.available_credits > ?', 0)}
 
   # Get external users activity
@@ -132,25 +134,27 @@ class User < ActiveRecord::Base
   # NOTE: the next definition is deprecated and all this users have to be upgrade to the new way to categorize them by roles.
   # NOTE: the external user who don't have rucom and only buy gold, he is called clients, they are:
   # 8. Joyero, 9. Comprador Ocasional y 10. Exportacion
-  scope :client_ids_with_fake_personal_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).pluck(:id)}
-  scope :client_ids_with_fake_company_rucom, -> {includes(office: [{company: :rucom}]).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).references(:office).pluck(:id)}
 
-  # IMPROVE: this class method is just temporal solucition to retrieve all clients
-  def self.clients_with_fake_rucom
-    ids = [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom].flatten.compact.uniq
-    User.where(id: ids)
-  end
+  # DEPRECATED!!!!
+  # scope :client_ids_with_fake_personal_rucom, -> {joins(:personal_rucom).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).pluck(:id)}
+  # scope :client_ids_with_fake_company_rucom, -> {includes(office: [{company: :rucom}]).where('rucoms.provider_type IN (?) ', ['Joyero', 'Comprador Ocasional', 'Exportacion', 'Comercializadores']).references(:office).pluck(:id)}
+
+  # # IMPROVE: this class method is just temporal solucition to retrieve all clients
+  # def self.clients_with_fake_rucom
+  #   ids = [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom].flatten.compact.uniq
+  #   User.where(id: ids)
+  # end
 
   # Finally, this scope gets all users that can be logged in the platform
   scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
-  scope :system_user_ids, -> { where('users.password_digest IS NOT NULL').pluck(:id)}
+  # scope :system_user_ids, -> { where('users.password_digest IS NOT NULL').pluck(:id)}
 
-  # scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
-  def self.clients
-    ids =  [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom, system_user_ids].flatten.compact.uniq
-    User.where(id: ids)
-  end
+  # # scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+  # def self.clients
+  #   ids =  [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom, system_user_ids].flatten.compact.uniq
+  #   User.where(id: ids)
+  # end
 
   #
   # Calbacks

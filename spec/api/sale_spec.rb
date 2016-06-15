@@ -4,22 +4,27 @@ describe 'Sale', :type => :request do
     context '#sales' do
 
       before :context do
-        @seller = create :user, :with_company
-        @token = @seller.create_token
+        # NOTE: because this user has a company he not necessarily
+        # will be the seller, actually, the seller will be the legal_representative
+        @current_user = create :user, :with_company
+        @token = @current_user.create_token
       end
 
       context 'POST' do
         it 'should create one complete sale' do
           buyer = create(:external_user, :with_company)
+          seller = @current_user.company.legal_representative
           courier = create(:courier)
-          purchases = create_list(:purchase, 2, :with_proof_of_purchase_file, user: @seller)
+          purchases = create_list(:purchase, 2,
+                                  :with_proof_of_purchase_file,
+                                   user: seller)
           selected_purchase_ids = purchases.map(&:id)
 
           expected_response = {
             "id" => 1,
             "courier_id" => 1,
-            "buyer_id" => buyer.id,
-            "user_id" => @seller.id,
+            "client_id" => buyer.id,
+            "user_id" => seller.id, # TODO: upgrade frontend
             # "gold_batch_id" => GoldBatch.last.id + 1,
             "fine_grams" => 1.5,
           }
@@ -36,7 +41,7 @@ describe 'Sale', :type => :request do
             # "id"=>1,
             "courier_id"=> courier.id,
             "buyer_id"=> buyer.id,
-            # "user_id"=> @seller.id,
+            # "user_id"=> @current_user.id,
             "price" => 180
             # "gold_batch_id" => expected_response['gold_batch_id']
           }

@@ -39,6 +39,15 @@ class GoldBatch < ActiveRecord::Base
   belongs_to :goldomable, polymorphic: true
 
   #
+  # Scopes
+  #
+
+  scope :by_type, ->(type) { joins("JOIN #{ type.table_name } ON #{ type.table_name }.id = #{ GoldBatch.table_name }.goldomable_id AND #{ GoldBatch.table_name }.goldomable_type = '#{ type.to_s }'") }
+  scope :by_goldomable_id, ->(goldomable_ids) { where(goldomable_id: goldomable_ids) }
+  scope :available, -> { where(sold: false) }
+  scope :sold, -> { where(sold: false) }
+
+  #
   # Instance Methods
   #
 

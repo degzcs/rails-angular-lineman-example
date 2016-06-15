@@ -22,9 +22,9 @@ FactoryGirl.define do
     gold_batch { create(:gold_batch) }
     origin_certificate_sequence { Faker::Code.isbn }
     origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf'),"application/pdf") }
-    price 1000000
+    price { 1000000 }
     seller_picture { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
-    trazoro false
+    trazoro { false }
 
     trait :with_proof_of_purchase_file do
       after :create do |purchase, e|

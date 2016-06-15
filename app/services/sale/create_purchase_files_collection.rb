@@ -11,11 +11,13 @@ class Sale::CreatePurchaseFilesCollection
     files = options[:files] || []
     timestamp = options[:timestamp] || Time.now.to_i
     @response = {}
+    purchases = sale.batches.map{ |sold_batch| sold_batch.gold_batch.goldomable }
+
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
-                              file_paths = purchase_files_from_aws_s3(sale.batches.map(&:purchase))
+                              file_paths = purchase_files_from_aws_s3(purchases)
                               exec_commands_on_aws_s3!(timestamp, file_paths)
                             else
-                              files = purchase_files_from_local_machine(sale.batches.map(&:purchase))
+                              files = purchase_files_from_local_machine(purchases)
                               exec_commands_on_local_machine!(timestamp, files)
                             end
 
@@ -116,7 +118,7 @@ class Sale::CreatePurchaseFilesCollection
     sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate_file.path).to_s }
   end
 
-  # @param purhcase [ Array ] with all Purchase related with the current sale
+  # @param purchases [ Array ] with all Purchase related with the current sale
   # @return [ Array ] with all documents (ActiveRecord) belonging to the  given purchase
   def purchase_files_from_aws_s3(purchases)
     files = []

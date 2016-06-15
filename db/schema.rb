@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609033854) do
+ActiveRecord::Schema.define(version: 20160613200750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20160609033854) do
   add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id", unique: true, using: :btree
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                                 null: false
+    t.string   "idrucom",            limit: 90,                   null: false
     t.text     "rucom_record"
     t.text     "name"
     t.text     "status"
@@ -206,12 +206,12 @@ ActiveRecord::Schema.define(version: 20160609033854) do
     t.text     "location"
     t.text     "subcontract_number"
     t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2016-05-19 03:52:01'
+    t.datetime "updated_at",                    default: "now()"
     t.string   "provider_type"
     t.string   "num_rucom"
     t.string   "rucomeable_type"
     t.integer  "rucomeable_id"
-    t.boolean  "trazoro",                       default: false,                 null: false
+    t.boolean  "trazoro",                       default: false,   null: false
   end
 
   create_table "sales", force: true do |t|
@@ -229,13 +229,14 @@ ActiveRecord::Schema.define(version: 20160609033854) do
   add_index "sales", ["inventory_id"], name: "index_sales_on_inventory_id", using: :btree
 
   create_table "sold_batches", force: true do |t|
-    t.integer  "purchase_id"
     t.float    "grams_picked"
     t.integer  "sale_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "gold_batch_id"
   end
 
+  add_index "sold_batches", ["gold_batch_id"], name: "index_sold_batches_on_gold_batch_id", using: :btree
   add_index "sold_batches", ["sale_id"], name: "index_sold_batches_on_sale_id", using: :btree
 
   create_table "states", force: true do |t|
