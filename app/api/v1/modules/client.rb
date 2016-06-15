@@ -61,7 +61,7 @@ module V1
           desc 'returns all existent clients', {
           entity: V1::Entities::Client,
           notes: <<-NOTES
-            Returns all existent cleints paginated
+            Returns all existent clients paginated
           NOTES
         }
         params do

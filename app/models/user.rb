@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
 
   # scope :system_user_ids, -> { where('users.password_digest IS NOT NULL').pluck(:id)}
 
-  # # scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+  scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
   # def self.clients
   #   ids =  [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom, system_user_ids].flatten.compact.uniq
   #   User.where(id: ids)
