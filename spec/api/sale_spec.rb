@@ -21,8 +21,8 @@ describe 'Sale', :type => :request do
           selected_purchase_ids = purchases.map(&:id)
 
           expected_response = {
-            "id" => 1,
-            "courier_id" => 1,
+            # "id" => 1,
+            "courier_id" => courier.id,
             "client_id" => buyer.id,
             "user_id" => seller.id, # TODO: upgrade frontend
             # "gold_batch_id" => GoldBatch.last.id + 1,

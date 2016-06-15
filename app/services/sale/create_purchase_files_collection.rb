@@ -15,12 +15,11 @@ class Sale::CreatePurchaseFilesCollection
 
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
                               file_paths = purchase_files_from_aws_s3(purchases)
-                              exec_commands_on_aws_s3!(timestamp, file_paths)
+                              exec_commands_on_aws_s3!(file_paths, timestamp)
                             else
                               files = purchase_files_from_local_machine(purchases)
-                              exec_commands_on_local_machine!(timestamp, files)
+                              exec_commands_on_local_machine!(files, timestamp)
                             end
-
     @response = generate_file_for!(sale, temporal_file_location)
   end
 
@@ -37,9 +36,12 @@ class Sale::CreatePurchaseFilesCollection
     { success: sale.save, errors: sale.errors.full_messages }
   end
 
-  #
-  def exec_commands_on_local_machine!(timestamp, file_paths)
-    final_temporal_file_name = "certificate-#{ timestamp }.pdf"
+  # Makes the whole process with files saved in the local machine
+  # @param file_paths [ Array ]
+  # @param timestamp [ Integer ]
+  # @return [ String ] with the temporal file location
+  def exec_commands_on_local_machine!(file_paths, timestamp)
+    final_temporal_file_name = "purchase-files-#{ timestamp }.pdf"
     folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
 
     if create_temporal_folder(folder_path)
@@ -49,11 +51,14 @@ class Sale::CreatePurchaseFilesCollection
     end
   end
 
+  # Makes the whole process will files saved in WAS S3
+  # @param files [ Array ]
+  # @param timestamp [ Intenger ]
+  # @return [ String ] with the temporal file location
   # TODO: check if it is better to use AWS Lambda instead to download
   # all files to the EC2 instance.
-  # @return [ String ] with the temporal file location
-  def exec_commands_on_aws_s3!(timestamp, files)
-    final_temporal_file_name = "certificate-#{ timestamp }.pdf"
+  def exec_commands_on_aws_s3!(files, timestamp)
+    final_temporal_file_name = "purchase-files-#{ timestamp }.pdf"
     folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
 
     if create_temporal_folder(folder_path)
@@ -106,12 +111,14 @@ class Sale::CreatePurchaseFilesCollection
     "#{ file.model.created_at.to_i }-#{ file.current_path.split('/').last }"
   end
 
+  # DEPRECATED
   # Gets all origin certificate files from the current sale
   # @return [ Array ] of DocumentUploader
   def origin_certificate_files_from_aws_s3
     sale.batches.map{ |batch| batch.purchase.origin_certificate_file }
   end
 
+  # DEPRECATED
   # Gets all origin certificate files from the current sale
   # @return [ Array ] of file paths
   def origin_certificate_files_from_local_machine
