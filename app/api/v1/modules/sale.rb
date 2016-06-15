@@ -37,6 +37,10 @@ module V1
 
       resource :sales do
 
+        #
+        # POST
+        #
+
         desc 'Creates a sale for the current user', {
             notes: <<-NOTE
               ### Description
@@ -55,6 +59,7 @@ module V1
                   }
             NOTE
           }
+
         params do
            requires :sale, type: Hash
            requires :gold_batch, type: Hash
@@ -79,23 +84,34 @@ module V1
             Rails.logger.info(response)
         end
 
+        #
+        # GET
+        #
+
         desc 'returns all existent sale for the current user', {
           entity: V1::Entities::Sale,
           notes: <<-NOTES
             Returns all existent sales paginated
           NOTES
         }
+
         params do
           use :pagination
         end
+
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           page = params[:page] || 1
           per_page = params[:per_page] || 10
-          sales = current_user.sales.paginate(:page => page, :per_page => per_page)
+          legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          sales = legal_representative.sales.paginate(:page => page, :per_page => per_page)
           header 'total_pages', sales.total_pages.to_s
           present sales, with: V1::Entities::Sale
         end
+
+        #
+        # GET by code
+        #
 
         desc 'Given sale code, it returns both provider and gold batch information necessary for made a purchase', {
           entity: V1::Entities::SaleForPurchase,
@@ -103,14 +119,21 @@ module V1
             Given sale code, it returns both provider and gold batch information necessary for made a purchase
           NOTES
         }
+
         params do
           requires :code, type: String, desc: 'Sale ID'
         end
+
         get 'get_by_code/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          sale = ::Sale.find_by(code: params[:code])
+          legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          sale = legal_representative.sales.find_by(code: params[:code])
           present sale, with: V1::Entities::SaleForPurchase
         end
+
+        #
+        # GET by id
+        #
 
         desc 'returns one existent sale by :id', {
           entity: V1::Entities::Sale,
@@ -118,14 +141,21 @@ module V1
             Returns one existent sale by :id
           NOTES
         }
+
         params do
           requires :id, type: Integer, desc: 'Sale ID'
         end
+
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          sale = ::Sale.find(params[:id])
+          legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          sale = legal_representative.sales.find(params[:id])
           present sale, with: V1::Entities::Sale
         end
+
+        #
+        # GET batches
+        #
 
         desc 'returns all batches for a given sale', {
           entity: V1::Entities::Sale,
@@ -133,12 +163,15 @@ module V1
             Returns all existent sales paginated
           NOTES
         }
+
         params do
           requires :id, type: Integer, desc: 'Sale ID'
         end
+
         get '/:id/batches', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          batches = ::Sale.find(params[:id]).batches
+          legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          batches = legal_representative.sales.find(params[:id]).batches
           present batches, with: V1::Entities::SoldBatch
         end
       end

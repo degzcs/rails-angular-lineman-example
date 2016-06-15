@@ -20,7 +20,6 @@ class SoldBatch < ActiveRecord::Base
 
   belongs_to :sale
   belongs_to :gold_batch
-  # has_one :purchase, through: :gold_batch
 
   #
   # Validations
@@ -30,7 +29,11 @@ class SoldBatch < ActiveRecord::Base
   # validates :grams_picked, presence: true
 
   def provider
-    purchase.provider
+    purchase.inventory.user
+  end
+
+  def purchase
+    gold_batch.goldomable
   end
 
 end

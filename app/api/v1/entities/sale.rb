@@ -8,7 +8,7 @@ module V1
         sale.buyer_id # TODO: upgrade frontend with this new name
       end
       expose :user_id ,documentation: { type: "integer", desc: "user id", example: '1' } do |sale, options|
-        sale.inventory.user_id
+        sale.inventory.user.id
       end
       expose :gold_batch_id ,documentation: { type: "integer", desc: "gold batch id", example: '1' } do |sale, options|
         sale.gold_batch.id
