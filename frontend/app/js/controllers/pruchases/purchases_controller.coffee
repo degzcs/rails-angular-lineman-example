@@ -11,11 +11,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
   $scope.hover_image = "http://www.gravatar.com/avatar/b76f6e92d9fc0690e6886f7b9d4f32da?s=100";
-  $scope.allProviders  = []
+  $scope.allsellers  = []
   $scope.searchText = null
   $scope.code = null
   $scope.origin_certificate_upload_type = null
-  $scope.selectedProvider = null
+  $scope.selectedseller = null
 
   $scope.rucomIDField =
     label: 'Número de RUCOM'
@@ -57,50 +57,50 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       }
 
   #
-  # Search one specific provider into the allProviders array
+  # Search one specific seller into the allsellers array
   # @return [Array] with the matched options with the query
 
-  query_for_providers = (query) ->
+  query_for_sellers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
-      ExternalUser.query_by_id(query).success (providers)->
-        $scope.allProviders = []
+      ExternalUser.query_by_id(query).success (sellers)->
+        $scope.allsellers = []
 
         i = 0
-        while i < providers.length
+        while i < sellers.length
           prov =
-            id: providers[i].id
-            document_number: providers[i].document_number
-            company_name: if providers[i].company then providers[i].company.name else 'Ninguna' #'company name test' # <-- TODO: migration
-            document_type: if providers[i].company then 'NIT' else 'CC' # <-- TODO: migration
-            first_name: providers[i].first_name
-            last_name: providers[i].last_name
-            address: providers[i].address
-            email: providers[i].email
-            phone_number: providers[i].phone_number || providers[i].phone
-            photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-            num_rucom: providers[i].rucom.num_rucom
-            rucom_record: providers[i].rucom.rucom_record
-            provider_type: providers[i].rucom.provider_type
-            rucom_status: if providers[i].rucom.status then providers[i].rucom.status else (if providers[i].rucom.id then 'Inscrito' else 'No Inscrito')
-            mineral: providers[i].rucom.mineral
-            name: providers[i].first_name + ' '+ providers[i].last_name
-            city: providers[i].city || ''
-            state: providers[i].state || ''
-            address: providers[i].address
-            nit: if providers[i].company then providers[i].company.nit_number else "--" # <-- TODO: migration
+            id: sellers[i].id
+            document_number: sellers[i].document_number
+            company_name: if sellers[i].company then sellers[i].company.name else 'Ninguna' #'company name test' # <-- TODO: migration
+            document_type: if sellers[i].company then 'NIT' else 'CC' # <-- TODO: migration
+            first_name: sellers[i].first_name
+            last_name: sellers[i].last_name
+            address: sellers[i].address
+            email: sellers[i].email
+            phone_number: sellers[i].phone_number || sellers[i].phone
+            photo_file: sellers[i].photo_file or 'http://robohash.org/' + sellers[i].id
+            num_rucom: sellers[i].rucom.num_rucom
+            rucom_record: sellers[i].rucom.rucom_record
+            seller_type: sellers[i].rucom.seller_type
+            rucom_status: if sellers[i].rucom.status then sellers[i].rucom.status else (if sellers[i].rucom.id then 'Inscrito' else 'No Inscrito')
+            mineral: sellers[i].rucom.mineral
+            name: sellers[i].first_name + ' '+ sellers[i].last_name
+            city: sellers[i].city || ''
+            state: sellers[i].state || ''
+            address: sellers[i].address
+            nit: if sellers[i].company then sellers[i].company.nit_number else "--" # <-- TODO: migration
 
-          $scope.allProviders.push prov
+          $scope.allsellers.push prov
           i++
-        resolve $scope.allProviders
+        resolve $scope.allsellers
 
       return
 
-  $scope.searchProvider = (query)->
+  $scope.searchseller = (query)->
     if query
-      promise = query_for_providers(query)
-      promise.then ((providers) ->
-        return providers
+      promise = query_for_sellers(query)
+      promise.then ((sellers) ->
+        return sellers
 
       ), (reason) ->
         console.log 'Failed: ' + reason
@@ -110,10 +110,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
 
   #
-  # Search provider by sale code
+  # Search seller by sale code
   # @ sale_code [Integer] is the generated code when the sale is created
   # @return [Array] with the matched options with the query
-  $scope.searchProviderByCode = (sale_code)->
+  $scope.searchsellerByCode = (sale_code)->
     SaleService.get_by_code(sale_code).success (data)->
       if data
         $scope.goldBatch.model.id = data.gold_batch_id
@@ -122,14 +122,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.goldBatch.model.grams =  MeasureConverterService.fineGramsToGrams(data.fine_grams, data.grade)
         $scope.purchase.model.sale_id =  data.id
         $scope.purchase.model.origin_certificate_file = data.origin_certificate_file
-        $scope.purchase.model.provider = data.provider
+        $scope.purchase.model.seller = data.seller
 
         # TODO: simplify this code
-        if data.provider.num_rucom
+        if data.seller.num_rucom
           $scope.rucomIDField.label = 'Número de RUCOM'
           $scope.rucomIDField.field = 'num_rucom'
           $scope.purchase.model.rucom_id_field = 'num_rucom'
-        else if data.provider.rucom_record
+        else if data.seller.rucom_record
           $scope.rucomIDField.label = 'Número de Expediente'
           $scope.rucomIDField.field = 'rucom_record'
           $scope.purchase.model.rucom_id_field = 'rucom_record'
@@ -140,19 +140,19 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   #
   #
-  $scope.selectedProviderChange = (provider) ->
+  $scope.selectedsellerChange = (seller) ->
     console.log "Seleccionado"
-    if provider
-      if provider.num_rucom
+    if seller
+      if seller.num_rucom
         $scope.rucomIDField.label = 'Número de RUCOM'
         $scope.rucomIDField.field = 'num_rucom'
         $scope.purchase.model.rucom_id_field = 'num_rucom'
-      else if provider.rucom_record
+      else if seller.rucom_record
         $scope.rucomIDField.label = 'Número de Expediente'
         $scope.rucomIDField.field = 'rucom_record'
         $scope.purchase.model.rucom_id_field = 'rucom_record'
     else
-      console.log 'Provider changed to none'
+      console.log 'seller changed to none'
 
 
   #
@@ -164,39 +164,39 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Create filter function for a query string, just filte by document number field
-  #@returns [Function] with the provider
+  #@returns [Function] with the seller
   createFilterFor = (query) ->
     lowercaseQuery = angular.lowercase(query)
-    (provider) ->
-      provider.document_number.indexOf(lowercaseQuery) != -1
+    (seller) ->
+      seller.document_number.indexOf(lowercaseQuery) != -1
 
   per_page = 100
   page = 1
 
-  $scope.format_provider = (provider)->
+  $scope.format_seller = (seller)->
     console.log "el rucom"
-    #console.log provider.rucom
-    rucom = provider.rucom
+    #console.log seller.rucom
+    rucom = seller.rucom
     return {
-      id: provider.id
-      document_number: provider.document_number
-      company_name: if provider.company then provider.company.name else provider.first_name + ' ' + provider.last_name #'company name test' # <-- TODO: migration
-      document_type: if provider.company then "NIT" else "CC"
-      first_name: provider.first_name
-      last_name: provider.last_name
-      address: provider.address
-      email: provider.email
-      phone_number: provider.phone_number || provider.phone
-      photo_file: provider.photo_file or 'http://robohash.org/' + provider.id
+      id: seller.id
+      document_number: seller.document_number
+      company_name: if seller.company then seller.company.name else seller.first_name + ' ' + seller.last_name #'company name test' # <-- TODO: migration
+      document_type: if seller.company then "NIT" else "CC"
+      first_name: seller.first_name
+      last_name: seller.last_name
+      address: seller.address
+      email: seller.email
+      phone_number: seller.phone_number || seller.phone
+      photo_file: seller.photo_file or 'http://robohash.org/' + seller.id
       num_rucom: rucom.num_rucom
       rucom_record: rucom.rucom_record
-      provider_type: rucom.provider_type
+      seller_type: rucom.seller_type
       rucom_status: rucom.status
       mineral: rucom.mineral
-      name: provider.first_name + ' '+ provider.last_name
-      city: provider.city.name || ''
-      state: provider.state.name || ''
-      address: provider.address
+      name: seller.first_name + ' '+ seller.last_name
+      city: seller.city.name || ''
+      state: seller.state.name || ''
+      address: seller.address
     }
 
   # Set the last picture that was took
@@ -247,7 +247,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       type: ''
       price: 0
       # seller_picture: ''
-      provider: {}
+      seller: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
@@ -257,7 +257,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
     GoldBatchService.model =
       grade: 1
-      grams: 0 # the introduced grams  by the seller or provider
+      grams: 0 # the introduced grams  by the seller or seller
       castellanos: 0
       ozs: 0
       tomines: 0
@@ -273,7 +273,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     console.log('saving purchase and gold batch states on sessionStore ... ')
     $scope.purchase.saveState()
     $scope.goldBatch.saveState()
-  #  $scope.purchase.model.provider_photo_file=CameraService.getLastScanImage()
+  #  $scope.purchase.model.seller_photo_file=CameraService.getLastScanImage()
 
   #
   # confirm Dialog
@@ -327,39 +327,39 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       #return
     return
 
-  $scope.createProvider = ->
-    ProviderService.setCallerState('new_purchase.step1')
-    $state.go('search_rucom',{type: 'provider'})
+  $scope.createseller = ->
+    sellerService.setCallerState('new_purchase.step1')
+    $state.go('search_rucom',{type: 'seller'})
 
   $scope.getQuery = (query)->
-    ExternalUser.query_by_id(query).success( (providers)->
-      $scope.allProviders = []
+    ExternalUser.query_by_id(query).success( (sellers)->
+      $scope.allsellers = []
 
       i = 0
-      while i < providers.length
+      while i < sellers.length
         prov =
-          id: providers[i].id
-          document_number: providers[i].document_number
-          company_name: if providers[i].company then providers[i].company.name else 'Ninguna' #'company name test' # <-- TODO: migration
-          document_type: if providers[i].company then 'NIT' else 'CC' # <-- TODO: migration
-          first_name: providers[i].first_name
-          last_name: providers[i].last_name
-          address: providers[i].address
-          email: providers[i].email
-          phone_number: providers[i].phone_number || providers[i].phone
-          photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-          num_rucom: providers[i].rucom.num_rucom
-          rucom_record: providers[i].rucom.rucom_record
-          provider_type: providers[i].rucom.provider_type
-          rucom_status: providers[i].rucom.status
-          mineral: providers[i].rucom.mineral
-          name: providers[i].first_name + ' '+ providers[i].last_name
-          city: providers[i].city || ''
-          state: providers[i].state || ''
-          address: providers[i].address
-          nit: if providers[i].company then providers[i].company.nit_number else "--" # <-- TODO: migration
+          id: sellers[i].id
+          document_number: sellers[i].document_number
+          company_name: if sellers[i].company then sellers[i].company.name else 'Ninguna' #'company name test' # <-- TODO: migration
+          document_type: if sellers[i].company then 'NIT' else 'CC' # <-- TODO: migration
+          first_name: sellers[i].first_name
+          last_name: sellers[i].last_name
+          address: sellers[i].address
+          email: sellers[i].email
+          phone_number: sellers[i].phone_number || sellers[i].phone
+          photo_file: sellers[i].photo_file or 'http://robohash.org/' + sellers[i].id
+          num_rucom: sellers[i].rucom.num_rucom
+          rucom_record: sellers[i].rucom.rucom_record
+          seller_type: sellers[i].rucom.seller_type
+          rucom_status: sellers[i].rucom.status
+          mineral: sellers[i].rucom.mineral
+          name: sellers[i].first_name + ' '+ sellers[i].last_name
+          city: sellers[i].city || ''
+          state: sellers[i].state || ''
+          address: sellers[i].address
+          nit: if sellers[i].company then sellers[i].company.nit_number else "--" # <-- TODO: migration
 
-        $scope.allProviders.push prov
+        $scope.allsellers.push prov
         i++
     ).error ()->
 

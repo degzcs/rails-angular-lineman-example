@@ -45,49 +45,48 @@
     %md-content{"flex"=> "", "class"=>"", "layout"=>"row", "layout-align"=>"center start"}
       %md-content{"flex"=> "", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center start"}
         %h5{"flex"=> ""}
-          Proveedor
-          /TODO: udpate provider variable name for seller
+          Vendedor
         %table.md-table{'flex' => ''}
           %tbody
             %tr.row
               %td.md-table-td-more
                 Razon social:
               %td.md-table-td-more.value
-                {{purchase.model.provider.company_name}}
+                {{purchase.model.seller.company_name}}
             %tr
               %td.md-table-td-more
                 Nit:
               %td.md-table-td-more.value
-                {{purchase.model.provider.nit}}
+                {{purchase.model.seller.nit}}
             %tr
               %td.md-table-td-more
                 Rucom:
               %td.md-table-td-more.value
-                {{purchase.model.provider.rucom_record}}
+                {{purchase.model.seller.rucom_record}}
             %tr
               %td.md-table-td-more
                 Nombre de usuario
               %td.md-table-td-more
-                {{purchase.model.provider.name}}
+                {{purchase.model.seller.name}}
             %tr
               %td.md-table-td-more
                 Cedula
               %td.md-table-td-more
-                {{purchase.model.provider.document_number}}
+                {{purchase.model.seller.document_number}}
             %tr
               %td.md-table-td-more
                 Direccion:
               %td.md-table-td-more.value
-                {{purchase.model.provider.address}}
+                {{purchase.model.seller.address}}
             %tr
               %td.md-table-td-more
                 Telefono:
               %td.md-table-td-more.value
-                {{purchase.model.provider.phone_number}}
+                {{purchase.model.seller.phone_number}}
       %md-content{"flex"=> "30", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
         .image.row
           .photo
-            %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
+            %img.face.cam{'alt'=>'Foto Vendedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
 
   %md-content{"class"=>"", "layout"=>"row"}
     %h4
@@ -164,12 +163,12 @@
             %md-input-container
               %span {{goldBatch.model.riales}}
   .error-message{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'provider'"}
+    %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'"}
       El usario no tiene suficientes creditos para realizar esta compra!
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'provider'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
+    %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
     %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'trazoro'", flex: "20", "ui-sref"=>"new_purchase.step1"} Volver
-    %md-button.btn-save{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'provider'", flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
+    %md-button.btn-save{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'", flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
 
 
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

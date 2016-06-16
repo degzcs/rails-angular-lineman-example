@@ -10,22 +10,22 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
-                %md-radio-button{:value => "provider", :ng-click => 'flushData()'} Directamente desde proveedor
+                %md-radio-button{:value => "seller", :ng-click => 'flushData()'} Directamente desde proveedor
                 %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
 
 
   %section{layout: "row"}
-    // ---------------------- Provider info ------------------- ///
+    // ---------------------- seller info ------------------- ///
     %div.md-padding{flex: ""}
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
-          %h3{:ng-if => "purchase.model.type == 'provider'"}
+          %h3{:ng-if => "purchase.model.type == 'seller'"}
             2. Seleccione un Proveedor
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             2. Ingrese el codigo de barras
 
-        %md-autocomplete{:ng-if => "purchase.model.type == 'provider'", "md-selected-item"=>"purchase.model.provider", "md-search-text"=> "searchText", "md-items" => "provider in searchProvider(searchText)", "md-no-cache" => "true", "md-item-text"=>"provider.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedProviderChange(provider)","md-search-text-change"=>"getQuery(searchText)"}
-          %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{provider.first_name}} {{provider.last_name}} - c.c. {{provider.document_number}}
+        %md-autocomplete{:ng-if => "purchase.model.type == 'seller'", "md-selected-item"=>"purchase.model.seller", "md-search-text"=> "searchText", "md-items" => "seller in searchseller(searchText)", "md-no-cache" => "true", "md-item-text"=>"seller.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedsellerChange(seller)","md-search-text-change"=>"getQuery(searchText)"}
+          %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{seller.first_name}} {{seller.last_name}} - c.c. {{seller.document_number}}
           %md-not-found
             No se encontraron proveedores
 
@@ -34,39 +34,39 @@
           %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
             %md-input-container{flex: ''}
               %label Numero de codigo de barras de la Venta
-              %input{"ng-model" => "code", :name => 'provider_name'}
+              %input{"ng-model" => "code", :name => 'seller_name'}
             %md-input-container{flex: 30}
-              %a.md-button.md-raised.md-primary.find-provider-button{:ng-click =>"searchProviderByCode(code)"}  Buscar
+              %a.md-button.md-raised.md-primary.find-seller-button{:ng-click =>"searchsellerByCode(code)"}  Buscar
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Nombre Proveedor
-              %input{"ng-model" => "purchase.model.provider.name", :required => "", :name => 'provider_name', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller.name", :required => "", :name => 'seller_name', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Nombre de la Compania
-              %input{"ng-model" => "purchase.model.provider.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
           %div{layout: "row"}
             / %md-input-container{flex: "20"}
             /   %label tipo doc.
-            /   %input{"ng-model" => "purchase.model.provider.document_type", :required => "", :name => 'provider_document_type', :readOnly => 'true'}
+            /   %input{"ng-model" => "purchase.model.seller.document_type", :required => "", :name => 'seller_document_type', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Numero de Documento
-              %input{"ng-model" => "purchase.model.provider.document_number", :required => "", :name => 'provider_document_number', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller.document_number", :required => "", :name => 'seller_document_number', :readOnly => 'true'}
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Registro Rucom
-              %input{"ng-model" => "purchase.model.provider[purchase.model.rucom_id_field]", :name => 'provider_rucom', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller[purchase.model.rucom_id_field]", :name => 'seller_rucom', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Estado Rucom
-              %input{"ng-model" => "purchase.model.provider.rucom_status", :name => 'provider_rucom_status', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller.rucom_status", :name => 'seller_rucom_status', :readOnly => 'true'}
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
-      /%a.md-button.create-provider-button{:ng-if => "purchase.model.type == 'provider'", "ng-click"=>"createProvider()"}  crear proveedor
+      /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
     %div{flex: ""}
-      // ---------------------- Provider photo ------------------- //
+      // ---------------------- seller photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
         %legend
-          %h3{:ng-if => "purchase.model.type == 'provider'"}
+          %h3{:ng-if => "purchase.model.type == 'seller'"}
             3. Tome una foto al Provedor
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             3. Tome una foto al Transportador
@@ -84,7 +84,7 @@
       %fieldset.standard.tr-fieldset.origin-certificate-fieldset
         %legend
           %h3
-          %h3{:ng-if => "purchase.model.type == 'provider'"}
+          %h3{:ng-if => "purchase.model.type == 'seller'"}
             4. Suba el certificado de origen e ingrese el numero
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             4. Ingrese el numero
@@ -99,13 +99,13 @@
           %div{flex: '40'}
             %h4 Seleccione una forma de subir el certificado
             %md-select.uploader-selector{"ng-model" => "origin_certificate_upload_type", :placeholder => "Cargar Centificado de Origen ..."}
-              .options{:ng-if => "purchase.model.type == 'provider'"}
+              .options{:ng-if => "purchase.model.type == 'seller'"}
                 %md-option{:value => "by_upload"} Desde el PC
                 %md-option{:value => "by_scan"} Por Escaner
                 %md-option{:value => "by_photo"} por Camara
           %div{flex: ''}
             .upload-oc{:flex => ''}
-              .button-action.md-padding{:ng-switch => '', :on => 'origin_certificate_upload_type', :ng-if => "purchase.model.type == 'provider'"}
+              .button-action.md-padding{:ng-switch => '', :on => 'origin_certificate_upload_type', :ng-if => "purchase.model.type == 'seller'"}
                 %md-input-container
                   %label Nombre del archivo
                   %input{"ng-model" => "purchase.model.origin_certificate_file[0].name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
@@ -138,5 +138,5 @@
 
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'provider'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'seller'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
     %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar

@@ -22,7 +22,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
       $scope.count = 0
       $scope.showEmpty = true
       $scope.liquidate_selected_items = (ev)->
-        
+
         if $scope.selectedItems.length == 0
           $mdDialog.show(
             $mdDialog.alert()
@@ -34,10 +34,9 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           #enterIngotsNumber(ev)
           confirm_liquidate($scope.totalAmount,ev)
         return
-        
+
 
       $scope.show_inventory = (item)->
-        console.log item
         PurchaseService.model.price = item.price
         PurchaseService.model.seller_picture = item.seller_picture
         PurchaseService.model.origin_certificate_sequence = item.origin_certificate_sequence
@@ -48,14 +47,14 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         PurchaseService.model.code = item.code
         PurchaseService.model.trazoro = item.trazoro
         PurchaseService.model.sale_id = item.sale_id
-        PurchaseService.model.provider = item.provider
+        PurchaseService.model.seller = item.seller
         PurchaseService.model.gold_batch = item.gold_batch
         PurchaseService.model.barcode_html = item.barcode_html
         PurchaseService.model.code = item.code
         PurchaseService.saveState()
         $state.go('show_inventory')
 
-        
+
 
         return
 
@@ -144,8 +143,8 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
       enterGramsDialog = (item,ev)->
         $mdDialog.show(
           controller: 'InventoryAmountCtrl'
-          resolve: 
-            pickedItem: -> 
+          resolve:
+            pickedItem: ->
               return item;
           templateUrl: 'partials/inventory_amount_form.html'
           targetEvent: ev).then ((answer) ->
@@ -160,7 +159,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           #if the response is negative set the checkbox to false
           item.selected = false
           return
-        return          
+        return
 
 
       #updates all checkboxes in the inventory list
@@ -173,7 +172,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           $scope.selectedItems = []
           clean_checkbox_items(inventoryItems)
         else
-          #Then we check if there are already items selected, 
+          #Then we check if there are already items selected,
           if $scope.selectedItems.length != 0
             confirm = $mdDialog.confirm()
             .title('Confirmar')
@@ -219,7 +218,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         return
 
 
-      #Launches a dialog to ask the user if wants to delete the amount 
+      #Launches a dialog to ask the user if wants to delete the amount
       $scope.deleteGramsDialog= (item,ev)->
         confirm = $mdDialog.confirm()
         .title('Confirmar')
@@ -254,7 +253,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           controller: 'InventoryIngotsCtrl'
           templateUrl: 'partials/ingots_number_form.html'
           targetEvent: ev).then ((answer) ->
-          
+
           LiquidationService.model.selectedPurchases = $scope.selectedItems
           LiquidationService.model.totalAmount = $scope.totalAmount
           LiquidationService.model.ingotsNumber = answer
@@ -294,10 +293,10 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           .content(message)
           .ariaLabel('Alert Dialog Demo').ok('Ok')
           .targetEvent(ev))
-      
+
       return
 
-    
+
     templateUrl: 'directives/md-table-inventory.html'
     link: (scope, element, attrs)->
 
@@ -305,7 +304,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
 
         result = document.getElementsByClassName('purchase-empty')
         angular.element(result).toggleClass('hidden')
-      
+
 
 
   }

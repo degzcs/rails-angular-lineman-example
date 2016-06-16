@@ -50,7 +50,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
     PurchaseService.model =
       price: 0
       seller_picture: ''
-      provider: {}
+      seller: {}
       origin_certificate_sequence: ''
       origin_certificate_file: ''
       proof_of_purchase_file_url: ''
@@ -62,7 +62,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
     GoldBatchService.model =
       parent_batches: ''
       grade: 1
-      grams: 0 # the introduced grams  by the seller or provider
+      grams: 0 # the introduced grams  by the seller or seller
       castellanos: 0
       ozs: 0
       tomines: 0

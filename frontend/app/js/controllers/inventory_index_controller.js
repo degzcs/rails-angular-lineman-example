@@ -12,7 +12,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
       field: 'id'
     },{
       name: 'Proveedor',
-      field: 'provider_name'
+      field: 'seller_name'
     }, {
       name: 'Gramos Finos',
       field: 'gold_batch_grams'
@@ -25,7 +25,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
     }
   ];
   //Filters
-  $scope.sortable = ['created_at','provider_name', 'gold_batch_grams', 'price', 'inventory_remaining_amount'];
+  $scope.sortable = ['created_at','seller_name', 'gold_batch_grams', 'price', 'inventory_remaining_amount'];
   //Variables configuration
   $scope.selectall = false;
   $scope.grams = {
@@ -33,7 +33,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
   };
   //Header Styles
   $scope.custom = {
-    provider_name: 'grey',
+    seller_name: 'grey',
     id: 'bold',
     gold_batch_grams: 'grey',
     price: 'grey',
@@ -62,7 +62,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
         created_at: purchases[i].created_at,
         reference_code: purchases[i].reference_code,
         access_token: purchases[i].access_token,
-        provider: purchases[i].provider,
+        seller: purchases[i].seller,
         gold_batch: purchases[i].gold_batch,
         inventory: purchases[i].inventory,
         trazoro:  purchases[i].trazoro,
@@ -70,7 +70,7 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
         barcode_html: purchases[i].barcode_html,
         code: purchases[i].code,
         // Aditional table paramters
-        provider_name: purchases[i].provider.first_name + " " + purchases[i].provider.last_name,
+        seller_name: purchases[i].seller.first_name + " " + purchases[i].seller.last_name,
         inventory_remaining_amount: purchases[i].inventory.remaining_amount,
         gold_batch_grams: purchases[i].gold_batch.grams,
 

@@ -51,37 +51,37 @@
                 %td.md-table-td-more
                   Razon social:
                 %td.md-table-td-more.value
-                  {{provider.company ? provider.company.name : provider.first_name + ' ' + provider.last_name}}
+                  {{seller.company ? seller.company.name : seller.first_name + ' ' + seller.last_name}}
               %tr
                 %td.md-table-td-more
                   Nit:
                 %td.md-table-td-more.value
-                  {{provider.nit}}
+                  {{seller.nit}}
               %tr
                 %td.md-table-td-more
                   Rucom:
                 %td.md-table-td-more.value
-                  {{provider.rucom.rucom_record}}
+                  {{seller.rucom.rucom_record}}
               %tr
                 %td.md-table-td-more
                   Nombre de usuario
                 %td.md-table-td-more
-                  {{provider.first_name}} {{provider.last_name}}
+                  {{seller.first_name}} {{seller.last_name}}
               %tr
                 %td.md-table-td-more
                   Cedula
                 %td.md-table-td-more
-                  {{provider.document_number}}
+                  {{seller.document_number}}
               %tr
                 %td.md-table-td-more
                   Direccion:
                 %td.md-table-td-more.value
-                  {{provider.address}}
+                  {{seller.address}}
               %tr
                 %td.md-table-td-more
                   Telefono:
                 %td.md-table-td-more.value
-                  {{provider.phone_number}}
+                  {{seller.phone_number}}
         %md-content{"flex"=> "30", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
           .image.row
             .photo
@@ -152,13 +152,13 @@
             %tr{"ng-repeat"=>"batch in trazoro_batches"}
               %td.md-table-td-more
                 %md-input-container
-                  {{batch.provider.id}}
+                  {{batch.seller.id}}
               /%td.md-table-td-more
               /  %md-input-container
-              /    {{batch.provider.rucom.rucom_record}}
+              /    {{batch.seller.rucom.rucom_record}}
               %td.md-table-td-more
                 %md-input-container
-                  {{batch.provider.first_name}} {{batch.provider.last_name }}
+                  {{batch.seller.first_name}} {{batch.seller.last_name }}
               %td.md-table-td-more
                 %md-input-container
                   {{batch.grams_picked}} gr

@@ -20,6 +20,10 @@ module V1
       #   requires :access_token, type: String, desc: 'Auth token', documentation: { example: '837f6b854fc7802c2800302e' }
       # end
 
+      #
+      # POST
+      #
+
       resource :purchases do
 
         desc 'Creates a purchase for the current user', {
@@ -43,9 +47,11 @@ module V1
                   }
             NOTE
           }
+
         params do
            requires :purchase, type: Hash
         end
+
         post '/', http_codes: [
             [200, "Successful"],
             [400, "Invalid parameter"],
@@ -68,16 +74,22 @@ module V1
 
         end
 
+        #
+        # GET
+        #
+
         desc 'returns all existent purchases for the current user', {
           entity: V1::Entities::Purchase,
           notes: <<-NOTES
             Returns all existent sessions paginated
           NOTES
         }
+
         params do
           use :pagination
           optional :purchase_list, type: Array #Array of purchase ids
         end
+
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           if params[:purchase_list]
@@ -85,20 +97,28 @@ module V1
           else
             page = params[:page] || 1
             per_page = params[:per_page] || 10
-            purchases = current_user.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)
+            legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+            purchases = legal_representative.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)
             header 'total_pages', purchases.total_pages.to_s
           end
           present purchases, with: V1::Entities::Purchase
         end
+
+        #
+        # GET by id
+        #
+
         desc 'returns one existent provider by :id', {
           entity: V1::Entities::Purchase,
           notes: <<-NOTES
             Returns one existent purchase by :id
           NOTES
         }
+
         params do
           requires :id, type: Integer, desc: 'Purchase ID'
         end
+
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           purchase = ::Purchase.find(params[:id])

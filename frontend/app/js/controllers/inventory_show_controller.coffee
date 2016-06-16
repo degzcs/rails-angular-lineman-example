@@ -1,7 +1,7 @@
 angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser,User,SaleService) ->
   #Get the current inventory from the sessionStorage using the Inventory Service
   $scope.purchase = PurchaseService.restoreState()
-  $scope.provider = null
+  $scope.seller = null
   $scope.barcode_html = $sce.trustAsHtml($scope.purchase.barcode_html)
   $scope.current_user =  null
   $scope.trazoro_batches = null
@@ -11,28 +11,25 @@ angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,P
   $scope.total_fine_grams =  $scope.purchase.gold_batch.grams
   $scope.fine_gram_unit_price =  $scope.purchase.price / $scope.total_fine_grams
   $scope.price =  $scope.purchase.price
-  
+
   CurrentUser.get().success (data)->
     $scope.current_user = data
-    console.log data
 
   #TODO: refactor grams and fine_grams notation
   $scope.total_fine_grams =  $scope.purchase.gold_batch.grams
   $scope.fine_gram_unit_price =  $scope.purchase.price / $scope.total_fine_grams
   $scope.price =  $scope.purchase.price
-  console.log $scope.purchase
   CurrentUser.get().success (data)->
     $scope.current_user = data
-    
+
   #Get the provier using the api
 
-  #TODO: Refactor provider and user provider logic
+  #TODO: Refactor seller and user seller logic
 
-  if $scope.purchase.trazoro 
+  if $scope.purchase.trazoro
     SaleService.getBatches($scope.purchase.sale_id).success (batches)->
       $scope.trazoro_batches  = batches
-      console.log $scope.trazoro_batches
 
-  User.get($scope.purchase.provider.id).success (user)->
-    $scope.provider = user
+  User.get($scope.purchase.seller.id).success (user)->
+    $scope.seller = user
 

@@ -15,11 +15,11 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     #
 
     model:
-      type: 'provider'
+      type: 'seller'
       price: 0
       seller_picture: ''
       inventory_id: ''
-      provider: {} # TODO: udpate provider variable name for seller
+      seller: {} # TODO: udpate seller variable name for seller
       origin_certificate_sequence: ''
       origin_certificate_file: ''
       proof_of_purchase_file_url: ''
@@ -58,7 +58,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           method: 'POST'
           fields:
             "purchase[price]": purchase.price,
-            "purchase[seller_id]": purchase.provider.id
+            "purchase[seller_id]": purchase.seller.id
             "purchase[sale_id]": purchase.inventory_id
             #"gold_batch[parent_batches]": gold_batch.parent_batches
             "gold_batch[fine_grams]": gold_batch.total_fine_grams
@@ -137,7 +137,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
                 "purchase_list[]": ids)
     flushModel: ->
       service.model = {
-        type: 'provider'
+        type: 'seller'
       }
       sessionStorage.removeItem('purchaseService')
       return
