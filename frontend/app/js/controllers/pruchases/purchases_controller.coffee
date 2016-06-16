@@ -299,7 +299,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Create a new purschase register in DB
-  $scope.create =  (ev) ->
+  $scope.create = (ev) ->
     console.log 'creating purchase ...'
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
     $scope.showUploadingDialog(ev)

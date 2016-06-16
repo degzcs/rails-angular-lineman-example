@@ -14,7 +14,6 @@ angular.module('app').factory 'GoldBatchService', ($rootScope)->
       ozs: 0
       tomines: 0
       riales: 0
-      inventory_id: 1
       total_grams: 0
       total_fine_grams: 0
 

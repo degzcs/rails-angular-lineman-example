@@ -7,17 +7,19 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     #
     # Service impl
     #
+
     impl: this
 
     #
     # Model
     #
+
     model:
       type: 'provider'
       price: 0
       seller_picture: ''
-      sale_id: ''
-      provider: {}
+      inventory_id: ''
+      provider: {} # TODO: udpate provider variable name for seller
       origin_certificate_sequence: ''
       origin_certificate_file: ''
       proof_of_purchase_file_url: ''
@@ -26,7 +28,6 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       barcode_html: ''
       code: ''
       trazoro: ''
-      sale_id: ''
       gold_batch: ''
       #barcode_html: ''
       code: ''
@@ -35,6 +36,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     #
     # HTTP resquests
     #
+
     create: (purchase, gold_batch) ->
       # if purchase.origin_certificate_file and purchase.seller_picture
       i = 0
@@ -56,12 +58,12 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           method: 'POST'
           fields:
             "purchase[price]": purchase.price,
-            "purchase[provider_id]": purchase.provider.id
-            "purchase[sale_id]": purchase.sale_id
+            "purchase[seller_id]": purchase.provider.id
+            "purchase[sale_id]": purchase.inventory_id
             #"gold_batch[parent_batches]": gold_batch.parent_batches
             "gold_batch[fine_grams]": gold_batch.total_fine_grams
             "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
-            "gold_batch[inventory_id]": gold_batch.inventory_id
+            #"gold_batch[inventory_id]": gold_batch.inventory_id
             "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             "gold_batch[extra_info]": { grams: gold_batch.total_grams }
           file: files
