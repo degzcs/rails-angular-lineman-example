@@ -24,7 +24,7 @@ class Sale::RegistrationService
       update_inventories(selected_gold_batches)
       register_sold_batches(@sale, selected_gold_batches)
       @response = ::Sale::CreatePurchaseFilesCollection.new.call(sale: @sale)
-      # @response = ::Sale::ProofOfSale::GenerationService.new.call(sale: @sale)
+      @response = ::Sale::ProofOfSale::GenerationService.new.call(sale: @sale)
     end
   end
 

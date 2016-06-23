@@ -23,7 +23,15 @@ class GoldBatchPresenter < BasePresenter
     reales.round(2) if reales?
   end
 
+  def origin_certificate_number
+    'Pending...'
+  end
+
   def total_fine_grams
-    "#{fine_grams.round(2)} grams" if fine_grams.present?
+    "#{ fine_grams.round(2) } grams" if fine_grams.present?
+  end
+
+  def seller_presenter
+    UserPresenter.new(goldomable.inventory.user, h)
   end
 end

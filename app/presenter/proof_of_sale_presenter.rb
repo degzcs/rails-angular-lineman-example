@@ -14,7 +14,7 @@ class ProofOfSalePresenter < BasePresenter
   end
 
   def buyer_presenter
-    UserPresenter.new(client, h)
+    UserPresenter.new(buyer, h)
   end
 
   def seller_presenter
@@ -26,9 +26,13 @@ class ProofOfSalePresenter < BasePresenter
   end
 
   def gold_batch_presenters
-    gold_batches.map do |gold_batch|
-      GoldBatchPresenter.new(gold_batch, h)
+    batches.map do |sold_batch|
+      GoldBatchPresenter.new(sold_batch.gold_batch, h)
     end
+  end
+
+  def grams
+    fine_grams # TODO: check what this field means in the equivalent document
   end
 
   def fine_gram_price

@@ -10,7 +10,8 @@ angular.module('app').factory 'SaleService', ($http)->
       gold_batch_id: null
       code: null
       price: null
-      origin_certificate_file: null
+      purchase_files_collection: null
+      proof_of_sale: null
       barcode_html: null
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
       totalAmount: null

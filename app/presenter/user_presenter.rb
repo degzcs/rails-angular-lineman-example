@@ -20,6 +20,10 @@ class UserPresenter < BasePresenter
     @object.nit || self.document_number
   end
 
+  def document_type
+    'NIT' # TODO: change this in the final document
+  end
+
   # TODO: this have to change asap. because will cause data inconsistencies
   def city_name
     if has_office?

@@ -45,7 +45,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     # Buyer
     # NOTE: I will leave buyer instead client in order to make the migrato to the new way to save
     # the sales and purchases (Perhaps a table called Transactions)
-    buyer_presenter = sale_presenter.client
+    buyer_presenter = sale_presenter.buyer_presenter
     move_cursor_to 859
     text_box buyer_presenter.company_name, :at => [130,cursor], :width => 170 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
     text_box buyer_presenter.name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -63,7 +63,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
 
 
     # Seller
-    seller_presenter = sale_presenter.user_presenter
+    seller_presenter = sale_presenter.seller_presenter
     move_cursor_to 725
     text_box seller_presenter.company_name, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box seller_presenter.name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -92,7 +92,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     text_box courier_presenter.id_document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box courier_presenter.company_name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 538
-    text_box courier_presenter.company_nit_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box courier_presenter.nit_company_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     # Selected Batches
 
@@ -100,11 +100,11 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     move_cursor_to 460
     gold_batch_presenters.each do |gold_batch_presenter|
       seller_presenter = gold_batch_presenter.seller_presenter
-      text_box gold_batch_presenter.purchase_id, :at => [50,cursor], :width => 65 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
-      text_box seller_presenter.id, :at => [130,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+      text_box gold_batch_presenter.goldomable_id.to_s, :at => [50,cursor], :width => 65 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+      text_box seller_presenter.id.to_s , :at => [130,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       text_box seller_presenter.company_name, :at => [233,cursor], :width => 120 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       text_box gold_batch_presenter.origin_certificate_number, :at => [392,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
-      text_box gold_batch_presenter.fine_grams, :at => [477,cursor], :width => 70, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+      text_box gold_batch_presenter.fine_grams.to_s, :at => [477,cursor], :width => 70, :size => 10, :height =>  10, :overflow => :shrink_to_fit
       text_box seller_presenter.rucom_number, :at => [560,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       move_down 20
     end
@@ -112,12 +112,12 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     # Totals
 
     move_cursor_to 233
-    text_box sale_presenter.fine_grams, :at => [465,cursor], :width => 90 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+    text_box sale_presenter.fine_grams.to_s, :at => [465,cursor], :width => 90 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 215
-    text_box sale_presenter.grams, :at => [465,cursor], :width => 90 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+    text_box sale_presenter.grams.to_s, :at => [465,cursor], :width => 90 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 197
-    text_box sale_presenter.grade, :at => [465,cursor], :width => 90 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box sale_presenter.grade.to_s, :at => [465,cursor], :width => 90 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 179
-    text_box sale_presenter.price, :at => [465,cursor], :width => 90 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box sale_presenter.price.to_s, :at => [465,cursor], :width => 90 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
   end
 end
