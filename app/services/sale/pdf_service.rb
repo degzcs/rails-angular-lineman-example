@@ -1,3 +1,6 @@
+#
+# DEPRECATED
+#
 #This Generator get all the necesary values for the pdf service in order to create a sale report
 class Sale::PDFService
   def initialize(sale_id)
@@ -34,7 +37,7 @@ class Sale::PDFService
   end
 
   def buyer
-    client = User.find(@sale.client_id)
+    client = User.find(@sale.buyer_id)
     {
       social: client.company.try(:name),
       name: client.first_name + client.last_name,

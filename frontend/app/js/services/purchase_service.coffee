@@ -131,8 +131,6 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       return $http({method: "GET", url: "api/v1/purchases/" + id})
 
     get_list: (ids)->
-      console.log "IDS"
-      console.log ids
       return $http.get('api/v1/purchases', params:
                 "purchase_list[]": ids)
     flushModel: ->

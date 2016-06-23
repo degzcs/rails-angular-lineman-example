@@ -68,6 +68,7 @@ module V1
         end
 
         # download_sales_report
+        # @ Deprecated
         get 'download_sales_report/:sale_id' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           sale_id = params[:sale_id]
           sale = ::Sale::PDFService.new(sale_id)

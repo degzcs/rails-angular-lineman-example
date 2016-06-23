@@ -7,7 +7,6 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
     return
 
   liquidation_info = LiquidationService.restoreState()
-  console.log liquidation_info
 
   $scope.selectedPurchases = liquidation_info.selectedPurchases
   $scope.totalAmount = liquidation_info.totalAmount
@@ -23,7 +22,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
   $scope.validation_messages = null
   $scope.clientVerifiedProgress = false
-  
+
   $scope.calculate_weight = ->
     $scope.selectedWeight  = Number(($scope.totalAmount * 999/$scope.selectedGrade).toFixed(2))
 
@@ -44,19 +43,19 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
 
   $scope.searchClients = (query)->
-    if query 
+    if query
       promise = query_for_clients(query)
       promise.then ((clients) ->
         return clients
-        
+
       ), (reason) ->
         console.log 'Failed: ' + reason
         return
-    else 
+    else
       return []
-    
 
-    
+
+
 
   #
   # Seacrch couriers by id
@@ -71,15 +70,15 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
       return
 
   $scope.searchCouriers = (query)->
-    if query 
+    if query
       promise = query_for_couriers(query)
       promise.then ((couriers) ->
         return couriers
-        
+
       ), (reason) ->
         console.log 'Failed: ' + reason
         return
-    else 
+    else
       return []
 
   #
@@ -104,7 +103,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
       $scope.courierVerifiedProgress = false
       return
     ), 400
-    
+
   #
   #Submit a sale if the sale is valid
   #
@@ -127,7 +126,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
 
       sale_params = {
         courier_id: $scope.selectedCourier.id,
-        client_id: $scope.selectedClient.id,
+        buyer_id: $scope.selectedClient.id,
         price: $scope.price
       }
 
@@ -136,7 +135,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         $mdDialog.cancel dialog
         SaleService.model.id = sale.id
         SaleService.model.courier_id = sale.courier_id
-        SaleService.model.client_id = sale.client_id
+        SaleService.model.buyer_id = sale.buyer_id
         SaleService.model.user_id = sale.user_id
         SaleService.model.gold_batch_id = sale.gold_batch_id
         SaleService.model.fine_grams = sale.fine_grams
@@ -173,7 +172,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
   #$scope.ingotsNumber = sale_info.ingotsNumber
   #$scope.ingots = []
   #$scope.divide_by_equal_amounts = false
-  
+
 
   #
   #It creates an array of ingots based on the ingots_number selected by the user
@@ -198,13 +197,13 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
     $scope.ingots[0].grams = $scope.totalAmount
   ###
 
-  # 
+  #
   ###
   $scope.divideIngots = ->
     i=0
     while i < $scope.ingots.length
       if $scope.divide_by_equal_amounts
-        $scope.ingots[i].grams = $scope.totalAmount/$scope.ingotsNumber 
+        $scope.ingots[i].grams = $scope.totalAmount/$scope.ingotsNumber
       else
         $scope.ingots[i].grams = null
       i++

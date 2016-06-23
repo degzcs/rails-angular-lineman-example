@@ -5,7 +5,7 @@ angular.module('app').factory 'SaleService', ($http)->
     model:
       id: null
       courier_id: null
-      client_id: null
+      buyer_id: null
       user_id: null
       gold_batch_id: null
       code: null
@@ -22,7 +22,6 @@ angular.module('app').factory 'SaleService', ($http)->
     saveState: ->
       sessionStorage.restoreSale = 'true'
       sessionStorage.saleService = angular.toJson(service.model)
-      console.log 'Sale Saved'
 
     restoreState: ->
       if(sessionStorage.restoreSale)

@@ -1,8 +1,8 @@
 angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService,$mdDialog, CurrentUser, LiquidationService,User,CourierService,ProviderService,PurchaseService,$sce,PdfService) ->
   #
-  # Deletes the last liquidation  
+  # Deletes the last liquidation
   LiquidationService.deleteState()
-  
+
   #
   #
   #Get info
@@ -23,15 +23,14 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
     id = $scope.selected_purchases[i].purchase_id
     ids.push(id)
     i++
-  
+
   PurchaseService.get_list(ids).success (data)->
     $scope.purchases = data
-    #console.log data
-  
+
   #
   # get Client
-  User.get(currentSale.client_id).success (client)->
-    $scope.currentClient = client
+  User.get(currentSale.buyer_id).success (buyer)->
+    $scope.currentClient = buyer
 
   #
   # get current user info
@@ -46,7 +45,7 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   $scope.getSalePDF = ->
     console.log "Generar pdf"
     PdfService.createSaleInvoice(currentSale.id)
-      
+
 
   #
   # TODO: Get All providers for purchases
@@ -61,4 +60,4 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
     i++
   console.log $scope.selectedPurchases
   ###
-  
+

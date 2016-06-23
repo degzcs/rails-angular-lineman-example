@@ -63,7 +63,7 @@ module V1
         params do
            requires :sale, type: Hash
            requires :gold_batch, type: Hash
-           optional :selected_purchase_ids, type: Array
+           requires :selected_purchases, type: Array
         end
 
         post '/', http_codes: [
@@ -72,12 +72,13 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
+            selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(
               sale_hash: params[:sale],
               current_user: current_user,
               gold_batch_hash: params[:gold_batch],
-              selected_purchase_ids: params[:selected_purchase_ids],
+              selected_purchase_ids: selected_purchase_ids,
               )
 
             present registration_service.sale, with: V1::Entities::Sale
