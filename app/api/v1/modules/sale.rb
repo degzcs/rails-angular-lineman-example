@@ -52,7 +52,7 @@ module V1
                   {
                     "id"=>1,
                      "courier_id"=>1,
-                     "client_id"=>1,
+                     "buyer_id"=>1,
                      "user_id" => 1,
                      "gold_batch_id" => 1,
                      "grams" => "2323",

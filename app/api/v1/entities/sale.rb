@@ -4,9 +4,7 @@ module V1
     class Sale < Grape::Entity
       expose :id ,documentation: { type: "integer", desc: "Sale id", example: '1' }
       expose :courier_id ,documentation: { type: "integer", desc: "courier id", example: '1' }
-      expose :client_id ,documentation: { type: "integer", desc: "client id", example: '1' } do |sale, options|
-        sale.buyer_id # TODO: upgrade frontend with this new name
-      end
+      expose :buyer_id ,documentation: { type: "integer", desc: "buyer id", example: '1' }
       expose :user_id ,documentation: { type: "integer", desc: "user id", example: '1' } do |sale, options|
         sale.inventory.user.id
       end

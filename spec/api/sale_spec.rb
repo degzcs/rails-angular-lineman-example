@@ -18,12 +18,13 @@ describe 'Sale', :type => :request do
           purchases = create_list(:purchase, 2,
                                   :with_proof_of_purchase_file,
                                    user: seller)
-          selected_purchase_ids = purchases.map(&:id)
+          # TODO: change frontend implementation to avoid this.
+          selected_purchases = purchases.map{ |purchase| { purchase_id: purchase.id } }
 
           expected_response = {
             # "id" => 1,
             "courier_id" => courier.id,
-            "client_id" => buyer.id,
+            "buyer_id" => buyer.id,
             "user_id" => seller.id, # TODO: upgrade frontend
             # "gold_batch_id" => GoldBatch.last.id + 1,
             "fine_grams" => 1.5,
@@ -49,7 +50,7 @@ describe 'Sale', :type => :request do
           post '/api/v1/sales/', {
             gold_batch: new_gold_batch_values,
             sale: new_sale_values,
-            selected_purchase_ids: selected_purchase_ids
+            selected_purchases: selected_purchases
             },
             {"Authorization" => "Barer #{ @token }"}
 
@@ -84,7 +85,7 @@ describe 'Sale', :type => :request do
             expected_response = {
               id:  sale.id,
               courier_id: sale.courier_id,
-              client_id:  sale.buyer_id,
+              buyer_id:  sale.buyer_id,
               user_id: @legal_representative.id,
               gold_batch_id: sale.gold_batch.id,
               fine_grams: sale.fine_grams,
