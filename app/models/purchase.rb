@@ -31,7 +31,7 @@ class Purchase < ActiveRecord::Base
 
   has_one :gold_batch, class_name: "GoldBatch", as: :goldomable
   belongs_to :inventory
-  has_many :sold_batches, dependent: :destroy
+  # has_many :sold_batches, dependent: :destroy
   has_many :documents, class_name: "Document", as: :documentable, dependent: :destroy
 
   # NOTE: this name is the most close to the real meaning of this field, because it is not always an invoice, most of the time it will be a equivalent-document.
