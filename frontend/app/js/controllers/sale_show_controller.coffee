@@ -17,7 +17,6 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   $scope.currentUser = null
   $scope.purchase_files_collection = currentSale.purchase_files_collection
   $scope.proof_of_sale = currentSale.proof_of_sale
-  window.scope = $scope
 
   ids = []
   i=0

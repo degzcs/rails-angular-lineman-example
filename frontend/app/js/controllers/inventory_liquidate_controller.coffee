@@ -144,7 +144,8 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, 
         SaleService.model.selectedPurchases = $scope.selectedPurchases
         SaleService.model.totalAmount = $scope.totalAmount
         SaleService.model.price = sale.price
-        SaleService.model.origin_certificate_file = sale.origin_certificate_file
+        SaleService.model.purchase_files_collection = sale.purchase_files_collection
+        SaleService.model.proof_of_sale = sale.proof_of_sale
         SaleService.saveState()
         $state.go('show_sale')
       ).error (data, status, headers, config) ->
