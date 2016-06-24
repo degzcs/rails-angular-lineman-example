@@ -23,17 +23,18 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
       $scope.showEmpty = true
       $scope.liquidate_selected_items = (ev)->
 
-        if $scope.selectedItems.length == 0
-          $mdDialog.show(
-            $mdDialog.alert()
-            .title('Mensaje Inventario')
-            .content('Debe seleccionar al menos una cantidad')
-            .ariaLabel('Alert Dialog Demo').ok('Ok')
-            .targetEvent(ev))
-        else
+        # NOTE: this part of code was disable becuase it is not needed to split gold
+        #if $scope.selectedItems.length == 0
+        #  $mdDialog.show(
+        #    $mdDialog.alert()
+        #    .title('Mensaje Inventario')
+        #    .content('Debe seleccionar al menos una cantidad')
+        #    .ariaLabel('Alert Dialog Demo').ok('Ok')
+        #    .targetEvent(ev))
+        #else
           #enterIngotsNumber(ev)
-          confirm_liquidate($scope.totalAmount,ev)
-        return
+          confirm_liquidate($scope.totalAmount, ev)
+        #return
 
 
       $scope.show_inventory = (item)->
@@ -53,11 +54,7 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         PurchaseService.model.code = item.code
         PurchaseService.saveState()
         $state.go('show_inventory')
-
-
-
         return
-
 
       $scope.nbOfPages = ->
         # if $scope.content
@@ -126,41 +123,14 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           $scope.deleteGramsDialog(item, ev)
         else
           #Show a message if there is no remainign grams
-          if item.inventory_remaining_amount == 0
+          if item.gold_batch_grams == 0
             show_dialog('Mensaje Inventario','No tiene gramos restantes en este lote', ev)
             return
-          #Check if the remaining amount is lowe than 1
-          if item.inventory_remaining_amount <= 1
-            item.selected = true
-            item.amount_picked = item.inventory_remaining_amount
-            #Push the hash to the array of selected items
-            $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
-            $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
-          else
-            enterGramsDialog(item, ev)
-
-      # Display a dialog that allows to enter the grams amount
-      enterGramsDialog = (item,ev)->
-        $mdDialog.show(
-          controller: 'InventoryAmountCtrl'
-          resolve:
-            pickedItem: ->
-              return item;
-          templateUrl: 'partials/inventory_amount_form.html'
-          targetEvent: ev).then ((answer) ->
-          #It catches the answer and push it to the array selectItems, it also adds the amount to the total
           item.selected = true
-          item.amount_picked = answer
+          item.amount_picked = item.gold_batch_grams
           #Push the hash to the array of selected items
           $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
-          $scope.totalAmount = Number(($scope.totalAmount + answer).toFixed(2))
-          return
-        ), ->
-          #if the response is negative set the checkbox to false
-          item.selected = false
-          return
-        return
-
+          $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
 
       #updates all checkboxes in the inventory list
       $scope.selectAll = (inventoryItems, grams, selectall,ev) ->
@@ -197,9 +167,9 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
         i=0
         while i < inventoryItems.length
           item = inventoryItems[i]
-          unless item.inventory_remaining_amount == 0
+          unless item.gold_batch_grams == 0
             item.selected = true
-            item.amount_picked = item.inventory_remaining_amount
+            item.amount_picked = item.gold_batch_grams
             #Push the hash to the array of selected items
             $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
             $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
@@ -216,7 +186,6 @@ angular.module('app').directive 'mdTableInventory', ($mdDialog,LiquidationServic
           i++
         console.log $scope.selectedItems
         return
-
 
       #Launches a dialog to ask the user if wants to delete the amount
       $scope.deleteGramsDialog= (item,ev)->

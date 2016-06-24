@@ -42,6 +42,7 @@ end
 
 begin
   office = company.offices.first
+  office.update_column :address, 'Calle 67 # 52 -20'
 rescue => e
   puts "There is not Office or the Company was not created properly. ERROR: #{ e }"
 end

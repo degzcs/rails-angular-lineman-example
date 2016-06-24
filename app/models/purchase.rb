@@ -53,7 +53,6 @@ class Purchase < ActiveRecord::Base
   # Callbacks
   #
 
-
   before_save :generate_barcode
   after_create :update_inventory_amount
 

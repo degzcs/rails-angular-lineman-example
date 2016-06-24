@@ -4,16 +4,16 @@
       Liquidar {{totalAmount}} Gramos
       %md-icon{:alt => "Alarm Icon", "md-svg-icon" =>"navigation:arrow_forward"}
   %md-checkbox{id: "hideButton","aria-label" => "Checkbox 1", "ng-model" => "showEmpty"}
-    Mostrar compras sin gramos restantes  
-    
-    
+    Mostrar compras sin gramos restantes
+
+
   %md-content
     .table-container
       %table.md-table.inventory-index-table
         %thead
           %tr.md-table-headers-row
             %th.table-checkbox.all-check
-              %md-button.md-icon-button.launch{"ng-click"=>"selectAll(content,grams,selectall,$event)"} 
+              %md-button.md-icon-button.launch{"ng-click"=>"selectAll(content,grams,selectall,$event)"}
                 %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{selectall ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"selectall ? 'item-selected' : ''","aria-label"=>"selectall"}
             %th.md-table-header
             %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
@@ -26,33 +26,14 @@
           %tr.md-table-content-row{"ng-repeat" => "item in content | filter:filters","ng-class"=>"{'purchase-empty': item.inventory.remaining_amount == 0}"}
             %td.table-checkbox
               /%md-checkbox{"ng-click" => "selectItem(item,grams,$event)", "ng-model" => "item.selected", "aria-label"=>"item-check", value:"item.selected"}
-              %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)"} 
+              %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)"}
                 %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}"}
               {{item.amount_picked}}
-            %td 
+            %td
               .trazoro-state.tag{"ng-if"=>"item.trazoro"}
                 Trazoro
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory(item)"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
-            
+
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
-        / Rows per page :
-        /   %a{:href => "#", "ng-click" => "goToPage(0); count=5"} 5
-        /   ,
-        /   %a{:href => "#", "ng-click" => "goToPage(0); count=10"} 10
-        /   ,
-        /   %a{:href => "#", "ng-click" => "goToPage(0); count=25"} 25
-        /   ,
-        /   %a{:href => "#", "ng-click" => "goToPage(0); count=50"} 50
-        /   ,
-        /   %a{:href => "#", "ng-click" => "goToPage(0); count=100"} 100
         Registros cargados: {{count}}
-      / %span{:flex => "flex"}
-      / %span{"ng-show" => "nbOfPages() > 1"}
-      /   %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==0", "ng-click" => "tablePage=tablePage-1", "aria-label" => "Previous Page"}
-      /     %i.ion-chevron-left{:style => "font-size:16px;"}
-      /   %a{:href => "#", "ng-repeat" => "i in getNumber(nbOfPages()) track by $index"}
-      /     %md-button.md-primary.md-hue-2.md-table-footer-item{"ng-click" => "goToPage($index)"}
-      /       %span{"ng-class" => "{ 'md-table-active-page': tablePage==$index}"} {{$index+1}}
-      /   %md-button.md-primary.md-hue-2{"ng-disabled" => "tablePage==nbOfPages()-1", "ng-click" => "tablePage=tablePage+1", "aria-label" => "Next Page"}
-      /     %i.ion-chevron-right{:style => "font-size:16px;"}

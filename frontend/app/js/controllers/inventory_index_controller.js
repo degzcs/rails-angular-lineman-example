@@ -19,9 +19,6 @@ angular.module('app').controller('InventoryIndexCtrl', function($scope, $mdDialo
     }, {
       name: 'Precio',
       field: 'price'
-    },{
-      name: 'Gramos Restantes',
-      field: 'inventory_remaining_amount'
     }
   ];
   //Filters
