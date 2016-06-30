@@ -88,7 +88,7 @@ describe 'Purchase', :type => :request do
           create_list(
                       :purchase, 20,
                       :with_proof_of_purchase_file,
-                      inventory_id: @buyer.inventory.id,
+                      inventory_id: @buyer.company.legal_representative.inventory.id,
                       seller_id: seller.id
                       )
         end
