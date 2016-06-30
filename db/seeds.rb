@@ -74,9 +74,9 @@ begin
         office: office,)
 
   FactoryGirl.create(:user,
-        first_name: 'Jesus',
-        last_name: 'Munoz',
-        email: 'jesus.munoz@trazoro.co',
+        first_name: 'Santigo',
+        last_name: 'Lopez',
+        email: 'santigo.lopez@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4',
         city: city,
