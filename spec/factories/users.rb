@@ -20,19 +20,12 @@ FactoryGirl.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name}
     email { Faker::Internet.email }
-    document_number { Faker::Number.number(10) }
+
     document_expedition_date 50.years.ago # NOTE : this field is useless.
-    nit_number { Faker::Number.number(10) }
-    phone_number { Faker::PhoneNumber.cell_phone }
-    address { Faker::Address.street_address}
-    id_document_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf") }
-    rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf") }
-    photo_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
-    mining_register_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'),"application/pdf") }
     personal_rucom {}
     office {}
     # population_center
-    city { City.all.sample }
+
     password { 'foobar' }
     password_confirmation { 'foobar' }
     external { false }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701201850) do
+ActiveRecord::Schema.define(version: 20160701210928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,24 @@ ActiveRecord::Schema.define(version: 20160701201850) do
   end
 
   add_index "population_centers", ["city_id"], name: "index_population_centers_on_city_id", using: :btree
+
+  create_table "profiles", force: true do |t|
+    t.string   "document_number"
+    t.string   "phone_number"
+    t.float    "avaible_credits"
+    t.string   "address"
+    t.string   "rut_file"
+    t.string   "photo_file"
+    t.text     "mining_authorization_file"
+    t.boolean  "legal_representative"
+    t.text     "id_document_file"
+    t.integer  "nit_number"
+    t.integer  "city_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
 
   create_table "purchases", force: true do |t|
     t.string   "origin_certificate_sequence"
