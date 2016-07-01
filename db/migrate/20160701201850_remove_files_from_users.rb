@@ -8,7 +8,6 @@ class RemoveFilesFromUsers < ActiveRecord::Migration
     remove_column :users, :rut_file, :string
     remove_column :users, :photo_file, :string
     remove_column :users, :population_center_id, :string
-    remove_column :users, :office_id, :string
     remove_column :users, :mining_register_file, :string
     remove_column :users, :legal_representative, :string
     remove_column :users, :id_document_file, :string

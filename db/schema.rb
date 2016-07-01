@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(version: 20160701201850) do
     t.string   "password_digest"
     t.string   "reset_token"
     t.boolean  "external",        default: false, null: false
+    t.string   "office_id"
   end
 
 end

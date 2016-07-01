@@ -2,29 +2,16 @@
 #
 # Table name: users
 #
-#  id                       :integer          not null, primary key
-#  first_name               :string(255)
-#  last_name                :string(255)
-#  email                    :string(255)
-#  document_number          :string(255)
-#  document_expedition_date :date
-#  phone_number             :string(255)
-#  created_at               :datetime
-#  updated_at               :datetime
-#  password_digest          :string(255)
-#  available_credits        :float
-#  reset_token              :string(255)
-#  address                  :string(255)
-#  rut_file                 :string(255)
-#  photo_file               :string(255)
-#  population_center_id     :integer
-#  office_id                :integer
-#  external                 :boolean          default(FALSE), not null
-#  mining_register_file     :string(255)
-#  legal_representative     :boolean          default(FALSE)
-#  id_document_file         :text
-#  nit_number               :string(255)
-#  city_id                  :integer
+#  id              :integer          not null, primary key
+#  first_name      :string(255)
+#  last_name       :string(255)
+#  email           :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  password_digest :string(255)
+#  reset_token     :string(255)
+#  external        :boolean          default(FALSE), not null
+#  office_id       :string(255)
 #
 
 #  created_at               :datetime
