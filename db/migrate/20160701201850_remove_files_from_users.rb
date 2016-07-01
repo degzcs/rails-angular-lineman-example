@@ -1,5 +1,7 @@
 class RemoveFilesFromUsers < ActiveRecord::Migration
   def change
+    remove_column :users, :first_name, :string
+    remove_column :users, :last_name, :string
     remove_column :users, :document_number, :string
     remove_column :users, :document_expedition_date, :string
     remove_column :users, :phone_number, :string
