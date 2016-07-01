@@ -19,9 +19,6 @@
 # So, I think it could be named as mining_authorization_document and add another field to select the document type
 class User < ActiveRecord::Base
 
-  class EmptyCredits < StandardError
-  end
-
   #
   # Associations
   #
@@ -83,7 +80,7 @@ class User < ActiveRecord::Base
   end
 
   # TODO: this name no make sense here. Update it asap!!!
-  scope :providers, -> {where('users.available_credits > ?', 0)}
+  scope :providers, -> { joins(:profile).where('profiles.available_credits > ?', 0) }
 
   # Get external users activity
   # NOTE: these names are in spanish because it is not clear yet how handle these categories and if the names are correct
@@ -145,6 +142,7 @@ class User < ActiveRecord::Base
 
   delegate :name, to: :city, prefix: :city
   delegate :name, to: :state, prefix: :state
+  delegate :available_credits, to: :profile
 
   #
   # Instance Methods
@@ -158,16 +156,6 @@ class User < ActiveRecord::Base
 
   def company_name
     company.try(:name)
-  end
-
-  # TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
-  def phone
-    phone_number
-  end
-
-  # TODO: this nit is completely different to company nit so fix it into the frontend asap!!
-  def nit
-    self.nit_number
   end
 
   def rucom_record
@@ -208,13 +196,6 @@ class User < ActiveRecord::Base
       exp: 14.days.from_now.to_i
     }
     JWT.encode(payload, Rails.application.secrets.secret_key_base);
-  end
-
-  #discount available credits amount
-  def discount_available_credits(credits)
-    new_amount = (available_credits - credits).round(2)
-    raise EmptyCredits if new_amount <= 0
-    update_attribute(:available_credits,new_amount)
   end
 
   # NOTE: This method is just and alias to avoid break the app, this field was removed and it will be deleted from the rest of the project asap.

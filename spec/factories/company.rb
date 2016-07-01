@@ -25,7 +25,7 @@ FactoryGirl.define do
     city { City.first.name }
     state { State.first.name }
     country { Country.first.name }
-    legal_representative { create :user, office: nil, legal_representative: true }
+    legal_representative { create :user, :with_profile, office: nil, legal_representative: true }
     email { Faker::Internet.email }
     phone_number { Faker::PhoneNumber.phone_number }
     chamber_of_commerce_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }

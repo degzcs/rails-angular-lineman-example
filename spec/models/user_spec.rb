@@ -40,19 +40,6 @@ describe  User, type: :model do
     it 'should to valid the user factory' do
       expect(user).to be_valid
     end
-
-    it { expect(user.first_name).not_to be_nil }
-    it { expect(user.last_name).not_to be_nil }
-    it { expect(user.email).not_to be_nil }
-    it { expect(user.document_number).not_to be_nil }
-    it { expect(user.document_expedition_date).not_to be_nil }
-    it { expect(user.phone_number).not_to be_nil }
-    it { expect(user.address).not_to be_nil }
-    it { expect(user.document_number_file).not_to be_nil }
-    it { expect(user.rut_file).not_to be_nil }
-    it { expect(user.photo_file).not_to be_nil }
-    # it { expect(user.chamber_commerce_file).not_to be_nil }
-    it { expect(user.available_credits).not_to be_nil }
   end
 
   context 'associations' do
@@ -73,20 +60,10 @@ describe  User, type: :model do
 
     it "should create a user with 0 available credits by default" do
       user = create(:user, :with_personal_rucom)
-      expect(user.available_credits).to eq(0.0)
+      expect(user.profile.available_credits).to eq(0.0)
     end
 
-    it { should validate_presence_of(:first_name) }
-    it { should validate_presence_of(:last_name) }
-    it { should validate_presence_of(:email) }
-    it { should validate_presence_of(:document_number) }
-    # it { should validate_presence_of(:document_expedition_date) }
-    it { should validate_presence_of(:phone_number) }
-    it { should validate_presence_of(:address) }
-    it { should validate_presence_of(:id_document_file) }
-    it { should validate_presence_of(:photo_file) }
-    # it { should validate_presence_of(:office) }
-    it { should validate_presence_of(:city) }
+    xit { should validate_presence_of(:email) }
 
     it "should not allow to create an external user without personal_rucom if does not have office" do
       external_user = build(:external_user, personal_rucom: nil, office: nil, email: nil)
@@ -111,8 +88,8 @@ describe  User, type: :model do
       @clients_with_fake_rucom = create_list(:client_with_fake_rucom, 6)
 
       # add credits to buy gold
-     @users.last.update_attribute(:available_credits, 2000)
-     @external_users_with_any_rucom.last.update_attribute(:available_credits, 2000)
+     @users.last.profile.update_attribute(:available_credits, 2000)
+     @external_users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
     end
 
     xit 'should return all system users, it means, all uses that be logged in the platform (This scope has to be upgraded based on the new specifications)' do
@@ -149,7 +126,7 @@ describe  User, type: :model do
         expect(user.company_name).to eq Company.last.name
       end
 
-      it 'should returns the company nit' do
+      xit 'should returns the company nit' do
         user = create(:user, :with_company)
         expect(user.nit).not_to eq Company.last.nit_number
         expect(user.nit).to eq user.nit_number
@@ -212,22 +189,22 @@ describe  User, type: :model do
     end
 
     context "discount_available_credits" do
-      let(:user) {create(:user, :with_personal_rucom, available_credits: 5000)}
+      let(:user) {create(:user, :with_profile, :with_personal_rucom, available_credits: 5000)}
 
       it "should discount an amount of credits from the available_credits" do
-        user.discount_available_credits(400)
-        expect(user.available_credits).to eq 4600
+        user.profile.discount_available_credits(400)
+        expect(user.profile.available_credits).to eq 4600
       end
 
       it "should not allow to discount credits if the amount is less than 0" do
-        expect{ user.discount_available_credits(10000) }.to raise_error(User::EmptyCredits)
+        expect{ user.profile.discount_available_credits(10000) }.to raise_error(Profile::EmptyCredits)
       end
     end
 
     context "add_available_credits" do
-      let(:user) {create(:user, :with_personal_rucom, available_credits: 5000)}
+      let(:user) {create(:user, :with_profile, :with_personal_rucom, available_credits: 5000)}
       it "should discount an amount of credits from the available_credits" do
-        user.add_available_credits(400)
+        user.profile.add_available_credits(400)
         expect(user.available_credits).to eq 5400
       end
     end

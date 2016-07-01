@@ -23,6 +23,10 @@
 
 class Profile < ActiveRecord::Base
 
+  # TODO: remove this class asap!!
+  class EmptyCredits < StandardError
+  end
+
   #
   # Associations
   #
@@ -70,9 +74,28 @@ class Profile < ActiveRecord::Base
     self.mining_authorization_file
   end
 
+
+  # TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
+  def phone
+    self.phone_number
+  end
+
+  # TODO: this nit is completely different to company nit so fix it into the frontend asap!!
+  def nit
+    self.nit_number
+  end
+
+
   #add available credits
   def add_available_credits(credits)
     new_amount = (available_credits + credits).round(2)
+    update_attribute(:available_credits, new_amount)
+  end
+
+  #discount available credits amount
+  def discount_available_credits(credits)
+    new_amount = (available_credits - credits).round(2)
+    raise EmptyCredits if new_amount <= 0
     update_attribute(:available_credits, new_amount)
   end
 
