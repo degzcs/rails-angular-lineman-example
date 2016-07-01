@@ -3,7 +3,7 @@ class CreateProfiles < ActiveRecord::Migration
     create_table :profiles do |t|
       t.string :document_number
       t.string :phone_number
-      t.float :avaible_credits
+      t.float :available_credits
       t.string :address
       t.string :rut_file
       t.string :photo_file
