@@ -3,8 +3,6 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
-#  first_name      :string(255)
-#  last_name       :string(255)
 #  email           :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -17,19 +15,45 @@
 FactoryGirl.define do
 
   factory :user, class: User do |f|
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name}
     email { Faker::Internet.email }
-
-    document_expedition_date 50.years.ago # NOTE : this field is useless.
     personal_rucom {}
     office {}
-    # population_center
-
+    profile
     password { 'foobar' }
     password_confirmation { 'foobar' }
     external { false }
-    legal_representative { false }
+
+    trait :with_profile do
+      transient do
+        first_name { Faker::Name.first_name }
+        last_name { Faker::Name.last_name}
+        document_number { Faker::Number.number(10) }
+        phone_number { Faker::PhoneNumber.cell_phone }
+        available_credits { 0 }
+        address { Faker::Address.street_address}
+        rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf") }
+        photo_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
+        mining_authorization_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'),"application/pdf") }
+        legal_representative { false }
+        id_document_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'),"application/pdf") }
+        nit_number { Faker::Number.number(10) }
+        city { City.all.sample }
+      end
+
+      after :build do |user, e|
+        user.profile.document_number = e.document_number
+        user.profile.phone_number = e.phone_number
+        user.profile.available_credits = e.available_credits
+        user.profile.address = e.address
+        user.profile.rut_file = e.rut_file
+        user.profile.photo_file = e.photo_file
+        user.profile.mining_authorization_file = e.mining_authorization_file
+        user.profile.legal_representative = e.legal_representative
+        user.profile.id_document_file = e.id_document_file
+        user.profile.nit_number = e.nit_number
+        user.profile.city = e.city
+      end
+    end
 
     trait :with_personal_rucom do
       before :create do |user, e|

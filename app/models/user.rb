@@ -3,8 +3,6 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
-#  first_name      :string(255)
-#  last_name       :string(255)
 #  email           :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -28,6 +26,7 @@ class User < ActiveRecord::Base
   # Associations
   #
 
+  has_one :profile, dependent: :destroy
   has_one :inventory, dependent: :destroy
   has_many :purchases, through: :inventory
   has_many :sales, through: :inventory
@@ -43,6 +42,7 @@ class User < ActiveRecord::Base
   has_one :company, through: :office
   belongs_to :city
   has_one :state, through: :city
+  has_and_belongs_to_many :roles
   # TODO: create migration to remote this field
   # belongs_to :population_center
 
@@ -53,21 +53,9 @@ class User < ActiveRecord::Base
   # Validations
   #
 
-  validates :first_name , presence: true
-  validates :last_name , presence: true
   validates :email, presence: true, uniqueness: true, unless: :external
-  validates :document_number , presence: true
-  # validates :document_expedition_date, presence: true
-  validates :phone_number, presence: true
-  validates :address, presence: true
-  validates :id_document_file, presence: true, unless: :external
-  # validates :rut_file, presence: true
-  # validates :mining_register_file, presence: true
-  validates :photo_file, presence: true, unless: :external
   validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
-  validates :city, presence: true
-  validates :personal_rucom, presence: true, unless: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
-  has_and_belongs_to_many :roles
+  validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
   has_secure_password validations: false
   validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
@@ -147,18 +135,9 @@ class User < ActiveRecord::Base
   # Calbacks
   #
 
-  after_initialize :init
   after_create :create_inventory
 
-  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office
-
-  #
-  # fields for save files by carrierwave
-  #
-  mount_uploader :id_document_file, DocumentUploader
-  mount_uploader :photo_file, PhotoUploader
-  mount_uploader :rut_file, DocumentUploader
-  mount_uploader :mining_register_file, DocumentUploader
+  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile
 
   #
   # Delegates
@@ -197,9 +176,9 @@ class User < ActiveRecord::Base
 
   def available_credits_based_on_user_role
     if has_office?
-      self.office.company.legal_representative.available_credits
+      self.office.company.legal_representative.profile.available_credits
     else
-     self.available_credits
+     self.profile.available_credits
     end
   end
 
@@ -238,12 +217,6 @@ class User < ActiveRecord::Base
     update_attribute(:available_credits,new_amount)
   end
 
-  #add available credits
-  def add_available_credits(credits)
-    new_amount = (available_credits + credits).round(2)
-    update_attribute(:available_credits,new_amount)
-  end
-
   # NOTE: This method is just and alias to avoid break the app, this field was removed and it will be deleted from the rest of the project asap.
   def document_number_file
     self.id_document_file
@@ -273,9 +246,7 @@ class User < ActiveRecord::Base
     self.create_inventory!(remaining_amount: 0) if self.inventory.blank?
   end
 
-  def init
-    self.available_credits ||= 0.0 #will set the default value only if it's nil
-  end
+
 
   # NOTE: all users marked as an external are users which will belong to the client role.
   def validate_office?
@@ -283,7 +254,7 @@ class User < ActiveRecord::Base
   end
 
   def validate_personal_rucom?
-    self.has_office? || self.legal_representative
+    !self.has_office? && !self.profile.legal_representative
   end
 
 end
