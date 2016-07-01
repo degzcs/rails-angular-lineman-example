@@ -54,7 +54,7 @@ describe Purchase::BuyGoldService do
       # binding.pry
     end
 
-    it 'should to make a purchase and discount credits to the current user' do
+    xit 'should to notify that user does not have enough available credits' do
     end
   end
 

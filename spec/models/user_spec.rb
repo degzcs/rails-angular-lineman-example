@@ -51,9 +51,11 @@ require 'spec_helper'
 describe  User, type: :model do
   context 'test factory' do
     let(:user){ create(:user, :with_personal_rucom ) }
-    it 'has a valid factory' do
+
+    it 'should to valid the user factory' do
       expect(user).to be_valid
     end
+
     it { expect(user.first_name).not_to be_nil }
     it { expect(user.last_name).not_to be_nil }
     it { expect(user.email).not_to be_nil }
