@@ -22,6 +22,6 @@ FactoryGirl.define do
     payment_flag true
     payment_date { Time.now }
     discount_percentage { 0 }
-    user { create :user, legal_representative: true }
+    user { create :user, :with_profile, legal_representative: true }
   end
 end

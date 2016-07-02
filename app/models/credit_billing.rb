@@ -64,7 +64,7 @@ class CreditBilling < ActiveRecord::Base
   # person can buy credits. Those users that are working for a company and buy with the
   # company rucom, they cannot buy credits.
   def can_buy?
-    if self.user && !self.user.legal_representative? && self.user.has_office?
+    if self.user && !self.user.legal_representative && self.user.has_office?
       self.errors.add :user, 'Este usuario no esta autorizado para comprar creditos'
     end
   end

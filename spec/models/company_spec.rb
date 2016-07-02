@@ -31,8 +31,6 @@ describe Company  do
     it { expect(company.state).not_to be_nil}
     it { expect(company.country).not_to be_nil}
     it { expect(company.legal_representative).not_to be_nil}
-    it { expect(company.id_type_legal_rep).not_to be_nil}
-    it { expect(company.id_number_legal_rep).not_to be_nil}
     it { expect(company.email).not_to be_nil }
     it { expect(company.phone_number).not_to be_nil}
     it { expect(company.chamber_of_commerce_file).not_to be_nil }
@@ -46,14 +44,10 @@ describe Company  do
       expect(build(:company)).to be_valid
     end
     it { should validate_presence_of(:nit_number) }
-    #it { should validate_presence_of(:city) }
-    #it { should validate_presence_of(:state) }
-    #it { should validate_presence_of(:country) }
     it { should validate_presence_of(:legal_representative) }
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:phone_number) }
     it { should validate_presence_of(:rucom) }
-    # it { should validate_presence_of(:mining_register_file)}
     it { should validate_presence_of(:rut_file)}
     it { should validate_presence_of(:chamber_of_commerce_file)}
   end

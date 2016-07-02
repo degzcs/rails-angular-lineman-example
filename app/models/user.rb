@@ -143,6 +143,7 @@ class User < ActiveRecord::Base
   delegate :name, to: :city, prefix: :city
   delegate :name, to: :state, prefix: :state
   delegate :available_credits, to: :profile
+  delegate :legal_representative, to: :profile
 
   #
   # Instance Methods
