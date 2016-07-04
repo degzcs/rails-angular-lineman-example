@@ -37,11 +37,11 @@ describe 'Client', :type => :request do
 
             expected_response = {
               id: client.id,
-              document_number: client.document_number,
-              first_name: client.first_name,
-              last_name: client.last_name,
-              phone_number: client.phone_number,
-              address: client.address,
+              document_number: client.profile.document_number,
+              first_name: client.profile.first_name,
+              last_name: client.profile.last_name,
+              phone_number: client.profile.phone_number,
+              address: client.profile.address,
               email: client.email,
             }
 
