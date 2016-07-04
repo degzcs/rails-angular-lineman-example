@@ -2,7 +2,7 @@ module V1
   module Entities
     class Client < Grape::Entity
       expose :id, documentation: { type: "integer", desc: "id of the user", example: '1' }
-      expose :document_number, documentation: { type: "string", desc: "Document number of the provider", example: "1968353479" }do |user, options|
+      expose :document_number, documentation: { type: "string", desc: "Document number of the provider", example: "1968353479" } do |user, options|
         user.profile.document_number
       end
       expose :first_name, documentation: { type: "string", desc: "Firstname", example: "Juan" } do |user, options|

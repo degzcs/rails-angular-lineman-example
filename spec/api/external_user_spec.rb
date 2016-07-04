@@ -39,11 +39,11 @@ describe 'ExternalUser', :type => :request do
 
             expected_response = {
               id: external_user.id,
-              document_number: external_user.document_number,
-              first_name: external_user.first_name,
-              last_name: external_user.last_name,
-              phone_number: external_user.phone_number,
-              address: external_user.address,
+              document_number: external_user.profile.document_number,
+              first_name: external_user.profile.first_name,
+              last_name: external_user.profile.last_name,
+              phone_number: external_user.profile.phone_number,
+              address: external_user.profile.address,
               email: external_user.email,
             }
 
