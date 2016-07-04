@@ -109,7 +109,7 @@ describe 'Sale', :type => :request do
 
             seller_expected_response = {
               id: @legal_representative.id,
-              name: "#{@legal_representative.first_name} #{@legal_representative.last_name}",
+              name: "#{ @legal_representative.profile.first_name } #{ @legal_representative.profile.last_name }",
               company_name: @legal_representative.company.name,
               document_type: 'NIT',
               document_number: @legal_representative.company.nit_number,

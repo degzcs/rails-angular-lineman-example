@@ -51,15 +51,15 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     text_box buyer_presenter.name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 841
     text_box buyer_presenter.document_type, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box buyer_presenter.nit_number, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box buyer_presenter.profile.nit_number, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 823
-    text_box buyer_presenter.document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box buyer_presenter.address, :at => [380,cursor], :width => 170 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box buyer_presenter.profile.document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box buyer_presenter.profile.address, :at => [380,cursor], :width => 170 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 805
     text_box buyer_presenter.rucom_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box buyer_presenter.email, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 787
-    text_box buyer_presenter.phone_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box buyer_presenter.profile.phone_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
 
     # Seller
@@ -69,15 +69,16 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     text_box seller_presenter.name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 707
     text_box seller_presenter.document_type, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box seller_presenter.nit_number, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.nit_number, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 689
-    text_box seller_presenter.document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box seller_presenter.address, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.address, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 671
-    text_box seller_presenter.address, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # TODO: double check why this address is twice
+    text_box seller_presenter.profile.address, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box seller_presenter.email, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 653
-    text_box seller_presenter.phone_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.phone_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     # Carrier
 

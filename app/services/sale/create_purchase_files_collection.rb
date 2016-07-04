@@ -133,9 +133,9 @@ class Sale::CreatePurchaseFilesCollection
     # Origin certificate
     files << purchase.origin_certificate_file
     # ID
-    files << purchase.user.id_document_file
+    files << purchase.user.profile.id_document_file
     # barequero id OR miner register OR resolution
-    files << purchase.user.mining_register_file
+    files << purchase.user.profile.mining_authorization_file
     # purchase equivalent document
     files << purchase.proof_of_purchase.file
     end
@@ -150,9 +150,9 @@ class Sale::CreatePurchaseFilesCollection
     # Origin certificate
     file_paths << Rails.root.join(purchase.origin_certificate_file.path)
     # ID
-    file_paths << Rails.root.join(purchase.user.id_document_file.path)
+    file_paths << Rails.root.join(purchase.user.profile.id_document_file.path)
     # barequero id OR miner register OR resolution
-    file_paths << Rails.root.join(purchase.user.mining_register_file.path)
+    file_paths << Rails.root.join(purchase.user.profile.mining_authorization_file.path)
     # purchase equivalent document
     file_paths << Rails.root.join(purchase.proof_of_purchase.file.path)
     end

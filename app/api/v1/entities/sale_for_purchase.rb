@@ -18,7 +18,7 @@ module V1
         seller = legal_representative = V1::Helpers::UserHelper.legal_representative_from(sale.inventory.user)
         user_transformed_to_provider = {
           id: seller.id,
-          name: "#{ seller.first_name } #{ seller.last_name }",
+          name: UserPresenter.new(seller, self).name,
           company_name: seller.company.name,
           document_type: 'NIT',
           document_number: seller.company.nit_number,
