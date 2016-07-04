@@ -27,10 +27,10 @@ module V1
           purchase.seller.id # TODO: change provider for saller in the front end
         end
         expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.seller.first_name
+          purchase.seller.profile.first_name
         end
         expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
-          purchase.seller.last_name
+          purchase.seller.profile.last_name
         end
       end
       expose :gold_batch do

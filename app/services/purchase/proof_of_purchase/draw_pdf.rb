@@ -52,7 +52,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box buyer_presenter.office.address, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 590
     text_box buyer_presenter.city_name, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box buyer_presenter.phone_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box buyer_presenter.profile.phone_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
 
     # Provider
@@ -63,13 +63,13 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box seller_presenter.name, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 512
     text_box seller_presenter.nit, :at => [130,cursor], :width => 150, :size => 10 , :height =>  10, :overflow => :shrink_to_fit
-    text_box seller_presenter.document_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.document_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 494
     text_box seller_presenter.rucom_record, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box seller_presenter.phone_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.phone_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 476
-    text_box seller_presenter.city_name, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box seller_presenter.address, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.city_name, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.profile.address, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 459
     text_box "population center", :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 

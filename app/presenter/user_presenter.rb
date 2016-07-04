@@ -7,7 +7,7 @@ class UserPresenter < BasePresenter
   end
 
   def name
-    "#{ user.first_name } #{ user.last_name }"
+    "#{ user.profile.first_name } #{ user.profile.last_name }"
   end
 
   # TODO: this have to change asap. because will cause data inconsistencies
@@ -17,7 +17,7 @@ class UserPresenter < BasePresenter
 
   # TODO: this have to change asap. because will cause data inconsistencies
   def nit
-    @object.nit || self.document_number
+    @object.profile.nit || self.profile.document_number
   end
 
   def document_type

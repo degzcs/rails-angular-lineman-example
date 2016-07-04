@@ -6,7 +6,7 @@ describe 'Purchase', :type => :request do
       before :context do
         @buyer = create :user, :with_company
         @legal_representative = @buyer.company.legal_representative
-        @legal_representative.update_column :available_credits, 20000
+        @legal_representative.profile.update_column :available_credits, 20000
         @token = @buyer.create_token
         file_path = "#{ Rails.root }/spec/support/images/image.png"
         seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
@@ -23,8 +23,8 @@ describe 'Purchase', :type => :request do
            "user_id" => @buyer.company.legal_representative.id,
            "seller" =>{ # TODO: change front end variable name from provider to seller
               "id" => seller.id,
-              "first_name" => seller.first_name,
-              "last_name" => seller.last_name
+              "first_name" => seller.profile.first_name,
+              "last_name" => seller.profile.last_name
            },
            "price" => 1.5,
            "origin_certificate_file" => {'url' => "/uploads/documents/purchase/origin_certificate_file/1/image.png"},

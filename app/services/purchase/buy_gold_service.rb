@@ -82,6 +82,6 @@ class Purchase::BuyGoldService
 
   def discount_credits_to!(buyer, buyed_fine_grams)
     new_credits = buyer.available_credits - buyed_fine_grams.to_f
-    buyer.update_column(:available_credits, new_credits)
+    buyer.profile.update_column(:available_credits, new_credits)
   end
 end
