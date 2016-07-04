@@ -67,6 +67,12 @@ class Profile < ActiveRecord::Base
   after_initialize :init
 
   #
+  # Delegates
+  #
+
+  delegate :name, to: :city, prefix: :city
+
+  #
   # Instance Methods
   #
 
