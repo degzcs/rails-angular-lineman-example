@@ -34,28 +34,8 @@ describe 'City', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to match expected_response.stringify_keys
           end
-
         end
-
-        context '/:id/population_centers' do
-
-          it 'gets all population centers from a city' do
-            city = City.last
-            population_centers = create_list(:population_center, 10, city: city)
-
-            expected_response = population_centers
-
-            get "/api/v1/cities/#{city.id}/population_centers",{},{ "Authorization" => "Barer #{@token}" }
-            expect(response.status).to eq 200
-            expect(JSON.parse(response.body).count).to be 10
-          end
-
-        end
-
       end
-
     end
-
   end
-
 end
