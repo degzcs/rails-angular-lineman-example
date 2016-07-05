@@ -5,7 +5,7 @@ describe Purchase::BuyGoldService do
   let(:company){ create :company}
   let(:legal_representative) do
     user = company.legal_representative
-    user.update_column :available_credits, 100
+    user.profile.update_column :available_credits, 100
     user
   end
 

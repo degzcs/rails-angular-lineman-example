@@ -11,6 +11,7 @@ This is the repository for Trazoro web app. In this repository you will find bot
 - [linemanjs] (http://linemanjs.com)
 - phantomjs 2.0
 - image-magic 6.9.0
+- Ghostscript 
 
 NOTE: We used to use rbenv, nodenv and phantomenv to install dependencies.
 

@@ -7,7 +7,7 @@ describe CreditBilling::Acceptance do
   context 'buy some credits' do
 
     it 'should buy credits for single user without company' do
-      user = FactoryGirl.create :user, :with_personal_rucom, nit_number: nil, available_credits: 7.0
+      user = create :user, :with_profile, :with_personal_rucom, nit_number: nil, available_credits: 7.0
       credit_billing = create :credit_billing, user: user, unit: 10.0
 
       new_credit_billing_values = {
@@ -24,9 +24,9 @@ describe CreditBilling::Acceptance do
     end
 
     it 'should buy credits for the legal representative' do
-      user = FactoryGirl.create :user, :with_company, available_credits: 0
+      user = FactoryGirl.create :user, :with_profile, :with_company, available_credits: 0
       legal_representative = user.company.legal_representative
-      legal_representative.update_column :available_credits, 5.0
+      legal_representative.profile.update_column :available_credits, 5.0
 
       credit_billing = create :credit_billing, user: legal_representative, unit: 10.0
 

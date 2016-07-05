@@ -21,7 +21,7 @@ describe 'Auth', :type => :request do
            "company_name" => nil,
            "company" => nil,
            "photo_file" => {
-             "url" => "/uploads/photos/profile/photo_file/#{ user.id }/photo_file.png"
+             "url" => "/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
             },
           }
 
@@ -76,7 +76,7 @@ describe 'Auth', :type => :request do
            "company_name" => company.name,
            "company" => expected_company,
            "photo_file" => {
-             "url" => "/uploads/photos/profile/photo_file/#{ user.id }/photo_file.png"
+             "url" => "/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
             },
           }
 
@@ -136,7 +136,7 @@ describe 'Auth', :type => :request do
            "company_name" => company.name,
            "company" => expected_company,
            "photo_file" => {
-             "url" => "/uploads/photos/profile/photo_file/#{ user.id }/photo_file.png"
+             "url" => "/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
             },
           }
 

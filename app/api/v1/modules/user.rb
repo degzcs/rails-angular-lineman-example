@@ -123,8 +123,9 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-              arranged_params = arrange(params[:user])
-              current_user.update()
+              data = V1::Helpers::UserHelper.rearrange_params(params[:user])
+              current_user.update!(data[:user_data])
+              current_user.profile.update!(data[:profile_data])
               present current_user, with: V1::Entities::User
         end
       end

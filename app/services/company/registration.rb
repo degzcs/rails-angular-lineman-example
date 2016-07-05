@@ -24,7 +24,8 @@ class Company::Registration
   # @param user_data [ Hash ]
   # @return [ User ]
   def create_legal_representative_from(user_data)
-    user = User.new(user_data.merge(legal_representative: true))
+    user = User.new(user_data)
+    user.profile.legal_representative = true
     @response[:success] = user.save
     @response[:errors] << user.errors.full_messages
     user

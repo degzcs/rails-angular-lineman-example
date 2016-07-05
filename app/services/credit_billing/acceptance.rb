@@ -39,7 +39,7 @@ class CreditBilling::Acceptance
   def update_credits_buyer_with(current_available_credits, credits_to_add)
     new_credit_amount = current_available_credits + credits_to_add
     {
-      success: credits_buyer.update_attributes(available_credits: new_credit_amount),
+      success: credits_buyer.profile.update_attributes(available_credits: new_credit_amount),
       errors: credits_buyer.errors.full_messages
     }
   end
