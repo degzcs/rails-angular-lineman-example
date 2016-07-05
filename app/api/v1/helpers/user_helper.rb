@@ -14,6 +14,15 @@ module V1
           end
         end
 
+        # This method was created because the user information was separated into user and profile models
+        # @param params [ Hash ]
+        # @return [ Hash ]
+        def arrange(params)
+          user_data = params.slice(User.columns_hash.except('id').keys)
+          profile_data = params.slice(Profile.columns_hash.except('id').keys)
+          user_date.merge!(profile_attributes: profile_data)
+        end
+
       end
     end
   end

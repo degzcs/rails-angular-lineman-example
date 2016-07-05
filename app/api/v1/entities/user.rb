@@ -16,7 +16,7 @@ module V1
         user.create_token
       end
       expose :available_credits , documentation: { type: "float", desc: "Available credits", example: 0.0 } do |user,options|
-        user.profile.available_credits_based_on_user_role
+        user.available_credits_based_on_user_role
       end
       expose :phone_number , documentation: { type: "string", desc: "Phone number", example: "312344626" } do |user, options|
         user.profile.phone_number
