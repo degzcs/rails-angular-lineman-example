@@ -55,15 +55,25 @@ describe Purchase::BuyGoldService do
       # binding.pry
     end
 
-    xit 'should to notify that user does not have enough available credits' do
-    end
 
     context 'show validation message' do
+      it 'should to notify that user does not have enough available credits' do
+          @initial_credits = 0
+
+          response = service.call(
+          purchase_hash: @purchase_hash,
+          gold_batch_hash: @gold_batch_hash,
+          current_user: legal_representative, # TODO: worker
+          )
+        expect(response[:success]).to be false
+        expect(response[:errors]).to include 'WARNING: No tienes los suficientes creditos para hacer esta compra'
+        expect(service.purchase).to be nil
+      end
+
       it 'should throw a message telling to barequero reach the limin for this month' do
         gold_batch = create :gold_batch, fine_grams: 30
         purchase = create :purchase, seller: @seller, gold_batch: gold_batch
         # Try to buy gold
-        expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
         response = service.call(
           purchase_hash: @purchase_hash,
           gold_batch_hash: @gold_batch_hash,
