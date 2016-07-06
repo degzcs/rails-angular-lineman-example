@@ -69,6 +69,12 @@ class Purchase < ActiveRecord::Base
   mount_uploader :seller_picture, PhotoUploader
 
   #
+  # Scopes
+  #
+
+  scope :fine_grams_sum_by_date, ->(date, seller_id) { where(created_at: (date.beginning_of_month .. date.end_of_month)).where(seller_id: seller_id).joins(:gold_batch).sum('gold_batches.fine_grams') }
+
+  #
   # Instance methods
   #
 
