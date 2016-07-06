@@ -65,10 +65,10 @@ class User < ActiveRecord::Base
 
   scope :order_by_id, -> {order("users.id DESC")}
   # TODO: the scraper must to format all the information incoming in order to avoid this kind of queries.
-  scope :find_by_name, ->(name){where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
-              {first_name: "%#{name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{name.downcase.gsub('%', '\%').gsub('_', '\_')}%"})}
-  scope :find_by_document_number, -> (document_number){where("document_number LIKE :document_number",
-              {document_number: "%#{document_number.gsub('%', '\%').gsub('_', '\_')}%"})}
+  scope :find_by_name, ->(name){ joins(:profile).where("lower(profile.first_name) LIKE :first_name OR lower(profile.last_name) LIKE :last_name",
+              { first_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%", last_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%"})}
+  scope :find_by_document_number, -> (document_number){ joins(:profile).where("profiles.document_number LIKE :document_number",
+              { document_number: "%#{ document_number.gsub('%', '\%').gsub('_', '\_') }%" }) }
 
 
   scope :external_user_ids_with_personal_rucom, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom).pluck(:id)}
