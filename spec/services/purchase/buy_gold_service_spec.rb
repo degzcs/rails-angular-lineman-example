@@ -15,7 +15,7 @@ describe Purchase::BuyGoldService do
 
     before :each do
       @initial_credits = 100
-      seller = create(:external_user, :with_company)
+      @seller = create(:external_user, :with_company)
       file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"
       file = Rack::Test::UploadedFile.new(file_path, "application/pdf")
 
@@ -32,7 +32,7 @@ describe Purchase::BuyGoldService do
       @purchase_hash ={
            # "id"=>1,
            # "user_id"=>1,
-           "seller_id" => seller.id,
+           "seller_id" => @seller.id,
            # "gold_batch_id" => @gold_batch_hash["id"],
            "price" => 1.5,
            "origin_certificate_file" => file,
@@ -59,6 +59,20 @@ describe Purchase::BuyGoldService do
     end
 
     context 'show validation message' do
+      it 'should throw a message telling to barequero reach the limin for this month' do
+        gold_batch = create :gold_batch, fine_grams: 30
+        purchase = create :purchase, seller: @seller, gold_batch: gold_batch
+        # Try to buy gold
+        expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
+        response = service.call(
+          purchase_hash: @purchase_hash,
+          gold_batch_hash: @gold_batch_hash,
+          current_user: legal_representative, # TODO: worker
+          )
+        expect(response[:success]).to be false
+        expect(response[:errors]).to include 'WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes'
+        expect(service.purchase).to be nil
+      end
     end
   end
 
