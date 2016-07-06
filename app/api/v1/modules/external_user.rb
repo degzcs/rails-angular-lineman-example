@@ -171,10 +171,13 @@ module V1
           params[:external_user].except!(:files).merge!(id_document_file: document_number_file, photo_file: photo_file, mining_register_file: ext_user_mining_register_file)
 
           external_user_params = params[:external_user]
-          external_user = ::User.new(params[:external_user])
+          arranged_params = V1::Helpers::UserHelper.rearrange_params(params[:external_user])
+          external_user = ::User.new(arranged_params[:user_data])
+          external_user.build_profile arranged_params[:profile_data]
           external_user.external = true
 
 
+          # TODO: change this to user roles instead the external flag
           rucom = ::Rucom.find(params[:rucom_id])
           #If there is a company
           if params[:company]

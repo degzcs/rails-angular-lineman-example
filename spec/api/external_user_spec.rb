@@ -54,38 +54,37 @@ describe 'ExternalUser', :type => :request do
         end
       end
 
-      xcontext 'POST (this is deprecated, the external users will be created from the backend)' do
+      context 'POST (this specs will be deprecated, the external users will be created from the backend)' do
 
-        xcontext "without rucom" do
-          xit 'returns a representation of the new external user created and code 201' do
+        context "without rucom" do
+          it 'returns a representation of the new external user created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
+            rucom = create :rucom, provider_type: 'Barequero'
 
-            population_center = create(:population_center)
-            external_user = build(:external_user, population_center_id: population_center.id)
+            external_user = build(:external_user)
 
             new_values = {
-              first_name: external_user.first_name,
-              last_name: external_user.last_name,
               email: external_user.email,
-              document_number: external_user.document_number,
-              document_expedition_date: external_user.document_expedition_date,
-              phone_number: external_user.phone_number,
-              address: external_user.address,
-              population_center_id: population_center.id,
-              files: @files
+              files: @user_files,
+              first_name: external_user.profile.first_name,
+              last_name: external_user.profile.last_name,
+              document_number: external_user.profile.document_number,
+              phone_number: external_user.profile.phone_number,
+              address: external_user.profile.address,
+              city_id: City.last.id
             }
 
             expected_response = {
-              document_number: external_user.document_number,
-              first_name: external_user.first_name,
-              last_name: external_user.last_name,
-              phone_number: external_user.phone_number,
-              address: external_user.address,
+              document_number: external_user.profile.document_number,
+              first_name: external_user.profile.first_name,
+              last_name: external_user.profile.last_name,
+              phone_number: external_user.profile.phone_number,
+              address: external_user.profile.address,
               email: external_user.email
             }
 
-            post '/api/v1/external_users', {external_user: new_values}, { "Authorization" => "Barer #{@token}" }
+            post '/api/v1/external_users', {external_user: new_values, rucom_id: rucom.id}, { "Authorization" => "Barer #{@token}" }
             expect(response.status).to eq 201
             expect(JSON.parse(response.body).except('id')).to include(expected_response.stringify_keys)
           end
