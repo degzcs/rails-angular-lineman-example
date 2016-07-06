@@ -5,7 +5,7 @@ describe Purchase::BuyGoldService do
   let(:company){ create :company}
   let(:legal_representative) do
     user = company.legal_representative
-    user.profile.update_column :available_credits, 100
+    user.profile.update_column :available_credits, @initial_credits
     user
   end
 
@@ -14,6 +14,7 @@ describe Purchase::BuyGoldService do
   context 'non trazoro user (from externanl user) ' do
 
     before :each do
+      @initial_credits = 100
       seller = create(:external_user, :with_company)
       file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"
       file = Rack::Test::UploadedFile.new(file_path, "application/pdf")
@@ -42,7 +43,7 @@ describe Purchase::BuyGoldService do
     end
 
     it 'should to make a purchase and discount credits from de company' do
-      expected_credits = 100 - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
+      expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
       response = service.call(
         purchase_hash: @purchase_hash,
         gold_batch_hash: @gold_batch_hash,
@@ -56,9 +57,12 @@ describe Purchase::BuyGoldService do
 
     xit 'should to notify that user does not have enough available credits' do
     end
+
+    context 'show validation message' do
+    end
   end
 
-  context 'errors' do
+  context 'cofiguration service errors' do
     before :each do
       @gold_batch_hash ={ fine_grams: 'invalid' }
       @purchase_hash ={ price: 'invalid' }

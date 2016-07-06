@@ -10,6 +10,7 @@ class Purchase::BuyGoldService
   attr_accessor :purchase
   attr_accessor :purchase_hash
   attr_accessor :gold_batch_hash
+  attr_accessor :response
 
   #
   # @params purchase_hash  [Hash]
@@ -18,6 +19,8 @@ class Purchase::BuyGoldService
   # @params seller [User]
   #
   def initialize
+    @response = {}
+    @response[:errors] = []
   end
 
   # @return [ Hash ] with the success or errors
@@ -39,20 +42,15 @@ class Purchase::BuyGoldService
   # user as well.
   def buy!
    # Build purchase
-    response = {}
-
-    if can_buy?(buyer, gold_batch_hash['fine_grams'])
+    if can_buy?(buyer, @purchase_hash['seller_id'], gold_batch_hash['fine_grams'])
       ActiveRecord::Base.transaction do
         @purchase = buyer.inventory.purchases.build(purchase_hash)
         @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-        response[:success] = @purchase.save!
-        response[:errors] = @purchase.errors.full_messages
+        @response[:success] = @purchase.save!
+        @response[:errors] << @purchase.errors.full_messages
         discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
-        response = ::Purchase::ProofOfPurchase::GenerationService.new.call(purchase: purchase) if response[:success]
+        response = ::Purchase::ProofOfPurchase::GenerationService.new.call(purchase: purchase) if @response[:success]
       end
-    else
-      response[:success] = false
-      response[:errors] = 'No tienes los suficientes creditos para hacer esta compra'
     end
     response
   end
@@ -68,12 +66,29 @@ class Purchase::BuyGoldService
     end
   end
 
-  def can_buy?(buyer, buyed_fine_grams)
-    user_can_buy?(buyer, buyed_fine_grams)
+  # @return [ Boolean ]
+  def can_buy?(buyer, seller_id, buyed_fine_grams)
+    user_can_buy?(buyer, buyed_fine_grams) &&
+       is_under_monthly_thershold?(seller_id, buyed_fine_grams)
   end
 
+  # @param buyer [ User ]
+  # @param buyed_fine_grams [ String ]
+  # @return [ Boolean ]
   def user_can_buy?(buyer, buyed_fine_grams)
-    buyer.available_credits >= buyed_fine_grams.to_f # TODO: change to price
+    response[:success] = buyer.available_credits >= buyed_fine_grams.to_f # TODO: change to price
+    response[:errors] << 'WARNING: No tienes los suficientes creditos para hacer esta compra' unless response[:success]
+    response[:success]
+  end
+
+  # @param seller_id [ String ]
+  # @param buyed_fine_grams [ String ]
+  # @return [ Boolean ]
+  def is_under_monthly_thershold?(seller_id, buyed_fine_grams)
+    already_buyed_gold = Purchase.fine_grams_sum_by_date(Date.today, seller_id)
+    response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= 30)
+    response[:errors] << 'WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes' unless response[:success]
+    response[:success]
   end
 
   # def company_can_buy?(buyer, buyed_fine_grams)
