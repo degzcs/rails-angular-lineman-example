@@ -13,18 +13,38 @@ describe 'Purchase', :type => :request do
         file = Rack::Test::UploadedFile.new(file_path, "image/jpeg")
         seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
         @files = [file, seller_picture]
+
+        @new_gold_batch_values = {
+          # "id" => 1,
+          # "parent_batches" => "",
+          "fine_grams" => 1.5,
+          "grade" => 1,
+          # "inventory_id" => 1,
+          "extra_info" => { 'grams' => 1.5 }.to_json
+        }
+
+        @seller = create(:external_user, :with_company)
+
+        @new_purchase_values ={
+         # "id"=>1,
+         # "user_id"=>@buyer.id,
+         "seller_id"=> @seller.id,
+         # "gold_batch_id" => new_gold_batch_values["id"],
+         "price" => 1.5,
+         "files" => @files,
+         "origin_certificate_sequence"=>"123456789",
+        }
       end
 
       context 'POST' do
         it 'should create one complete purchase with its all attached files' do
-          seller = create(:external_user, :with_company)
           expected_response = {
            "id" => 1,
            "user_id" => @buyer.company.legal_representative.id,
            "seller" =>{ # TODO: change front end variable name from provider to seller
-              "id" => seller.id,
-              "first_name" => seller.profile.first_name,
-              "last_name" => seller.profile.last_name
+              "id" => @seller.id,
+              "first_name" => @seller.profile.first_name,
+              "last_name" => @seller.profile.last_name
            },
            "price" => 1.5,
            "origin_certificate_file" => {'url' => "/uploads/documents/purchase/origin_certificate_file/1/image.png"},
@@ -48,28 +68,10 @@ describe 'Purchase', :type => :request do
            # "sale_id" => nil
           }
 
-          new_gold_batch_values = {
-            # "id" => 1,
-            # "parent_batches" => "",
-            "fine_grams" => 1.5,
-            "grade" => 1,
-            # "inventory_id" => 1,
-            "extra_info" => { 'grams' => 1.5 }.to_json
-          }
-
-          new_purchase_values ={
-           # "id"=>1,
-           # "user_id"=>@buyer.id,
-           "seller_id"=>seller.id,
-           # "gold_batch_id" => new_gold_batch_values["id"],
-           "price" => 1.5,
-           "files" => @files,
-           "origin_certificate_sequence"=>"123456789",
-          }
           post '/api/v1/purchases/',
             {
-              gold_batch: new_gold_batch_values,
-              purchase: new_purchase_values
+              gold_batch: @new_gold_batch_values,
+              purchase: @new_purchase_values
             },
             {
               "Authorization" => "Barer #{ @token }"
@@ -78,6 +80,30 @@ describe 'Purchase', :type => :request do
           expected_response.each do |key, value|
             expect(JSON.parse(response.body)[key]).to eq value
           end
+        end
+
+        it 'POST buy threshold error' do
+          # Create a purchase with 30 fine grams for the current seller
+          gold_batch = create :gold_batch, fine_grams: 30
+          purchase = create :purchase, seller: @seller, gold_batch: gold_batch
+
+          expected_response = {
+              "message" => [
+                "WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes"
+              ],
+               "status" => 500
+            }
+
+          post '/api/v1/purchases/',
+            {
+              gold_batch: @new_gold_batch_values,
+              purchase: @new_purchase_values
+            },
+            {
+              "Authorization" => "Barer #{ @token }"
+            }
+          expect(response.status).to eq 201
+          expect(JSON.parse(response.body)).to eq expected_response
         end
       end
 
