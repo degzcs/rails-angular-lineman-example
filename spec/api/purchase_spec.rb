@@ -88,11 +88,12 @@ describe 'Purchase', :type => :request do
           purchase = create :purchase, seller: @seller, gold_batch: gold_batch
 
           expected_response = {
-              "message" => [
-                "WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes"
-              ],
-               "status" => 500
-            }
+            "error" => "unexpected error",
+            "detail" => [
+              "WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes"
+            ]
+          }
+
 
           post '/api/v1/purchases/',
             {
@@ -102,7 +103,7 @@ describe 'Purchase', :type => :request do
             {
               "Authorization" => "Barer #{ @token }"
             }
-          expect(response.status).to eq 201
+          expect(response.status).to eq 409
           expect(JSON.parse(response.body)).to eq expected_response
         end
       end
