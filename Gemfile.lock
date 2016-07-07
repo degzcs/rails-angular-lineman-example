@@ -354,8 +354,6 @@ GEM
     hashie (3.4.1)
     hashie-forbidden_attributes (0.1.1)
       hashie (>= 3.0)
-    hashie_rails (0.0.4)
-      hashie (>= 3.0)
     hike (1.2.3)
     hirb (0.7.3)
     httparty (0.13.3)
@@ -603,8 +601,7 @@ DEPENDENCIES
   grape-entity (~> 0.4.0)
   grape-swagger (~> 0.7.2)
   grape-swagger-rails (~> 0.0.10)
-  hashie-forbidden_attributes
-  hashie_rails
+  hashie-forbidden_attributes (~> 0.1.1)
   httparty
   jazz_hands!
   jbuilder (~> 2.0)
@@ -635,4 +632,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
