@@ -35,6 +35,7 @@ module V1
       end
       expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
+      expose :provider_type, documentation: { type: "string", desc: "provider_type", example: "" }
     end
   end
 end

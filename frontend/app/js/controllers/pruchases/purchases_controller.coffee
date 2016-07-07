@@ -1,15 +1,18 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter) ->
   #*** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMode = "determinate"
   $scope.loadingMessage = "Registrando su compra ..."
   $scope.loadingProgress = 0
+  $scope.date = $filter('date')(Date.now(), 'yyyy-MM-dd');
   #
   # Instances
   #
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
+  $scope.mineralType = 'Oro'
+  $scope.measureUnit = 'Gramos Finos'
   $scope.hover_image = "http://www.gravatar.com/avatar/b76f6e92d9fc0690e6886f7b9d4f32da?s=100";
   $scope.allsellers  = []
   $scope.searchText = null
@@ -27,6 +30,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   CurrentUser.get().success (data) ->
     $scope.current_user = data
     $scope.buyer_data = buyer_data_from($scope.current_user)
+    window.scope = $scope
 
   #
   # Fuctions
@@ -39,10 +43,15 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         office: current_user.office,
         nit: current_user.company.nit_number,
         rucom_record: current_user.company.rucom.rucom_record,
-        first_name: current_user.company.legal_representative.first_name,
-        last_name: current_user.company.legal_representative.last_name,
+        first_name: current_user.company.legal_representative.profile.first_name,
+        last_name: current_user.company.legal_representative.profile.last_name,
+        name: current_user.company.legal_representative.profile.first_name + ' ' + current_user.company.legal_representative.profile.last_name
         address: current_user.company.address,
+        document_type: 'NIT',
+        document_number: current_user.company.nit_number
         phone: current_user.company.phone_number,
+        city: current_user.company.city
+        state: current_user.company.state
       }
     else
       {
@@ -54,6 +63,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         last_name: current_user.last_name,
         address: current_user.address,
         phone: current_user.phone_number,
+        city: current_user.city.name
       }
 
   #
@@ -88,6 +98,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
             city: sellers[i].city || ''
             state: sellers[i].state || ''
             address: sellers[i].address
+            provider_type: sellers[i].provider_type
             nit: if sellers[i].company then sellers[i].company.nit_number else "--" # <-- TODO: migration
 
           $scope.allsellers.push prov

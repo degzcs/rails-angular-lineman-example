@@ -142,6 +142,7 @@ class User < ActiveRecord::Base
 
   delegate :available_credits, to: :profile
   delegate :legal_representative, to: :profile
+  delegate :provider_type, to: :rucom
 
   #
   # Instance Methods
