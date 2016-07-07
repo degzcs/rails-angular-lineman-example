@@ -42,19 +42,17 @@ module V1
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           query_name = params[:query_name]
-          query_id = params[:query_id]
+          query = params[:query_id]
           query_rucomid = params[:query_rucomid]
           #binding.pry
           if query_name
-            users = ::User.order("id DESC").where("lower(first_name) LIKE :first_name OR lower(last_name) LIKE :last_name",
-              {first_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%", last_name: "%#{query_name.downcase.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
-          elsif query_id
-            users = ::User.order("id DESC").where("document_number LIKE :document_number",
-              {document_number: "%#{query_id.gsub('%', '\%').gsub('_', '\_')}%"}).paginate(:page => page, :per_page => per_page)
+            users = ::User.order_by_id.find_by_name(name).paginate(:page => page, :per_page => per_page)
+          elsif query
+            users = ::User.order_by_id.find_by_document_number(query).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
-            users = ::User.order("id DESC").where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+            users = ::User.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
-            users = ::User.order("id DESC").paginate(:page => page, :per_page => per_page)
+            users = ::User.order_by_id.paginate(:page => page, :per_page => per_page)
           end
           #binding.pry
           header 'total_pages', users.total_pages.to_s
