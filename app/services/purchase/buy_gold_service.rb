@@ -87,7 +87,10 @@ class Purchase::BuyGoldService
   def is_under_monthly_thershold?(seller_id, buyed_fine_grams)
     already_buyed_gold = Purchase.fine_grams_sum_by_date(Date.today, seller_id)
     response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= ::Purchase::MONTHLY_THRESHOLD)
-    response[:errors] << 'usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes' unless response[:success]
+    unless response[:success]
+      seller_name = UserPresenter.new(User.find(seller_id), self).name
+      response[:errors] << "Usted no puede realizar esta compra, debido a que con esta compra el barequero exederia el limite permitido por mes. El total comprado hasta el momento por #{ seller_name } es: #{ already_buyed_gold } gramos finos"
+    end
     response[:success]
   end
 
