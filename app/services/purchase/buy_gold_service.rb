@@ -77,7 +77,7 @@ class Purchase::BuyGoldService
   # @return [ Boolean ]
   def user_can_buy?(buyer, buyed_fine_grams)
     response[:success] = buyer.available_credits >= buyed_fine_grams.to_f # TODO: change to price
-    response[:errors] << 'WARNING: No tienes los suficientes creditos para hacer esta compra' unless response[:success]
+    response[:errors] << 'No tienes los suficientes creditos para hacer esta compra' unless response[:success]
     response[:success]
   end
 
@@ -87,7 +87,7 @@ class Purchase::BuyGoldService
   def is_under_monthly_thershold?(seller_id, buyed_fine_grams)
     already_buyed_gold = Purchase.fine_grams_sum_by_date(Date.today, seller_id)
     response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= 30)
-    response[:errors] << 'WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes' unless response[:success]
+    response[:errors] << 'usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes' unless response[:success]
     response[:success]
   end
 

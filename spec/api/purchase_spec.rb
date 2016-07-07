@@ -90,7 +90,7 @@ describe 'Purchase', :type => :request do
           expected_response = {
             "error" => "unexpected error",
             "detail" => [
-              "WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes"
+              "usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes"
             ]
           }
 

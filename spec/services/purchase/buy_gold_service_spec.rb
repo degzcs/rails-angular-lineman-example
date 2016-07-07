@@ -66,7 +66,7 @@ describe Purchase::BuyGoldService do
           current_user: legal_representative, # TODO: worker
           )
         expect(response[:success]).to be false
-        expect(response[:errors]).to include 'WARNING: No tienes los suficientes creditos para hacer esta compra'
+        expect(response[:errors]).to include 'No tienes los suficientes creditos para hacer esta compra'
         expect(service.purchase).to be nil
       end
 
@@ -80,7 +80,7 @@ describe Purchase::BuyGoldService do
           current_user: legal_representative, # TODO: worker
           )
         expect(response[:success]).to be false
-        expect(response[:errors]).to include 'WARNING: usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes'
+        expect(response[:errors]).to include 'usted no puede realizar esta compra debido a que con esta compra ha exedido el limite permitido por mes'
         expect(service.purchase).to be nil
       end
     end
