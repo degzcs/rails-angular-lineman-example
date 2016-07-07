@@ -84,17 +84,15 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             model.proof_of_purchase_file_url = data.proof_of_purchase_file_url
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
-            #service.flushModel()
-            # if !data.status == 500
             $location.path('/purchases/show')
-            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ariaLabel('Alert Dialog Demo').ok('ok')
+            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ok('ok')
 
-            # else
-              # show an error message
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image failed to load!!'
+          window.service = service
+          $location.path('/purchases/new/purchases/step1')
+          $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
           service.restoreState()
-          # $location.path('/purchases/new/step1')
         # image failed to load
         return
 

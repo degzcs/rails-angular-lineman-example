@@ -282,7 +282,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     confirm = $mdDialog.confirm()
                       .title('Desea realizar la compra?')
                       .content('Va a ser generada una compra. Esta seguro que desea realizar esta compra?')
-                      .ariaLabel('Lucky day')
                       .ok('Si, deseo comprar')
                       .cancel('No, cancelar compra')
                       .targetEvent(ev)
