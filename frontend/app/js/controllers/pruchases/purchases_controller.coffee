@@ -45,13 +45,13 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         rucom_record: current_user.company.rucom.rucom_record,
         first_name: current_user.company.legal_representative.profile.first_name,
         last_name: current_user.company.legal_representative.profile.last_name,
-        name: current_user.company.legal_representative.profile.first_name + ' ' + current_user.company.legal_representative.profile.last_name
+        name: current_user.company.legal_representative.profile.first_name + ' ' + current_user.company.legal_representative.profile.last_name,
         address: current_user.company.address,
         document_type: 'NIT',
-        document_number: current_user.company.nit_number
+        document_number: current_user.company.nit_number,
         phone: current_user.company.phone_number,
-        city: current_user.company.city
-        state: current_user.company.state
+        city: current_user.company.city,
+        state: current_user.company.state,
       }
     else
       {
