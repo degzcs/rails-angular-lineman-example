@@ -58,8 +58,8 @@ gem 'grape-entity', '~> 0.4.0'
 gem 'rack-contrib', '~> 1.1.0'
 gem 'grape-swagger', '~> 0.7.2'
 gem 'grape-swagger-rails',  '~> 0.0.10'
-gem "hashie_rails"
-gem "hashie-forbidden_attributes"
+#gem "hashie_rails"
+gem 'hashie-forbidden_attributes', '~> 0.1.1'
 
 group :development do
   gem 'quiet_assets'
