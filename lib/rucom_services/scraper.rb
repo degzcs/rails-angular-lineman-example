@@ -3,9 +3,9 @@
 # require 'watir-nokogiri'
 # require 'pry'
 
-module Rucom
+module RucomServices
 
-class ScraperService
+class Scraper
   URL_PAGE = 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
 
   attr_accessor :rucom_page, :data_to_find, :clic_selector
@@ -90,7 +90,7 @@ class ScraperService
   end
 end
 
-rs = ScraperService.new.call
+#rs = RucomServices::Scraper.new.call
 # puts '***************** Inicio Consola *****************'
 # URL_PAGE = 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
 # agent = Mechanize.new

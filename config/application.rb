@@ -34,7 +34,14 @@ module Trazoro
         config.autoload_paths << file
     end
     Dir[Rails.root.join('lib/concerns/**/*.rb')].each { |f| require f }
-    Dir[Rails.root.join('lib/rucom/*.rb')].each { |f| require f }
+    
+    # Rucom Scraper
+    config.paths.add File.join('lib', 'rucom_services'), :glob => File.join('**', '*.rb')
+    Dir[Rails.root.join('lib/rucom_services/*.rb')].each { |f| require f }
+    Dir[File.join(Rails.root, 'lib', 'rucom_services', '*')].each do |file|
+       config.autoload_paths << file
+   end
+
   end
 end
 

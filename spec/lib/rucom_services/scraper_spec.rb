@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ScraperService, type: :service do
+describe RucomServices::Scraper, type: :service do
 
   it 'permits initialize the service' do
   end
