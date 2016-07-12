@@ -3,6 +3,7 @@
 # require 'watir-nokogiri'
 # require 'pry'
 
+module Rucom
 
 class ScraperService
   URL_PAGE = 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
@@ -103,3 +104,4 @@ rs = ScraperService.new.call
 # pp frm.field_with(:name => 'form:trol_input').options[1]
 # puts '***************** clic on submit button *****************'
 # agent.submit(frm)
+end

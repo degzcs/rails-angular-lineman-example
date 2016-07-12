@@ -34,6 +34,7 @@ module Trazoro
         config.autoload_paths << file
     end
     Dir[Rails.root.join('lib/concerns/**/*.rb')].each { |f| require f }
+    Dir[Rails.root.join('lib/rucom/*.rb')].each { |f| require f }
   end
 end
 
