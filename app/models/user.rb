@@ -37,8 +37,8 @@ class User < ActiveRecord::Base
   has_many :credit_billings, dependent: :destroy
   belongs_to :office
   has_one :company, through: :office
-  belongs_to :city
-  has_one :state, through: :city
+  # belongs_to :city
+  # has_one :state, through: :city
   has_and_belongs_to_many :roles
   # TODO: create migration to remote this field
   # belongs_to :population_center
