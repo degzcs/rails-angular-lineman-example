@@ -71,6 +71,8 @@ class Profile < ActiveRecord::Base
   #
 
   delegate :name, to: :city, prefix: :city
+  delegate :state_name, to: :city
+
 
   #
   # Instance Methods
