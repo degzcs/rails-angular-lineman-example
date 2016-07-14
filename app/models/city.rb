@@ -24,6 +24,7 @@ class City < ActiveRecord::Base
   #
 
   delegate :code, to: :state, prefix: :state
+  delegate :name, to: :state, prefix: :state
 
   #
   # Validations
