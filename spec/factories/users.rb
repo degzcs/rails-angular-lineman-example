@@ -41,6 +41,8 @@ FactoryGirl.define do
       end
 
       after :build do |user, e|
+        user.profile.first_name = e.first_name
+        user.profile.last_name = e.last_name
         user.profile.document_number = e.document_number
         user.profile.phone_number = e.phone_number
         user.profile.available_credits = e.available_credits
@@ -56,14 +58,23 @@ FactoryGirl.define do
     end
 
     trait :with_personal_rucom do
+      transient do
+        provider_type { 'Titular'}
+      end
       before :create do |user, e|
-        user.personal_rucom = create(:rucom)
+        user.personal_rucom = create(:rucom, provider_type: e.provider_type)
       end
     end
 
     trait :with_company do
+      transient do
+         city { 'Popayan'}
+         name { 'MinTrace SAS' }
+         nit_number { '8877878778' }
+         rucom { create :rucom }
+      end
       before :create do |user, e|
-        user.office = create(:company).main_office
+        user.office = create(:company, city: e.city, name: e.name, nit_number: e.nit_number, rucom: e.rucom).main_office
       end
     end
 
