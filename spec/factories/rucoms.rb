@@ -21,8 +21,7 @@
 
 FactoryGirl.define do
   factory :rucom do
-    idrucom {
-        Faker::Code.ean }
+    idrucom { Faker::Code.ean }
     rucom_record { Faker::Code.ean }
     num_rucom { Faker::Code.ean }
     name { Faker::Name.name }
