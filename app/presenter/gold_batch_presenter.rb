@@ -31,6 +31,10 @@ class GoldBatchPresenter < BasePresenter
     "#{ fine_grams.round(2) } grams" if fine_grams.present?
   end
 
+  def formatted_fine_grams
+    fine_grams.to_s
+  end
+
   def seller_presenter
     UserPresenter.new(goldomable.inventory.user, h)
   end
