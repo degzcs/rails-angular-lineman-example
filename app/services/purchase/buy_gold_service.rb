@@ -28,28 +28,37 @@ class Purchase::BuyGoldService
     raise 'You must to provide a current_user option' if options[:current_user].blank?
     raise 'You must to provide a purchase_hash option' if options[:purchase_hash].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
+    raise 'You must to provide a date option' if options[:date].blank?
     # seller is the gold provider
     @buyer = buyer_from(options[:current_user])
     @purchase_hash = options[:purchase_hash]
     @gold_batch_hash = options[:gold_batch_hash]
+    @date = options[:date]
     buy!
   end
-
   #
   # @return [ Hash ] with the success or errors
   # TODO: define is the purchase will be done as a natural person or as a Copany
   # This will define the rucom and city to be used and the dicount credits to the correct
   # user as well.
   def buy!
-   # Build purchase
+
+    signature_picture = @purchase_hash.delete ("signature_picture")
+    date = @date
+    # Build purchase
     if can_buy?(buyer, @purchase_hash['seller_id'], gold_batch_hash['fine_grams'])
-      ActiveRecord::Base.transaction do
-        @purchase = buyer.inventory.purchases.build(purchase_hash)
-        @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-        @response[:success] = @purchase.save!
-        @response[:errors] << @purchase.errors.full_messages
-        discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
-        response = ::Purchase::ProofOfPurchase::GenerationService.new.call(purchase: purchase) if @response[:success]
+      begin
+        ActiveRecord::Base.transaction do
+          @purchase = buyer.inventory.purchases.build(purchase_hash)
+          @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
+          @response[:success] = @purchase.save!
+          discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
+            response = ::Purchase::ProofOfPurchase::GenerationService.new.call(purchase: purchase) if @response[:success]
+
+            response = ::OriginCertificates::DrawAuthorizedProviderOriginCertificate.new.call(purchase: purchase, signature_picture: signature_picture, date: date ) if @response[:success]
+          end
+      rescue => exception
+        @response[:errors] << exception.message
       end
     end
     response
