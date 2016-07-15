@@ -15,12 +15,15 @@ describe Purchase::BuyGoldService do
 
     before :each do
       @initial_credits = 100
-      @seller = create(:external_user, :with_company)
+      @seller = create(:user, :with_personal_rucom, provider_type: 'Barequero')
       file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"
       file = Rack::Test::UploadedFile.new(file_path, "application/pdf")
 
       seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
       seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
+
+      signature_picture_path = "#{ Rails.root }/spec/support/images/signature.png"
+      @signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
       @gold_batch_hash ={
        # "id" => 1,
       # "parent_batches" => "",
@@ -38,7 +41,8 @@ describe Purchase::BuyGoldService do
            "origin_certificate_file" => file,
            "seller_picture" => seller_picture,
            "origin_certificate_sequence"=>"123456789",
-           "trazoro" => false
+           "trazoro" => false,
+           "signature_picture" => @signature_picture
       }
     end
 
@@ -48,11 +52,11 @@ describe Purchase::BuyGoldService do
         purchase_hash: @purchase_hash,
         gold_batch_hash: @gold_batch_hash,
         current_user: legal_representative, # TODO: worker
+        date: '2016/07/15'.to_date,
         )
       expect(response[:success]).to be true
       expect(service.purchase.persisted?).to be true
       expect(company.reload.available_credits).to eq expected_credits
-      # binding.pry
     end
 
 
@@ -64,6 +68,7 @@ describe Purchase::BuyGoldService do
           purchase_hash: @purchase_hash,
           gold_batch_hash: @gold_batch_hash,
           current_user: legal_representative, # TODO: worker
+          date: '2016/07/15'.to_date,
           )
         expect(response[:success]).to be false
         expect(response[:errors]).to include 'No tienes los suficientes creditos para hacer esta compra'
@@ -79,6 +84,7 @@ describe Purchase::BuyGoldService do
           purchase_hash: @purchase_hash,
           gold_batch_hash: @gold_batch_hash,
           current_user: legal_representative, # TODO: worker
+          date: '2016/07/15'.to_date,
           )
         expect(response[:success]).to be false
         expect(response[:errors]).to include "Usted no puede realizar esta compra, debido a que con esta compra el barequero exederia el limite permitido por mes. El total comprado hasta el momento por #{ seller_name } es: 30.0 gramos finos"
