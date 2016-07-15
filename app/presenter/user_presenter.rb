@@ -3,25 +3,45 @@ class UserPresenter < BasePresenter
 
   # TODO: this names have to change asap. because will cause data inconsistencies
   def rucom_number
-    rucom_record
+    if has_office?
+      company.rucom.rucom_record
+    else
+      rucom_record
+    end
+  end
+
+  def provider_type
+    user.rucom.provider_type
   end
 
   def name
-    "#{ user.profile.first_name } #{ user.profile.last_name }"
+    "#{ profile.first_name } #{ profile.last_name }"
   end
 
   # TODO: this have to change asap. because will cause data inconsistencies
   def company_name
-    @object.company_name || self.name
+    user.company_name || name
   end
 
   # TODO: this have to change asap. because will cause data inconsistencies
-  def nit
-    @object.profile.nit || self.profile.document_number
+  def nit_number
+    if has_office?
+      company.nit_number
+    else
+      profile.nit_number
+    end
+  end
+
+  def document_number
+    profile.document_number
   end
 
   def document_type
     'NIT' # TODO: change this in the final document
+  end
+
+  def state_name
+    profile.city.state.name
   end
 
   # TODO: this have to change asap. because will cause data inconsistencies
@@ -29,7 +49,7 @@ class UserPresenter < BasePresenter
     if has_office?
       office.city.name
     else
-      city.name
+      profile.city.name
     end
   end
 end
