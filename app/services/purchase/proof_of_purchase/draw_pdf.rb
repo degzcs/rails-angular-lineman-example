@@ -45,7 +45,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box buyer_presenter.company_name, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box buyer_presenter.rucom_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 626
-    text_box buyer_presenter.nit, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box buyer_presenter.nit_number, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box buyer_presenter.name, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 607
     text_box buyer_presenter.office.name, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -62,7 +62,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box seller_presenter.company_name, :at => [130,cursor], :width => 150 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
     text_box seller_presenter.name, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 512
-    text_box seller_presenter.nit, :at => [130,cursor], :width => 150, :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+    text_box seller_presenter.nit_number, :at => [130,cursor], :width => 150, :size => 10 , :height =>  10, :overflow => :shrink_to_fit
     text_box seller_presenter.profile.document_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 494
     text_box seller_presenter.rucom_record, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit

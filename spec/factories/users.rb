@@ -68,9 +68,9 @@ FactoryGirl.define do
 
     trait :with_company do
       transient do
-         city { 'Popayan'}
+         city { City.all.sample.name }
          name { 'MinTrace SAS' }
-         nit_number { '8877878778' }
+         nit_number { Faker::Number.number(10) }
          rucom { create :rucom }
       end
       before :create do |user, e|
