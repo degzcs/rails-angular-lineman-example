@@ -1,8 +1,20 @@
 require 'spec_helper'
 
 describe RucomServices::Scraper, type: :service do
-
-  it 'permits initialize the service' do
-    subject.call
+  before :each do
+    @data = {rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
   end
-end
+
+  it '#initialize' do
+    rss = RucomServices::Scraper.new(@data)
+    rss.call
+  end
+
+  it 'Validates the params from request has values' do
+    @data = {}
+    rss = RucomServices::Scraper.new
+    expect(rss.data_to_find).to eq({})
+  end  
+
+end  
+
