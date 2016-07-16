@@ -61,6 +61,7 @@ gem 'grape-swagger-rails', '~> 0.2.2'
 #gem "hashie_rails"
 gem 'hashie-forbidden_attributes', '~> 0.1.1'
 gem 'selenium-webdriver', '~> 2.53'
+gem 'virtus'
 
 group :development do
   gem 'quiet_assets'

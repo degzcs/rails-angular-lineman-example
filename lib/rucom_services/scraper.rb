@@ -19,7 +19,10 @@ module RucomServices
       validates_has_required_params_to_execute_service
       driver = Selenium::WebDriver.for :phantomjs
       html_page_data = navigate_and_get_results_from_searching(driver)
-      #data_formated = formater_elements(html_page_data)
+      formatted_data = formater_elements(html_page_data)
+      virtus_model_name = (@data_to_find[:format].to_sym == :Barequero) ? "BarequeroResponse" : "TraderResponse"
+      virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
+      validate_data(virtus_model, virtus_model_name)
       #response[:success] = persist_data(data_formated)
       driver.quit
     rescue Exception => e 
@@ -38,6 +41,21 @@ module RucomServices
       table_content = html_results.xpath("//*[@id='#{TABLE_BODY_ID}']").children.css('tr > td')
       #pp table_content.each_with_object([]) {|td, obj| obj << td.text }      
     end
+
+    def formater_elements(html_page_data)
+      options = {data: html_page_data, format: @data_to_find[:format].to_sym }
+      RucomServices::Formater.new.call(options)
+    end
+
+    def convert_to_virtus_model(formatted_data, virtus_model_name)
+      "RucomServices::#{virtus_model_name}".constantize.new(formatted_data)
+    end
+
+    def validate_data(virtus_model, virtus_model_name)
+      raise "" 
+    rescue Exception => e 
+      @response[:errors]  << e.message
+    end  
 
     private
 
