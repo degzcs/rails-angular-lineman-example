@@ -12,6 +12,8 @@ describe 'Purchase', :type => :request do
         seller_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
         file = Rack::Test::UploadedFile.new(file_path, "image/jpeg")
         seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
+        signature_picture_path = "#{ Rails.root }/spec/support/images/signature.png"
+        @signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
         @files = [file, seller_picture]
 
         @new_gold_batch_values = {
@@ -23,7 +25,8 @@ describe 'Purchase', :type => :request do
           "extra_info" => { 'grams' => 1.5 }.to_json
         }
 
-        @seller = create(:external_user, :with_company)
+        #@seller = create(:external_user, :with_company)
+        @seller = create(:external_user, :with_personal_rucom, provider_type: 'Barequero' )
 
         @new_purchase_values ={
          # "id"=>1,
@@ -33,6 +36,7 @@ describe 'Purchase', :type => :request do
          "price" => 1.5,
          "files" => @files,
          "origin_certificate_sequence"=>"123456789",
+         "signature_picture" => @signature_picture
         }
       end
 
