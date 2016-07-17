@@ -60,9 +60,13 @@ module V1
           ] do
 
           # update params
+          #signature_picture_path = "#{ Rails.root }/spec/support/images/signature.png"
+          #signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
+          date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
           gold_purchase_service = ::Purchase::BuyGoldService.new
-          service_response = gold_purchase_service.call(purchase_hash: new_params[:purchase], gold_batch_hash: new_params[:gold_batch], current_user: current_user)
+          service_response = gold_purchase_service.call(purchase_hash: new_params[:purchase], gold_batch_hash: new_params[:gold_batch], current_user: current_user, date: date )
+
           if service_response[:success]
             present gold_purchase_service.purchase , with: V1::Entities::Purchase
           else
