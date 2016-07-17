@@ -6,7 +6,7 @@ module V1
         def format_params(params)
           params.tap do
             trazoro = false
-            files =params[:purchase].slice(:files)[:files]
+            files = params[:purchase].slice(:files)[:files]
             origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
             seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
 
