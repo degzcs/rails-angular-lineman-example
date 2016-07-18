@@ -74,6 +74,22 @@ rspec spec
 cap production deploy
 ```
 
+##Issues (Mac OSX 10.11.3)
+
+To fix the next issues related with rmagick
+
+```sh
+checking for Magick-config... no
+...
+Cannot install natives libraries 'rmagick', it needs the dependence gem 'imagemagic' -v '(version)'
+...
+```
+I have to install the gem imagemagic first:
+
+```sh
+gem install imagemagic -v '(version)'
+```
+
 ## Issues (Ubuntu 16.04)
 
 To fix the next issues related with rmagick
