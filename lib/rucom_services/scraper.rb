@@ -9,14 +9,16 @@ module RucomServices
     attr_accessor :rucom_page, :data_to_find
 
     def initialize(data = {}, page = nil)
-      @response = {}
-      @response[:errors] = []
+      self.response = {}
+      self.response[:errors] = []
       self.rucom_page = page || PAGE_URL      
       self.data_to_find = data #{rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
     end
 
     def call
       validates_has_required_params_to_execute_service
+      setting = setting_service
+      raise "Error load settings from rucom_service.cfg.yml file" unless setting[:success]
       driver = Selenium::WebDriver.for :phantomjs
       html_page_data = navigate_and_get_results_from_searching(driver)
       formatted_data = formater_elements(html_page_data)
@@ -27,6 +29,11 @@ module RucomServices
       driver.quit
     rescue Exception => e 
       puts "RucomService::Scraper.call error : #{e.message}" 
+      self.response[:errors] << "RucomService::Scraper.call error : #{e.message}"
+    end  
+
+    def setting_service
+      setting = RucomServices::Setting.new.call
     end  
 
     def navigate_and_get_results_from_searching(driver)

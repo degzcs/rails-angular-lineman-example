@@ -1,0 +1,16 @@
+scraper: 
+  page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
+  table_body_id: "form:tablaListadosANM_data"
+  hidden_elements_id: 
+    step_0: 'form:trol_panel'
+    step_1: 'form:tIdentificacion_panel'
+    step_2: 'form:numId'
+  barequero:
+    select_options: ["Barequero", "CEDULA"]
+    response_class: "AutorizedProviderResponse"
+  trainer:
+    select_options: ["Comerciante", "CEDULA", "NIT"]
+    response_class: "TraderResponse"  
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  
