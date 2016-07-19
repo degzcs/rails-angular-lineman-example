@@ -6,13 +6,13 @@ module RucomServices
     SELECT_OPTIONS = %w(Barequero CEDULA NIT)
     TABLE_BODY_ID = "form:tablaListadosANM_data" # "//*[@id='form:tablaListadosANM_data']"
 
-    attr_accessor :rucom_page, :data_to_find
+    attr_accessor :response, :setting, :data_to_find
 
-    def initialize(data = {}, page = nil)
+    def initialize(data={})
       self.response = {}
       self.response[:errors] = []
       #self.rucom_page = page || PAGE_URL  
-      self.settings = {}   
+      self.setting = {}   
       self.data_to_find = data #{rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
     end
 
@@ -23,15 +23,18 @@ module RucomServices
       ##driver = Selenium::WebDriver.for :phantomjs
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance) #(driver)
       formatted_data = formater_elements(html_page_data)
-      virtus_model_name = (@data_to_find[:format].to_sym == :Barequero) ? "BarequeroResponse" : "TraderResponse"
+      ##virtus_model_name = (@data_to_find[:format].to_sym == :Barequero) ? "BarequeroResponse" : "TraderResponse"
+      binding.pry
+      virtus_model_name = @setting.response_class
       virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
       validate_data(virtus_model, virtus_model_name)
       #response[:success] = persist_data(data_formated)
       ##driver.quit
       @setting.driver_instance.quit
+      @response
     rescue Exception => e 
       puts "RucomService::Scraper.call error : #{e.message}" 
-      self.response[:errors] << "RucomService::Scraper.call error : #{e.message}"
+      @response[:errors] << "RucomService::Scraper.call error : #{e.message}"
     end  
 
     def setting_service(data_to_find)
@@ -58,7 +61,9 @@ module RucomServices
     end
 
     def convert_to_virtus_model(formatted_data, virtus_model_name)
+      binding.pry
       "RucomServices::#{virtus_model_name}".constantize.new(formatted_data)
+      1
     end
 
     def validate_data(virtus_model, virtus_model_name)
