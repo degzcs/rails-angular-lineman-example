@@ -16,6 +16,7 @@ describe 'Sale', :type => :request do
           seller = @current_user.company.legal_representative
           courier = create(:courier)
           purchases = create_list(:purchase, 2,
+                                   :with_origin_certificate_file,
                                   :with_proof_of_purchase_file,
                                    user: seller)
           # TODO: change frontend implementation to avoid this.
