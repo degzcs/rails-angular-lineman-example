@@ -60,8 +60,6 @@ module V1
           ] do
 
           # update params
-          #signature_picture_path = "#{ Rails.root }/spec/support/images/signature.png"
-          #signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
           date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
           gold_purchase_service = ::Purchase::BuyGoldService.new
