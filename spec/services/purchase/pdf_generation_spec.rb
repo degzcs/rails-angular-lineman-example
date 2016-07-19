@@ -7,9 +7,16 @@ describe Purchase::PdfGeneration do
   let(:service){ Purchase::PdfGeneration.new }
 
   context 'check process' do
+
+    before :each do
+      signature_picture_path = "#{ Rails.root }/spec/support/images/signature.png"
+      @signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
+    end
+
     it 'should to create a pdf file with the correct information' do
       response = service.call(
                         purchase: purchase,
+                        signature_picture: @signature_picture,
                         draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
                         document_type: 'equivalent_document',
                         )
