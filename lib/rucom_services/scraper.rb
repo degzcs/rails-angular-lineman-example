@@ -11,33 +11,35 @@ module RucomServices
     def initialize(data = {}, page = nil)
       self.response = {}
       self.response[:errors] = []
-      self.rucom_page = page || PAGE_URL      
+      #self.rucom_page = page || PAGE_URL  
+      self.settings = {}   
       self.data_to_find = data #{rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
     end
 
     def call
       validates_has_required_params_to_execute_service
-      setting = setting_service
-      raise "Error load settings from rucom_service.cfg.yml file" unless setting[:success]
-      driver = Selenium::WebDriver.for :phantomjs
-      html_page_data = navigate_and_get_results_from_searching(driver)
+      setting_service(@data_to_find)
+      raise "Error load settings from rucom_service.cfg.yml file" unless @setting[:success]
+      ##driver = Selenium::WebDriver.for :phantomjs
+      html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance) #(driver)
       formatted_data = formater_elements(html_page_data)
       virtus_model_name = (@data_to_find[:format].to_sym == :Barequero) ? "BarequeroResponse" : "TraderResponse"
       virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
       validate_data(virtus_model, virtus_model_name)
       #response[:success] = persist_data(data_formated)
-      driver.quit
+      ##driver.quit
+      @setting.driver_instance.quit
     rescue Exception => e 
       puts "RucomService::Scraper.call error : #{e.message}" 
       self.response[:errors] << "RucomService::Scraper.call error : #{e.message}"
     end  
 
-    def setting_service
-      setting = RucomServices::Setting.new.call
+    def setting_service(data_to_find)
+      @setting = RucomServices::Setting.new.call(data_to_find)
     end  
 
     def navigate_and_get_results_from_searching(driver)
-      driver.navigate.to PAGE_URL
+      driver.navigate.to @setting.page_url ##PAGE_URL
       display_and_select_options_fields(driver)
       button = driver.find_element(:id, 'form:consultar')
       button.click      
@@ -45,7 +47,8 @@ module RucomServices
       #pp driver.page_source
       html_results = Nokogiri::HTML(driver.page_source)
       pp html_results.class
-      table_content = html_results.xpath("//*[@id='#{TABLE_BODY_ID}']").children.css('tr > td')
+      table_content = 
+        html_results.xpath("//*[@id='#{@setting.table_body_id}']").children.css('tr > td')
       #pp table_content.each_with_object([]) {|td, obj| obj << td.text }      
     end
 
