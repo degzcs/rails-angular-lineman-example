@@ -16,6 +16,10 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     purchase_presenter = options[:purchase_presenter]
     @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_compra.pdf'))
     draw_file!(purchase_presenter)
+  end
+
+  # @return [ Purchase::ProofOfPurchase::DrawPDF ]
+  def file
     self
   end
 
