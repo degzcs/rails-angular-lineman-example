@@ -21,7 +21,9 @@ FactoryGirl.define do
 
     after :build do |sold_batch, e|
       e.number_of_batches.times do |index|
-        sold_batch.gold_batch = create(:purchase, :with_proof_of_purchase_file).gold_batch
+        sold_batch.gold_batch = create(:purchase,
+          :with_proof_of_purchase_file,
+          :with_origin_certificate_file).gold_batch
       end
     end
   end
