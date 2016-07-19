@@ -115,14 +115,14 @@ class Sale::CreatePurchaseFilesCollection
   # Gets all origin certificate files from the current sale
   # @return [ Array ] of DocumentUploader
   def origin_certificate_files_from_aws_s3
-    sale.batches.map{ |batch| batch.purchase.origin_certificate_file }
+    sale.batches.map{ |batch| batch.purchase.origin_certificate.file }
   end
 
   # DEPRECATED
   # Gets all origin certificate files from the current sale
   # @return [ Array ] of file paths
   def origin_certificate_files_from_local_machine
-    sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate_file.path).to_s }
+    sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate.file.path).to_s }
   end
 
   # @param purchases [ Array ] with all Purchase related with the current sale
@@ -131,7 +131,7 @@ class Sale::CreatePurchaseFilesCollection
     files = []
     purchases.each do |purchase|
     # Origin certificate
-    files << purchase.origin_certificate_file
+    files << purchase.origin_certificate.file
     # ID
     files << purchase.user.profile.id_document_file
     # barequero id OR miner register OR resolution
@@ -148,7 +148,7 @@ class Sale::CreatePurchaseFilesCollection
     file_paths = []
     purchases.each do |purchase|
     # Origin certificate
-    file_paths << Rails.root.join(purchase.origin_certificate_file.path)
+    file_paths << Rails.root.join(purchase.origin_certificate.file.path)
     # ID
     file_paths << Rails.root.join(purchase.user.profile.id_document_file.path)
     # barequero id OR miner register OR resolution
