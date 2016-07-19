@@ -13,9 +13,11 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   # @return [ Purchase::PdfGenerator ] instance with the document created in memory
   def call(options={})
     raise "You must to provide a purchase_presenter option" if options[:purchase_presenter].blank?
+    raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
     purchase_presenter = options[:purchase_presenter]
+    signature_picture = options[:signature_picture]
     @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_compra.pdf'))
-    draw_file!(purchase_presenter)
+    draw_file!(purchase_presenter, signature_picture)
   end
 
   # @return [ Purchase::ProofOfPurchase::DrawPDF ]
@@ -26,7 +28,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   private
 
   # Fills out the equivalent document for the created purchase
-  def draw_file!(purchase_presenter)
+  def draw_file!(purchase_presenter, signature_picture)
     start_new_page({:template => base_file.path , :template_page => 1})
 
     # header
@@ -110,5 +112,11 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     move_cursor_to 286
     text_box purchase_presenter.price.to_s, :at => [400 , cursor] , :width => 100 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
+
+    move_cursor_to 230
+    signature = signature_picture.is_a?(Hash) ? OpenStruct.new(signature_picture) : signature_picture
+    image(signature.tempfile, :at => [280,cursor], :fit => [200,100])
+
+    image(signature.tempfile, :at => [36,cursor], :fit => [200,100])
   end
 end
