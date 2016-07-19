@@ -58,6 +58,7 @@ class Purchase::BuyGoldService
 
           response = pdf_generation_service.call(
                         purchase: purchase,
+                        signature_picture: signature_picture,
                         draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
                         document_type: 'equivalent_document',
                         )
