@@ -53,10 +53,23 @@ class Purchase::BuyGoldService
           @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
           @response[:success] = @purchase.save!
           discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
-            response = ::Purchase::ProofOfPurchase::GenerationService.new.call(purchase: purchase) if @response[:success]
 
-            response = ::OriginCertificates::DrawAuthorizedProviderOriginCertificate.new.call(purchase: purchase, signature_picture: signature_picture, date: date ) if @response[:success]
-          end
+          pdf_generation_service = ::Purchase::PdfGeneration.new
+
+          response = pdf_generation_service.call(
+                        purchase: purchase,
+                        draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
+                        document_type: 'equivalent_document',
+                        )
+
+          response = pdf_generation_service.call(
+                        purchase: purchase,
+                        signature_picture: signature_picture,
+                        date: date,
+                        document_type: 'origin_certificate',
+                        draw_pdf_service: ::OriginCertificates::DrawAuthorizedProviderOriginCertificate,
+                        )
+        end
       rescue => exception
         @response[:errors] << exception.message
       end
