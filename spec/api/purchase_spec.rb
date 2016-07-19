@@ -51,7 +51,7 @@ describe 'Purchase', :type => :request do
               "last_name" => @seller.profile.last_name
            },
            "price" => 1.5,
-           "origin_certificate_file" => {'url' => "/uploads/documents/purchase/origin_certificate_file/1/image.png"},
+           "origin_certificate_file" => {'url' => "/uploads/documents/document/file/2/origin_certificate.pdf"},
            "seller_picture" => {'url' => "/uploads/photos/purchase/seller_picture/1/seller_picture.png"},
            "origin_certificate_sequence"=>"123456789",
            "gold_batch"=> {
@@ -120,6 +120,7 @@ describe 'Purchase', :type => :request do
           create_list(
                       :purchase, 20,
                       :with_proof_of_purchase_file,
+                      :with_origin_certificate_file,
                       inventory_id: @buyer.company.legal_representative.inventory.id,
                       seller_id: seller.id
                       )
