@@ -50,7 +50,7 @@ class Purchase < ActiveRecord::Base
   validates :seller_id, presence: true
   #validates :origin_certificate_sequence, presence: true
   # validates :gold_batch_id, presence: true
-  validates :origin_certificate_file, presence: true
+  # validates :origin_certificate_file, presence: true
   validates :price, presence: true
 
   accepts_nested_attributes_for :gold_batch
@@ -90,6 +90,11 @@ class Purchase < ActiveRecord::Base
     documents.where(type: 'equivalent_document').first
   end
 
+  # For now it is selcting the equivalente document.
+  # TODO: upgrade to select the correct invoice or equivalent document
+  def origin_certificate
+    documents.where(type: 'origin_certificate').first
+  end
   # This is the unique code assigned to this purchase
   def reference_code
     Digest::MD5.hexdigest "#{origin_certificate_sequence}#{id}"
