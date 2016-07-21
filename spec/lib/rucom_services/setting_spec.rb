@@ -113,5 +113,14 @@ describe RucomServices::Setting, type: :service do
       expect(cfg.trader.class).to eq(Array)
       expect(cfg.trader.blank?).not_to eq(true)
     end
+
+    it "#clic_button_id" do
+      if cfg.clic_button_id
+        expect(cfg.clic_button_id.class).to eq(String)
+      else
+        expect(cfg.response[:errors].count).to eq(1)
+        expect(cfg.response[:errors].first).to eq("clic_button_id: Should set up clic_button_id")
+      end
+    end
   end
 end

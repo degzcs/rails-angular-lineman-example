@@ -2,11 +2,12 @@ scraper:
   driver: Selenium::WebDriver
   browser: :phantomjs
   page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
-  table_body_id: "form:tablaListadosANM_data"
+  table_body_id: "form:tablaListadosANM_data"  
   hidden_elements_id: 
     step_0: 'form:trol_panel'
     step_1: 'form:tIdentificacion_panel'
     step_2: 'form:numId'
+  clic_button_id: 'form:consultar'
   barequero:
     select_options: ["Barequero", "CEDULA"]
     response_class: "AutorizedProviderResponse"

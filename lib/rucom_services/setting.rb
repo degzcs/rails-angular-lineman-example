@@ -127,8 +127,14 @@ module RucomServices
         end
     end
 
-    # def format!(field_names)
-      
-    # end
+    def clic_button_id
+      @clic_button_id =   
+        if !@response[:config]["scraper"]["clic_button_id"].blank?
+          @response[:config]["scraper"]["clic_button_id"]
+        else
+          @response[:errors] << "clic_button_id: Should set up clic_button_id"
+          nil
+        end  
+    end     
   end
 end  
