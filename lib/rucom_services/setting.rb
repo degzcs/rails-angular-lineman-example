@@ -40,7 +40,12 @@ module RucomServices
 
     def response_class
       key_rol = @response[:send_data][:rol_name].downcase
-      @response_class = @response[:config]["scraper"][key_rol]["response_class"] || nil
+      if @response[:config]["scraper"].key?(key_rol)
+        @response_class = @response[:config]["scraper"][key_rol]["response_class"]
+      else
+        @response[:errors] << "response_class: The key no Exist!. Key: #{key_rol}"
+        nil
+      end
     end  
 
     def page_url
@@ -84,15 +89,13 @@ module RucomServices
     end
 
     def driver_instance
-      binding.pry
       @driver_instance ||=
-        if @driver && @browser
-          @driver.constantize.for @browser 
+        if driver && browser
+          driver.constantize.for browser 
         else
           @response[:errors] << "driver_instance: Should setting up the driver and browser"
           nil
         end
-        1
     end  
 
     def hidden_elements_id

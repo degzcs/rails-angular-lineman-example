@@ -16,54 +16,57 @@ describe RucomServices::Setting, type: :service do
   end
 
   context "When the rucom_service.cfg.yml exist" do
+    let(:cfg) { rs_setting.call }
+
     it "has parameters as initials values to the rucom service scraper" do
-      cfg = rs_setting.call
       expect(cfg.response[:config]["scraper"]["page_url"]).to eq( rucom_page_url)
     end
 
     it "#page_url" do
-      cfg =  rs_setting.call
       expect(cfg.page_url).to eq(rucom_page_url)
     end
 
     context "#driver" do
       it "#driver" do
-        cfg =  rs_setting.call        
         expect(cfg.driver).to include("Selenium::WebDriver") if cfg.driver
       end
 
       context "When doesn't have set a driver" do
         it "returns nil and set an error inside response object" do
-          cfg =  rs_setting.call
-          
           unless cfg.driver
             err_msg = "driver: Should setting up the driver"
 
             expect(cfg.driver).to eq(nil)
             expect(cfg.response[:errors].first).to eq(err_msg)
-          end  
+          end
         end
       end
     end
 
     it '#success' do
-      cfg = rs_setting.call
       expect(cfg.success).not_to eq(nil)
     end
 
-    it '#call' do
-      cfg = rs_setting.call
+    context "When calling the Setting service whith send data from frontend" do
+      let(:data) {{rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}}
+      let(:cfg1) { rs_setting.call(data)}
 
-      expect(cfg.response[:success]).to be true
-    end
+      it '#call' do
+        expect(cfg1.response[:success]).to be true
+      end
+
+      it "storages the values inside response in a key(hash) called send_data" do
+        expect(cfg1.response[:send_data][:rol_name]).to eq 'Barequero'
+        expect(cfg1.response[:send_data][:id_type]).to eq 'CEDULA'
+        expect(cfg1.response[:send_data][:id_number]).to eq '15535725'
+      end
+    end  
 
     it "#browser" do
-      cfg = rs_setting.call
       expect(cfg.browser).to eq(:phantomjs)
     end
 
     it "#hidden_elements_id" do
-      cfg = rs_setting.call
       elements = {
         "step_0"=> "form:trol_panel", 
         "step_1"=> "form:tIdentificacion_panel", 
@@ -73,18 +76,42 @@ describe RucomServices::Setting, type: :service do
     end
 
     it "#table_body_id" do
-      cfg = rs_setting.call
       expect(cfg.table_body_id).to eq("form:tablaListadosANM_data")
     end
 
     it "#response_class" do
-      data = {rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
-      cfg = rs_setting.call(data)
-      if cfg.response[:send_data][:rol_name] == "Barequero"
-        expect(cfg.response_class).to eq("AutorizedProviderResponse")
-      else
-         expect(cfg.response_class).to eq("TraderResponse") 
+      data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725' }
+      cfg1 = rs_setting.call(data)
+      expect(cfg1.response_class).to eq("AutorizedProviderResponse")
+
+      data[:rol_name] = 'Trader'
+      cfg1 = rs_setting.call(data)
+      expect(cfg1.response_class).to eq("TraderResponse")
+    end
+
+    context "when the rol_name key no exist in the rucom_service.cfg.yml" do
+      it "returns nil and an error inside response[:errors] array" do
+        data = {rol_name: 'Comerciante', id_type: 'CEDULA', id_number: '15535725'} 
+        cfg1 =  rs_setting.call(data)
+        
+        expect(cfg1.response_class).to eq(nil)
+        expect(cfg1.response[:errors].count).to eq(1)
+        expect(cfg1.response[:errors].first).to match("response_class: The key no Exist!. Key:")
       end
+    end
+
+    it "#driver_instance" do
+      expect(cfg.driver_instance.class).to eq(Selenium::WebDriver::Driver)
+    end
+
+    it "#barequero" do
+      expect(cfg.barequero.class).to eq(Array)
+      expect(cfg.barequero.blank?).not_to eq(true)
+    end
+
+    it "#trader" do
+      expect(cfg.trader.class).to eq(Array)
+      expect(cfg.trader.blank?).not_to eq(true)
     end
   end
 end
