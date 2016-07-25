@@ -78,7 +78,9 @@ end
 group :development, :test do
   gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'rspec-rails'
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.36.0', require: false
+  gem 'guard-rubocop', '~> 1.2.0'
+  gem 'rubycritic', '~> 2.7.0', require: false
 end
 
 group :test do
