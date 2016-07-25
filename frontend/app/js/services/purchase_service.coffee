@@ -32,7 +32,6 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       #barcode_html: ''
       code: ''
       rucom_id_field: ''
-
     #
     # HTTP resquests
     #
@@ -46,8 +45,10 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
         ##IMPROVE: Setup the filenames in order to receive them properly in server side.
         ## I am using a Regx in server to know which files is each one
         seller_picture_blob.name = 'seller_picture.png'
+        signature_picture = seller_picture_blob
+
         if purchase.origin_certificate_file[0]
-          files = [purchase.origin_certificate_file[0], seller_picture_blob]
+          files = [purchase.origin_certificate_file[0], seller_picture_blob, signature_picture]
         else
           js_pdf = new jsPDF()
           files = [seller_picture_blob]
