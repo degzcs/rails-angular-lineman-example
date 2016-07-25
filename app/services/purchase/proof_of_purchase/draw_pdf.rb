@@ -30,7 +30,6 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   # Fills out the equivalent document for the created purchase
   def draw_file!(purchase_presenter, signature_picture)
     start_new_page({:template => base_file.path , :template_page => 1})
-
     # header
     move_cursor_to 778
     text_box purchase_presenter.ymd_time, :at => [420,cursor] , :width => 80, :size => 12 , :height =>  12
@@ -59,7 +58,6 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     move_cursor_to 590
     text_box buyer_presenter.city_name, :at => [130,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box buyer_presenter.profile.phone_number, :at => [390,cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-
 
     # Provider
     # TODO: use seller instead provider to represent this kind of user
@@ -103,13 +101,10 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box gold_batch_presenter.rounded_grams, :at => [400 , cursor] , :width => 125 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 379
     text_box gold_batch_presenter.grade.to_s, :at => [400 , cursor] , :width => 125 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
-
     move_cursor_to 362
     text_box gold_batch_presenter.total_fine_grams, :at => [400 , cursor] , :width => 125 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
-
     move_cursor_to 286
     text_box purchase_presenter.fine_gram_price, :at => [140 , cursor] , :width => 100 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
-
     move_cursor_to 286
     text_box purchase_presenter.price.to_s, :at => [400 , cursor] , :width => 100 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
 
