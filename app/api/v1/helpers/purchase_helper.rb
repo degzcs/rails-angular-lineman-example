@@ -9,6 +9,7 @@ module V1
             files = params[:purchase].slice(:files)[:files]
             origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
             seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
+            signature_picture = files.select{|file| file['filename'] =~ /seller_picture/}.last
 
             if origin_certificate_file.nil? && params[:purchase][:sale_id].present?
               origin_certificate_file = Sale.find( params[:purchase][:sale_id] ).origin_certificate_file
@@ -16,7 +17,7 @@ module V1
             end
             params[:gold_batch][:extra_info] = JSON.parse(params[:gold_batch][:extra_info])
 
-            params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture, trazoro: trazoro)
+            params[:purchase].except!(:files).merge!(origin_certificate_file: origin_certificate_file, seller_picture: seller_picture, signature_picture: signature_picture, trazoro: trazoro)
           end
         end
 
