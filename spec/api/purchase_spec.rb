@@ -14,6 +14,7 @@ describe 'Purchase', :type => :request do
         seller_picture =  Rack::Test::UploadedFile.new(seller_picture_path, "image/jpeg")
         signature_picture_path = "#{ Rails.root }/spec/support/images/seller_picture.png"
         signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
+        #add signature.picture in @files for sending parameters correct
         @files = [file, seller_picture, signature_picture]
 
         @new_gold_batch_values = {
