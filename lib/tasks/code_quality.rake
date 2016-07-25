@@ -13,8 +13,10 @@ namespace :code_quality do
     uname = `uname`
     command = 'open'
     command = 'xdg-open' if uname.strip == 'Linux'
-    `#{command} #{brakeman_tmp_location}`
+    # `#{command} #{brakeman_tmp_location}`
     `#{command} #{rubocop_tmp_location}`
     `#{command} #{rails_best_practices_tmp_location}`
+    puts rubocop_tmp_location
+    puts rails_best_practices
   end
 end

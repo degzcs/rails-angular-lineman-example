@@ -81,6 +81,7 @@ group :development, :test do
   gem 'rubocop', '~> 0.36.0', require: false
   gem 'guard-rubocop', '~> 1.2.0'
   gem 'rubycritic', '~> 2.7.0', require: false
+  gem 'rails_best_practices', '~> 1.15.7', require: false
 end
 
 group :test do
