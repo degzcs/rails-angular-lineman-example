@@ -73,15 +73,18 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano3-nginx', '~> 2.0'
   gem 'capistrano-nodenv', '~> 1.1.0'
+  gem 'guard', '~> 2.14.0'
+  gem 'rubocop', '~> 0.42.0', require: false
+  gem 'guard-rubocop', '~> 1.2.0'
+  gem 'rubycritic', '~> 2.7.0', require: false
+  gem 'rails_best_practices', '~> 1.15.7', require: false
+  gem 'inch', '~> 0.7.0', require: false
+  gem 'guard-inch', '~> 0.2.0'
 end
 
 group :development, :test do
   gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'rspec-rails'
-  gem 'rubocop', '~> 0.36.0', require: false
-  gem 'guard-rubocop', '~> 1.2.0'
-  gem 'rubycritic', '~> 2.7.0', require: false
-  gem 'rails_best_practices', '~> 1.15.7', require: false
 end
 
 group :test do
