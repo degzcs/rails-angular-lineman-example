@@ -53,11 +53,11 @@ gem 'rmagick'
 # API
 gem 'jwt'
 gem 'httparty'
-gem 'grape', '0.8.0'#github: 'intridea/grape'
-gem 'grape-entity', '~> 0.4.0'
 gem 'rack-contrib', '~> 1.1.0'
-gem 'grape-swagger', '~> 0.7.2'
-gem 'grape-swagger-rails',  '~> 0.0.10'
+gem 'grape', '0.16.2'#github: 'intridea/grape'
+gem 'grape-entity', '0.5.0 '
+gem 'grape-swagger', '0.20.3'
+gem 'grape-swagger-rails', '~> 0.2.2'
 #gem "hashie_rails"
 gem 'hashie-forbidden_attributes', '~> 0.1.1'
 

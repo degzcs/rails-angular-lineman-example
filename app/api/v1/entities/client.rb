@@ -36,15 +36,19 @@ module V1
       expose :state_name, documentation: { type: "string", desc: "State name", example: "Antioquia" } do |user, options|
         user.profile.city.state.name
       end
-      expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
-      expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
+      expose :company, documentation: { type: "json", desc: "company_info", example: "" } do |user, options|
+        user.company.as_indexed_json if user.has_office?
+      end
+      expose :rucom, documentation: { type: "json", desc: "rucom", example: "" } do |user, options|
+        user.rucom.as_json
+      end
       # expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
       expose :activity, documentation: {type: "hash", desc: "can be Joyero | Comprador Ocasional | Exportacion", example: "Joyero"}
-      expose :city, documentation: { type: "string", desc: "", example: "user city" } do |user, options|
-        user.profile.city
+      expose :city, documentation: { type: "json", desc: "", example: "user city" } do |user, options|
+        user.profile.city.as_json
       end
-      expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" } do |user, options|
-        user.profile.city.state
+      expose :state, documentation: { type: "json", desc: "State name", example: "Antioquia" } do |user, options|
+        user.profile.city.state.as_json
       end
       expose :external, documentation: { type: "boolean", desc: "External flag", example: "true" }
     end

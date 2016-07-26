@@ -38,10 +38,10 @@ class API < Grape::API
   # Adds the swagger documentation to your
   # api. You only need this once, not in
   # every sub module
-  add_swagger_documentation(
-    base_path: "/",
-    hide_documentation_path: true,
-    api_version: 'v1',
-    markdown: true
-  )
+  # add_swagger_documentation(
+  #   base_path: "/",
+  #   hide_documentation_path: true,
+  #   api_version: 'v1',
+  #   markdown: true
+  # )
 end

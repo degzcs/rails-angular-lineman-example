@@ -18,9 +18,13 @@ module V1
 
       expose :city_name, documentation: { type: "string", desc: "City name", example: "Medellín" }
       expose :state_name, documentation: { type: "string", desc: "State name", example: "Antioquia" }
-      expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
-      expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
-      expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
+            expose :company, documentation: { type: "json", desc: "company_info", example: "" } do |user, options|
+        user.company.as_indexed_json if user.has_office?
+      end
+      expose :rucom, documentation: { type: "json", desc: "rucom", example: "" } do |user, options|
+        user.rucom.as_json
+      end
+      # expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
     end
   end
 end

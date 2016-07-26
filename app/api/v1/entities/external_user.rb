@@ -28,13 +28,17 @@ module V1
       end
       expose :email, documentation: { type: "string", desc: "E-mail address", example: "provider@example.com" }
       expose :city, documentation: { type: "string", desc: "City name", example: "Medellín" }  do |user, options|
-        user.profile.city
+        user.profile.city.as_json
       end
       expose :state, documentation: { type: "string", desc: "State name", example: "Antioquia" }  do |user, options|
-        user.profile.city.state
+        user.profile.city.state.as_json
       end
-      expose :company, documentation: { type: "hash", desc: "company_info", example: "" }
-      expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
+      expose :company, documentation: { type: "json", desc: "company_info", example: "" } do |user, options|
+        user.company.as_indexed_json if user.has_office?
+      end
+      expose :rucom, documentation: { type: "json", desc: "rucom", example: "" } do |user, options|
+        user.rucom.as_json
+      end
       expose :provider_type, documentation: { type: "string", desc: "provider_type", example: "" }
     end
   end

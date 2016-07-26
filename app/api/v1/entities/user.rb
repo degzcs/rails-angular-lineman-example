@@ -2,10 +2,10 @@ module V1
   module Entities
     class User < Grape::Entity
       expose :id, documentation: { type: "string", desc: "id of the user", example: '1' }
-      expose :first_name, documentation: { type: "string", desc: " First user name", example: "Lourdez" }do |user, options|
+      expose :first_name, documentation: { type: "string", desc: " First user name", example: "Lourdez" } do |user, options|
         user.profile.first_name
       end
-      expose :last_name, documentation: { type: "string", desc: "Last user name", example: "Astre" }do |user, options|
+      expose :last_name, documentation: { type: "string", desc: "Last user name", example: "Astre" } do |user, options|
         user.profile.last_name
       end
       expose :email, documentation: { type: "string", desc: "email", example: "lourdezastre@test.com" }
@@ -32,9 +32,9 @@ module V1
       expose :office, documentation: { type: "string", desc: "", example: "7895465." } do |user, options|
         user.office.name if user.has_office?
       end
-      # TODO: upgrade the frontend in order to avois to send duplicated information like city, state, phone number , etc.
-      expose :city, documentation: { type: "string", desc: "", example: "user city" } do |user, options|
-        user.profile.city
+      ## TODO: upgrade the frontend in order to avois to send duplicated information like city, state, phone number , etc.
+      expose :city, documentation: { type: "json", desc: "", example: "user city" } do |user, options|
+        user.profile.city.as_json
       end
       expose :city_name, documentation: { type: "string", desc: "", example: "user city" } do |user, options|
         user.profile.city.name
@@ -45,10 +45,12 @@ module V1
       expose :photo_file, documentation: { type: "photo", desc: "photo file", example: "" } do |user, options|
         user.profile.photo_file
       end
-      expose :company, documentation: { type: "hash", desc: "company_info", example: "" } do |user, e|
+      expose :company, documentation: { type: "hash", desc: "company_info", example: "" } do |user, options|
         user.company.as_indexed_json if user.has_office?
       end
-      expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" }
+      expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" } do |user, options|
+        user.rucom.as_json
+      end
     end
   end
 end
