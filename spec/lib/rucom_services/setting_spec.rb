@@ -122,5 +122,13 @@ describe RucomServices::Setting, type: :service do
         expect(cfg.response[:errors].first).to eq("clic_button_id: Should set up clic_button_id")
       end
     end
+
+    it "#wait_load" do
+      expect(cfg.wait_load.class).to eq(Fixnum)
+    end
+
+    it "#wait_clic" do
+      expect(cfg.wait_clic.class).to eq(Fixnum)
+    end
   end
 end

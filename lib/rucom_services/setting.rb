@@ -6,6 +6,7 @@ module RucomServices
     YAML_NAME = "rucom_service.cfg.yml"
     attr_accessor :response, :response_class, :page_url, :driver, :browser,
                   :driver_instance, :table_body_id, :hidden_elements_id,
+                  :wait_load, :wait_clic,
                   :barequero, :trader
 
     def initialize
@@ -69,23 +70,13 @@ module RucomServices
     end    
 
     def driver
-      @driver = 
-        if !@response[:config]["scraper"]["driver"].blank?
-          @response[:config]["scraper"]["driver"]
-        else
-          @response[:errors] << "driver: Should setting up the driver"
-          nil
-        end  
+      include_warning_inside_errors?("driver", "driver: Should setting up the driver")
+      @driver = @response[:config]["scraper"].fetch("driver", nil)
     end
     
     def browser
-      @browser = 
-        if !@response[:config]["scraper"]["browser"].blank?
-          @response[:config]["scraper"]["browser"]
-        else
-          @response[:errors] << "browser: Should setting up the browser"
-          nil
-        end  
+      include_warning_inside_errors?("browser", "browser: Should setting up the browser")
+      @browser = @response[:config]["scraper"].fetch("browser", nil)
     end
 
     def driver_instance
@@ -99,32 +90,17 @@ module RucomServices
     end  
 
     def hidden_elements_id
-      @hidden_elements_id =   
-        if !@response[:config]["scraper"]["hidden_elements_id"].blank?
-          @response[:config]["scraper"]["hidden_elements_id"]
-        else
-          []
-        end  
-    end     
+      @hidden_elements_id = @response[:config]["scraper"].fetch("hidden_elements_id", [])
+    end
 
     def barequero
-      @barequero = 
-        if !@response[:config]["scraper"]["barequero"].blank?
-          @response[:config]["scraper"]["barequero"]["select_options"]
-        else
-          @response[:errors] << "barequero: Should setting up the barequero/select_options"
-          []
-        end  
+      include_warning_inside_errors?("barequero")
+      @barequero = @response[:config]["scraper"]["barequero"].fetch("select_options", [])
     end  
 
     def trader
-      @trader = 
-        if !@response[:config]["scraper"]["trader"].blank?
-          @response[:config]["scraper"]["trader"]["select_options"]
-        else
-          @response[:errors] << "trader: Should setting up the trader/select_options"
-          []
-        end
+      include_warning_inside_errors?("trader")
+      @trader = @response[:config]["scraper"]["trader"].fetch("select_options", [])
     end
 
     def clic_button_id
@@ -135,6 +111,26 @@ module RucomServices
           @response[:errors] << "clic_button_id: Should set up clic_button_id"
           nil
         end  
-    end     
+    end
+
+    def wait_load
+      @wait_load = @response[:config]["scraper"].fetch("wait_load", 10).to_i
+    end
+
+    def wait_clic
+      @wait_clic = @response[:config]["scraper"].fetch("wait_clic", 2).to_i
+    end
+
+    private
+
+    def include_warning_inside_errors?(key, str_msg= "")
+      msg = str_msg || "#{key}: Should setting up the #{key}/select_options"
+      if @response[:config]["scraper"][key].blank?
+        @response[:errors] << msg
+        true
+      else
+        false
+      end
+    end
   end
-end  
+end

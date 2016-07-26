@@ -1,6 +1,8 @@
 scraper: 
   driver: Selenium::WebDriver
   browser: :phantomjs
+  wait_load: 20
+  wait_clic: 1
   page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
   table_body_id: "form:tablaListadosANM_data"  
   hidden_elements_id: 
