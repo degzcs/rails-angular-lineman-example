@@ -31,15 +31,21 @@ module RucomServices
       elsif options[:format] == :autorized_provider_response
         FIELDS_AUTORIZED_PROV
       else
-        nil
+        store_and_raise_error("assign_fields: format option doesn't match: #{options[:format]}")
       end
     end
     
-    def format!(field_names)
+    def format!(field_names)  
+      store_and_raise_error("format!: field_names parameter can't be empty") if field_names.blank?
       field_names.each_with_index do |key, index|
         @response[key] = @data[index].content
       end
       @response
+    end
+
+    def store_and_raise_error(str_message)
+      @response[:errors] << str_message
+      raise str_message
     end
   end
 end  

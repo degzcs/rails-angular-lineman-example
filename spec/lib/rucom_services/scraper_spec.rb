@@ -22,21 +22,36 @@ describe RucomServices::Scraper, type: :service do
       it "raises and error indicating which parameter didn't send it" do
         msg = 'RucomService::Scraper.call: ' \
           'validates_has_required_params_to_execute_service: Error with sent input data from view'
-        expect(rss.call.response[:errors].count).to be > 0
-        expect(rss.call.response[:errors]).to include(msg)
+        scraper = rss.call
+        expect(scraper.response[:errors].count).to be > 0
+        expect(scraper.response[:errors]).to include(msg)
       end
     end
 
     context "When can not load the settings" do
-      xit "raises an error" do
+      it "raises an error" do
         msg = "RucomService::Scraper.call: Error load settings from rucom_service.cfg.yml file"
-        scraper = rss.call(@data)
-        #if scraper.setting.success
-          expect(rss.call.response[:errors].count).to be( 1)
-          expect(rss.call.response[:errors]).to include(msg)
-        #end
-      end  
-    end  
+        @data[:yaml_file_name] = "other.cfg.yml"
+        rs_scraper = RucomServices::Scraper.new(@data)
+        scraper = rs_scraper.call
+        expect(scraper.response[:errors].count).to be( 1)
+        expect(scraper.response[:errors]).to include(msg)
+      end
+    end
+
+    it "returns a scraper service object whith the response required inside response attribute " \
+      "and whithout errors of any kind" do
+      rs_scraper = RucomServices::Scraper.new(@data)
+      scraper = rs_scraper.call
+      
+      expect(scraper.setting.success).to be  true
+
+      if scraper.response[:errors].include?("RucomService::Scraper.call: Net::ReadTimeout")
+        p "Timeout error in the conexion, It seems not be enable at this moment this conexion"
+      else
+        expect(scraper.response[:errors].count).to be( 0)
+      end
+    end
   end
 
 end  
