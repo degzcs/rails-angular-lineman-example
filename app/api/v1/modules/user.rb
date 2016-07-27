@@ -92,6 +92,7 @@ module V1
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           user = ::User.find(params[:id])
+          authorize! :read, user
           present user, with: V1::Entities::User
         end
 
@@ -113,7 +114,7 @@ module V1
             NOTE
           }
         params do
-           requires :user, type: Hash
+          requires :user, type: Hash
         end
         put '/', http_codes: [
             [200, "Successful"],

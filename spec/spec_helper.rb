@@ -9,6 +9,7 @@ require 'active_attr/rspec'
 # require 'sidekiq/testing'
 require 'shoulda/matchers'
 require 'carrierwave/test/matchers'
+require "cancan/matchers"
 
 #include seeds
 require "#{Rails.root}/db/seeds.rb"

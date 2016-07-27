@@ -8,12 +8,13 @@ class Company::Registration
   end
 
   def call(options={})
+    #binding.pry
     raise 'You must to provide a legal_representative_data option' if options[:legal_representative_data].blank?
     raise 'You must to provide a company_data option' if options[:company_data].blank?
     raise 'You must to provide a rucom option' if options[:rucom].blank?
-    @response = {}
-    @response[:errors] = []
-
+    @response[:success] = "Succesfull, getting the options call"
+    @response[:errors] = "Error, don't got the options call"
+    binding.pry
     @legal_representative = create_legal_representative_from(options[:legal_representative_data])
     @company = create_company_from(options[:company_data], legal_representative, options[:rucom])
     # associate legal representative with the main company office

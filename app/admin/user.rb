@@ -4,7 +4,12 @@ ActiveAdmin.register User do
 
   #belongs_to :office
 
-  permit_params :email, :first_name, :last_name , :document_number , :document_expedition_date , :phone_number , :address, :document_number_file, :rut_file, :mining_register_file, :photo_file, :office_id, :population_center_id, :password , :password_confirmation
+  permit_params :email, :external,
+    profile_attributes:[
+      :first_name, :last_name, :document_number , :document_expedition_date , 
+      :phone_number , :address, :document_number_file, :rut_file, :mining_register_file, 
+      :photo_file, :office_id, :population_center_id, :password , :password_confirmation
+    ]
 
   index do
     selectable_column
@@ -35,6 +40,26 @@ ActiveAdmin.register User do
   form partial: 'form'
 
 
+
+  form do |f|
+   # f.semantic_errors *f.object.errors.keys
+    f.inputs "User Details" do
+      f.input :email
+      f.input :external, as: :boolean
+    end
+  
+
+     # f.inputs "User Profile", for: [:profile, f.object.profile] do |s|
+      
+    
+    f.actions
+  end
+
+
+
+ 
+
+
   # form do |f|
   #   if f.object.errors.size >= 1
   #     f.inputs "Errors" do
@@ -61,36 +86,36 @@ ActiveAdmin.register User do
   #   f.actions
   # end
 
-  show do
-    attributes_table do
-      row :email
-      row :first_name, label: "Nombre"
-      row :last_name, label: "Apellido"
-      row :document_number, label: "Numero de documento"
-      row :document_expedition_date, label: "Fecha de expedicion"
-      row :phone_number , label: "Numero telefonico"
-      row :address, label: "Direccion"
-      row :photo_file, label: "Foto usuario" do|u|
-        image_tag u.photo_file.try(:thumb).try(:url) , class: "photo-user"
-      end
-      row :document_number_file , label: "PDF cedula"do|u|
-        link_to(image_tag(u.document_number_file.try(:preview).try(:url)),u.document_number_file.url, :target => "_blank" )
-      end
-      row :rut_file , label: "PDF Rut"do|u|
-        link_to(image_tag(u.rut_file.try(:preview).try(:url)),u.rut_file.url, :target => "_blank" ) if u.rut_file
-      end
+  # show do
+  #   attributes_table do
+  #     row :email
+  #     row :first_name, label: "Nombre"
+  #     row :last_name, label: "Apellido"
+  #     row :document_number, label: "Numero de documento"
+  #     row :document_expedition_date, label: "Fecha de expedicion"
+  #     row :phone_number , label: "Numero telefonico"
+  #     row :address, label: "Direccion"
+  #     row :photo_file, label: "Foto usuario" do|u|
+  #       image_tag u.photo_file.try(:thumb).try(:url) , class: "photo-user"
+  #     end
+  #     row :document_number_file , label: "PDF cedula"do|u|
+  #       link_to(image_tag(u.document_number_file.try(:preview).try(:url)),u.document_number_file.url, :target => "_blank" )
+  #     end
+  #     row :rut_file , label: "PDF Rut"do|u|
+  #       link_to(image_tag(u.rut_file.try(:preview).try(:url)),u.rut_file.url, :target => "_blank" ) if u.rut_file
+  #     end
 
-      row :company , label: "Compañia" do|u|
-        u.company ? u.company.name : "Ninguna"
-      end
-      row :office , label: "Sucursal" do|u|
-        u.office ? u.office.name : "--"
-      end
-      row :rucom do|u|
-        link_to "#{u.office ? 'Rucom de empresa' : 'Rucom personal'}: #{u.rucom.name} - Numero: #{u.rucom.num_rucom}", admin_rucom_path(u.rucom.id)
-      end
-    end
-    active_admin_comments
-  end
+  #     row :company , label: "Compañia" do|u|
+  #       u.company ? u.company.name : "Ninguna"
+  #     end
+  #     row :office , label: "Sucursal" do|u|
+  #       u.office ? u.office.name : "--"
+  #     end
+  #     row :rucom do|u|
+  #       link_to "#{u.office ? 'Rucom de empresa' : 'Rucom personal'}: #{u.rucom.name} - Numero: #{u.rucom.num_rucom}", admin_rucom_path(u.rucom.id)
+  #     end
+  #   end
+  #   active_admin_comments
+  # end
 
 end

@@ -202,7 +202,33 @@ class User < ActiveRecord::Base
   def document_number_file
     self.id_document_file
   end
+  
+  #
+  #Roles
+  #
+  
+#to determine if a user is in a specific role
+def has_role?(role_sym)
+  roles.any? { |r| r.name.underscore.to_sym == role_sym }
+end
 
+
+
+  def authorized_producer?
+    self.roles.map(&:authorized_producer?).any?
+  end
+
+  def final_client?
+    self.roles.map(&:final_client?).any?
+  end
+
+  def trader?
+    self.roles.map(&:trader?).any?
+  end
+
+  def transporter?
+    self.roles.map(&:transporter?).any?
+  end
   #
   # Class Methods
   #

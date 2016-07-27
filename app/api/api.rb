@@ -16,6 +16,18 @@ class API < Grape::API
     def authenticate!
       error!('401 Unauthorized', 401) unless current_user
     end
+
+    alias_method :authenticate?, :authenticate!
+
+
+    def current_ability
+      @current_ability ||= Ability.new(current_user)
+    end
+
+    def authorize!(*args)
+      ::Ability.new(current_user).authorize!(*args)
+    end
+
   end
 
   mount V1::Modules::Purchase

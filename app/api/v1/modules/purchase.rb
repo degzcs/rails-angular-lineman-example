@@ -6,6 +6,10 @@ module V1
         authenticate!
       end
 
+      before do
+        authorize_route! if authenticate?
+      end
+
        helpers do
         params :pagination do
           optional :page, type: Integer
@@ -57,7 +61,7 @@ module V1
             [400, "Invalid parameter"],
             [401, "Unauthorized"],
             [404, "Entry not found"],
-          ] do
+          ], authorize: [:create, Purchase] do
 
           # update params
           date = '2016/07/15'.to_date
@@ -89,7 +93,7 @@ module V1
           optional :purchase_list, type: Array #Array of purchase ids
         end
 
-        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get   http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           if params[:purchase_list]
             purchases = ::Purchase.get_list(params[:purchase_list])
@@ -121,6 +125,7 @@ module V1
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
           purchase = ::Purchase.find(params[:id])
+          authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end
       end

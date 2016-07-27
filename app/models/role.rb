@@ -28,4 +28,24 @@ class Role < ActiveRecord::Base
   #
 
   validates :name, presence: true
+
+  #
+  #Instace methods
+  #
+
+  def authorized_producer?
+    self.name == ("authorized_producer")
+  end
+
+  def final_client?
+    self.name == ("final_client")
+  end
+
+  def trader?
+    self.name == ("trader")
+  end
+
+  def transporter?
+    self.name == ("transporter")
+  end
 end
