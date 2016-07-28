@@ -17,9 +17,13 @@ module V1
     class Sale <  Grape::API
 
       before_validation do
-        authenticate!
+        binding.pry
+        load_and_authorize_resource # authenticate!
       end
+      
+      
 
+      #grape-cancan
       before do
         authorize_route! if authenticate?
       end
@@ -79,7 +83,9 @@ module V1
             [400, "Invalid parameter"],
             [401, "Unauthorized"],
             [404, "Entry not found"],
-          ], authorize: [:create, Sale] do
+          ] do
+            binding.pry
+            authorize! :create, Sale
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(
@@ -88,7 +94,7 @@ module V1
               gold_batch_hash: params[:gold_batch],
               selected_purchase_ids: selected_purchase_ids,
               )
-            binding.pry
+            
             if response[:purchase]
               present registration_service.sale, with: V1::Entities::Sale
               Rails.logger.info(response)

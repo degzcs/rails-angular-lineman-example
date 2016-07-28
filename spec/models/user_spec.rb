@@ -244,27 +244,49 @@ describe  User, type: :model do
     end
   end
 
-  context "user roles" do
+  context "user roles with_authorized_producer_role" do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_authorized_producer_role, :with_final_client_role, :with_trader_role, :with_transporter_role
+      @user =  create :user, :with_personal_rucom, :with_authorized_producer_role
+      #:with_final_client_role, :with_trader_role, :with_transporter_role
     end
 
     it "should check that user is a authorized provider" do
       #@user.roles.map(&:name)) include("authorized_producer")
       expect(@user.authorized_producer?).to be true
     end
+  end
 
-    it "should check that user is a final_client" do
+  context "user roles :with_final_client_role" do
+    before :each do
+      @user =  create :user, :with_personal_rucom, :with_final_client_role
+      #:with_trader_role, :with_transporter_role
+    end
+
+    it "should check that user is a final client" do
+      #@user.roles.map(&:name)) include("authorized_producer")
       expect(@user.final_client?).to be true
+    end
+  end
+
+  context "user roles :with_trader_role" do
+    before :each do
+      @user =  create :user, :with_personal_rucom, :with_trader_role
     end
 
     it "should check that user is a trader" do
       expect(@user.trader?).to be true
     end 
+  end
+
+  context "user roles :with_transporter_role" do
+    before :each do
+      @user =  create :user, :with_personal_rucom, :with_transporter_role
+    end
 
     it "should check that user is a transporter" do
       expect(@user.transporter?).to be true
     end
   end
+
 end
 
