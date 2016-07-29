@@ -10,7 +10,6 @@ class Sale::RegistrationService
     raise 'You must to provide a current_user option' if options[:current_user].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
     raise 'You must to provide a selected_purchase_ids option' if options[:selected_purchase_ids].blank?
-    
     @seller = seller_based_on(options[:current_user])
     @selected_purchase_ids = options[:selected_purchase_ids]
     @response = {}

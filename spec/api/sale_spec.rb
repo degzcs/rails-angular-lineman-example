@@ -54,7 +54,6 @@ describe 'Sale', :type => :request do
             selected_purchases: selected_purchases
             },
             {"Authorization" => "Barer #{ @token }"}
-   
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end

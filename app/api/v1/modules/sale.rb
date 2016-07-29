@@ -76,7 +76,6 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-
             authorize! :create, ::Sale
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
@@ -86,15 +85,12 @@ module V1
               gold_batch_hash: params[:gold_batch],
               selected_purchase_ids: selected_purchase_ids,
               )
-
-            if response[:purchase]
+            if response[:success]
               present registration_service.sale, with: V1::Entities::Sale
               Rails.logger.info(response)
             else
               error!({error: "unexpected error", detail: response[:errors] }, 409)
             end
-            #authorize! :create, current_user
-
         end
 
         #
