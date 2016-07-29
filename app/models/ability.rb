@@ -4,7 +4,7 @@ class Ability
     def initialize(user)
 
         @user = user || User.new # for guest
-        @user.roles.each { |role| send(role.name.downcase) }
+        @user.roles.each { |role| self.send(role.name.downcase) }
         # Define abilities for the passed in user here. For example:
         #
         #   user ||= User.new # guest user (not logged in)

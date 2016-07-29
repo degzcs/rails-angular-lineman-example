@@ -11,21 +11,21 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #
+require 'cancancan'
 
 module V1
   module Modules
     class Sale <  Grape::API
 
       before_validation do
-        binding.pry
-        load_and_authorize_resource # authenticate!
+        authenticate!
       end
       
       
 
       #grape-cancan
       before do
-        authorize_route! if authenticate?
+        authorize! if authenticate?
       end
 
        helpers do
@@ -84,8 +84,8 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-            binding.pry
-            authorize! :create, Sale
+          
+            authorize! :create, ::Sale
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(
