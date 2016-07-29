@@ -20,15 +20,8 @@ module V1
       before_validation do
         authenticate!
       end
-      
-      
 
-      #grape-cancan
-      before do
-        authorize! if authenticate?
-      end
-
-       helpers do
+      helpers do
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -38,7 +31,6 @@ module V1
       rescue_from ::CanCan::AccessDenied do
         error!('403 Forbidden', 403)
       end
-
 
       format :json
       content_type :json, 'application/json'
@@ -84,7 +76,7 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
-          
+
             authorize! :create, ::Sale
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
@@ -94,7 +86,7 @@ module V1
               gold_batch_hash: params[:gold_batch],
               selected_purchase_ids: selected_purchase_ids,
               )
-            
+
             if response[:purchase]
               present registration_service.sale, with: V1::Entities::Sale
               Rails.logger.info(response)
@@ -102,7 +94,7 @@ module V1
               error!({error: "unexpected error", detail: response[:errors] }, 409)
             end
             #authorize! :create, current_user
-            
+
         end
 
         #

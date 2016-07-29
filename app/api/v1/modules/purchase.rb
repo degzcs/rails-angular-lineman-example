@@ -6,11 +6,7 @@ module V1
         authenticate!
       end
 
-      before do
-        authorize_route! if authenticate?
-      end
-
-       helpers do
+      helpers do
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
