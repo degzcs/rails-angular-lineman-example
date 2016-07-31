@@ -108,7 +108,11 @@ module V1
           use :pagination
         end
 
-        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/', http_codes: [ 
+          [200, "Successful"],
+          [401, "Unauthorized"]
+          ]do
+          authorize! :read, ::Sale
           content_type "text/json"
           page = params[:page] || 1
           per_page = params[:per_page] || 10
@@ -134,6 +138,7 @@ module V1
         end
 
         get 'get_by_code/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Sale
           content_type "text/json"
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find_by(code: params[:code])
@@ -156,6 +161,7 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Sale
           content_type "text/json"
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find(params[:id])

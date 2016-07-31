@@ -40,10 +40,13 @@ class Ability
     def trader
 
         #can :read, User, :user_id = user.id
-        can :update, Profile, :registration_state == "authorized?"
+        #(a) can :update, Profile, :registration_state == "authorized?"
         can [:create, :read], Sale
         can [:create, :read], Purchase
-        
+    end
+
+    def authorized_producer
+        cannot :manage, all
     end
 
     
@@ -51,6 +54,15 @@ class Ability
 #can update user (proveedor) authorized
 #can [purchase, sale, ] create read 
 #can read inventory
+#courier only will be created by admin
+#A trader just can update provider when created and registration_status in "inicialized"(a)
+#rucoms public, just read
+#depende of role, trader [cannot create or delete user, (a)can update provider]
+
+
+#future
+#TO DO a trader have access to own credit_billing.
+
 
     
 

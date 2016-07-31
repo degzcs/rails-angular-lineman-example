@@ -25,7 +25,7 @@ class API < Grape::API
     alias_method :authenticate?, :authenticate!
 
     def authorize!(*args)
-      ::Ability.new(current_user).authorize!(*args)
+      current_ability.authorize!(*args)
     end
   end
 

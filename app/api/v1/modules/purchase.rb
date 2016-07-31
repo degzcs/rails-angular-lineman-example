@@ -57,8 +57,8 @@ module V1
             [400, "Invalid parameter"],
             [401, "Unauthorized"],
             [404, "Entry not found"],
-          ], authorize: [:create, Purchase] do
-
+          ]do
+          authorize! :create, ::Purchase
           # update params
           date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
@@ -89,7 +89,8 @@ module V1
           optional :purchase_list, type: Array #Array of purchase ids
         end
 
-        get   http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/' http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Purchase
           content_type "text/json"
           if params[:purchase_list]
             purchases = ::Purchase.get_list(params[:purchase_list])
@@ -119,6 +120,7 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Purchase
           content_type "text/json"
           purchase = ::Purchase.find(params[:id])
           authorize! :read, purchase
