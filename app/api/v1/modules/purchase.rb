@@ -89,7 +89,7 @@ module V1
           optional :purchase_list, type: Array #Array of purchase ids
         end
 
-        get '/' http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           authorize! :read, ::Purchase
           content_type "text/json"
           if params[:purchase_list]
