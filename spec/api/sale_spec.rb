@@ -6,12 +6,12 @@ describe 'Sale', :type => :request do
       before :context do
         # NOTE: because this user has a company he not necessarily
         # will be the seller, actually, the seller will be the legal_representative
-        @current_user = create :user, :with_company
+        @current_user = create :user, :with_company, :with_trader_role
         @token = @current_user.create_token
       end
 
       context 'POST' do
-        it 'should create one complete sale' do
+        it 'should create one complete sale with trader role' do
           buyer = create(:external_user, :with_company)
           seller = @current_user.company.legal_representative
           courier = create(:courier)
@@ -54,7 +54,6 @@ describe 'Sale', :type => :request do
             selected_purchases: selected_purchases
             },
             {"Authorization" => "Barer #{ @token }"}
-
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end
@@ -62,7 +61,7 @@ describe 'Sale', :type => :request do
 
       context "GET" do
         before(:all) do
-          @current_user = create :user, :with_company
+          @current_user = create :user, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
           @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, inventory: @legal_representative.inventory)
@@ -80,7 +79,7 @@ describe 'Sale', :type => :request do
         end
 
         context '/:id' do
-          it 'gets purchase by id' do
+          it 'gets purchase by id with role trader' do
             sale = @sales.last
 
             expected_response = {

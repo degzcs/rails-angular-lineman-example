@@ -11,6 +11,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #
+require 'cancancan'
 
 module V1
   module Modules
@@ -20,13 +21,16 @@ module V1
         authenticate!
       end
 
-       helpers do
+      helpers do
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
         end
       end
 
+      rescue_from ::CanCan::AccessDenied do
+        error!('403 Forbidden', 403)
+      end
 
       format :json
       content_type :json, 'application/json'
@@ -72,6 +76,7 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ] do
+            authorize! :create, ::Sale
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(
@@ -80,9 +85,12 @@ module V1
               gold_batch_hash: params[:gold_batch],
               selected_purchase_ids: selected_purchase_ids,
               )
-
-            present registration_service.sale, with: V1::Entities::Sale
-            Rails.logger.info(response)
+            if response[:success]
+              present registration_service.sale, with: V1::Entities::Sale
+              Rails.logger.info(response)
+            else
+              error!({error: "unexpected error", detail: response[:errors] }, 409)
+            end
         end
 
         #
@@ -100,7 +108,11 @@ module V1
           use :pagination
         end
 
-        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/', http_codes: [ 
+          [200, "Successful"],
+          [401, "Unauthorized"]
+          ]do
+          authorize! :read, ::Sale
           content_type "text/json"
           page = params[:page] || 1
           per_page = params[:per_page] || 10
@@ -126,6 +138,7 @@ module V1
         end
 
         get 'get_by_code/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Sale
           content_type "text/json"
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find_by(code: params[:code])
@@ -148,9 +161,12 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Sale
           content_type "text/json"
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find(params[:id])
+          #authorize: [:read, Sale]
+          authorize! :read, sale
           present sale, with: V1::Entities::Sale
         end
 

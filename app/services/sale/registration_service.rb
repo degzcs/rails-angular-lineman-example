@@ -13,7 +13,6 @@ class Sale::RegistrationService
     @seller = seller_based_on(options[:current_user])
     @selected_purchase_ids = options[:selected_purchase_ids]
     @response = {}
-
     @sale = @seller.inventory.sales.build(options[:sale_hash])
     @sale.build_gold_batch(options[:gold_batch_hash])
 

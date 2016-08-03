@@ -47,6 +47,8 @@ module V1
           header 'total_pages', credit_billings.total_pages.to_s
           present credit_billings, with: V1::Entities::CreditBilling
         end
+
+        
         desc 'returns one existent credit_billing by :id', {
           entity: V1::Entities::CreditBilling,
           notes: <<-NOTES

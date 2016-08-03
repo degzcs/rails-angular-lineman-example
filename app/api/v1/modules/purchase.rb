@@ -6,7 +6,7 @@ module V1
         authenticate!
       end
 
-       helpers do
+      helpers do
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -57,8 +57,8 @@ module V1
             [400, "Invalid parameter"],
             [401, "Unauthorized"],
             [404, "Entry not found"],
-          ] do
-
+          ]do
+          authorize! :create, ::Purchase
           # update params
           date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
@@ -90,6 +90,7 @@ module V1
         end
 
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Purchase
           content_type "text/json"
           if params[:purchase_list]
             purchases = ::Purchase.get_list(params[:purchase_list])
@@ -119,8 +120,10 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Purchase
           content_type "text/json"
           purchase = ::Purchase.find(params[:id])
+          authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end
       end

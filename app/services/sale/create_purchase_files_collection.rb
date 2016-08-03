@@ -47,7 +47,7 @@ class Sale::CreatePurchaseFilesCollection
     if create_temporal_folder(folder_path)
       join_files(folder_path, file_paths, final_temporal_file_name)
     else
-      raise 'The folder was not creted!'
+      raise 'The folder was not created!'
     end
   end
 
@@ -78,6 +78,7 @@ class Sale::CreatePurchaseFilesCollection
   def join_files(folder_path, file_paths, final_temporal_file_name)
     joined_file_paths = file_paths.join(' ')
     # NOTE: if it is needed you can add  -density 50 to the next command
+    
     system <<-COMMAND
       cd #{ folder_path } && convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
     COMMAND
