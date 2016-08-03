@@ -47,8 +47,6 @@ ActiveAdmin.register User do
   #new and edit
   form do |f|
     if f.object.errors.size >= 1
-      binding.pry
-      1
       f.inputs 'Errors' do
         f.object.errors.full_messages.join('|')
       end
