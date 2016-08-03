@@ -49,6 +49,12 @@ GIT
       countries (~> 1.2.0)
       sort_alphabetical (~> 1.0)
 
+GIT
+  remote: https://github.com/seuros/state_machine.git
+  revision: 95ba53f03e5657a5873343c2b1dc6a148ea3542e
+  specs:
+    state_machine (1.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -706,6 +712,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.53)
   shoulda-matchers
   spring
+  state_machine!
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)

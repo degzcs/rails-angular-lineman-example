@@ -1,6 +1,7 @@
 class CreateRucom < ActiveRecord::Migration
   def change
     create_table :rucoms do |t|
+      t.string :rucom_number
       t.string :name
       t.string :original_name
       t.string :minerals

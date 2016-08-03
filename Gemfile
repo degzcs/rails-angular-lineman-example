@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-ruby "2.3.0"
+ruby '2.3.0'
 
 gem 'rails', '4.1.9'
 
 # PDF
-gem 'prawn','1.0.0.rc2'
+gem 'prawn', '1.0.0.rc2'
 gem 'pdf-reader', '~> 1.3.3'
 
 # DB
@@ -29,7 +29,7 @@ gem 'turbolinks'
 
 gem 'jbuilder', '~> 2.0'
 
-gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'spring',        group: :development
 
@@ -54,14 +54,15 @@ gem 'rmagick'
 gem 'jwt'
 gem 'httparty'
 gem 'rack-contrib', '~> 1.1.0'
-gem 'grape', '0.16.2'#github: 'intridea/grape'
+gem 'grape', '0.16.2' # github: 'intridea/grape'
 gem 'grape-entity', '0.5.0 '
 gem 'grape-swagger', '0.20.3'
 gem 'grape-swagger-rails', '~> 0.2.2'
-#gem "hashie_rails"
+# gem "hashie_rails"
 gem 'hashie-forbidden_attributes', '~> 0.1.1'
 gem 'selenium-webdriver', '~> 2.53'
 gem 'virtus'
+gem 'state_machine', git: 'https://github.com/seuros/state_machine.git'
 
 group :development do
   gem 'quiet_assets'
@@ -90,10 +91,9 @@ group :development, :test do
 end
 
 group :test do
-  #gem 'capybara'
-  #gem 'capybara-webkit'
+  # gem 'capybara'
+  # gem 'capybara-webkit'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
 end
-

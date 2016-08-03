@@ -65,6 +65,10 @@ module V1
           end
           present rucoms, with: V1::Entities::Rucom
         end
+
+        # 
+        #  GET /rucoms/:id
+        # 
         desc 'returns one existent rucom registry by :id', {
           entity: V1::Entities::Rucom,
           notes: <<-NOTES
