@@ -8,7 +8,7 @@
 #  updated_at      :datetime
 #  password_digest :string(255)
 #  reset_token     :string(255)
-#  external        :boolean          default(FALSE), not null
+#  external        :boolean          default(FALSE), not NULL
 #  office_id       :string(255)
 #
 
@@ -134,8 +134,7 @@ class User < ActiveRecord::Base
 
   after_create :create_inventory
 
-  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile
-
+  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom
   #
   # Delegates
   #
@@ -263,5 +262,4 @@ end
   def validate_personal_rucom?
     !self.has_office? && !self.profile.legal_representative
   end
-
 end
