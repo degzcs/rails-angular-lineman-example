@@ -8,36 +8,41 @@
     <%= f.input :nit_number , label: "NIT" %>
     <%= f.input :name, label: "Nombre" %>
     <%= f.input :country, label: "Pais" %>
-    <%= f.input :state, label: "Departamento" %>
+    <%= f.input :state, label: "Departamento", :collection => State.all.map{ |s| ["#{s.name}", s.id]} %>
     <%= f.input :city, label: "Ciudad" %>
-    <%= f.inputs do %>
-      <% user = f.object.legal_representative || User.new %>
-      <%= f.semantic_fields_for :legal_representative, user do |user| %>
-        <%= user.input :first_name, label: t('first_name') %>
-        <%= user.input :last_name, label: t('last_name') %>
-        <%= user.input :document_number , label: t('document_number') %>
-        <%= user.input :document_expedition_date, label: t('document_expedition_date'), start_year: Date.today.year - 70 %>
-        <%= user.input :phone_number, label: t('phone_number') %>
-        <%= user.input :address, label: t('address') %>
-        <%= user.input :photo_file, :as => :file , label: t('photo_file') , :hint => image_tag(user.object.photo_file.try(:thumb).try(:url)) %>
-        <%= user.input :document_number_file, :as => :file , label: t('document_file') , :hint => link_to(image_tag(user.object.document_number_file.try(:preview).try(:url)),user.object.document_number_file.url, :target => "_blank" ) %>
-        <%= user.input :rut_file, :as => :file, label: t('rut_file'), :hint => link_to(image_tag(user.object.rut_file.try(:preview).try(:url)), user.object.rut_file.url, :target => "_blank" ) %>
-        <% #user.input :city_id, label: t('city'), :collection => City.all.map{|city| [city.name, city.id]} %>
-        <br/>
-        <%= user.input :email, label: t('email') %>
-        <%= user.input :password, label: t('password') %>
-        <%= user.input :password_confirmation, label: t('password_confirmation') %>
-        <%= user.input :legal_representative, as: :hidden, input_html: { value: true } %>
-      <% end %>
-    <% end %>
     <%= f.input :email , label: "Email compañia" %>
     <%= f.input :phone_number, label:"Telefono" %>
+    <%= f.input :address,  label:"Direccion" %>
     <%= f.input :chamber_of_commerce_file, label:"PDF camara de comercio"  %>
     <%= f.input :rut_file, label:"PDF rut"  %>
     <%= f.input :mining_register_file, label:"PDF registro minero"  %>
-
-
   <% end %>
+
+    <%= f.inputs name: "Informacion Representante Legal" do %>
+      <br>
+        <% user = f.object.legal_representative || User.new %>
+        <% user.build_profile unless user.profile.present? %>
+        <%= f.semantic_fields_for :legal_representative, user do |u| %>
+          <%= u.semantic_fields_for :profile_attributes, user.profile do |p| %>
+            <%= p.input :first_name, label: t('first_name') %>
+              <%= p.input :last_name, label: t('last_name') %>
+              <%= p.input :document_number , label: t('document_number') %>
+              <%= p.input :phone_number, label: t('phone_number') %>
+              <%= p.input :address, label: t('address') %>
+              <%= p.input :photo_file, :as => :file , label: t('photo_file') , :hint => image_tag(p.object.photo_file.try(:thumb).try(:url)) %>
+              <%= p.input :id_document_file, :as => :file , label: t('document_file') , :hint => link_to(image_tag(p.object.id_document_file.try(:preview).try(:url)),p.object.id_document_file.url, :target => "_blank" ) %>
+              <%= p.input :rut_file, :as => :file, label: t('rut_file'), :hint => link_to(image_tag(p.object.rut_file.try(:preview).try(:url)), p.object.rut_file.url, :target => "_blank" ) %>
+              <%= p.input :legal_representative, as: :hidden, input_html: { value: true } %>
+              <%= # p.input :city_id, as: :hidden, input_html: { value: 1 } %>
+              <%= p.input :city_id, label: t('city'), :collection => City.all.map{|city| [city.name, city.id]} %>
+            <% end %>
+            <br/>
+            <%= u.input :email, label: t('email') %>
+            <%= u.input :password, label: t('password') %>
+            <%= u.input :password_confirmation, label: t('password_confirmation') %>
+        <% end %>
+    <% end %>
+
   <%= f.actions  do %>
     <%= f.action :submit, :as => :button %>
     <%= f.action :cancel, :as => :link %>
