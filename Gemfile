@@ -31,8 +31,6 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'spring',        group: :development
-
 gem 'rails-lineman', github: 'degzcs/rails-lineman'
 
 gem 'activeadmin', github: 'activeadmin'
@@ -76,9 +74,6 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano3-nginx', '~> 2.0'
   gem 'capistrano-nodenv', '~> 1.1.0'
-  gem 'guard', '~> 2.14.0'
-  gem 'rubocop', '~> 0.42.0', require: false
-  gem 'guard-rubocop', '~> 1.2.0'
   gem 'rubycritic', '~> 2.7.0', require: false
   gem 'rails_best_practices', '~> 1.15.7', require: false
   gem 'inch', '~> 0.7.0', require: false
@@ -88,6 +83,13 @@ end
 group :development, :test do
   gem 'jazz_hands', github: 'jkrmr/jazz_hands'
   gem 'rspec-rails'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'guard', '~> 2.14.0'
+  gem 'rubocop', '~> 0.42.0', require: false
+  gem 'guard-rubocop', '~> 1.2.0'
+  gem 'guard-rspec', '~> 4.7.3', require: false
+  # gem 'guard-livereload', '~> 2.5.2', require: false
 end
 
 group :test do
