@@ -18,7 +18,6 @@
 # 3. a resolution to guarantee that he/she can commercialize gold
 # So, I think it could be named as mining_authorization_document and add another field to select the document type
 class User < ActiveRecord::Base
-
   #
   # Associations
   #
@@ -32,7 +31,7 @@ class User < ActiveRecord::Base
   # and select this role when the sale will be done on the sale module/service
   # has_many :purchases_as_provider , class_name: "Purchase", as: :provider
   # has_many :sales_as_client, class_name: "Sale", as: :client
-  has_one :personal_rucom, class_name: "Rucom",  as: :rucomeable
+  has_one :personal_rucom, class_name: "Rucom", as: :rucomeable
 
   has_many :credit_billings, dependent: :destroy
   belongs_to :office
@@ -51,11 +50,11 @@ class User < ActiveRecord::Base
   #
 
   validates :email, presence: true, uniqueness: true, unless: :external
-  validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
+  validates :office, presence: true, if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
   has_secure_password validations: false
-  validates_presence_of :password, :on => :create, if: lambda { |user|  !user.external }
+  validates_presence_of :password, :on => :create, if: lambda { |user| !user.external }
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }
   validates_presence_of :password_confirmation, if: lambda { |m| m.password.present? }
 
@@ -69,7 +68,6 @@ class User < ActiveRecord::Base
               { first_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%", last_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%"})}
   scope :find_by_document_number, -> (document_number){ joins(:profile).where("profiles.document_number LIKE :document_number",
               { document_number: "%#{ document_number.gsub('%', '\%').gsub('_', '\_') }%" }) }
-
 
   scope :external_user_ids_with_personal_rucom, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom).pluck(:id)}
   scope :external_user_ids_with_company_rucom, -> {includes(office: [{company: :rucom}]).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:office).pluck(:id)}
@@ -135,6 +133,7 @@ class User < ActiveRecord::Base
   after_create :create_inventory
 
   accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom
+
   #
   # Delegates
   #
@@ -197,21 +196,14 @@ class User < ActiveRecord::Base
     JWT.encode(payload, Rails.application.secrets.secret_key_base);
   end
 
-  # NOTE: This method is just and alias to avoid break the app, this field was removed and it will be deleted from the rest of the project asap.
-  def document_number_file
-    self.id_document_file
+  #
+  # Roles
+  #
+
+  # to determine if a user is in a specific role
+  def has_role?(role_sym)
+    roles.any? { |r| r.name.underscore.to_sym == role_sym }
   end
-  
-  #
-  #Roles
-  #
-  
-#to determine if a user is in a specific role
-def has_role?(role_sym)
-  roles.any? { |r| r.name.underscore.to_sym == role_sym }
-end
-
-
 
   def authorized_producer?
     self.roles.map(&:authorized_producer?).any?
@@ -228,6 +220,7 @@ end
   def transporter?
     self.roles.map(&:transporter?).any?
   end
+
   #
   # Class Methods
   #
@@ -251,8 +244,6 @@ end
   def create_inventory
     self.create_inventory!(remaining_amount: 0) if self.inventory.blank?
   end
-
-
 
   # NOTE: all users marked as an external are users which will belong to the client role.
   def validate_office?
