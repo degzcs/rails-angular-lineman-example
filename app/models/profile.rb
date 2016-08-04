@@ -22,7 +22,6 @@
 #
 
 class Profile < ActiveRecord::Base
-
   # TODO: remove this class asap!!
   class EmptyCredits < StandardError
   end
@@ -38,9 +37,9 @@ class Profile < ActiveRecord::Base
   # Validations
   #
 
-  validates :first_name , presence: true
-  validates :last_name , presence: true
-  validates :document_number , presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :document_number, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
   # TODO: change external feature to roles feature
@@ -49,7 +48,6 @@ class Profile < ActiveRecord::Base
   # validates :mining_authorization_file, presence: true
   # validates :photo_file, presence: true, unless: :external
   validates :city, presence: true
-
 
   #
   # Uploaders
@@ -73,7 +71,6 @@ class Profile < ActiveRecord::Base
   delegate :name, to: :city, prefix: :city
   delegate :state_name, to: :city
 
-
   #
   # Instance Methods
   #
@@ -81,7 +78,6 @@ class Profile < ActiveRecord::Base
   def mining_register_file
     self.mining_authorization_file
   end
-
 
   # TODO: change all this methods because there are a lot of inconsistencies with the names in the client side
   def phone
@@ -93,14 +89,13 @@ class Profile < ActiveRecord::Base
     self.nit_number
   end
 
-
-  #add available credits
+  # add available credits
   def add_available_credits(credits)
     new_amount = (available_credits + credits).round(2)
     update_attribute(:available_credits, new_amount)
   end
 
-  #discount available credits amount
+  # discount available credits amount
   def discount_available_credits(credits)
     new_amount = (available_credits - credits).round(2)
     raise EmptyCredits if new_amount <= 0
@@ -109,10 +104,7 @@ class Profile < ActiveRecord::Base
 
   protected
 
-
   def init
-    self.available_credits ||= 0.0 #will set the default value only if it's nil
+    self.available_credits ||= 0.0 # will set the default value only if it's nil
   end
-
-
 end
