@@ -181,7 +181,7 @@ module V1
           rucom = ::Rucom.find(params[:rucom_id])
           #If there is a company
           if params[:company]
-            company = Company.new(params[:company].merge!(mining_authorization_file: mining_register_file, rut_file: rut_file, chamber_of_commerce_file: chamber_of_commerce_file))
+            company = Company.new(params[:company].merge!(mining_register_file: mining_register_file, rut_file: rut_file, chamber_of_commerce_file: chamber_of_commerce_file))
             company.rucom = rucom
             external_user.build_office(name: "N/A", company: company)
           else
