@@ -21,8 +21,10 @@ class ProofOfSalePresenter < BasePresenter
     UserPresenter.new(user, h)
   end
 
+  # NOTE: This is a different kind of user but he/she will be in user table some day, at that time
+  # We should to use UserPresenter class instead CourierPresenter class.
   def courier_presenter
-    UserPresenter.new(courier, h)
+    CourierPresenter.new(courier, h)
   end
 
   def gold_batch_presenters
