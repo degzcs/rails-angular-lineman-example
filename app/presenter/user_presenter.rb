@@ -32,6 +32,14 @@ class UserPresenter < BasePresenter
     end
   end
 
+  def address
+    profile.address || 'N/A'
+  end
+
+  def phone_number
+    profile.phone_number || 'N/A'
+  end
+
   def document_number
     profile.document_number
   end
