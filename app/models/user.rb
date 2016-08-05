@@ -8,8 +8,8 @@
 #  updated_at      :datetime
 #  password_digest :string(255)
 #  reset_token     :string(255)
-#  external        :boolean          default(FALSE), not NULL
-#  office_id       :string(255)
+#  office_id       :integer
+#  external        :boolean          default(FALSE), not null
 #
 
 # TODO: define a new name for mining_register_file, because this will contain one of these:
