@@ -5,10 +5,10 @@ module V1
       expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" } do |purchase, options|
         purchase.user.id # TODO: remove this temporal fix
       end
-      expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do|purchase, options|
+      expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do |purchase, options|
         purchase.price.round(2)
       end
-      expose :proof_of_purchase_file_url, documentation: { type: 'file', desc: 'file', example: '...' } do |purchase, options|
+      expose :proof_of_purchase_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.proof_of_purchase.file.url
       end
       expose :origin_certificate_file, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
@@ -20,12 +20,12 @@ module V1
         purchase.created_at.in_time_zone("Bogota").strftime("%m/%d/%Y - %I:%M%p")
       end
       expose :barcode_html, documentation:{type: "string", desc: "barcode in html format", example: ''}
-      expose :code, documentation:{type: "string", desc: "code with 12 characteres in charged to generate the barcode", example: '075124874512'}
+      expose :code, documentation: {type: "string", desc: "code with 12 characteres in charged to generate the barcode", example: '075124874512'}
       expose :access_token, documentation: { type: "string", desc: "authentication token", example: "sjahdkfjhasdfhaskdj" } do |purchase, options|
         purchase.user.create_token
       end
       expose :seller do
-        expose :id , documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
+        expose :id, documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
           purchase.seller.id # TODO: change provider for saller in the front end
         end
         expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|

@@ -189,8 +189,13 @@ class User < ActiveRecord::Base
     company.try(:name)
   end
 
+  # This method is about to be deprecated.
   def rucom_record
-    rucom.try(:rucom_record)
+    rucom.try(:rucom_number)
+  end
+
+  def rucom_number
+    rucom.try :rucom_number
   end
 
   def available_credits_based_on_user_role

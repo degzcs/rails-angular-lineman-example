@@ -4,7 +4,7 @@ describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
 
   let(:seller) { create :user, :with_profile, :with_personal_rucom, provider_type: 'Barequero', first_name: 'Alam', last_name: 'brito', document_number: '1234567890', city: City.find_by(name: 'MEDELLIN')
   }
-  let(:rucom) { create :rucom, rucom_record: '7767899877' }
+  let(:rucom) { create :rucom, rucom_number: '7767899877' }
   let(:gold_batch) { create :gold_batch, fine_grams: 2.2 }
   let(:buyer) { create :user, :with_company, city_name: 'MEDELLIN', name: 'Aquiles S.A', nit_number: '0987654321', rucom: rucom }
   let(:purchase) { create :purchase, seller: seller, inventory: buyer.inventory, gold_batch: gold_batch }

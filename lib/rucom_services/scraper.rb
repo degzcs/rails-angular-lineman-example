@@ -49,7 +49,7 @@ module RucomServices
     def convert_to_virtus_model(formatted_data, virtus_model_name)
       virtus_model = Object.const_get "RucomServices::Models::#{virtus_model_name}"
       virtus_model.new(formatted_data)
-      #eval("RucomServices::Models::#{virtus_model_name}.new(#{formatted_data})")
+      # eval("RucomServices::Models::#{virtus_model_name}.new(#{formatted_data})")
     end
 
     def validate_data(virtus_model, virtus_model_name)
