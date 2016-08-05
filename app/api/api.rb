@@ -39,7 +39,6 @@ class API < Grape::API
   mount V1::Modules::Rucom
   mount V1::Modules::State
   mount V1::Modules::City
-  mount V1::Modules::PopulationCenter
   mount V1::Modules::CreditBilling
   mount V1::Modules::File
   mount V1::Modules::Courier

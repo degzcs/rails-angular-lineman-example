@@ -16,7 +16,6 @@ class City < ActiveRecord::Base
   # Associations
   #
 
-  has_many :population_centers
   belongs_to :state
 
   #

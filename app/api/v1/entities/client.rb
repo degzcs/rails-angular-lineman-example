@@ -42,7 +42,6 @@ module V1
       expose :rucom, documentation: { type: "json", desc: "rucom", example: "" } do |user, options|
         user.rucom.as_json
       end
-      # expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
       expose :activity, documentation: {type: "hash", desc: "can be Joyero | Comprador Ocasional | Exportacion", example: "Joyero"}
       expose :city, documentation: { type: "json", desc: "", example: "user city" } do |user, options|
         user.profile.city.as_json

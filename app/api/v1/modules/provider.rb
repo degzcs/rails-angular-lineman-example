@@ -44,7 +44,6 @@ module V1
         params :provider do
           optional :provider, type: Hash do
             optional  :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
-            optional  :population_center_id, type: Integer, desc: 'population_center_id', documentation: { example: '1' }
             optional  :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
             optional  :first_name, type: String, desc: 'first_name', documentation: { example: 'Rock' }
             optional  :last_name, type: String, desc: 'last_name', documentation: { example: 'Rock' }

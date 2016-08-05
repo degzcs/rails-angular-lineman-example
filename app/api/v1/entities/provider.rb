@@ -24,7 +24,6 @@ module V1
       expose :rucom, documentation: { type: "json", desc: "rucom", example: "" } do |user, options|
         user.rucom.as_json
       end
-      # expose :population_center, documentation: {type: "hash", desc: "population center", example: ""}
     end
   end
 end

@@ -10,7 +10,7 @@ module V1
       content_type :json, 'application/json'
 
       helpers do
-        
+
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -47,21 +47,6 @@ module V1
           content_type "text/json"
           city = ::City.find(params[:id])
           present city, with: V1::Entities::City
-        end
-        desc 'returns all population centers from a city', {
-          entity: V1::Entities::City,
-          notes: <<-NOTES
-            returns all population centers from a city
-          NOTES
-        }
-        params do
-          use :id
-        end
-        get '/:id/population_centers', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          content_type "text/json"
-          city = ::City.find(params[:id])
-          population_centers = city.population_centers
-          present population_centers, with: V1::Entities::PopulationCenter
         end
       end
     end

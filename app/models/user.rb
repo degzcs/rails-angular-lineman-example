@@ -39,8 +39,6 @@ class User < ActiveRecord::Base
   # belongs_to :city
   # has_one :state, through: :city
   has_and_belongs_to_many :roles
-  # TODO: create migration to remote this field
-  # belongs_to :population_center
 
   # #IMPORTANT : type 1. is dedicated to users without company and 7. to users without rucom
   # enum user_type: [ :barequero, :comercializador, :solicitante, :beneficiario, :consumidor, :titular, :subcontrato, :inscrito]
@@ -145,7 +143,7 @@ class User < ActiveRecord::Base
   #
   # State Machine for registration_state field
   #
-  
+
   state_machine :registration_state, initial: :basic, use_transactions: true do
 
     before_transition :on => :insert_from_rucom, :do => :there_are_unset_attributes
@@ -163,7 +161,7 @@ class User < ActiveRecord::Base
       transition :inserted_from_rucom => :completed
     end
 
-    event :error do 
+    event :error do
       transition :from => [:basic, :inserted_from_rucom], :to => :failure
     end
   end
