@@ -4,7 +4,7 @@ class UserPresenter < BasePresenter
   # TODO: this names have to change asap. because will cause data inconsistencies
   def rucom_number
     if has_office?
-      company.rucom.rucom_record
+      company.rucom.rucom_number
     else
       rucom_record
     end

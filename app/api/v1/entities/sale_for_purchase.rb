@@ -22,8 +22,8 @@ module V1
           company_name: seller.company.name,
           document_type: 'NIT',
           document_number: seller.company.nit_number,
-          rucom_record:  seller.company.rucom.rucom_record,
-          num_rucom:  seller.company.rucom.num_rucom,
+          rucom_record:  seller.company.rucom.rucom_number,
+          num_rucom:  seller.company.rucom.rucom_number,
           rucom_status: seller.company.rucom.status
         }
       end

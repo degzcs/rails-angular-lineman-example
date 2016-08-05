@@ -4,7 +4,6 @@ describe 'Sale', :type => :request do
       before :context do
         # NOTE: because this user has a company he not necessarily
         # will be the seller, actually, the seller will be the legal_representative
-    
         @current_user = create :user, :with_company, :with_trader_role
         @token = @current_user.create_token
       end
@@ -47,7 +46,7 @@ describe 'Sale', :type => :request do
             # 'gold_batch_id' => expected_response['gold_batch_id']
           }
 
-          post '/api/v1/sales/', {
+          post "/api/v1/sales/", {
             gold_batch: new_gold_batch_values,
             sale: new_sale_values,
             selected_purchases: selected_purchases },
@@ -68,9 +67,9 @@ describe 'Sale', :type => :request do
         context '/' do
           it 'verifies that response has the elements number specified in per_page param' do
             per_page = 5
-            get '/api/v1/sales',
-              { per_page: per_page },
-              { 'Authorization' => "Barer #{ @token }" }
+            get "/api/v1/sales",
+            { per_page: per_page },
+            { 'Authorization' => "Barer #{ @token }" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to eq per_page
           end
@@ -90,7 +89,7 @@ describe 'Sale', :type => :request do
               code: sale.code,
               barcode_html: sale.barcode_html
             }
-            get '/api/v1/sales/#{sale.id}',{},{ 'Authorization' => 'Barer #{@token}' }
+            get "/api/v1/sales/#{sale.id}", {}, { 'Authorization' => "Barer #{@token}" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
@@ -111,8 +110,8 @@ describe 'Sale', :type => :request do
               company_name: @legal_representative.company.name,
               document_type: 'NIT',
               document_number: @legal_representative.company.nit_number,
-              rucom_record:  @legal_representative.company.rucom.rucom_record,
-              num_rucom: @legal_representative.company.rucom.num_rucom,
+              rucom_record:  @legal_representative.company.rucom.rucom_number,
+              num_rucom: @legal_representative.company.rucom.rucom_number,
               rucom_status: @legal_representative.company.rucom.status
             }
 
@@ -122,11 +121,11 @@ describe 'Sale', :type => :request do
               fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: seller_expected_response.stringify_keys,
-              origin_certificate_file: {'url'=>'/uploads/documents/document/file/#{ @sale.purchase_files_collection.id }/documento_equivalente_de_venta.pdf'}
+              origin_certificate_file: {'url'=>"/uploads/documents/document/file/#{ @sale.purchase_files_collection.id }/documento_equivalente_de_venta.pdf"}
             }
             # TODO: upgrade Front end with proof_of_sale and purchase_files_collections files
 
-            get '/api/v1/sales/get_by_code/#{ @sale.code }',
+            get "/api/v1/sales/get_by_code/#{ @sale.code }",
               {},
               { 'Authorization' => "Barer #{ @token }" }
             expect(response.status).to eq 200
@@ -140,7 +139,7 @@ describe 'Sale', :type => :request do
             total_sold_batches = 30
             list = create_list(:sold_batch, total_sold_batches, sale_id: sale.id)
 
-            get '/api/v1/sales/#{ sale.id }/batches',
+            get "/api/v1/sales/#{ sale.id }/batches",
               {} ,
               { 'Authorization' => "Barer #{ @token }" }
             expect(response.status).to eq 200

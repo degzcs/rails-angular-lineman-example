@@ -69,7 +69,7 @@ describe 'Purchase', :type => :request do
            #'sale_id' => nil
           }
 
-          post '/api/v1/purchases/',{
+          post "/api/v1/purchases/",{
             gold_batch: @new_gold_batch_values,
             purchase: @new_purchase_values
           },{
@@ -93,7 +93,7 @@ describe 'Purchase', :type => :request do
             ]
           }
 
-          post '/api/v1/purchases/', {
+          post "/api/v1/purchases/", {
             gold_batch: @new_gold_batch_values,
             purchase: @new_purchase_values},
             { 'Authorization' => "Barer #{ @token }"}
