@@ -1,4 +1,5 @@
 require 'cancancan'
+# API helpers
 class API < Grape::API
   prefix 'api'
   version 'v1', using: :path
@@ -25,7 +26,7 @@ class API < Grape::API
     alias_method :authenticate?, :authenticate!
 
     def authorize!(*args)
-      current_ability.authorize!(*args)
+      ::Ability.new(current_user).authorize!(*args)
     end
   end
 
@@ -44,12 +45,11 @@ class API < Grape::API
   mount V1::Modules::Courier
   mount V1::Modules::Sale
 
-
   # Adds the swagger documentation to your
   # api. You only need this once, not in
   # every sub module
   add_swagger_documentation(
-    base_path: "/",
+    base_path: '/',
     hide_documentation_path: true,
     api_version: 'v1',
     # markdown: true

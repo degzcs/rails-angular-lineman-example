@@ -15,8 +15,7 @@ require 'cancancan'
 
 module V1
   module Modules
-    class Sale <  Grape::API
-
+    class Sale < Grape::API
       before_validation do
         authenticate!
       end
@@ -37,16 +36,15 @@ module V1
 
         # params :auth do
         #   requires :access_token, type: String, desc: 'Auth token', documentation: { example: '837f6b854fc7802c2800302e' }
-        # end
+        #end
 
       resource :sales do
-
         #
         # POST
         #
 
-        desc 'Creates a sale for the current user', {
-            notes: <<-NOTE
+        desc 'Creates a sale for the current user',{
+          notes: <<-NOTE
               ### Description
               Create a new sale made for the current user. \n
               It returns the sale values created. \n
@@ -54,28 +52,28 @@ module V1
               ### Example successful response
 
                   {
-                    "id"=>1,
-                     "courier_id"=>1,
-                     "buyer_id"=>1,
-                     "user_id" => 1,
-                     "gold_batch_id" => 1,
-                     "grams" => "2323",
+                    'id'=>1,
+                     'courier_id'=>1,
+                     'buyer_id'=>1,
+                     'user_id' => 1,
+                     'gold_batch_id' => 1,
+                     'grams' => '2323',
                   }
             NOTE
-          }
+        }
 
         params do
-           requires :sale, type: Hash
-           requires :gold_batch, type: Hash
-           requires :selected_purchases, type: Array
+          requires :sale, type: Hash
+          requires :gold_batch, type: Hash
+          requires :selected_purchases, type: Array
         end
 
         post '/', http_codes: [
-            [200, "Successful"],
-            [400, "Invalid parameter"],
-            [401, "Unauthorized"],
-            [404, "Entry not found"],
-          ] do
+            [200, 'Successful'],
+            [400, 'Invalid parameter'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found'],
+            ] do
             authorize! :create, ::Sale
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
@@ -89,7 +87,7 @@ module V1
               present registration_service.sale, with: V1::Entities::Sale
               Rails.logger.info(response)
             else
-              error!({error: "unexpected error", detail: response[:errors] }, 409)
+              error!({error: 'unexpected error', detail: response[:errors] }, 409)
             end
         end
 
@@ -109,11 +107,11 @@ module V1
         end
 
         get '/', http_codes: [ 
-          [200, "Successful"],
-          [401, "Unauthorized"]
-          ]do
+          [200, 'Successful'],
+          [401, 'Unauthorized']
+          ] do
           authorize! :read, ::Sale
-          content_type "text/json"
+          content_type 'text/json'
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
@@ -137,9 +135,9 @@ module V1
           requires :code, type: String, desc: 'Sale ID'
         end
 
-        get 'get_by_code/:code', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get 'get_by_code/:code', http_codes: [ [200, 'Successful'], [401, 'Unauthorized'] ] do
           authorize! :read, ::Sale
-          content_type "text/json"
+          content_type 'text/json'
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find_by(code: params[:code])
           present sale, with: V1::Entities::SaleForPurchase
@@ -160,9 +158,9 @@ module V1
           requires :id, type: Integer, desc: 'Sale ID'
         end
 
-        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/:id', http_codes: [ [200, 'Successful'], [401, 'Unauthorized'] ] do
           authorize! :read, ::Sale
-          content_type "text/json"
+          content_type 'text/json'
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find(params[:id])
           #authorize: [:read, Sale]
@@ -185,8 +183,8 @@ module V1
           requires :id, type: Integer, desc: 'Sale ID'
         end
 
-        get '/:id/batches', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          content_type "text/json"
+        get '/:id/batches', http_codes: [ [200, 'Successful'], [401, 'Unauthorized'] ] do
+          content_type 'text/json'
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           batches = legal_representative.sales.find(params[:id]).batches
           present batches, with: V1::Entities::SoldBatch

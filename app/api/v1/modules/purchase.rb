@@ -1,7 +1,8 @@
+require 'cancancan'
+
 module V1
   module Modules
-    class Purchase <  Grape::API
-
+    class Purchase < Grape::API
       before_validation do
         authenticate!
       end
@@ -25,7 +26,6 @@ module V1
       #
 
       resource :purchases do
-
         desc 'Creates a purchase for the current user', {
             notes: <<-NOTE
               ### Description
