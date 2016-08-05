@@ -84,7 +84,7 @@ FactoryGirl.define do
         nit_number { Faker::Number.number(10) }
         rucom { create :rucom }
       end
-      before :create do |user, _e|
+      before :create do |user, e|
         user.office = create(:company, city: e.city_name, name: e.name, nit_number: e.nit_number, rucom: e.rucom).main_office
       end
     end
