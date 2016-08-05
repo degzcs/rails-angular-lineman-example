@@ -28,7 +28,7 @@ class UserPresenter < BasePresenter
     if has_office?
       company.nit_number
     else
-      profile.nit_number
+      profile.nit_number || 'N/A'
     end
   end
 
