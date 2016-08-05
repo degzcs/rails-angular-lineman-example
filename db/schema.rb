@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701222306) do
+ActiveRecord::Schema.define(version: 20160801190327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,21 +220,20 @@ ActiveRecord::Schema.define(version: 20160701222306) do
   add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id", unique: true, using: :btree
 
   create_table "rucoms", force: true do |t|
-    t.string   "idrucom",            limit: 90,                                 null: false
-    t.text     "rucom_record"
-    t.text     "name"
-    t.text     "status"
-    t.text     "mineral"
-    t.text     "location"
-    t.text     "subcontract_number"
-    t.text     "mining_permit"
-    t.datetime "updated_at",                    default: '2016-07-08 21:46:14'
+    t.string   "rucom_number"
+    t.string   "name"
+    t.string   "original_name"
+    t.string   "minerals"
+    t.string   "location"
+    t.string   "status"
     t.string   "provider_type"
-    t.string   "num_rucom"
     t.string   "rucomeable_type"
     t.integer  "rucomeable_id"
-    t.boolean  "trazoro",                       default: false,                 null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
+
+  add_index "rucoms", ["rucomeable_id"], name: "index_rucoms_on_rucomeable_id", using: :btree
 
   create_table "sales", force: true do |t|
     t.integer  "courier_id"
@@ -276,7 +275,8 @@ ActiveRecord::Schema.define(version: 20160701222306) do
     t.string   "password_digest"
     t.string   "reset_token"
     t.integer  "office_id"
-    t.boolean  "external",        default: false, null: false
+    t.boolean  "external",           default: false, null: false
+    t.string   "registration_state"
   end
 
 end

@@ -8,8 +8,8 @@
 #  updated_at      :datetime
 #  password_digest :string(255)
 #  reset_token     :string(255)
+#  office_id       :integer
 #  external        :boolean          default(FALSE), not null
-#  office_id       :string(255)
 #
 
 # TODO: define a new name for mining_register_file, because this will contain one of these:
@@ -145,8 +145,41 @@ class User < ActiveRecord::Base
   delegate :provider_type, to: :rucom
 
   #
+  # State Machine for registration_state field
+  #
+  
+  state_machine :registration_state, initial: :basic, use_transactions: true do
+
+    before_transition :on => :insert_from_rucom, :do => :there_are_unset_attributes
+    before_transition :on => :complete, :do => :are_set_all_attributes
+
+    state :inserted_from_rucom
+    state :completed
+    state :failure
+
+    event :insert_from_rucom do
+        transition :basic => :inserted_from_rucom
+    end
+
+    event :complete do
+      transition :inserted_from_rucom => :completed
+    end
+
+    event :error do 
+      transition :from => [:basic, :inserted_from_rucom], :to => :failure
+    end
+  end
+
+  #
   # Instance Methods
   #
+  def there_are_unset_attributes
+    self.email.blank? || self.password.blank?
+  end
+
+  def are_set_all_attributes
+    !self.email.blank? && !self.password.blank?
+  end
 
   #
   # Get the user activity based on rucom
