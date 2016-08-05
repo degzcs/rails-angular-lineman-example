@@ -78,65 +78,6 @@
               /%md-tooltip{'md-direction'=> 'right'}
               /  Tomar Foto
 
-  %section.uploader-certificate-form{layout: "row"}
-    %div.md-padding{flex: ""}
-      // ---------------------- Origin certificate info ------------------- //
-      %fieldset.standard.tr-fieldset.origin-certificate-fieldset
-        %legend
-          %h3
-          %h3{:ng-if => "purchase.model.type == 'seller'"}
-            4. Suba el certificado de origen e ingrese el numero
-          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-            4. Ingrese el numero
-        %div{layout: "row"}
-          %md-input-container{flex: '40'}
-            %label Numero Certificado de Origen
-            %input.origin-certificate-number{"ng-model" => "purchase.model.origin_certificate_sequence", :name => 'origin_certificate_sequence'}
-            %div{"ng-messages" => "purchaseForm.origin_certificate_sequence.$error"}
-              %div{"ng-message" => "required"} * Este campo es requerido.
-
-        %section.uploader-certificate-tab{layout: "row"}
-          %div{flex: '40'}
-            %h4 Seleccione una forma de subir el certificado
-            %md-select.uploader-selector{"ng-model" => "origin_certificate_upload_type", :placeholder => "Cargar Centificado de Origen ..."}
-              .options{:ng-if => "purchase.model.type == 'seller'"}
-                %md-option{:value => "by_upload"} Desde el PC
-                %md-option{:value => "by_scan"} Por Escaner
-                %md-option{:value => "by_photo"} por Camara
-          %div{flex: ''}
-            .upload-oc{:flex => ''}
-              .button-action.md-padding{:ng-switch => '', :on => 'origin_certificate_upload_type', :ng-if => "purchase.model.type == 'seller'"}
-                %md-input-container
-                  %label Nombre del archivo
-                  %input{"ng-model" => "purchase.model.origin_certificate_file[0].name",  :readOnly => 'true',:required => "", :name => 'origin_certificate_file'}
-                  %div{"ng-messages" => "purchaseForm.origin_certificate_file.$error"}
-                    %div{"ng-message" => "required"} * Debe cargar el certificado de origen
-                  / .preview
-                  /   %img{:ngf-src=>"purchase.model.origin_certificate_file[0]"}
-
-                .by_upload{:ng-switch-when =>'by_upload'}
-                  %md-button.btn-save.md-button{'ng-file-select' => '', 'ng-model' => 'purchase.model.origin_certificate_file'}
-                    Subir Archivo
-                    %md-icon{"md-svg-icon"=>"file:file_upload"}
-
-
-                .by_scan{:ng-switch-when =>'by_scan'}
-                  %md-button.btn-save.md-button{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
-                    Usar Escaner
-                    %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
-
-                .by_photo{:ng-switch-when =>'by_photo'}
-                  %md-button.btn-save.md-button{"aria-label" => "Certificado de origen", :md-ripple-size => "partial",:ng-href => "#scanner",'ng-click' => "scanner(2)"}
-                    Escanear con Camara
-                    %md-icon{"md-svg-icon" => "image:camera_alt"}
-
-              .button-action.md-padding{:ng-if => "purchase.model.type == 'trazoro'"}
-                .trazoro-origin-certificate
-                  %md-input-container
-                    %p Certificado de Origen
-                    {{formatOriginCertificate(purchase.model.origin_certificate_file.url)}}
-
-
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
     %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'seller'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
     %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar

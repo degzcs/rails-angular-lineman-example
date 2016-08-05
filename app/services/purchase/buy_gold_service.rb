@@ -42,7 +42,6 @@ class Purchase::BuyGoldService
   # This will define the rucom and city to be used and the dicount credits to the correct
   # user as well.
   def buy!
-
     signature_picture = @purchase_hash.delete ("signature_picture")
     date = @date
     # Build purchase
