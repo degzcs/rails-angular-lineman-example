@@ -4,14 +4,14 @@
     <strong>
       Nombre:
     </strong>
-    <%="#{@user.first_name} #{@user.last_name}" %>
+    <%="#{@user.profile.first_name} #{@user.profile.last_name}" %>
   </h3>
 
   <h3>
     <strong>
       Numbero de documento:
     </strong>
-    <%="#{@user.document_number}" %>
+    <%="#{@user.profile.document_number}" %>
   </h3>
   <h2>Datos de Transaccion</h2>
   <table style="width:400px">
@@ -27,7 +27,7 @@
       <h5>
         <%= @credit_billing.unit %>
       </h5>
-    </td> 
+    </td>
   </tr>
   <tr>
     <td>
@@ -41,7 +41,7 @@
       <h5>
         <%= @credit_billing.per_unit_value %>
       </h5>
-    </td> 
+    </td>
   </tr>
   <tr>
     <td>
@@ -55,7 +55,7 @@
       <h5>
         <%= @credit_billing.unit * @credit_billing.per_unit_value %>
       </h5>
-    </td> 
+    </td>
   </tr>
   <tr>
   <tr>
@@ -70,7 +70,7 @@
       <h5>
         <%= @credit_billing.discount %>
       </h5>
-    </td> 
+    </td>
   </tr>
   <tr>
     <td>
@@ -84,7 +84,7 @@
       <h5>
         <%= @credit_billing.total_amount %>
       </h5>
-    </td> 
+    </td>
   </tr>
 
 </table>

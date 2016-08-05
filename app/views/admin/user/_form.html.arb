@@ -10,25 +10,24 @@ active_admin_form_for resource , :url => resource ?  "/admin/users/#{resource.id
 	f.inputs :name => "Basic" do
 		f.semantic_errors *f.object.errors.keys
 		f.input :email
-		f.input :first_name , label: t('first_name')
-		f.input :last_name, label: t('last_name')
-		f.input :document_number , label: t('document_number')
-		f.input :document_expedition_date, label: t('document_expedition_date'), start_year: Date.today.year - 70
-		f.input :phone_number, label: t('phone_number')
-		f.input :address, label: t('address')
-		f.input :photo_file, :as => :file , label: t('photo_file') , :hint => image_tag(f.object.photo_file.try(:thumb).try(:url))
-		f.input :document_number_file, :as => :file , label: t('document_file') , :hint => link_to(image_tag(f.object.document_number_file.try(:preview).try(:url)),f.object.document_number_file.url, :target => "_blank" )
-		f.input :rut_file, :as => :file, label: t('rut_file'), :hint => link_to(image_tag(f.object.rut_file.try(:preview).try(:url)),f.object.rut_file.url, :target => "_blank" )
+
+
+
 		h2 t('.company_header')
 		f.input :office, label: t('office') , :collection => Office.all.map{|o| ["#{o.company.name if o.company} - #{o.name}", o.id]}
 		if resource
 			h4 t('.office_hint') unless resource.office
 		end
+
 		unless resource.external
 			h2 t('.password_header')
 			f.input :password, label: t('password')
 			f.input :password_confirmation, label: t('password_confirmation')
 		end
+
+
+
+
 	end
 	actions
 end

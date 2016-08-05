@@ -28,7 +28,7 @@ ActiveAdmin.register Office do
 
     ul do
       office.users.each do |user|
-        li link_to user.first_name, admin_user_path(user)
+        li link_to user.profile.first_name, admin_user_path(user)
       end
     end
 

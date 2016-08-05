@@ -168,7 +168,7 @@ module V1
           chamber_of_commerce_file = files.select{|file| file['filename'] =~ /chamber_of_commerce_file/}.first
 
           # NOTE: This endpoint is about to be deprecated, but in order to continue its working, I update the document_number_file field name to id_document_file
-          params[:external_user].except!(:files).merge!(id_document_file: document_number_file, photo_file: photo_file, mining_register_file: ext_user_mining_register_file)
+          params[:external_user].except!(:files).merge!(id_document_file: document_number_file, photo_file: photo_file, mining_authorization_file: ext_user_mining_register_file)
 
           external_user_params = params[:external_user]
           arranged_params = V1::Helpers::UserHelper.rearrange_params(params[:external_user])

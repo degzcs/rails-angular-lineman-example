@@ -15,7 +15,7 @@ ActiveAdmin.register Rucom do
     rucom = Rucom.find(params[:rucom_id])
     company_registration_service = Company::Registration.new
 
-    company_params = params.require(:company).permit(:nit_number, :name, :country, :city ,:state , :email , :phone_number, :chamber_of_commerce_file, :rut_file, :mining_register_file)
+    company_params = params.require(:company).permit(:nit_number, :name, :country, :city ,:state , :email , :phone_number, :address, :chamber_of_commerce_file, :rut_file, :mining_register_file)
 
     legal_representative_params = params[:company].require(:legal_representative_attributes).permit!
 
