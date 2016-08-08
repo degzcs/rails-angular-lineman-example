@@ -3,6 +3,11 @@ Role::TYPES.each do |role_name|
   Role.create name: role_name
 end
 
+puts 'Create basic settings ...'
+settings = Settings.instance
+settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
+settings.save!
+
 puts 'Creating cities and states ...'
 
 if ENV['CREATE_LOCATIONS'] == 'yes'
