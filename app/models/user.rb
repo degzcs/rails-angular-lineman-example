@@ -48,8 +48,8 @@ class User < ActiveRecord::Base
   # Validations
   #
 
-  validates :email, presence: true, uniqueness: true, unless: :external
-  validates :office, presence: true, if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
+  validates :email, presence: true, uniqueness: true, unless: :external 
+  validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
   has_secure_password validations: false
@@ -145,7 +145,8 @@ class User < ActiveRecord::Base
   # State Machine for registration_state field
   #
 
-  state_machine :registration_state, initial: :basic, use_transactions: true do
+
+  state_machine :registration_state, initial: :inserted_from_rucom, use_transactions: true do
 
     before_transition :on => :insert_from_rucom, :do => :there_are_unset_attributes
     before_transition :on => :complete, :do => :are_set_all_attributes
@@ -153,17 +154,22 @@ class User < ActiveRecord::Base
     state :inserted_from_rucom
     state :completed
     state :failure
+    state :paused
 
-    event :insert_from_rucom do
-        transition :basic => :inserted_from_rucom
-    end
+    # event :insert_from_rucom do
+    #     transition :basic => :inserted_from_rucom
+    # end
 
     event :complete do
-      transition :inserted_from_rucom => :completed
+      transition :from => [:inserted_from_rucom, :paused], :to => :completed
     end
 
     event :error do
       transition :from => [:basic, :inserted_from_rucom], :to => :failure
+    end
+
+    event :pause_ do
+      transition :inserted_from_rucom => :paused
     end
   end
 
@@ -273,6 +279,10 @@ class User < ActiveRecord::Base
 
   def has_office?
     self.office.present?
+  end
+
+  def state_basic?
+    self.registration_state == 'basic' && there_are_unset_attributes
   end
 
   protected
