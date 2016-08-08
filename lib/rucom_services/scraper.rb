@@ -1,13 +1,15 @@
 module RucomServices
   #  RucomServices Module Allows to handle all the service to extract the data from de Rucom page.
   class Scraper
-    attr_accessor :response, :setting, :data_to_find
+    attr_accessor :response, :setting, :data_to_find, :virtus_model, :is_there_rucom
 
     def initialize(data = {})
       self.response = {}
       @response[:errors] = []
       self.setting = nil
       self.data_to_find = data # {rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
+      self.is_there_rucom = false
+      @virtus_model = nil
     end
 
     def call
@@ -15,10 +17,11 @@ module RucomServices
       setting_service(@data_to_find)
       raise 'Error load settings from rucom_service.cfg.yml file' unless @setting.success
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance)
-      formatted_data = formater_elements(html_page_data)
+      validate_got_results(html_page_data)
+      formatted_data = @is_there_rucom ? formater_elements(html_page_data) : []
       virtus_model_name = @setting.response_class
-      virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
-      validate_data(virtus_model, virtus_model_name)
+      @virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
+      # validate_data(virtus_model, virtus_model_name) -> TODO should be remove
       # response[:success] = persist_data(data_formated)
       @setting.driver_instance.quit
       self
@@ -48,14 +51,11 @@ module RucomServices
 
     def convert_to_virtus_model(formatted_data, virtus_model_name)
       virtus_model = Object.const_get "RucomServices::Models::#{virtus_model_name}"
-      virtus_model.new(formatted_data)
-      # eval("RucomServices::Models::#{virtus_model_name}.new(#{formatted_data})")
+      (formatted_data.blank? || formatted_data.class != Hash) ? virtus_model.new : virtus_model.new(formatted_data)
     end
 
-    def validate_data(virtus_model, virtus_model_name)
-      # raise ""
-    rescue StandardError => e
-      @response[:errors] << e.message
+    def validate_got_results(html_results)
+      @is_there_rucom = html_results.present?
     end
 
     private

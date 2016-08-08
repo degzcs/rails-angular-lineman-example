@@ -17,9 +17,10 @@ describe RucomServices::Formater, type: :service do
                       <td role="gridcell"><span style="white-space:normal">CORDOBA - PUERTO LIBERTADOR</span></td>
                     </tr>'
         response = {
-          name: 'AMADO  MARULANDA ',
+          original_name: 'AMADO  MARULANDA',
+          name: 'AMADO  MARULANDA',
           minerals: 'ORO',
-          localization: 'CORDOBA - PUERTO LIBERTADOR',
+          location: 'CORDOBA - PUERTO LIBERTADOR',
           errors: []
         }
 
@@ -39,11 +40,12 @@ describe RucomServices::Formater, type: :service do
                     <td role="gridcell"><span style="white-space:normal">Certificado</span></td>
                   </tr>'
         response = {
-          rucom_number: 'RUCOM-20131218132',
-          name: '   FUNDICIÓN RAMIREZ ZONA FRANCA S.A.S.',
+          errors: [],
+          original_name: 'FUNDICIÓN RAMIREZ ZONA FRANCA S.A.S.',
+          name: 'FUNDICIÓN RAMIREZ ZONA FRANCA S.A.S.',
           minerals: 'MINERALES DE ORO Y SUS CONCENTRADOS',
-          state: 'Certificado',
-          errors: []
+          status: 'certificado',
+          rucom_number: 'RUCOM-20131218132'
         }
 
         tds_results_html = Nokogiri::HTML(str_html).children.css('tr > td')
@@ -80,7 +82,7 @@ describe RucomServices::Formater, type: :service do
   context '#assign_fields' do
     context 'When format key value is autorized_provider_response' do
       it 'returns the fields of the autorized_provider_response' do
-        fields_autorized_prov = %i(name minerals localization)
+        fields_autorized_prov = %i(name minerals location)
         options = { data: nil, format: :autorized_provider_response }
 
         expect(rs_formater.assign_fields(options)).to eq(fields_autorized_prov)
@@ -89,7 +91,7 @@ describe RucomServices::Formater, type: :service do
 
     context 'When format key value is trader_response' do
       it 'returns the fields of the trader_response' do
-        fields_trader = %i(rucom_number name minerals state)
+        fields_trader = %i(rucom_number name minerals status)
         options = { data: nil, format: :trader_response }
 
         expect(rs_formater.assign_fields(options)).to eq(fields_trader)
@@ -103,5 +105,8 @@ describe RucomServices::Formater, type: :service do
         expect(rs_formater.response[:errors]).to include(/assign_fields: format option doesn't match\:/)
       end
     end
+  end
+
+  xit '#remove_spaces' do
   end
 end
