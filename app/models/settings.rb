@@ -30,5 +30,5 @@ class Settings < ActiveRecord::Base
     end
   end
 
-  serialized_attr_accessor :monthly_threshold, :gold_value_per_fine_gram
+  serialized_attr_accessor :monthly_threshold, :fine_gram_value, :vat_percentage
 end
