@@ -2,14 +2,15 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  email           :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  password_digest :string(255)
-#  reset_token     :string(255)
-#  office_id       :integer
-#  external        :boolean          default(FALSE), not null
+#  id                 :integer          not null, primary key
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  password_digest    :string(255)
+#  reset_token        :string(255)
+#  office_id          :integer
+#  external           :boolean          default(FALSE), not null
+#  registration_state :string(255)
 #
 
 #  created_at               :datetime

@@ -3,6 +3,7 @@
 # Table name: rucoms
 #
 #  id              :integer          not null, primary key
+#  rucom_number    :string(255)
 #  name            :string(255)
 #  original_name   :string(255)
 #  minerals        :string(255)
