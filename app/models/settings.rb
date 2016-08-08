@@ -9,4 +9,26 @@
 #
 
 class Settings < ActiveRecord::Base
+  # include Singleton
+  serialize :data
+
+  #
+  # Class Methods
+  #
+
+  def self.serialized_attr_accessor(*args)
+    args.each do |method_name|
+      eval "
+        def #{method_name}
+          (self.data || {})[:#{method_name}]
+        end
+        def #{method_name}=(value)
+          self.data ||= {}
+          self.data[:#{method_name}] = value
+        end
+      "
+    end
+  end
+
+  serialized_attr_accessor :monthly_threshold, :gold_value_per_fine_gram
 end
