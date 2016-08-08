@@ -11,6 +11,15 @@
 class Settings < ActiveRecord::Base
   # include Singleton
   serialize :data
+  #
+  # Intance Methods
+  #
+
+  @@instance = Settings.last || Settings.new
+
+  def self.instance
+    return @@instance
+  end
 
   #
   # Class Methods
@@ -31,4 +40,6 @@ class Settings < ActiveRecord::Base
   end
 
   serialized_attr_accessor :monthly_threshold, :fine_gram_value, :vat_percentage
+
+  private_class_method :new
 end
