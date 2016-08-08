@@ -90,6 +90,8 @@ group :development, :test do
   gem 'guard-rubocop', '~> 1.2.0'
   gem 'guard-rspec', '~> 4.7.3', require: false
   # gem 'guard-livereload', '~> 2.5.2', require: false
+  # TODO, Vcr gem is to improve the synchronize test
+  #gem 'vcr', '~> 3.0', '>= 3.0.3'
 end
 
 group :test do
