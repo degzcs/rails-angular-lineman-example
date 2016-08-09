@@ -35,7 +35,7 @@ class Company::Registration
   # @param legal_representative [ User ]
   # @return [ Company ]
   def create_company_from(company_data, legal_representative, rucom)
-    company = Company.create(
+  company = Company.create(
       company_data.merge(legal_representative: legal_representative, rucom: rucom)
     )
     @response[:success] = company.save

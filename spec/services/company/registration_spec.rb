@@ -31,9 +31,7 @@ describe Company::Registration do
     @company_data = {
       nit_number: '654321987',
       name: 'Fake Company SAS',
-      state: 'ATIOQUIA',
-      city: 'MEDELLIN',
-      country: 'COLOMBIA',
+      city: City.find_by(name: 'MEDELLIN'),
       email: 'fake.company@thecompany.com',
       phone_number: '3001112233',
       chamber_of_commerce_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'chamber_of_commerce_file.pdf'), "application/pdf"),

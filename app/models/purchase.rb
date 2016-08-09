@@ -37,12 +37,6 @@ class Purchase < ActiveRecord::Base
   # NOTE: this name is the most close to the real meaning of this field, because it is not always an invoice, most of the time it will be a equivalent-document.
 
   #
-  # Constants
-  #
-
-  MONTHLY_THRESHOLD = Settings.instance.monthly_threshold.to_f
-
-  #
   # Validations
   #
 
