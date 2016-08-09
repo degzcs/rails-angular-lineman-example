@@ -46,7 +46,7 @@ class CreditBilling < ActiveRecord::Base
   #
 
   def iva_value
-    self.total_amount * 0.16
+    self.total_amount * Settings.instance.vat_percentage.to_f/100
   end
 
   #
@@ -57,11 +57,11 @@ class CreditBilling < ActiveRecord::Base
 
   # Initialize values when a new credit_billing is build
   def init
-    self.per_unit_value = 500
+    self.per_unit_value = Settings.instance.fine_gram_value
   end
 
   # Only the user who are legal representative or those user that buy gold as a natural
-  # person can buy credits. Those users that are working for a company and buy with the
+  # person can buy credits. Those users who are working for a company and buy with the
   # company rucom, they cannot buy credits.
   def can_buy?
     if self.user && !self.user.legal_representative && self.user.has_office?

@@ -80,13 +80,13 @@ FactoryGirl.define do
 
     trait :with_company do
       transient do
-        city_name { City.all.sample.name }
+        city { City.all.sample }
         name { 'MinTrace SAS' }
         nit_number { Faker::Number.number(10) }
         rucom { create :rucom }
       end
       before :create do |user, e|
-        user.office = create(:company, city: e.city_name, name: e.name, nit_number: e.nit_number, rucom: e.rucom).main_office
+        user.office = create(:company, city: e.city, name: e.name, nit_number: e.nit_number, rucom: e.rucom).main_office
       end
     end
 

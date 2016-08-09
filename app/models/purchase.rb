@@ -40,7 +40,7 @@ class Purchase < ActiveRecord::Base
   # Constants
   #
 
-  MONTHLY_THRESHOLD = 30
+  MONTHLY_THRESHOLD = Settings.instance.monthly_threshold.to_f
 
   #
   # Validations

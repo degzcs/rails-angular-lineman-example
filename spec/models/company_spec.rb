@@ -26,8 +26,6 @@ describe Company  do
     it { expect(company.nit_number).not_to be_nil }
     it { expect(company.name).not_to be_nil }
     it { expect(company.city).not_to be_nil}
-    it { expect(company.state).not_to be_nil}
-    it { expect(company.country).not_to be_nil}
     it { expect(company.legal_representative).not_to be_nil}
     it { expect(company.email).not_to be_nil }
     it { expect(company.phone_number).not_to be_nil}
