@@ -5,9 +5,6 @@
 #  id                       :integer          not null, primary key
 #  nit_number               :string(255)
 #  name                     :string(255)
-#  city                     :string(255)
-#  state                    :string(255)
-#  country                  :string(255)
 #  email                    :string(255)
 #  phone_number             :string(255)
 #  created_at               :datetime
@@ -18,10 +15,10 @@
 #  mining_register_file     :string(255)
 #  legal_representative_id  :integer
 #  address                  :string(255)
+#  city_id                  :integer
 #
 
 class Company < ActiveRecord::Base
-
   #
   # Associations
   #
@@ -30,6 +27,7 @@ class Company < ActiveRecord::Base
   # has_many :external_users # TODO: check this association asap
   has_one :rucom, as: :rucomeable
   belongs_to :legal_representative, class_name: 'User'
+  belongs_to :city
   accepts_nested_attributes_for :legal_representative
 
   #
@@ -66,6 +64,7 @@ class Company < ActiveRecord::Base
   #
 
   delegate :available_credits, to: :legal_representative
+  delegate :state, to: :city
 
   #
   # Uploaders
@@ -107,7 +106,7 @@ class Company < ActiveRecord::Base
 
   def as_indexed_json(options={})
     as_json(
-      include:[:rucom, legal_representative: { include: :profile } ],
+      include:[:rucom, legal_representative: { include: :profile }],
       methods: [:address, :city, :state]
       )
   end
@@ -118,7 +117,7 @@ class Company < ActiveRecord::Base
   # To have consistency this office is called PRINCIPAL and it is located in the same
   # place where the company was registered.
   def create_basic_office!
-    self.offices.create(name: 'principal', city: City.find_by(name: city), address: self.address) if self.offices.blank?
+    self.offices.create(name: 'principal', city: self.city, address: self.address) if self.offices.blank?
   end
 
   # Double check that the company is empty. if not raise an error and avoid delete this company

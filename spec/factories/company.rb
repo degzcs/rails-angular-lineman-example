@@ -22,9 +22,7 @@ FactoryGirl.define do
   factory :company do |f|
     nit_number { Faker::Number.number(10) }
     name { Faker::Company.name }
-    city { City.first.name }
-    state { State.first.name }
-    country { Country.first.name }
+    city { City.first }
     legal_representative { create :user, :with_profile, office: nil, legal_representative: true }
     email { Faker::Internet.email }
     phone_number { Faker::PhoneNumber.phone_number }

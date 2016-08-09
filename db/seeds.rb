@@ -15,9 +15,7 @@ if ENV['CREATE_LOCATIONS'] == 'yes'
   importer.call(file_path: File.join(Rails.root, 'spec', 'support', 'csvs', 'codigos-departamentos-municipios-dane-v1.0.csv'))
 end
 
-country = Country.find_by(name: 'COLOMBIA')
 city = City.find_by(name: 'MEDELLIN')
-state = State.find_by(name: 'ANTIOQUIA')
 
 begin
   # TODO: add the real files to this company (rut, nit, etc.)
@@ -31,18 +29,16 @@ begin
         office: nil,
         legal_representative: true)
   company = FactoryGirl.create(:company,
-                                name: 'Trazoro',
-                                city: city.name,
-                                state: state.name,
-                                country: country.name,
+                                name: 'MinTrace Colombia SAS',
+                                city: city,
                                 legal_representative: legal_representative,
-                                nit_number: 'temp_number',
+                                nit_number: '900848984',
                                 email: 'soport@trazoro.co',
                                 phone_number: '3004322618',
                                 address: 'carrera 44 # 19 A 20',
                               )
 rescue => e
-  company = Company.find_by(nit_number: 'temp_number')
+  company = Company.find_by(nit_number: '900848984')
   puts "There was something wrong!. ERROR: #{ e }"
 end
 

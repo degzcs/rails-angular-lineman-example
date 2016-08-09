@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :external, :rucom, profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :external, :rucom, role_ids:  [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
 
   # overwrite controller update to perform upgrade Rucom.
   controller do
@@ -34,9 +34,6 @@ ActiveAdmin.register User do
         new_hash = permitted_params[:user].except(:rucom)
         new_hash[:personal_rucom] = Rucom.find(rucom_id)
         user = User.new(new_hash)
-        # this line temporal
-        # TODO: remove this line and implemeted a dropdawn to select the user role this will be done when the registration state machine have been implemented
-        user.roles << Role.find_by(name: 'authorized_producer')
         user.save!
         redirect_to admin_users_path
       end
@@ -52,24 +49,20 @@ ActiveAdmin.register User do
     end
     f.inputs 'User' do
       if params[:action] == 'edit'
-        columns "Este Usuario Cuenta Actualmente Con #{user.office ? 'Rucom de empresa' : 'Rucom personal'}: #{user.rucom.name} - Numero: #{user.rucom.num_rucom}"
+        columns "Este Usuario Cuenta Actualmente Con #{user.office ? 'Rucom de empresa' : 'Rucom personal'}: #{user.rucom.name} - Numero: #{user.rucom.rucom_number}"
       end
-      f.input :email
-      f.input :office, label: 'office', :collection => Office.all.map { |o| ["#{o.company.name if o.company} - #{o.name}", o.id] }
+      f.input :roles, label: 'Rol'
+      f.input :email, label: 'Correo'
+      f.input :office, label: 'oficina', :collection => Office.all.map { |o| ["#{o.company.name if o.company} - #{o.name}", o.id] }
       unless user.has_office?
         # TDDO: Encontrar la manera de que el desplegable seleccione  el rucom asociado al usuario que se esta editando. Tener en cuenta que la relacion User con Rucom es polimorfica.
-        f.input :rucom, label: 'Rucom', :collection => Rucom.all.map{ |rucom| [rucom.name, rucom.id]}
+        f.input :rucom, label: 'Rucom', :collection => Rucom.all.map { |rucom| [rucom.name, rucom.id] }
       end
-      # f.input :rucom, label: 'Rucom', :collection => Rucom.all.map{["#{object.rucom ? "#{object.rucom.num_rucom }" : "#{object.rucom.num_rucom }"}", object.rucom.rucomeable_id]}
-      # ["#{object.rucom.try(:rucom_record) ? "#{object.rucom.try(:rucom_record) }" : "#{object.rucom.num_rucom }"}", object.id]
-      # f.input :rucom, label: 'Rucom', :collection => Office.all.map{ |o| ["#{object.office ? 'Rucom de empresa' : 'Rucom personal'}: #{object.rucom.name} - Numero: #{object.rucom.num_rucom }", object.rucom.rucomeable_id]}
-      # f.input :rucom, label: 'Rucom', :collection => Office.all.map{ |o| ["#{object.office.company.rucom.name if object.company} #{object.rucom.num_rucom}", object.rucom.rucomeable_id]}
       unless user.external
-       f.input :password, label: 'Password (Minimo 8 caracteres)', :if => f.object.external
-       f.input :password_confirmation, label: 'password_confirmation'
+        f.input :password, label: 'Password (Minimo 8 caracteres)', :if => f.object.external
+        f.input :password_confirmation, label: 'password_confirmation'
       end
     end
-
     f.inputs 'User Details' do
       f.has_many :profile do |p|
         p.input :first_name, label: 'Nombre'
@@ -97,15 +90,15 @@ ActiveAdmin.register User do
     column(:first_name) { |user|
       user.profile.first_name
     }
-    column (:document_number) { |user|
+    column(:document_number) { |user|
       user.profile.document_number
     }
-    column (:phone_number) { |user|
+    column(:phone_number) { |user|
       user.profile.phone_number
     }
-    column(:external) do |credit|
-      !credit.external? ? status_tag( 'trazoro', :ok ) : status_tag( 'externo', :warn )
-    end
+    column(:roles) { |user|
+      user.roles.map(& :name)
+    }
     actions
   end
 
@@ -114,21 +107,24 @@ ActiveAdmin.register User do
   filter :profile_first_name, :as => :string
   filter :profile_document_number, :as => :string
   filter :profile_phone_number, :as => :string
-  filter :external
+  filter :roles
 
   # form partial: 'form'
   # show
   show do
     attributes_table do
       row :email
-      row :company , label: 'Compañia' do |u|
+      row :company, label: 'Compañia' do |u|
         u.company ? u.company.name : 'Ninguna'
       end
-      row :office , label: 'Sucursal' do |u|
-        u.office ? u.office.name : "--"
+      row :office, label: 'Sucursal' do |u|
+        u.office ? u.office.name : '--'
       end
       row :rucom do |u|
-        link_to "#{u.office ? 'Rucom de empresa' : 'Rucom personal'}: #{u.rucom.name} - Numero: #{u.rucom.num_rucom}", admin_rucom_path(u.rucom.id)
+        link_to "#{u.office ? 'Rucom de empresa' : 'Rucom personal'}: #{u.rucom.name} - Numero: #{u.rucom.rucom_number}", admin_rucom_path(u.rucom.id)
+      end
+      row :roles do |u|
+        u.roles.map(& :name)
       end
     end
     panel 'User profile' do
@@ -137,14 +133,14 @@ ActiveAdmin.register User do
         row :last_name, label: 'Apellido'
         row :document_number, label: 'Numero de documento'
         row :nit_number, label: 'nit_number'
-        row :phone_number , label: 'Numero telefonico'
+        row :phone_number, label: 'Numero telefonico'
         row :address, label: 'Direccion'
         row :city, label: 'Ciudad'
         row :photo_file, label: 'Foto usuario' do |u|
-          image_tag u.photo_file.try(:thumb).try(:url), class: "photo-user"
+          image_tag u.photo_file.try(:thumb).try(:url), class: 'photo-user'
         end
-        row :rut_file , label: 'PDF Rut' do |u|
-          link_to(image_tag(u.rut_file.try(:preview).try(:url)),u.rut_file.url, :target => "_blank" ) if u.rut_file
+        row :rut_file, label: 'PDF Rut' do |u|
+          link_to(image_tag(u.rut_file.try(:preview).try(:url)), u.rut_file.url, :target => '_blank') if u.rut_file
         end
       end
     end

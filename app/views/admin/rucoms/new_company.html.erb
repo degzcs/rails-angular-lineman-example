@@ -1,15 +1,13 @@
 <%= semantic_form_for @company , :url=> create_company_admin_rucom_path(:rucom_id => resource.id) do |f| %>
   <%= f.inputs  name: "Rucom seleccionado" do %>
-    <h3><strong> Numero de rucom: </strong><%=resource.num_rucom%></h3>
+    <h3><strong> Numero de rucom: </strong><%=resource.rucom_number%></h3>
     <h3><strong> Nombre rucom: </strong><%=resource.name%></h3>
   <% end %>
   <%= f.inputs name: "Informacion de la nueva compañia" do %>
     <%= f.semantic_errors *f.object.errors.keys %>
     <%= f.input :nit_number , label: "NIT" %>
     <%= f.input :name, label: "Nombre" %>
-    <%= f.input :country, label: "Pais" %>
-    <%= f.input :state, label: "Departamento", :collection => State.all.map{ |s| ["#{s.name}", s.id]} %>
-    <%= f.input :city, label: "Ciudad" %>
+    <%= f.input :city, label: "Ciudad de la compañia" %>
     <%= f.input :email , label: "Email compañia" %>
     <%= f.input :phone_number, label:"Telefono" %>
     <%= f.input :address,  label:"Direccion" %>
@@ -26,15 +24,14 @@
           <%= u.semantic_fields_for :profile_attributes, user.profile do |p| %>
             <%= p.input :first_name, label: t('first_name') %>
               <%= p.input :last_name, label: t('last_name') %>
-              <%= p.input :document_number , label: t('document_number') %>
+              <%= p.input :document_number, label: t('document_number') %>
               <%= p.input :phone_number, label: t('phone_number') %>
               <%= p.input :address, label: t('address') %>
-              <%= p.input :photo_file, :as => :file , label: t('photo_file') , :hint => image_tag(p.object.photo_file.try(:thumb).try(:url)) %>
-              <%= p.input :id_document_file, :as => :file , label: t('document_file') , :hint => link_to(image_tag(p.object.id_document_file.try(:preview).try(:url)),p.object.id_document_file.url, :target => "_blank" ) %>
+              <%= p.input :photo_file, :as => :file, label: t('photo_file'), :hint => image_tag(p.object.photo_file.try(:thumb).try(:url)) %>
+              <%= p.input :id_document_file, :as => :file, label: t('document_file'), :hint => link_to(image_tag(p.object.id_document_file.try(:preview).try(:url)),p.object.id_document_file.url, :target => "_blank" ) %>
               <%= p.input :rut_file, :as => :file, label: t('rut_file'), :hint => link_to(image_tag(p.object.rut_file.try(:preview).try(:url)), p.object.rut_file.url, :target => "_blank" ) %>
               <%= p.input :legal_representative, as: :hidden, input_html: { value: true } %>
-              <%= # p.input :city_id, as: :hidden, input_html: { value: 1 } %>
-              <%= p.input :city_id, label: t('city'), :collection => City.all.map{|city| [city.name, city.id]} %>
+              <%= p.input :city, label: "Ciudad" %>
             <% end %>
             <br/>
             <%= u.input :email, label: t('email') %>

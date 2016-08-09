@@ -5,9 +5,6 @@
 #  id                       :integer          not null, primary key
 #  nit_number               :string(255)
 #  name                     :string(255)
-#  city                     :string(255)
-#  state                    :string(255)
-#  country                  :string(255)
 #  email                    :string(255)
 #  phone_number             :string(255)
 #  created_at               :datetime
@@ -18,6 +15,7 @@
 #  mining_register_file     :string(255)
 #  legal_representative_id  :integer
 #  address                  :string(255)
+#  city_id                  :integer
 #
 
 require 'spec_helper'
