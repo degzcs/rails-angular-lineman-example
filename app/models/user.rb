@@ -131,7 +131,7 @@ class User < ActiveRecord::Base
 
   after_create :create_inventory
 
-  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom
+  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles
 
   #
   # Delegates

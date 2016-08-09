@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808203611) do
+ActiveRecord::Schema.define(version: 20160808170240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,9 +62,6 @@ ActiveRecord::Schema.define(version: 20160808203611) do
   create_table "companies", force: true do |t|
     t.string   "nit_number"
     t.string   "name"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
     t.string   "email"
     t.string   "phone_number"
     t.datetime "created_at"
@@ -75,8 +72,10 @@ ActiveRecord::Schema.define(version: 20160808203611) do
     t.string   "mining_register_file"
     t.integer  "legal_representative_id"
     t.string   "address"
+    t.integer  "city_id"
   end
 
+  add_index "companies", ["city_id"], name: "index_companies_on_city_id", using: :btree
   add_index "companies", ["legal_representative_id"], name: "index_companies_on_legal_representative_id", using: :btree
 
   create_table "countries", force: true do |t|
