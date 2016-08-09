@@ -11,9 +11,9 @@ ActiveAdmin.register Settings do
 
   form do |f|
     f.inputs 'Configuracion' do
-      f.input :monthly_threshold, label: 'Limite mensual por barequero/chatarrero'
-      f.input :vat_percentage, label: 'Porcentaje IVA'
-      f.input :fine_gram_value, label: 'Valor gramo fino'
+      f.input :monthly_threshold, label: 'Limite mensual por barequero/chatarrero (gramos)'
+      f.input :vat_percentage, label: 'Porcentaje IVA (%)'
+      f.input :fine_gram_value, label: 'Valor gramo fino (COP)'
       actions
     end
   end
