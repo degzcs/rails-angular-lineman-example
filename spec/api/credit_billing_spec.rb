@@ -11,7 +11,7 @@ describe 'Credit Billing', :type => :request do
         context "with company info" do
           it 'returns a representation of the new credit billing created and code 201' do
 
-            per_unit_value = 500.0
+            per_unit_value = Settings.instance.fine_gram_value
             new_values = {
               user_id: @user.id,
               unit: 200
@@ -28,7 +28,7 @@ describe 'Credit Billing', :type => :request do
               discount_percentage: 0.0
             }
 
-            post '/api/v1/credit_billings', {credit_billing: new_values}, { "Authorization" => "Barer #{@token}" }
+            post '/api/v1/credit_billings', { credit_billing: new_values }, { 'Authorization' => "Barer #{ @token }" }
 
             expect(response.status).to eq 201
             expect(JSON.parse(response.body)).to match(expected_response.stringify_keys)
@@ -47,7 +47,7 @@ describe 'Credit Billing', :type => :request do
         context "with company info" do
           it 'returns a representation of the new credit billing created and code 201' do
 
-            per_unit_value = 500.0
+            per_unit_value = Settings.instance.fine_gram_value
             new_values = {
               user_id: @user.id,
               unit: 200
@@ -118,7 +118,7 @@ describe 'Credit Billing', :type => :request do
         context "with company info" do
           it 'returns a representation of the new credit billing created and code 201' do
 
-            per_unit_value = 500.0
+            per_unit_value = Settings.instance.fine_gram_value
             new_values = {
               user_id: @user.id,
               unit: 200
