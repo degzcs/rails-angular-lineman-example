@@ -40,15 +40,13 @@ module V1
           use :id_type
         end
 
-        get '/', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
+        get '/by_id_number', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           content_type 'text/json'
-          options_from_view = { id_number: params[:id_number], id_type: params[:id_type], role_name: params[:role_name] }
-          sync = RucomServices::Synchronize.new.call(options_from_view)
+          options_from_view = { rol_name: params['rol_name'], id_type: params['id_type'], id_number: params['id_number'] }
+          sync = RucomServices::Synchronize.new(options_from_view).call
           if sync.success
             present sync.user, with: V1::Entities::AuthorizedProvider
-            # present gold_purchase_service.purchase , with: V1::Entities::Purchase
           else
-            # error!({ error: "unexpected error", detail: service_response[:errors] }, 409)
             error!({ error: "unexpected error", detail: sync.response[:errors] }, 409)
           end
         end

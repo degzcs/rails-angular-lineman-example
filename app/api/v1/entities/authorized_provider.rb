@@ -18,21 +18,21 @@ module V1
       expose :address, documentation: { type: 'string', desc: 'Address', example: 'Calle falsa n#4233' } do |user, _options|
         user.profile.address
       end
-      expose :document_number_file, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+      expose :document_number_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.id_document_file
       end
-      expose :mining_register_file, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+      expose :mining_register_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.mining_authorization_file
       end
-      expose :photo_file, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+      expose :photo_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.photo_file
       end
       expose :email, documentation: { type: 'string', desc: 'E-mail address', example: 'provider@example.com' }
       expose :city, documentation: { type: 'string', desc: 'City name', example: 'Medellín' } do |user, _options|
         user.profile.city.as_json
       end
-      expose :state, documentation: { type: 'string', desc: 'State name', example: 'Antioquia' } do |user, _options|
-        user.profile.city.state.as_json
+      expose :state, safe: true, documentation: { type: 'string', desc: 'State name', example: 'Antioquia' } do |user, _options|
+        user.profile.city.state.as_json if user.profile.city.present?
       end
       expose :company, documentation: { type: 'json', desc: 'company_info', example: '' } do |user, _options|
         user.company.as_indexed_json if user.has_office?
