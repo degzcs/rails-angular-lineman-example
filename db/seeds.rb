@@ -3,11 +3,6 @@ Role::TYPES.each do |role_name|
   Role.create name: role_name
 end
 
-puts 'Create basic settings ...'
-settings = Settings.instance
-settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
-settings.save!
-
 puts 'Creating cities and states ...'
 
 if ENV['CREATE_LOCATIONS'] == 'yes'
@@ -15,7 +10,9 @@ if ENV['CREATE_LOCATIONS'] == 'yes'
   importer.call(file_path: File.join(Rails.root, 'spec', 'support', 'csvs', 'codigos-departamentos-municipios-dane-v1.0.csv'))
 end
 
+country = Country.find_by(name: 'COLOMBIA')
 city = City.find_by(name: 'MEDELLIN')
+state = State.find_by(name: 'ANTIOQUIA')
 
 begin
   # TODO: add the real files to this company (rut, nit, etc.)
@@ -29,16 +26,18 @@ begin
         office: nil,
         legal_representative: true)
   company = FactoryGirl.create(:company,
-                                name: 'MinTrace Colombia SAS',
-                                city: city,
+                                name: 'Trazoro',
+                                city: city.name,
+                                state: state.name,
+                                country: country.name,
                                 legal_representative: legal_representative,
-                                nit_number: '900848984',
+                                nit_number: 'temp_number',
                                 email: 'soport@trazoro.co',
                                 phone_number: '3004322618',
                                 address: 'carrera 44 # 19 A 20',
                               )
 rescue => e
-  company = Company.find_by(nit_number: '900848984')
+  company = Company.find_by(nit_number: 'temp_number')
   puts "There was something wrong!. ERROR: #{ e }"
 end
 
