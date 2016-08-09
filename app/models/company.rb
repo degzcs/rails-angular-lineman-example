@@ -107,8 +107,8 @@ class Company < ActiveRecord::Base
   def as_indexed_json(options={})
     as_json(
       include:[:rucom, legal_representative: { include: :profile }],
-      methods: [:address, :city, :state]
-      )
+      methods: [:address]
+      ).merge('city' => self.city.name, 'state' => self.state.name, 'country' => self.state.country.name )
   end
 
   private

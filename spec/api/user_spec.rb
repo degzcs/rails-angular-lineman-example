@@ -3,7 +3,7 @@ describe 'Auth', :type => :request do
     context '#me' do
       context 'GET' do
         it 'show the user info, this user dont have company' do
-          user = create :user, :with_profile, :with_personal_rucom, :with_trader_role, nit_number: nil 
+          user = create :user, :with_profile, :with_personal_rucom, :with_trader_role, nit_number: nil
           token = user.create_token
           expected_response = {
            'id' => user.id,
@@ -41,9 +41,9 @@ describe 'Auth', :type => :request do
           token = user.create_token
 
           expected_company = {
-             'city' => company.city,
-             'state' => company.state,
-             'country' => company.country,
+             'city' => company.city.name,
+             'state' => company.state.name,
+             'country' => company.state.country.name,
              'email' => company.email,
              'external' => company.external,
              'id' => company.id,
@@ -101,9 +101,9 @@ describe 'Auth', :type => :request do
           token = user.create_token
 
           expected_company = {
-             'city' => company.city,
-             'state' => company.state,
-             'country' => company.country,
+             'city' => company.city.name,
+             'state' => company.state.name,
+             'country' => company.state.country.name,
              'email' => company.email,
              'external' => company.external,
              'id' => company.id,
