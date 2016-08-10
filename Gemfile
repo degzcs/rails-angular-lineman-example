@@ -94,7 +94,8 @@ end
 
 group :test do
   gem 'capybara'
-  # gem 'capybara-webkit'
+  gem 'poltergeist'
+  gem 'capybara-webkit'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
