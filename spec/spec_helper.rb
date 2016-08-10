@@ -32,12 +32,21 @@ require "#{Rails.root}/db/seeds.rb"
 #
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
-# Configure Capybara
-Capybara.default_host = 'http://127.0.0.1'
-Capybara.javascript_driver = :poltergeist
-Capybara.register_driver :rack_test do |app|
-  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+# Configure Capybara and you can pass a debug option set up as true => see documentation
+Capybara.configure do |config|
+  config.default_host = 'http://127.0.0.1'
+  config.default_driver = :poltergeist
+  config.javascript_driver = :poltergeist
+  config.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+  end
 end
+#
+# Capybara works with rack_test by default_driver and selenium for javascript_driver
+#
+# Capybara.register_driver :rack_test do |app|
+#   Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+# end
 
 # include seeds
 # require "#{Rails.root}/db/test_seeds.rb"
