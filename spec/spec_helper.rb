@@ -2,7 +2,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
-#require 'capybara/rspec'
+require 'capybara/rspec'
 require 'database_cleaner'
 require 'faker'
 require 'active_attr/rspec'
@@ -32,11 +32,11 @@ require "#{Rails.root}/db/seeds.rb"
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Configure Capybara
-#Capybara.default_host = "http://127.0.0.1"
-#Capybara.javascript_driver = :webkit
-#Capybara.register_driver :rack_test do |app|
+Capybara.default_host = "http://127.0.0.1"
+Capybara.javascript_driver = :phantomjs
+# Capybara.register_driver :rack_test do |app|
 #  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
-#end
+# end
 
 # #include seeds
 # require "#{Rails.root}/db/test_seeds.rb"
@@ -95,7 +95,7 @@ RSpec.configure do |config|
 #  config.include Devise::TestHelpers, :type => :controller
 
  # Capybara
- # config.include Capybara::DSL
+ config.include Capybara::DSL
 
   # CarrierWave
   config. include CarrierWave::Test::Matchers
