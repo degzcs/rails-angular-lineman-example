@@ -3,15 +3,16 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 require 'database_cleaner'
 require 'faker'
 require 'active_attr/rspec'
 # require 'sidekiq/testing'
 require 'shoulda/matchers'
 require 'carrierwave/test/matchers'
-require "cancan/matchers"
+require 'cancan/matchers'
 
-#include seeds
+# include seeds
 require "#{Rails.root}/db/seeds.rb"
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -32,13 +33,13 @@ require "#{Rails.root}/db/seeds.rb"
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Configure Capybara
-Capybara.default_host = "http://127.0.0.1"
-Capybara.javascript_driver = :phantomjs
-# Capybara.register_driver :rack_test do |app|
-#  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
-# end
+Capybara.default_host = 'http://127.0.0.1'
+Capybara.javascript_driver = :poltergeist
+Capybara.register_driver :rack_test do |app|
+  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+end
 
-# #include seeds
+# include seeds
 # require "#{Rails.root}/db/test_seeds.rb"
 
 RSpec.configure do |config|
@@ -48,7 +49,6 @@ RSpec.configure do |config|
   # #add job_lab_mandrill classes
   # Dir[Rails.root.join('app/job_lab_mandrill/*.rb')].each { |f| require f }
   # Dir[Rails.root.join('app/job_lab_mandrill/**/*.rb')].each { |f| require f }
-
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -69,7 +69,6 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-
 
   # Database Cleaner config
 
@@ -105,5 +104,4 @@ RSpec.configure do |config|
 
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model
-
 end
