@@ -230,10 +230,10 @@ describe  User, type: :model do
 
       it 'should valid if the user has the trader abilities' do
         #binding.pry
-        @abilities.should be_able_to(:read, Purchase.new)
-        @abilities.should be_able_to(:create, Purchase.new)
-        @abilities.should be_able_to(:create, Sale.new)
-        @abilities.should be_able_to(:read, Sale.new)
+        expect(@abilities).to be_able_to(:read, Purchase.new)
+        expect(@abilities).to be_able_to(:create, Purchase.new)
+        expect(@abilities).to be_able_to(:create, Sale.new)
+        expect(@abilities).to be_able_to(:read, Sale.new)
       end
 
     end
@@ -270,7 +270,7 @@ describe  User, type: :model do
 
     it "should check that user is a trader" do
       expect(@user.trader?).to be true
-    end 
+    end
   end
 
   context "user roles :with_transporter_role" do

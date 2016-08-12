@@ -25,8 +25,22 @@ describe Purchase::PdfGeneration do
       expect(purchase.reload.proof_of_purchase.file.path).to match(/equivalent_document.pdf/)
     end
 
-    it 'raise an error' do
-      expect{ service.call(purchase: nil) }.to raise_error
+    it 'raise an error when the purchase param is empty' do
+      expect do
+        service.call(purchase: nil, draw_pdf_service: nil, document_type: nil)
+      end.to raise_error 'You must to provide a purchase param'
+    end
+
+    it 'raise an error when the draw_pdf_service param is empty' do
+      expect do
+        service.call(purchase: 'something_here', draw_pdf_service: nil, document_type: nil)
+      end.to raise_error 'You must to provide a draw_pdf_service param'
+    end
+
+    it 'raise an error when the document_type param is empty' do
+      expect do
+        service.call(purchase: 'something_here', draw_pdf_service: 'something_here', document_type: nil)
+      end.to raise_error 'You must to provide a document_type param'
     end
   end
 end

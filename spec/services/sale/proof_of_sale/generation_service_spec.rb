@@ -13,8 +13,8 @@ describe Sale::ProofOfSale::GenerationService do
       expect(sale.reload.proof_of_sale.file.path).to match(/equivalent_document.pdf/)
     end
 
-    it 'raise an error' do
-      expect{ service.call(sale: nil) }.to raise_error
+    it 'raise an error when sale param is empty' do
+      expect{ service.call(sale: nil) }.to raise_error 'You must to provide a sale param'
     end
   end
 end

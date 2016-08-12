@@ -39,7 +39,7 @@ describe CreditBilling  do
       user = create :user, :with_profile, :with_company, available_credits: 0, legal_representative: false
       legal_representative = user.company.legal_representative
       credit_billing = build(:credit_billing, user: user)
-      expect { credit_billing.save! }.to raise_error #'Este usuario no esta autorizado para comprar creditos'
+      expect { credit_billing.save! }.to raise_error.with_message(/Este usuario no esta autorizado para comprar creditos/)
     end
 
     it "should not allow to create without unit" do
