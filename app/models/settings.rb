@@ -16,6 +16,10 @@ class Settings < ActiveRecord::Base
   # Class Methods
   #
 
+  def self.instance
+    Settings.first || Settings.new
+  end
+
   def self.serialized_attr_accessor(*args)
     args.each do |method_name|
       eval "
