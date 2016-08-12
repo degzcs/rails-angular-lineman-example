@@ -38,7 +38,7 @@ Capybara.configure do |config|
   config.default_driver = :poltergeist
   config.javascript_driver = :poltergeist
   config.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+    Capybara::Poltergeist::Driver.new(app, headers: { 'HTTP_USER_AGENT' => 'Capybara' })
   end
 end
 #
@@ -81,36 +81,45 @@ RSpec.configure do |config|
 
   # Database Cleaner config
 
-  static_info_tables = %w[cities states countries roles]
+  static_info_tables = %w(cities states countries roles admin_users)
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, {except: static_info_tables}
+    DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
     DatabaseCleaner.start
   end
 
-  config.after(:suite) do
-    DatabaseCleaner.clean
+  config.after(:each) do
+    DatabaseCleaner.clean!
   end
 
-  config.after(:context) do |example|
-    DatabaseCleaner.clean
+  config.after(:context) do
+    DatabaseCleaner.clean!
   end
 
   # Factory Girl methods
   config.include FactoryGirl::Syntax::Methods
 
   # Include devise test helpers in controller specs
-#  config.include Devise::TestHelpers, :type => :controller
+  # config.include Devise::TestHelpers, :type => :controller
 
- # Capybara
- config.include Capybara::DSL
+  # Capybara
+  config.include Capybara::DSL
 
   # CarrierWave
   config. include CarrierWave::Test::Matchers
 
   # API
-  config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: /spec\/api/ }
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: %r{spec\/api} }
 
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model
+
+  # Include warden helper for use login_as capybara
+  config.include Warden::Test::Helpers
+  config.before :suite do
+    Warden.test_mode!
+  end
+  config.after :each do
+    Warden.test_reset!
+  end
 end
