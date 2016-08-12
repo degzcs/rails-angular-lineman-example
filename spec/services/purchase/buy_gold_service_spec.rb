@@ -99,14 +99,44 @@ describe Purchase::BuyGoldService do
       @purchase_hash ={ price: 'invalid' }
     end
 
-    it 'raise errors' do
+    it 'raise a date param error' do
+      expect do
+        service.call(
+        current_user: legal_representative,
+        purchase_hash: @purchase_hash,
+        gold_batch_hash: @gold_batch_hash,
+        )
+      end.to raise_error('You must to provide a date option')
+    end
+
+    it 'raise a date purchase_hash error' do
+      expect do
+        service.call(
+        current_user: legal_representative,
+        gold_batch_hash: @gold_batch_hash,
+        date: Date.today,
+        )
+      end.to raise_error('You must to provide a purchase_hash option')
+    end
+
+    it 'raise a date gold_batch_hash error' do
+      expect do
+        service.call(
+        current_user: legal_representative,
+        purchase_hash: @purchase_hash,
+        date: Date.today,
+        )
+      end.to raise_error('You must to provide a gold_batch_hash option')
+    end
+
+    it 'raise a current_user param error' do
       expect do
         service.call(
         purchase_hash: @purchase_hash,
         gold_batch_hash: @gold_batch_hash,
-        buyer: user
+        date: Date.today
         )
-      end.to raise_error
+      end.to raise_error('You must to provide a current_user option')
     end
   end
 end
