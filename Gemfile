@@ -93,8 +93,8 @@ group :development, :test do
 end
 
 group :test do
-  # gem 'capybara'
-  # gem 'capybara-webkit'
+  gem 'capybara'
+  gem 'poltergeist'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'

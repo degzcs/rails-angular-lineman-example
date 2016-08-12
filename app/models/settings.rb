@@ -36,5 +36,5 @@ class Settings < ActiveRecord::Base
 
   serialized_attr_accessor :monthly_threshold, :fine_gram_value, :vat_percentage
 
-  public_class_method :allocate
+  public_class_method :allocate, :new
 end
