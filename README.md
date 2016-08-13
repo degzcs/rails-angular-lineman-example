@@ -9,11 +9,16 @@ This is the repository for Trazoro web app. In this repository you will find bot
 - ruby 2.3.0
 - nodejs 5.7.1
 - [linemanjs] (http://linemanjs.com)
-- phantomjs 2.0
+- phantomjs 1.9.8
 - image-magic 6.9.0
-- Ghostscript 
+- Ghostscript
 
 NOTE: We used to use rbenv, nodenv and phantomenv to install dependencies.
+
+## Phantonjs 1.9.8
+
+we use version phantonjs 1.9.8 because from version 2.0.0 onwards
+not support upload files with capybara test.
 
 ## Development
 
@@ -120,3 +125,4 @@ sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gst
 ## Contributors
 
 - Diego Gomez
+- Santiago Lopez
