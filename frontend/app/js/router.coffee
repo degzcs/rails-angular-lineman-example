@@ -795,7 +795,7 @@
   .state("new_origin_certificate.beneficiation_plant",
     url: "/origin_certificates/beneficiation_plant/new",
     ncyBreadcrumb:
-      label: 'Certificado de Origen Planta de Beneficio'
+      label: 'Certificado de Origen Planta de Beneficio' ######## REFERENCIA ######
     views:
       'content':
         templateUrl: "partials/origin_certificates/beneficiation_plant/new.html"
@@ -850,13 +850,13 @@
   # ------- Inventory routes ----------- #
 
   .state("index_inventory",
-    url: "/inventory",
+    url: "/inventory", # <-- inventory
     ncyBreadcrumb:
-      label: 'Inventario de compras'
+      label: 'Inventario'
     views:
       'content':
-        templateUrl: "partials/inventory/index.html"
-        controller: "InventoryIndexCtrl"
+        templateUrl: "partials/inventory/list_inventory.html" # partial list_inventory (tabs control)
+        controller: "InventoryTabsCtrl" # tab inventory controller
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -873,6 +873,58 @@
           deferred.resolve()
         deferred.promise
   )
+
+
+  .state("index_inventory.purchase",
+    url: "/index_purchase", # <-- inventory
+    ncyBreadcrumb:
+      label: 'Inventario de compras'
+    views:
+      'content':
+        templateUrl: "partials/inventory/index.html" # partials/inventory/index_purchase.html partial list_inventory (tab purchase) 
+        controller: "InventoryPurchaseIndexCtrl" # Purchase index controller
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("index_inventory.sale",
+    url: "/index_sale",
+    ncyBreadcrumb:
+      label: 'Inventario de ventas'
+    views:
+      'content':
+        templateUrl: "partials/inventory/index_sale_b.html" # TO DO partial list_inventory (tab sale)  
+        controller: "InventorySaleIndexCtrl" # TO DO Sale index Controller 
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise  
+  )
+  
   .state("show_inventory",
     url: "/inventory/detail",
     ncyBreadcrumb:
@@ -953,3 +1005,4 @@
   $authProvider.loginUrl = '/api/v1/auth/login';
   $authProvider.loginRedirect = '/dashboard';
   $authProvider.tokenName = 'access_token'
+
