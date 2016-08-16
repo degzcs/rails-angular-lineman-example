@@ -88,12 +88,12 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
-    DatabaseCleaner.clean!
+  config.after(:suite) do
+    DatabaseCleaner.clean
   end
 
   config.after(:context) do
-    DatabaseCleaner.clean!
+    DatabaseCleaner.clean
   end
 
   # Factory Girl methods
