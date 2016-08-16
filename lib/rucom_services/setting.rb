@@ -3,7 +3,8 @@ module RucomServices
   require 'yaml'
   #  RucomServices::Setting loads the config *.yml file with the values to initiliaze the RucomServices::Scraper.
   class Setting
-    YAML_NAME = 'rucom_service.cfg.yml'.freeze
+    YAML_NAME = 'rucom_service.yml'.freeze
+    YAML_PATH = Rails.root.join('config')
     attr_accessor :response, :response_class, :page_url, :driver, :browser, :driver_instance,
                   :table_body_id, :hidden_elements_id, :wait_load, :wait_clic, :barequero, :trader
 
@@ -13,8 +14,9 @@ module RucomServices
     end
 
     def call(options = {})
-      @file_name = options[:yaml_file_name] || YAML_NAME
-      @response[:config] = YAML.load_file(File.join(__dir__, @file_name))
+      @file_name = options.fetch(:yaml_file_name, YAML_NAME)
+      @file_path = options.fetch(:yaml_file_path, YAML_PATH)
+      @response[:config] = YAML.load_file(File.join(@file_path, @file_name))[Rails.env]
       @response[:success] = true if @response[:config]
       options_data =
         { rol_name: options[:rol_name], id_type: options[:id_type], id_number: options[:id_number] }

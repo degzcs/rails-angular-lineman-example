@@ -1,6 +1,7 @@
 module V1
   module Entities
     class Provider < Grape::Entity
+      # TODO this Entity will be deprecated, don't use it any more
       expose :id, documentation: { type: "integer", desc: "id of the user", example: '1' }
       expose :document_number, documentation: { type: "string", desc: "Document number of the provider", example: "1968353479" }
       expose :first_name, documentation: { type: "string", desc: "Firstname", example: "Juan" }

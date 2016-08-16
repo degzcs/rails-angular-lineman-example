@@ -6,6 +6,7 @@ tmp/**/*
 config/database.yml
 config/newrelic.yml
 config/app_config.yml
+config/rucom_service.yml
 TODO.local.txt
 .~lock*
 vendor/bundle
