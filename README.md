@@ -41,6 +41,7 @@ You have to copy&paste the next cofiguration files and replace their values for 
 ```sh
 cp config/database.yml.example config/database.yml
 cp config/app_config.yml.example config/app_config.yml
+cp config/rucom_service.yml.example config/rucom_service.yml
 
 ```
 Create the database and run the seeds
