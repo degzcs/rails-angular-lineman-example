@@ -2,7 +2,7 @@ class PurchasePresenter < BasePresenter
   presents :purchase
 
   def date
-    created_at.to_time.getlocal('-05:00')
+    created_at.to_timge.getlocal('-05:00')
   end
 
   def hms_time
@@ -31,5 +31,10 @@ class PurchasePresenter < BasePresenter
 
   def total_price
     "$#{ price.round(2) }"
+  end
+
+  # presenter of sold's status
+  def status
+    purchase.gold_batch.sold? ? 'Disponible' : 'Vendido'
   end
 end
