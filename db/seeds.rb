@@ -78,7 +78,7 @@ begin
   FactoryGirl.create(:user, :with_profile,
         first_name: 'Santigo',
         last_name: 'Lopez',
-        email: 'santigo.lopez@trazoro.co',
+        email: 'santiago.lopez@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4',
         city: city,
@@ -89,7 +89,7 @@ end
 
 puts 'Associating trazoro users ...'
 # Add to the trazoro Office
-trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co', 'dcm@trazoro.co'])
+trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co', 'dcm@trazoro.co', 'santiago.lopez@trazoro.co'])
 trazoro_users.update_all(office_id: office.id)
 
 puts 'Setting user roles ...'
