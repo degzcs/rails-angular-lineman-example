@@ -62,7 +62,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -81,20 +81,25 @@ RSpec.configure do |config|
 
   # Database Cleaner config
 
-  static_info_tables = %w(cities states countries roles admin_users settings)
+  static_info_tables = %w(cities states countries roles settings admin_users)
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
-    DatabaseCleaner.start
+  config.before :suite do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation, { except: static_info_tables }
   end
 
-  config.after(:suite) do
-    DatabaseCleaner.clean
+  config.before :each do |example|
+    if example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
+    else
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.start
+    end
   end
 
-  config.after(:context) do
-    DatabaseCleaner.clean
-  end
+  # config.after :each do
+  #   DatabaseCleaner.clean
+  # end
 
   # Factory Girl methods
   config.include FactoryGirl::Syntax::Methods
