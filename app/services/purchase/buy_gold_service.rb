@@ -71,7 +71,6 @@ class Purchase::BuyGoldService
                         )
         end
       rescue => exception
-        binding.pry
         @response[:errors] << exception.message
       end
     end
