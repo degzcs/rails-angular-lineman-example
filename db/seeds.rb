@@ -76,7 +76,7 @@ begin
         office: office,)
 
   FactoryGirl.create(:user, :with_profile,
-        first_name: 'Santigo',
+        first_name: 'Santiago',
         last_name: 'Lopez',
         email: 'santiago.lopez@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
