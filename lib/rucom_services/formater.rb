@@ -28,7 +28,7 @@ module RucomServices
     def assign_fields(options)
       if options[:format] == :trader_response
         FIELDS_TRADERS
-      elsif options[:format] == :autorized_provider_response
+      elsif options[:format] == :authorized_provider_response
         FIELDS_AUTORIZED_PROV
       else
         store_and_raise_error("assign_fields: format option doesn't match: #{options[:format]}", false)

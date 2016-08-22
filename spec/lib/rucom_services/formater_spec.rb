@@ -25,7 +25,7 @@ describe RucomServices::Formater, type: :service do
         }
 
         tds_results_html = Nokogiri::HTML(str_html).children.css('tr > td')
-        options = { data: tds_results_html, format: :autorized_provider_response }
+        options = { data: tds_results_html, format: :authorized_provider_response }
 
         expect(rs_formater.call(options)).to eq(response)
       end
@@ -62,7 +62,7 @@ describe RucomServices::Formater, type: :service do
                       <td role="gridcell"><span style="white-space:normal">ORO</span></td>
                       <td role="gridcell"><span style="white-space:normal">CORDOBA - PUERTO LIBERTADOR</span></td>
                     </tr>'
-        options = { data: nil, format: :autorized_provider_response }
+        options = { data: nil, format: :authorized_provider_response }
         error_msg = 'call: No was send data as parameter when invoqued the method.'
         tds_results_html = Nokogiri::HTML(str_html).children.css('tr > td')
         expect(rs_formater.call(options)[:errors]).to include(error_msg)
@@ -83,7 +83,7 @@ describe RucomServices::Formater, type: :service do
     context 'When format key value is autorized_provider_response' do
       it 'returns the fields of the autorized_provider_response' do
         fields_autorized_prov = %i(name minerals location)
-        options = { data: nil, format: :autorized_provider_response }
+        options = { data: nil, format: :authorized_provider_response }
 
         expect(rs_formater.assign_fields(options)).to eq(fields_autorized_prov)
       end
