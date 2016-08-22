@@ -17,12 +17,10 @@ module RucomServices
       setting_service(@data_to_find)
       raise 'Error load settings from rucom_service.cfg.yml file' unless @setting.success
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance)
-      validate_got_results(html_page_data)
+      @is_there_rucom = validate_got_results(html_page_data)
       formatted_data = @is_there_rucom ? formater_elements(html_page_data) : []
       virtus_model_name = @setting.response_class
       @virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
-      # validate_data(virtus_model, virtus_model_name) -> TODO should be remove
-      # response[:success] = persist_data(data_formated)
       @setting.driver_instance.quit
       self
     rescue StandardError => e
@@ -51,11 +49,11 @@ module RucomServices
 
     def convert_to_virtus_model(formatted_data, virtus_model_name)
       virtus_model = Object.const_get "RucomServices::Models::#{virtus_model_name}"
-      (formatted_data.blank? || formatted_data.class != Hash) ? virtus_model.new : virtus_model.new(formatted_data)
+      formatted_data.blank? || formatted_data.class != Hash ? virtus_model.new : virtus_model.new(formatted_data)
     end
 
     def validate_got_results(html_results)
-      @is_there_rucom = html_results.present?
+      html_results.text.present?
     end
 
     private

@@ -45,8 +45,9 @@ module RucomServices
       end
     end
 
-    def raises_no_exist_rucom
-      raise "The rucom dosen't exist for this id_number: #{@data[:id_number]}"
+    def raises_no_exist_rucom(message = false)
+      msg = message || "The rucom dosen't exist for this id_number: #{@data[:id_number]}"
+      raise msg
     end
 
     def user_registration_state_completed?
@@ -58,8 +59,7 @@ module RucomServices
         @user = @user_profile.user
         @rucom
       elsif exist_remote_rucom?
-        create_rucom
-        create_user_and_profile
+        create_rucom && create_user_and_profile ? @rucom : raises_no_exist_rucom('Error inesperado, no se pudo crear el rucom')
       else
         raises_no_exist_rucom
       end
@@ -87,8 +87,10 @@ module RucomServices
     private
 
     def create_rucom
-      @rucom = @scraper.virtus_model.rucom if @scraper.virtus_model.save
-      @rucom
+      if @scraper.is_there_rucom && @scraper.virtus_model.save
+        @rucom = @scraper.virtus_model.rucom
+      end
+      @rucom.present?
     end
 
     def create_user_and_profile
@@ -98,6 +100,7 @@ module RucomServices
       @user.save!(validate: false)
       @user_profile = @user.profile
       @user.personal_rucom = @rucom
+      @user.present? && @user_profile.present?
     end
   end
 end
