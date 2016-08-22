@@ -83,11 +83,6 @@ RSpec.configure do |config|
 
   static_info_tables = %w(cities states countries roles settings admin_users)
 
-  config.before :suite do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with :truncation, { except: static_info_tables }
-  end
-
   config.before :each do |example|
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
@@ -97,9 +92,9 @@ RSpec.configure do |config|
     end
   end
 
-  # config.after :each do
-  #   DatabaseCleaner.clean
-  # end
+  config.after :each do
+    DatabaseCleaner.clean
+  end
 
   # Factory Girl methods
   config.include FactoryGirl::Syntax::Methods
