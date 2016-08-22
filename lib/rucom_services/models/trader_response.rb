@@ -10,6 +10,7 @@ module RucomServices
       attribute :minerals, String
       attribute :status, String
       attribute :original_name, String
+      attribute :provider_type, String, default: :set_underscore_class_name
 
       # Validations
       validates :rucom_number, presence: true
@@ -27,11 +28,13 @@ module RucomServices
         end
       end
 
+      def set_underscore_class_name
+        self.class.name.gsub(/^RucomServices::Models::|Response$/, '').underscore
+      end
+
       private
 
       def persist!
-        # user = User.create!(email: email)
-        # @expense = user.expenses.create!(amount: amount, paid: paid)  -> this is an example
         model_fields = {
           rucom_number: rucom_number,
           name: name,
