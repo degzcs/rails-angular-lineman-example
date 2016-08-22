@@ -90,9 +90,9 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_authorized_producer_role do
+    trait :with_authorized_provider_role do
       before :create do |user, _e|
-        role = Role.find_by(name: 'authorized_producer')
+        role = Role.find_by(name: 'authorized_provider')
         user.roles << role
       end
     end

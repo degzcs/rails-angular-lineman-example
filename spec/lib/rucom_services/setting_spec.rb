@@ -83,7 +83,7 @@ describe RucomServices::Setting, type: :service do
     it '#response_class' do
       data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725' }
       cfg1 = rs_setting.call(data)
-      expect(cfg1.response_class).to eq('AutorizedProviderResponse')
+      expect(cfg1.response_class).to eq('AuthorizedProviderResponse')
 
       data[:rol_name] = 'Trader'
       cfg1 = rs_setting.call(data)
