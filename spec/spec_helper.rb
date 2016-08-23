@@ -83,6 +83,15 @@ RSpec.configure do |config|
 
   static_info_tables = %w(cities states countries roles settings admin_users)
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with :truncation, {except: static_info_tables}
+  end
+
+  config.before(:context) do
+    DatabaseCleaner.clean_with :truncation, {except: static_info_tables}
+  end
+
+
   config.before :each do |example|
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
@@ -93,7 +102,6 @@ RSpec.configure do |config|
   end
 
   config.after :each do
-    DatabaseCleaner.clean_with :truncation, { except: static_info_tables }
     DatabaseCleaner.clean!
     `rm -rf #{Rails.root}/tmp/purchases`
     `rm -rf #{Rails.root}/tmp/sales`
