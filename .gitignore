@@ -38,3 +38,5 @@ frontend/generated/*
 uploads/*
 spec/uploads/*
 .env*
+public/development
+public/test
