@@ -25,7 +25,7 @@ else
   class DocumentUploader < CarrierWave::Uploader::Base
     storage :file
     def store_dir
-      "#{Rails.root}/public/uploads/documents/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      "#{Rails.root}/public/#{ Rails.env }/uploads/documents/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
   end
 
@@ -33,7 +33,7 @@ else
     storage :file
 
     def store_dir
-      "#{Rails.root}/public/uploads/photos/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      "#{Rails.root}/public/#{ Rails.env }/uploads/photos/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
   end
 

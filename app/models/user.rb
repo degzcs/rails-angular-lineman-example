@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   # Validations
   #
 
-  validates :email, presence: true, uniqueness: true, unless: :external 
+  validates :email, presence: true, uniqueness: true, unless: :external
   validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
@@ -225,7 +225,8 @@ class User < ActiveRecord::Base
     if self.external?
       personal_rucom=rucom
     else
-      office.company.rucom = rucom if office.present?
+     # NOTE: this line was remove it because the company rucom is set up in the company model not here
+     # office.company.rucom = rucom if office.present?
     end
   end
 

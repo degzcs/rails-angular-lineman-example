@@ -2,7 +2,7 @@ describe 'AuthorizedProviders', type: :request do
   describe :v1 do
     context 'authorized_providers' do
       before :context do
-        @user = create :user, :with_company, email: "testing_#{Faker::Number.number(3)}@fake.com", password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, email: "testing_#{ User.count + 100 }@fake.com", password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
       end
 

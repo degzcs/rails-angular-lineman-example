@@ -1,4 +1,4 @@
-describe 'Auth', :type => :request do
+describe 'Auth' do
   describe :v1 do
     context '#me' do
       context 'GET' do
@@ -20,7 +20,7 @@ describe 'Auth', :type => :request do
            'company_name' => nil,
            'company' => nil,
            'photo_file' => {
-             'url' => "/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
+             'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
             },
           }
 
@@ -52,12 +52,12 @@ describe 'Auth', :type => :request do
              'nit_number' => company.nit_number,
              'phone_number' => company.phone_number,
              'mining_register_file' => {
-              'url'=>"/uploads/documents/company/mining_register_file/#{ company.id }/mining_register_file.pdf"},
+              'url'=>"/test/uploads/documents/company/mining_register_file/#{ company.id }/mining_register_file.pdf"},
              'rut_file' => {
-              'url'=>"/uploads/documents/company/rut_file/#{ company.id }/rut_file.pdf"
+              'url'=>"/test/uploads/documents/company/rut_file/#{ company.id }/rut_file.pdf"
               },
             'chamber_of_commerce_file' => {
-              'url'=>"/uploads/documents/company/chamber_of_commerce_file/#{ company.id }/photo_file.png"
+              'url'=>"/test/uploads/documents/company/chamber_of_commerce_file/#{ company.id }/photo_file.png"
               },
           }
 
@@ -76,7 +76,7 @@ describe 'Auth', :type => :request do
            'company_name' => company.name,
            'company' => expected_company,
            'photo_file' => {
-             'url' => "/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
+             'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
             },
           }
 
@@ -112,12 +112,12 @@ describe 'Auth', :type => :request do
              'nit_number' => company.nit_number,
              'phone_number' => company.phone_number,
              'mining_register_file' => {
-              'url' => "/uploads/documents/company/mining_register_file/#{ company.id }/mining_register_file.pdf"},
+              'url' => "/test/uploads/documents/company/mining_register_file/#{ company.id }/mining_register_file.pdf"},
              'rut_file' => {
-              'url' => "/uploads/documents/company/rut_file/#{ company.id }/rut_file.pdf"
+              'url' => "/test/uploads/documents/company/rut_file/#{ company.id }/rut_file.pdf"
               },
             'chamber_of_commerce_file' => {
-              'url' => "/uploads/documents/company/chamber_of_commerce_file/#{ company.id }/photo_file.png"
+              'url' => "/test/uploads/documents/company/chamber_of_commerce_file/#{ company.id }/photo_file.png"
               },
           }
 
@@ -136,7 +136,7 @@ describe 'Auth', :type => :request do
            'company_name' => company.name,
            'company' => expected_company,
            'photo_file' => {
-             'url' => "/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
+             'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
             },
           }
 

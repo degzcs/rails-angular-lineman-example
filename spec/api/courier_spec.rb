@@ -4,7 +4,7 @@ describe 'Courier', :type => :request do
     context 'couriers' do
 
       before :context do
-        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
         FactoryGirl.create_list(:courier, 20)
         FactoryGirl.create(:courier, id_document_number: '1234567890')

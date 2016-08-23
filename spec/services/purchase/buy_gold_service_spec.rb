@@ -11,9 +11,12 @@ describe Purchase::BuyGoldService do
 
   subject(:service){ Purchase::BuyGoldService.new }
 
-  context 'non trazoro user (from externanl user) ' do
+  context 'non trazoro user (from externanl user)' do
 
     before :each do
+      settings = Settings.instance
+      settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
+      settings.save!
       @initial_credits = 100
       @seller = create(:user, :with_personal_rucom, provider_type: 'Barequero')
       file_path = "#{ Rails.root }/spec/support/pdfs/origin_certificate_file.pdf"

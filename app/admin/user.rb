@@ -6,22 +6,23 @@ ActiveAdmin.register User do
   # overwrite controller update to perform upgrade Rucom.
   controller do
     def update
-      if params[:user][:rucom].blank?
-        super
-      elsif params[:user][:rucom].present?
-        user = User.find(params[:id])
+      user = User.find(params[:id])
+      if params[:user][:rucom].present?
         rucom_id = params[:user].delete(:rucom)
         if user.rucom.present?
           user.rucom.update_attributes(rucomeable_id: nil)
           rucom = Rucom.find_by_id(rucom_id)
           rucom.update_attributes(rucomeable: user)
-          super
         else
           rucom = Rucom.find_by_id(rucom_id)
           rucom.update_attributes(rucomeable: user)
-          super
         end
       end
+      ActiveRecord::Base.transaction do
+        user.update_attributes(permitted_params[:user].except(:profile_attributes))
+        user.profile.update_attributes(permitted_params[:user][:profile_attributes])
+      end
+      redirect_to admin_user_path(user)
     end
   end
   # overwrite controller create to create a user with an associated Rucom.

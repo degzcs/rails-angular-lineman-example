@@ -1,4 +1,4 @@
-describe 'Purchase', :type => :request do
+describe 'Purchase' do
   describe :v1 do
     context '#purchases (buyer is not necessary the company legal representative)' do
       before :context do
@@ -40,7 +40,6 @@ describe 'Purchase', :type => :request do
       context 'POST' do
         it 'should create one complete purchase with its all attached files' do
           expected_response = {
-           'id' => 1,
            'user_id' => @buyer.company.legal_representative.id,
            'seller' => { # TODO: change front end variable name from provider to seller
               'id' => @seller.id,
@@ -48,11 +47,8 @@ describe 'Purchase', :type => :request do
               'last_name' => @seller.profile.last_name
            },
            'price' => 1.5,
-           'origin_certificate_file' => {'url' => '/uploads/documents/document/file/2/origin_certificate.pdf'},
-           'seller_picture' => {'url' => '/uploads/photos/purchase/seller_picture/1/seller_picture.png'},
            'origin_certificate_sequence' => '123456789',
            'gold_batch' => {
-              'id' => 1,
               'grams' => 1.5,
               'grade' => 1
            },
@@ -69,14 +65,27 @@ describe 'Purchase', :type => :request do
            #'sale_id' => nil
           }
 
+          expected_files = {
+           'origin_certificate_file' => 'origin_certificate.pdf',
+           'seller_picture' => 'seller_picture.png',
+          }
+
           post "/api/v1/purchases/",{
             gold_batch: @new_gold_batch_values,
             purchase: @new_purchase_values
           },{
               'Authorization' => "Barer #{ @token }"}
           expect(response.status).to eq 201
-          expected_response.each do |key, value|
+          expected_response.except('gold_batch').each do |key, value|
             expect(JSON.parse(response.body)[key]).to eq value
+          end
+
+          expected_response['gold_batch'].each do |key, value|
+            expect(JSON.parse(response.body)['gold_batch'][key]).to eq value
+          end
+
+          expected_files.each do |key , value|
+            expect(JSON.parse(response.body)[key]['url']).to match value
           end
         end
 
@@ -105,7 +114,7 @@ describe 'Purchase', :type => :request do
       context 'GET' do
         before(:all) do
           seller = create(:external_user, :with_personal_rucom)
-          create_list(:purchase, 20,
+          @purchases = create_list(:purchase, 20,
                       :with_proof_of_purchase_file,
                       :with_origin_certificate_file,
                       inventory_id: @buyer.company.legal_representative.inventory.id,

@@ -62,7 +62,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -81,19 +81,32 @@ RSpec.configure do |config|
 
   # Database Cleaner config
 
-  static_info_tables = %w(cities states countries roles admin_users settings)
+  static_info_tables = %w(cities states countries roles settings admin_users)
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
+    DatabaseCleaner.clean_with :truncation, {except: static_info_tables}
+  end
+
+  config.before(:context) do
+    DatabaseCleaner.clean_with :truncation, {except: static_info_tables}
+  end
+
+
+  config.before :each do |example|
+    if example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
+    else
+      DatabaseCleaner.strategy = :transaction
+    end
     DatabaseCleaner.start
   end
 
-  config.after(:suite) do
-    DatabaseCleaner.clean
-  end
-
-  config.after(:context) do
-    DatabaseCleaner.clean
+  config.after :each do
+    DatabaseCleaner.clean!
+    `rm -rf #{Rails.root}/tmp/purchases`
+    `rm -rf #{Rails.root}/tmp/sales`
+    `rm -rf #{Rails.root}/tmp/purchase_files_collection`
+    `rm -rf #{Rails.root}/public/test`
   end
 
   # Factory Girl methods
@@ -109,7 +122,7 @@ RSpec.configure do |config|
   config. include CarrierWave::Test::Matchers
 
   # API
-  config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: %r{spec\/api} }
+  config.include RSpec::Rails::RequestExampleGroup, parent_example_group: { file_path: %r{spec\/api} }
 
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model
