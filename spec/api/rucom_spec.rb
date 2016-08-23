@@ -2,7 +2,7 @@ describe 'Rucom', type: :request do
   describe :v1 do
     context 'rucoms' do
       before :context do
-        @user = create :user, :with_company, email: 'elcho.esquillas@fake.com', password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
         create_list(:rucom, 20, rucom_number: 'ARE_PLU-08141')
         create_list(:rucom, 20)

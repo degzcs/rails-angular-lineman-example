@@ -88,12 +88,17 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
     else
       DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.start
     end
+    DatabaseCleaner.start
   end
 
   config.after :each do
-    DatabaseCleaner.clean
+    DatabaseCleaner.clean_with :truncation, { except: static_info_tables }
+    DatabaseCleaner.clean!
+    `rm -rf #{Rails.root}/tmp/purchases`
+    `rm -rf #{Rails.root}/tmp/sales`
+    `rm -rf #{Rails.root}/tmp/purchase_files_collection`
+    `rm -rf #{Rails.root}/public/test`
   end
 
   # Factory Girl methods
@@ -109,7 +114,7 @@ RSpec.configure do |config|
   config. include CarrierWave::Test::Matchers
 
   # API
-  config.include RSpec::Rails::RequestExampleGroup, type: :request, parent_example_group: { file_path: %r{spec\/api} }
+  config.include RSpec::Rails::RequestExampleGroup, parent_example_group: { file_path: %r{spec\/api} }
 
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model

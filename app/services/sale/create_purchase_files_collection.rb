@@ -42,7 +42,7 @@ class Sale::CreatePurchaseFilesCollection
   # @return [ String ] with the temporal file location
   def exec_commands_on_local_machine!(file_paths, timestamp)
     final_temporal_file_name = "purchase-files-#{ timestamp }.pdf"
-    folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
+    folder_path = "#{ Rails.root }/tmp/purchase_files_collection/#{ timestamp }"
 
     if create_temporal_folder(folder_path)
       join_files(folder_path, file_paths, final_temporal_file_name)
@@ -59,7 +59,7 @@ class Sale::CreatePurchaseFilesCollection
   # all files to the EC2 instance.
   def exec_commands_on_aws_s3!(files, timestamp)
     final_temporal_file_name = "purchase-files-#{ timestamp }.pdf"
-    folder_path = "#{ Rails.root }/tmp/#{ timestamp }"
+    folder_path = "#{ Rails.root }/tmp/purchase_files_collection/#{ timestamp }"
 
     if create_temporal_folder(folder_path)
       temporal_files = download_files!(folder_path, files)
@@ -78,7 +78,7 @@ class Sale::CreatePurchaseFilesCollection
   def join_files(folder_path, file_paths, final_temporal_file_name)
     joined_file_paths = file_paths.join(' ')
     # NOTE: if it is needed you can add  -density 50 to the next command
-    
+
     system <<-COMMAND
       cd #{ folder_path } && convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
     COMMAND
