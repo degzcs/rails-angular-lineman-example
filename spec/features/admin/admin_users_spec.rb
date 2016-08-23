@@ -31,7 +31,7 @@ describe 'all test the admin_user view', :js do
       email: 'adminuser@prueba.com',
       password: '123123123'
     }
-    admin_user = AdminUser.create(email: 'adminuser@trazoro.com', password: '123123123', password_confirmation: '123123123')
+    admin_user = AdminUser.create(email: 'Emailtobeedite@prueba.com', password: '123123123', password_confirmation: '123123123')
     visit '/admin/admin_users/'
     within("#admin_user_#{admin_user.id}") do
       click_link('Edit')
