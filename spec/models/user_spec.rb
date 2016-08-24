@@ -239,15 +239,15 @@ describe  User, type: :model do
     end
   end
 
-  context "user roles with_authorized_producer_role" do
+  context "user roles with_authorized_provider_role" do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_authorized_producer_role
+      @user =  create :user, :with_personal_rucom, :with_authorized_provider_role
       #:with_final_client_role, :with_trader_role, :with_transporter_role
     end
 
     it "should check that user is a authorized provider" do
-      #@user.roles.map(&:name)) include("authorized_producer")
-      expect(@user.authorized_producer?).to be true
+      #@user.roles.map(&:name)) include("authorized_provider")
+      expect(@user.authorized_provider?).to be true
     end
   end
 
@@ -258,7 +258,7 @@ describe  User, type: :model do
     end
 
     it "should check that user is a final client" do
-      #@user.roles.map(&:name)) include("authorized_producer")
+      #@user.roles.map(&:name)) include("authorized_provider")
       expect(@user.final_client?).to be true
     end
   end

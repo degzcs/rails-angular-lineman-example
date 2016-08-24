@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe RucomServices::Setting, type: :service do
-  let(:file_name) { 'rucom_service.cfg.yml' }
+  let(:file_name) { 'rucom_service.yml' }
   subject(:rs_setting) { RucomServices::Setting.new }
   page = 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
   let(:rucom_page_url) { page }
 
-  context 'When the rucom_service.cfg.yml file not exist or not found in the path the rucom_services' do
+  context 'When the rucom_service.yml file not exist or not found in the path the rucom_services' do
     it 'raises an error inside the  response variable in the errors key' do
-      file_name = 'wherever.cfg.yml'
+      file_name = 'wherever.yml'
       cfg = rs_setting.call(yaml_file_name: file_name)
 
       expect(cfg.response[:errors].count).to be(1)
@@ -16,7 +16,7 @@ describe RucomServices::Setting, type: :service do
     end
   end
 
-  context 'When the rucom_service.cfg.yml exist' do
+  context 'When the rucom_service.yml exist' do
     let(:cfg) { rs_setting.call }
 
     it 'has parameters as initials values to the rucom service scraper' do
@@ -83,14 +83,14 @@ describe RucomServices::Setting, type: :service do
     it '#response_class' do
       data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725' }
       cfg1 = rs_setting.call(data)
-      expect(cfg1.response_class).to eq('AutorizedProviderResponse')
+      expect(cfg1.response_class).to eq('AuthorizedProviderResponse')
 
       data[:rol_name] = 'Trader'
       cfg1 = rs_setting.call(data)
       expect(cfg1.response_class).to eq('TraderResponse')
     end
 
-    context 'when the rol_name key no exist in the rucom_service.cfg.yml' do
+    context 'when the rol_name key no exist in the rucom_service.yml' do
       it 'returns nil and an error inside response[:errors] array' do
         data = { rol_name: 'Comerciante', id_type: 'CEDULA', id_number: '15535725' }
         cfg1 = rs_setting.call(data)
@@ -102,7 +102,10 @@ describe RucomServices::Setting, type: :service do
     end
 
     it '#driver_instance' do
-      expect(cfg.driver_instance.class).to eq(Selenium::WebDriver::Driver)
+      VCR.use_cassette('settings_driver_instance_class') do
+        expect(cfg.driver_instance.class).to eq(Selenium::WebDriver::Driver)
+        expect(cfg.driver_instance.quit).to eq(nil)
+      end
     end
 
     it '#barequero' do

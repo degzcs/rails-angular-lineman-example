@@ -249,8 +249,8 @@ class User < ActiveRecord::Base
     roles.any? { |r| r.name.underscore.to_sym == role_sym }
   end
 
-  def authorized_producer?
-    self.roles.map(&:authorized_producer?).any?
+  def authorized_provider?
+    self.roles.map(&:authorized_provider?).any?
   end
 
   def final_client?

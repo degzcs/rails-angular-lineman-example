@@ -13,7 +13,7 @@ class Role < ActiveRecord::Base
   # Constants
   #
 
-  TYPES = %w(trader final_client transporter authorized_producer)
+  TYPES = %w(trader final_client transporter authorized_provider)
 
   #
   # Associations
@@ -32,8 +32,8 @@ class Role < ActiveRecord::Base
   # Instace methods
   #
 
-  def authorized_producer?
-    self.name == 'authorized_producer'
+  def authorized_provider?
+    self.name == 'authorized_provider'
   end
 
   def final_client?

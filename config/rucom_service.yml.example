@@ -13,7 +13,7 @@ development:
     clic_button_id: 'form:consultar'
     barequero:
       select_options: ["Barequero", "CEDULA"]
-      response_class: "AutorizedProviderResponse"
+      response_class: "AuthorizedProviderResponse"
     trader:
       select_options: ["Comerciante", "CEDULA", "NIT"]
       response_class: "TraderResponse"  
@@ -35,7 +35,7 @@ test:
     clic_button_id: 'form:consultar'
     barequero:
       select_options: ["Barequero", "CEDULA"]
-      response_class: "AutorizedProviderResponse"
+      response_class: "AuthorizedProviderResponse"
     trader:
       select_options: ["Comerciante", "CEDULA", "NIT"]
       response_class: "TraderResponse"  

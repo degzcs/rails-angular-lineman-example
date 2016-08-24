@@ -91,7 +91,6 @@ group :development, :test do
   gem 'guard-rspec', '~> 4.7.3', require: false
   # gem 'guard-livereload', '~> 2.5.2', require: false
   # TODO, Vcr gem is to improve the synchronize test
-  #gem 'vcr', '~> 3.0', '>= 3.0.3'
 end
 
 group :test do
@@ -100,4 +99,6 @@ group :test do
   gem 'launchy'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
+  gem 'vcr', '~> 3.0.3', require: false
+  gem 'webmock', '~> 2.1.0', require: false
 end

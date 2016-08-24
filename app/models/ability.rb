@@ -44,7 +44,7 @@ class Ability
     can [:create, :read], Purchase
   end
 
-  def authorized_producer
+  def authorized_provider
     cannot :manage, all
   end
 

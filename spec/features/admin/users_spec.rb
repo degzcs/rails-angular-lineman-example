@@ -31,7 +31,7 @@ describe 'all test the user view', js: true do
     visit '/admin'
     find('#users').click # link header of users
     find('.action_item').click # button new user
-    select('authorized_producer', from: 'user_role_ids')
+    select('authorized_provider', from: 'user_role_ids')
     fill_in 'Correo*', with: expected_response[:email]
     select(expected_response[:office], from: 'user_office_id')
     # select('Empresa falsa # 0', from: 'user_rucom')

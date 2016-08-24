@@ -11,6 +11,8 @@ require 'active_attr/rspec'
 require 'shoulda/matchers'
 require 'carrierwave/test/matchers'
 require 'cancan/matchers'
+require 'vcr'
+require 'webmock/rspec'
 
 # include seeds
 require "#{Rails.root}/db/seeds.rb"
@@ -31,6 +33,18 @@ require "#{Rails.root}/db/seeds.rb"
 # require only the support files necessary.
 #
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
+#
+# Setup VCR: Improve the performance to scraper web page and in this case for Synchronize Service from Rucom
+#
+VCR.configure do |config|
+  config.cassette_library_dir = Rails.root.join('spec', 'support', 'vcr_cassettes')
+  config.hook_into :webmock
+  config.ignore_localhost = true # it's recomendable to javascript local test whit capybara 
+  # config.ignore_request do |request|
+  #   URI(request.uri).port == 7777
+  # end
+end
 
 # Configure Capybara and you can pass a debug option set up as true => see documentation
 Capybara.configure do |config|
