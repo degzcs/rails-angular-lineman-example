@@ -40,7 +40,8 @@ module RucomServices
           name: name,
           minerals: minerals,
           status: 'Activo',
-          original_name: original_name
+          original_name: original_name,
+          provider_type: provider_type
         }
         Rucom.create!(model_fields)
       end
