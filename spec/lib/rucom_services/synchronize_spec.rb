@@ -12,7 +12,7 @@ describe RucomServices::Synchronize do
 
   context '#call' do
     it 'executes sucessfully' do
-     # VCR.use_cassette('successful_rucom_response') do
+      VCR.use_cassette('successful_rucom_response') do
         @sync.call
 
         # sets data attribute with the data sended
@@ -45,11 +45,11 @@ describe RucomServices::Synchronize do
         # returns the respective user profile
         expect(@sync.user_profile.present?).to eq(true)
         expect(@sync.user_profile.class).to eq(Profile)
-     # end
+      end
     end
 
     it 'executes unsucessfully' do
-     # VCR.use_cassette('unsuccessful_rucom_response') do
+      VCR.use_cassette('unsuccessful_rucom_response') do
         @data[:id_number] = '1234567'
         @sync = RucomServices::Synchronize.new(@data).call
 
@@ -61,7 +61,7 @@ describe RucomServices::Synchronize do
 
         # it 'returns its own instance'
         expect(@sync.class).to eq(RucomServices::Synchronize)
-     # end
+      end
     end
   end
 
@@ -85,7 +85,7 @@ describe RucomServices::Synchronize do
         end
 
         it 'creates rucom from scraper service' do
-         # VCR.use_cassette('successful_rucom_response') do
+          VCR.use_cassette('successful_rucom_response') do
             clean_user_profile_rucom_data(@data[:id_number])
             @sync.call
             @rucom = Rucom.find_by(name: 'AMADO  MARULANDA')
@@ -106,17 +106,17 @@ describe RucomServices::Synchronize do
             # it 'creates a user row in the database'
             @user = @rucom.rucomeable
             expect(@sync.user).to eq(@user)
-         # end
+          end
         end
 
         context 'when rucom dosen\'t exist in the Rucom Remote database' do
           it 'raises an error and set the response error with it' do
-           # VCR.use_cassette('unsuccessful_rucom_response') do
+            VCR.use_cassette('unsuccessful_rucom_response') do
               @data[:id_number] = '1234567'
               @sync = RucomServices::Synchronize.new(@data).call
               expect(@sync.response[:errors].count).to eq(1)
               expect(@sync.response[:errors]).to include(/The rucom dosen't exist for this id_number:/)
-           # end
+            end
           end
         end
       end
@@ -160,26 +160,26 @@ describe RucomServices::Synchronize do
 
     context 'When rucom exist' do
       it 'returns true as response' do
-       # VCR.use_cassette('unsuccessful_rucom_response') do
+        VCR.use_cassette('unsuccessful_rucom_response') do
           @user = create :user, :with_profile, :with_personal_rucom
           @data[:id_number] = @user.profile.document_number
           @sync = RucomServices::Synchronize.new(@data)
           @sync.call
           expect(@sync.rucom_exist?).to eq true
-       # end
+        end
       end
     end
 
     context 'When rucom no exist' do
       it 'returns false as response' do
-       # VCR.use_cassette('unsuccessful_rucom_response') do
+        VCR.use_cassette('unsuccessful_rucom_response') do
           @user = build :user, :with_profile
           @user.save(validates: false)
           @data[:id_number] = @user.profile.document_number
           @sync = RucomServices::Synchronize.new(@data)
           @sync.call
           expect(@sync.rucom_exist?).to eq false
-       # end
+        end
       end
     end
   end

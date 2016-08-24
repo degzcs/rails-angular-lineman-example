@@ -175,6 +175,8 @@ GEM
     countries (1.2.5)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     currencies (0.4.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
@@ -386,6 +388,7 @@ GEM
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
+    hashdiff (0.3.0)
     hashery (2.1.2)
     hashie (3.4.4)
     hashie-forbidden_attributes (0.1.1)
@@ -601,6 +604,7 @@ GEM
       reek (= 3.10.1)
       virtus (~> 1.0)
     rubyzip (1.2.0)
+    safe_yaml (1.0.4)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -657,6 +661,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.1.0)
     unicode_utils (1.4.0)
+    vcr (3.0.3)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -664,6 +669,10 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.6)
       rack (>= 1.0)
+    webmock (2.1.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     websocket (1.2.3)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
@@ -742,11 +751,13 @@ DEPENDENCIES
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
+  vcr (~> 3.0.3)
   virtus
+  webmock (~> 2.1.0)
   will_paginate (~> 3.0.6)
 
 RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
