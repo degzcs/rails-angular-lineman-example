@@ -83,7 +83,7 @@ FactoryGirl.define do
         city { City.all.sample }
         name { 'MinTrace SAS' }
         nit_number { Faker::Number.number(10) }
-        rucom { create :rucom }
+        rucom { build :rucom }
       end
       before :create do |user, e|
         user.office = create(:company, city: e.city, name: e.name, nit_number: e.nit_number, rucom: e.rucom).main_office

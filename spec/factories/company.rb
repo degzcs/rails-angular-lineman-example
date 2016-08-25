@@ -29,8 +29,14 @@ FactoryGirl.define do
     chamber_of_commerce_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
     mining_register_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'),"application/pdf") }
     rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf") }
-    rucom
     address { 'Street 123' }
+
+    transient do
+      rucom { build :rucom }
+    end
+    after :build do |company, e|
+      company.rucom = e.rucom
+    end
 
     after :create do |company, e|
       company.legal_representative.update_column :office_id, company.main_office.id
