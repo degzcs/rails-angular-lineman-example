@@ -23,7 +23,8 @@
 # data in a better way and to improve the app performance as well.
 class Rucom < ActiveRecord::Base
   belongs_to :rucomeable, polymorphic: true
-
+  # TODO: Currently these fields :rucomeable_type, :rucomeable_id cause some problems when they are add to attr_readonly method. So we decided to put them there in the next iterations and fix the specs related with them.
+  attr_readonly :name, :minerals, :status, :provider_type, :original_name
   # This method is just for clarfy the user activity related with gold.
   def activity
     provider_type
