@@ -60,6 +60,7 @@ ActiveAdmin.register Rucom do
         item 'Registrar Compañia', new_company_admin_rucom_path(rucom.id)
       end
     end
+    actions
   end
 
   filter :rucom_number
@@ -69,15 +70,35 @@ ActiveAdmin.register Rucom do
   filter :status
   filter :provider_type
 
+  # overwrite controller create for create a Rucom using the scraper
+  controller do
+    def create
+      parameters = permitted_params[:rucom]
+      params_values = { rol_name: parameters['name'], id_type: parameters['provider_type'], id_number: parameters['rucom_number'] }
+      response = RucomServices::Synchronize.new(params_values).call
+      if response.response[:errors][0] == "Sincronize.call: error => The rucom dosen't exist for this id_number: #{params_values[:id_number]}"
+        redirect_to admin_rucoms_path, notice: 'Rucom No Existe en la pagina ANM'
+      else
+        redirect_to admin_rucoms_path
+      end
+    end
+  end
+
   form do |f|
     f.inputs 'Rucom Details' do
-      f.input :rucom_number
-      f.input :name
-      f.input :original_name
-      f.input :minerals
-      f.input :location
-      f.input :status
-      f.input :provider_type
+      if params[:action] == 'new'
+        f.input :name, label: 'Rol', collection: %w(Barequero Comerciante)
+        f.input :provider_type, label: 'Tipo Identificacion', collection: %w(CEDULA NIT)
+        f.input :rucom_number, label: 'Numero Identificacion'
+      else
+        f.input :rucom_number
+        f.input :name
+        f.input :original_name
+        f.input :minerals
+        f.input :location
+        f.input :status
+        f.input :provider_type
+      end
     end
     f.actions
   end
