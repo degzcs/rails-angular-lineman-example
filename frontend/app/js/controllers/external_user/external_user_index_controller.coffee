@@ -10,6 +10,8 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
   $scope.queryName = ''
   $scope.queryId = ''
   $scope.queryFocus = ''
+  ## response: It will Storage the query rucom response to show the data inside the form
+  $scope.response = {}
 
   $scope.headers = [
     {
@@ -142,8 +144,6 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
     #$state.go 'create_external_user_type_a'
     $mdDialog.show
       controller: 'ExternalUserTypeCtrl'
-      templateUrl: 'partials/user-type-selection.html'
+      templateUrl: 'partials/providers/step0.html'
       targetEvent: ev
     return
-
-

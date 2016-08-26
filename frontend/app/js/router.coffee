@@ -197,6 +197,34 @@
         deferred.promise
   )
 
+  #---- Step1 external user complete the external user information  -----#
+  .state("external_user_complete_edit",
+    url: "/external_user/:id/complete_edit",
+    ncyBreadcrumb:
+      label: 'Edición de proveedor'
+      parent: 'index_external_user' #'show_external_user'
+    views:
+      'content':
+        templateUrl: "partials/external_users/complete_edit.html"
+        controller: "ExternalUserCompleteEditCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  #-----------------------------------------------------------------------#
+
   .state("edit_external_user",
     url: "/external_user/:id/edit",
     ncyBreadcrumb:
@@ -275,8 +303,8 @@
         parent: 'index_external_user'
       views:
         'content':
-          templateUrl: "partials/external_users/type_a.html"
-          controller: "ExternalUserCreateTypeACtrl"
+          templateUrl: "partials/providers/step0.html"
+          controller: "ExternalUserCreateTypeCtrl"
         'top-nav':
           templateUrl: "partials/top-nav.html"
           controller: "SidebarCtrl"
@@ -543,6 +571,26 @@
         deferred.promise
   )
 
+  # -----Providers Routes ----#
+
+  .state("query_rucom.step0",
+    url: "/providers/step0",
+    ncyBreadcrumb:
+      label: 'Consulta Productor'
+    views:
+      'content':
+        templateUrl: "partials/providers/step0.html"
+        controller: "ProvidersRucomCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   #  --- Purchase Routes ---- #
 
   .state("new_purchase",
@@ -570,6 +618,24 @@
         deferred.promise
   )
 
+  .state("new_purchase.step0",
+    url: "/purchases/step0",
+    ncyBreadcrumb:
+      label: 'Consulta Productor'
+    views:
+      'content':
+        templateUrl: "partials/purchases/step0.html"
+        controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  
   .state("new_purchase.step1",
     url: "/purchases/step1",
     ncyBreadcrumb:
