@@ -26,9 +26,6 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
 
 	$scope.headers = [
     {
-      name: 'Estado',
-      field: 's'
-    },
       name: 'Fecha',
       field: 'created_at'
     }, {
