@@ -53,6 +53,7 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
         PurchaseService.model.gold_batch = item.gold_batch
         PurchaseService.model.barcode_html = item.barcode_html
         PurchaseService.model.code = item.code
+        PurchaseService.model.sold = item.sold
         PurchaseService.saveState()
         $state.go('show_inventory')
         return
@@ -106,6 +107,7 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
                   provider_name: purchases[i].provider.first_name + ' ' + purchases[i].provider.last_name
                   inventory_remaining_amount: purchases[i].inventory.remaining_amount
                   gold_batch_grams: purchases[i].gold_batch.grams
+                  sold: purchases[i].gold_batch.sold
                 $scope.content.push purchase
                 i++
               $scope.pages = parseInt(headers().total_pages)
@@ -118,8 +120,9 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
       #selects a single item in the inventory list
       #@params item [Object]
 
+
       $scope.selectItem = (item, grams, ev) ->
-        if item.selected
+        if item.selected 
           #Delete selected grams
           $scope.deleteGramsDialog(item, ev)
         else
@@ -128,9 +131,10 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
             show_dialog('Mensaje Inventario','No tiene gramos restantes en este lote', ev)
             return
           item.selected = true
+          item.sold = item.sold
           item.amount_picked = item.gold_batch_grams
           #Push the hash to the array of selected items
-          $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
+          $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked, sold: item.sold})
           $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
 
       #updates all checkboxes in the inventory list
@@ -171,8 +175,9 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
           unless item.gold_batch_grams == 0
             item.selected = true
             item.amount_picked = item.gold_batch_grams
+            item.sold = item.sold
             #Push the hash to the array of selected items
-            $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked})
+            $scope.selectedItems.push({purchase_id: item.id, amount_picked: item.amount_picked, sold: item.sold})
             $scope.totalAmount = Number(($scope.totalAmount + item.amount_picked).toFixed(2))
           i++
         console.log $scope.selectedItems
@@ -274,7 +279,4 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
 
         result = document.getElementsByClassName('purchase-empty')
         angular.element(result).toggleClass('hidden')
-
-
-
   }
