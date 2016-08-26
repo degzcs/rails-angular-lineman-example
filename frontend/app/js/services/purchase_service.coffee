@@ -128,7 +128,10 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     #
     get: (id)->
       return $http({method: "GET", url: "api/v1/purchases/" + id})
-
+    
+    #
+    #Get all purchases
+    #
     get_list: (ids)->
       return $http.get('api/v1/purchases', params:
                 "purchase_list[]": ids)
