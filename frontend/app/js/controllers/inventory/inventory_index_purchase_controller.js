@@ -5,6 +5,9 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
   //Headers of the table
   $scope.headers = [
     {
+      name: 'Estado',
+      field: 'sold'
+    },{
       name: 'Fecha',
       field: 'created_at'
     },{
@@ -22,7 +25,7 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
     }
   ];
   //Filters
-  $scope.sortable = ['created_at','seller_name', 'gold_batch_grams', 'price', 'inventory_remaining_amount'];
+  $scope.sortable = ['sold', 'created_at','seller_name', 'gold_batch_grams', 'price', 'inventory_remaining_amount'];
   //Variables configuration
   $scope.selectall = false;
   $scope.grams = {
@@ -36,6 +39,7 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
     price: 'grey',
     created_at: 'bold',
     inventory_remaining_amount: 'bold',
+    sold: 'bold',
   };
 
   $scope.pages = 0;
@@ -70,6 +74,7 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
         seller_name: purchases[i].seller.first_name + " " + purchases[i].seller.last_name,
         inventory_remaining_amount: purchases[i].inventory.remaining_amount,
         gold_batch_grams: purchases[i].gold_batch.grams,
+        sold: purchases[i].gold_batch.sold,
 
       };
       content.push(purchase);
@@ -88,6 +93,14 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
     //     $window.history.back();
     //   });
   };
+
+ // $scope.isDisabled = function(soldValue) {
+   //      console.log 'soldValue = ' + soldValue;
+     //    res = soldValue == "true";
+       //  console.log 'isDisabled = ' + res;
+         //return res;
+
+//       };
 
 
 
