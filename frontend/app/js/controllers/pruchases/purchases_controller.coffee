@@ -338,7 +338,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     return
 
   $scope.createseller = ->
-    sellerService.setCallerState('new_purchase.step1')
+    sellerService.setCallerState('new_purchase.step0')
     $state.go('search_rucom',{type: 'seller'})
 
   $scope.getQuery = (query)->

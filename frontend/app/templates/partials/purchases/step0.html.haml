@@ -1,0 +1,19 @@
+%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
+  %section{layout: "row"}
+    // ---------------------- seller info ------------------- ///
+    %div.md-padding{flex: ""}
+      %fieldset.standard.tr-fieldset{:layout => "column"}
+        %legend
+          %h3
+            1. Ingrese el documento del Productor
+        %div.fieldset-inputs
+          %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
+
+          %md-autocomplete{:ng-if => "purchase.model.type == 'seller'", "md-selected-item"=>"purchase.model.seller", "md-search-text"=> "searchText", "md-items" => "seller in searchseller(searchText)", "md-no-cache" => "true", "md-item-text"=>"seller.name", "placeholder" => "1 Buscar Productor por Cedula", "md-selected-item-change" => "selectedsellerChange(seller)","md-search-text-change"=>"getQuery(searchText)"}
+            %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{seller.first_name}} {{seller.last_name}} - c.c. {{seller.document_number}}
+            %md-not-found
+              No se encontraron proveedores
+
+  .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'seller'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
