@@ -106,7 +106,7 @@ module V1
           use :pagination
         end
 
-        get '/', http_codes: [ 
+        get '/', http_codes: [
           [200, 'Successful'],
           [401, 'Unauthorized']
           ] do
