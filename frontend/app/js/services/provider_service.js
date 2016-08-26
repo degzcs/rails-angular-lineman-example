@@ -19,6 +19,10 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         byTypes: {method:'GET', isArray: true}
     });
 
+    var basicProvider = $resource('/api/v1/autorized_providers/by_id_number', { rol_name:'Barequero', id_type: 'CEDULA', id_number: '@id_number' },{
+        byTypes: {method:'GET', isArray: true }
+    });
+
     var getCurrentProv = function() {
         return currentProvider;
     };
@@ -388,6 +392,7 @@ angular.module('app').factory('ProviderService', function($resource,$upload,$htt
         retrieve: retrieve,
         currentTabProvCreation: currentTabProvCreation,
         setCallerState: setCallerState,
-        getCallerState: getCallerState
+        getCallerState: getCallerState,
+        basicProvider: basicProvider
     };
 });

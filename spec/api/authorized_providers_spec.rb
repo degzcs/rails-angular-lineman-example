@@ -2,7 +2,7 @@ describe 'AuthorizedProviders', type: :request do
   describe :v1 do
     context 'authorized_providers' do
       before :context do
-        @user = create :user, :with_company, email: "testing_#{ User.count + 100 }@fake.com", password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_company, email: "testing_#{User.count + 100}@fake.com", password: 'super_password', password_confirmation: 'super_password'
         @token = @user.create_token
       end
 
@@ -41,7 +41,7 @@ describe 'AuthorizedProviders', type: :request do
                 'rucomeable_type' => user.rucom.rucomeable_type,
                 'rucomeable_id' => user.rucom.rucomeable_id
               },
-              'provider_type' => nil
+              'provider_type' => user.rucom.provider_type
             }
 
             res = JSON.parse(response.body)
@@ -84,51 +84,64 @@ describe 'AuthorizedProviders', type: :request do
           #   rucom: { rucom_number: '987654321' }
           # }
 
-          user_vals = { email: 'amado.prueba1@barequero.co' }
+          #
+          # formato del params enviado desde el frontend
+          #
+          # {
+          #   "data" => "{\"authorized_provider\":{\"email\":\"amado1@prueba.com.co\"},\"profile\":{\"first_name\":\"AMADO\",\"document_number\":\"\",\"last_name\":\"MARULANDA\",\"phone_number\":\"2334455\",\"address\":\"call 12\",\"city_id\":\"\",\"photo_file\":{\"name\":\"photo_file.png\"}},\"rucom\":{\"rucom_number\":\"987654321\"}}",
+          #   "id" => "5"
+          # }
+
+          user_vals = { 'email' => 'amado.prueba1@barequero.co' }
+          files = [photo_file, id_document_file, mining_authorization_file]
           profile = {
-            first_name: 'AMADO',
-            last_name: 'PRUEBA1 MARULO',
-            phone_number: '2334455',
-            address: 'Calle 45 # 34b-56',
-            id_document_file: id_document_file,
-            mining_authorization_file: mining_authorization_file,
-            photo_file: photo_file,
-            city_id: city.id || nil
+            'first_name' => 'AMADO',
+            'last_name' => 'PRUEBA1 MARULO',
+            'phone_number' => '2334455',
+            'address' => 'Calle 45 # 34b-56',
+            'id_document_file' => '',
+            'mining_authorization_file' => '',
+            'photo_file' => '',
+            'city_id' => city.id || nil,
+            'files' => files
           }
-          rucom = { rucom_number: '987654321' }
+          rucom = { 'rucom_number' => '987654321' }
+          
+          url_base = "/test/uploads"
+          document_number_file_url = "/documents/profile/id_document_file/#{user.id}/document_number_file.pdf"
+          mining_register_file_url = "/documents/profile/mining_authorization_file/#{user.id}/mining_register_file.pdf"
+          photo_file = "/photos/profile/photo_file/#{user.id}/photo_file.png"
           
           expected_response = {
-                        'id' => user.id,
-                 'document_number' => user.profile.document_number,
-                      'first_name' => 'AMADO',
-                       'last_name' => 'PRUEBA1 MARULO',
-                    'phone_number' => '2334455',
-                         'address' => 'Calle 45 # 34b-56',
-            'document_number_file' => { 'url'=>  "/test/uploads/documents/profile/id_document_file/#{user.id}/document_number_file.pdf"}, #{ 'url' => user.profile.id_document_file_url },
-            'mining_register_file' => { 'url' => "/test/uploads/documents/profile/mining_authorization_file/#{user.id}/mining_register_file.pdf"}, #{ 'url' => user.profile.mining_register_file.url },
-                      'photo_file' => { 'url' => "/test/uploads/photos/profile/photo_file/#{user.id}/image.png" }, #{ 'url' => user.profile.photo_file.url },
-                           'email' => 'amado.prueba1@barequero.co',
-                            'city' => JSON.parse(city.to_json).except('created_at', 'updated_at'),
-                           'state' => JSON.parse(city.state.to_json).except('created_at', 'updated_at'),
-                         'company' => nil,
-                           'rucom' => {
-                                         'id' => user.rucom.id,
-                               'rucom_number' => '987654321',
-                                       'name' => user.rucom.name,
-                              'original_name' => user.rucom.original_name,
-                                   'minerals' => user.rucom.minerals,
-                                   'location' => user.rucom.location,
-                                     'status' => user.rucom.status,
-                              'provider_type' => user.rucom.provider_type,
-                            'rucomeable_type' => user.rucom.rucomeable_type,
-                              'rucomeable_id' => user.rucom.rucomeable_id
-                                      },
-                   'provider_type' => user.rucom.provider_type
-            }
-
-          params_to_set = {authorized_provider: user_vals, profile: profile, rucom: rucom}
-          put "/api/v1/autorized_providers/#{user.id}", params_to_set, { "Authorization" => "Barer #{token}" }
-          # put "/api/v1/autorized_providers/#{@user.id}", {authorized_provider: new_values, profile: new_company_info_values}, { "Authorization" => "Barer #{@token}" }
+            'id' => user.id,
+            'document_number' => user.profile.document_number,
+            'first_name' => 'AMADO',
+            'last_name' => 'PRUEBA1 MARULO',
+            'phone_number' => '2334455',
+            'address' => 'Calle 45 # 34b-56',
+            'document_number_file' => { 'url' => url_base + document_number_file_url },
+            'mining_register_file' => { 'url' => url_base + mining_register_file_url },
+            'photo_file' => { 'url' => url_base + photo_file },
+            'email' => 'amado.prueba1@barequero.co',
+            'city' => JSON.parse(city.to_json).except('created_at', 'updated_at'),
+            'state' => JSON.parse(city.state.to_json).except('created_at', 'updated_at'),
+            'company' => nil,
+            'rucom' => {
+              'id' => user.rucom.id,
+              'rucom_number' => '987654321',
+              'name' => user.rucom.name,
+              'original_name' => user.rucom.original_name,
+              'minerals' => user.rucom.minerals,
+              'location' => user.rucom.location,
+              'status' => user.rucom.status,
+              'provider_type' => user.rucom.provider_type,
+              'rucomeable_type' => user.rucom.rucomeable_type,
+              'rucomeable_id' => user.rucom.rucomeable_id
+            },
+            'provider_type' => user.rucom.provider_type
+          }
+          params_set = { 'authorized_provider' => user_vals, 'profile' => profile, 'rucom' => rucom }
+          put "/api/v1/autorized_providers/#{user.id}", params_set, { "Authorization" => "Barer #{token}" }
 
           res = JSON.parse(response.body)
           # it Removes the datetime attributes to make coincid the hashes
@@ -138,10 +151,6 @@ describe 'AuthorizedProviders', type: :request do
 
           expect(response.status).to eq 200
           expect(res).to match expected_response
-
-          # expect(response.status).to eq 200
-          # expect(JSON.parse(response.body)).to include(expected_response.stringify_keys)
-          # expect(JSON.parse(response.body)['profile']['nit_number']).to eq new_nit_number
         end
       end
     end
