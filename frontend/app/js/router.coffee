@@ -876,13 +876,14 @@
 
 
   .state("index_inventory.purchase",
-    url: "/index_purchase", # <-- inventory
+    url: "/index_purchase",
     ncyBreadcrumb:
       label: 'Inventario de compras'
     views:
       'content':
-        templateUrl: "partials/inventory/index.html" # partials/inventory/index_purchase.html partial list_inventory (tab purchase) 
-        controller: "InventoryPurchaseIndexCtrl" # Purchase index controller
+        # partials/inventory/index_purchase.html partial list_inventory (tab purchase) 
+        templateUrl: "partials/inventory/index.html" # TODO: Refactor to leave the old version 
+        controller: "InventoryPurchaseIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -906,8 +907,8 @@
       label: 'Inventario de ventas'
     views:
       'content':
-        templateUrl: "partials/inventory/index_sale_b.html" # TO DO partial list_inventory (tab sale)  
-        controller: "InventorySaleIndexCtrl" # TO DO Sale index Controller 
+        templateUrl: "partials/inventory/index_sale.html" 
+        controller: "InventorySaleIndexCtrl" 
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
