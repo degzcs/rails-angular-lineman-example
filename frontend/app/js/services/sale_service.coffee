@@ -1,5 +1,5 @@
 
-angular.module('app').factory 'SaleService', ($http)->
+angular.module('app').factory 'SaleService', ($http, $rootScope)->
   service =
 
     model:
@@ -17,7 +17,7 @@ angular.module('app').factory 'SaleService', ($http)->
       totalAmount: null
 
 
-    create: (sale_params, gold_batch_params,selectedPurchases)->
+    create: (sale_params, gold_batch_params, selectedPurchases)->
       return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params,selected_purchases: selectedPurchases})
 
     saveState: ->
@@ -40,6 +40,26 @@ angular.module('app').factory 'SaleService', ($http)->
     getBatches: (id)->
       return $http.get("api/v1/sales/"+id+"/batches")
 
+    #
+    # Get all sales paged for the current user  
+    #
+    all_paged: (page)->
+      if page
+        return $http
+                 method: "GET"
+                 url: "api/v1/sales"
+                 params: page: page
+      else
+        return $http
+                 method: "GET"
+                 url: "api/v1/sales"
+
+    #
+    #Get all sales
+    #
+    get_list: (ids)->
+      return $http.get('api/v1/sales', params:
+                "sales_list[]": ids)
     #setSaleInfo: function(sale_info){
     #  sessionStorage.setItem('saleInfo',JSON.stringify(sale_info));
     #  console.log(JSON.parse(sessionStorage.getItem('saleInfo')));
