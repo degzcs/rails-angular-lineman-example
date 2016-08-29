@@ -60,7 +60,10 @@ Go to frontend folder and install node dependencies and run lineman command, as 
  npm install
  lineman run
 ```
-
+then copy&paste the basic config, as follows:
+```sh
+cp frontend/config/application.coffee.example frontend/config/application.coffee
+```
 ## Tests
 
 Prepare test environment, as follows:
