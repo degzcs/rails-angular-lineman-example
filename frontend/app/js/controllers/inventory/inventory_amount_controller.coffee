@@ -34,7 +34,7 @@ angular.module('app')
 
       #Then adds the total amount at the end
       $scope.gram_options.push($scope.total_grams)
-    ###
+  ###
 
   return
 
