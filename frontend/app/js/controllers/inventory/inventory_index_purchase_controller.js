@@ -94,13 +94,16 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
     //   });
   };
 
- // $scope.isDisabled = function(soldValue) {
-   //      console.log 'soldValue = ' + soldValue;
-     //    res = soldValue == "true";
-       //  console.log 'isDisabled = ' + res;
-         //return res;
+ $scope.isThisDisabled = function(content) {
+    
+    for (var i in $scope.content) {
+          if ($scope.content[i.sold]) {
+            return true;
+          }
+      }  
 
-//       };
+     return false;
+  }
 
 
 

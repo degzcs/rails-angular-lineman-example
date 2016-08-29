@@ -24,7 +24,7 @@
             %td.table-checkbox
               /%md-checkbox{"ng-click" => "selectItem(item,grams,$event)", "ng-model" => "item.selected", "aria-label"=>"item-check", value:"item.selected" 2.9 500 2.060 200 credito}
               %md-button.md-icon-button.launch{"ng-click"=>"selectItem(item,grams,$event)", "ng-disabled" => "true"}
-                %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}", "ng-disabled" => "true"}
+                %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{item.selected ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"item.selected ? 'item-selected' : ''","aria-label"=>"cb-item-{{item.id}}", "ng-disabled" => "{{item.sold}} ? true : false"}
               {{item.amount_picked}}
               {{item.sold}}
               
