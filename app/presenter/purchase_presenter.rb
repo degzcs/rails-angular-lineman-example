@@ -2,7 +2,7 @@ class PurchasePresenter < BasePresenter
   presents :purchase
 
   def date
-    created_at.to_timge.getlocal('-05:00')
+    created_at.to_time.getlocal('-05:00')
   end
 
   def hms_time
