@@ -21,7 +21,6 @@ require 'barby/outputter/html_outputter'
 # TODO: extract origin_certicated* fields to a single table and make the association
 # TODO: the origin_certificate_files in a trazoro transaction will be the collection of the old purchase files so this name has to be changed to something similar to 'mineral_documentation'
 class Purchase < ActiveRecord::Base
-
   #
   # Associations
   #
@@ -42,7 +41,7 @@ class Purchase < ActiveRecord::Base
 
   validates :inventory_id, presence: true
   validates :seller_id, presence: true
-  #validates :origin_certificate_sequence, presence: true
+  # validates :origin_certificate_sequence, presence: true
   # validates :gold_batch_id, presence: true
   # validates :origin_certificate_file, presence: true
   validates :price, presence: true
@@ -100,6 +99,11 @@ class Purchase < ActiveRecord::Base
     Barby::HtmlOutputter.new(barcode).to_html
   end
 
+  # presenter of sold's state
+  def state
+    gold_batch.sold? ? 'Vendido' : 'Disponible' 
+  end
+
   #
   # Class methods
   #
@@ -130,7 +134,7 @@ class Purchase < ActiveRecord::Base
 
     # Manufacturer Code: 5 digits
     # this is the office code:
-    mfg_code =  self.seller.id.to_s.rjust(5, '0') #TODO: seller.officce.reference_code
+    mfg_code = self.seller.id.to_s.rjust(5, '0') #TODO: seller.officce.reference_code
 
     # Product Code: 4 digits
     # This is the goldbach code:

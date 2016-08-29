@@ -1,8 +1,8 @@
 module V1
   module Entities
     class SaleForPurchase < Grape::Entity
-      expose :id ,documentation: { type: "integer", desc: "Sale id", example: '1' }
-      expose :gold_batch_id ,documentation: { type: "integer", desc: "gold batch id", example: '1' } do |sale, options|
+      expose :id, documentation: { type: "integer", desc: "Sale id", example: '1' }
+      expose :gold_batch_id, documentation: { type: "integer", desc: "gold batch id", example: '1' } do |sale, options|
         sale.gold_batch.id
       end
       expose :fine_grams ,documentation: { type: "float", desc: "grams", example: '239923' }

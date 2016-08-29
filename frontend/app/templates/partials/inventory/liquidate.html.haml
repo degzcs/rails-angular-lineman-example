@@ -76,7 +76,7 @@
             %legend 
               %h3 
                 Seleccione un Transportador
-            %md-autocomplete{"md-selected-item"=>"selectedCourier", "md-search-text"=> "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula","md-selected-item-change"=>"setSelectedCourier(selectedCourier)"}
+            %md-autocomplete{"md-selected-item" => "selectedCourier", "md-search-text" => "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula","md-selected-item-change" => "setSelectedCourier(selectedCourier)"}
               %span{"md-highlight-text" => "searchClientText"} {{courier.id_document_number}} - {{courier.first_name}} {{courier.last_name}}
             %div.fieldset-inputs
               %div{layout: "row"}

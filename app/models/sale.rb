@@ -16,21 +16,20 @@
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
-
+# Model Sale
 class Sale < ActiveRecord::Base
-
   #
   # Associations
   #
 
   belongs_to :inventory
   has_one :user, through: :inventory
-  belongs_to :buyer, class_name: "User"
+  belongs_to :buyer, class_name: 'User'
 
   belongs_to :courier
-  has_many :batches , class_name: "SoldBatch" #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
+  has_many :batches, class_name: 'SoldBatch' #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
   has_one :gold_batch, class_name: 'GoldBatch', as: :goldomable
-  has_many :documents, class_name: "Document", as: :documentable
+  has_many :documents, class_name: 'Document', as: :documentable
 
   #
   # Callbacks
@@ -82,12 +81,21 @@ class Sale < ActiveRecord::Base
   end
 
   def fine_gram_unit_price
-    (price/fine_grams)
+    (price / fine_grams)
+  end
+
+  def purchases_total_value
+    self.batches.map{ |b| b.gold_batch.goldomable.price }.sum
+  end
+
+  def total_gain
+    # (precio final - precio inicial)/cantd de gramos
+    (price - purchases_total_value)
   end
 
   protected
 
-  #Before the sale is saved generate a barcode and its html representation
+  # Before the sale is saved generate a barcode and its html representation
   def generate_barcode
     # new_id = Sale.count + 1
     # code = new_id.to_s.rjust(12, '0')
@@ -99,13 +107,13 @@ class Sale < ActiveRecord::Base
 
     # Manufacturer Code: 5 digits
     # this is the office code:
-    mfg_code =  self.buyer_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+    mfg_code = self.buyer_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
                                                   # In puchases mfg_code uses the user id. Using buyer_id in sales for
                                                   # ensuring uniqueness (?)
 
     # Product Code: 4 digits
     # This is the goldbach code:
-    product_code= self.gold_batch.id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
+    product_code = self.gold_batch.id.to_s.rjust(4, '0') #TODO: self.gold_batch.reference_code
                                                         # (!) This doesn't guarantee the product code to be unique once
                                                         # the gold_batch id sequence reaches the 9999 value, does it?
 

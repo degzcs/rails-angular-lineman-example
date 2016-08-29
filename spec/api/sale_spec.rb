@@ -10,7 +10,7 @@ describe 'Sale', :type => :request do
 
       context 'POST' do
         it 'should create one complete sale with trader role' do
-          buyer = create(:external_user, :with_company)
+          buyer = create(:user, :with_company, :with_trader_role)
           seller = @current_user.company.legal_representative
           courier = create(:courier)
           purchases = create_list(:purchase, 2,
@@ -19,11 +19,14 @@ describe 'Sale', :type => :request do
                                   user: seller)
           # TODO: change frontend implementation to avoid this.
           selected_purchases = purchases.map { |purchase| { purchase_id: purchase.id } }
-
           expected_response = {
             # 'id' => 1,
             'courier_id' => courier.id,
-            'buyer_id' => buyer.id,
+            'buyer' => {
+              'id' => buyer.id,
+              'first_name' => buyer.profile.first_name,
+              'last_name' => buyer.profile.last_name
+            },
             'user_id' => seller.id, # TODO: upgrade frontend
             # 'gold_batch_id' => GoldBatch.last.id + 1,
             'fine_grams' => 1.5,
@@ -46,11 +49,11 @@ describe 'Sale', :type => :request do
             # 'gold_batch_id' => expected_response['gold_batch_id']
           }
 
-          post "/api/v1/sales/", {
+          post '/api/v1/sales/', {
             gold_batch: new_gold_batch_values,
             sale: new_sale_values,
             selected_purchases: selected_purchases },
-            { 'Authorization' => "Barer #{ @token }" }
+            { 'Authorization' => "barcode_htmler #{ @token }" }
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
         end
@@ -62,6 +65,7 @@ describe 'Sale', :type => :request do
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
           @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, inventory: @legal_representative.inventory)
+          @buyer = create(:user, :with_company, :with_trader_role)
         end
 
         context '/' do
@@ -78,11 +82,11 @@ describe 'Sale', :type => :request do
         context '/:id' do
           it 'gets purchase by id with role trader' do
             sale = @sales.last
-
+            
             expected_response = {
-              id:  sale.id,
+              id: sale.id,
               courier_id: sale.courier_id,
-              buyer_id:  sale.buyer_id,
+              #buyer: buyer_expected_response.stringify_keys,
               user_id: @legal_representative.id,
               gold_batch_id: sale.gold_batch.id,
               fine_grams: sale.fine_grams,

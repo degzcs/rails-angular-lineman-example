@@ -32,4 +32,9 @@ class PurchasePresenter < BasePresenter
   def total_price
     "$#{ price.round(2) }"
   end
+
+  # presenter of sold's state
+  def state
+    gold_batch.sold? ? 'Vendido' : 'Disponible' 
+  end
 end
