@@ -94,7 +94,6 @@ describe 'Sale', :type => :request do
               barcode_html: sale.barcode_html
             }
             get "/api/v1/sales/#{sale.id}", {}, { 'Authorization' => "Barer #{@token}" }
-            binding.pry
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
