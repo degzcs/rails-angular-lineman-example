@@ -6,7 +6,8 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
 
   attr_accessor :base_file
 
-  def intiliazer(options={})
+  def initialize(options={})
+    super(skip_page_creation: true)
   end
 
   def call(options={})
