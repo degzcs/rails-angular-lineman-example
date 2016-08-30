@@ -19,6 +19,5 @@ angular.module('app').controller 'ExternalUserShowCtrl', ($scope,$sce, $state, $
       $scope.company = data.company
       $scope.currentExternalUser = data
       # 3. Set map
-      map = "<iframe width='600' height='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/place?key=AIzaSyBSvGJkkB0CyXnEQsd16bgVBEeNm49tQZM &q=#{data.city.name},#{data.state.name}'></iframe>"
+      map = "<iframe width='800' height='450' frameborder='0' style='border:0' src='https://www.google.com/maps/embed/v1/place?key=AIzaSyA6ygHFh-nrWQhsmypiONtiriz2DiTwUSQ&q=#{data.city.name},#{data.state.name}'></iframe>"
       $scope.map_iframe = $sce.trustAsHtml(map);
-  
