@@ -29,4 +29,8 @@ class Rucom < ActiveRecord::Base
   def activity
     provider_type
   end
+
+  def there_are_unset_attributes
+    self.rucom_number.blank?
+  end
 end
