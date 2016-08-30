@@ -81,7 +81,7 @@ module V1
                                       elsif query_rucomid
                                         ::User.external_users.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
                                       else
-                                        ::User.external_users.order_by_id.paginate(:page => page, :per_page => per_page)
+                                        ::User.authorized_providers.order_by_id.paginate(:page => page, :per_page => per_page)
                                       end
           #binding.pry
           header 'total_pages', external_users.total_pages.to_s
@@ -174,7 +174,6 @@ module V1
           external_user = ::User.new(arranged_params[:user_data])
           external_user.build_profile arranged_params[:profile_data]
           external_user.external = true
-
 
           # TODO: change this to user roles instead the external flag
           rucom = ::Rucom.find(params[:rucom_id])

@@ -27,20 +27,20 @@ module V1
         end
 
         # params :profile do
-          # optional :profile, type: Hash do
-          #   optional :nit_number, type: String, desc: 'nit_number', documentation: { example: 'Rock' }
-          #   optional :name, type: String, desc: 'name', documentation: { example: 'Rock' }
-          #   optional :city, type: String, desc: 'city', documentation: { example: 'Rock' }
-          #   optional :state, type: String, desc: 'state', documentation: { example: 'Rock' }
-          #   optional :country, type: String, desc: 'country', documentation: { example: 'Rock' }
-          #   optional :legal_representative, type: String, desc: 'legal_representative', documentation: { example: 'Rock' }
-          #   optional :id_type_legal_rep, type: String, desc: 'id_type_legal_rep', documentation: { example: 'Rock' }
-          #   optional :id_number_legal_rep, type: String, desc: 'id_number_legal_rep', documentation: { example: 'Rock' }
-          #   optional :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
-          #   optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
-          #   optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
-          #   optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
-          # end
+        # optional :profile, type: Hash do
+        #   optional :nit_number, type: String, desc: 'nit_number', documentation: { example: 'Rock' }
+        #   optional :name, type: String, desc: 'name', documentation: { example: 'Rock' }
+        #   optional :city, type: String, desc: 'city', documentation: { example: 'Rock' }
+        #   optional :state, type: String, desc: 'state', documentation: { example: 'Rock' }
+        #   optional :country, type: String, desc: 'country', documentation: { example: 'Rock' }
+        #   optional :legal_representative, type: String, desc: 'legal_representative', documentation: { example: 'Rock' }
+        #   optional :id_type_legal_rep, type: String, desc: 'id_type_legal_rep', documentation: { example: 'Rock' }
+        #   optional :id_number_legal_rep, type: String, desc: 'id_number_legal_rep', documentation: { example: 'Rock' }
+        #   optional :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
+        #   optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
+        #   optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
+        #   optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
+        # end
         # end
 
         params :authorized_provider do
@@ -70,9 +70,6 @@ module V1
           end
         end
       end
-
-
-
 
       resource :autorized_providers do
         #
@@ -128,6 +125,8 @@ module V1
           format_params = V1::Helpers::UserHelper.format_params_files(params)
           p 'despues de ser modificados  params y add files'
           p format_params
+          # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
+          authorized_provider.roles << Role.find_by(name: 'authorized_provider')
           authorized_provider.update_attributes(format_params['authorized_provider']) if format_params['authorized_provider'] && authorized_provider.present?
           authorized_provider.profile.update_attributes(format_params['profile']) if format_params['profile']
           authorized_provider.rucom.update_attributes(format_params['rucom']) if format_params['rucom']

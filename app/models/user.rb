@@ -76,6 +76,7 @@ class User < ActiveRecord::Base
     User.where(id: ids)
   end
 
+  scope :authorized_providers, -> {joins(:roles).where('roles.name = ?', 'authorized_provider')}
   # TODO: this name no make sense here. Update it asap!!!
   scope :providers, -> { joins(:profile).where('profiles.available_credits > ?', 0) }
 

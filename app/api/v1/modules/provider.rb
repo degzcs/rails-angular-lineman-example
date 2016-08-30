@@ -156,7 +156,7 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
-           #binding.pry
+          
           content_type "text/json"
 
           # update params
@@ -169,19 +169,17 @@ module V1
           # chamber_commerce_file = files.select{|file| file['filename'] =~ /chamber_commerce_file/}.first
           photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
           params[:provider].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
-
           provider_params = params[:provider]
           provider = ::User.new(params[:provider])
           provider.external = true
           provider.build_company(params[:company]) if params[:company]
-
 
           if params[:rucom_id]
             rucom = ::Rucom.find(params[:rucom_id]) if params[:rucom_id]
             provider.personal_rucom = rucom
           end
 
-            #binding.pry
+        
 
           if provider.save
             present provider, with: V1::Entities::Provider
@@ -211,6 +209,7 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
+          #binding.pry
           content_type "text/json"
           provider = ::User.providers.find(params[:id])
           provider_params = params[:provider]
