@@ -5,7 +5,7 @@
       .provider-info
         %div{layout: 'row'}
           .photo-container{flex: '30'}
-            %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.thumb.url}}"}
+            %img.face{:alt => "", "ng-src" => "{{currentExternalUser.photo_file.url}}"}
             %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user({ id: currentExternalUser.id })"} Editar Información
 
           .fields-container{flex: '70'}
