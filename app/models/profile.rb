@@ -101,6 +101,17 @@ class Profile < ActiveRecord::Base
     raise EmptyCredits if new_amount <= 0
     update_attribute(:available_credits, new_amount)
   end
+  
+  def there_are_unset_attributes
+    self.first_name.blank? ||
+    self.last_name.blank? ||
+    self.phone.blank? ||
+    self.address.blank? ||
+    self.city_id.blank? ||
+    self.photo_file.url.blank? ||
+    self.id_document_file.url.blank? ||
+    self.mining_register_file.url.blank?
+  end  
 
   protected
 

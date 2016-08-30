@@ -1,0 +1,17 @@
+%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
+  %section{layout: "row"}
+    // ---------------------- seller info ------------------- ///
+    %div.md-padding{flex: ""}
+      %fieldset.standard.tr-fieldset{:layout => "column"}
+        %legend
+          %h3
+            1. Ingrese el documento del Productor
+        %div.fieldset-inputs
+          %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
+
+          %md-input-container{"name"=>"idNumber"}
+            %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin %puntos", "type"=>"Number"}
+            %md-not-found
+
+  .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar

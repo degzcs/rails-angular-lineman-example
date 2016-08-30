@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   # and select this role when the sale will be done on the sale module/service
   # has_many :purchases_as_provider , class_name: "Purchase", as: :provider
   # has_many :sales_as_client, class_name: "Sale", as: :client
-  has_one :personal_rucom, class_name: "Rucom", as: :rucomeable
+  has_one :personal_rucom, class_name: 'Rucom', as: :rucomeable
 
   has_many :credit_billings, dependent: :destroy
   belongs_to :office
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   #
 
   validates :email, presence: true, uniqueness: true, unless: :external
-  validates :office, presence: true , if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
+  validates :office, presence: true, if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
   has_secure_password validations: false
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   # Scopes
   #
 
-  scope :order_by_id, -> {order("users.id DESC")}
+  scope :order_by_id, -> { order('users.id DESC') }
   # TODO: the scraper must to format all the information incoming in order to avoid this kind of queries.
   scope :find_by_name, ->(name){ joins(:profile).where("lower(profile.first_name) LIKE :first_name OR lower(profile.last_name) LIKE :last_name",
               { first_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%", last_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%"})}
@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
   # 0. Barequero, 1. Chatarrero, 2. Solicitante de Legalización De Minería, 3. Beneficiario Área Reserva Especial,
   # 4. Consumidor, 5. Titular , 6. Subcontrato de operación
 
-  scope :barequeros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Barequero')}
+  scope :barequeros, -> { joins(:personal_rucom).where('rucoms.provider_type = ?', 'Barequero') }
   scope :chatarreros, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Chatarrero')}
   scope :solicitantes, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Solicitante Legalización De Minería')}
   scope :beneficiarios, -> {joins(:personal_rucom).where('rucoms.provider_type = ?', 'Beneficiario Área Reserva Especial')}
@@ -149,6 +149,7 @@ class User < ActiveRecord::Base
   state_machine :registration_state, initial: :inserted_from_rucom, use_transactions: true do
 
     before_transition :on => :insert_from_rucom, :do => :there_are_unset_attributes
+    before_transition :on => :paused, :do => :has_profile_or_rucom_unset_attributes
     before_transition :on => :complete, :do => :are_set_all_attributes
 
     state :inserted_from_rucom
@@ -165,7 +166,7 @@ class User < ActiveRecord::Base
     end
 
     event :error do
-      transition :from => [:basic, :inserted_from_rucom], :to => :failure
+      transition :from => [:paused, :inserted_from_rucom], :to => :failure
     end
 
     event :pause_ do
@@ -177,11 +178,23 @@ class User < ActiveRecord::Base
   # Instance Methods
   #
   def there_are_unset_attributes
-    self.email.blank? || self.password.blank?
+    self.email.blank? # || self.password.blank?
   end
 
   def are_set_all_attributes
-    !self.email.blank? && !self.password.blank?
+    !self.email.blank? && !has_profile_or_rucom_unset_attributes
+  end
+
+  def has_profile_or_rucom_unset_attributes
+    has_profile_unset_attributes || has_rucom_unset_attributes
+  end
+
+  def has_profile_unset_attributes
+    self.profile.there_are_unset_attributes
+  end
+
+  def has_rucom_unset_attributes
+    self.rucom.there_are_unset_attributes
   end
 
   #
