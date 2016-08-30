@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, ProviderService, AuthorizedProvider) ->
   #*** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMode = "determinate"
@@ -53,7 +53,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         city: current_user.company.city,
         state: current_user.company.state,
       }
-    else
+    else      
       {
         company_name: 'NA',
         office: 'NA',
@@ -63,7 +63,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         last_name: current_user.last_name,
         address: current_user.address,
         phone: current_user.phone_number,
-        city: current_user.city.name
+        city: if current_user.city then current_user.city.name else ''
       }
 
   #
@@ -375,4 +375,60 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.user_has_enough_credits = ->
     $scope.current_user.available_credits >= $scope.purchase.model.price
+  
+  #
+  #  Formatted the provider data returned from ProviderService
+  #
+  formatted_content = (producer)->
+    prov = 
+      id: producer.id
+      document_number: producer.document_number
+      first_name: producer.first_name
+      last_name: producer.last_name
+      address: producer.address
+      email: producer.email
+      city: producer.city
+      state: producer.state
+      phone_number: producer.phone_number
+      photo_file: producer.photo_file or 'http://robohash.org/' + producer.id
+      identification_number_file: producer.identification_number_file
+      mining_register_file: producer.mining_register_file
+      rut_file: producer.rut_file
+      rucom:
+        id: producer.rucom.id
+        num_rucom: producer.rucom.rucom_number
+        provider_type: producer.rucom.producer_type
+        rucom_status: if producer.rucom.status then producer.rucom.status else if producer.rucom.id then 'Inscrito' else 'No Inscrito'
+        mineral: producer.rucom.minerals
+    return prov
 
+
+  #
+  # Query to return an answer if the rucom exist or no
+  #
+  $scope.queryRucomByIdNumber = (ev, idNumber) ->
+    console.log('ingresa al envento - idNumber: ' + idNumber)
+    if idNumber
+      ProviderService.basicProvider.get {
+        id_number: idNumber
+      }, ((data, status, headers) ->
+          $scope.showLoading = false
+          $scope.current_user = data
+          $scope.purchase.model.seller = data
+          $scope.purchase.model.seller.provider_type = 'Barequero'
+          $scope.purchase.model.seller.document_type = 'CEDULA'
+          console.log 'purchase.model.seller'
+          console.log $scope.purchase.model.seller
+          $scope.buyer_data = buyer_data_from($scope.current_user)
+          #$scope.prov = formatted_content(data)
+          #AuthorizedProvider.response = $scope.prov
+          #AuthorizedProvider.modelToCreate.user_type = 'Barequero'
+          #AuthorizedProvider.saveModelToCreate()
+          $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+          $state.go 'new_purchase.step2', { id: $scope.prov.id, content: $scope.prov}
+          console.log 'desde typeCrtl devuelve a AuthorizedProvider.response: '
+          console.log AuthorizedProvider.response
+      ), (error) ->
+          $scope.prov = error
+          $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+          return
