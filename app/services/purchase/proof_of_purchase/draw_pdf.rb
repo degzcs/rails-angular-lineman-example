@@ -12,9 +12,10 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   # @return [ Purchase::PdfGenerator ] instance with the document created in memory
   def call(options={})
     raise 'You must to provide a purchase_presenter option' if options[:purchase_presenter].blank?
-    raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
+    # raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
     purchase_presenter = options[:purchase_presenter]
-    signature_picture = options[:signature_picture]
+    signature_picture_path = "#{ Rails.root }/spec/support/images/santiago_signature.jpg"
+    signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
     @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor', 'pdfs', 'documento_equivalente_de_compra.pdf'))
     draw_file!(purchase_presenter, signature_picture)
   end
