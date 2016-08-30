@@ -36,6 +36,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Fuctions
   #
 
+  full_name = (current_user) ->
+    return current_user.first_name + ' ' + current_user.last_name
+
   buyer_data_from = (current_user)->
     if current_user.company
       {
@@ -59,6 +62,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         office: 'NA',
         nit: current_user.nit,
         rucom_record: current_user.rucom.num_rucom || current_user.rucom.rucom_record,
+        name: full_name(current_user)
         first_name: current_user.first_name,
         last_name: current_user.last_name,
         address: current_user.address,
@@ -417,6 +421,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.purchase.model.seller = data
           $scope.purchase.model.seller.provider_type = 'Barequero'
           $scope.purchase.model.seller.document_type = 'CEDULA'
+          $scope.purchase.model.seller.name = full_name($scope.current_user)
+          $scope.purchase.model.seller.company_name = "NA"
           console.log 'purchase.model.seller'
           console.log $scope.purchase.model.seller
           $scope.buyer_data = buyer_data_from($scope.current_user)
@@ -425,9 +431,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           #AuthorizedProvider.modelToCreate.user_type = 'Barequero'
           #AuthorizedProvider.saveModelToCreate()
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-          $state.go 'new_purchase.step2', { id: $scope.prov.id, content: $scope.prov}
-          console.log 'desde typeCrtl devuelve a AuthorizedProvider.response: '
-          console.log AuthorizedProvider.response
+          $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
+          #console.log 'desde typeCrtl devuelve a AuthorizedProvider.response: '
+          #console.log AuthorizedProvider.response
       ), (error) ->
           $scope.prov = error
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
