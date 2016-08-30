@@ -420,7 +420,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           console.log 'purchase.model.seller'
           console.log $scope.purchase.model.seller
           $scope.buyer_data = buyer_data_from($scope.current_user)
-          #$scope.prov = formatted_content(data)
+          $scope.prov = formatted_content(data)
           #AuthorizedProvider.response = $scope.prov
           #AuthorizedProvider.modelToCreate.user_type = 'Barequero'
           #AuthorizedProvider.saveModelToCreate()
