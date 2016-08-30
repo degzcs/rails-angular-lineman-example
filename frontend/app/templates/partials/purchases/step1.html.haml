@@ -54,10 +54,10 @@
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %label Registro Rucom
-              %input{"ng-model" => "purchase.model.seller[purchase.model.rucom_id_field]", :name => 'seller_rucom', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller.rucom.rucom_number", :name => 'seller_rucom', :readOnly => 'true'}
             %md-input-container{flex: ""}
               %label Estado Rucom
-              %input{"ng-model" => "purchase.model.seller.rucom_status", :name => 'seller_rucom_status', :readOnly => 'true'}
+              %input{"ng-model" => "purchase.model.seller.rucom.status", :name => 'seller_rucom_status', :readOnly => 'true'}
 
           %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
             %md-progress-circular{"md-mode" => "indeterminate"}
@@ -79,5 +79,6 @@
               /  Tomar Foto
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step0", "ng-click" => ""} Volver
     %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'seller'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
     %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
