@@ -129,7 +129,7 @@ module V1
         end
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           content_type "text/json"
-          external_user = ::User.external_users.find(params[:id])
+          external_user = ::User.authorized_providers.find(params[:id])
           present external_user, with: V1::Entities::ExternalUser
         end
 
