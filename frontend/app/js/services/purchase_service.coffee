@@ -21,7 +21,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       inventory_id: ''
       seller: {} # TODO: udpate seller variable name for seller
       origin_certificate_sequence: ''
-      origin_certificate_file: ''
+      origin_certificate_file_url: ''
       proof_of_purchase_file_url: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
@@ -32,23 +32,23 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       #barcode_html: ''
       code: ''
       rucom_id_field: ''
-    
+
     #
     # HTTP resquests
     #
-    
+
     create: (purchase, gold_batch) ->
       i = 0
       files = []
-      
+
       ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
       blobUtil.imgSrcToBlob(purchase.seller_picture).then((seller_picture_blob) ->
         seller_picture_blob.name = 'seller_picture.png'
         signature_picture = seller_picture_blob
-       
+
         js_pdf = new jsPDF()
-        files = [seller_picture_blob]
-        
+        files = [seller_picture_blob, signature_picture]
+
         $upload.upload(
           headers: {'Content-Type': 'application/json'}
           url: '/api/v1/purchases/'
@@ -74,6 +74,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             model.barcode_html = data.barcode_html
             model.code = data.code
             model.proof_of_purchase_file_url = data.proof_of_purchase_file_url
+            model.origin_certificate_file_url = data.origin_certificate_file_url
             sessionStorage.purchaseService = angular.toJson(model)
             service.model = model
             $location.path('/purchases/show')
@@ -117,7 +118,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     #
     get: (id)->
       return $http({method: "GET", url: "api/v1/purchases/" + id})
-    
+
     #
     #Get all purchases
     #
