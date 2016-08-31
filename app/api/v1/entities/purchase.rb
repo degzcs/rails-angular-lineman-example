@@ -13,8 +13,8 @@ module V1
       expose :proof_of_purchase_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.proof_of_purchase.file.url
       end
-      expose :origin_certificate_file, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
-        purchase.origin_certificate.file
+      expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
+        purchase.origin_certificate.file.url
       end
       expose :seller_picture, documentation: { type: "file", desc: "file", example: "..." }
       expose :origin_certificate_sequence, documentation: { type: "string", desc: "sequence", example: "123456789" }
