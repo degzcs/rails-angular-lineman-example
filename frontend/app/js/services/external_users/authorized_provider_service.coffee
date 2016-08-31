@@ -30,20 +30,13 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
         rut_file: ''
 
     update: (id)->
-      # Photo file
-      console.log('before call API and process the data sended')
-      console.log 'service.modelToCreate'
-      console.log service.modelToCreate
       external_user = service.modelToCreate.authorized_provider
       profile = service.modelToCreate.profile
       files_to_upload = service.modelToCreate.files
       rucom = service.modelToCreate.rucom
 
       blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (external_user_photo_file) ->
-        #external_user_photo_file = photo_file
         external_user_photo_file.name = 'photo_file.png'
-        console.log 'external_user_photo_file'
-        console.log external_user_photo_file
         # Other Files
         filesRemaining = 0;
 
@@ -127,11 +120,6 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
 
         uploadFiles = ->
 
-          #files = [
-          #  external_user_photo_file
-          #  files_to_upload.document_number_file[0]
-          #  files_to_upload.external_user_mining_register_file[0]
-          #]
           if external_user_photo_file
             files.push external_user_photo_file
           if files_to_upload.document_number_file[0]
@@ -139,9 +127,9 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
           if files_to_upload.external_user_mining_register_file[0]
             files.push files_to_upload.external_user_mining_register_file[0]
 
-
           console.log 'Se impreme el array de archivos a cargar: '
           console.log files
+
           $upload.upload(
             url: '/api/v1/autorized_providers/' + id
             method: 'PUT'
@@ -165,9 +153,6 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
             service.clearModelToCreate()
             return
           ).error (data, status, headers, config)->
-            #
-            #TODO: This message has to be validated in case of error
-            #
             $mdDialog.show $mdDialog.alert().title('Alerta - Hubo inconvenientes').content('El Productor no pudo ser Actualizado!').ariaLabel('Alert Dialog Demo').ok('ok')
             $state.go "index_external_user"
             service.clearModelToCreate()
