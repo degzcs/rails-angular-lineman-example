@@ -32,51 +32,42 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       #barcode_html: ''
       code: ''
       rucom_id_field: ''
+    
     #
     # HTTP resquests
     #
-
+    
     create: (purchase, gold_batch) ->
-      # if purchase.origin_certificate_file and purchase.seller_picture
       i = 0
       files = []
+      
       ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
       blobUtil.imgSrcToBlob(purchase.seller_picture).then((seller_picture_blob) ->
-        ##IMPROVE: Setup the filenames in order to receive them properly in server side.
-        ## I am using a Regx in server to know which files is each one
         seller_picture_blob.name = 'seller_picture.png'
         signature_picture = seller_picture_blob
-
-        if purchase.origin_certificate_file[0]
-          files = [purchase.origin_certificate_file[0], seller_picture_blob, signature_picture]
-        else
-          js_pdf = new jsPDF()
-          files = [seller_picture_blob]
-
+       
+        js_pdf = new jsPDF()
+        files = [seller_picture_blob]
+        
         $upload.upload(
-          # headers: {'Content-Type': file.type},
+          headers: {'Content-Type': 'application/json'}
           url: '/api/v1/purchases/'
           method: 'POST'
           fields:
             "purchase[price]": purchase.price,
             "purchase[seller_id]": purchase.seller.id
             "purchase[inventory_id]": purchase.inventory_id
-            #"gold_batch[parent_batches]": gold_batch.parent_batches
             "gold_batch[fine_grams]": gold_batch.total_fine_grams
             "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
-            #"gold_batch[inventory_id]": gold_batch.inventory_id
             "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
             "gold_batch[extra_info]": { grams: gold_batch.total_grams }
           file: files
           fileFormDataName: 'purchase[files][]')
 
         .progress((evt) ->
-            # progressPercentage = parseInt(100.0 * evt.loaded / evt.total)
-            # console.log 'progress: ' + progressPercentage + '% ' + evt.config.file.name
             console.log 'progress: ' + service.impl.uploadProgress + '% ' + evt.config.file
             service.impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
         )
-
         .success (data, status, headers, config) ->
             console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
             model = angular.fromJson(sessionStorage.purchaseService)
@@ -87,14 +78,12 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             service.model = model
             $location.path('/purchases/show')
             $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ok('ok')
-
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image failed to load!!'
-          window.service = service
           $location.path('/purchases/new/purchases/step1')
-          $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
+          $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
+          #$mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
           service.restoreState()
-        # image failed to load
         return
 
     #
@@ -141,8 +130,6 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       }
       sessionStorage.removeItem('purchaseService')
       return
-
-
 
   #
   # Set uploadProgress variable
