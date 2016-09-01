@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, ProviderService, AuthorizedProvider) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, ProviderService, AuthorizedProvider, SignatureService) ->
   #*** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMode = "determinate"
@@ -29,17 +29,17 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    $scope.buyer_data = buyer_data_from($scope.current_user)
+    $scope.buyer_data = buyerDataFrom($scope.current_user)
     window.scope = $scope
 
   #
   # Fuctions
   #
 
-  full_name = (current_user) ->
+  fullName = (current_user) ->
     return current_user.first_name + ' ' + current_user.last_name
 
-  buyer_data_from = (current_user)->
+  buyerDataFrom = (current_user)->
     if current_user.company
       {
         company_name: current_user.company.name,
@@ -56,13 +56,13 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         city: current_user.company.city,
         state: current_user.company.state,
       }
-    else      
+    else
       {
         company_name: 'NA',
         office: 'NA',
         nit: current_user.nit,
         rucom_record: current_user.rucom.num_rucom || current_user.rucom.rucom_record,
-        name: full_name(current_user)
+        name: fullName(current_user)
         first_name: current_user.first_name,
         last_name: current_user.last_name,
         address: current_user.address,
@@ -74,7 +74,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Search one specific seller into the allsellers array
   # @return [Array] with the matched options with the query
 
-  query_for_sellers = (query) ->
+  queryForSellers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
       ExternalUser.query_by_id(query).success (sellers)->
@@ -113,7 +113,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.searchseller = (query)->
     if query
-      promise = query_for_sellers(query)
+      promise = queryForSellers(query)
       promise.then ((sellers) ->
         return sellers
 
@@ -189,8 +189,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   page = 1
 
   $scope.format_seller = (seller)->
-    console.log "el rucom"
-    #console.log seller.rucom
     rucom = seller.rucom
     return {
       id: seller.id
@@ -202,7 +200,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       address: seller.address
       email: seller.email
       phone_number: seller.phone_number || seller.phone
-      photo_file: seller.photo_file or 'http://robohash.org/' + seller.id
+      photo_file: seller.photo_file
       num_rucom: rucom.num_rucom
       rucom_record: rucom.rucom_record
       seller_type: rucom.seller_type
@@ -283,7 +281,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     console.log 'deleting models ...'
 
   #
-  # Save the values in SessionStorage
+  # Save values in SessionStorage
   $scope.saveState= ->
     console.log('saving purchase and gold batch states on sessionStore ... ')
     $scope.purchase.saveState()
@@ -379,12 +377,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   $scope.user_has_enough_credits = ->
     $scope.current_user.available_credits >= $scope.purchase.model.price
-  
+
   #
   #  Formatted the provider data returned from ProviderService
   #
-  formatted_content = (producer)->
-    prov = 
+  formattedContent = (producer)->
+    prov =
       id: producer.id
       document_number: producer.document_number
       first_name: producer.first_name
@@ -394,7 +392,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       city: producer.city
       state: producer.state
       phone_number: producer.phone_number
-      photo_file: producer.photo_file or 'http://robohash.org/' + producer.id
+      photo_file: producer.photo_file
       identification_number_file: producer.identification_number_file
       mining_register_file: producer.mining_register_file
       rut_file: producer.rut_file
@@ -421,12 +419,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.purchase.model.seller = data
           $scope.purchase.model.seller.provider_type = 'Barequero'
           $scope.purchase.model.seller.document_type = 'CEDULA'
-          $scope.purchase.model.seller.name = full_name($scope.current_user)
+          $scope.purchase.model.seller.name = fullName($scope.current_user)
           $scope.purchase.model.seller.company_name = "NA"
-          console.log 'purchase.model.seller'
-          console.log $scope.purchase.model.seller
-          $scope.buyer_data = buyer_data_from($scope.current_user)
-          $scope.prov = formatted_content(data)
+          $scope.buyer_data = buyerDataFrom($scope.current_user)
+          $scope.prov = formattedContent(data)
           #AuthorizedProvider.response = $scope.prov
           #AuthorizedProvider.modelToCreate.user_type = 'Barequero'
           #AuthorizedProvider.saveModelToCreate()
@@ -438,3 +434,14 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.prov = error
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
           return
+
+  #
+  # Signature services
+  #
+  # Allows to see if the device is connected.
+  #
+  $scope.restartSessionDevice = ->
+    SignatureService.restartSession()
+
+  $scope.captureSignature = ->
+    SignatureService.Capture()
