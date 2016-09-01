@@ -85,8 +85,15 @@
               %md-input-container{"flex"=>""}
                 %label Numero de Indentificacion
                 %input{"readonly" => "true", "ng-model" => "buyer_data.nit", "type" => "text"}
+    %section{flex: '', layout: 'row'}
+      %div{flex: ''}
+        %textarea{ cols: "125", rows: "15", id: "txtDisplay" }
+      %div{flex: ''}
+        #imageBox{  flex: ''}
+          image here
 
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+      %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Verificar Device
       %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
-      %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step3"} Firmar
+      %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
       %md-button.btn-save{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "20", "ng-click" => "saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
