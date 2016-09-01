@@ -85,12 +85,15 @@
               %md-input-container{"flex"=>""}
                 %label Numero de Indentificacion
                 %input{"readonly" => "true", "ng-model" => "buyer_data.nit", "type" => "text"}
-    %section{flex: '', layout: 'row'}
+    %section{flex: '', layout: 'column'}
       %div{flex: ''}
-        %textarea{ cols: "125", rows: "15", id: "txtDisplay" }
+        %textarea{ cols: "125", rows: "5", id: "txtDisplay", style: 'overflow: hidden;'}
       %div{flex: ''}
-        #imageBox{  flex: ''}
-          image here
+        #imageBox{  flex: '', style: 'width: 300px; height: 200px;'}
+      %div{flex: ''}
+        .signature-text
+          Firma
+
 
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
       %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Verificar Device
