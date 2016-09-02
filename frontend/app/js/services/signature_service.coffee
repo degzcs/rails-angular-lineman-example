@@ -151,6 +151,6 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
         service.printInBox 'Session error. Restarting the session.'
         service.restartSession window.Capture
         return
-      service.dynCapt.Capture service.sigCtl, service.authorizedProviderName, 'Compra Mineral Precioso', null, null, onDynCaptCapture
+      service.dynCapt.Capture service.sigCtl, service.authorizedProviderName, 'Compra Mineral', null, null, onDynCaptCapture
       return
   return service
