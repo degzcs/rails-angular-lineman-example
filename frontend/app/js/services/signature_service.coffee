@@ -6,6 +6,7 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
     sigObj: null
     sigCtl: null
     dynCapt: null
+    authorizedProviderName: 'Proveedor Autorizado'
     # Show the exeptions
     Exception: (txt)->
       service.printInBox("Exception: " + txt)
@@ -32,19 +33,19 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
     restartSession: (callback) ->
       timedDetect= ->
         if service.wgssSignatureSDK.running
-          service.printInBox 'Signature SDK Service detected.'
+          service.printInBox 'Servicio SDK de firma detectado.'
           start()
         else
-          service.printInBox 'Signature SDK Service not detected.'
+          service.printInBox 'Servicio SDK de firma no detectado.'
         return
 
       onDetectRunning= ->
         if service.wgssSignatureSDK.running
-          service.printInBox 'Signature SDK Service detected.'
+          service.printInBox 'Servicio SDK de firma detectado.'
           clearTimeout timeout
           start()
         else
-          service.printInBox 'Signature SDK Service not detected.'
+          service.printInBox 'Servicio SDK de firma no detectado.'
         return
 
       start= ->
@@ -76,7 +77,7 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
 
       onSigCtlGetProperty= (sigCtlV, property, status) ->
         if service.wgssSignatureSDK.ResponseStatus.OK == status
-          service.printInBox 'DLL: flSigCOM.dll  v' + property.text
+          #service.printInBox 'DLL: flSigCOM.dll  v' + property.text
           service.dynCapt.GetProperty 'Component_FileVersion', onDynCaptGetProperty
         else
           service.printInBox 'SigCtl GetProperty error: ' + status
@@ -84,9 +85,9 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
 
       onDynCaptGetProperty= (dynCaptV, property, status) ->
         if service.wgssSignatureSDK.ResponseStatus.OK == status
-          service.printInBox 'DLL: flSigCapt.dll v' + property.text
-          service.printInBox 'Test application ready.'
-          service.printInBox 'Press \'Start\' to capture a signature.'
+          #service.printInBox 'DLL: flSigCapt.dll v' + property.text
+          service.printInBox 'La aplicacion esta lista!!!'
+          service.printInBox 'Presione el boton \'FIRMAR\' para capturar la firma.'
           if 'function' == typeof callback
             callback()
         else
@@ -137,16 +138,12 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
 
       onRenderBitmap= (sigObjV, bmpObj, status) ->
         if service.wgssSignatureSDK.ResponseStatus.OK == status
-          console.log('I am in Ok status')
           imageBox = document.getElementById('imageBox')
           if null == imageBox.firstChild
-            console.log('I am in imageBox detected')
             imageBox.appendChild bmpObj.image
           else
-            console.log('I am in imageBox was NOT detected')
             imageBox.replaceChild bmpObj.image, imageBox.firstChild
         else
-          console.log('I am in NOT OK status')
           service.printInBox 'Signature Render Bitmap error: ' + status
         return
 
@@ -154,6 +151,6 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
         service.printInBox 'Session error. Restarting the session.'
         service.restartSession window.Capture
         return
-      service.dynCapt.Capture service.sigCtl, 'who', 'why', null, null, onDynCaptCapture
+      service.dynCapt.Capture service.sigCtl, service.authorizedProviderName, 'Compra Mineral Precioso', null, null, onDynCaptCapture
       return
   return service

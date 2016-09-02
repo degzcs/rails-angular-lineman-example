@@ -85,18 +85,17 @@
               %md-input-container{"flex"=>""}
                 %label Numero de Indentificacion
                 %input{"readonly" => "true", "ng-model" => "buyer_data.nit", "type" => "text"}
-    %section{flex: '', layout: 'column'}
-      %div{flex: ''}
-        %textarea{ cols: "125", rows: "5", id: "txtDisplay", style: 'overflow: hidden;'}
-      %div{flex: ''}
-        #imageBox{  flex: '', style: 'width: 500px; height: 100px;'}
-      %div{flex: ''}
+    %section.signature-section.md-padding{flex: '', layout: 'column'}
+      %div{flex: '', layout: 'row', "layout-align"=>"center center"}
+        %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
+      %div{flex: '', layout: 'row', "layout-align"=>"center center"}
+        #imageBox{  flex: ''}
+      %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
         .signature-text
           Firma
 
-
-    .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-      %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Verificar Device
+    .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"end end"}
+      %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
       %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
       %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
       %md-button.btn-save{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "20", "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar

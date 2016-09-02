@@ -410,7 +410,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Query to return an answer if the rucom exist or no
   #
   $scope.queryRucomByIdNumber = (ev, idNumber) ->
-    console.log('ingresa al envento - idNumber: ' + idNumber)
     if idNumber
       ProviderService.basicProvider.get {
         id_number: idNumber
@@ -443,6 +442,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   $scope.restartSessionDevice = ->
     SignatureService.imageId = 'purchase_signature'
+    SignatureService.authorizedProviderName = $scope.purchase.model.seller.name
     SignatureService.restartSession()
 
   $scope.captureSignature = ->

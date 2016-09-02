@@ -129,6 +129,21 @@ md-card.seller{
   }
 }
 
+.signature-section{
+  #imageBox{
+    padding-top: 10px;
+    width: 500px;
+    height: 100px;
+  }
+  .signature-text-wrapper{
+    .signature-text{
+      width: 500px;
+      text-align: center;
+      border-top: 1px solid #000;
+    }
+  }
+}
+
 .upload-oc{
   border: 1px solid #eee;
   min-height: 150px;
@@ -155,3 +170,4 @@ md-card.seller{
     padding: 18px 0 0 0;
   }
 }
+
