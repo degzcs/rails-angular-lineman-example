@@ -22,7 +22,7 @@ set :keep_releases, '5'
 # dirs we want symlinked to the shared folder
 # during deployment
 set :linked_dirs, %w{uploads log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
-set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml config/.env frontend/config/application.coffee}
+set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml config/.env frontend/config/application.coffee config/rucom_service.yml}
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deploy/code/trazoro'
