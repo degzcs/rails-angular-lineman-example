@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.6.1'
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
 set :rbenv_ruby, File.read('.ruby-version').strip
@@ -22,7 +22,7 @@ set :keep_releases, '5'
 # dirs we want symlinked to the shared folder
 # during deployment
 set :linked_dirs, %w{uploads log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
-set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml config/.env}
+set :linked_files, %w{config/database.yml config/app_config.yml config/secrets.yml config/.env frontend/config/application.coffee}
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deploy/code/trazoro'

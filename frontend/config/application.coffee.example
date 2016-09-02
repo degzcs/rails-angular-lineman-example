@@ -3,8 +3,8 @@
 #
 
 module.exports = (lineman) ->
-	# NgTemplate config
-  	ngtemplates: app:
+  # NgTemplate config
+    ngtemplates: app:
       options: base: 'generated/templates'
       src: 'generated/templates/**/*.html'
       dest: '<%= files.ngtemplates.dest %>'
