@@ -120,11 +120,7 @@ module V1
         ] do
           content_type 'text/json'
           authorized_provider = ::User.find(params[:id])
-          p 'antes de ser modificados params y add files'
-          p params
           format_params = V1::Helpers::UserHelper.format_params_files(params)
-          p 'despues de ser modificados  params y add files'
-          p format_params
           # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
           authorized_provider.roles << Role.find_by(name: 'authorized_provider')
           authorized_provider.update_attributes(format_params['authorized_provider']) if format_params['authorized_provider'] && authorized_provider.present?
