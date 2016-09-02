@@ -9,13 +9,11 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
   # @return [ Hash ] with the success or errors
   def call(options={})
     raise 'You must to provide a purchase option' if options[:purchase].blank?
-    # raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
+    raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
     raise 'You must to provide a purchase option' if options[:date].blank?
     purchase_presenter = PurchasePresenter.new(options[:purchase], nil)
     date_to_day = options[:date]
-    # signature_picture = options[:signature_picture]
-    signature_picture_path = "#{ Rails.root }/spec/support/images/santiago_signature.jpg"
-    signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
+    signature_picture = options[:signature_picture]
     begin
       generate_certificate(purchase_presenter, signature_picture, date_to_day)
       @response[:success] = true
