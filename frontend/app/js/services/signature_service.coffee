@@ -1,6 +1,7 @@
 angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $mdDialog, $state) ->
 
   service =
+    imageId: ''
     wgssSignatureSDK: null
     sigObj: null
     sigCtl: null
@@ -116,7 +117,7 @@ angular.module('app').factory 'SignatureService', ($resource, $upload, $http, $m
               service.printInBox 'Signature captured successfully'
               flags = service.wgssSignatureSDK.RBFlags.RenderOutputBase64 | service.wgssSignatureSDK.RBFlags.RenderColor24BPP
               imageBox = document.getElementById('imageBox')
-              service.sigObj.RenderBitmap 'bmp', imageBox.clientWidth, imageBox.clientHeight, 0.7, 0x00000000, 0x00FFFFFF, flags, 0, 0, onRenderBitmap
+              service.sigObj.RenderBitmap 'bmp', imageBox.clientWidth, imageBox.clientHeight, 0.7, 0x00000000, 0x00FFFFFF, flags, 0, 0, service.imageId, onRenderBitmap
             when service.wgssSignatureSDK.DynamicCaptureResult.DynCaptCancel
               service.printInBox 'Signature capture cancelled'
             when service.wgssSignatureSDK.DynamicCaptureResult.DynCaptPadError
