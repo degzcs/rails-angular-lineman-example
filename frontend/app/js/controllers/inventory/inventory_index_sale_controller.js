@@ -81,7 +81,7 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
         // Default sale entity parameters
         id: sales[i].id,
         courier_id: sales[i].courier_id,
-        buyer_id: sales[i].buyer_id,
+        buyer_id: sales[i].buyer.id,
         user_id: sales[i].user_id,
         buyer_name: sales[i].buyer.first_name + " " + sales[i].buyer.last_name,
         price: sales[i].price,
