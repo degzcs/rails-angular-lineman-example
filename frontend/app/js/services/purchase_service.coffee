@@ -32,6 +32,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       #barcode_html: ''
       code: ''
       rucom_id_field: ''
+      signature_picture: ''
 
     #
     # HTTP resquests
@@ -40,52 +41,63 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     create: (purchase, gold_batch) ->
       i = 0
       files = []
+      console.log 'IN'
 
       ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
-      blobUtil.imgSrcToBlob(purchase.seller_picture).then((seller_picture_blob) ->
-        seller_picture_blob.name = 'seller_picture.png'
-        signature_picture = seller_picture_blob
+      blobUtil.imgSrcToBlob(purchase.seller_picture).then( (seller_picture_blob) ->
+        seller_picture_blob.name= 'seller_picture.png'
+        signature_picture_blob = ''
 
-        js_pdf = new jsPDF()
-        files = [seller_picture_blob, signature_picture]
-
-        $upload.upload(
-          headers: {'Content-Type': 'application/json'}
-          url: '/api/v1/purchases/'
-          method: 'POST'
-          fields:
-            "purchase[price]": purchase.price,
-            "purchase[seller_id]": purchase.seller.id
-            "purchase[inventory_id]": purchase.inventory_id
-            "gold_batch[fine_grams]": gold_batch.total_fine_grams
-            "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
-            "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
-            "gold_batch[extra_info]": { grams: gold_batch.total_grams }
-          file: files
-          fileFormDataName: 'purchase[files][]')
-
-        .progress((evt) ->
-            console.log 'progress: ' + service.impl.uploadProgress + '% ' + evt.config.file
-            service.impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
-        )
-        .success (data, status, headers, config) ->
-            console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
-            model = angular.fromJson(sessionStorage.purchaseService)
-            model.barcode_html = data.barcode_html
-            model.code = data.code
-            model.proof_of_purchase_file_url = data.proof_of_purchase_file_url
-            model.origin_certificate_file_url = data.origin_certificate_file_url
-            sessionStorage.purchaseService = angular.toJson(model)
-            service.model = model
-            $location.path('/purchases/show')
-            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ok('ok')
+        blobUtil.imgSrcToBlob(purchase.signature_picture).then( (signature_picture_blob) ->
+          signature_picture_blob.name = 'signature_picture.png'
+          files = [seller_picture_blob, signature_picture_blob]
+          service.uploadFiles(files, purchase, gold_batch)
         ).catch (err) ->
-          console.log '[SERVICE-ERROR]: image failed to load!!'
-          $location.path('/purchases/new/purchases/step1')
-          $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
-          #$mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
-          service.restoreState()
-        return
+        console.log '[SERVICE-ERROR]: image failed to load!!'
+        location.path('/purchases/new/purchases/step4')
+        $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
+        $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
+        service.restoreState()
+      ).catch (err) ->
+        console.log '[SERVICE-ERROR]: image failed to load!!' + err
+        location.path('/purchases/new/purchases/step4')
+        $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
+        $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
+        service.restoreState()
+
+    uploadFiles: (files, purchase, gold_batch) ->
+      $upload.upload(
+        headers: {'Content-Type': 'application/json'}
+        url: '/api/v1/purchases/'
+        method: 'POST'
+        fields:
+          "purchase[price]": purchase.price,
+          "purchase[seller_id]": purchase.seller.id
+          "purchase[inventory_id]": purchase.inventory_id
+          "gold_batch[fine_grams]": gold_batch.total_fine_grams
+          "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
+          "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
+          "gold_batch[extra_info]": { grams: gold_batch.total_grams }
+        file: files
+        fileFormDataName: 'purchase[files][]')
+
+      .progress((evt) ->
+          console.log 'progress: ' + service.impl.uploadProgress + '% ' + evt.config.file
+          service.impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
+      )
+      .success (data, status, headers, config) ->
+          console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
+          model = angular.fromJson(sessionStorage.purchaseService)
+          model.barcode_html = data.barcode_html
+          model.code = data.code
+          model.proof_of_purchase_file_url = data.proof_of_purchase_file_url
+          model.origin_certificate_file_url = data.origin_certificate_file_url
+          sessionStorage.purchaseService = angular.toJson(model)
+          service.model = model
+          $location.path('/purchases/show')
+          $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ok('ok')
+
+      return
 
     #
     # Save, restore and  delete model temporal states
