@@ -20,7 +20,7 @@
  // ganancia (utilidad por gramos) (preocio final - precio inicial)/ cantd. de gramos
  // 
 
-angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdDialog, SaleService){
+angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdDialog, SaleService, $state){
 
 	$scope.toggleSearch = false;
 
@@ -118,6 +118,46 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
     return $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud');
   });
 
+  // SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
+  //       $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
+  //       $mdDialog.cancel dialog
+  //       SaleService.model.id = sale.id
+  //       SaleService.model.courier_id = sale.courier_id
+  //       SaleService.model.buyer_id = sale.buyer_id
+  //       SaleService.model.user_id = sale.user_id
+  //       SaleService.model.gold_batch_id = sale.gold_batch_id
+  //       SaleService.model.fine_grams = sale.fine_grams
+  //       SaleService.model.code = sale.code
+  //       SaleService.model.barcode_html = sale.barcode_html
+  //       SaleService.model.selectedPurchases = $scope.selectedPurchases
+  //       SaleService.model.totalAmount = $scope.totalAmount
+  //       SaleService.model.price = sale.price
+  //       SaleService.model.purchase_files_collection = sale.purchase_files_collection
+  //       SaleService.model.proof_of_sale = sale.proof_of_sale
+  //       SaleService.saveState()
+  //       $state.go('show_sale')
+  //     ).error (data, status, headers, config) ->
+  //       $scope.infoAlert('EEROR', 'No se pudo realizar la solicitud')
+
+  $scope.showInventorySale = function(item) {
+    SaleService.model.id = item.id;
+    SaleService.model.courier_id = item.courier_id
+    SaleService.model.buyer_id = item.buyer_id
+    SaleService.model.user_id = item.user_id
+    SaleService.model.gold_batch_id = item.gold_batch_id
+    SaleService.model.fine_grams = item.fine_grams
+    SaleService.model.code = item.code
+    SaleService.model.barcode_html = item.barcode_html
+    SaleService.model.selectedPurchases = item.selectedPurchases
+    SaleService.model.totalAmount = item.totalAmount
+    SaleService.model.gold_batch = item.gold_batch
+    SaleService.model.price = item.price //no secure
+    SaleService.model.purchase_files_collection = item.purchase_files_collection
+    SaleService.model.proof_of_sale = item.proof_of_sale;
+    SaleService.saveState();
+    $state.go('show_inventory_sale');
+    };
+  window.scope = $scope
   $scope.infoAlert = function(title, content) {
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'));
     // .finally(function() {
