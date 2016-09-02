@@ -20,15 +20,9 @@
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3{:ng-if => "purchase.model.type == 'seller'"}
-            2. Seleccione un Proveedor
+            2. Proveedor
           %h3{:ng-if => "purchase.model.type == 'trazoro'"}
             2. Ingrese el codigo de barras
-
-        %md-autocomplete{:ng-if => "purchase.model.type == 'seller'", "md-selected-item"=>"purchase.model.seller", "md-search-text"=> "searchText", "md-items" => "seller in searchseller(searchText)", "md-no-cache" => "true", "md-item-text"=>"seller.name", "placeholder" => "Buscar Proveedor por Cedula", "md-selected-item-change" => "selectedsellerChange(seller)","md-search-text-change"=>"getQuery(searchText)"}
-          %span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} {{seller.first_name}} {{seller.last_name}} - c.c. {{seller.document_number}}
-          %md-not-found
-            No se encontraron proveedores
-
 
         %div.fieldset-inputs
           %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
