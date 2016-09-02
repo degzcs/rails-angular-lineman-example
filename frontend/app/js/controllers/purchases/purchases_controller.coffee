@@ -92,7 +92,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
             address: sellers[i].address
             email: sellers[i].email
             phone_number: sellers[i].phone_number || sellers[i].phone
-            photo_file: sellers[i].photo_file or 'http://robohash.org/' + sellers[i].id
+            photo_file: sellers[i].photo_file
             num_rucom: sellers[i].rucom.num_rucom
             rucom_record: sellers[i].rucom.rucom_record
             seller_type: sellers[i].rucom.seller_type
@@ -234,7 +234,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     CameraService.setTypeFile(type)
 
   # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price]', ->
+  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -248,6 +248,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
     #Price
     $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
+    $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 1000)
 
   #
   # Flush Data

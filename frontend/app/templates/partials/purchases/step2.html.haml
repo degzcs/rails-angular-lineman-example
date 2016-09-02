@@ -11,12 +11,17 @@
             %div{"ng-messages" => "purchaseForm.degre.$error"}
               %div{"ng-message" => "required"} * Este campo es requerido.
         .fine-gram-unit-price{'flex' => ''}
-          %h5 Valor por unidad de gramo fino en Pesos Colombianos(COP)
+          %h5 Valor gramo fino de vender en COP
           %md-input-container
             %label Precio de gramo fino por unidad
             %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1"}
             %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
               %div{"ng-message" => "required"} * Este campo es requerido.
+        .price-to-buy{ 'flex' => ''}
+          %h5 Valor gramo fino de comprar en COP
+          %md-input-container
+            %label Precio de gramo fino por unidad
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1"}
 
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
