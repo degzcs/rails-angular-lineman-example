@@ -441,7 +441,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Allows to see if the device is connected.
   #
   $scope.restartSessionDevice = ->
+    SignatureService.imageId = 'purchase_signature'
     SignatureService.restartSession()
 
   $scope.captureSignature = ->
     SignatureService.Capture()
+  $scope.saveSignature = ->
+    $scope.purchase.model.signature_picture = document.getElementById('purchase_signature').src
