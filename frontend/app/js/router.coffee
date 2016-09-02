@@ -635,7 +635,7 @@
           deferred.resolve()
         deferred.promise
   )
-  
+
   .state("new_purchase.step1",
     url: "/purchases/step1",
     ncyBreadcrumb:
@@ -691,7 +691,7 @@
   )
 
   .state("new_purchase.step4",
-    url: "/step3",
+    url: "/step4",
     ncyBreadcrumb:
       label: 'Previsualizar Factura'
     views:
@@ -881,8 +881,8 @@
       label: 'Inventario de compras'
     views:
       'content':
-        # partials/inventory/index_purchase.html partial list_inventory (tab purchase) 
-        templateUrl: "partials/inventory/index.html" # TODO: Refactor to leave the old version 
+        # partials/inventory/index_purchase.html partial list_inventory (tab purchase)
+        templateUrl: "partials/inventory/index.html" # TODO: Refactor to leave the old version
         controller: "InventoryPurchaseIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
@@ -907,8 +907,8 @@
       label: 'Inventario de ventas'
     views:
       'content':
-        templateUrl: "partials/inventory/index_sale.html" 
-        controller: "InventorySaleIndexCtrl" 
+        templateUrl: "partials/inventory/index_sale.html"
+        controller: "InventorySaleIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -923,9 +923,9 @@
           $location.path "/login"
         else
           deferred.resolve()
-        deferred.promise  
+        deferred.promise
   )
-  
+
   .state("show_inventory",
     url: "/inventory/detail",
     ncyBreadcrumb:
