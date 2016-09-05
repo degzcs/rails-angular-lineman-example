@@ -9,7 +9,7 @@ module V1
             files = params[:purchase].slice(:files)[:files]
             # origin_certificate_file = files.reject{|file| file['filename'] =~ /seller_picture/}.first
             seller_picture = files.select{|file| file['filename'] =~ /seller_picture/}.first
-            signature_picture = files.select{|file| file['filename'] =~ /signature_picture/}.last
+            signature_picture = files.select{|file| file['filename'] =~ /signature/}.last
 
             # TODO: this implementattion has to be changed in order to work with the new trazoro purchase requiriments. This cause problems with the normal purchases.
 
