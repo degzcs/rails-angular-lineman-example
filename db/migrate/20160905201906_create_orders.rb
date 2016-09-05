@@ -6,6 +6,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :type
       t.string :code
       t.string :price
+      t.string :seller_picture
       t.boolean :trazoro
 
       t.timestamps

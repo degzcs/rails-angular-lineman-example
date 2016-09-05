@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20160905201906) do
     t.string   "type"
     t.string   "code"
     t.string   "price"
+    t.string   "seller_picture"
     t.boolean  "trazoro"
     t.datetime "created_at"
     t.datetime "updated_at"
