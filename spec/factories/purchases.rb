@@ -16,7 +16,7 @@
 #
 
 FactoryGirl.define do
-  factory :purchase do
+  factory :purchase, class: Order do
     seller { create(:user, :with_company) } # seller
     inventory { create(:inventory) }
     gold_batch { create(:gold_batch) }

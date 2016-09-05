@@ -20,8 +20,7 @@ class User < ActiveRecord::Base
 
   has_one :profile, dependent: :destroy
   has_one :inventory, dependent: :destroy
-  has_many :purchases, through: :inventory
-  has_many :sales, through: :inventory
+  has_many :orders
   has_one :personal_rucom, class_name: 'Rucom', as: :rucomeable
   has_many :credit_billings, dependent: :destroy
   belongs_to :office
@@ -84,7 +83,7 @@ class User < ActiveRecord::Base
 
   after_create :create_inventory
 
-  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles
+  accepts_nested_attributes_for :orders, :credit_billings, :office, :profile, :personal_rucom, :roles
 
   #
   # Delegates

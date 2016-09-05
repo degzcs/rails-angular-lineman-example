@@ -14,7 +14,7 @@
 #
 
 FactoryGirl.define do
-  factory :sale do
+  factory :sale, class: Order do
     courier
     inventory { create(:inventory) } # Seller
     buyer { User.where(email: 'diego.gomez@trazoro.co').first || create(:external_user) } # Buyer

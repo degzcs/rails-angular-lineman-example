@@ -18,7 +18,7 @@ class SoldBatch < ActiveRecord::Base
   # Associations
   #
 
-  belongs_to :sale
+  belongs_to :order
   belongs_to :gold_batch
 
   #
