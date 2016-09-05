@@ -6,7 +6,7 @@ class UserPresenter < BasePresenter
     if has_office?
       company.rucom.rucom_number
     else
-      rucom_record
+      user.rucom.rucom_number
     end
   end
 
