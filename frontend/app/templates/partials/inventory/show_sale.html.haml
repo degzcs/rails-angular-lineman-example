@@ -122,20 +122,18 @@
               %td {{associatedPurchase.seller.provider_type}} 
               %td {{associatedPurchase.fine_grams}}
               %td
-            %tr.table-last
-              %td
-              %td
-              %td
-              %td
+            %tr.table-last{ layout: "row", layout-align: "end end" }
+              %td  
                 %h2
                   %strong
                     Gramos Totales:
-                    %br
+                    
                     {{totalAmount}} grs
+              %td
                 %h2
                   %strong
                     Precio Total:
-                    %br
+                    
                     ${{price}}
 
 
