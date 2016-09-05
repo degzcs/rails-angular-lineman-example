@@ -8,9 +8,9 @@ describe 'Purchase' do
         @token = @buyer.create_token
         file_path = "#{Rails.root}/spec/support/images/image.png"
         seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
+        signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
         file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
         seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
-        signature_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
         signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
         # add signature.picture in @files for sending parameters correct
         @files = [file, seller_picture, signature_picture]
@@ -66,7 +66,6 @@ describe 'Purchase' do
           }
 
           expected_files = {
-           'origin_certificate_file' => 'origin_certificate.pdf',
            'seller_picture' => 'seller_picture.png',
           }
 
@@ -84,7 +83,7 @@ describe 'Purchase' do
             expect(JSON.parse(response.body)['gold_batch'][key]).to eq value
           end
 
-          expected_files.each do |key , value|
+          expected_files.each do |key, value|
             expect(JSON.parse(response.body)[key]['url']).to match value
           end
         end
