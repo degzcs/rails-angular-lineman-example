@@ -34,7 +34,7 @@ angular.module('app').controller('CouriersNewCtrl', function($scope, $window, $m
         }
     }, true); // objectEquality = true
 
-    $scope.back = function() {
+    $scope.comeBack = function() {
       $window.history.back();
     };
 
@@ -46,10 +46,9 @@ angular.module('app').controller('CouriersNewCtrl', function($scope, $window, $m
 	};
 
     $scope.newCourier = function() {
-      console.log(JSON.stringify($scope.courier));
       $resource = CourierService.create($scope.courier);
       if($resource){
-        $resource .save($scope.courier);
+        $resource.save($scope.courier);
         $scope.infoAlert('Transportador', 'Transportador registrado!');
       } else{
       	$scope.infoAlert('No se pudo hacer el registro', 'Ingrese todos los datos');

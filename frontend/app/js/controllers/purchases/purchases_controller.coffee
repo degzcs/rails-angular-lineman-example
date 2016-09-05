@@ -1,4 +1,5 @@
 angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, ProviderService, AuthorizedProvider, SignatureService) ->
+
   #*** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMode = "determinate"
@@ -30,7 +31,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   CurrentUser.get().success (data) ->
     $scope.current_user = data
     $scope.buyer_data = buyerDataFrom($scope.current_user)
-    window.scope = $scope
 
   #
   # Fuctions
@@ -423,6 +423,8 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.purchase.model.seller.company_name = "NA"
           $scope.buyer_data = buyerDataFrom($scope.current_user)
           $scope.prov = formattedContent(data)
+          $scope.purchase.model.seller.name = full_name($scope.current_user)
+          $scope.purchase.model.seller.company_name = "NA"
           #AuthorizedProvider.response = $scope.prov
           #AuthorizedProvider.modelToCreate.user_type = 'Barequero'
           #AuthorizedProvider.saveModelToCreate()
@@ -449,3 +451,5 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     SignatureService.Capture()
   $scope.saveSignature = ->
     $scope.purchase.model.signature_picture = document.getElementById('purchase_signature').src
+
+         

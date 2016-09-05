@@ -38,7 +38,7 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
         #return
 
 
-      $scope.show_inventory = (item)->
+      $scope.show_inventory_purchase = (item)->
         PurchaseService.model.price = item.price
         PurchaseService.model.seller_picture = item.seller_picture
         PurchaseService.model.origin_certificate_sequence = item.origin_certificate_sequence

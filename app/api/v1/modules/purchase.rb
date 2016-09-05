@@ -123,7 +123,6 @@ module V1
           authorize! :read, ::Purchase
           content_type "text/json"
           purchase = ::Purchase.find(params[:id])
-          authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end
       end

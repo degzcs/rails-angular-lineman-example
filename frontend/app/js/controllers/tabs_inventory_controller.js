@@ -1,3 +1,4 @@
+// NOTA this is the way corret to do a tab (incomplete)
 // angular.module('app').controller('TabInventoryCtrl', ['$scope', function ($scope) {
 
 // 	.$scope.tabs = [{

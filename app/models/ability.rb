@@ -42,6 +42,7 @@ class Ability
     # (a) can :update, Profile, :registration_state == "authorized?"
     can [:create, :read], Sale
     can [:create, :read], Purchase
+    can :read, User
   end
 
   def authorized_provider
@@ -50,8 +51,8 @@ class Ability
 
   # tracer
   # can update user (proveedor) authorized
-  # can [purchase, sale, ] create read
-  # can read inventory
+  # can [purchase, sale, ] create read   <--
+  # can read inventory---------------------|
   # courier only will be created by admin
   # A trader just can update provider when created and registration_status in "inicialized"(a)
   # rucoms public, just read

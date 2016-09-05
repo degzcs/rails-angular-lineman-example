@@ -31,7 +31,7 @@
             %td
               .trazoro-state.tag{"ng-if"=>"item.trazoro"}
                 Trazoro
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory(item)"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
+            %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory_purchase(item)"} {{h.field.indexOf('date') > 0 ? (item[h.field] | date) : item[h.field]}}
 
 
             

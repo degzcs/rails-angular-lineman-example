@@ -5,7 +5,7 @@
       
       Ingrese los datos del nuevo transportador
 
-    %form{:name => "courierForm", "ng-submit" => "newCourier()", "novalidate" => "novalidate"}
+    %form{:name => "courierForm", "novalidate" => "novalidate"}
       .provider-info
         %div{layout: 'row'}
           .photo-container{flex: '30'}
@@ -49,6 +49,6 @@
                 %label Placas/Numero de Vuelo
                 %input{:name => "nit_company_number", "ng-model" => "courier.nit_company_number", :placeholder => "900555555-6"}
             %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-              %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Cancel
-              %md-button.md-raised.btn-save{"ng-disabled" => "!courierForm.$valid || !saveBtnEnabled", :type => "submit"} Guardar
+              %md-button.md-raised{"ng-click" => "comeBack()"} Cancel
+              %md-button.md-raised.btn-save{"ng-disabled" => "!courierForm.$valid || !saveBtnEnabled", "ng-click" => "newCourier()"} Guardar
           

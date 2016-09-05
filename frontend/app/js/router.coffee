@@ -974,6 +974,33 @@
           deferred.resolve()
         deferred.promise
   )
+
+  .state("show_inventory_sale",
+    url: "inventory/saledetail",
+    ncyBreadcrumb:
+      label: 'Detalle de venta'
+    views:
+      'content':
+        templateUrl:'partials/inventory/show_sale.html'
+        controller:'InventoryShowSaleCtrl'
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise  
+
+  )
+
   .state("show_sale",
     url: "/sale/info",
     ncyBreadcrumb:
