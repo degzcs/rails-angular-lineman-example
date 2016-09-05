@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160906224754) do
+ActiveRecord::Schema.define(version: 20160905201906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,17 @@ ActiveRecord::Schema.define(version: 20160906224754) do
     t.string   "address"
   end
 
+  create_table "orders", force: true do |t|
+    t.integer  "buyer_id"
+    t.integer  "seller_id"
+    t.string   "type"
+    t.string   "code"
+    t.string   "price"
+    t.boolean  "trazoro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "profiles", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -243,14 +254,13 @@ ActiveRecord::Schema.define(version: 20160906224754) do
 
   create_table "sold_batches", force: true do |t|
     t.float    "grams_picked"
-    t.integer  "sale_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "gold_batch_id"
+    t.integer  "order_id"
   end
 
   add_index "sold_batches", ["gold_batch_id"], name: "index_sold_batches_on_gold_batch_id", using: :btree
-  add_index "sold_batches", ["sale_id"], name: "index_sold_batches_on_sale_id", using: :btree
 
   create_table "states", force: true do |t|
     t.string   "name"
