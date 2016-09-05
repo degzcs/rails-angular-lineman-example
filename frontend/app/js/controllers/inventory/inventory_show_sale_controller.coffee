@@ -11,7 +11,7 @@ angular.module('app').controller 'InventoryShowSaleCtrl', ($scope, SaleService, 
   console.log(currentSale)
   $scope.associatedPurchases = currentSale.associatedPurchases
   $scope.price = currentSale.price
-  $scope.totalAmount = currentSale.fine_grams
+  $scope.totalAmount = currentSale.totalAmount
   $scope.barcode_html = $sce.trustAsHtml(currentSale.barcode_html)
   $scope.code = currentSale.code
   $scope.currentClient = null

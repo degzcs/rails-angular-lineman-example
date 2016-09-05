@@ -36,7 +36,7 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
       field: 'buyer_name'
     }, {
       name: 'Total Gramos Finos',
-      field: 'fine_grams'
+      field: 'totalAmount'
     }, {
       name: 'Precio venta',
       field: 'price'
@@ -148,7 +148,6 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
     SaleService.model.user_id = item.user_id
     SaleService.model.associatedPurchases = item.associatedPurchases
     SaleService.model.gold_batch_id = item.gold_batch_id
-    SaleService.model.fine_grams = item.fine_grams
     SaleService.model.code = item.code
     SaleService.model.barcode_html = item.barcode_html
     SaleService.model.selectedPurchases = item.selectedPurchase
