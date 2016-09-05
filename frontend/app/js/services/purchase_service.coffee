@@ -28,7 +28,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       barcode_html: ''
       code: ''
       trazoro: ''
-      gold_batch: ''
+      gold_batch: {}
       #barcode_html: ''
       code: ''
       rucom_id_field: ''
@@ -49,7 +49,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
         signature_picture_blob = ''
 
         blobUtil.imgSrcToBlob(purchase.signature_picture).then( (signature_picture_blob) ->
-          signature_picture_blob.name = 'signature_picture.png'
+          signature_picture_blob.name = 'signature.png'
           files = [seller_picture_blob, signature_picture_blob]
           service.uploadFiles(files, purchase, gold_batch)
         ).catch (err) ->
@@ -77,7 +77,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           "gold_batch[fine_grams]": gold_batch.total_fine_grams
           "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
           "purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
-          "gold_batch[extra_info]": { grams: gold_batch.total_grams }
+          "gold_batch[extra_info]": { grams: gold_batch.total_grams, castellanos: gold_batch.castellanos, ozs: gold_batch.ozs, tomines: gold_batch.tomines, reales: gold_batch.reales }
         file: files
         fileFormDataName: 'purchase[files][]')
 
