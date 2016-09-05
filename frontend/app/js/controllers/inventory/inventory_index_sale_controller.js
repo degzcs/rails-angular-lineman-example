@@ -99,6 +99,7 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
         access_token: sales[i].access_token,
         seller: sales[i].seller,
         gold_batch_id: sales[i].gold_batch_id,
+
         //inventory: sales[i].inventory,
         //trazoro:  sales[i].trazoro,
         barcode_html: sales[i].barcode_html,
@@ -147,7 +148,7 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
     SaleService.model.user_id = item.user_id
     SaleService.model.associatedPurchases = item.associatedPurchases
     SaleService.model.gold_batch_id = item.gold_batch_id
-    //SaleService.model.fine_grams = item.fine_grams
+    SaleService.model.fine_grams = item.fine_grams
     SaleService.model.code = item.code
     SaleService.model.barcode_html = item.barcode_html
     SaleService.model.selectedPurchases = item.selectedPurchase
