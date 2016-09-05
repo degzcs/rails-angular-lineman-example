@@ -46,7 +46,7 @@ class Purchase::BuyGoldService
     date = @date
     # Build purchase
     if can_buy?(buyer, @purchase_hash['seller_id'], gold_batch_hash['fine_grams'])
-      begin
+     # begin
         ActiveRecord::Base.transaction do
           @purchase = buyer.inventory.purchases.build(purchase_hash)
           @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
@@ -70,9 +70,9 @@ class Purchase::BuyGoldService
                         draw_pdf_service: ::OriginCertificates::DrawAuthorizedProviderOriginCertificate,
                         )
         end
-      rescue => exception
-        @response[:errors] << exception.message
-      end
+      #rescue => exception
+      #  @response[:errors] << exception.message
+      #end
     end
     response
   end
