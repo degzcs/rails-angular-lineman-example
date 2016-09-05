@@ -42,12 +42,19 @@ class Order < ActiveRecord::Base
 
   before_save :generate_barcode
 
+  #
+  # Uploaders
+  #
+
+  mount_uploader :seller_picture, PhotoUploader
+
 
   #
   # Scopes
   #
 
   scope :fine_grams_sum_by_date, ->(date, seller_id) { where(created_at: (date.beginning_of_month .. date.end_of_month)).where(seller_id: seller_id).joins(:gold_batch).sum('gold_batches.fine_grams') }
+  scope :remaining_amount_for, ->(buyer) { where(buyer_id: buyer.id).joins(:gold_batch).where('gold_batches.sold IS NOT true').sum('gold_batches.fine_grams') }
 
   #
   # Instance Methods
@@ -128,7 +135,7 @@ class Order < ActiveRecord::Base
 
     # Manufacturer Code: 5 digits
     # this is the office code:
-    mfg_code = self.buyer_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
+    mfg_code = self.seller_id.to_s.rjust(5, '0') #TODO: user.officce.reference_code
                                                   # In puchases mfg_code uses the user id. Using buyer_id in sales for
                                                   # ensuring uniqueness (?)
 
