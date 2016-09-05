@@ -4,15 +4,15 @@ class GoldBatchPresenter < BasePresenter
   # These are the measurements used to calculated the fine_grams field
 
   def rounded_castellanos
-    castellanos.round(2) if castellanos?
+    castellanos.round(2).to_s if castellanos?
   end
 
   def rounded_tomines
-    tomines.round(1) if tomines?
+    tomines.round(1).to_s if tomines?
   end
 
   def rounded_onzas
-    onzas.round(2) if onzas?
+    onzas.round(2).to_s if onzas?
   end
 
   def rounded_grams
@@ -20,7 +20,7 @@ class GoldBatchPresenter < BasePresenter
   end
 
   def rounded_reales
-    reales.round(2) if reales?
+    reales.round(2).to_s if reales?
   end
 
   def origin_certificate_number
