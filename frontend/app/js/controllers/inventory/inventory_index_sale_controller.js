@@ -63,7 +63,7 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
     price: 'grey',
     created_at: 'bold',
     purchases_total_value: 'grey',
-    total_gain: 'bold',
+    total_gain: 'grey',
     inventory_remaining_amount: 'bold',
   };
 
@@ -85,7 +85,8 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
         user_id: sales[i].user_id,
         buyer_name: sales[i].buyer.first_name + " " + sales[i].buyer.last_name,
         price: sales[i].price,
-        fine_grams: sales[i].fine_grams,
+        totalAmount: sales[i].fine_grams,
+        associatedPurchases: sales[i].associated_purchases,
         //purchase_files_collection: sales[i].purchase_files_collection,
         //proof_of_sale: sales[i].proof_of_sale,
         purchases_total_value: sales[i].purchases_total_value,
@@ -144,20 +145,20 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
     SaleService.model.courier_id = item.courier_id
     SaleService.model.buyer_id = item.buyer_id
     SaleService.model.user_id = item.user_id
+    SaleService.model.associatedPurchases = item.associatedPurchases
     SaleService.model.gold_batch_id = item.gold_batch_id
-    SaleService.model.fine_grams = item.fine_grams
+    //SaleService.model.fine_grams = item.fine_grams
     SaleService.model.code = item.code
     SaleService.model.barcode_html = item.barcode_html
-    SaleService.model.selectedPurchases = item.selectedPurchases
+    SaleService.model.selectedPurchases = item.selectedPurchase
     SaleService.model.totalAmount = item.totalAmount
     SaleService.model.gold_batch = item.gold_batch
     SaleService.model.price = item.price //no secure
     SaleService.model.purchase_files_collection = item.purchase_files_collection
     SaleService.model.proof_of_sale = item.proof_of_sale;
-    SaleService.saveState();
+    SaleService.saveState();    
     $state.go('show_inventory_sale');
     };
-  window.scope = $scope
   $scope.infoAlert = function(title, content) {
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'));
     // .finally(function() {

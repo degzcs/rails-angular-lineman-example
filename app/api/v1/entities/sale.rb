@@ -22,6 +22,19 @@ module V1
       expose :gold_batch_id, documentation: { type: 'integer', desc: 'gold batch id', example: '1' } do |sale, _options|
         sale.gold_batch.id
       end
+       expose :associated_purchases, documentation: { type: 'file', desc: 'sold_batches', example: 'array sold_batches' } do |sale, _options|
+        sale.batches.map do |batch|
+          purchase = batch.gold_batch.goldomable
+          purchase.as_json.merge(
+              fine_grams: purchase.fine_grams, # This method is delagated to gold_batch model
+              seller: {
+                first_name: purchase.seller.profile.first_name,
+                last_name: purchase.seller.profile.last_name,
+                provider_type: purchase.seller.provider_type,
+              }
+            )
+        end.as_json
+      end
       expose :created_at, documentation: { type: 'created at', desc: 'date', example: 'date' } do |purchase, _options|
         purchase.created_at.in_time_zone('Bogota').strftime("%m/%d/%Y - %I:%M%p")
       end

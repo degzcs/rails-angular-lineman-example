@@ -14,6 +14,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       proof_of_sale: null
       barcode_html: null
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
+      associatedPurchases: null
       totalAmount: null
 
 

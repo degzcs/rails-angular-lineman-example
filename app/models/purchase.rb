@@ -74,6 +74,11 @@ class Purchase < ActiveRecord::Base
   scope :fine_grams_sum_by_date, ->(date, seller_id) { where(created_at: (date.beginning_of_month .. date.end_of_month)).where(seller_id: seller_id).joins(:gold_batch).sum('gold_batches.fine_grams') }
 
   #
+  # Delegates
+  #
+
+  delegate :fine_grams, to: :gold_batch
+  #
   # Instance methods
   #
 

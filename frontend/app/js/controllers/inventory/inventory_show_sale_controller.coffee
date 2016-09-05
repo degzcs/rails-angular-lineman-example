@@ -7,8 +7,9 @@ angular.module('app').controller 'InventoryShowSaleCtrl', ($scope, SaleService, 
   #
   #Get info
   currentSale = SaleService.restoreState()
-  $scope.selected_purchases = currentSale.selectedPurchases
-  $scope.purchases = null
+  $scope.soldBatches = currentSale.sold_batches
+  console.log(currentSale)
+  $scope.associatedPurchases = currentSale.associatedPurchases
   $scope.price = currentSale.price
   $scope.totalAmount = currentSale.totalAmount
   $scope.barcode_html = $sce.trustAsHtml(currentSale.barcode_html)

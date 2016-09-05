@@ -112,15 +112,16 @@
         .card-inputs
           %table.sale-table
             %tr.table-head
-              %th ID Compra
-              %th ID Proveedor
+              %th Fecha Compra
               %th Nombre Proveedor
+              %th Tipo Proveedor
               %th Gramos (Finos)
-            %tr.stripped{"ng-repeat"=>"purchase in purchases"}
-              %th {{purchase.id}}
-              %td {{purchase.provider.id}}
-              %td {{purchase.provider.first_name}} {{purchase.provider.last_name}}
-              %td {{selected_purchases[$index].amount_picked}}
+            %tr.stripped{"ng-repeat" => "associatedPurchase in associatedPurchases"}
+              %th {{associatedPurchase.created_at}}
+              %td {{associatedPurchase.seller.first_name}} {{associatedPurchase.seller.last_name}}
+              %td {{associatedPurchase.seller.provider_type}} 
+              %td {{associatedPurchase.fine_grams}}
+              %td
             %tr.table-last
               %td
               %td
@@ -130,7 +131,7 @@
                   %strong
                     Gramos Totales:
                     %br
-                    {{totalAmount}} gr
+                    {{totalAmount}} grs
                 %h2
                   %strong
                     Precio Total:
