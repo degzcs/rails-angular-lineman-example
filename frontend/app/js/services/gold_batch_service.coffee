@@ -13,7 +13,7 @@ angular.module('app').factory 'GoldBatchService', ($rootScope)->
       castellanos: 0
       ozs: 0
       tomines: 0
-      riales: 0
+      reales: 0
       total_grams: 0
       total_fine_grams: 0
 
