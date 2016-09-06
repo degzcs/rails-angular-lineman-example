@@ -51,7 +51,6 @@ class Order < ActiveRecord::Base
 
   mount_uploader :seller_picture, PhotoUploader
 
-
   #
   # Scopes
   #
@@ -63,9 +62,13 @@ class Order < ActiveRecord::Base
   # Instance Methods
   #
 
-  # NOTE: temporal method to avoid   break the app. It must to be removed asap.
+  # NOTE: temporal method to avoid break the app. It must to be removed asap.
   def origin_certificate_file
-    self.purchase_files_collection.file
+    self.origin_certificate.file
+  end
+
+  def origin_certificate
+    documents.where(type: 'origin_certificate').first
   end
 
   # It is the collection of all origin certificates, buyer IDs,

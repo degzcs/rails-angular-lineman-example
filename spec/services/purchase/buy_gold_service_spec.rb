@@ -35,30 +35,28 @@ describe Purchase::BuyGoldService do
       # "inventory_id" => 1,
       "extra_info" => { 'grams' => 1.5 }
       }
-      @purchase_hash ={
+      @order_hash ={
            # "id"=>1,
            # "user_id"=>1,
            "seller_id" => @seller.id,
            # "gold_batch_id" => @gold_batch_hash["id"],
            "price" => 1.5,
-           "origin_certificate_file" => file,
            "seller_picture" => seller_picture,
-           "origin_certificate_sequence"=>"123456789",
            "trazoro" => false,
            "signature_picture" => @signature_picture
       }
     end
 
-    it 'should to make a purchase and discount credits from de company' do
+    it 'should to make a purchase order and discount credits from de company' do
       expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
       response = service.call(
-        purchase_hash: @purchase_hash,
+        order_hash: @order_hash,
         gold_batch_hash: @gold_batch_hash,
         current_user: legal_representative, # TODO: worker
         date: '2016/07/15'.to_date,
         )
       expect(response[:success]).to be true
-      expect(service.purchase.persisted?).to be true
+      expect(service.purchase_order.persisted?).to be true
       expect(company.reload.available_credits).to eq expected_credits
     end
 
@@ -68,14 +66,14 @@ describe Purchase::BuyGoldService do
           @initial_credits = 0
 
           response = service.call(
-          purchase_hash: @purchase_hash,
+          order_hash: @order_hash,
           gold_batch_hash: @gold_batch_hash,
           current_user: legal_representative, # TODO: worker
           date: '2016/07/15'.to_date,
           )
         expect(response[:success]).to be false
         expect(response[:errors]).to include 'No tienes los suficientes creditos para hacer esta compra'
-        expect(service.purchase).to be nil
+        expect(service.purchase_order).to be nil
       end
 
       it 'should throw a message telling to barequero reach the limin for this month' do
@@ -84,14 +82,14 @@ describe Purchase::BuyGoldService do
         seller_name = UserPresenter.new(@seller, self).name
         # Try to buy gold
         response = service.call(
-          purchase_hash: @purchase_hash,
+          order_hash: @order_hash,
           gold_batch_hash: @gold_batch_hash,
           current_user: legal_representative, # TODO: worker
           date: '2016/07/15'.to_date,
           )
         expect(response[:success]).to be false
         expect(response[:errors]).to include "Usted no puede realizar esta compra, debido a que con esta compra el barequero exederia el limite permitido por mes. El total comprado hasta el momento por #{ seller_name } es: 30.0 gramos finos"
-        expect(service.purchase).to be nil
+        expect(service.purchase_order).to be nil
       end
     end
   end
@@ -99,34 +97,34 @@ describe Purchase::BuyGoldService do
   context 'cofiguration service errors' do
     before :each do
       @gold_batch_hash ={ fine_grams: 'invalid' }
-      @purchase_hash ={ price: 'invalid' }
+      @order_hash ={ price: 'invalid' }
     end
 
     it 'raise a date param error' do
       expect do
         service.call(
         current_user: legal_representative,
-        purchase_hash: @purchase_hash,
+        order_hash: @order_hash,
         gold_batch_hash: @gold_batch_hash,
         )
       end.to raise_error('You must to provide a date option')
     end
 
-    it 'raise a date purchase_hash error' do
+    it 'raise a date order_hash error' do
       expect do
         service.call(
         current_user: legal_representative,
         gold_batch_hash: @gold_batch_hash,
         date: Date.today,
         )
-      end.to raise_error('You must to provide a purchase_hash option')
+      end.to raise_error('You must to provide a order_hash option')
     end
 
     it 'raise a date gold_batch_hash error' do
       expect do
         service.call(
         current_user: legal_representative,
-        purchase_hash: @purchase_hash,
+        order_hash: @order_hash,
         date: Date.today,
         )
       end.to raise_error('You must to provide a gold_batch_hash option')
@@ -135,7 +133,7 @@ describe Purchase::BuyGoldService do
     it 'raise a current_user param error' do
       expect do
         service.call(
-        purchase_hash: @purchase_hash,
+        order_hash: @order_hash,
         gold_batch_hash: @gold_batch_hash,
         date: Date.today
         )

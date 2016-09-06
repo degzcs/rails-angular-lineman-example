@@ -15,7 +15,7 @@ describe Purchase::PdfGeneration do
 
     it 'should to create a pdf file with the correct information' do
       response = service.call(
-                        order: purchase_order,
+                        purchase_order: purchase_order,
                         signature_picture: @signature_picture,
                         draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
                         document_type: 'equivalent_document',
@@ -27,19 +27,19 @@ describe Purchase::PdfGeneration do
 
     it 'raise an error when the order of purchase param is empty' do
       expect do
-        service.call(order: nil, draw_pdf_service: nil, document_type: nil)
-      end.to raise_error 'You must to provide a order param'
+        service.call(purchase_order: nil, draw_pdf_service: nil, document_type: nil)
+      end.to raise_error 'You must to provide a purchase_order param'
     end
 
     it 'raise an error when the draw_pdf_service param is empty' do
       expect do
-        service.call(order: 'something_here', draw_pdf_service: nil, document_type: nil)
+        service.call(purchase_order: 'something_here', draw_pdf_service: nil, document_type: nil)
       end.to raise_error 'You must to provide a draw_pdf_service param'
     end
 
     it 'raise an error when the document_type param is empty' do
       expect do
-        service.call(order: 'something_here', draw_pdf_service: 'something_here', document_type: nil)
+        service.call(purchase_order: 'something_here', draw_pdf_service: 'something_here', document_type: nil)
       end.to raise_error 'You must to provide a document_type param'
     end
   end

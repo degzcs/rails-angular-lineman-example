@@ -7,7 +7,7 @@
 class Purchase::BuyGoldService
   attr_accessor :buyer
   attr_accessor :seller
-  attr_accessor :purchase
+  attr_accessor :purchase_order
   attr_accessor :order_hash
   attr_accessor :gold_batch_hash
   attr_accessor :response
@@ -48,22 +48,22 @@ class Purchase::BuyGoldService
     if can_buy?(buyer, @order_hash['seller_id'], gold_batch_hash['fine_grams'])
      # begin
         ActiveRecord::Base.transaction do
-          @purchase = buyer.orders.build(order_hash.merge(type: 'purchase'))
-          @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-          @response[:success] = @purchase.save!
-          discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
+          @purchase_order = buyer.purchases.build(order_hash.merge(type: 'purchase'))
+          @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
+          @response[:success] = @purchase_order.save!
+          discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless @purchase_order.trazoro
 
           pdf_generation_service = ::Purchase::PdfGeneration.new
 
           response = pdf_generation_service.call(
-                        purchase: purchase,
+                        purchase_order: @purchase_order,
                         signature_picture: signature_picture,
                         draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
                         document_type: 'equivalent_document',
                         )
 
           response = pdf_generation_service.call(
-                        purchase: purchase,
+                        purchase_order: @purchase_order,
                         signature_picture: signature_picture,
                         date: date,
                         document_type: 'origin_certificate',

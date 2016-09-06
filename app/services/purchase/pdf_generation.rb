@@ -9,10 +9,10 @@ class Purchase::PdfGeneration
 
   # @return [ Hash ] with the success or errors
   def call(options={})
-    raise "You must to provide a order param" if options[:order].blank?
+    raise "You must to provide a purchase_order param" if options[:purchase_order].blank?
     raise "You must to provide a draw_pdf_service param" if options[:draw_pdf_service].blank?
     raise "You must to provide a document_type param" if options[:document_type].blank?
-    @order_presenter = OrderPresenter.new(options[:order], nil)
+    @order_presenter = OrderPresenter.new(options[:purchase_order], nil)
     @draw_pdf_service_class = options[:draw_pdf_service]
     timestamp = options[:timestamp] || Time.now.to_i
     document_type = options[:document_type]
