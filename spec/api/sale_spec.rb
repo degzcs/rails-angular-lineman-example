@@ -84,7 +84,7 @@ describe 'Sale', :type => :request do
             { per_page: per_page },
             { 'Authorization' => "Barer #{ @token }" }
             expect(response.status).to eq 200
-            expect(JSON.parse(response.body)).to eq per_page
+            expect(JSON.parse(response.body).count).to eq per_page
           end
         end
 

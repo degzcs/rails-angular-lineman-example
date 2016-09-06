@@ -80,8 +80,8 @@ describe  User, type: :model do
       @users = create_list(:user, 5, :with_personal_rucom) # or internal traders
 
       @user_with_trader_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_trader_role)
-      @user_with_final_client_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_final_client_role)
-      @user_with_transporter_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_transporter_role)
+      @user_with_final_client_role = create_list(:user, 3, :with_personal_rucom, :with_final_client_role)
+      @user_with_transporter_role = create_list(:user, 3, :with_personal_rucom, :with_transporter_role)
 
       @external_users_with_any_rucom = create_list(:external_user, 5)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil, external: true)
@@ -157,15 +157,15 @@ describe  User, type: :model do
       end
     end
 
-    context 'external users' do
+    context 'authorized provider' do
       it 'should returns the user activity from rucom info' do
         rucom = create(:rucom)
-        external_user = create(:external_user, personal_rucom: rucom, office: nil)
-        expect(external_user.activity).to eq rucom.activity
+        authorized_provider = create(:user, :with_authorized_provider_role, personal_rucom: rucom, office: nil)
+        expect(authorized_provider.activity).to eq rucom.activity
       end
 
       xit 'should validate the rucom called personal rucom' do
-        user = build(:user, external: true,  personal_rucom: nil)
+        user = build(:user, external: true, personal_rucom: nil)
         expect(user).not_to be_valid
       end
     end
@@ -229,66 +229,53 @@ describe  User, type: :model do
     end
   end
 
-  context "abilities" do
-    context "trader abilities" do
+  context 'abilities' do
+    context 'trader abilities' do
       before :each do
-        trader_user = create :user, :with_profile, :with_personal_rucom, :with_trader_role
+        trader_user = create :user, :with_company, :with_profile, :with_personal_rucom, :with_trader_role
         @abilities = Ability.new(trader_user)
       end
 
       it 'should valid if the user has the trader abilities' do
-        #binding.pry
         expect(@abilities).to be_able_to(:read, Purchase.new)
         expect(@abilities).to be_able_to(:create, Purchase.new)
         expect(@abilities).to be_able_to(:create, Sale.new)
         expect(@abilities).to be_able_to(:read, Sale.new)
       end
-
     end
   end
 
-  context "user roles with_authorized_provider_role" do
+  context 'user roles with_authorized_provider_role' do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_authorized_provider_role
-      #:with_final_client_role, :with_trader_role, :with_transporter_role
+      @user = create :user, :with_personal_rucom, :with_authorized_provider_role
+      # :with_final_client_role, :with_trader_role, :with_transporter_role
     end
 
-    it "should check that user is a authorized provider" do
-      #@user.roles.map(&:name)) include("authorized_provider")
+    it 'should check that user is a authorized provider' do
+      # @user.roles.map(&:name)) include("authorized_provider")
       expect(@user.authorized_provider?).to be true
     end
   end
 
-  context "user roles :with_final_client_role" do
+  context 'user roles :with_final_client_role' do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_final_client_role
-      #:with_trader_role, :with_transporter_role
+      @user = create :user, :with_personal_rucom, :with_final_client_role
+      # :with_trader_role, :with_transporter_role
     end
 
-    it "should check that user is a final client" do
-      #@user.roles.map(&:name)) include("authorized_provider")
+    it 'should check that user is a final client' do
+      # @user.roles.map(&:name)) include("authorized_provider")
       expect(@user.final_client?).to be true
     end
   end
 
-  context "user roles :with_trader_role" do
+  context 'user roles :with_trader_role' do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_trader_role
+      @user = create :user, :with_personal_rucom, :with_transporter_role
     end
 
-    it "should check that user is a trader" do
-      expect(@user.trader?).to be true
-    end
-  end
-
-  context "user roles :with_transporter_role" do
-    before :each do
-      @user =  create :user, :with_personal_rucom, :with_transporter_role
-    end
-
-    it "should check that user is a transporter" do
+    it 'should check that user is a transporter' do
       expect(@user.transporter?).to be true
     end
   end
 end
-
