@@ -4,7 +4,9 @@ module V1
       expose :purchase_id , documentation: { type: "integer", desc: "courier id", example: '1' } do |sold_batch, options|
         sold_batch.purchase.id
       end
-      expose :sale_id , documentation: { type: "integer", desc: "client id", example: '1' }
+      expose :sale_id , documentation: { type: "integer", desc: "client id", example: '1' } do |sold_batch, options|
+        sold_batch.order_id
+      end
       expose :grams_picked , documentation: { type: "float", desc: "user id", example: '1' }
       expose :provider , documentation: { type: "json", desc: "provider", example: '1' } do |sold_batch, options|
         sold_batch.provider.as_json

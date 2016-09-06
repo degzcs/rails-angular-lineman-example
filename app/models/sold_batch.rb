@@ -29,7 +29,7 @@ class SoldBatch < ActiveRecord::Base
   # validates :grams_picked, presence: true
 
   def provider
-    purchase.inventory.user
+    purchase.seller
   end
 
   def purchase

@@ -36,6 +36,6 @@ class GoldBatchPresenter < BasePresenter
   end
 
   def seller_presenter
-    UserPresenter.new(goldomable.inventory.user, h)
+    UserPresenter.new(goldomable.seller, h)
   end
 end

@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 20160905201906) do
     t.float    "price"
     t.string   "seller_picture"
     t.boolean  "trazoro",        default: false, null: false
-    t.boolean  "boolean",        default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

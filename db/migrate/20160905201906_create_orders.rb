@@ -8,7 +8,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :code
       t.float :price
       t.string :seller_picture
-      t.boolean :trazoro, :boolean, default: false, null: false
+      t.boolean :trazoro, default: false, null: false
       t.timestamps
     end
   end

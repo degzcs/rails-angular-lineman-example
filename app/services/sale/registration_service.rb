@@ -1,29 +1,29 @@
 class Sale::RegistrationService
-  attr_accessor :sale, :selected_purchase_ids, :response
+  attr_accessor :sale_order, :selected_purchase_ids, :response
   attr_accessor :seller
 
   def initialize
   end
 
   def call(options={})
-    raise 'You must to provide a sale_hash option' if options[:sale_hash].blank?
+    raise 'You must to provide a order_hash option' if options[:order_hash].blank?
     raise 'You must to provide a current_user option' if options[:current_user].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
     raise 'You must to provide a selected_purchase_ids option' if options[:selected_purchase_ids].blank?
     @seller = seller_based_on(options[:current_user])
     @selected_purchase_ids = options[:selected_purchase_ids]
     @response = {}
-    @sale = @seller.inventory.sales.build(options[:sale_hash])
-    @sale.build_gold_batch(options[:gold_batch_hash])
+    @sale_order = @seller.sales.build(options[:order_hash].merge(type: 'sale'))
+    @sale_order.build_gold_batch(options[:gold_batch_hash])
 
     ActiveRecord::Base.transaction do
-      @sale.save! # This save both the new sale and gold_batch
+      @sale_order.save! # This save both the new sale and gold_batch
       selected_gold_batches = find_gold_batches_from(@selected_purchase_ids)
       mark_as_sold!(selected_gold_batches)
       update_inventories(selected_gold_batches)
-      register_sold_batches(@sale, selected_gold_batches)
-      @response = ::Sale::CreatePurchaseFilesCollection.new.call(sale: @sale)
-      @response = ::Sale::ProofOfSale::GenerationService.new.call(sale: @sale)
+      register_sold_batches(@sale_order, selected_gold_batches)
+      @response = ::Sale::CreatePurchaseFilesCollection.new.call(sale_order: @sale_order)
+      @response = ::Sale::ProofOfSale::GenerationService.new.call(sale_order: @sale_order)
     end
   end
 
