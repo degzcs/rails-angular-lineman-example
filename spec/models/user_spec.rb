@@ -64,14 +64,14 @@ describe  User, type: :model do
 
     xit { should validate_presence_of(:email) }
 
-    it 'should not allow to create an external user without personal_rucom if does not have office' do
-      external_user = build(:external_user, personal_rucom: nil, office: nil, email: nil)
-      expect(external_user).not_to be_valid
+    it 'should not allow to create an authorized_provider without personal_rucom if does not have office' do
+      user = build(:user, :with_authorized_provider_role, personal_rucom: nil, office: nil, email: nil)
+      expect(user).not_to be_valid
     end
 
     it 'should allow create an external user without email' do
-      external_user = build(:external_user, email: nil)
-      expect(external_user).to be_valid
+      user = build(:user, email: nil)
+      expect(user).to be_valid
     end
   end
 
@@ -83,7 +83,7 @@ describe  User, type: :model do
       @user_with_final_client_role = create_list(:user, 3, :with_personal_rucom, :with_final_client_role)
       @user_with_transporter_role = create_list(:user, 3, :with_personal_rucom, :with_transporter_role)
 
-      @external_users_with_any_rucom = create_list(:external_user, 5)
+      @users_with_any_rucom = create_list(:user, 5)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil, external: true)
 
       @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)
@@ -91,7 +91,7 @@ describe  User, type: :model do
 
       # add credits to buy gold
       @users.last.profile.update_attribute(:available_credits, 2000)
-      @external_users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
+      @users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
     end
 
     it 'should return all users except with authorized_provider user role' do
@@ -103,7 +103,7 @@ describe  User, type: :model do
     end
 
     xit 'should return all extenal users, they can have one of the next personal_rucom or company rucom' do
-      expect(User.external_users.count).to eq [@external_users_with_any_rucom, @external_traders].flatten.compact.uniq.count
+      expect(User.users.count).to eq [@users_with_any_rucom, @external_traders].flatten.compact.uniq.count
     end
 
     it 'should select all user that can provider gold (providers)' do
@@ -142,17 +142,15 @@ describe  User, type: :model do
       context 'users or external users with company' do
         it 'should respond with the rucom\'s company' do
           user = create(:user, :with_company)
-          external_user = create(:external_user, :with_company)
           expect(user.rucom).to eq user.company.rucom
-          expect(external_user.rucom).to eq external_user.company.rucom
         end
       end
 
       context 'external user without company' do
         it 'should respond with the rucom\'s user' do
           personal_rucom = create(:rucom)
-          external_user = create(:external_user, office: nil, personal_rucom: personal_rucom)
-          expect(external_user.personal_rucom).to eq personal_rucom
+          user = create(:user, office: nil, personal_rucom: personal_rucom)
+          expect(user.personal_rucom).to eq personal_rucom
         end
       end
     end
