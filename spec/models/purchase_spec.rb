@@ -17,9 +17,7 @@
 
 require 'spec_helper'
 
-describe Purchase do
-
-
+describe 'Purchase' do
   context "test factory" do
     let(:purchase) { create :purchase }
     it 'has a valid factory' do

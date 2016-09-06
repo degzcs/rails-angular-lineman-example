@@ -2,12 +2,12 @@
 #
 # Table name: sold_batches
 #
-#  id             :integer          not null, primary key
-#  grams_picked   :float
-#  created_at     :datetime
-#  updated_at     :datetime
-#  gold_batch_id  :integer
-#  transaction_id :integer
+#  id            :integer          not null, primary key
+#  grams_picked  :float
+#  created_at    :datetime
+#  updated_at    :datetime
+#  gold_batch_id :integer
+#  order_id      :integer
 #
 
 require 'spec_helper'

@@ -2,21 +2,24 @@
 #
 # Table name: orders
 #
-#  id         :integer          not null, primary key
-#  buyer_id   :integer
-#  seller_id  :integer
-#  type       :string(255)
-#  code       :string(255)
-#  price      :string(255)
-#  trazoro    :boolean
-#  created_at :datetime
-#  updated_at :datetime
+#  id             :integer          not null, primary key
+#  buyer_id       :integer
+#  seller_id      :integer
+#  courier_id     :integer
+#  type           :string(255)
+#  code           :string(255)
+#  price          :string(255)
+#  seller_picture :string(255)
+#  trazoro        :boolean          default(FALSE), not null
+#  boolean        :boolean          default(FALSE), not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #
 
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
-# TODO create a state machine to handle the orider stauts
+# TODO create a state machine to handle the order stauts
 class Order < ActiveRecord::Base
 
   #

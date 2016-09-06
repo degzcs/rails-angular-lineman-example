@@ -158,11 +158,13 @@ ActiveRecord::Schema.define(version: 20160905201906) do
   create_table "orders", force: true do |t|
     t.integer  "buyer_id"
     t.integer  "seller_id"
+    t.integer  "courier_id"
     t.string   "type"
     t.string   "code"
     t.string   "price"
     t.string   "seller_picture"
-    t.boolean  "trazoro"
+    t.boolean  "trazoro",        default: false, null: false
+    t.boolean  "boolean",        default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

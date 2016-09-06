@@ -15,11 +15,11 @@
 
 require 'spec_helper'
 
-describe Sale do
+describe 'Sale' do
   context "test factory" do
     let(:sale) { build(:sale) }
     it {expect(sale.courier).not_to be_nil }
-    it {expect(sale.user).not_to be_nil}
+    it {expect(sale.seller).not_to be_nil}
     it {expect(sale.buyer).not_to be_nil }
     it {expect(sale.gold_batch).not_to be_nil}
     it {expect(sale.code).not_to be_nil}
@@ -34,10 +34,10 @@ describe Sale do
     context "for a trazoro sale (user - user sale)" do
       let!(:user1) { create(:user, :with_company) }
       let!(:buyer) { create(:user, :with_company) }
-      let(:sale) {create(:sale, user: user1, buyer: buyer, trazoro: true)}
+      let(:sale) {create(:sale, seller: user1, buyer: buyer, trazoro: true)}
       it "expect to have the correct user" do
         expect(sale.trazoro).to be true
-        expect(sale.user).to eq user1
+        expect(sale.seller).to eq user1
       end
       it "expect to have the correct buyer" do
         expect(sale.trazoro).to be true
@@ -48,10 +48,10 @@ describe Sale do
     context "for an external buyer purchase" do
       let!(:user1) { create(:user, :with_company) }
       let!(:external_user) {create(:external_user)}
-      let(:sale) {create(:sale, user: user1, buyer: external_user)}
+      let(:sale) {create(:sale, seller: user1, buyer: external_user)}
       it "expect to have the correct user" do
         expect(sale.trazoro).to be false
-        expect(sale.user).to eq user1
+        expect(sale.seller).to eq user1
       end
       it "expect to have the correct buyer" do
         expect(sale.trazoro).to be false

@@ -16,9 +16,10 @@
 FactoryGirl.define do
   factory :sale, class: Order do
     courier
-    inventory { create(:inventory) } # Seller
-    buyer { User.where(email: 'diego.gomez@trazoro.co').first || create(:external_user) } # Buyer
-    gold_batch { create :gold_batch }# bought gold in this transaction.
+    # inventory { create(:inventory) } # Seller
+    seller { create(:user, :with_personal_rucom, :with_authorized_provider_role) }
+    buyer { create(:user, :with_company, :with_trader_role) }
+    gold_batch { create :gold_batch } # bought gold in this transaction.
     code "123456789"
     price { 100 }
 
