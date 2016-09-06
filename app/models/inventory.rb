@@ -10,22 +10,21 @@
 #  user_id          :integer
 #
 
-class Inventory < ActiveRecord::Base
-
+class Inventory
   #
   # Associations
   #
 
-  belongs_to :user
-  has_many :purchases, dependent: :destroy
-  has_many :sales, dependent: :destroy
+  # belongs_to :user
+  # has_many :purchases, dependent: :destroy
+  # has_many :sales, dependent: :destroy
 
-  #
-  # Validations
-  #
+  # #
+  # # Validations
+  # #
 
-  validates :remaining_amount , presence: true
-  validates :user , presence: true
+  # validates :remaining_amount , presence: true
+  # validates :user , presence: true
 
   class EmptyInventory < StandardError
   end

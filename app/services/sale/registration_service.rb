@@ -20,26 +20,12 @@ class Sale::RegistrationService
       @sale_order.save! # This save both the new sale and gold_batch
       selected_gold_batches = find_gold_batches_from(@selected_purchase_ids)
       mark_as_sold!(selected_gold_batches)
-      update_inventories(selected_gold_batches)
+      # update_inventories(selected_gold_batches)
+      # TODO: raise an error if the user try to sold more gold than it has.
       register_sold_batches(@sale_order, selected_gold_batches)
       @response = ::Sale::CreatePurchaseFilesCollection.new.call(sale_order: @sale_order)
       @response = ::Sale::ProofOfSale::GenerationService.new.call(sale_order: @sale_order)
     end
-  end
-
-  # Update all inventories related with the current sale
-  # @param gold_batches [ Array ]
-  def update_inventories(gold_batches)
-    # Seller
-    sold_fine_grams = sum_fine_grams_from(gold_batches)
-    available_fine_grams = seller.inventory.remaining_amount - sold_fine_grams
-    set_fine_grams_on_hand_for!(seller.inventory, available_fine_grams)
-
-    # Buyer
-    # TODO: pending sale trazoro type ->
-    # It must to add the amount of gold to the buyer. All operations here are related with the
-    # inventory of the saler. To update the buyer it is needed to know
-    # if he/she buys as a company or single person
   end
 
   # @param gold_batch [ Array ]
@@ -50,12 +36,6 @@ class Sale::RegistrationService
 
   def sum_fine_grams_from(gold_batches)
     gold_batches.inject(0){ |res, gold_batch| res + gold_batch.fine_grams }
-  end
-
-  # Sets the amount of gold available on the Inventory
-  # @return [ Boolean ]
-  def set_fine_grams_on_hand_for!(inventory, new_value)
-    inventory.update_attributes(remaining_amount: new_value)
   end
 
   # Select the correct seller based on he is a natual or legal person.

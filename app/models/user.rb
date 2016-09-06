@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   #
 
   has_one :profile, dependent: :destroy
-  has_one :inventory, dependent: :destroy
   has_many :purchases, dependent: :destroy, class_name: 'Order', foreign_key: 'buyer_id'
   has_many :sales, dependent: :destroy, class_name: 'Order', foreign_key: 'seller_id'
   has_one :personal_rucom, class_name: 'Rucom', as: :rucomeable
@@ -81,8 +80,6 @@ class User < ActiveRecord::Base
   #
   # Calbacks
   #
-
-  after_create :create_inventory
 
   accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles
 
@@ -257,11 +254,6 @@ class User < ActiveRecord::Base
     if self.authorized_provider? && self.has_office?
       self.errors.add(:office, 'Los proveedores autorizados no pueden tener oficina')
     end
-  end
-
-  # After create the user it creates its own inventory with the remaining_amount value equals to 0
-  def create_inventory
-    self.create_inventory!(remaining_amount: 0) if self.inventory.blank?
   end
 
   # NOTE: all users marked as an external are users which will belong to the client role.

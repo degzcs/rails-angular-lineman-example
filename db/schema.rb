@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905201906) do
+ActiveRecord::Schema.define(version: 20160906215022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,16 +136,6 @@ ActiveRecord::Schema.define(version: 20160905201906) do
 
   add_index "gold_batches", ["goldomable_id"], name: "index_gold_batches_on_goldomable_id", using: :btree
 
-  create_table "inventories", force: true do |t|
-    t.float    "remaining_amount",                null: false
-    t.boolean  "status",           default: true, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
-  add_index "inventories", ["user_id"], name: "index_inventories_on_user_id", using: :btree
-
   create_table "offices", force: true do |t|
     t.string   "name"
     t.integer  "company_id"
@@ -190,21 +180,6 @@ ActiveRecord::Schema.define(version: 20160905201906) do
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
-  create_table "purchases", force: true do |t|
-    t.string   "origin_certificate_sequence"
-    t.string   "origin_certificate_file"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "price"
-    t.string   "seller_picture"
-    t.text     "code"
-    t.boolean  "trazoro",                     default: false, null: false
-    t.integer  "seller_id"
-    t.integer  "inventory_id"
-  end
-
-  add_index "purchases", ["seller_id"], name: "index_purchases_on_seller_id", using: :btree
-
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -233,20 +208,6 @@ ActiveRecord::Schema.define(version: 20160905201906) do
   end
 
   add_index "rucoms", ["rucomeable_id"], name: "index_rucoms_on_rucomeable_id", using: :btree
-
-  create_table "sales", force: true do |t|
-    t.integer  "courier_id"
-    t.string   "code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "price"
-    t.boolean  "trazoro",      default: false, null: false
-    t.integer  "inventory_id"
-    t.integer  "buyer_id"
-  end
-
-  add_index "sales", ["buyer_id"], name: "index_sales_on_buyer_id", using: :btree
-  add_index "sales", ["inventory_id"], name: "index_sales_on_inventory_id", using: :btree
 
   create_table "settings", force: true do |t|
     t.text     "data"
