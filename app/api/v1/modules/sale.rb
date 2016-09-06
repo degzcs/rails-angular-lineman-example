@@ -74,7 +74,7 @@ module V1
             [401, 'Unauthorized'],
             [404, 'Entry not found'],
             ] do
-            authorize! :create, ::Sale
+            authorize! :create, ::Order
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(

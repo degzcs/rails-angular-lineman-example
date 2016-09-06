@@ -58,7 +58,7 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ]do
-          authorize! :create, ::Purchase
+          authorize! :create, ::Order
           # update params
           date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
@@ -95,7 +95,7 @@ module V1
         end
 
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          authorize! :read, ::Purchase
+          authorize! :read, ::Order
           content_type "text/json"
           if params[:purchase_list]
             purchases = ::Order.where(id: params[:purchase_list], type: 'purchase')
