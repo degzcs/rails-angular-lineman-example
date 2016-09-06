@@ -42,7 +42,7 @@ describe  User, type: :model do
     end
   end
 
-  context 'associations' do
+  context 'associations with roles' do
     it { should have_and_belong_to_many :roles }
   end
 
@@ -79,6 +79,10 @@ describe  User, type: :model do
     before :each do
       @users = create_list(:user, 5, :with_personal_rucom) # or internal traders
 
+      @user_with_trader_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_trader_role)
+      @user_with_final_client_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_final_client_role)
+      @user_with_transporter_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_transporter_role)
+
       @external_users_with_any_rucom = create_list(:external_user, 5)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil, external: true)
 
@@ -88,6 +92,10 @@ describe  User, type: :model do
       # add credits to buy gold
       @users.last.profile.update_attribute(:available_credits, 2000)
       @external_users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
+    end
+
+    it 'should return all users except with authorized_provider user role' do
+      expect(User.not_authorize_providers_users.count).to eq [@user_with_trader_role, @user_with_final_client_role, @user_with_transporter_role].flatten.compact.uniq.count
     end
 
     xit 'should return all system users, it means, all uses that be logged in the platform (This scope has to be upgraded based on the new specifications)' do

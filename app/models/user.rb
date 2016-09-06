@@ -65,16 +65,21 @@ class User < ActiveRecord::Base
   # TODO: the scraper must to format all the information incoming in order to avoid this kind of queries.
   scope :find_by_name, ->(name){ joins(:profile).where("lower(profile.first_name) LIKE :first_name OR lower(profile.last_name) LIKE :last_name",
               { first_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%", last_name: "%#{ name.downcase.gsub('%', '\%').gsub('_', '\_') }%"})}
-  scope :find_by_document_number, -> (document_number){ joins(:profile).where("profiles.document_number LIKE :document_number",
+  scope :externalnumber, -> (document_number){ joins(:profile).where("profiles.document_number LIKE :document_number",
               { document_number: "%#{ document_number.gsub('%', '\%').gsub('_', '\_') }%" }) }
 
-  scope :external_user_ids_with_personal_rucom, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom).pluck(:id)}
-  scope :external_user_ids_with_company_rucom, -> {includes(office: [{company: :rucom}]).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:office).pluck(:id)}
+  # :external_user_ids_with_personal_rucom --> authorized_provider
+  # ['role_name = ? and ', 'authorized_provider']
+  # static scope
+  scope :not_authorize_providers_users, -> { joins(:roles).where('roles.name <> ? ', 'authorized_provider') }
 
-  def self.external_users
-    ids = [external_user_ids_with_company_rucom, external_user_ids_with_personal_rucom].flatten.compact.uniq
-    User.where(id: ids)
-  end
+  # scope :external_user_ids_with_personal_rucom, -> {includes(:personal_rucom).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom).pluck(:id)}
+  # scope :external_user_ids_with_company_rucom, -> {includes(office: [{company: :rucom}]).where('(users.external IS TRUE) AND ( rucoms.provider_type NOT IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion ']).references(:office).pluck(:id)}
+
+  #def self.external_users
+  #  ids = not_authorize_providers_users
+  #  User.where(id: ids)
+  #end
 
   scope :authorized_providers, -> {joins(:roles).where('roles.name = ?', 'authorized_provider')}
   # TODO: this name no make sense here. Update it asap!!!
@@ -119,8 +124,8 @@ class User < ActiveRecord::Base
   scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
   # scope :system_user_ids, -> { where('users.password_digest IS NOT NULL').pluck(:id)}
-
-  scope :clients, -> {includes(:personal_rucom).where('(users.password_digest IS NOT NULL) OR ( rucoms.provider_type IN (?) )', ['Joyero', 'Comprador Ocasional', 'Exportacion']).references(:personal_rucom)}
+  # NOTE: Implementacion de client es ambigua 
+  scope :clients, -> {includes(:personal_rucom).not_authorize_providers_users}
   # def self.clients
   #   ids =  [client_ids_with_fake_personal_rucom, client_ids_with_fake_company_rucom, system_user_ids].flatten.compact.uniq
   #   User.where(id: ids)
@@ -145,7 +150,6 @@ class User < ActiveRecord::Base
   #
   # State Machine for registration_state field
   #
-
 
   state_machine :registration_state, initial: :inserted_from_rucom, use_transactions: true do
 
@@ -199,9 +203,9 @@ class User < ActiveRecord::Base
   end
 
   #
-  # Get the user activity based on rucom
+  # Get the user activity based on rucom, barequero (authorized provider)
   def activity
-    self.external && self.office.blank? ? personal_rucom.activity : company.rucom.activity
+    self.authorized_provider? && self.office.blank? ? personal_rucom.activity : company.rucom.activity
   end
 
   def company_name
@@ -221,7 +225,7 @@ class User < ActiveRecord::Base
     if has_office?
       self.office.company.legal_representative.profile.available_credits
     else
-     self.profile.available_credits
+      self.profile.available_credits
     end
   end
 
@@ -236,8 +240,8 @@ class User < ActiveRecord::Base
 
   # Set rucom based on type of user
   def rucom=(rucom)
-    if self.external?
-      personal_rucom=rucom
+    if authorized_provider? # external?
+      personal_rucom = rucom
     else
      # NOTE: this line was remove it because the company rucom is set up in the company model not here
      # office.company.rucom = rucom if office.present?
@@ -286,9 +290,9 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the token is valid and false if it's not
   def self.valid?(token)
     begin
-     JWT.decode(token, Rails.application.secrets.secret_key_base)
+    JWT.decode(token, Rails.application.secrets.secret_key_base)
     rescue
-     false
+    false
     end
   end
 
@@ -309,7 +313,7 @@ class User < ActiveRecord::Base
 
   # NOTE: all users marked as an external are users which will belong to the client role.
   def validate_office?
-    self.external && !self.personal_rucom
+    self.trader?
   end
 
   def validate_personal_rucom?

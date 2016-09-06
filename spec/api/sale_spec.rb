@@ -77,6 +77,15 @@ describe 'Sale', :type => :request do
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to eq per_page
           end
+
+          it 'should verifies that the elements are corrects in the configuration of entities sale' do
+            per_page = 3
+            get "/api/v1/sales",
+            { per_page: per_page },
+            { 'Authorization' => "Barer #{ @token }" }
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body)).to eq per_page
+          end
         end
 
         context '/:id' do
