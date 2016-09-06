@@ -205,7 +205,7 @@ class User < ActiveRecord::Base
   #
   # Get the user activity based on rucom, barequero (authorized provider)
   def activity
-    self.authorized_provider? && self.office.blank? ? personal_rucom.activity : company.rucom.activity
+    self.authorized_provider? ? personal_rucom.activity : company.rucom.activity
   end
 
   def company_name
@@ -306,12 +306,20 @@ class User < ActiveRecord::Base
 
   protected
 
+  def validate_authorized_provider?
+    if self.authorized_provider? && self.has_office?
+      self.errors.add(:office, 'Los proveedores autorizados no pueden tener oficina')
+    end
+  end
+
   # After create the user it creates its own inventory with the remaining_amount value equals to 0
   def create_inventory
     self.create_inventory!(remaining_amount: 0) if self.inventory.blank?
   end
 
   # NOTE: all users marked as an external are users which will belong to the client role.
+  # NOTE: We are waiting the meeting with accounter to define the validations when a
+  # trader is legal person and natural person and his relantionship with the model Office
   def validate_office?
     self.trader?
   end
