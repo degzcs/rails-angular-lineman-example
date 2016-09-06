@@ -24,7 +24,7 @@ describe 'Purchase' do
           'extra_info' => { 'grams' => 1.5 }.to_json
         }
 
-        @seller = create(:external_user, :with_personal_rucom, provider_type: 'Barequero')
+        @seller = create(:user, :with_personal_rucom, provider_type: 'Barequero')
 
         @new_purchase_values = {
          # 'id'=>1,
@@ -145,7 +145,7 @@ describe 'Purchase' do
               id: purchase.id,
               price: purchase.price, }
 
-            get "/api/v1/purchases/#{purchase.id}", {}, { 'Authorization' => "Barer #{@token}" }
+            get "/api/v1/purchases/#{purchase.id}", {}, { 'Authorization' => "Barer #{ @token }" }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end

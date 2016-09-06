@@ -125,9 +125,9 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          authorize! :read, ::Purchase
+          authorize! :read, ::Order
           content_type "text/json"
-          purchase = ::Order.where(params[:id], type: 'pruchase')
+          purchase = ::Order.where(id: params[:id], type: 'purchase').last
           authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end
