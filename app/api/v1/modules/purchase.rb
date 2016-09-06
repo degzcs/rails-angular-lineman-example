@@ -63,10 +63,15 @@ module V1
           date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
           gold_purchase_service = ::Purchase::BuyGoldService.new
-          service_response = gold_purchase_service.call(purchase_hash: new_params[:purchase], gold_batch_hash: new_params[:gold_batch], current_user: current_user, date: date )
+          service_response = gold_purchase_service.call(
+            order_hash: new_params[:purchase],
+            gold_batch_hash: new_params[:gold_batch],
+            current_user: current_user,
+            date: date
+            )
 
           if service_response[:success]
-            present gold_purchase_service.purchase , with: V1::Entities::Purchase
+            present gold_purchase_service.purchase_order , with: V1::Entities::Purchase
           else
             error!({ error: "unexpected error", detail: service_response[:errors] }, 409)
           end
@@ -93,7 +98,7 @@ module V1
           authorize! :read, ::Purchase
           content_type "text/json"
           if params[:purchase_list]
-            purchases = ::Purchase.get_list(params[:purchase_list])
+            purchases = ::Order.where(id: params[:purchase_list], type: 'purchase')
           else
             page = params[:page] || 1
             per_page = params[:per_page] || 10
@@ -122,7 +127,8 @@ module V1
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           authorize! :read, ::Purchase
           content_type "text/json"
-          purchase = ::Purchase.find(params[:id])
+          purchase = ::Order.where(params[:id], type: 'pruchase')
+          authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end
       end

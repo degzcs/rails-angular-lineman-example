@@ -6,7 +6,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :courier_id
       t.string :type
       t.string :code
-      t.string :price
+      t.float :price
       t.string :seller_picture
       t.boolean :trazoro, :boolean, default: false, null: false
       t.timestamps

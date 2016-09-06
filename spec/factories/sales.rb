@@ -16,10 +16,10 @@
 FactoryGirl.define do
   factory :sale, class: Order do
     courier
-    # inventory { create(:inventory) } # Seller
     seller { create(:user, :with_personal_rucom, :with_authorized_provider_role) }
     buyer { create(:user, :with_company, :with_trader_role) }
     gold_batch { create :gold_batch } # bought gold in this transaction.
+    type 'sale'
     code "123456789"
     price { 100 }
 

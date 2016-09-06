@@ -5,7 +5,7 @@ module V1
 
       expose :id, documentation: { type: "string", desc: "id of the purchase", example: '1' }
       expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" } do |purchase, options|
-        purchase.user.id # TODO: remove this temporal fix
+        purchase.buyer.id # TODO: remove this temporal fix
       end
       expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do |purchase, options|
         purchase.price.round(2)
@@ -17,14 +17,13 @@ module V1
         purchase.origin_certificate.file.url
       end
       expose :seller_picture, documentation: { type: "file", desc: "file", example: "..." }
-      expose :origin_certificate_sequence, documentation: { type: "string", desc: "sequence", example: "123456789" }
       expose :created_at, documentation: { type: "created at", desc: "date", example: "date" } do |purchase, options|
         purchase.created_at.in_time_zone("Bogota").strftime("%m/%d/%Y - %I:%M%p")
       end
       expose :barcode_html, documentation: {type: "string", desc: "barcode in html format", example: ''}
       expose :code, documentation: {type: "string", desc: "code with 12 characteres in charged to generate the barcode", example: '075124874512'}
       expose :access_token, documentation: { type: "string", desc: "authentication token", example: "sjahdkfjhasdfhaskdj" } do |purchase, options|
-        purchase.user.create_token
+        purchase.buyer.create_token
       end
       expose :state, documentation: {type: "boolean", desc: "State to determinate if a gold_batch is sold or not", example: 'true'}
       expose :seller do
@@ -52,15 +51,10 @@ module V1
           purchase.gold_batch.sold
         end
       end
+      # TODO: remove this inventory namespace as soon as the frontend being upgrated
       expose :inventory do
-        expose :id, documentation: { type: "integer", desc: "inventory id", example: "123456789" }do|purchase, options|
-          purchase.inventory.id
-        end
-        expose :status, documentation: { type: "string", desc: "inventory status", example: "123456789" }do|purchase, options|
-          purchase.inventory.status
-        end
         expose :remaining_amount, documentation: { type: "string", desc: "inventory remaining_amount", example: "123456789" } do|purchase, options|
-          purchase.inventory.remaining_amount.round(2)
+          Order.remaining_amount_for(purchase.buyer).round(2)
         end
       end
       expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" }

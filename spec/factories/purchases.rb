@@ -19,8 +19,8 @@ FactoryGirl.define do
   factory :purchase, class: Order do
     seller { create(:user, :with_company) } # seller
     buyer { create(:user, :with_company) } # seller
-    # inventory { create(:inventory) }
     gold_batch { create(:gold_batch) }
+    type 'purchase'
     # origin_certificate_sequence { Faker::Code.isbn }
     # origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf'),"application/pdf") }
     price { 1_000_000 }

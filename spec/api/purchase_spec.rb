@@ -33,7 +33,6 @@ describe 'Purchase' do
          # 'gold_batch_id' => new_gold_batch_values['id'],
          'price' => 1.5,
          'files' => @files,
-         'origin_certificate_sequence' => '123456789',
         }
       end
 
@@ -47,15 +46,9 @@ describe 'Purchase' do
               'last_name' => @seller.profile.last_name
            },
            'price' => 1.5,
-           'origin_certificate_sequence' => '123456789',
            'gold_batch' => {
               'grams' => 1.5,
               'grade' => 1
-           },
-           'inventory' => {
-              'id' => @buyer.company.legal_representative.inventory.id,
-              'status' => true,
-              'remaining_amount' => 1.5
            },
            #'created_at'=> '',
            #'barcode_html' => '',
@@ -112,11 +105,11 @@ describe 'Purchase' do
 
       context 'GET' do
         before(:all) do
-          seller = create(:external_user, :with_personal_rucom)
+          seller = create(:user, :with_personal_rucom, :with_authorized_provider_role)
           @purchases = create_list(:purchase, 20,
                       :with_proof_of_purchase_file,
                       :with_origin_certificate_file,
-                      inventory_id: @buyer.company.legal_representative.inventory.id,
+                      buyer: @buyer.company.legal_representative,
                       seller_id: seller.id)
         end
 
@@ -146,7 +139,7 @@ describe 'Purchase' do
 
         context '/:id' do
           it 'gets purchase by id' do
-            purchase = Purchase.last
+            purchase = Order.where(type: 'purchase').last
 
             expected_response = {
               id: purchase.id,

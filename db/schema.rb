@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20160905201906) do
     t.integer  "courier_id"
     t.string   "type"
     t.string   "code"
-    t.string   "price"
+    t.float    "price"
     t.string   "seller_picture"
     t.boolean  "trazoro",        default: false, null: false
     t.boolean  "boolean",        default: false, null: false
