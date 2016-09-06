@@ -11,12 +11,12 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
   # @return [ Purchase::PdfGenerator ] instance with the document created in memory
   def call(options={})
-    raise 'You must to provide a purchase_presenter option' if options[:purchase_presenter].blank?
+    raise 'You must to provide a order_presenter option' if options[:order_presenter].blank?
     raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
-    purchase_presenter = options[:purchase_presenter]
+    order_presenter = options[:order_presenter]
     signature_picture = options[:signature_picture]
     @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor', 'pdfs', 'documento_equivalente_de_compra.pdf'))
-    draw_file!(purchase_presenter, signature_picture)
+    draw_file!(order_presenter, signature_picture)
   end
 
   # @return [ Purchase::ProofOfPurchase::DrawPDF ]
@@ -27,24 +27,24 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   private
 
   # Fills out the equivalent document for the created purchase
-  def draw_file!(purchase_presenter, signature_picture)
+  def draw_file!(order_presenter, signature_picture)
     start_new_page(:template => base_file.path, :template_page => 1)
     # header
     move_cursor_to 778
-    text_box purchase_presenter.ymd_time, :at => [420, cursor], :width => 80, :size => 12, :height =>  12
+    text_box order_presenter.ymd_time, :at => [420, cursor], :width => 80, :size => 12, :height =>  12
     move_cursor_to 720
-    barcode = Barby::EAN13.new(purchase_presenter.code)
+    barcode = Barby::EAN13.new(order_presenter.code)
     outputter = Barby::PrawnOutputter.new(barcode)
     outputter.annotate_pdf(self, options = { x: 45, y: cursor })
     font ('Courier') do
-      text_box purchase_presenter.code, :at => [45, cursor], :width => 240, :size => 12, :height =>  12
+      text_box order_presenter.code, :at => [45, cursor], :width => 240, :size => 12, :height =>  12
     end
 
     move_cursor_to 760
-    text_box purchase_presenter.hms_time, :at => [420, cursor], :width => 80, :size => 12, :height =>  12
+    text_box order_presenter.hms_time, :at => [420, cursor], :width => 80, :size => 12, :height =>  12
 
     # Buyer
-    buyer_presenter = purchase_presenter.buyer_presenter
+    buyer_presenter = order_presenter.buyer_presenter
     move_cursor_to 644
     text_box buyer_presenter.company_name, :at => [130, cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box buyer_presenter.rucom_number, :at => [390, cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -60,7 +60,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     # Provider
     # TODO: use seller instead provider to represent this kind of user
-    seller_presenter = purchase_presenter.seller_presenter
+    seller_presenter = order_presenter.seller_presenter
     move_cursor_to 530
     text_box seller_presenter.company_name, :at => [130, cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box seller_presenter.name, :at => [390, cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -77,7 +77,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box 'population center', :at => [390, cursor], :width => 150, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     # Gold batch section
-    gold_batch_presenter = purchase_presenter.gold_batch_presenter
+    gold_batch_presenter = order_presenter.gold_batch_presenter
     if gold_batch_presenter.castellanos?
       move_cursor_to 398
       text_box gold_batch_presenter.rounded_castellanos, :at => [130, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -103,9 +103,9 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     move_cursor_to 362
     text_box gold_batch_presenter.total_fine_grams, :at => [400, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 286
-    text_box purchase_presenter.fine_gram_price, :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.fine_gram_price, :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 286
-    text_box purchase_presenter.price.to_s, :at => [400, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.price.to_s, :at => [400, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to 230
     signature = signature_picture.is_a?(Hash) ? OpenStruct.new(signature_picture) : signature_picture

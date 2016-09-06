@@ -1,5 +1,5 @@
 class PurchasePresenter < BasePresenter
-  presents :purchase
+  presents :order
 
   def date
     created_at.to_time.getlocal('-05:00')
@@ -35,6 +35,6 @@ class PurchasePresenter < BasePresenter
 
   # presenter of sold's state
   def state
-    gold_batch.sold? ? 'Vendido' : 'Disponible' 
+    gold_batch.sold? ? 'Vendido' : 'Disponible'
   end
 end

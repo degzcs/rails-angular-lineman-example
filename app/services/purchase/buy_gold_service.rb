@@ -8,12 +8,12 @@ class Purchase::BuyGoldService
   attr_accessor :buyer
   attr_accessor :seller
   attr_accessor :purchase
-  attr_accessor :purchase_hash
+  attr_accessor :order_hash
   attr_accessor :gold_batch_hash
   attr_accessor :response
 
   #
-  # @params purchase_hash  [Hash]
+  # @params order_hash  [Hash]
   # @params bold_batch_hash  [Hash]
   # @params buyer [User]
   # @params seller [User]
@@ -26,12 +26,12 @@ class Purchase::BuyGoldService
   # @return [ Hash ] with the success or errors
   def call(options={})
     raise 'You must to provide a current_user option' if options[:current_user].blank?
-    raise 'You must to provide a purchase_hash option' if options[:purchase_hash].blank?
+    raise 'You must to provide a order_hash option' if options[:order_hash].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
     raise 'You must to provide a date option' if options[:date].blank?
     # seller is the gold provider
     @buyer = buyer_from(options[:current_user])
-    @purchase_hash = options[:purchase_hash]
+    @order_hash = options[:order_hash]
     @gold_batch_hash = options[:gold_batch_hash]
     @date = options[:date]
     buy!
@@ -42,13 +42,13 @@ class Purchase::BuyGoldService
   # This will define the rucom and city to be used and the dicount credits to the correct
   # user as well.
   def buy!
-    signature_picture = @purchase_hash.delete ("signature_picture")
+    signature_picture = @order_hash.delete ("signature_picture")
     date = @date
     # Build purchase
-    if can_buy?(buyer, @purchase_hash['seller_id'], gold_batch_hash['fine_grams'])
+    if can_buy?(buyer, @order_hash['seller_id'], gold_batch_hash['fine_grams'])
      # begin
         ActiveRecord::Base.transaction do
-          @purchase = buyer.inventory.purchases.build(purchase_hash)
+          @purchase = buyer.orders.build(order_hash.merge(type: 'purchase'))
           @purchase.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
           @response[:success] = @purchase.save!
           discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase.trazoro
@@ -107,7 +107,7 @@ class Purchase::BuyGoldService
   # @param buyed_fine_grams [ String ]
   # @return [ Boolean ]
   def is_under_monthly_thershold?(seller_id, buyed_fine_grams)
-    already_buyed_gold = Purchase.fine_grams_sum_by_date(Date.today, seller_id)
+    already_buyed_gold = Order.fine_grams_sum_by_date(Date.today, seller_id)
     response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= Settings.instance.monthly_threshold.to_f)
     unless response[:success]
       seller_name = UserPresenter.new(User.find(seller_id), self).name
