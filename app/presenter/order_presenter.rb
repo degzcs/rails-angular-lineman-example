@@ -25,6 +25,22 @@ class OrderPresenter < BasePresenter
     @gold_batch_presenter ||= GoldBatchPresenter.new(gold_batch, h)
   end
 
+  # NOTE: This is a different kind of user but he/she will be in user table some day, at that time
+  # We should to use UserPresenter class instead CourierPresenter class.
+  def courier_presenter
+    CourierPresenter.new(courier, h)
+  end
+
+  def gold_batch_presenters
+    batches.map do |sold_batch|
+      GoldBatchPresenter.new(sold_batch.gold_batch, h)
+    end
+  end
+
+  def grams
+    fine_grams # TODO: check what this field means in the equivalent document
+  end
+
   def fine_gram_price
     "$#{ (price/gold_batch.fine_grams).round(2) }"
   end

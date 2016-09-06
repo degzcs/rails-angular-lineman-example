@@ -48,14 +48,14 @@ FactoryGirl.define do
         number_of_batches { 3 }
       end
       after :create do |sale, e|
-        seller = User.where(email: 'tech@trazoro.co').first || create(:external_user)
+        seller = User.where(email: 'tech@trazoro.co').first || create(:user, :with_personal_rucom, :with_authorized_provider_role)
         e.number_of_batches.times do |index|
           purchase = create(:purchase,
             :with_origin_certificate_file,
             :with_proof_of_purchase_file,
-            user: sale.user,
+            buyer: sale.buyer,
             seller: seller)
-          create(:sold_batch, sale: sale, gold_batch: purchase.gold_batch )
+          create(:sold_batch, order: sale, gold_batch: purchase.gold_batch )
         end
       end
     end
