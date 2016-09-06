@@ -235,10 +235,8 @@ describe  User, type: :model do
       end
 
       it 'should valid if the user has the trader abilities' do
-        expect(@abilities).to be_able_to(:read, Purchase.new)
-        expect(@abilities).to be_able_to(:create, Purchase.new)
-        expect(@abilities).to be_able_to(:create, Sale.new)
-        expect(@abilities).to be_able_to(:read, Sale.new)
+        expect(@abilities).to be_able_to(:read, Order.new)
+        expect(@abilities).to be_able_to(:create, Order.new)
       end
     end
   end
