@@ -4,10 +4,10 @@
 #
 #  id            :integer          not null, primary key
 #  grams_picked  :float
-#  sale_id       :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #  gold_batch_id :integer
+#  order_id      :integer
 #
 
 require 'spec_helper'
@@ -16,7 +16,7 @@ describe SoldBatch, type: :model do
   context "test factory" do
     let(:sold_batch) { build(:sold_batch) }
     it { expect(sold_batch.gold_batch).not_to be_nil }
-    it { expect(sold_batch.sale).not_to be_nil }
+    it { expect(sold_batch.order).not_to be_nil }
   end
 
   context "test creation" do

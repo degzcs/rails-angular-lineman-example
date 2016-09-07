@@ -8,14 +8,14 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
 
   # @return [ Hash ] with the success or errors
   def call(options={})
-    raise 'You must to provide a purchase option' if options[:purchase].blank?
+    raise 'You must to provide a purchase_order option' if options[:purchase_order].blank?
     raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
     raise 'You must to provide a purchase option' if options[:date].blank?
-    purchase_presenter = PurchasePresenter.new(options[:purchase], nil)
+    order_presenter = OrderPresenter.new(options[:purchase_order], nil)
     date_to_day = options[:date]
     signature_picture = options[:signature_picture]
     begin
-      generate_certificate(purchase_presenter, signature_picture, date_to_day)
+      generate_certificate(order_presenter, signature_picture, date_to_day)
       @response[:success] = true
     rescue => exception
       @response[:success] = false
@@ -30,14 +30,14 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
   end
 
   # Generar certificado para barequeros y chatarreros
-  def generate_certificate(purchase_presenter, signature_picture, date_to_day)
+  def generate_certificate(order_presenter, signature_picture, date_to_day)
     file = File.open(File.join(Rails.root, 'vendor','pdfs','formato_certificado_origen_barequero_chatarrero.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # complete information
 
     # header
-    buyer_presenter = purchase_presenter.buyer_presenter
+    buyer_presenter = order_presenter.buyer_presenter
 
     move_cursor_to 590
     text_box buyer_presenter.city_name, :at => [370,cursor], :width => 250, :height => 15 , :overflow => :shrink_to_fit
@@ -48,7 +48,7 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
     text_box "#{date_to_day.year}" , :at => [222,cursor], :width => 85
 
      #body producer
-    seller_presenter =  purchase_presenter.seller_presenter
+    seller_presenter =  order_presenter.seller_presenter
     move_cursor_to 532
     case   seller_presenter.provider_type.downcase
       when 'barequero'
@@ -73,7 +73,7 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
     text_box seller_presenter.city_name , :at => [300,cursor] , :width => 300, :height => 15 , :overflow => :shrink_to_fit
 
     # Gold Batch
-    gold_batch_presenter = purchase_presenter.gold_batch_presenter
+    gold_batch_presenter = order_presenter.gold_batch_presenter
     move_cursor_to 322
     text_box "Oro" , :at => [300,cursor] , :width => 300, :height => 15 , :overflow => :shrink_to_fit
 

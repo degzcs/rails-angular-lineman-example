@@ -10,24 +10,24 @@ describe 'Sale', :type => :request do
 
       context 'POST' do
         it 'should create one complete sale with trader role' do
-          buyer = create(:user, :with_company, :with_trader_role)
-          seller = @current_user.company.legal_representative
+          current_buyer = create(:user, :with_company, :with_trader_role).company.legal_representative
+          current_seller = @current_user.company.legal_representative
           courier = create(:courier)
           purchases = create_list(:purchase, 2,
                                   :with_origin_certificate_file,
                                   :with_proof_of_purchase_file,
-                                  user: seller)
+                                  buyer: current_seller)
           # TODO: change frontend implementation to avoid this.
           selected_purchases = purchases.map { |purchase| { purchase_id: purchase.id } }
           expected_response = {
             # 'id' => 1,
             'courier_id' => courier.id,
             'buyer' => {
-              'id' => buyer.id,
-              'first_name' => buyer.profile.first_name,
-              'last_name' => buyer.profile.last_name
+              'id' => current_buyer.id,
+              'first_name' => current_buyer.profile.first_name,
+              'last_name' => current_buyer.profile.last_name
             },
-            'user_id' => seller.id, # TODO: upgrade frontend
+            'user_id' => current_seller.id, # TODO: upgrade frontend
             # 'gold_batch_id' => GoldBatch.last.id + 1,
             'fine_grams' => 1.5,
           }
@@ -43,7 +43,7 @@ describe 'Sale', :type => :request do
           new_sale_values = {
             # 'id'=>1,
             'courier_id' => courier.id,
-            'buyer_id' => buyer.id,
+            'buyer_id' => current_buyer.id,
             # 'user_id'=> @current_user.id,
             'price' => 180
             # 'gold_batch_id' => expected_response['gold_batch_id']
@@ -64,7 +64,7 @@ describe 'Sale', :type => :request do
           @current_user = create :user, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
-          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, inventory: @legal_representative.inventory)
+          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative)
           @buyer = create(:user, :with_company, :with_trader_role)
         end
 
@@ -91,7 +91,7 @@ describe 'Sale', :type => :request do
         context '/:id' do
           it 'gets purchase by id with role trader' do
             sale = @sales.last
-            
+
             expected_response = {
               id: sale.id,
               courier_id: sale.courier_id,
@@ -148,11 +148,11 @@ describe 'Sale', :type => :request do
 
         context '/:id/batches' do
           it 'verifies that response has the elements number specified in per_page param' do
-            sale = Sale.last
+            order = Order.last
             total_sold_batches = 30
-            list = create_list(:sold_batch, total_sold_batches, sale_id: sale.id)
+            list = create_list(:sold_batch, total_sold_batches, order_id: order.id)
 
-            get "/api/v1/sales/#{ sale.id }/batches",
+            get "/api/v1/sales/#{ order.id }/batches",
               {} ,
               { 'Authorization' => "Barer #{ @token }" }
             expect(response.status).to eq 200

@@ -6,5 +6,4 @@ class DropExtenernalUsers < ActiveRecord::Migration
   def down
     raise ActiveRecord::IrreversibleMigration
   end
-
 end

@@ -1,26 +1,27 @@
 # == Schema Information
 #
-# Table name: purchases
+# Table name: orders
 #
-#  id                          :integer          not null, primary key
-#  origin_certificate_sequence :string(255)
-#  origin_certificate_file     :string(255)
-#  created_at                  :datetime
-#  updated_at                  :datetime
-#  price                       :float
-#  seller_picture              :string(255)
-#  code                        :text
-#  trazoro                     :boolean          default(FALSE), not null
-#  seller_id                   :integer
-#  inventory_id                :integer
+#  id             :integer          not null, primary key
+#  buyer_id       :integer
+#  seller_id      :integer
+#  courier_id     :integer
+#  type           :string(255)
+#  code           :string(255)
+#  price          :string(255)
+#  seller_picture :string(255)
+#  trazoro        :boolean          default(FALSE), not null
+#  boolean        :boolean          default(FALSE), not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #
 
 FactoryGirl.define do
-  factory :purchase, class: Order do
+  factory :order do
     seller { create(:user, :with_company) } # seller
     buyer { create(:user, :with_company) } # seller
+    # inventory { create(:inventory) }
     gold_batch { create(:gold_batch) }
-    type 'purchase'
     # origin_certificate_sequence { Faker::Code.isbn }
     # origin_certificate_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf'),"application/pdf") }
     price { 1_000_000 }

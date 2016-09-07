@@ -4,10 +4,10 @@
 #
 #  id            :integer          not null, primary key
 #  grams_picked  :float
-#  sale_id       :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #  gold_batch_id :integer
+#  order_id      :integer
 #
 
 # TODO: the grams_picked field should be remove, because though
@@ -18,7 +18,7 @@ class SoldBatch < ActiveRecord::Base
   # Associations
   #
 
-  belongs_to :sale
+  belongs_to :order
   belongs_to :gold_batch
 
   #
@@ -29,7 +29,7 @@ class SoldBatch < ActiveRecord::Base
   # validates :grams_picked, presence: true
 
   def provider
-    purchase.inventory.user
+    purchase.seller
   end
 
   def purchase

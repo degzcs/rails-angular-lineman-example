@@ -69,9 +69,9 @@ describe  User, type: :model do
       expect(user).not_to be_valid
     end
 
-    it 'should allow create an external user without email' do
-      user = build(:user, email: nil)
-      expect(user).to be_valid
+    it 'should allow create an authorized provider user without email' do
+      user = create(:user, :with_personal_rucom, :with_authorized_provider_role, email: nil)
+      expect(user.valid?).to eq true
     end
   end
 
@@ -83,7 +83,7 @@ describe  User, type: :model do
       @user_with_final_client_role = create_list(:user, 3, :with_personal_rucom, :with_final_client_role)
       @user_with_transporter_role = create_list(:user, 3, :with_personal_rucom, :with_transporter_role)
 
-      @users_with_any_rucom = create_list(:user, 5)
+      @users_with_any_rucom = create_list(:user, 5, :with_personal_rucom)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil, external: true)
 
       @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)
@@ -235,10 +235,8 @@ describe  User, type: :model do
       end
 
       it 'should valid if the user has the trader abilities' do
-        expect(@abilities).to be_able_to(:read, Purchase.new)
-        expect(@abilities).to be_able_to(:create, Purchase.new)
-        expect(@abilities).to be_able_to(:create, Sale.new)
-        expect(@abilities).to be_able_to(:read, Sale.new)
+        expect(@abilities).to be_able_to(:read, Order.new)
+        expect(@abilities).to be_able_to(:create, Order.new)
       end
     end
   end

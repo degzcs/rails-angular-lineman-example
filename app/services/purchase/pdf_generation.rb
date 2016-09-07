@@ -1,6 +1,6 @@
 class Purchase::PdfGeneration
 
-  attr_accessor :purchase_presenter, :draw_pdf_service_class
+  attr_accessor :order_presenter, :draw_pdf_service_class
 
   def initialize(options={})
     @response = {}
@@ -9,10 +9,10 @@ class Purchase::PdfGeneration
 
   # @return [ Hash ] with the success or errors
   def call(options={})
-    raise "You must to provide a purchase param" if options[:purchase].blank?
+    raise "You must to provide a purchase_order param" if options[:purchase_order].blank?
     raise "You must to provide a draw_pdf_service param" if options[:draw_pdf_service].blank?
     raise "You must to provide a document_type param" if options[:document_type].blank?
-    @purchase_presenter = PurchasePresenter.new(options[:purchase], nil)
+    @order_presenter = OrderPresenter.new(options[:purchase_order], nil)
     @draw_pdf_service_class = options[:draw_pdf_service]
     timestamp = options[:timestamp] || Time.now.to_i
     document_type = options[:document_type]
@@ -22,9 +22,9 @@ class Purchase::PdfGeneration
     temporal_file_path = "#{temporal_folder_path}/#{document_type}.pdf"
 
     if create_temporal_folder(temporal_folder_path)
-      purchase_presenter = generate_file_for(@purchase_presenter, temporal_file_path, document_type, options)
-      @response[:success] = purchase_presenter.save!
-      @response[:errors] << purchase_presenter.errors.full_messages
+      order_presenter = generate_file_for(@order_presenter, temporal_file_path, document_type, options)
+      @response[:success] = order_presenter.save!
+      @response[:errors] << order_presenter.errors.full_messages
     else
       raise 'The folder was not creted!'
     end
@@ -33,12 +33,12 @@ class Purchase::PdfGeneration
 
   private
 
-  def generate_file_for(purchase_presenter, temporal_file_path, document_type, options)
+  def generate_file_for(order_presenter, temporal_file_path, document_type, options)
     draw_pdf_service = draw_pdf_service_class.new
-    response = draw_pdf_service.call(options.merge(purchase_presenter: purchase_presenter))
+    response = draw_pdf_service.call(options.merge(order_presenter: order_presenter))
     file = draw_pdf_service.file
     file.render_file(temporal_file_path)
-    purchase_presenter.documents.build(
+    order_presenter.documents.build(
       file: File.open(temporal_file_path),
       type: document_type,
       )

@@ -19,9 +19,8 @@ class User < ActiveRecord::Base
   #
 
   has_one :profile, dependent: :destroy
-  has_one :inventory, dependent: :destroy
-  has_many :purchases, through: :inventory
-  has_many :sales, through: :inventory
+  has_many :purchases, dependent: :destroy, class_name: 'Order', foreign_key: 'buyer_id'
+  has_many :sales, dependent: :destroy, class_name: 'Order', foreign_key: 'seller_id'
   has_one :personal_rucom, class_name: 'Rucom', as: :rucomeable
   has_many :credit_billings, dependent: :destroy
   belongs_to :office
@@ -32,7 +31,7 @@ class User < ActiveRecord::Base
   # Validations
   #
 
-  validates :email, presence: true, uniqueness: true, unless: :external
+  validates :email, presence: true, uniqueness: true, if: lambda { |user| user.trader?}
   validates :office, presence: true, if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
@@ -77,12 +76,12 @@ class User < ActiveRecord::Base
   scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializadores')}
   # NOTE: It will be deprecated in order to use the role customers
   scope :clients, -> { includes(:personal_rucom).not_authorize_providers_users }
+  # Finally, this scope gets all users that can be logged in the platform
+  scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
   #
   # Calbacks
   #
-
-  after_create :create_inventory
 
   accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles
 
@@ -257,11 +256,6 @@ class User < ActiveRecord::Base
     if self.authorized_provider? && self.has_office?
       self.errors.add(:office, 'Los proveedores autorizados no pueden tener oficina')
     end
-  end
-
-  # After create the user it creates its own inventory with the remaining_amount value equals to 0
-  def create_inventory
-    self.create_inventory!(remaining_amount: 0) if self.inventory.blank?
   end
 
   # NOTE: all users marked as an external are users which will belong to the client role.

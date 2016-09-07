@@ -17,7 +17,7 @@ module V1
         end
       end
       expose :user_id, documentation: { type: 'integer', desc: 'user id', example: '1' } do |sale, _options|
-        sale.inventory.user.id
+        sale.seller.id
       end
       expose :gold_batch_id, documentation: { type: 'integer', desc: 'gold batch id', example: '1' } do |sale, _options|
         sale.gold_batch.id

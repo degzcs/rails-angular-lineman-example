@@ -4,16 +4,16 @@
 #
 #  id            :integer          not null, primary key
 #  grams_picked  :float
-#  sale_id       :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #  gold_batch_id :integer
+#  order_id      :integer
 #
 
 FactoryGirl.define do
   factory :sold_batch do
     # grams_picked 2.5
-    sale
+    order
 
     transient do
       number_of_batches { 3 }

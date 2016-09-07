@@ -32,17 +32,17 @@ describe 'all test the user view', js: true do
     find('#users').click # link header of users
     find('.action_item').click # button new user
     select('authorized_provider', from: 'user_role_ids')
-    fill_in 'Correo*', with: expected_response[:email]
+    fill_in 'Correo', with: expected_response[:email]
     select(expected_response[:office], from: 'user_office_id')
     # select('Empresa falsa # 0', from: 'user_rucom')
-    fill_in 'Password (Minimo 8 caracteres)*', with: expected_response[:password]
+    fill_in 'Password', with: expected_response[:password]
     fill_in 'password_confirmation', with: expected_response[:password]
     find('#new_user > fieldset:nth-child(3) > ol > li > a').click # button add new profile
-    fill_in 'Nombre*', with: expected_response[:profile][:first_name]
-    fill_in 'Apellido*', with: expected_response[:profile][:last_name]
-    fill_in 'Numero de documento*', with: expected_response[:profile][:document_number]
-    fill_in 'Numero telefonico*', with: expected_response[:profile][:phone_number]
-    fill_in 'Direccion*', with: expected_response[:profile][:address]
+    fill_in 'Nombre', with: expected_response[:profile][:first_name]
+    fill_in 'Apellido', with: expected_response[:profile][:last_name]
+    fill_in 'Numero de documento', with: expected_response[:profile][:document_number]
+    fill_in 'Numero telefonico', with: expected_response[:profile][:phone_number]
+    fill_in 'Direccion', with: expected_response[:profile][:address]
     attach_file('user_profile_attributes_photo_file', expected_response[:profile][:photo_file])
     attach_file('user_profile_attributes_rut_file', expected_response[:profile][:rut_file])
     attach_file('user_profile_attributes_mining_authorization_file', expected_response[:profile][:mining_authorization_file])

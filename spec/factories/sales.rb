@@ -14,11 +14,12 @@
 #
 
 FactoryGirl.define do
-  factory :sale do
+  factory :sale, class: Order do
     courier
-    inventory { create(:inventory) } # Seller
-    buyer { User.where(email: 'diego.gomez@trazoro.co').first || create(:external_user) } # Buyer
-    gold_batch { create :gold_batch }# bought gold in this transaction.
+    seller { create(:user, :with_personal_rucom, :with_authorized_provider_role) }
+    buyer { create(:user, :with_company, :with_trader_role) }
+    gold_batch { create :gold_batch } # bought gold in this transaction.
+    type 'sale'
     code "123456789"
     price { 100 }
 
@@ -47,14 +48,14 @@ FactoryGirl.define do
         number_of_batches { 3 }
       end
       after :create do |sale, e|
-        seller = User.where(email: 'tech@trazoro.co').first || create(:external_user)
+        seller = User.where(email: 'tech@trazoro.co').first || create(:user, :with_personal_rucom, :with_authorized_provider_role)
         e.number_of_batches.times do |index|
           purchase = create(:purchase,
             :with_origin_certificate_file,
             :with_proof_of_purchase_file,
-            user: sale.user,
+            buyer: sale.buyer,
             seller: seller)
-          create(:sold_batch, sale: sale, gold_batch: purchase.gold_batch )
+          create(:sold_batch, order: sale, gold_batch: purchase.gold_batch )
         end
       end
     end

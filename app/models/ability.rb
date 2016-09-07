@@ -40,8 +40,7 @@ class Ability
   def trader
     # can :read, User, :user_id = user.id
     # (a) can :update, Profile, :registration_state == "authorized?"
-    can [:create, :read], Sale
-    can [:create, :read], Purchase
+    can [:create, :read], Order
     can :read, User
   end
 

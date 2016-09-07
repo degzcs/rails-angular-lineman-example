@@ -1,5 +1,5 @@
-class ProofOfSalePresenter < BasePresenter
-  presents :sale
+class OrderPresenter < BasePresenter
+  presents :order
 
   def date
     created_at.to_time.getlocal('-05:00')
@@ -14,11 +14,15 @@ class ProofOfSalePresenter < BasePresenter
   end
 
   def buyer_presenter
-    UserPresenter.new(buyer, h)
+    @buyer_presenter ||= UserPresenter.new(buyer, h)
   end
 
   def seller_presenter
-    UserPresenter.new(user, h)
+    @seller_presenter ||= UserPresenter.new(seller, h)
+  end
+
+  def gold_batch_presenter
+    @gold_batch_presenter ||= GoldBatchPresenter.new(gold_batch, h)
   end
 
   # NOTE: This is a different kind of user but he/she will be in user table some day, at that time
@@ -43,5 +47,10 @@ class ProofOfSalePresenter < BasePresenter
 
   def total_price
     "$#{ price.round(2) }"
+  end
+
+  # presenter of sold's state
+  def state
+    gold_batch.sold? ? 'Vendido' : 'Disponible'
   end
 end

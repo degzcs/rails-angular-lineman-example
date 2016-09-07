@@ -1,17 +1,17 @@
 #This Generator joins all sold batches in one unique pdf.
 class Sale::CreatePurchaseFilesCollection
-  attr_accessor :sale, :response
+  attr_accessor :sale_order, :response
 
   def initialize(options={})
   end
 
   def call(options={})
-    raise 'You must to set the sale option' if options[:sale].blank?
-    @sale = options[:sale]
+    raise 'You must to set the sale_order option' if options[:sale_order].blank?
+    @sale_order = options[:sale_order]
     files = options[:files] || []
     timestamp = options[:timestamp] || Time.now.to_i
     @response = {}
-    purchases = sale.batches.map{ |sold_batch| sold_batch.gold_batch.goldomable }
+    purchases = sale_order.batches.map{ |sold_batch| sold_batch.gold_batch.goldomable }
 
     temporal_file_location = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
                               file_paths = purchase_files_from_aws_s3(purchases)
@@ -20,20 +20,20 @@ class Sale::CreatePurchaseFilesCollection
                               files = purchase_files_from_local_machine(purchases)
                               exec_commands_on_local_machine!(files, timestamp)
                             end
-    @response = generate_file_for!(sale, temporal_file_location)
+    @response = generate_file_for!(sale_order, temporal_file_location)
   end
 
   private
 
-  # @param sale [ Sale ]
+  # @param sale_order [ Order ]
   # @param file [ File ]
   # @return [ Hash ] with the response
-  def generate_file_for!(sale, file)
-    sale.documents.build(
+  def generate_file_for!(sale_order, file)
+    sale_order.documents.build(
       file: open(file),
       type: 'purchase_files_collection'
       )
-    { success: sale.save, errors: sale.errors.full_messages }
+    { success: sale_order.save, errors: sale_order.errors.full_messages }
   end
 
   # Makes the whole process with files saved in the local machine
@@ -126,36 +126,36 @@ class Sale::CreatePurchaseFilesCollection
     sale.batches.map { |batch| Rails.root.join(batch.purchase.origin_certificate.file.path).to_s }
   end
 
-  # @param purchases [ Array ] with all Purchase related with the current sale
+  # @param purchase_orders [ Array ] with all Purchase related with the current sale
   # @return [ Array ] with all documents (ActiveRecord) belonging to the  given purchase
-  def purchase_files_from_aws_s3(purchases)
+  def purchase_files_from_aws_s3(purchase_orders)
     files = []
-    purchases.each do |purchase|
+    purchase_orders.each do |purchase_order|
     # Origin certificate
-    files << purchase.origin_certificate.file
+    files << purchase_order.origin_certificate.file
     # ID
-    files << purchase.user.profile.id_document_file
+    files << purchase_order.seller.profile.id_document_file
     # barequero id OR miner register OR resolution
-    files << purchase.user.profile.mining_authorization_file
-    # purchase equivalent document
-    files << purchase.proof_of_purchase.file
+    files << purchase_order.seller.profile.mining_authorization_file
+    # purchase_order equivalent document
+    files << purchase_order.proof_of_purchase.file
     end
     files
   end
 
   # @param purhcase [ Array ] with all Purchase related with the current sale
   # @return [ Array ] with all document paths belonging to the  given purchase
-  def purchase_files_from_local_machine(purchases)
+  def purchase_files_from_local_machine(purchase_orders)
     file_paths = []
-    purchases.each do |purchase|
+    purchase_orders.each do |purchase_order|
     # Origin certificate
-    file_paths << Rails.root.join(purchase.origin_certificate.file.path)
+    file_paths << Rails.root.join(purchase_order.origin_certificate.file.path)
     # ID
-    file_paths << Rails.root.join(purchase.user.profile.id_document_file.path)
+    file_paths << Rails.root.join(purchase_order.seller.profile.id_document_file.path)
     # barequero id OR miner register OR resolution
-    file_paths << Rails.root.join(purchase.user.profile.mining_authorization_file.path)
-    # purchase equivalent document
-    file_paths << Rails.root.join(purchase.proof_of_purchase.file.path)
+    file_paths << Rails.root.join(purchase_order.seller.profile.mining_authorization_file.path)
+    # purchase_order equivalent document
+    file_paths << Rails.root.join(purchase_order.proof_of_purchase.file.path)
     end
     file_paths
   end

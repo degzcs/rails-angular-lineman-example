@@ -15,7 +15,7 @@ module V1
       end
       expose :provider, documentation: { type: "string", desc: "information about the persorn who made the sale" } do | sale, options|
         #IMPROVE: this entity was created provitionaly in order to convert the user in provider. Have to be refactored!!
-        seller = legal_representative = V1::Helpers::UserHelper.legal_representative_from(sale.inventory.user)
+        seller = V1::Helpers::UserHelper.legal_representative_from(sale.seller)
         user_transformed_to_provider = {
           id: seller.id,
           name: UserPresenter.new(seller, self).name,

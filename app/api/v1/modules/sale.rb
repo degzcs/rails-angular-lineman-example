@@ -74,17 +74,17 @@ module V1
             [401, 'Unauthorized'],
             [404, 'Entry not found'],
             ] do
-            authorize! :create, ::Sale
+            authorize! :create, ::Order
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
             registration_service = ::Sale::RegistrationService.new
             response = registration_service.call(
-              sale_hash: params[:sale],
+              order_hash: params[:sale],
               current_user: current_user,
               gold_batch_hash: params[:gold_batch],
               selected_purchase_ids: selected_purchase_ids,
               )
             if response[:success]
-              present registration_service.sale, with: V1::Entities::Sale
+              present registration_service.sale_order, with: V1::Entities::Sale
               Rails.logger.info(response)
             else
               error!({error: 'unexpected error', detail: response[:errors] }, 409)
@@ -110,7 +110,7 @@ module V1
           [200, 'Successful'],
           [401, 'Unauthorized']
           ] do
-          authorize! :read, ::Sale
+          authorize! :read, ::Order
           content_type 'text/json'
           page = params[:page] || 1
           per_page = params[:per_page] || 10
@@ -136,7 +136,7 @@ module V1
         end
 
         get 'get_by_code/:code', http_codes: [ [200, 'Successful'], [401, 'Unauthorized'] ] do
-          authorize! :read, ::Sale
+          authorize! :read, ::Order
           content_type 'text/json'
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sale = legal_representative.sales.find_by(code: params[:code])
@@ -159,11 +159,10 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, 'Successful'], [401, 'Unauthorized'] ] do
-          authorize! :read, ::Sale
+          authorize! :read, ::Order
           content_type 'text/json'
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
-          sale = legal_representative.sales.find(params[:id])
-          #authorize: [:read, Sale]
+          sale = legal_representative.sales.where(id: params[:id], type: 'sale').last
           authorize! :read, sale
           present sale, with: V1::Entities::Sale
         end
@@ -186,7 +185,7 @@ module V1
         get '/:id/batches', http_codes: [ [200, 'Successful'], [401, 'Unauthorized'] ] do
           content_type 'text/json'
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
-          batches = legal_representative.sales.find(params[:id]).batches
+          batches = legal_representative.sales.where(id: params[:id], type: 'sale').last.batches
           present batches, with: V1::Entities::SoldBatch
         end
       end

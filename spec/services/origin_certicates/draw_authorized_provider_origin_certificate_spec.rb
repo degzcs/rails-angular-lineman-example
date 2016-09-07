@@ -7,7 +7,7 @@ describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
   let(:rucom) { create :rucom, rucom_number: '7767899877' }
   let(:gold_batch) { create :gold_batch, fine_grams: 2.2 }
   let(:buyer) { create :user, :with_company, city: City.find_by(name: 'MEDELLIN'), name: 'Aquiles S.A', nit_number: '0987654321', rucom: rucom }
-  let(:purchase) { create :purchase, seller: seller, inventory: buyer.inventory, gold_batch: gold_batch }
+  let(:purchase_order) { create :purchase, seller: seller, buyer: buyer, gold_batch: gold_batch }
 
   subject(:service){ OriginCertificates::DrawAuthorizedProviderOriginCertificate.new }
 
@@ -20,7 +20,7 @@ describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
     it 'test the execution signature' do
       expected_hash = "174cd197bad6ca1ac9e1c5e33246b13757607af00bb4ee8ecb9cb85d35e3e4c8"
       response = service.call(
-       purchase: purchase,
+       purchase_order: purchase_order,
        signature_picture: @signature_picture,
        date: '2016/07/15'.to_date,
       )

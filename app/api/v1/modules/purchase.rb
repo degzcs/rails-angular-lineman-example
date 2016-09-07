@@ -58,15 +58,20 @@ module V1
             [401, "Unauthorized"],
             [404, "Entry not found"],
           ]do
-          authorize! :create, ::Purchase
+          authorize! :create, ::Order
           # update params
           date = '2016/07/15'.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
           gold_purchase_service = ::Purchase::BuyGoldService.new
-          service_response = gold_purchase_service.call(purchase_hash: new_params[:purchase], gold_batch_hash: new_params[:gold_batch], current_user: current_user, date: date )
+          service_response = gold_purchase_service.call(
+            order_hash: new_params[:purchase],
+            gold_batch_hash: new_params[:gold_batch],
+            current_user: current_user,
+            date: date
+            )
 
           if service_response[:success]
-            present gold_purchase_service.purchase , with: V1::Entities::Purchase
+            present gold_purchase_service.purchase_order , with: V1::Entities::Purchase
           else
             error!({ error: "unexpected error", detail: service_response[:errors] }, 409)
           end
@@ -90,10 +95,10 @@ module V1
         end
 
         get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          authorize! :read, ::Purchase
+          authorize! :read, ::Order
           content_type "text/json"
           if params[:purchase_list]
-            purchases = ::Purchase.get_list(params[:purchase_list])
+            purchases = ::Order.where(id: params[:purchase_list], type: 'purchase')
           else
             page = params[:page] || 1
             per_page = params[:per_page] || 10
@@ -120,9 +125,10 @@ module V1
         end
 
         get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          authorize! :read, ::Purchase
+          authorize! :read, ::Order
           content_type "text/json"
-          purchase = ::Purchase.find(params[:id])
+          purchase = ::Order.where(id: params[:id], type: 'purchase').last
+          authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end
       end

@@ -136,16 +136,6 @@ ActiveRecord::Schema.define(version: 20160906224754) do
 
   add_index "gold_batches", ["goldomable_id"], name: "index_gold_batches_on_goldomable_id", using: :btree
 
-  create_table "inventories", force: true do |t|
-    t.float    "remaining_amount",                null: false
-    t.boolean  "status",           default: true, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
-  add_index "inventories", ["user_id"], name: "index_inventories_on_user_id", using: :btree
-
   create_table "offices", force: true do |t|
     t.string   "name"
     t.integer  "company_id"
@@ -153,6 +143,19 @@ ActiveRecord::Schema.define(version: 20160906224754) do
     t.datetime "updated_at"
     t.integer  "city_id"
     t.string   "address"
+  end
+
+  create_table "orders", force: true do |t|
+    t.integer  "buyer_id"
+    t.integer  "seller_id"
+    t.integer  "courier_id"
+    t.string   "type"
+    t.string   "code"
+    t.float    "price"
+    t.string   "seller_picture"
+    t.boolean  "trazoro",        default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "profiles", force: true do |t|
@@ -176,21 +179,6 @@ ActiveRecord::Schema.define(version: 20160906224754) do
 
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
-
-  create_table "purchases", force: true do |t|
-    t.string   "origin_certificate_sequence"
-    t.string   "origin_certificate_file"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "price"
-    t.string   "seller_picture"
-    t.text     "code"
-    t.boolean  "trazoro",                     default: false, null: false
-    t.integer  "seller_id"
-    t.integer  "inventory_id"
-  end
-
-  add_index "purchases", ["seller_id"], name: "index_purchases_on_seller_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -221,20 +209,6 @@ ActiveRecord::Schema.define(version: 20160906224754) do
 
   add_index "rucoms", ["rucomeable_id"], name: "index_rucoms_on_rucomeable_id", using: :btree
 
-  create_table "sales", force: true do |t|
-    t.integer  "courier_id"
-    t.string   "code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "price"
-    t.boolean  "trazoro",      default: false, null: false
-    t.integer  "inventory_id"
-    t.integer  "buyer_id"
-  end
-
-  add_index "sales", ["buyer_id"], name: "index_sales_on_buyer_id", using: :btree
-  add_index "sales", ["inventory_id"], name: "index_sales_on_inventory_id", using: :btree
-
   create_table "settings", force: true do |t|
     t.text     "data"
     t.datetime "created_at"
@@ -243,14 +217,13 @@ ActiveRecord::Schema.define(version: 20160906224754) do
 
   create_table "sold_batches", force: true do |t|
     t.float    "grams_picked"
-    t.integer  "sale_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "gold_batch_id"
+    t.integer  "order_id"
   end
 
   add_index "sold_batches", ["gold_batch_id"], name: "index_sold_batches_on_gold_batch_id", using: :btree
-  add_index "sold_batches", ["sale_id"], name: "index_sold_batches_on_sale_id", using: :btree
 
   create_table "states", force: true do |t|
     t.string   "name"
