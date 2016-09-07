@@ -24,29 +24,29 @@ describe 'all test the rucom view', :js do
     expect(last_user.profile.document_number).to eq expected_response[:identification_number]
   end
 
-  it 'Edit Rucom' do
-    user_with_rucom = create(:user, :with_profile, :with_personal_rucom)
-    expected_response = {
-      location: 'MEDELLIN'
-    }
-    visit '/admin/rucoms/'
-    within("#rucom_#{ user_with_rucom.rucom.id }") do
-      click_link('Edit')
-    end
-    fill_in 'rucom_location', with: ' '
-    fill_in 'rucom_location', with: expected_response[:location]
-    click_button('Update Rucom')
-    expect(user_with_rucom.reload.rucom.location).to eq expected_response[:location]
-  end
+  # it 'Edit Rucom' do
+  #   user_with_rucom = create(:user, :with_profile, :with_personal_rucom)
+  #   expected_response = {
+  #     location: 'MEDELLIN'
+  #   }
+  #   visit '/admin/rucoms/'
+  #   within("#rucom_#{ user_with_rucom.rucom.id }") do
+  #     click_link('Edit')
+  #   end
+  #   fill_in 'rucom_location', with: ' '
+  #   fill_in 'rucom_location', with: expected_response[:location]
+  #   click_button('Update Rucom')
+  #   expect(user_with_rucom.reload.rucom.location).to eq expected_response[:location]
+  # end
 
-  it 'Show Rucom' do
-    user_with_rucom = create(:user, :with_profile, :with_personal_rucom)
-    visit '/admin/rucoms/'
-    within("#rucom_#{ user_with_rucom.rucom.id }") do
-      click_link('View')
-    end
-    expect(page).to have_content "#{user_with_rucom.rucom.name}"
-  end
+  # it 'Show Rucom' do
+  #   user_with_rucom = create(:user, :with_profile, :with_personal_rucom)
+  #   visit '/admin/rucoms/'
+  #   within("#rucom_#{ user_with_rucom.rucom.id }") do
+  #     click_link('View')
+  #   end
+  #   expect(page).to have_content "#{user_with_rucom.rucom.name}"
+  # end
 
   it 'Rucom not exist in the page ANM' do
     visit '/admin/rucoms/new'
