@@ -156,7 +156,7 @@ module V1
           [401, "Unauthorized"],
           [404, "Entry not found"],
         ]  do
-          
+
           content_type "text/json"
 
           # update params
@@ -171,7 +171,6 @@ module V1
           params[:provider].except!(:files).merge!(document_number_file: document_number_file, mining_register_file: mining_register_file, rut_file: rut_file, photo_file: photo_file)
           provider_params = params[:provider]
           provider = ::User.new(params[:provider])
-          provider.external = true
           provider.build_company(params[:company]) if params[:company]
 
           if params[:rucom_id]
@@ -179,7 +178,7 @@ module V1
             provider.personal_rucom = rucom
           end
 
-        
+
 
           if provider.save
             present provider, with: V1::Entities::Provider

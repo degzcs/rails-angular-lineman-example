@@ -43,7 +43,7 @@ ActiveAdmin.register Rucom do
     column('Estado', :rucom_status) do |rucom|
       if rucom.rucomeable
         if rucom.rucomeable_type == 'User'
-          rucom.rucomeable.external ? status_tag('Usuario Externo', :warn) : status_tag('Usuario', :ok)
+          status_tag(rucom.rucomeable.roles, :warn)
         else
           status_tag('Compañia', :ok)
         end

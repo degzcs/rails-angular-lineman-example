@@ -49,7 +49,6 @@ module V1
       expose :state, documentation: { type: "json", desc: "State name", example: "Antioquia" } do |user, options|
         user.profile.city.state.as_json
       end
-      expose :external, documentation: { type: "boolean", desc: "External flag", example: "true" }
     end
   end
 end

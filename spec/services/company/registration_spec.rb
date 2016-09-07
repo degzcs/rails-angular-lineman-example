@@ -9,7 +9,6 @@ describe Company::Registration do
     @legal_representative_data = {
       email: 'lam.ehbotas@thecompany.com',
       office_id: nil, # This will be updated after create both user and company records
-      external: false,
       password: 'this_is_my_password',
       password_confirmation: 'this_is_my_password',
       profile_attributes: {
@@ -35,7 +34,6 @@ describe Company::Registration do
       email: 'fake.company@thecompany.com',
       phone_number: '3001112233',
       chamber_of_commerce_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'chamber_of_commerce_file.pdf'), "application/pdf"),
-      external: false, # ?
       rut_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'), "application/pdf"),
       mining_register_file: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'), "application/pdf"),
       address: 'Street 123'

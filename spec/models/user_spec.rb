@@ -84,7 +84,7 @@ describe  User, type: :model do
       @user_with_transporter_role = create_list(:user, 3, :with_personal_rucom, :with_transporter_role)
 
       @users_with_any_rucom = create_list(:user, 5, :with_personal_rucom)
-      @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil, external: true)
+      @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil)
 
       @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)
       @clients_with_fake_rucom = create_list(:client_with_fake_rucom, 6)
@@ -162,25 +162,24 @@ describe  User, type: :model do
         expect(authorized_provider.activity).to eq rucom.activity
       end
 
-      xit 'should validate the rucom called personal rucom' do
-        user = build(:user, external: true, personal_rucom: nil)
-        expect(user).not_to be_valid
+      it 'should validate the rucom called personal rucom' do
+        expect{ create(:user, personal_rucom: nil) }.to raise_error "Personal rucom can't be blank"
       end
     end
 
     context 'normal users' do
       it 'should returns the user activity trough company model' do
-        user = create(:user, :with_company, external: false, personal_rucom: nil)
+        user = create(:user, :with_company, personal_rucom: nil)
         expect(user.activity).to eq user.company.rucom.activity
       end
 
       it 'should allows create a users without personal rucom' do
-        user = create(:user, :with_company, external: false, personal_rucom: nil)
+        user = create(:user, :with_company, personal_rucom: nil)
         expect(user.persisted?).to eq true
       end
 
       xit 'should not allow to create a user without office (this case is not enough.. create more test about this)' do
-        user = create(:user, :with_personal_rucom, external: false, office: nil)
+        user = create(:user, :with_personal_rucom, office: nil)
         expect(user.persisted?).to eq false
       end
     end

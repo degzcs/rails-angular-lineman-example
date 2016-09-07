@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :external, :rucom, role_ids:  [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids:  [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
 
   # overwrite controller update to perform upgrade Rucom.
   controller do
@@ -59,8 +59,8 @@ ActiveAdmin.register User do
         # TDDO: Encontrar la manera de que el desplegable seleccione  el rucom asociado al usuario que se esta editando. Tener en cuenta que la relacion User con Rucom es polimorfica.
         f.input :rucom, label: 'Rucom', :collection => Rucom.all.map { |rucom| [rucom.name, rucom.id] }
       end
-      unless user.external
-        f.input :password, label: 'Password (Minimo 8 caracteres)', :if => f.object.external
+      unless user.authorized_provider?
+        f.input :password, label: 'Password (Minimo 8 caracteres)', :if => f.object.authorized_provider?
         f.input :password_confirmation, label: 'password_confirmation'
       end
     end
