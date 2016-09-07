@@ -21,7 +21,6 @@ FactoryGirl.define do
     profile
     password { 'foobar' }
     password_confirmation { 'foobar' }
-    external { false }
 
     trait :with_profile do
       transient do
@@ -116,13 +115,6 @@ FactoryGirl.define do
         role = Role.find_by(name: 'transporter')
         user.roles << role
       end
-    end
-
-    factory :external_user, class: User do
-      personal_rucom { create :rucom }
-      external { true }
-      password { nil }
-      password_confirmation { nil }
     end
 
     factory :client_with_fake_personal_rucom, class: User do

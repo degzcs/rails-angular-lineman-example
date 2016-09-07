@@ -3,28 +3,28 @@ describe 'Auth' do
     context '#me' do
       context 'GET' do
         it 'show the user info, this user dont have company' do
-          user = create :user, :with_profile, :with_personal_rucom, :with_trader_role, nit_number: nil
+          user = create :user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, nit_number: nil
           token = user.create_token
           expected_response = {
-           'id' => user.id,
-           'first_name' => user.profile.first_name,
-           'last_name' => user.profile.last_name,
-           'nit' => nil, # NOTE: This field is not mandatory because not all barequeros have this document, they should but they dont have it.
-           'email' => user.email,
-           'document_number' => user.profile.document_number,
-           #'access_token'=> token,
-           'available_credits' => user.profile.available_credits,
-           'phone_number' => user.profile.phone_number,
-           'address' => user.profile.address,
-           'office' => nil,
-           'company_name' => nil,
-           'company' => nil,
-           'photo_file' => {
-             'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
-            },
+            'id' => user.id,
+            'first_name' => user.profile.first_name,
+            'last_name' => user.profile.last_name,
+            'nit' => nil, # NOTE: This field is not mandatory because not all barequeros have this document, they should but they dont have it.
+            'email' => user.email,
+            'document_number' => user.profile.document_number,
+            # 'access_token'=> token,
+            'available_credits' => user.profile.available_credits,
+            'phone_number' => user.profile.phone_number,
+            'address' => user.profile.address,
+            'office' => nil,
+            'company_name' => nil,
+            'company' => nil,
+            'photo_file' => {
+              'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
+            }
           }
 
-          get '/api/v1/users/me', {}, {'Authorization' => "Barer #{token}"}
+          get '/api/v1/users/me', {}, { 'Authorization' => "Barer #{token}" }
           expect(response.status).to eq 200
           expected_response.each do |key, value|
             expect(JSON.parse(response.body)[key]).to eq value
@@ -33,8 +33,9 @@ describe 'Auth' do
         # Exportador --> role
         # certificado de origen
 
+        # NOTE: Ambiguous test(adding :with_trader_role to pass.)
         it 'should to check if a user belonging to a company is showing a correct information' do
-          user = create :user, :with_profile, :with_company, available_credits: 0
+          user = create :user, :with_profile, :with_company, :with_trader_role, available_credits: 0
           company = user.company
           company.legal_representative.profile.update_column :available_credits, 100
           company.reload
@@ -94,7 +95,7 @@ describe 'Auth' do
         end
 
         it 'should to check if the legal representative inforamtion is correct' do
-          user = create :user, :with_profile, legal_representative: true, office: nil, available_credits: 100
+          user = build(:user, :with_profile, :with_trader_role, legal_representative: true, office: nil, available_credits: 100)
           company = create :company, legal_representative: user
           user.update_column :office_id, company.main_office.id
           user.reload
@@ -140,7 +141,7 @@ describe 'Auth' do
             },
           }
 
-          get '/api/v1/users/me', {},{ 'Authorization' => "Barer #{ token }" }
+          get '/api/v1/users/me', {}, { 'Authorization' => "Barer #{ token }" }
           expect(response.status).to eq 200
           expected_response.each do |key, value|
             if key == 'company'
@@ -167,7 +168,7 @@ describe 'Auth' do
            'available_credits' => user.available_credits
           }
 
-          new_values ={
+          new_values = {
            'first_name' => 'Armando',
            'last_name' => 'Casas',
            'email' => 'armando.casas@fake.com',

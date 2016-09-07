@@ -5,17 +5,20 @@ describe 'Client', :type => :request do
 
       before :context do
         @user = create :user, :with_company
+        @user_with_final_client_role = create :user, :with_company, :with_final_client_role
+        @user_with_trader_role = create_list(:user, 3, :with_company, :with_trader_role)
+        @user_with_transporter_role = create_list(:user, 3, :with_company, :with_transporter_role)
         @token = @user.create_token
-        create_list(:client_with_fake_rucom, 20)
+        #create_list(:client_with_fake_rucom, 20)
 
         document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
         mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
         rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
         chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
         photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
-        document_number_file =  Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
+        document_number_file = Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
         # mining_register_file =  Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
-        rut_file =  Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
+        rut_file = Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
         chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
         photo_file =  Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
         @user_files = [photo_file,document_number_file]
@@ -23,8 +26,7 @@ describe 'Client', :type => :request do
       end
 
       context 'GET' do
-
-        it 'verifies that response has the elements number specified in per_page param' do
+        it 'verifies that response has the elements(not_authorize_provider_users) number specified in per_page param' do
           per_page = 5
           get '/api/v1/clients', { per_page: per_page } , { "Authorization" => "Barer #{ @token }" }
           expect(response.status).to eq 200

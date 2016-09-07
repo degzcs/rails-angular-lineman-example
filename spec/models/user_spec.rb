@@ -42,7 +42,7 @@ describe  User, type: :model do
     end
   end
 
-  context 'associations' do
+  context 'associations with roles' do
     it { should have_and_belong_to_many :roles }
   end
 
@@ -64,14 +64,14 @@ describe  User, type: :model do
 
     xit { should validate_presence_of(:email) }
 
-    it 'should not allow to create an external user without personal_rucom if does not have office' do
-      external_user = build(:external_user, personal_rucom: nil, office: nil, email: nil)
-      expect(external_user).not_to be_valid
+    it 'should not allow to create an authorized_provider without personal_rucom if does not have office' do
+      user = build(:user, :with_authorized_provider_role, personal_rucom: nil, office: nil, email: nil)
+      expect(user).not_to be_valid
     end
 
     it 'should allow create an external user without email' do
-      external_user = build(:external_user, email: nil)
-      expect(external_user).to be_valid
+      user = build(:user, email: nil)
+      expect(user).to be_valid
     end
   end
 
@@ -79,7 +79,11 @@ describe  User, type: :model do
     before :each do
       @users = create_list(:user, 5, :with_personal_rucom) # or internal traders
 
-      @external_users_with_any_rucom = create_list(:external_user, 5)
+      @user_with_trader_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_trader_role)
+      @user_with_final_client_role = create_list(:user, 3, :with_personal_rucom, :with_final_client_role)
+      @user_with_transporter_role = create_list(:user, 3, :with_personal_rucom, :with_transporter_role)
+
+      @users_with_any_rucom = create_list(:user, 5)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil, external: true)
 
       @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)
@@ -87,7 +91,11 @@ describe  User, type: :model do
 
       # add credits to buy gold
       @users.last.profile.update_attribute(:available_credits, 2000)
-      @external_users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
+      @users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
+    end
+
+    it 'should return all users except with authorized_provider user role' do
+      expect(User.not_authorize_providers_users.count).to eq [@user_with_trader_role, @user_with_final_client_role, @user_with_transporter_role].flatten.compact.uniq.count
     end
 
     xit 'should return all system users, it means, all uses that be logged in the platform (This scope has to be upgraded based on the new specifications)' do
@@ -95,7 +103,7 @@ describe  User, type: :model do
     end
 
     xit 'should return all extenal users, they can have one of the next personal_rucom or company rucom' do
-      expect(User.external_users.count).to eq [@external_users_with_any_rucom, @external_traders].flatten.compact.uniq.count
+      expect(User.users.count).to eq [@users_with_any_rucom, @external_traders].flatten.compact.uniq.count
     end
 
     it 'should select all user that can provider gold (providers)' do
@@ -134,30 +142,28 @@ describe  User, type: :model do
       context 'users or external users with company' do
         it 'should respond with the rucom\'s company' do
           user = create(:user, :with_company)
-          external_user = create(:external_user, :with_company)
           expect(user.rucom).to eq user.company.rucom
-          expect(external_user.rucom).to eq external_user.company.rucom
         end
       end
 
       context 'external user without company' do
         it 'should respond with the rucom\'s user' do
           personal_rucom = create(:rucom)
-          external_user = create(:external_user, office: nil, personal_rucom: personal_rucom)
-          expect(external_user.personal_rucom).to eq personal_rucom
+          user = create(:user, office: nil, personal_rucom: personal_rucom)
+          expect(user.personal_rucom).to eq personal_rucom
         end
       end
     end
 
-    context 'external users' do
+    context 'authorized provider' do
       it 'should returns the user activity from rucom info' do
         rucom = create(:rucom)
-        external_user = create(:external_user, personal_rucom: rucom, office: nil)
-        expect(external_user.activity).to eq rucom.activity
+        authorized_provider = create(:user, :with_authorized_provider_role, personal_rucom: rucom, office: nil)
+        expect(authorized_provider.activity).to eq rucom.activity
       end
 
       xit 'should validate the rucom called personal rucom' do
-        user = build(:user, external: true,  personal_rucom: nil)
+        user = build(:user, external: true, personal_rucom: nil)
         expect(user).not_to be_valid
       end
     end
@@ -221,66 +227,53 @@ describe  User, type: :model do
     end
   end
 
-  context "abilities" do
-    context "trader abilities" do
+  context 'abilities' do
+    context 'trader abilities' do
       before :each do
-        trader_user = create :user, :with_profile, :with_personal_rucom, :with_trader_role
+        trader_user = create :user, :with_company, :with_profile, :with_personal_rucom, :with_trader_role
         @abilities = Ability.new(trader_user)
       end
 
       it 'should valid if the user has the trader abilities' do
-        #binding.pry
         expect(@abilities).to be_able_to(:read, Purchase.new)
         expect(@abilities).to be_able_to(:create, Purchase.new)
         expect(@abilities).to be_able_to(:create, Sale.new)
         expect(@abilities).to be_able_to(:read, Sale.new)
       end
-
     end
   end
 
-  context "user roles with_authorized_provider_role" do
+  context 'user roles with_authorized_provider_role' do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_authorized_provider_role
-      #:with_final_client_role, :with_trader_role, :with_transporter_role
+      @user = create :user, :with_personal_rucom, :with_authorized_provider_role
+      # :with_final_client_role, :with_trader_role, :with_transporter_role
     end
 
-    it "should check that user is a authorized provider" do
-      #@user.roles.map(&:name)) include("authorized_provider")
+    it 'should check that user is a authorized provider' do
+      # @user.roles.map(&:name)) include("authorized_provider")
       expect(@user.authorized_provider?).to be true
     end
   end
 
-  context "user roles :with_final_client_role" do
+  context 'user roles :with_final_client_role' do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_final_client_role
-      #:with_trader_role, :with_transporter_role
+      @user = create :user, :with_personal_rucom, :with_final_client_role
+      # :with_trader_role, :with_transporter_role
     end
 
-    it "should check that user is a final client" do
-      #@user.roles.map(&:name)) include("authorized_provider")
+    it 'should check that user is a final client' do
+      # @user.roles.map(&:name)) include("authorized_provider")
       expect(@user.final_client?).to be true
     end
   end
 
-  context "user roles :with_trader_role" do
+  context 'user roles :with_trader_role' do
     before :each do
-      @user =  create :user, :with_personal_rucom, :with_trader_role
+      @user = create :user, :with_personal_rucom, :with_transporter_role
     end
 
-    it "should check that user is a trader" do
-      expect(@user.trader?).to be true
-    end
-  end
-
-  context "user roles :with_transporter_role" do
-    before :each do
-      @user =  create :user, :with_personal_rucom, :with_transporter_role
-    end
-
-    it "should check that user is a transporter" do
+    it 'should check that user is a transporter' do
       expect(@user.transporter?).to be true
     end
   end
 end
-
