@@ -35,29 +35,29 @@ describe 'Purchase' do
 
   context "purchase creation" do
     context "for a trazoro purchase (user - user purchase)" do
-      let!(:user1) { create(:user, :with_company) }
+      let!(:buyer) { create(:user, :with_company) }
       let!(:seller) { create(:user, :with_company) }
-      let(:purchase) {create(:purchase, buyer: user1, seller: seller, trazoro: true)}
+      let(:purchase) {create(:purchase, buyer: buyer, seller: seller, trazoro: true)}
       it "expect to have the correct user" do
         expect(purchase.trazoro).to be true
-        expect(purchase.buyer).to eq user1
+        expect(purchase.buyer).to eq buyer
       end
       it "expect to have the correct seller" do
         expect(purchase.trazoro).to be true
         expect(purchase.seller).to eq seller
       end
     end
-    context "for an external seller purchase" do
-      let!(:user1) { create(:user, :with_company) }
-      let!(:external_user) { create(:external_user) }
-      let(:purchase) {create(:purchase, buyer: user1, seller: external_user)}
+    context "for an authorized provider seller" do
+      let!(:buyer) { create(:user, :with_company) }
+      let!(:seller) { create(:user, :with_personal_rucom, :with_authorized_provider_role) }
+      let(:purchase) {create(:purchase, buyer: buyer, seller: seller)}
       it "expect to have the correct user" do
         expect(purchase.trazoro).to be false
-        expect(purchase.buyer).to eq user1
+        expect(purchase.buyer).to eq buyer
       end
       it "expect to have the correct seller" do
         expect(purchase.trazoro).to be false
-        expect(purchase.seller).to eq external_user
+        expect(purchase.seller).to eq seller
       end
     end
   end

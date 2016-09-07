@@ -51,7 +51,7 @@ describe 'Rucom', type: :request do
             context 'if rucom is already in use by a user or external user' do
               it 'responds with an error' do
                 rucom = create(:rucom)
-                create(:external_user, personal_rucom: rucom)
+                create(:user, personal_rucom: rucom)
                 get "/api/v1/rucoms/#{rucom.id}/check_if_available", {}, 'Authorization' => "Barer #{@token}"
                 expect(response.status).to eq 400
               end

@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   # Validations
   #
 
-  validates :email, presence: true, uniqueness: true, unless: :external
+  validates :email, presence: true, uniqueness: true, if: lambda { |user| user.trader?}
   validates :office, presence: true, if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
 
@@ -76,6 +76,8 @@ class User < ActiveRecord::Base
   scope :comercializadores, -> {joins(office: [{company: :rucom}]).where('rucoms.provider_type = ?', 'Comercializadores')}
   # NOTE: It will be deprecated in order to use the role customers
   scope :clients, -> { includes(:personal_rucom).not_authorize_providers_users }
+  # Finally, this scope gets all users that can be logged in the platform
+  scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
   #
   # Calbacks
