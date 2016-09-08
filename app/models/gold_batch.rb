@@ -17,8 +17,8 @@
 # the plataform make transaction with the fine grams, but in the extra_info you will be able to
 # find where this value come from. See the measurement_converter_service.coffee file for more information
 
+# Lote de oro
 class GoldBatch < ActiveRecord::Base
-
   #
   # Serialized field
   # Example,
@@ -28,6 +28,7 @@ class GoldBatch < ActiveRecord::Base
   #  tomines: 8,
   #  reales: 10,
   #  onzas: 14,
+  #  granos: 50
   # }
 
   serialize :extra_info
@@ -75,6 +76,10 @@ class GoldBatch < ActiveRecord::Base
     extra_data.reales
   end
 
+  def granos
+    entra_data.granos
+  end
+
   def grams?
     grams.present? && !grams.zero?
   end
@@ -95,4 +100,7 @@ class GoldBatch < ActiveRecord::Base
     reales.present? && !reales.zero?
   end
 
+  def granos?
+    granos.present? && !granos.zero?
+  end
 end
