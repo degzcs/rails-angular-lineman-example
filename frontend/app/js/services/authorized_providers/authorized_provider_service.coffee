@@ -28,7 +28,24 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
         mining_register_file: ''
         chamber_of_commerce_file: ''
         rut_file: ''
+     all: (per_page,page)->
+      #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
+      return $http
+                url: 'api/v1/external_users'
+                method: 'GET'
+                params: {
+                  per_page: per_page || 10,
+                  page: page || 1
+                }
 
+# -----------------------------------------------------------
+    get: (id)->
+      #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
+      return $http
+                url: 'api/v1/external_users/'+id
+                method: 'GET'
+
+# -----------------------------------------------------------
     update: (id)->
       external_user = service.modelToCreate.authorized_provider
       profile = service.modelToCreate.profile
@@ -49,7 +66,7 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
             document_number_file_copy = files_to_upload.document_number_file
             document_number_reader = new FileReader
             fileName = 'document_number_file'
-            
+
             document_number_reader.onload = ->
               array = createBinaryFile(@result)
               files_to_upload.document_number_file = createBlobFile(array, fileName, document_number_file_copy)
@@ -83,7 +100,7 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
             miningRegisterReader.readAsBinaryString mining_register_file_copy[0]
             filesRemaining++
 
-  #------------------------------------------------------------        
+  #------------------------------------------------------------
         #
         # Funtion to convert the files in a array valid with the Binary format to then convert it as Blob to send it by PUT Request
         #
@@ -134,7 +151,7 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
             url: '/api/v1/autorized_providers/' + id
             method: 'PUT'
             headers: {'Content-Type': 'application/json'}
-            fields: 
+            fields:
               "authorized_provider[email]":external_user.email,
               "profile[first_name]":profile.first_name,
               "profile[last_name]":profile.last_name,

@@ -1,11 +1,11 @@
 
-angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog) ->
+angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProvider, RucomService, LocationService, $mdDialog) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
   $scope.loadingMessage = "Cargando ..."
   # *********************************** VARIABLES **********************************#
-  $scope.currentExternalUser = null
+  $scope.currentAuthorizedProvider = null
   $scope.companyInfo = null
   $scope.saveBtnEnabled = false
   $scope.rucomIDField =
@@ -13,13 +13,13 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
     field: 'num_rucom'
   # ********************************************************************************#
   if $stateParams.id
-    ExternalUser.get($stateParams.id).success (data)->
+    AuthorizedProvider.get($stateParams.id).success (data)->
       $scope.showLoading = false
-      $scope.currentExternalUser = data
+      $scope.currentAuthorizedProvider = data
       $scope.loadProviderLocation(data)
-  
+
   #****** Watchers for listen to changes in editable fields *************************
-  $scope.$watch 'currentExternalUser', ((newVal, oldVal) ->
+  $scope.$watch 'currentAuthorizedProvider', ((newVal, oldVal) ->
     if oldVal and newVal != oldVal
       $scope.saveBtnEnabled = true
     return
@@ -27,7 +27,7 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
 
 
   #****** Autocomplete for State, City and Population Center fields *****************
-  
+
   createFilterFor = (query) ->
     lowercaseQuery = angular.lowercase(query)
     (state) ->
@@ -145,7 +145,7 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
 
   $scope.selectedPopulationCenterChange = (population_center) ->
     if population_center
-      ExternalUser.modelToUpdate.external_user.population_center_id = population_center.id
+      AuthorizedProvider.modelToUpdate.external_user.population_center_id = population_center.id
     else
       #console.log 'Population Center changed to none'
     return
@@ -169,13 +169,13 @@ angular.module('app').controller 'ExternalUserEditCtrl', ($scope, $state, $state
   $scope.save = ->
     #PUT Request:
 
-    ExternalUser.modelToUpdate.external_user.phone_number = $scope.currentExternalUser.phone_number
-    ExternalUser.modelToUpdate.external_user.email = $scope.currentExternalUser.email
-    ExternalUser.modelToUpdate.external_user.address = $scope.currentExternalUser.address
-    
-    ExternalUser.update_external_user($scope.currentExternalUser.id).success (data)->
+    AuthorizedProvider.modelToUpdate.external_user.phone_number = $scope.currentAuthorizedProvider.phone_number
+    AuthorizedProvider.modelToUpdate.external_user.email = $scope.currentAuthorizedProvider.email
+    AuthorizedProvider.modelToUpdate.external_user.address = $scope.currentAuthorizedProvider.address
+
+    AuthorizedProvider.update_external_user($scope.currentAuthorizedProvider.id).success (data)->
       #$mdDialog.cancel()
-      $state.go "show_external_user", {id: $scope.currentExternalUser.id}
+      $state.go "show_external_user", {id: $scope.currentAuthorizedProvider.id}
       $mdDialog.show $mdDialog.alert().title('Mensaje').content('Información actualizada correctamente.').ariaLabel('Alert Dialog Demo').ok('ok!')
 
     return

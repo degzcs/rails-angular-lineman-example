@@ -1,5 +1,5 @@
-%md-dialog.user-type-dialog{"aria-label" => "Mango (Fruit)"}
-  %form.purchase-form{:name => "authorizedProviderForm", "novalidate" => "novalidate"} 
+%md-dialog.user-type-dialog{"aria-label" => ""}
+  %form.purchase-form{:name => "authorizedProviderForm", "novalidate" => "novalidate"}
     %md-dialog-content.sticky-container
       %section{layout: "row"}
         // ---------------------- seller info ------------------- ///
@@ -16,12 +16,12 @@
                 //%span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} 155357
                 %md-not-found
         %br
-        %div{"ng-controller"=>"ExternalUserTypeCtrl"}
-        %p{"color"=>"red", :ng-if=> "ExternalUserTypeCtrl.$scope.anyErrors()"}No se encontró el proveedor
+        %div{"ng-controller"=>"AuthorizedProviderSearchCtrl"}
+        %p{"color"=>"red", :ng-if=> "AuthorizedProviderSearchCtrl.$scope.anyErrors()"}No se encontró el proveedor
 
       .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
         %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar
         %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
-    
+
       %br
       %md-button.md-primary{"ng-click" => "cancel()"} Cancelar

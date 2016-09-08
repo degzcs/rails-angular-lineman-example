@@ -1,6 +1,6 @@
-angular.module('app').controller 'ExternalUserCompanyEditCtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog) ->
+angular.module('app').controller 'AuthorizedProviderCompanyEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProvider, RucomService, LocationService,$mdDialog) ->
   # *********************************** VARIABLES **********************************#
-  $scope.currentExternalUser = null
+  $scope.currentAuthorizedProvider = null
   $scope.company = null
   $scope.saveBtnEnabled = false
   $scope.rucomIDField =
@@ -8,13 +8,13 @@ angular.module('app').controller 'ExternalUserCompanyEditCtrl', ($scope, $state,
     field: 'num_rucom'
   # ********************************************************************************#
   if $stateParams.id
-    ExternalUser.get($stateParams.id).success (data)->
+    AuthorizedProvider.get($stateParams.id).success (data)->
       $mdDialog.cancel()
       $scope.company = data.company
-      $scope.currentExternalUser = data
-      
+      $scope.currentAuthorizedProvider = data
+
   #****** Watchers for listen to changes in editable fields *************************
-  $scope.$watch 'currentExternalUser', ((newVal, oldVal) ->
+  $scope.$watch 'currentAuthorizedProvider', ((newVal, oldVal) ->
     if oldVal and newVal != oldVal
       $scope.saveBtnEnabled = true
     return
@@ -23,10 +23,10 @@ angular.module('app').controller 'ExternalUserCompanyEditCtrl', ($scope, $state,
 
   $scope.save = ->
     #PUT Request:
-    ExternalUser.modelToUpdate.company.phone_number = $scope.currentExternalUser.company.phone_number
-    ExternalUser.modelToUpdate.company.email = $scope.currentExternalUser.company.email
-    
-    ExternalUser.update_external_user_company($scope.currentExternalUser.id).success (data)->
+    AuthorizedProvider.modelToUpdate.company.phone_number = $scope.currentAuthorizedProvider.company.phone_number
+    AuthorizedProvider.modelToUpdate.company.email = $scope.currentAuthorizedProvider.company.email
+
+    AuthorizedProvider.update_external_user_company($scope.currentAuthorizedProvider.id).success (data)->
       $mdDialog.cancel()
       $mdDialog.show $mdDialog.alert().title('Mensaje').content('Información actualizada correctamente.').ariaLabel('Alert Dialog Demo').ok('ok!')
 

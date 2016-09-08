@@ -1,4 +1,4 @@
-angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$mdDialog,$state) ->
+angular.module('app').controller 'AuthorizedProviderIndexCtrl', ($scope, AuthorizedProvider, $mdDialog, $state) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -87,7 +87,7 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
     content = []
     i = 0
     while i < data.length
-      external_user = 
+      external_user =
         id: data[i].id
         document_number: data[i].document_number
         first_name: data[i].first_name
@@ -106,12 +106,12 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
     return content
   ##***************************************************************************************************************************##
 
-  ExternalUser.all($scope.count).success( (data, status, headers)->
+  AuthorizedProvider.all($scope.count).success( (data, status, headers)->
     $scope.showLoading = false
-  
+
     $scope.content = formated_content(data)
     $scope.pages = parseInt(headers().total_pages)
-    
+
   ).error (data, status, headers, config)->
     $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Compruebe su conexion a intenet.').ariaLabel('Alert Dialog ').ok('ok')
     return
@@ -121,7 +121,7 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
   $scope.$watch 'queryName', (newVal, oldVal) ->
     if oldVal and newVal != oldVal
       $scope.queryFocus = 'name'
-      ExternalUser.query_by_name($scope.queryName).success( (data, status, headers) ->
+      AuthorizedProvider.query_by_name($scope.queryName).success( (data, status, headers) ->
         $mdDialog.cancel()
         $scope.content = formated_content(data)
         $scope.pages = parseInt(headers().total_pages)
@@ -132,18 +132,19 @@ angular.module('app').controller 'ExternalUserIndexCtrl', ($scope,ExternalUser,$
   $scope.$watch 'queryId', (newVal, oldVal) ->
     if oldVal and newVal != oldVal
       $scope.queryFocus = 'id'
-      ExternalUser.query_by_id($scope.queryId).success( (data, status, headers) ->
+      AuthorizedProvider.query_by_id($scope.queryId).success( (data, status, headers) ->
         $mdDialog.cancel()
         $scope.content = formated_content(data)
         $scope.pages = parseInt(headers().total_pages)
       ).error (data, status, headers, config)->
       return
 
-  #Launch External user type selection
-  $scope.new_external_user = (ev) ->
+  # Launch External user type selection
+  # TODO: check if the routes and templates can be handled by the router instead here
+  $scope.newAuthorizedProvider = (event) ->
     #$state.go 'create_external_user_type_a'
     $mdDialog.show
-      controller: 'ExternalUserTypeCtrl'
-      templateUrl: 'partials/providers/step0.html'
-      targetEvent: ev
+      controller: 'AuthorizedProviderSearchCtrl'
+      templateUrl: 'partials/authorized_providers/rucom_search.html'
+      targetEvent: event
     return

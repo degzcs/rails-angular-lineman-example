@@ -1,26 +1,33 @@
-angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state, $stateParams, $window, ExternalUser, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
-  # *** Loading Variables **** #
+angular.module('app').controller 'AuthorizedProviderCreateTypeBCtrl', ($scope, $state, $stateParams, $window, AuthorizedProvider, RucomService, LocationService,$mdDialog,CameraService,ScannerService) ->
+  #*** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMessage = "Cargando archivos ..."
   $scope.loadingMode = "determinate"
   $scope.loadingProgress = 0
   # ****** Tab directive variables and methods ********** #
   $scope.validPersonalData = false
+  $scope.idTypeLegalRep = [
+    { type: 1, name: 'CC' },
+    { type: 2, name: 'CE' }
+  ]
+  $scope.isCompany = AuthorizedProvider.isCompany
   $scope.abortCreate = false
   $scope.rucomIDField =
     label: 'Número de RUCOM'
     field: 'num_rucom'
 
-  $scope.tabIndex =
-    selectedIndex: 0
 
   $scope.pendingPost = false
+
+  $scope.tabIndex =
+    selectedIndex: 0
 
   goToDocumentation = ->
     $scope.tabIndex.selectedIndex = 1
 
+
   # ********* Scanner variables and methods *********** #
-  # This have to be executed before retrieve the ExternalUser model to check for pendind scaned files
+  # This have to be executed before retrieve the AuthorizedProvider model to check for pendind scaned files
 
   $scope.photo = CameraService.getLastScanImage()
   if CameraService.getJoinedFile() and CameraService.getJoinedFile().length > 0
@@ -29,46 +36,44 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     $scope.file = ScannerService.getScanFiles()
 
   if $scope.photo and CameraService.getTypeFile() == 1
-    ExternalUser.modelToCreate.files.photo_file = $scope.photo
-    ExternalUser.saveModelToCreate()
+    AuthorizedProvider.modelToCreate.files.photo_file = $scope.photo
+    AuthorizedProvider.saveModelToCreate()
     CameraService.clearData()
 
   if $scope.file
     if CameraService.getTypeFile() == 2
-      ExternalUser.modelToCreate.files.document_number_file = $scope.file
-      ExternalUser.saveModelToCreate()
+      AuthorizedProvider.modelToCreate.files.document_number_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 3
-      ExternalUser.modelToCreate.files.mining_register_file = $scope.file
-      ExternalUser.saveModelToCreate()
+      AuthorizedProvider.modelToCreate.files.mining_register_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 4
-      ExternalUser.modelToCreate.files.rut_file = $scope.file
-      ExternalUser.saveModelToCreate()
+      AuthorizedProvider.modelToCreate.files.rut_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 5
-      ExternalUser.modelToCreate.files.chamber_of_commerce_file = $scope.file
-      ExternalUser.saveModelToCreate()
+      AuthorizedProvider.modelToCreate.files.chamber_of_commerce_file = $scope.file
       goToDocumentation()
     if CameraService.getTypeFile() == 6
-      ExternalUser.modelToCreate.files.external_user_mining_register_file = $scope.file
+      AuthorizedProvider.modelToCreate.files.external_user_mining_register_file = $scope.file
       goToDocumentation()
-    #ExternalUser.saveModelToCreate()
+
+    AuthorizedProvider.saveModelToCreate()
     CameraService.clearData()
     ScannerService.clearData()
   $scope.scanner = (type) ->
     CameraService.setTypeFile type
-    ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-    ExternalUser.saveModelToCreate()
+    AuthorizedProvider.modelToCreate.external_user = $scope.newAuthorizedProvider
+    AuthorizedProvider.saveModelToCreate()
     return
 
   # **************************************************************************
 
-  $scope.newExternalUser = ExternalUser.restoreModelToCreate().external_user
-  $scope.newCompany = ExternalUser.restoreModelToCreate().company
-  $scope.newFiles = ExternalUser.restoreModelToCreate().files
-  $scope.user_type = ExternalUser.restoreModelToCreate().user_type
-  #console.log ExternalUser.restoreModelToCreate()
+  $scope.newAuthorizedProvider = AuthorizedProvider.restoreModelToCreate().external_user
+  $scope.newCompany = AuthorizedProvider.restoreModelToCreate().company
+  $scope.newFiles = AuthorizedProvider.restoreModelToCreate().files
+  $scope.user_type = AuthorizedProvider.restoreModelToCreate().user_type
+
+  console.log AuthorizedProvider.restoreModelToCreate()
 
   #******************* Population center variables ********************************** #
   $scope.states = [];
@@ -136,8 +141,8 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
         return
     return
 
-  if $scope.newExternalUser.population_center_id != ''
-    loadProviderLocation($scope.newExternalUser)
+  if $scope.newAuthorizedProvider.population_center_id != ''
+    loadProviderLocation($scope.newAuthorizedProvider)
 
   LocationService.getStates.query {}, (states) ->
     $scope.states = states
@@ -169,7 +174,6 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
         break
     return
 
-
   # It listens to state changes
   $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
     if toState.url != '/scanner' and toState.url != '/scanner1' and toState.url != '/camera' and toState.url != '/rucoms'
@@ -179,7 +183,7 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
         confirm = $mdDialog.confirm().title('Cancelar la creación del nuevo proveedor').content('¿Desea cancelar la operación actual? Los datos que no haya guardado se perderán').ariaLabel('Lucky day').ok('Aceptar').cancel('Cancelar').targetEvent(event)
         return $mdDialog.show(confirm).then((->
           $scope.abortCreate = true
-          ExternalUser.clearModelToCreate()
+          AuthorizedProvider.clearModelToCreate()
           $state.go toState, toParams
           return
         ), ->
@@ -213,12 +217,11 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
   $scope.selectedCityChange = (city) ->
     if city
       $scope.selectedCity = city
-      $scope.newExternalUser.city_id = city.id
-      #LocationService.getPopulationCentersFromCity.query { cityId: city.id }, (population_centers) ->
-      #  $scope.population_centers = population_centers
-      #  #console.log 'Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers)
-      #  return
-      $scope.population_centers = []
+      #console.log 'City changed to ' + JSON.stringify(city)
+      LocationService.getPopulationCentersFromCity.query { cityId: city.id }, (population_centers) ->
+        $scope.population_centers = population_centers
+        #console.log 'Population Centers from ' + city.name + ': ' + JSON.stringify(population_centers)
+        return
       $scope.populationCenterDisabled = false
     else
       #console.log 'City changed to none'
@@ -227,8 +230,8 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
 
   $scope.selectedPopulationCenterChange = (population_center) ->
     if population_center
-      $scope.newExternalUser.population_center_id = population_center.id
-      #console.log $scope.newExternalUser
+      $scope.newAuthorizedProvider.population_center_id = population_center.id
+      #console.log $scope.newAuthorizedProvider
     else
       #console.log 'Population Center changed to none'
     return
@@ -251,79 +254,93 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
 
   $scope.searchRucom = ->
     RucomService.user_type = $scope.user_type
-    ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-    ExternalUser.saveModelToCreate()
+    AuthorizedProvider.modelToCreate.external_user = $scope.newAuthorizedProvider
+    AuthorizedProvider.modelToCreate.company = $scope.newCompany
+    AuthorizedProvider.saveModelToCreate()
     $state.go 'search_rucom'
 
   $scope.currentRucom = RucomService.getCurrentRucom()
   if $scope.currentRucom
-    ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
-    ExternalUser.saveModelToCreate()
+    AuthorizedProvider.modelToCreate.rucom_id = $scope.currentRucom.id
+    AuthorizedProvider.saveModelToCreate()
     if $scope.currentRucom.num_rucom
       $scope.rucomIDField.label = 'Número de RUCOM'
       $scope.rucomIDField.field = 'num_rucom'
     else if $scope.currentRucom.rucom_record
       $scope.rucomIDField.label = 'Número de Expediente'
       $scope.rucomIDField.field = 'rucom_record'
-
-
-    #console.log ExternalUser.modelToCreate
+    #console.log AuthorizedProvider.modelToCreate
 
   #************ Creation methods *************************#
   #TODO: Imporove the watch method on the scope to improve performance
   $scope.$watch  ->
     $scope.validate_personal_fields()
 
-
-  $scope.createExternalUser = (ev)->
+  $scope.createAuthorizedProvider = (ev)->
 
     $scope.validate_documentation_and_create()
 
   $scope.cancel= ()->
     $state.go 'index_external_user'
 
-
   $scope.validate_personal_fields= ()->
     if $scope.newFiles.photo_file == ''
       $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.newExternalUser.first_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.last_name == '' || $scope.newExternalUser.email == '' || $scope.newExternalUser.document_number == '' || $scope.newExternalUser.phone_number == '' || $scope.newExternalUser.address == ''
+    else if $scope.newAuthorizedProvider.first_name == '' || $scope.newAuthorizedProvider.last_name == '' || $scope.newAuthorizedProvider.last_name == '' || $scope.newAuthorizedProvider.email == '' || $scope.newAuthorizedProvider.document_number == '' || $scope.newAuthorizedProvider.phone_number == '' || $scope.newAuthorizedProvider.address == '' || $scope.newAuthorizedProvider.population_center_id == ''
       $scope.validPersonalData = false
-      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.newExternalUser.first_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.last_name == undefined || $scope.newExternalUser.email ==  undefined || $scope.newExternalUser.document_number == undefined || $scope.newExternalUser.phone_number == undefined || $scope.newExternalUser.address == undefined
+    else if $scope.newAuthorizedProvider.first_name == undefined || $scope.newAuthorizedProvider.last_name == undefined || $scope.newAuthorizedProvider.last_name == undefined || $scope.newAuthorizedProvider.email ==  undefined || $scope.newAuthorizedProvider.document_number == undefined || $scope.newAuthorizedProvider.phone_number == undefined || $scope.newAuthorizedProvider.address == undefined
       $scope.validPersonalData = false
-      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.currentRucom == null && !$scope.isCompany
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.isCompany
+      $scope.validate_company_fields()
+    else
+      $scope.validPersonalData = true
+
+  $scope.validate_company_fields = ()->
+    if $scope.newCompany.name == '' || $scope.newCompany.nit_number == '' || $scope.newCompany.legal_representative == '' || $scope.newCompany.id_number_legal_rep == '' || $scope.newCompany.email == '' || $scope.newCompany.id_type_legal_rep == '' || $scope.newCompany.phone_number == ''
+      $scope.validPersonalData = false
+      $scope.tabIndex.selectedIndex = 0
+    else if $scope.newCompany.name == undefined || $scope.newCompany.nit_number == undefined || $scope.newCompany.legal_representative == undefined || $scope.newCompany.id_number_legal_rep == undefined || $scope.newCompany.email == undefined || $scope.newCompany.id_type_legal_rep == undefined || $scope.newCompany.phone_number == undefined
+      $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
     else if $scope.currentRucom == null
       $scope.validPersonalData = false
-      #$mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
     else
       $scope.validPersonalData = true
-      #goToDocumentation()
+
 
   $scope.validate_documentation_and_create=  ()->
-      if $scope.newFiles.document_number_file == ''
-        $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
-      else
-        $scope.pendingPost = true
-        ExternalUser.modelToCreate.external_user = $scope.newExternalUser
-        ExternalUser.modelToCreate.rucom_id = $scope.currentRucom.id
-        ExternalUser.modelToCreate.files = $scope.newFiles
-        ExternalUser.saveModelToCreate()
-        #console.log ExternalUser.modelToCreate
-        ExternalUser.create()
-        $scope.showUploadingDialog()
+    if $scope.isCompany &&  ($scope.newFiles.mining_register_file == '' || $scope.newFiles.rut_file == '')
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+    else if $scope.newFiles.document_number_file == ''
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+    else
+      $scope.pendingPost = true
+      console.log $scope.newFiles
+      AuthorizedProvider.modelToCreate.external_user = $scope.newAuthorizedProvider
+      AuthorizedProvider.modelToCreate.rucom_id = $scope.currentRucom.id
+      AuthorizedProvider.modelToCreate.files = $scope.newFiles
+      AuthorizedProvider.modelToCreate.company = $scope.newCompany if $scope.isCompany
+      AuthorizedProvider.saveModelToCreate()
+      #console.log AuthorizedProvider.modelToCreate
+      AuthorizedProvider.create()
+      $scope.showUploadingDialog()
+
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true
     $scope.loadingMessage = "Subiendo archivos ..."
     $scope.$watch (->
-      ExternalUser.uploadProgress
+      AuthorizedProvider.uploadProgress
     ), (newVal, oldVal) ->
       if typeof newVal != 'undefined'
-        $scope.loadingProgress = ExternalUser.uploadProgress
+        $scope.loadingProgress = AuthorizedProvider.uploadProgress
         if $scope.loadingProgress == 100
           $scope.abortCreate = true
           $scope.loadingMessage = "Espere un momento ..."
@@ -336,17 +353,17 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
     #   controller: [
     #     'scope'
     #     '$mdDialog'
-    #     'ExternalUser'
-    #     (scope, $mdDialog, ExternalUser) ->
-    #       scope.progress = ExternalUser.uploadProgress
+    #     'AuthorizedProvider'
+    #     (scope, $mdDialog, AuthorizedProvider) ->
+    #       scope.progress = AuthorizedProvider.uploadProgress
     #       scope.message = 'Espere por favor...'
     #       scope.mode = 'determinate'
     #       scope.$watch (->
-    #         ExternalUser.uploadProgress
+    #         AuthorizedProvider.uploadProgress
     #       ), (newVal, oldVal) ->
     #         if typeof newVal != 'undefined'
-    #           console.log 'Progress: ' + scope.progress + ' (' + ExternalUser.uploadProgress + ')'
-    #           scope.progress = ExternalUser.uploadProgress
+    #           console.log 'Progress: ' + scope.progress + ' (' + AuthorizedProvider.uploadProgress + ')'
+    #           scope.progress = AuthorizedProvider.uploadProgress
     #           scope.mode = 'indeterminate'
     #           if scope.progress == 100
     #             $scope.abortCreate = true
@@ -356,7 +373,12 @@ angular.module('app').controller 'ExternalUserCreateTypeACtrl', ($scope, $state,
 
     #       return
     #   ]
-    # return
+    return
 
+  $scope.setIsCompany = ()->
+    $scope.tabIndex.selectedIndex = 0
+    $scope.currentRucom = null
+    console.log $scope.isCompany
+    AuthorizedProvider.isCompany = $scope.isCompany
 
 

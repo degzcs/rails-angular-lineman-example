@@ -1,10 +1,10 @@
-angular.module('app').controller 'ExternalUserTypeCtrl', ($scope, $state , $mdDialog , AuthorizedProvider, ProviderService) ->
+angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state , $mdDialog , AuthorizedProvider, ProviderService) ->
   $scope.prov = undefined
   AuthorizedProvider.clearModelToCreate()
 
   # method to format the content acording the table headers
   formatted_content = (producer)->
-    prov = 
+    prov =
       id: producer.id
       document_number: producer.document_number
       first_name: producer.first_name
@@ -14,7 +14,7 @@ angular.module('app').controller 'ExternalUserTypeCtrl', ($scope, $state , $mdDi
       city: producer.city
       state: producer.state
       phone_number: producer.phone_number
-      photo_file: producer.photo_file or 'http://robohash.org/' + producer.id
+      photo_file: producer.photo_file
       identification_number_file: producer.identification_number_file
       mining_register_file: producer.mining_register_file
       rut_file: producer.rut_file
@@ -39,20 +39,14 @@ angular.module('app').controller 'ExternalUserTypeCtrl', ($scope, $state , $mdDi
           AuthorizedProvider.modelToCreate.user_type = 'Barequero'
           AuthorizedProvider.saveModelToCreate()
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-          $state.go 'external_user_complete_edit', { id: $scope.prov.id, content: $scope.prov}
-          console.log 'desde typeCrtl devuelve a AuthorizedProvider.response: '
-          console.log AuthorizedProvider.response
+          $state.go 'authorized_provider_complete_edit', { id: $scope.prov.id, content: $scope.prov}
 
-          #$mdDialog.show {
-          #  controller: 'ExternalUserCompleteEditCrtl'
-          #  templateUrl: 'partials/external_users/complete_edit.html'
-          #  targetEvent: ev
-          #  #local: {content: $scope.prov}
-          #}
       ), (error) ->
           $scope.prov = error
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
           return
 
+  $scope.cancel = ->
+    window.back
   $scope.anyErrors = ->
     return if $scope.prov.errors == null || $scope.prov.errors == undefined then  false  else true
