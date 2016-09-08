@@ -7,6 +7,7 @@ module RucomServices
     YAML_PATH = Rails.root.join('config')
     attr_accessor :response, :response_class, :page_url, :driver, :browser, :driver_instance,
                   :table_body_id, :hidden_elements_id, :wait_load, :wait_clic, :barequero, :trader
+    attr_reader :send_data
 
     def initialize
       @response = {}
@@ -18,14 +19,23 @@ module RucomServices
       @file_path = options.fetch(:yaml_file_path, YAML_PATH)
       @response[:config] = YAML.load_file(File.join(@file_path, @file_name))[Rails.env]
       @response[:success] = true if @response[:config]
-      options_data =
-        { rol_name: options[:rol_name], id_type: options[:id_type], id_number: options[:id_number] }
-      @response[:send_data] = options_data
-      # @response.merge!(send_data: options_data)
+      @response[:send_data] = ordering_options(options)
       self
     rescue StandardError => e
       @response[:errors] << e.message
       self
+    end
+
+    #
+    # options => is a hash with the keys and values sent from the frontend
+    #            example: {id_number: '123123', id_type: 'NIT', rol_name: 'Barequero'}
+    #
+    def ordering_options(options)
+      {
+        rol_name: options.fetch(:rol_name, nil),
+        id_type: options.fetch(:id_type, nil),
+        id_number: options.fetch(:id_number, nil)
+      }
     end
 
     def success
@@ -37,7 +47,7 @@ module RucomServices
     end
 
     def response_class
-      key_rol = @response[:send_data][:rol_name].downcase
+      key_rol = role_name.downcase
       if @response[:config]['scraper'].key?(key_rol)
         @response_class = @response[:config]['scraper'][key_rol]['response_class']
       else
@@ -101,6 +111,20 @@ module RucomServices
 
     def wait_clic
       @wait_clic = @response[:config]['scraper'].fetch('wait_clic', 2).to_i
+    end
+
+    def role_name
+      if trader.include?(@response[:send_data][:rol_name])
+        'trader'
+      elsif barequero.include?(@response[:send_data][:rol_name])
+        'barequero'
+      else
+        'unknown'
+      end
+    end
+
+    def send_data
+      @response[:send_data] || {}
     end
 
     private

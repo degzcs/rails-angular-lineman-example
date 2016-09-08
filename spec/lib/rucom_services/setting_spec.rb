@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe RucomServices::Setting, type: :service do
-  let(:file_name) { 'rucom_service.yml' }
   subject(:rs_setting) { RucomServices::Setting.new }
   page = 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
+  let(:file_name) { 'rucom_service.yml' }
   let(:rucom_page_url) { page }
 
   context 'When the rucom_service.yml file not exist or not found in the path the rucom_services' do
@@ -85,7 +85,7 @@ describe RucomServices::Setting, type: :service do
       cfg1 = rs_setting.call(data)
       expect(cfg1.response_class).to eq('AuthorizedProviderResponse')
 
-      data[:rol_name] = 'Trader'
+      data[:rol_name] = 'Comercializadores'
       cfg1 = rs_setting.call(data)
       expect(cfg1.response_class).to eq('TraderResponse')
     end
@@ -133,6 +133,80 @@ describe RucomServices::Setting, type: :service do
 
     it '#wait_clic' do
       expect(cfg.wait_clic.class).to eq(Fixnum)
+    end
+
+    context '#role_name' do
+      context 'when is sent a Barequero as rol_name' do
+        it 'returns barequero string as answer' do
+          data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725' }
+          cfg1 = rs_setting.call(data)
+
+          expect(cfg1.role_name.class).to eq(String)
+          expect(cfg1.role_name).to eq('barequero')
+        end
+      end
+
+      context 'when is sent a Comercializadores as rol_name' do
+        it 'returns trader string as answer' do
+          data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+          cfg1 = rs_setting.call(data)
+
+          expect(cfg1.role_name.class).to eq(String)
+          expect(cfg1.role_name).to eq('trader')
+        end
+      end
+
+      context 'when is sent a different word as rol_name' do
+        it 'returns unknown string as answer' do
+          data = { rol_name: 'Comerciante', id_type: 'NIT', id_number: '900058021' }
+          cfg1 = rs_setting.call(data)
+
+          expect(cfg1.role_name.class).to eq(String)
+          expect(cfg1.role_name).to eq('unknown')
+        end
+      end
+    end
+
+    it '#ordering_options' do
+      opts = {
+        id_number: '1234567',
+        rol_name: 'Comercializadores',
+        id_type: 'NIT'
+      }
+
+      result = {
+        rol_name: 'Comercializadores',
+        id_type: 'NIT',
+        id_number: '1234567'
+      }
+
+      response = rs_setting.ordering_options(opts)
+
+      expect(response.keys[0]).to eq(result.keys[0])
+      expect(response.values[0]).to eq(result.values[0])
+
+      expect(response.keys[1]).to eq(result.keys[1])
+      expect(response.values[1]).to eq(result.values[1])
+
+      expect(response.keys[2]).to eq(result.keys[2])
+      expect(response.values[2]).to eq(result.values[2])
+    end
+
+    it '#send_data' do
+      data = { id_type: 'NIT', id_number: '900058021', rol_name: 'Comerciante' }
+      cfg1 = rs_setting.call(data)
+      result = { rol_name: 'Comerciante', id_type: 'NIT', id_number: '900058021' }
+
+      expect(cfg1.send_data).to eq(result)
+
+      expect(cfg1.send_data.keys[0]).to eq(result.keys[0])
+      expect(cfg1.send_data.values[0]).to eq(result.values[0])
+
+      expect(cfg1.send_data.keys[1]).to eq(result.keys[1])
+      expect(cfg1.send_data.values[1]).to eq(result.values[1])
+
+      expect(cfg1.send_data.keys[2]).to eq(result.keys[2])
+      expect(cfg1.send_data.values[2]).to eq(result.values[2])
     end
   end
 end
