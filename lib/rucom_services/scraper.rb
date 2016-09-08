@@ -15,7 +15,7 @@ module RucomServices
     def call
       validates_has_required_params_to_execute_service
       setting_service(@data_to_find)
-      raise 'Error load settings from rucom_service.cfg.yml file' unless @setting.success
+      raise 'Error loading settings from rucom_service.yml file' unless @setting.success
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance)
       @is_there_rucom = validate_got_results(html_page_data)
       formatted_data = @is_there_rucom ? formater_elements(html_page_data) : []
@@ -68,14 +68,15 @@ module RucomServices
     end
 
     def display_and_select_options_fields(browser)
-      @data_to_find.values.each_with_index do |val, i|
+      @setting.send_data.values.each_with_index do |val, i|
         display_hidden_element(browser, @setting.hidden_elements_id["step_#{i}"]) if i < 2
         id = @setting.hidden_elements_id["step_#{i}"] if i > 1
         xpath_element = i < 2 ? "//*[@data-label='#{val}']" : "//*[@id='#{id}']"
 
         raise "can't find the element" \
-         "by xpath: #{xpath_element}" unless element = browser.find_element(xpath: xpath_element)
-        rol_name = @setting.response[:send_data][:rol_name].downcase
+         "by xpath: #{xpath_element}" unless (element = browser.find_element(xpath: xpath_element))
+        rol_name = @setting.role_name.downcase
+        raise "Valor enviado desconocido, rol_name: #{response[:send_data][:rol_name]}" if rol_name == 'unknown'
 
         if @setting.instance_eval("send(:#{rol_name})").include?(val)
           if element.displayed?
