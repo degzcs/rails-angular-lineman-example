@@ -23,6 +23,10 @@ class GoldBatchPresenter < BasePresenter
     reales.round(2).to_s if reales?
   end
 
+  def rounded_granos
+    granos.round(2).to_s if granos?
+  end
+
   def origin_certificate_number
     'Pending...'
   end
