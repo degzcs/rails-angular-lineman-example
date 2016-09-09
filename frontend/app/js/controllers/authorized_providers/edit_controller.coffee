@@ -57,7 +57,6 @@ angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, 
   $scope.states = []
   LocationService.getStates.query {}, (states) ->
     $scope.states = states
-    console.log 'States: ' + JSON.stringify(states)
     return
   $scope.cities = []
   $scope.population_centers = []
@@ -175,7 +174,7 @@ angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, 
 
     AuthorizedProvider.update_external_user($scope.currentAuthorizedProvider.id).success (data)->
       #$mdDialog.cancel()
-      $state.go "show_external_user", {id: $scope.currentAuthorizedProvider.id}
+      $state.go "show_authorized_provider", {id: $scope.currentAuthorizedProvider.id}
       $mdDialog.show $mdDialog.alert().title('Mensaje').content('Información actualizada correctamente.').ariaLabel('Alert Dialog Demo').ok('ok!')
 
     return

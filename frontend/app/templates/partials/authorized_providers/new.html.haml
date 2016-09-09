@@ -63,7 +63,7 @@
                 %input{:name => "address", "ng-model" => "currentAuthorizedProvider.address", :required => ""}
                 %div{"ng-messages" => "providerEditionForm.address.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
-
+            / TODO: fix this: These select inputs produce an error when they are empty. This is the error: Cannot read property 'length' of undefined
             .population-selection
               %h2.md-subhead Ubicacion:
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
@@ -72,7 +72,7 @@
 
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
                   %span{"md-highlight-text" => "searchCity"} {{city.name}}
-
+              / end error
 
             .rucom-selection
               %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar

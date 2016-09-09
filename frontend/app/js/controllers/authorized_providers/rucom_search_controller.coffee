@@ -39,7 +39,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
           AuthorizedProvider.modelToCreate.user_type = 'Barequero'
           AuthorizedProvider.saveModelToCreate()
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-          $state.go 'authorized_provider_complete_edit', { id: $scope.prov.id, content: $scope.prov}
+          $state.go 'new_authorized_provider', { id: $scope.prov.id, content: $scope.prov}
 
       ), (error) ->
           $scope.prov = error

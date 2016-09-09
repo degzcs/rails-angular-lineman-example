@@ -166,7 +166,7 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
             return
           ).success( (data, status, headers, config)->
             $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
-            $state.go "index_external_user"
+            $state.go "index_authorized_provider"
             service.clearModelToCreate()
             return
           ).error (data, status, headers, config)->

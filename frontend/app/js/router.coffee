@@ -197,7 +197,7 @@
         deferred.promise
   )
 
-  .state("authorized_provider.new",
+  .state("new_authorized_provider",
     url: "/authorized_providers/:id/new",
     ncyBreadcrumb:
       label: 'Edición de proveedor'
