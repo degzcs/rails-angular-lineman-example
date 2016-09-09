@@ -80,7 +80,6 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
 
 #--------------------------------------------------------------------
         # External Users mining register file
-        console.log 'Mining Register File'
         if files_to_upload.external_user_mining_register_file
           if !(files_to_upload.external_user_mining_register_file[0] instanceof File)
             files_to_upload.external_user_mining_register_file[0].name = 'mining_register_file.pdf'
@@ -144,9 +143,6 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
           if files_to_upload.external_user_mining_register_file[0]
             files.push files_to_upload.external_user_mining_register_file[0]
 
-          console.log 'Se impreme el array de archivos a cargar: '
-          console.log files
-
           $upload.upload(
             url: '/api/v1/autorized_providers/' + id
             method: 'PUT'
@@ -178,7 +174,28 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
         #Files Upload
         if filesRemaining <= 0
           uploadFiles()
-          console.log "SUBIENDO"
+
+#-----------------------------------------------------------------
+    queryById: (id,per_page,page) ->
+      return $http
+                url: 'api/v1/external_users'
+                method: 'GET'
+                params: {
+                  per_page: per_page || 10
+                  page: page || 1
+                  query_id: id
+                }
+#-----------------------------------------------------------------
+
+    basicProvider: (idNumber) ->
+      return $http
+                url: '/api/v1/autorized_providers/by_id_number'
+                method: 'GET'
+                params: {
+                  rol_name:'Barequero'
+                  id_type: 'CEDULA'
+                  id_number: idNumber
+                }
 
 #-----------------------------------------------------------------
     saveModelToCreate: ->
@@ -225,6 +242,4 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
           chamber_of_commerce_file: ''
           rut_file: ''
 
-
-      console.log "Model clened"
   return service
