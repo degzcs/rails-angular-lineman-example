@@ -1,7 +1,7 @@
 %div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
 %div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
   %form.external-user-form{:name => "providerEditionForm", "novalidate" => "novalidate"}
-    %h2 Registro de usuario externo
+    %h2 Registro de Proveedor
 
       /****************************   PERSONAL DATA ***********************************/
 
@@ -45,7 +45,7 @@
                 /  %span.ion-android-checkmark-circle &nbsp;válido
               %md-input-container{:flex => ""}
                 %label Tipo de Proveedor
-                %input{:readonly => true,:name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.user_type"}
+                %input{:readonly => true,:name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
             %md-content.md-padding{:layout => "", "layout-sm" => "column"}
               %md-input-container{:flex => ""}
                 %label Teléfono
@@ -64,7 +64,7 @@
                 %div{"ng-messages" => "providerEditionForm.address.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
             / TODO: fix this: These select inputs produce an error when they are empty. This is the error: Cannot read property 'length' of undefined
-            .population-selection
+            .location-selection
               %h2.md-subhead Ubicacion:
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
@@ -146,8 +146,6 @@
                       %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
-
-
 
         %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
           %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "updateAuthorizedProvider($event)", "ng-disabled"=>"pendingPost"} Actualizar Proveedor

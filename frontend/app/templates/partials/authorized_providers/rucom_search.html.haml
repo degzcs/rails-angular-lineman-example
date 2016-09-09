@@ -12,12 +12,12 @@
               %div{layout: "row"}
 
               %md-input-container{"name"=>"idNumber"}
-                %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin %puntos", "type"=>"Number"}
+                %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number"}
                 //%span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} 155357
                 %md-not-found
         %br
-        %div{"ng-controller"=>"AuthorizedProviderSearchCtrl"}
-        %p{"color"=>"red", :ng-if=> "AuthorizedProviderSearchCtrl.$scope.anyErrors()"}No se encontró el proveedor
+        %div{}
+        %p{"color"=>"red", :ng-if=> "anyErrors()"} No se encontró el proveedor
 
       .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
         %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar

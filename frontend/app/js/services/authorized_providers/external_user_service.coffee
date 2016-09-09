@@ -315,7 +315,6 @@ angular.module('app').factory 'ExternalUser', ($resource, $upload, $http, $mdDia
 
 
     update_external_user: (id)->
-      #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
                 url: 'api/v1/external_users/'+id
                 method: 'PUT'

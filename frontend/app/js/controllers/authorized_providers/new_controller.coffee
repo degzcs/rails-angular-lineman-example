@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, RucomService, LocationService,$mdDialog,CameraService,ScannerService, AuthorizedProvider) ->
+angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, RucomService, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -7,14 +7,12 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.btnContinue = false
   # *********************************** VARIABLES **********************************#
   $scope.currentAuthorizedProvider = null
-  $scope.companyInfo = null
   $scope.saveBtnEnabled = false
   $scope.rucomIDField =
     label: 'Número de RUCOM'
     field: 'num_rucom'
 
   $scope.validPersonalData = false
-  #$scope.selectedTab = 0
   $scope.tabIndex =
     selectedIndex: 0
 
@@ -24,7 +22,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     $scope.tabIndex.selectedIndex = 1
 
   # ********* Scanner variables and methods *********** #
-  # This have to be executed before retrieve the AuthorizedProvider model to check for pendind scaned files
+  # This have to be executed before retrieve the AuthorizedProviderService model to check for pendind scaned files
 
   $scope.photo = CameraService.getLastScanImage()
   if CameraService.getJoinedFile() and CameraService.getJoinedFile().length > 0
@@ -33,50 +31,50 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     $scope.file = ScannerService.getScanFiles()
 
   if $scope.photo and CameraService.getTypeFile() == 1
-    AuthorizedProvider.modelToCreate.files.photo_file = $scope.photo
-    AuthorizedProvider.saveModelToCreate()
+    AuthorizedProviderService.model.files.photo_file = $scope.photo
+    AuthorizedProviderService.saveModel()
     CameraService.clearData()
 
   if $scope.file
     if CameraService.getTypeFile() == 2
-      AuthorizedProvider.modelToCreate.files.document_number_file = $scope.file
-      AuthorizedProvider.saveModelToCreate()
+      AuthorizedProviderService.model.files.document_number_file = $scope.file
+      AuthorizedProviderService.saveModel()
       goToDocumentation()
     if CameraService.getTypeFile() == 3
-      AuthorizedProvider.modelToCreate.files.mining_register_file = $scope.file
-      AuthorizedProvider.saveModelToCreate()
+      AuthorizedProviderService.model.files.mining_register_file = $scope.file
+      AuthorizedProviderService.saveModel()
       goToDocumentation()
     if CameraService.getTypeFile() == 4
-      AuthorizedProvider.modelToCreate.files.rut_file = $scope.file
-      AuthorizedProvider.saveModelToCreate()
+      AuthorizedProviderService.model.files.rut_file = $scope.file
+      AuthorizedProviderService.saveModel()
       goToDocumentation()
     if CameraService.getTypeFile() == 5
-      AuthorizedProvider.modelToCreate.files.chamber_of_commerce_file = $scope.file
-      AuthorizedProvider.saveModelToCreate()
+      AuthorizedProviderService.model.files.chamber_of_commerce_file = $scope.file
+      AuthorizedProviderService.saveModel()
       goToDocumentation()
     if CameraService.getTypeFile() == 6
-      AuthorizedProvider.modelToCreate.files.external_user_mining_register_file = $scope.file
+      AuthorizedProviderService.model.files.external_user_mining_register_file = $scope.file
       goToDocumentation()
-    #AuthorizedProvider.saveModelToCreate()
+    #AuthorizedProviderService.saveModel()
     CameraService.clearData()
     ScannerService.clearData()
+
   $scope.scanner = (type) ->
     CameraService.setTypeFile type
-    AuthorizedProvider.modelToCreate.authorized_provider = $scope.currentAuthorizedProvider
-    AuthorizedProvider.saveModelToCreate()
+    AuthorizedProviderService.model.authorized_provider = $scope.currentAuthorizedProvider
+    AuthorizedProviderService.saveModel()
     return
 
   # **************************************************************************
 
-  $scope.newFiles = AuthorizedProvider.restoreModelToCreate().files
-  $scope.user_type = AuthorizedProvider.restoreModelToCreate().user_type
-
+  $scope.newFiles = AuthorizedProviderService.restoreModel().files
 
   # ********************************************************************************#
 
   if $stateParams.id
-    $scope.showLoading = false
-    $scope.currentAuthorizedProvider = AuthorizedProvider.response
+    AuthorizedProviderService.get($stateParams.id).success (data)->
+      $scope.showLoading = false
+      $scope.currentAuthorizedProvider = data
   else
     console.log 'no se envió el Id del usuario en los parámetros'
 
@@ -86,7 +84,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       $scope.saveBtnEnabled = true
     return
   ), true
-
 
   #****** Autocomplete for State, City and Population Center fields *****************
 
@@ -99,14 +96,14 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     switch level
       when 'state'
         $scope.cities = []
-        $scope.selectedState = null
-        $scope.selectedCity = null
-        $scope.searchState = null
-        $scope.searchCity = null
+        $scope.selectedState = ''
+        $scope.selectedCity = ''
+        $scope.searchState = ''
+        $scope.searchCity = ''
         $scope.cityDisabled = true
       when 'city'
-        $scope.searchCity = null
-        $scope.selectedCity = null
+        $scope.searchCity = ''
+        $scope.selectedCity = ''
       else
         break
     return
@@ -117,10 +114,10 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     $scope.states = states
     return
   $scope.cities = []
-  $scope.selectedState = null
-  $scope.selectedCity = null
-  $scope.searchState = null
-  $scope.searchCity = null
+  $scope.selectedState = ''
+  $scope.selectedCity = ''
+  $scope.searchState = ''
+  $scope.searchCity = ''
   $scope.cityDisabled = true
 
   $scope.stateSearch = (query) ->
@@ -169,14 +166,13 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.save = ->
     #PUT Request:
-
-    AuthorizedProvider.modelToUpdate.profile.first_name = $scope.currentAuthorizedProvider.first_name
-    AuthorizedProvider.modelToUpdate.profile.last_name = $scope.currentAuthorizedProvider.last_name
-    AuthorizedProvider.modelToUpdate.rucom.rucom_number = $scope.currentAuthorizedProvider.rucom.rucom_number
-    AuthorizedProvider.modelToUpdate.profile.phone_number = $scope.currentAuthorizedProvider.phone_number
-    AuthorizedProvider.modelToUpdate.authorized_provider.email = $scope.currentAuthorizedProvider.email
-    AuthorizedProvider.modelToUpdate.profile.address = $scope.currentAuthorizedProvider.address
-    AuthorizedProvider.modelToUpdate.profile.city_id = $scope.currentAuthorizedProvider.city
+    AuthorizedProviderService.model.profile.first_name = $scope.currentAuthorizedProvider.first_name
+    AuthorizedProviderService.model.profile.last_name = $scope.currentAuthorizedProvider.last_name
+    AuthorizedProviderService.model.rucom.rucom_number = $scope.currentAuthorizedProvider.rucom.rucom_number
+    AuthorizedProviderService.model.profile.phone_number = $scope.currentAuthorizedProvider.phone_number
+    AuthorizedProviderService.model.authorized_provider.email = $scope.currentAuthorizedProvider.email
+    AuthorizedProviderService.model.profile.address = $scope.currentAuthorizedProvider.address
+    AuthorizedProviderService.model.profile.city_id = $scope.currentAuthorizedProvider.city
 
   $scope.back = ->
     $window.history.back()
@@ -212,7 +208,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       $scope.validPersonalData = false
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
-    else if $scope.currentRucom == null
+    else if $scope.currentRucom == ''
       $scope.validPersonalData = false
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
       $scope.tabIndex.selectedIndex = 0
@@ -244,20 +240,20 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else
       $scope.pendingPost = true
 
-      AuthorizedProvider.modelToCreate.profile.first_name = $scope.currentAuthorizedProvider.first_name
-      AuthorizedProvider.modelToCreate.profile.last_name = $scope.currentAuthorizedProvider.last_name
-      AuthorizedProvider.modelToCreate.rucom.rucom_number = $scope.currentAuthorizedProvider.rucom.rucom_number
-      AuthorizedProvider.modelToCreate.profile.phone_number = $scope.currentAuthorizedProvider.phone_number
-      AuthorizedProvider.modelToCreate.authorized_provider.email = $scope.currentAuthorizedProvider.email
-      AuthorizedProvider.modelToCreate.profile.address = $scope.currentAuthorizedProvider.address
-      AuthorizedProvider.modelToCreate.profile.city_id = $scope.currentAuthorizedProvider.city
-      AuthorizedProvider.modelToCreate.profile.state_id = $scope.currentAuthorizedProvider.state
-      AuthorizedProvider.saveModelToCreate()
-      AuthorizedProvider.update($scope.currentAuthorizedProvider.id)
+      AuthorizedProviderService.model.profile.first_name = $scope.currentAuthorizedProvider.first_name
+      AuthorizedProviderService.model.profile.last_name = $scope.currentAuthorizedProvider.last_name
+      AuthorizedProviderService.model.rucom.rucom_number = $scope.currentAuthorizedProvider.rucom.rucom_number
+      AuthorizedProviderService.model.profile.phone_number = $scope.currentAuthorizedProvider.phone_number
+      AuthorizedProviderService.model.authorized_provider.email = $scope.currentAuthorizedProvider.email
+      AuthorizedProviderService.model.profile.address = $scope.currentAuthorizedProvider.address
+      AuthorizedProviderService.model.profile.city_id = $scope.currentAuthorizedProvider.city
+      AuthorizedProviderService.model.profile.state_id = $scope.currentAuthorizedProvider.state
+      AuthorizedProviderService.saveModel()
+      AuthorizedProviderService.update($scope.currentAuthorizedProvider.id)
       return
 
 
-  $scope.updateAuthorizedProvider = (ev)->
+  $scope.updateAuthorizedProviderService = (ev)->
     $scope.validate_documentation_and_update()
 
 
@@ -266,21 +262,21 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
       $scope.pendingPost = true
-      AuthorizedProvider.modelToCreate.external_user = $scope.currentAuthorizedProvider
-      AuthorizedProvider.modelToCreate.rucom_id = $scope.currentRucom.id
-      AuthorizedProvider.modelToCreate.files = $scope.newFiles
-      AuthorizedProvider.saveModelToCreate()
-      AuthorizedProvider.create()
+      AuthorizedProviderService.model.external_user = $scope.currentAuthorizedProvider
+      AuthorizedProviderService.model.rucom_id = $scope.currentRucom.id
+      AuthorizedProviderService.model.files = $scope.newFiles
+      AuthorizedProviderService.saveModel()
+      AuthorizedProviderService.create()
       $scope.showUploadingDialog()
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true
     $scope.loadingMessage = "Subiendo archivos ..."
     $scope.$watch (->
-      AuthorizedProvider.uploadProgress
+      AuthorizedProviderService.uploadProgress
     ), (newVal, oldVal) ->
       if typeof newVal != 'undefined'
-        $scope.loadingProgress = AuthorizedProvider.uploadProgress
+        $scope.loadingProgress = AuthorizedProviderService.uploadProgress
         if $scope.loadingProgress == 100
           $scope.abortCreate = true
           $scope.loadingMessage = "Espere un momento ..."

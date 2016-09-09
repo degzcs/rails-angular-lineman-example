@@ -1,9 +1,9 @@
-angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, $mdDialog, RucomService, $state) ->
+angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, $http, $mdDialog, RucomService, $state) ->
   service =
 
     uploadProgress: 0
     isCompany: false
-    modelToCreate:
+    model:
       user_type: ''
       rucom_id: ''
       authorized_provider:
@@ -47,10 +47,11 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
 
 # -----------------------------------------------------------
     update: (id)->
-      external_user = service.modelToCreate.authorized_provider
-      profile = service.modelToCreate.profile
-      files_to_upload = service.modelToCreate.files
-      rucom = service.modelToCreate.rucom
+      # Photo file
+      external_user = service.model.authorized_provider
+      profile = service.model.profile
+      files_to_upload = service.model.files
+      rucom = service.model.rucom
 
       blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (external_user_photo_file) ->
         external_user_photo_file.name = 'photo_file.png'
@@ -116,8 +117,6 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
           while i < l
             array[i] = d.charCodeAt(i)
             i++
-          console.log 'Array = '
-          console.log array
           return array
 
 #------------------------------------------------------------
@@ -163,12 +162,12 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
           ).success( (data, status, headers, config)->
             $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
             $state.go "index_authorized_provider"
-            service.clearModelToCreate()
+            service.clearmodel()
             return
           ).error (data, status, headers, config)->
             $mdDialog.show $mdDialog.alert().title('Alerta - Hubo inconvenientes').content('El Productor no pudo ser Actualizado!').ariaLabel('Alert Dialog Demo').ok('ok')
             $state.go "index_external_user"
-            service.clearModelToCreate()
+            service.clearmodel()
             return
 
         #Files Upload
@@ -187,7 +186,7 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
                 }
 #-----------------------------------------------------------------
 
-    basicProvider: (idNumber) ->
+    byIdNumber: (idNumber) ->
       return $http
                 url: '/api/v1/autorized_providers/by_id_number'
                 method: 'GET'
@@ -198,25 +197,25 @@ angular.module('app').factory 'AuthorizedProvider', ($resource, $upload, $http, 
                 }
 
 #-----------------------------------------------------------------
-    saveModelToCreate: ->
-      sessionStorage.external_user_to_create = angular.toJson(service.modelToCreate)
+    saveModel: ->
+      sessionStorage.external_user_to_create = angular.toJson(service.model)
 
-    restoreModelToCreate: ->
-      files = service.modelToCreate.files
+    restoreModel: ->
+      files = service.model.files
       if sessionStorage.external_user_to_create != null
-        service.modelToCreate = angular.fromJson(sessionStorage.external_user_to_create)
-        service.modelToCreate.files = files
-        service.modelToCreate
+        service.model = angular.fromJson(sessionStorage.external_user_to_create)
+        service.model.files = files
+        service.model
       else
-        service.modelToCreate
+        service.model
 
 
-    clearModelToCreate: ->
+    clearModel: ->
       RucomService.user_type = ''
       RucomService.currentRucom = null
       sessionStorage.external_user_to_create = null
       service.isCompany= false
-      service.modelToCreate =
+      service.model =
         user_type: ''
         rucom_id: ''
         authorized_provider:

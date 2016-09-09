@@ -223,6 +223,31 @@
         deferred.promise
   )
 
+  .state("search_authorized_provider",
+    url: "/authorized_providers/:id/rucom_search",
+    ncyBreadcrumb:
+      label: 'Edición de proveedor'
+      parent: 'search_authorized_provider' #'show_authorized_provider'
+    views:
+      'content':
+        templateUrl: "partials/authorized_providers/rucom_search.html"
+        controller: "AuthorizedProviderSearchCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
   .state("edit_authorized_provider",
     url: "/authorized_provider/:id/edit",
     ncyBreadcrumb:

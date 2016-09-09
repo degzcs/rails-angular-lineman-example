@@ -1,17 +1,17 @@
-angular.module('app').controller 'AuthorizedProviderShowCtrl', ($scope,$sce, $state, $stateParams, $window, AuthorizedProvider, RucomService, LocationService,$mdDialog) ->
+angular.module('app').controller 'AuthorizedProviderShowCtrl', ($scope,$sce, $state, $stateParams, $window, AuthorizedProviderService, RucomService, LocationService,$mdDialog) ->
   # *** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
   $scope.loadingMessage = "Cargando ..."
   # *********************************** VARIABLES ********************************** #
-  $scope.currentAuthorizedProvider = null
+  $scope.currentAuthorizedProviderService = null
   $scope.company = null
   $scope.rucomIDField =
     label: 'Numero'
     field: 'num_rucom'
   # ******************************************************************************** #
   if $stateParams.id
-    AuthorizedProvider.get($stateParams.id).success (data)->
+    AuthorizedProviderService.get($stateParams.id).success (data)->
       # 1. Cancel loading map
       $scope.showLoading = false
       # 2. Set scope variables
