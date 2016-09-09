@@ -234,15 +234,17 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     CameraService.setTypeFile(type)
 
   # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
+  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
     $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
+    $scope.granosToGrams = MeasureConverterService.granosToGrams($scope.goldBatch.model.granos)
+
     $scope.grams = $scope.goldBatch.model.grams
-    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.grams
+    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.rialesToGrams + $scope.granosToGrams + $scope.grams
 
     # cover grams to fineGrams
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
@@ -276,6 +278,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       ozs: 0
       tomines: 0
       riales: 0
+      granos: 0
       inventory_id: 1
       total_grams: 0
       total_fine_grams: 0
@@ -423,7 +426,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.purchase.model.seller.company_name = "NA"
           $scope.buyer_data = buyerDataFrom($scope.current_user)
           $scope.prov = formattedContent(data)
-          $scope.purchase.model.seller.name = full_name($scope.current_user)
+          #$scope.purchase.model.seller.name = full_name($scope.current_user)
           $scope.purchase.model.seller.company_name = "NA"
           #AuthorizedProvider.response = $scope.prov
           #AuthorizedProvider.modelToCreate.user_type = 'Barequero'

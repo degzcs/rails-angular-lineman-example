@@ -40,6 +40,15 @@ angular.module('app').factory 'MeasureConverterService', ()->
       (riales*4.6)/16
 
     #
+    # Convert from Granos to Grams
+    # e.g.  96 GRANOS -> 1 castellano -> 4.6 grams
+    # @params granos [Integer]
+    # @return [Float]
+    #
+    granosToGrams: (granos)->
+      (granos*4.6)/96
+
+    #
     # Get the Unit price for castellanos from the gram unit price
     # @params fineGramUnitPrice [Integer]
     # @return [Integer]
@@ -70,6 +79,14 @@ angular.module('app').factory 'MeasureConverterService', ()->
     #
     rialesUnitPriceFrom: (fineGramUnitPrice)->
       (4.6*fineGramUnitPrice)/16
+
+    #
+    # Get the Unit price for granos from the gram unit price
+    # @params fineGramUnitPrice [Integer]
+    # @return [Integer]
+    #
+    granosUnitPriceFrom: (fineGramUnitPrice)->
+      (4.6*fineGramUnitPrice)/96
 
     #
     # Get the Unit price per gram from the fine gram unit price

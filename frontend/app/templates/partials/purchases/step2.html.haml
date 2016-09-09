@@ -82,11 +82,19 @@
                     %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>""}
               %tr
                 %td.md-table-td-more
-                  Rial(es)
+                  Real(es)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
                     %input{"ng-model" => "goldBatch.model.riales", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  // 1 grano --> 0.44792 gramos
+                  Grano(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>""}
 
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
     %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
