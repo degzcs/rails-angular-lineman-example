@@ -34,6 +34,7 @@ class Order < ActiveRecord::Base
 
   belongs_to :buyer, class_name: "User"
   belongs_to :seller, class_name: "User"
+  belongs_to :performer, class_name: "User"
   belongs_to :courier
   has_one :gold_batch, class_name: "GoldBatch", as: :goldomable
   has_many :documents, class_name: "Document", as: :documentable, dependent: :destroy

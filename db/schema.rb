@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160906224754) do
+ActiveRecord::Schema.define(version: 20160909185919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,7 +156,10 @@ ActiveRecord::Schema.define(version: 20160906224754) do
     t.boolean  "trazoro",        default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "performer_id"
   end
+
+  add_index "orders", ["performer_id"], name: "index_orders_on_performer_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.string   "first_name"
