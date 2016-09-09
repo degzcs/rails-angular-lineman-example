@@ -22,6 +22,7 @@ FactoryGirl.define do
     type 'sale'
     code "123456789"
     price { 100 }
+    performer { buyer }
 
     trait :with_proof_of_sale_file do
       after :create do |sale, e|

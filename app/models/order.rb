@@ -41,6 +41,11 @@ class Order < ActiveRecord::Base
   has_many :batches, class_name: 'SoldBatch' #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
 
   #
+  # Validations
+  #
+  validates :performer, presence: true
+
+  #
   # Callbacks
   #
 

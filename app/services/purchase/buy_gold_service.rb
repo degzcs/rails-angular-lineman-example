@@ -11,6 +11,7 @@ class Purchase::BuyGoldService
   attr_accessor :order_hash
   attr_accessor :gold_batch_hash
   attr_accessor :response
+  attr_accessor :performer_user
 
   #
   # @params order_hash  [Hash]
@@ -30,6 +31,7 @@ class Purchase::BuyGoldService
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
     raise 'You must to provide a date option' if options[:date].blank?
     # seller is the gold provider
+    @performer_user = options[:current_user]
     @buyer = buyer_from(options[:current_user])
     @order_hash = options[:order_hash]
     @gold_batch_hash = options[:gold_batch_hash]
@@ -50,6 +52,7 @@ class Purchase::BuyGoldService
         ActiveRecord::Base.transaction do
           @purchase_order = buyer.purchases.build(order_hash.merge(type: 'purchase'))
           @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
+          @purchase_order.performer = @performer_user
           @response[:success] = @purchase_order.save!
           discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless @purchase_order.trazoro
 

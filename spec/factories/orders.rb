@@ -27,6 +27,7 @@ FactoryGirl.define do
     price { 1_000_000 }
     seller_picture { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
     trazoro { false }
+    performer { buyer }
 
     trait :with_origin_certificate_file do
       after :build do |purchase, _e|
@@ -44,6 +45,13 @@ FactoryGirl.define do
         file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_compra.pdf')),
         type: 'equivalent_document',
         )
+        # purchase.save!
+      end
+    end
+
+    trait :with_performer_user do
+      before :save do |purchase, e|
+        purchase.performer = purchase.buyer
         # purchase.save!
       end
     end

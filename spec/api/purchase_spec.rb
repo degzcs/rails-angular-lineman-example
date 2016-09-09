@@ -83,8 +83,9 @@ describe 'Purchase' do
 
         it 'POST buy threshold error' do
           # Create a purchase with 30 fine grams for the current seller
+          current_user = @buyer
           gold_batch = create :gold_batch, fine_grams: 30
-          purchase = create :purchase, seller: @seller, gold_batch: gold_batch
+          purchase = create :purchase, seller: @seller, gold_batch: gold_batch, performer: current_user
           seller_name = UserPresenter.new(@seller, self).name
 
           expected_response = {
@@ -110,7 +111,8 @@ describe 'Purchase' do
                       :with_proof_of_purchase_file,
                       :with_origin_certificate_file,
                       buyer: @buyer.company.legal_representative,
-                      seller_id: seller.id)
+                      seller_id: seller.id,
+                      performer: @buyer)
         end
 
         context '/' do
