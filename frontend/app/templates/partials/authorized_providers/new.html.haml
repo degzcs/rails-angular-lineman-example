@@ -1,5 +1,4 @@
 %div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
-%div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
   %form.external-user-form{:name => "providerEditionForm", "novalidate" => "novalidate"}
     %h2 Registro de Proveedor
 
@@ -14,7 +13,7 @@
             %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
                 %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{newFiles.photo_file || 'img/default-user.png'}}","ng-model" => "newFiles.photo_file",  "check-image" => ''}
+                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{currentAuthorizedProvider.photo_file || 'img/default-user.png'}}","ng-model" => "currentAuthorizedProvider.photo_file", "check-image" => ''}
                   /%md-tooltip{'md-direction'=> 'bottom'}
                   /  Tomar Foto
           %fieldset.standard.fieldset-information{:flex => ""}
@@ -87,21 +86,21 @@
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}
               %h4 Subir documento de identificación
-              %md-select.uploader-selector{"ng-model" => "identification_number_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
+              %md-select.uploader-selector{"ng-model" => "id_document_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
                 %md-option{:value => "by_scan"} Por Escaner
                 %md-option{:value => "by_photo"} por Camara
             %div{flex: ''}
               .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'identification_number_upload_type'}
+                .button-action.md-padding{:ng-switch => '', :on => 'id_document_upload_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newFiles.document_number_file[0].name", :readOnly => 'true', :required => "", :name => 'identification_number'}
-                    %div{"ng-messages" => "providerEditionForm.identification_number.$error"}
+                    %input{"ng-model" => "currentAuthorizedProvider.id_document_file[0].name", :readOnly => 'true', :required => "", :name => 'id_document_number'}
+                    %div{"ng-messages" => "providerEditionForm.id_document_number.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.document_number_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_number_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
 
@@ -119,21 +118,21 @@
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}
               %h4 Subir Registro minero del usuario
-              %md-select.uploader-selector{"ng-model" => "mining_register_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
+              %md-select.uploader-selector{"ng-model" => "mining_authorization_uplaod_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
                 %md-option{:value => "by_scan"} Por Escaner
                 %md-option{:value => "by_photo"} por Camara
             %div{flex: ''}
               .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'mining_register_type'}
+                .button-action.md-padding{:ng-switch => '', :on => 'mining_authorization_uplaod_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newFiles.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register'}
-                    %div{"ng-messages" => "providerEditionForm.mining_register.$error"}
+                    %input{"ng-model" => "currentAuthorizedProvider.mining_authorization_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_authorization'}
+                    %div{"ng-messages" => "providerEditionForm.mining_authorization.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de registro minero
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.mining_register_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.mining_authorization_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
 

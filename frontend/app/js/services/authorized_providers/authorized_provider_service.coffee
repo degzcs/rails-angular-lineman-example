@@ -3,30 +3,27 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
     uploadProgress: 0
     isCompany: false
-    model:
+    model: #IMPORTANT NOTE: The model must to have the same structure of the entity
       provider_type: ''
       rucom_id: ''
-      authorized_provider:
-        email: ''
-      profile:
-        first_name: ''
-        last_name: ''
-        document_number: ''
-        phone_number: ''
-        address: ''
-        id_document_file: ''
-        mining_authorization_file: ''
-        photo_file: ''
-        city_id: ''
-        state_id: ''
-      rucom:
-        rucom_number: ''
-      files:
-        photo_file: ''
-        document_number_file: ''
-        mining_register_file: ''
-        chamber_of_commerce_file: ''
-        rut_file: ''
+      email: ''
+      first_name: ''
+      last_name: ''
+      document_number: ''
+      phone_number: ''
+      address: ''
+      id_document_file: ''
+      mining_authorization_file: ''
+      photo_file: ''
+      city_id: ''
+      state_id: ''
+      rucom_number: ''
+      # files:
+      #   photo_file: ''
+      #   document_number_file: ''
+      #   mining_register_file: ''
+      #   chamber_of_commerce_file: ''
+      #   rut_file: ''
 
 # -----------------------------------------------------------
      all: (per_page,page)->
@@ -51,55 +48,57 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       # Photo file
       authorized_provider = service.model.authorized_provider
       profile = service.model.profile
-      files_to_upload = service.model.files
+      filesToUpload = [
+        servce.model.id_document_file,
+        servce.model.mining_authorization_file
+      ]
       rucom = service.model.rucom
 
-      blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (photo_file) ->
-        #photo_file = photo_file
+      blobUtil.imgSrcToBlob(filesToUpload.photo_file).then (photo_file) ->
         photo_file.name = 'photo_file.png'
         # Other Files
         filesRemaining = 0;
 
 # -----------------------------------------------------------
-        # Document Number File
-        if files_to_upload.document_number_file
-          if !(files_to_upload.document_number_file[0] instanceof File)
-            files_to_upload.document_number_file[0].name = 'document_number_file.pdf'
+        # Id Document File
+        if filesToUpload.id_document_file
+          if !(filesToUpload.id_document_file[0] instanceof File)
+            filesToUpload.id_document_file[0].name = 'id_document_file.pdf'
           else
-            document_number_file_copy = files_to_upload.document_number_file
-            document_number_reader = new FileReader
-            fileName = 'document_number_file'
+            id_document_file_copy = filesToUpload.id_document_file
+            idDocumentReader = new FileReader
+            fileName = 'id_document_file'
 
-            document_number_reader.onload = ->
+            idDocumentReader.onload = ->
               array = createBinaryFile(@result)
-              files_to_upload.document_number_file = createBlobFile(array, fileName, document_number_file_copy)
+              filesToUpload.id_document_file = createBlobFile(array, fileName, id_document_file_copy)
               --filesRemaining
               if filesRemaining <= 0
                 uploadFiles()
               return
 
-            document_number_reader.readAsBinaryString document_number_file_copy[0]
+            idDocumentReader.readAsBinaryString id_document_file_copy[0]
             filesRemaining++
 
 #--------------------------------------------------------------------
-        # External Users mining register file
-        if files_to_upload.mining_register_file
-          if !(files_to_upload.mining_register_file[0] instanceof File)
-            files_to_upload.mining_register_file[0].name = 'mining_register_file.pdf'
+        # mining_authorization file
+        if filesToUpload.mining_authorization_file
+          if !(filesToUpload.mining_authorization_file[0] instanceof File)
+            filesToUpload.mining_authorization_file[0].name = 'mining_authorization_file.pdf'
           else
-            mining_register_file_copy = files_to_upload.mining_register_file
-            miningRegisterReader = new FileReader
-            fileName = 'mining_register_file'
+            mining_authorization_file_copy = filesToUpload.mining_authorization_file
+            miningAuthorizationReader = new FileReader
+            fileName = 'mining_authorization_file'
 
-            miningRegisterReader.onload = ->
+            miningAuthorizationReader.onload = ->
               array = createBinaryFile(@result)
-              files_to_upload.mining_register_file = createBlobFile(array, fileName, mining_register_file_copy)
+              filesToUpload.mining_authorization_file = createBlobFile(array, fileName, mining_authorization_file_copy)
               --filesRemaining
               if filesRemaining <= 0
                 uploadFiles()
               return
 
-            miningRegisterReader.readAsBinaryString mining_register_file_copy[0]
+            miningAuthorizationReader.readAsBinaryString mining_authorization_file_copy[0]
             filesRemaining++
 
   #------------------------------------------------------------
@@ -138,16 +137,16 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         uploadFiles = ->
           #files = [
           #  photo_file
-          #  files_to_upload.document_number_file[0]
-          #  files_to_upload.external_user_mining_register_file[0]
+          #  filesToUpload.document_number_file[0]
+          #  filesToUpload.external_user_mining_register_file[0]
           #]
           console.log 'sending'
           if photo_file
             files.push photo_file
-          if files_to_upload.document_number_file[0]
-            files.push files_to_upload.document_number_file[0]
-          if files_to_upload.mining_register_file[0]
-            files.push files_to_upload.mining_register_file[0]
+          if filesToUpload.id_documnet_file[0]
+            files.push filesToUpload.id_documnet_file[0]
+          if filesToUpload.mining_authorization_file[0]
+            files.push filesToUpload.mining_authorization_file[0]
 
           $upload.upload(
             url: '/api/v1/autorized_providers/' + id

@@ -32,13 +32,13 @@ module V1
             trazoro = false
             files = params['profile'].slice('files')['files']
             photo_file = files.select{|file| file['filename'] =~ /photo_file/}.first
-            document_number_file = files.select{|file| file['filename'] =~ /document_number_file/}.first
-            mining_register_file = files.select{|file| file['filename'] =~ /mining_register_file/}.last
+            id_document_file = files.select{|file| file['filename'] =~ /id_document_file/}.first
+            mining_authorization_file = files.select{|file| file['filename'] =~ /mining_authorization_file/}.last
 
             add_files_to_profile = {
               :photo_file => photo_file,
-              :id_document_file => document_number_file,
-              :mining_authorization_file => mining_register_file
+              :id_document_file => id_document_file,
+              :mining_authorization_file => mining_authorization_file
             }
             params['profile'].except!('files').merge!(add_files_to_profile)
           end

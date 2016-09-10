@@ -1,4 +1,3 @@
-
 angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, RucomService, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
@@ -20,6 +19,14 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.goToDocumentation = ->
     $scope.tabIndex.selectedIndex = 1
+  window.scope = $scope
+  window.ser = AuthorizedProviderService
+
+  # **************************************************************************
+  # Fill up form with retrieved values
+
+  $scope.currentAuthorizedProvider = AuthorizedProviderService.model
+  $scope.showLoading = false
 
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the AuthorizedProviderService model to check for pendind scaned files
@@ -27,33 +34,38 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.photo = CameraService.getLastScanImage()
   if CameraService.getJoinedFile() and CameraService.getJoinedFile().length > 0
     $scope.file = CameraService.getJoinedFile()
+
   else if ScannerService.getScanFiles() and ScannerService.getScanFiles().length > 0
     $scope.file = ScannerService.getScanFiles()
 
   if $scope.photo and CameraService.getTypeFile() == 1
-    AuthorizedProviderService.model.files.photo_file = $scope.photo
-    AuthorizedProviderService.saveModel()
+    $scope.currentAuthorizedProvider.photo_file = $scope.photo
+    # AuthorizedProviderService.saveModel()
     CameraService.clearData()
 
   if $scope.file
     if CameraService.getTypeFile() == 2
-      AuthorizedProviderService.model.files.document_number_file = $scope.file
-      AuthorizedProviderService.saveModel()
+      $scope.currentAuthorizedProvider.id_document_file = $scope.file
+      # AuthorizedProviderService.saveModel()
       goToDocumentation()
+
     if CameraService.getTypeFile() == 3
-      AuthorizedProviderService.model.files.mining_register_file = $scope.file
-      AuthorizedProviderService.saveModel()
+      $scope.currentAuthorizedProvider.mining_authorization_file = $scope.file
+      # AuthorizedProviderService.saveModel()
       goToDocumentation()
+
     if CameraService.getTypeFile() == 4
-      AuthorizedProviderService.model.files.rut_file = $scope.file
-      AuthorizedProviderService.saveModel()
+      $scope.currentAuthorizedProvider.rut_file = $scope.file
+      # AuthorizedProviderService.saveModel()
       goToDocumentation()
+
     if CameraService.getTypeFile() == 5
-      AuthorizedProviderService.model.files.chamber_of_commerce_file = $scope.file
-      AuthorizedProviderService.saveModel()
+      $scope.currentAuthorizedProvider.chamber_of_commerce_file = $scope.file
+      # AuthorizedProviderService.saveModel()
       goToDocumentation()
+
     if CameraService.getTypeFile() == 6
-      AuthorizedProviderService.model.files.external_user_mining_register_file = $scope.file
+      $scope.currentAuthorizedProvider.mining_authorization_file = $scope.file
       goToDocumentation()
     #AuthorizedProviderService.saveModel()
     CameraService.clearData()
@@ -61,17 +73,9 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.scanner = (type) ->
     CameraService.setTypeFile type
-    $scope.currentAuthorizedProvider = AuthorizedProviderService.model.authorized_provider
+    $scope.currentAuthorizedProvider = AuthorizedProviderService.model
     AuthorizedProviderService.saveModel()
     return
-
-  # **************************************************************************
-  # Fill up form with retrieved values
-
-  $scope.currentAuthorizedProvider = AuthorizedProviderService.model.authorized_provider
-  $scope.newFiles = $scope.currentAuthorizedProvider.files || []
-  $scope.showLoading = false
-  window.files = $scope.newFiles # remove!!!
 
   #****** Watchers for listen to changes in editable fields *************************
   $scope.$watch 'currentAuthorizedProvider', ((newVal, oldVal) ->
@@ -147,13 +151,11 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     return
 
   $scope.searchTextStateChange = (text) ->
-    #console.log 'Text changed to ' + text
     if text == ''
       flushFields 'state'
     return
 
   $scope.searchTextCityChange = (text) ->
-    #console.log 'Text changed to ' + text
     if text == '' || text == undefined
       flushFields 'city'
     return
@@ -190,29 +192,21 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else
       isOk = false
     return isOk
-#------------end Validations -----------------#
+#-----------Validations -----------------#
 
-  $scope.validateDocumentationAndUpdate =  ()->
-    if $scope.newFiles.document_number_file == ''
+  $scope.updateAuthorizedProvider = (ev)->
+    validateDocumentationAndUpdate()
+
+  validateDocumentationAndUpdate =  ()->
+    if $scope.id_document_file == ''
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
       $scope.pendingPost = true
-
-      AuthorizedProviderService.model.profile.first_name = $scope.currentAuthorizedProvider.first_name
-      AuthorizedProviderService.model.profile.last_name = $scope.currentAuthorizedProvider.last_name
-      AuthorizedProviderService.model.rucom.rucom_number = $scope.currentAuthorizedProvider.rucom.rucom_number
-      AuthorizedProviderService.model.profile.phone_number = $scope.currentAuthorizedProvider.phone_number
-      AuthorizedProviderService.model.authorized_provider.email = $scope.currentAuthorizedProvider.email
-      AuthorizedProviderService.model.profile.address = $scope.currentAuthorizedProvider.address
-      AuthorizedProviderService.model.profile.city_id = $scope.currentAuthorizedProvider.city
-      AuthorizedProviderService.model.profile.state_id = $scope.currentAuthorizedProvider.state
+      AuthorizedProviderService.model = $scope.currentAuthorizedProvider
       AuthorizedProviderService.saveModel()
       AuthorizedProviderService.update($scope.currentAuthorizedProvider.id)
+      $scope.showUploadingDialog()
       return
-
-
-  $scope.updateAuthorizedProviderService = (ev)->
-    $scope.validateDocumentationAndUpdate()
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true
