@@ -4,7 +4,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
     uploadProgress: 0
     isCompany: false
     model:
-      user_type: ''
+      provider_type: ''
       rucom_id: ''
       authorized_provider:
         email: ''
@@ -24,10 +24,11 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       files:
         photo_file: ''
         document_number_file: ''
-        external_user_mining_register_file: ''
         mining_register_file: ''
         chamber_of_commerce_file: ''
         rut_file: ''
+
+# -----------------------------------------------------------
      all: (per_page,page)->
       #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
@@ -48,13 +49,14 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 # -----------------------------------------------------------
     update: (id)->
       # Photo file
-      external_user = service.model.authorized_provider
+      authorized_provider = service.model.authorized_provider
       profile = service.model.profile
       files_to_upload = service.model.files
       rucom = service.model.rucom
 
-      blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (external_user_photo_file) ->
-        external_user_photo_file.name = 'photo_file.png'
+      blobUtil.imgSrcToBlob(files_to_upload.photo_file).then (photo_file) ->
+        #photo_file = photo_file
+        photo_file.name = 'photo_file.png'
         # Other Files
         filesRemaining = 0;
 
@@ -81,17 +83,17 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
 #--------------------------------------------------------------------
         # External Users mining register file
-        if files_to_upload.external_user_mining_register_file
-          if !(files_to_upload.external_user_mining_register_file[0] instanceof File)
-            files_to_upload.external_user_mining_register_file[0].name = 'mining_register_file.pdf'
+        if files_to_upload.mining_register_file
+          if !(files_to_upload.mining_register_file[0] instanceof File)
+            files_to_upload.mining_register_file[0].name = 'mining_register_file.pdf'
           else
-            mining_register_file_copy = files_to_upload.external_user_mining_register_file
+            mining_register_file_copy = files_to_upload.mining_register_file
             miningRegisterReader = new FileReader
             fileName = 'mining_register_file'
 
             miningRegisterReader.onload = ->
               array = createBinaryFile(@result)
-              files_to_upload.external_user_mining_register_file = createBlobFile(array, fileName, mining_register_file_copy)
+              files_to_upload.mining_register_file = createBlobFile(array, fileName, mining_register_file_copy)
               --filesRemaining
               if filesRemaining <= 0
                 uploadFiles()
@@ -134,20 +136,25 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         files = []
 
         uploadFiles = ->
-
-          if external_user_photo_file
-            files.push external_user_photo_file
+          #files = [
+          #  photo_file
+          #  files_to_upload.document_number_file[0]
+          #  files_to_upload.external_user_mining_register_file[0]
+          #]
+          console.log 'sending'
+          if photo_file
+            files.push photo_file
           if files_to_upload.document_number_file[0]
             files.push files_to_upload.document_number_file[0]
-          if files_to_upload.external_user_mining_register_file[0]
-            files.push files_to_upload.external_user_mining_register_file[0]
+          if files_to_upload.mining_register_file[0]
+            files.push files_to_upload.mining_register_file[0]
 
           $upload.upload(
             url: '/api/v1/autorized_providers/' + id
             method: 'PUT'
             headers: {'Content-Type': 'application/json'}
             fields:
-              "authorized_provider[email]":external_user.email,
+              "authorized_provider[email]":authorized_provider.email,
               "profile[first_name]":profile.first_name,
               "profile[last_name]":profile.last_name,
               "profile[phone_number]":profile.phone_number,
@@ -166,7 +173,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             return
           ).error (data, status, headers, config)->
             $mdDialog.show $mdDialog.alert().title('Alerta - Hubo inconvenientes').content('El Productor no pudo ser Actualizado!').ariaLabel('Alert Dialog Demo').ok('ok')
-            $state.go "index_external_user"
+            $state.go "index_authorized_provider"
             service.clearmodel()
             return
 
@@ -198,12 +205,12 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
 #-----------------------------------------------------------------
     saveModel: ->
-      sessionStorage.external_user_to_create = angular.toJson(service.model)
+      sessionStorage.authorized_provider = angular.toJson(service.model)
 
     restoreModel: ->
       files = service.model.files
-      if sessionStorage.external_user_to_create != null
-        service.model = angular.fromJson(sessionStorage.external_user_to_create)
+      if sessionStorage.authorized_provider != null
+        service.model = angular.fromJson(sessionStorage.authorized_provider)
         service.model.files = files
         service.model
       else
@@ -211,12 +218,12 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
 
     clearModel: ->
-      RucomService.user_type = ''
+      RucomService.provider_type = ''
       RucomService.currentRucom = null
-      sessionStorage.external_user_to_create = null
+      sessionStorage.authorized_provider = null
       service.isCompany= false
       service.model =
-        user_type: ''
+        provider_type: ''
         rucom_id: ''
         authorized_provider:
           email: ''
@@ -236,7 +243,6 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         files:
           photo_file: ''
           document_number_file: ''
-          external_user_mining_register_file: ''
           mining_register_file: ''
           chamber_of_commerce_file: ''
           rut_file: ''

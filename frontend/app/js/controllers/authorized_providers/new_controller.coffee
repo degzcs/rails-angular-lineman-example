@@ -61,22 +61,17 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.scanner = (type) ->
     CameraService.setTypeFile type
-    AuthorizedProviderService.model.authorized_provider = $scope.currentAuthorizedProvider
+    $scope.currentAuthorizedProvider = AuthorizedProviderService.model.authorized_provider
     AuthorizedProviderService.saveModel()
     return
 
   # **************************************************************************
+  # Fill up form with retrieved values
 
-  $scope.newFiles = AuthorizedProviderService.restoreModel().files
-
-  # ********************************************************************************#
-
-  if $stateParams.id
-    AuthorizedProviderService.get($stateParams.id).success (data)->
-      $scope.showLoading = false
-      $scope.currentAuthorizedProvider = data
-  else
-    console.log 'no se envió el Id del usuario en los parámetros'
+  $scope.currentAuthorizedProvider = AuthorizedProviderService.model.authorized_provider
+  $scope.newFiles = $scope.currentAuthorizedProvider.files || []
+  $scope.showLoading = false
+  window.files = $scope.newFiles # remove!!!
 
   #****** Watchers for listen to changes in editable fields *************************
   $scope.$watch 'currentAuthorizedProvider', ((newVal, oldVal) ->
@@ -98,11 +93,11 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
         $scope.cities = []
         $scope.selectedState = ''
         $scope.selectedCity = ''
-        $scope.searchState = ''
-        $scope.searchCity = ''
+        $scope.searchStateText = ''
+        $scope.searchCityText = ''
         $scope.cityDisabled = true
       when 'city'
-        $scope.searchCity = ''
+        $scope.searchCityText = ''
         $scope.selectedCity = ''
       else
         break
@@ -116,8 +111,8 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.cities = []
   $scope.selectedState = ''
   $scope.selectedCity = ''
-  $scope.searchState = ''
-  $scope.searchCity = ''
+  $scope.searchStateText = ''
+  $scope.searchCityText = ''
   $scope.cityDisabled = true
 
   $scope.stateSearch = (query) ->
@@ -143,7 +138,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     return
 
   $scope.selectedCityChange = (city) ->
-    window.city = city
     if city
       $scope.selectedCity = city
       $scope.currentAuthorizedProvider.city = city.id || ''
@@ -164,57 +158,21 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       flushFields 'city'
     return
 
-  $scope.save = ->
-    #PUT Request:
-    AuthorizedProviderService.model.profile.first_name = $scope.currentAuthorizedProvider.first_name
-    AuthorizedProviderService.model.profile.last_name = $scope.currentAuthorizedProvider.last_name
-    AuthorizedProviderService.model.rucom.rucom_number = $scope.currentAuthorizedProvider.rucom.rucom_number
-    AuthorizedProviderService.model.profile.phone_number = $scope.currentAuthorizedProvider.phone_number
-    AuthorizedProviderService.model.authorized_provider.email = $scope.currentAuthorizedProvider.email
-    AuthorizedProviderService.model.profile.address = $scope.currentAuthorizedProvider.address
-    AuthorizedProviderService.model.profile.city_id = $scope.currentAuthorizedProvider.city
-
   $scope.back = ->
     $window.history.back()
     return
 
 #------------Validations -----------------#
   $scope.validatePersonalFields = ()->
-    window.frm = $scope.currentAuthorizedProvider
     res = $scope.isEmptyOrUndefinedAnyField()
-    console.log('result de validacion = ' + res)
     if res == true
       $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
       $scope.btnContinue = false
-      console.log 'validacion : campos vacios o no definidos'
     else
       $scope.validPersonalData = true
       $scope.tabIndex.selectedIndex = 1
       $scope.btnContinue =  true
-      console.log 'validacion : campos completos'
-
-# --------------------------------------
-  $scope.validate_personal_fields_old= ()->
-    if $scope.newFiles.photo_file == ''
-      $scope.validPersonalData = false
-      $scope.tabIndex.selectedIndex = 0
-    else if $scope.currentAuthorizedProvider.first_name == '' || $scope.currentAuthorizedProvider.last_name == '' || $scope.currentAuthorizedProvider.last_name == '' || $scope.currentAuthorizedProvider.email == '' || $scope.currentAuthorizedProvider.document_number == '' || $scope.currentAuthorizedProvider.phone_number == '' || $scope.currentAuthorizedProvider.address == ''
-      $scope.validPersonalData = false
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
-      #$mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-      $scope.tabIndex.selectedIndex = 0
-    else if $scope.currentAuthorizedProvider.first_name == undefined || $scope.currentAuthorizedProvider.last_name == undefined || $scope.currentAuthorizedProvider.last_name == undefined || $scope.currentAuthorizedProvider.email ==  undefined || $scope.currentAuthorizedProvider.document_number == undefined || $scope.currentAuthorizedProvider.phone_number == undefined || $scope.currentAuthorizedProvider.address == undefined
-      $scope.validPersonalData = false
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Formulario Incompleto').content('Por favor llene todos los datos personales incluyendo el centro poblado del usuario').ariaLabel('Alert Dialog Demo').ok('ok')
-      $scope.tabIndex.selectedIndex = 0
-    else if $scope.currentRucom == ''
-      $scope.validPersonalData = false
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Formulario Incompleto').content('Por favor seleccione un rucom').ariaLabel('Alert Dialog Demo').ok('ok')
-      $scope.tabIndex.selectedIndex = 0
-    else
-      $scope.validPersonalData = true
-      $scope.tabIndex.selectedIndex = 1
 
 # ----------------- dependencie methods to the validations ------------------------#
   $scope.isEmptyOrUndefinedAnyField = ()->
@@ -234,7 +192,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     return isOk
 #------------end Validations -----------------#
 
-  $scope.validate_documentation_and_update =  ()->
+  $scope.validateDocumentationAndUpdate =  ()->
     if $scope.newFiles.document_number_file == ''
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
@@ -254,20 +212,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
 
   $scope.updateAuthorizedProviderService = (ev)->
-    $scope.validate_documentation_and_update()
-
-
-  $scope.validate_documentation_and_create =  ()->
-    if $scope.newFiles.document_number_file == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
-    else
-      $scope.pendingPost = true
-      AuthorizedProviderService.model.external_user = $scope.currentAuthorizedProvider
-      AuthorizedProviderService.model.rucom_id = $scope.currentRucom.id
-      AuthorizedProviderService.model.files = $scope.newFiles
-      AuthorizedProviderService.saveModel()
-      AuthorizedProviderService.create()
-      $scope.showUploadingDialog()
+    $scope.validateDocumentationAndUpdate()
 
   $scope.showUploadingDialog = () ->
     $scope.showLoading = true

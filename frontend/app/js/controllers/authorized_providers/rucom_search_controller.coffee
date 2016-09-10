@@ -39,12 +39,11 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
       AuthorizedProviderService.byIdNumber(idNumber)
       .success((data, status, headers) ->
         $scope.showLoading = false
-        $scope.authorizedProvider = formattedContent(data)
+        AuthorizedProviderService.model.authorized_provider = formattedContent(data)
         # AuthorizedProviderService.response = $scope.authorized_provider
         # AuthorizedProviderService.model.user_type = 'Barequero'
-        AuthorizedProviderService.saveModel()
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-        $state.go 'new_authorized_provider', { id: $scope.authorizedProvider.id, content: $scope.authorizedProvider }
+        $state.go 'new_authorized_provider', { id: formattedContent(data).id }
       )
       .error((error)->
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')

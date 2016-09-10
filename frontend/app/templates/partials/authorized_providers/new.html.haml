@@ -6,7 +6,7 @@
       /****************************   PERSONAL DATA ***********************************/
 
     %md-tabs.external-user-tab{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>""}
-      %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales", "ng-click"=>"validate_personal_fields()"}
+      %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales", "ng-click"=>"validatePersonalFields()"}
         %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
           %fieldset.standard.photo-fieldset
             %legend
@@ -64,14 +64,15 @@
                 %div{"ng-messages" => "providerEditionForm.address.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
             / TODO: fix this: These select inputs produce an error when they are empty. This is the error: Cannot read property 'length' of undefined
+            / NOTE: This error came from the library. Perhaps when we upgrade the version this will be fixed.
             .location-selection
               %h2.md-subhead Ubicacion:
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
-                %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchState)", "md-no-cache" => "true", "md-search-text" => "searchState", "md-search-text-change" => "searchTextStateChange(searchState)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
-                  %span{"md-highlight-text" => "searchState"} {{state.name}}
+                %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchStateText)", "md-no-cache" => "true", "md-search-text" => "searchStateText", "md-search-text-change" => "searchTextStateChange(searchStateText)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
+                  %span{"md-highlight-text" => "searchStateText"} {{state.name}}
 
-                %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCity)", "md-no-cache" => "true", "md-search-text" => "searchCity", "md-search-text-change" => "searchTextCityChange(searchCity)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
-                  %span{"md-highlight-text" => "searchCity"} {{city.name}}
+                %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCityText)", "md-no-cache" => "true", "md-search-text" => "searchCityText", "md-search-text-change" => "searchTextCityChange(searchCityText)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
+                  %span{"md-highlight-text" => "searchCityText"} {{city.name}}
               / end error
 
             .rucom-selection
@@ -95,7 +96,7 @@
                 .button-action.md-padding{:ng-switch => '', :on => 'identification_number_upload_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newFiles.document_number_file[0].name", :readOnly => 'true',:required => "", :name => 'identification_number'}
+                    %input{"ng-model" => "newFiles.document_number_file[0].name", :readOnly => 'true', :required => "", :name => 'identification_number'}
                     %div{"ng-messages" => "providerEditionForm.identification_number.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
@@ -118,21 +119,21 @@
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}
               %h4 Subir Registro minero del usuario
-              %md-select.uploader-selector{"ng-model" => "external_user_mining_register_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
+              %md-select.uploader-selector{"ng-model" => "mining_register_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
                 %md-option{:value => "by_scan"} Por Escaner
                 %md-option{:value => "by_photo"} por Camara
             %div{flex: ''}
               .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'external_user_mining_register_type'}
+                .button-action.md-padding{:ng-switch => '', :on => 'mining_register_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "newFiles.external_user_mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'external_user_mining_register'}
-                    %div{"ng-messages" => "providerEditionForm.external_user_mining_register.$error"}
+                    %input{"ng-model" => "newFiles.mining_register_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_register'}
+                    %div{"ng-messages" => "providerEditionForm.mining_register.$error"}
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de registro minero
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.external_user_mining_register_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'newFiles.mining_register_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
 
