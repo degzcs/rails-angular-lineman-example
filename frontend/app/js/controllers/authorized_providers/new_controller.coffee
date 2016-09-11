@@ -6,10 +6,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.btnContinue = false
   # *********************************** VARIABLES **********************************#
   $scope.currentAuthorizedProvider = null
-  $scope.saveBtnEnabled = false
-  $scope.rucomIDField =
-    label: 'Número de RUCOM'
-    field: 'num_rucom'
 
   $scope.validPersonalData = false
   $scope.tabIndex =
@@ -76,13 +72,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     $scope.currentAuthorizedProvider = AuthorizedProviderService.model
     AuthorizedProviderService.saveModel()
     return
-
-  #****** Watchers for listen to changes in editable fields *************************
-  $scope.$watch 'currentAuthorizedProvider', ((newVal, oldVal) ->
-    if oldVal and newVal != oldVal
-      $scope.saveBtnEnabled = true
-    return
-  ), true
 
   #****** Autocomplete for State, City and Population Center fields *****************
 

@@ -41,7 +41,6 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     create: (purchase, gold_batch) ->
       i = 0
       files = []
-      console.log 'IN'
 
       ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
       blobUtil.imgSrcToBlob(purchase.seller_picture).then( (seller_picture_blob) ->

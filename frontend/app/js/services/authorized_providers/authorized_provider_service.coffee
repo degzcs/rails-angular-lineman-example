@@ -17,7 +17,8 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       photo_file: ''
       city_id: ''
       state_id: ''
-      rucom_number: ''
+      rucom:
+        rucom_number: ''
       # files:
       #   photo_file: ''
       #   document_number_file: ''
@@ -46,13 +47,11 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 # -----------------------------------------------------------
     update: (id)->
       # Photo file
-      authorized_provider = service.model.authorized_provider
-      profile = service.model.profile
-      filesToUpload = [
-        servce.model.id_document_file,
-        servce.model.mining_authorization_file
-      ]
-      rucom = service.model.rucom
+      filesToUpload = {
+        id_document_file: service.model.id_document_file,
+        mining_authorization_file: service.model.mining_authorization_file,
+        photo_file: service.model.photo_file,
+      }
 
       blobUtil.imgSrcToBlob(filesToUpload.photo_file).then (photo_file) ->
         photo_file.name = 'photo_file.png'
@@ -62,9 +61,10 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 # -----------------------------------------------------------
         # Id Document File
         if filesToUpload.id_document_file
-          if !(filesToUpload.id_document_file[0] instanceof File)
+          if (filesToUpload.id_document_file[0] instanceof File)
             filesToUpload.id_document_file[0].name = 'id_document_file.pdf'
           else
+            # NOTE: this part is uses to convert the image take it over document in a blob image
             id_document_file_copy = filesToUpload.id_document_file
             idDocumentReader = new FileReader
             fileName = 'id_document_file'
@@ -83,9 +83,10 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 #--------------------------------------------------------------------
         # mining_authorization file
         if filesToUpload.mining_authorization_file
-          if !(filesToUpload.mining_authorization_file[0] instanceof File)
+          if (filesToUpload.mining_authorization_file[0] instanceof File)
             filesToUpload.mining_authorization_file[0].name = 'mining_authorization_file.pdf'
           else
+            # NOTE: this part is uses to convert the image take it over document in a blob image
             mining_authorization_file_copy = filesToUpload.mining_authorization_file
             miningAuthorizationReader = new FileReader
             fileName = 'mining_authorization_file'
@@ -101,84 +102,81 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             miningAuthorizationReader.readAsBinaryString mining_authorization_file_copy[0]
             filesRemaining++
 
-  #------------------------------------------------------------
-        #
-        # Funtion to convert the files in a array valid with the Binary format to then convert it as Blob to send it by PUT Request
-        #
-        createBinaryFile = (result) ->
-          `var i`
-          i = undefined
-          l = undefined
-          d = undefined
-          array = undefined
-          d = result
-          l = d.length
-          array = new Uint8Array(l)
-          i = 0
-          while i < l
-            array[i] = d.charCodeAt(i)
-            i++
-          return array
-
-#------------------------------------------------------------
-        #
-        # Funtion to convert the files as Blob to send it by PUT Request
-        #
-        createBlobFile = (array, fileName, fileCopy) ->
-          file = []
-          ext = fileCopy[0].name.substring(fileCopy[0].name.lastIndexOf('.'))
-          file.push new Blob([ array ], type: 'application/octet-stream')
-          file[0].name = fileName + ext
-          return file
-
-#------------------------------------------------------------
-        files = []
-
-        uploadFiles = ->
-          #files = [
-          #  photo_file
-          #  filesToUpload.document_number_file[0]
-          #  filesToUpload.external_user_mining_register_file[0]
-          #]
-          console.log 'sending'
-          if photo_file
-            files.push photo_file
-          if filesToUpload.id_documnet_file[0]
-            files.push filesToUpload.id_documnet_file[0]
-          if filesToUpload.mining_authorization_file[0]
-            files.push filesToUpload.mining_authorization_file[0]
-
-          $upload.upload(
-            url: '/api/v1/autorized_providers/' + id
-            method: 'PUT'
-            headers: {'Content-Type': 'application/json'}
-            fields:
-              "authorized_provider[email]":authorized_provider.email,
-              "profile[first_name]":profile.first_name,
-              "profile[last_name]":profile.last_name,
-              "profile[phone_number]":profile.phone_number,
-              "profile[address]":profile.address,
-              "profile[city_id]":profile.city_id,
-              "rucom[rucom_number]":rucom.rucom_number
-            file: files
-            fileFormDataName: 'profile[files][]').progress((evt) ->
-            console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
-            service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
-            return
-          ).success( (data, status, headers, config)->
-            $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
-            $state.go "index_authorized_provider"
-            service.clearmodel()
-            return
-          ).error (data, status, headers, config)->
-            $mdDialog.show $mdDialog.alert().title('Alerta - Hubo inconvenientes').content('El Productor no pudo ser Actualizado!').ariaLabel('Alert Dialog Demo').ok('ok')
-            $state.go "index_authorized_provider"
-            service.clearmodel()
-            return
-
         #Files Upload
         if filesRemaining <= 0
           uploadFiles()
+
+#------------------------------------------------------------
+      #
+      # Funtion to convert the files in a array valid with the Binary format to then convert it as Blob to send it by PUT Request
+      #
+      createBinaryFile= (result) ->
+        `var i`
+        i = undefined
+        l = undefined
+        d = undefined
+        array = undefined
+        d = result
+        l = d.length
+        array = new Uint8Array(l)
+        i = 0
+        while i < l
+          array[i] = d.charCodeAt(i)
+          i++
+        return array
+
+#------------------------------------------------------------
+      #
+      # Funtion to convert the files as Blob to send it by PUT Request
+      #
+      createBlobFile= (array, fileName, fileCopy) ->
+        file = []
+        ext = fileCopy[0].name.substring(fileCopy[0].name.lastIndexOf('.'))
+        file.push new Blob([ array ], type: 'application/octet-stream')
+        file[0].name = fileName + ext
+        return file
+
+#------------------------------------------------------------
+      files = []
+
+      uploadFiles= () ->
+        if filesToUpload.photo_file
+          files.push filesToUpload.photo_file
+        if filesToUpload.id_document_file[0]
+          files.push filesToUpload.id_document_file[0]
+        if filesToUpload.mining_authorization_file[0]
+          files.push filesToUpload.mining_authorization_file[0]
+
+        $upload.upload(
+          url: '/api/v1/autorized_providers/' + id
+          method: 'PUT'
+          headers: {'Content-Type': 'application/json'}
+          fields:
+            "authorized_provider[email]":service.model.email,
+            "profile[first_name]":service.modelfirst_name,
+            "profile[last_name]":service.modellast_name,
+            "profile[phone_number]":service.modelphone_number,
+            "profile[address]":service.modeladdress,
+            "profile[city_id]":service.modelcity_id,
+            "rucom[rucom_number]":service.model.rucom.rucom_number
+          file: files
+          fileFormDataName: 'profile[files][]').progress((evt) ->
+          console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
+          service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
+          return
+        ).success( (data, status, headers, config)->
+          $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('El usuario a sido creado').ariaLabel('Alert Dialog Demo').ok('ok')
+          $state.go "index_authorized_provider"
+          service.clearModel()
+          return
+        ).error (data, status, headers, config)->
+          #
+          #TODO: This message has to be validated in case of error
+          #
+          $mdDialog.show $mdDialog.alert().title('Alerta - Hubo inconvenientes').content('El Productor no pudo ser Actualizado!').ariaLabel('Alert Dialog Demo').ok('ok')
+          $state.go "index_authorized_provider"
+          service.clearModel()
+          return
 
 #-----------------------------------------------------------------
     queryById: (id,per_page,page) ->
