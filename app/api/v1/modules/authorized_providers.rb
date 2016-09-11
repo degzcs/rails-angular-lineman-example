@@ -43,6 +43,11 @@ module V1
         # end
         # end
 
+        params :pagination do
+          optional :page, type: Integer
+          optional :per_page, type: Integer
+        end
+
         params :authorized_provider do
           optional :authorized_provider, type: Hash do
             optional :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
@@ -64,14 +69,50 @@ module V1
 
         params :files do
           optional :files, type: Hash do
-            optional :document_number_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
-            optional :mining_register_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
+            optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
+            optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
             optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
           end
         end
       end
 
-      resource :autorized_providers do
+      resource :authorized_providers do
+
+        #
+        # GET all
+        #
+        desc 'returns all authorized providers', {
+          entity: V1::Entities::AuthorizedProvider,
+          notes: <<-NOTES
+            Returns all existent sessions paginated
+          NOTES
+        }
+        params do
+          use :pagination
+          # use :authorized_provider_query
+        end
+        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          query_name = params[:query_name]
+          query_id = params[:query_id]
+          query_rucomid = params[:query_rucomid]
+          #binding.pry
+          authorized_providers = if query_name
+                                        ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(:page => page, :per_page => per_page)
+                                      elsif query_id
+                                        ::User.authorized_providers.order_by_id.find_by_document_number(query_id).paginate(:page => page, :per_page => per_page)
+                                      elsif query_rucomid
+                                        ::User.authorized_providers.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+                                      else
+                                        ::User.authorized_providers.order_by_id.paginate(:page => page, :per_page => per_page)
+                                      end
+          #binding.pry
+          header 'total_pages', authorized_providers.total_pages.to_s
+          present authorized_providers, with: V1::Entities::AuthorizedProvider
+        end
+
         #
         # GET by id_number
         #

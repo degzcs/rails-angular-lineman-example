@@ -30,7 +30,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
      all: (per_page,page)->
       #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
-                url: 'api/v1/external_users'
+                url: 'api/v1/authorized_providers'
                 method: 'GET'
                 params: {
                   per_page: per_page || 10,
@@ -148,7 +148,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           files.push filesToUpload.mining_authorization_file[0]
 
         $upload.upload(
-          url: '/api/v1/autorized_providers/' + id
+          url: '/api/v1/authorized_providers/' + id
           method: 'PUT'
           headers: {'Content-Type': 'application/json'}
           fields:
@@ -192,7 +192,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
     byIdNumber: (idNumber) ->
       return $http
-                url: '/api/v1/autorized_providers/by_id_number'
+                url: '/api/v1/authorized_providers/by_id_number'
                 method: 'GET'
                 params: {
                   rol_name:'Barequero'
