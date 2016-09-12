@@ -5,6 +5,7 @@ module RucomServices
       include ActiveModel::Model
       include Virtus.model(nullify_blank: true)
 
+      attr_accessor :rucom
       attribute :rucom_number, String
       attribute :name, String
       attribute :minerals, String
@@ -21,7 +22,7 @@ module RucomServices
 
       def save
         if valid?
-          persist!
+          @rucom = persist!
           true
         else
           false
