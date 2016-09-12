@@ -20,14 +20,15 @@ module V1
         def rearrange_params(params)
           new_params = {}
           new_params[:user_data] = params.slice(*User.columns_hash.except('id').keys)
-          new_params [:profile_data] = params.slice(*Profile.columns_hash.except('id').keys)
+          new_params[:profile_data] = params.slice(*Profile.columns_hash.except('id').keys)
+          new_params[:profile_data].merge!(file_params(params))
           new_params
         end
 
         # It is used in Authorized providers endPoint
         # # @param params [ Hash ] => with files from the frontend
         # @return [ Hash ]
-        def format_params_files(params)
+        def file_params(params)
           params.tap do
             trazoro = false
             files = params['profile'].slice('files')['files']

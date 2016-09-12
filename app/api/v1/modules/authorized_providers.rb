@@ -161,16 +161,19 @@ module V1
         ] do
           content_type 'text/json'
           authorized_provider = ::User.find(params[:id])
-          format_params = V1::Helpers::UserHelper.format_params_files(params)
-          # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
-          authorized_provider.roles << Role.find_by(name: 'authorized_provider')
-          authorized_provider.update_attributes(format_params['authorized_provider']) if format_params['authorized_provider'] && authorized_provider.present?
-          authorized_provider.profile.update_attributes(format_params['profile']) if format_params['profile']
-          authorized_provider.rucom.update_attributes(format_params['rucom']) if format_params['rucom']
-          if authorized_provider.save
-            present authorized_provider, with: V1::Entities::AuthorizedProvider
-          else
-            error!(authorized_provider.errors, 400)
+          if authorized_provider.present?
+            binding.pry
+            formatted_params = V1::Helpers::UserHelper.rearrange_params(params)
+            # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
+            authorized_provider.roles << Role.find_by(name: 'authorized_provider')
+            authorized_provider.update_attributes(formatted_params[:user_data]) if formatted_params[:user_data]
+            authorized_provider.profile.update_attributes(formatted_params[:profile_data]) if formatted_params[:profile_data]
+            authorized_provider.rucom.update_attributes(formatted_params['rucom']) if formatted_params['rucom']
+            if authorized_provider.save
+              present authorized_provider, with: V1::Entities::AuthorizedProvider
+            else
+              error!(authorized_provider.errors, 400)
+            end
           end
         end
       end

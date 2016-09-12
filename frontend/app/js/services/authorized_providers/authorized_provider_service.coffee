@@ -19,12 +19,6 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       state_id: ''
       rucom:
         rucom_number: ''
-      # files:
-      #   photo_file: ''
-      #   document_number_file: ''
-      #   mining_register_file: ''
-      #   chamber_of_commerce_file: ''
-      #   rut_file: ''
 
 # -----------------------------------------------------------
      all: (per_page,page)->
@@ -146,19 +140,19 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           files.push filesToUpload.id_document_file[0]
         if filesToUpload.mining_authorization_file[0]
           files.push filesToUpload.mining_authorization_file[0]
-
+        console.log filesToUpload
         $upload.upload(
           url: '/api/v1/authorized_providers/' + id
           method: 'PUT'
           headers: {'Content-Type': 'application/json'}
           fields:
-            "authorized_provider[email]":service.model.email,
-            "profile[first_name]":service.modelfirst_name,
-            "profile[last_name]":service.modellast_name,
-            "profile[phone_number]":service.modelphone_number,
-            "profile[address]":service.modeladdress,
-            "profile[city_id]":service.modelcity_id,
-            "rucom[rucom_number]":service.model.rucom.rucom_number
+            "email":service.model.email,
+            "first_name":service.modelfirst_name,
+            "last_name":service.modellast_name,
+            "phone_number":service.modelphone_number,
+            "address":service.modeladdress,
+            "city_id":service.modelcity_id,
+            "rucom_number":service.model.rucom.rucom_number
           file: files
           fileFormDataName: 'profile[files][]').progress((evt) ->
           console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
