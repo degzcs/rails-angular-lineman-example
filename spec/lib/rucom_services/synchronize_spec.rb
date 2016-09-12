@@ -79,7 +79,6 @@ describe RucomServices::Synchronize do
             @data[:id_number] = @user.profile.document_number
             rucom = @user.rucom
             @sync = RucomServices::Synchronize.new(@data).call
-            puts 'ok1'
             expect(@sync.rucom).to eq(rucom)
           end
         end
@@ -100,7 +99,6 @@ describe RucomServices::Synchronize do
 
             # it 'creates a user profile row in the database'
             @profile = Profile.find_by(document_number: @data[:id_number])
-
             expect(@sync.user_profile).to eq(@profile)
 
             # it 'creates a user row in the database'
@@ -192,5 +190,134 @@ describe RucomServices::Synchronize do
     Profile.destroy(profile)
     Rucom.destroy(rucom) if rucom.present?
     User.destroy(user)
+  end
+
+  # specs for company
+
+  context '#call' do
+    it 'executes sucessfully' do
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @sync = RucomServices::Synchronize.new(@data)
+      VCR.use_cassette('successful_rucom_response') do
+        @sync.call
+
+        # sets data attribute with the data sended
+        expect(@sync.data).to eq(@data)
+
+        # has a scraper instance setting up @scraper attribute
+        expect(@sync.scraper.class).to eq(RucomServices::Scraper)
+
+        # returns the setting object as a scraper attribute
+        expect(@sync.scraper.setting.present?).to eq(true)
+        expect(@sync.scraper.setting.class).to eq(RucomServices::Setting)
+
+        # returns the state of response of the setting object success as true
+        expect(@sync.scraper.setting.success).to eq(true)
+
+        # sets response success key as true
+        expect(@sync.response[:success]).to eq(true)
+
+        # returns its own instance
+        expect(@sync.class).to eq(RucomServices::Synchronize)
+
+        # returns the respective rucom
+        expect(@sync.rucom.present?).to eq(true)
+        expect(@sync.rucom.class).to eq(Rucom)
+
+        expect(@sync.company.present?).to eq(true)
+        expect(@sync.company.class).to eq(Company)
+        expect(@sync.company.rucom.present?).to eq(true)
+        expect(@sync.company.nit_number).to eq(@data[:id_number])
+      end
+    end
+  end
+
+  context '#first_or_create_company_from_rucom' do
+    before do
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @sync = RucomServices::Synchronize.new(@data)
+    end
+
+    context 'When the company exist' do
+      context '' do
+        context 'when rucom exist in the local database' do
+          it 'returns the respective rucom row' do
+            @company = create :company
+            @data[:id_number] = @company.nit_number
+            rucom = @company.rucom
+            @sync = RucomServices::Synchronize.new(@data).call
+            expect(@sync.rucom).to eq(rucom)
+          end
+        end
+
+        it 'creates rucom from scraper service' do
+          VCR.use_cassette('successful_rucom_response') do
+            clean_company_rucom_data(@data[:id_number])
+            @sync.call
+            @rucom = Rucom.find_by(name: 'Q Y M SAS')
+
+            # returns the virtus model to the class response
+            expect(@sync.scraper.virtus_model.present?).to eq(true)
+            expect(@sync.scraper.virtus_model.class.name).to eq("RucomServices::Models::#{@sync.scraper.setting.response_class}")
+
+            # it 'creates a rucom row in the database'
+            expect(@sync.rucom.blank?).to eq(false)
+            expect(@sync.rucom).to eq(@rucom)
+            @company = Company.find_by(nit_number: @data[:id_number])
+            expect(@sync.company.rucom.present?).to eq(true)
+            expect(@sync.company.rucom).to eq(@rucom)
+            expect(@sync.company).to eq(@company)
+          end
+        end
+      end
+    end
+  end
+
+  context 'company_exist?' do
+    before do
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @sync = RucomServices::Synchronize.new(@data)
+    end
+
+    context 'When the producer Profile dosen\'t exist' do
+      it 'returns false as a result' do
+        expect(@sync.company_exist?).to eq false
+      end
+    end
+
+    context 'When the producer Profile exists' do
+      it 'returns true as a result' do
+        @company = create :company
+        @data[:id_number] = @company.nit_number
+        @sync = RucomServices::Synchronize.new(@data)
+        expect(@sync.company_exist?).to eq true
+      end
+    end
+  end
+
+  context '#company_rucom_exist?' do
+    before do
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @sync = RucomServices::Synchronize.new(@data)
+    end
+
+    context 'When rucom exist' do
+      it 'returns true as response' do
+        VCR.use_cassette('unsuccessful_rucom_response') do
+          @company = create :company
+          @data[:id_number] = @company.nit_number
+          @sync = RucomServices::Synchronize.new(@data)
+          @sync.call
+          expect(@sync.company_rucom_exist?).to eq true
+        end
+      end
+    end
+  end
+
+  def clean_company_rucom_data(id_number)
+    return false unless company = Company.find_by(nit_number: id_number)
+    rucom = company.rucom
+    Company.destroy(company)
+    Rucom.destroy(rucom) if rucom.present?
   end
 end
