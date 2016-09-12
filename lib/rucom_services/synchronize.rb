@@ -3,7 +3,7 @@ module RucomServices
   # This class set the format to the sent data
   class Synchronize
     attr_accessor :response
-    attr_reader :scraper, :user, :user_profile, :rucom, :data, :success
+    attr_reader :scraper, :user, :user_profile, :rucom, :data, :success, :company
 
     def initialize(data = {})
       self.response = {}
@@ -13,6 +13,7 @@ module RucomServices
       @user_profile = nil
       @user = nil
       @rucom = nil
+      @company = nil
     rescue StandardError => e
       @response[:errors] << "Sincronize.initialize: error => #{e}"
     end
@@ -20,13 +21,24 @@ module RucomServices
     def call(data: {})
       @data ||= data
       @scraper = RucomServices::Scraper.new(@data)
-      first_or_create_user_from_rucom
+      select_company_or_user_from_rucom(@data[:rol_name])
       @response[:success] = @response[:errors].blank?
       self
     rescue StandardError => e
       @response[:errors] << "Sincronize.call: error => #{e}"
       @response[:success] = false
       self
+    end
+
+    def select_company_or_user_from_rucom(rol_name)
+      case rol_name
+      when 'Barequero'
+        first_or_create_user_from_rucom
+      when 'Comercializadores'
+        first_or_create_company_from_rucom
+      else
+        raise 'Role name No Valid!'
+      end
     end
 
     def success
@@ -84,6 +96,38 @@ module RucomServices
       @scraper.is_there_rucom
     end
 
+    # methods for create company
+    def first_or_create_company_from_rucom
+      if company_exist?
+        query_company_rucom_or_create_it
+      elsif exist_remote_rucom?
+        create_rucom
+        create_company
+      else
+        raises_no_exist_rucom
+      end
+    end
+
+    def company_rucom_exist?
+      @rucom = @company.rucom unless @company.blank?
+      @rucom.present?
+    end
+
+    def company_exist?
+      @company = Company.find_by(nit_number: @data[:id_number])
+      @company.present?
+    end
+
+    def query_company_rucom_or_create_it
+      if company_rucom_exist?
+        @rucom
+      elsif exist_remote_rucom?
+        create_rucom && create_company ? @rucom : raises_no_exist_rucom('Error inesperado, no se pudo crear el rucom')
+      else
+        raises_no_exist_rucom
+      end
+    end
+
     private
 
     def create_rucom
@@ -101,6 +145,13 @@ module RucomServices
       @user_profile = @user.profile
       @user.personal_rucom = @rucom
       @user.present? && @user_profile.present?
+    end
+
+    def create_company
+      @company = Company.new(nit_number: @data[:id_number])
+      @company.save!(validate: false)
+      @company.rucom = @rucom
+      @company.present? && @company.rucom.present?
     end
   end
 end
