@@ -10,15 +10,10 @@
 #  provider_id          :integer
 #
 
-#
-#
-# NOTE: It is not used anymore, check if it could de deleted
-#
-#
-
 ActiveAdmin.register Company do
-  menu false #priority: 4, label: 'Compañias'
+  menu priority: 4, label: 'Compañias'
 
+  actions :index, :show, :edit, :create, :new, :update
   permit_params :nit_number, :name, :city_id, :legal_representative, :email, :phone_number, :chamber_of_commerce_file, :rut_file
 
   controller do
@@ -26,6 +21,20 @@ ActiveAdmin.register Company do
     def company
       # Instance method
       Company.find(params[:id])
+    end
+  end
+
+  # overwrite controller create for create a company using the scraper
+  controller do
+    def create
+      parameters = permitted_params[:company]
+      params_values = { rol_name: parameters['name'], id_type: 'NIT', id_number: parameters['nit_number'] }
+      response = RucomServices::Synchronize.new(params_values).call
+      if response.response[:errors][0]
+        redirect_to admin_companies_path, notice: 'A ocurrido un error'
+      else
+        redirect_to admin_companies_path
+      end
     end
   end
 
@@ -58,16 +67,21 @@ ActiveAdmin.register Company do
 
   form do |f|
     f.inputs 'Informacion de compañia' do
-      f.input :nit_number, label: 'NIT'
-      f.input :name, label: 'Nombre'
-      f.input :legal_representative, label: 'Representante legal', :collection => User.all.map { |u| ["#{u.profile.first_name} - #{u.profile.last_name}", u.id] }
-      f.input :city, label: 'Ciudad'
-      f.input :email, label: 'Email compañia'
-      f.input :phone_number, label: 'Telefono'
-      f.input :address, label: 'Direccion'
-      f.input :chamber_of_commerce_file, :as => :file, label: 'PDF Camara de comercio', :hint => link_to(image_tag(f.object.chamber_of_commerce_file.try(:preview).try(:url)), f.object.chamber_of_commerce_file.url, :target => '_blank')
-      f.input :rut_file, :as => :file, label: 'PDF RUT', :hint => link_to(image_tag(f.object.rut_file.try(:preview).try(:url)), f.object.rut_file.url, :target => '_blank')
-      f.input :mining_register_file, :as => :file, label: 'PDF Registro minero', :hint => link_to(image_tag(f.object.mining_register_file.try(:preview).try(:url)), f.object.mining_register_file.url, :target => '_blank')
+      if params[:action] == 'new'
+        f.input :name, label: 'Rol', collection: %w(Comercializadores)
+        f.input :nit_number, label: 'NIT'
+      else
+        f.input :nit_number, label: 'NIT'
+        f.input :name, label: 'Nombre'
+        f.input :legal_representative, label: 'Representante legal', :collection => User.all.map { |u| ["#{u.profile.first_name} - #{u.profile.last_name}", u.id] }
+        f.input :city, label: 'Ciudad'
+        f.input :email, label: 'Email compañia'
+        f.input :phone_number, label: 'Telefono'
+        f.input :address, label: 'Direccion'
+        f.input :chamber_of_commerce_file, :as => :file, label: 'PDF Camara de comercio', :hint => link_to(image_tag(f.object.chamber_of_commerce_file.try(:preview).try(:url)), f.object.chamber_of_commerce_file.url, :target => '_blank')
+        f.input :rut_file, :as => :file, label: 'PDF RUT', :hint => link_to(image_tag(f.object.rut_file.try(:preview).try(:url)), f.object.rut_file.url, :target => '_blank')
+        f.input :mining_register_file, :as => :file, label: 'PDF Registro minero', :hint => link_to(image_tag(f.object.mining_register_file.try(:preview).try(:url)), f.object.mining_register_file.url, :target => '_blank')
+      end
     end
     f.actions
   end
