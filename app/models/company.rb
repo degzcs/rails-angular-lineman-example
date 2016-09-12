@@ -53,7 +53,7 @@ class Company < ActiveRecord::Base
   #
 
   after_save :create_basic_office!
-  before_destroy :check_empty_company
+  before_destroy :is_deletable?
 
   #
   # Scopes
@@ -120,9 +120,21 @@ class Company < ActiveRecord::Base
     self.offices.create(name: 'principal', city: self.city, address: self.address) if self.offices.blank?
   end
 
+  def is_deletable?
+    check_empty_company
+    check_company_orders
+  end
+
   # Double check that the company is empty. if not raise an error and avoid delete this company
   def check_empty_company
     # errors.add(:users, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos un usuario EXTERNO') if self.external_users.present?
     errors.add(:users, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos un usuario') if offices.map(&:users).flatten.compact.present?
+  end
+
+  # this method is to validate that the company does not have orders
+  def check_company_orders
+    if self.legal_representative.purchases.present? || self.legal_representative.sales.present?
+      errors.add(:legal_representative, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos una Order')
+    end
   end
 end
