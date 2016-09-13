@@ -100,7 +100,7 @@
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_file', name: 'id_document_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
 
@@ -132,7 +132,7 @@
                       %div{"ng-message" => "required"} * Debe seleccionar el documento de registro minero
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.mining_authorization_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.mining_authorization_file', name: 'mining_authorization_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
 
