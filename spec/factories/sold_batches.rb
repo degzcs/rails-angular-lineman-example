@@ -20,10 +20,12 @@ FactoryGirl.define do
     end
 
     after :build do |sold_batch, e|
-      e.number_of_batches.times do |index|
+      # current_user = create :user, :with_company, :with_trader_role
+      e.number_of_batches.times do |_index|
         sold_batch.gold_batch = create(:purchase,
-          :with_proof_of_purchase_file,
-          :with_origin_certificate_file).gold_batch
+                                       :with_proof_of_purchase_file,
+                                       :with_origin_certificate_file,
+                                       :with_performer_user).gold_batch
       end
     end
   end

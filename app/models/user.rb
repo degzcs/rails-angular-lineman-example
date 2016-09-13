@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_one :profile, dependent: :destroy
   has_many :purchases, dependent: :destroy, class_name: 'Order', foreign_key: 'buyer_id'
   has_many :sales, dependent: :destroy, class_name: 'Order', foreign_key: 'seller_id'
+  has_many :performers, dependent: :destroy, class_name: 'Order', foreign_key: 'performer_id'
   has_one :personal_rucom, class_name: 'Rucom', as: :rucomeable
   has_many :credit_billings, dependent: :destroy
   belongs_to :office

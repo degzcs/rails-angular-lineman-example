@@ -1,6 +1,7 @@
 class Sale::RegistrationService
   attr_accessor :sale_order, :selected_purchase_ids, :response
   attr_accessor :seller
+  attr_accessor :performer_user
 
   def initialize
   end
@@ -10,11 +11,13 @@ class Sale::RegistrationService
     raise 'You must to provide a current_user option' if options[:current_user].blank?
     raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
     raise 'You must to provide a selected_purchase_ids option' if options[:selected_purchase_ids].blank?
+    @performer_user = options[:current_user]
     @seller = seller_based_on(options[:current_user])
     @selected_purchase_ids = options[:selected_purchase_ids]
     @response = {}
     @sale_order = @seller.sales.build(options[:order_hash].merge(type: 'sale'))
     @sale_order.build_gold_batch(options[:gold_batch_hash])
+    @sale_order.performer = @performer_user
 
     ActiveRecord::Base.transaction do
       @sale_order.save! # This save both the new sale and gold_batch

@@ -17,6 +17,7 @@ describe 'Sale', :type => :request do
                                   :with_origin_certificate_file,
                                   :with_proof_of_purchase_file,
                                   buyer: current_seller)
+                                  #performer: @current_user)
           # TODO: change frontend implementation to avoid this.
           selected_purchases = purchases.map { |purchase| { purchase_id: purchase.id } }
           expected_response = {
@@ -30,6 +31,7 @@ describe 'Sale', :type => :request do
             'user_id' => current_seller.id, # TODO: upgrade frontend
             # 'gold_batch_id' => GoldBatch.last.id + 1,
             'fine_grams' => 1.5,
+           # 'performer_id' => current_buyer.id
           }
 
           new_gold_batch_values = {
@@ -55,7 +57,8 @@ describe 'Sale', :type => :request do
             selected_purchases: selected_purchases },
             { 'Authorization' => "barcode_htmler #{ @token }" }
           expect(response.status).to eq 201
-          expect(JSON.parse(response.body)).to include expected_response
+          parser_response = JSON.parse(response.body)
+          expect(parser_response).to include expected_response
         end
       end
 
@@ -64,7 +67,7 @@ describe 'Sale', :type => :request do
           @current_user = create :user, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
-          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative)
+          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative, performer: @current_user)
           @buyer = create(:user, :with_company, :with_trader_role)
         end
 
