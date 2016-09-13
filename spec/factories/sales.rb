@@ -20,25 +20,25 @@ FactoryGirl.define do
     buyer { create(:user, :with_company, :with_trader_role) }
     gold_batch { create :gold_batch } # bought gold in this transaction.
     type 'sale'
-    code "123456789"
+    code '123456789'
     price { 100 }
     performer { buyer }
 
     trait :with_proof_of_sale_file do
-      after :create do |sale, e|
+      after :create do |sale, _e|
         sale.documents.build(
-        file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
-        type: 'equivalent_document',
+          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
+          type: 'equivalent_document'
         )
         sale.save!
       end
     end
 
     trait :with_purchase_files_collection_file do
-      after :create do |sale, e|
+      after :create do |sale, _e|
         sale.documents.build(
-        file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
-        type: 'purchase_files_collection',
+          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
+          type: 'purchase_files_collection'
         )
         sale.save!
       end
@@ -50,13 +50,13 @@ FactoryGirl.define do
       end
       after :create do |sale, e|
         seller = User.where(email: 'tech@trazoro.co').first || create(:user, :with_personal_rucom, :with_authorized_provider_role)
-        e.number_of_batches.times do |index|
+        e.number_of_batches.times do |_index|
           purchase = create(:purchase,
-            :with_origin_certificate_file,
-            :with_proof_of_purchase_file,
-            buyer: sale.buyer,
-            seller: seller)
-          create(:sold_batch, order: sale, gold_batch: purchase.gold_batch )
+                            :with_origin_certificate_file,
+                            :with_proof_of_purchase_file,
+                            buyer: sale.buyer,
+                            seller: seller)
+          create(:sold_batch, order: sale, gold_batch: purchase.gold_batch)
         end
       end
     end
