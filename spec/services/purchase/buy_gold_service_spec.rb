@@ -19,7 +19,7 @@ describe Purchase::BuyGoldService do
       @seller = create(:user, :with_personal_rucom, provider_type: 'Barequero')
 
       file_path = "#{Rails.root}/spec/support/pdfs/origin_certificate_file.pdf"
-      file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
+      Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
       seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
       seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
@@ -71,7 +71,7 @@ describe Purchase::BuyGoldService do
 
       it 'should throw a message telling to barequero reach the limin for this month' do
         gold_batch = create :gold_batch, fine_grams: 30
-        purchase = create :purchase, seller: @seller, gold_batch: gold_batch, performer: legal_representative
+        create :purchase, seller: @seller, gold_batch: gold_batch, performer: legal_representative
         seller_name = UserPresenter.new(@seller, self).name
         # Try to buy gold
         response = service.call(
