@@ -162,7 +162,6 @@ module V1
           content_type 'text/json'
           authorized_provider = ::User.find(params[:id])
           if authorized_provider.present?
-            binding.pry
             formatted_params = V1::Helpers::UserHelper.rearrange_params(params)
             # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
             authorized_provider.roles << Role.find_by(name: 'authorized_provider')
