@@ -42,65 +42,64 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
     update: (id)->
       # Rearrange all files to upload to get them easyly
       filesToUpload = {
-        id_document_file: service.model.id_document_file,
-        mining_authorization_file: service.model.mining_authorization_file,
-        photo_file: service.model.photo_file,
+        idDocumentFile: service.model.id_document_file,
+        miningAuthorizationFile: service.model.mining_authorization_file,
+        photoFile: service.model.photo_file,
       }
 
       # Final files that will be uplaoded by the $upload service
-      blobFiles ={
-        id_document_file: '',
-        mining_authorization_file: '',
-        photo_file: '',
+      blobFiles = {
+        idDocumentFile: '',
+        miningAuthorizationFile: '',
+        photoFile: '',
       }
 
-      blobUtil.imgSrcToBlob(filesToUpload.photo_file).then (photo_file) ->
-        photo_file.name = 'photo_file.png'
+      blobUtil.imgSrcToBlob(filesToUpload.photoFile).then (photoFile) ->
+        blobFiles.photoFile = photoFile
+        blobFiles.photoFile.name = 'photo_file.png'
         # Other Files
         filesRemaining = 0;
 
 # -----------------------------------------------------------
         # Id Document File
-        if filesToUpload.id_document_file
+        if filesToUpload.idDocumentFile
           # if !(filesToUpload.id_document_file[0] instanceof File)
           #   filesToUpload.id_document_file[0].name = 'id_document_file.pdf'
           # else
           # NOTE: this part is used to convert the image/ in a blob image and can change the filename
-          id_document_file_copy = filesToUpload.id_document_file
+          idDocumentFileCopy = filesToUpload.idDocumentFile
           idDocumentReader = new FileReader
-          fileName = 'id_document_file'
 
           idDocumentReader.onload = ->
-            array = createBinaryFile(@result)
-            blobFiles.id_document_file = createBlobFile(array, fileName, id_document_file_copy[0])
+            idDocumentArray = createBinaryFile(@result)
+            blobFiles.idDocumentFile = createBlobFile(idDocumentArray, 'id_document_file', idDocumentFileCopy[0])
             --filesRemaining
             if filesRemaining <= 0
               uploadFiles()
             return
 
-          idDocumentReader.readAsBinaryString id_document_file_copy[0]
+          idDocumentReader.readAsBinaryString idDocumentFileCopy[0]
           filesRemaining++
 
 #--------------------------------------------------------------------
         # mining_authorization file
-        if filesToUpload.mining_authorization_file
+        if filesToUpload.miningAuthorizationFile
           # if !(filesToUpload.mining_authorization_file[0] instanceof File)
           #   filesToUpload.mining_authorization_file[0].name = 'mining_authorization_file.pdf'
           # else
           # NOTE: this part is used to convert the image/ in a blob image and can change the filename
-          mining_authorization_file_copy = filesToUpload.mining_authorization_file
+          miningAuthorizationFileCopy = filesToUpload.miningAuthorizationFile
           miningAuthorizationReader = new FileReader
-          fileName = 'mining_authorization_file'
 
           miningAuthorizationReader.onload = ->
-            array = createBinaryFile(@result)
-            blobFiles.mining_authorization_file = createBlobFile(array, fileName, mining_authorization_file_copy[0])
+            miningAuthorizationArray = createBinaryFile(@result)
+            blobFiles.miningAuthorizationFile = createBlobFile(miningAuthorizationArray, 'mining_authorization_file', miningAuthorizationFileCopy[0])
             --filesRemaining
             if filesRemaining <= 0
               uploadFiles()
             return
 
-          miningAuthorizationReader.readAsBinaryString mining_authorization_file_copy[0]
+          miningAuthorizationReader.readAsBinaryString miningAuthorizationFileCopy[0]
           filesRemaining++
 
         #Files Upload
@@ -131,22 +130,21 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       # Converts files to Blob type
       #
       createBlobFile= (array, fileName, fileCopy) ->
-        file = []
+        file = null
         ext = fileCopy.name.substring(fileCopy.name.lastIndexOf('.'))
-        file.push new Blob([ array ], type: 'application/octet-stream')
-        file[0].name = fileName + ext
-        return file[0]
+        file = new Blob([ array ], type: 'application/octet-stream')
+        file.name = fileName + ext
+        return file
 
 #------------------------------------------------------------
       files =[]
       uploadFiles= () ->
-        # if blobFiles.photo_file
-        #   files.push blobFiles.photo_file
-        if blobFiles.id_document_file
-          files.push blobFiles.id_document_file
-        if blobFiles.mining_authorization_file
-          files.push blobFiles.mining_authorization_file
-        console.log files
+        if blobFiles.photoFile
+           files.push blobFiles.photoFile
+        if blobFiles.idDocumentFile
+          files.push blobFiles.idDocumentFile
+        if blobFiles.miningAuthorizationFile
+          files.push blobFiles.miningAuthorizationFile
         $upload.upload(
           url: '/api/v1/authorized_providers/' + id
           method: 'PUT'
