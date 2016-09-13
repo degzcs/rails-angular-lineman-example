@@ -11,12 +11,10 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.tabIndex =
     selectedIndex: 0
 
-  $scope.pendingPost = false
+  $scope.sendingPost = false
 
   $scope.goToDocumentation = ->
     $scope.tabIndex.selectedIndex = 1
-  window.scope = $scope
-  window.ser = AuthorizedProviderService
 
   # **************************************************************************
   # Fill up form with retrieved values
@@ -133,7 +131,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.selectedCityChange = (city) ->
     if city
       $scope.selectedCity = city
-      $scope.currentAuthorizedProvider.city = city.id || ''
+      $scope.currentAuthorizedProvider.city_id = city.id
     else
       #console.log 'City changed to none'
       flushFields 'city'
@@ -154,6 +152,8 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     return
 
 #------------Validations -----------------#
+  # Validates if the fiels are fill up or not
+  # and take action ver the viwe flows.
   $scope.validatePersonalFields = ()->
     res = $scope.isEmptyOrUndefinedAnyField()
     if res == true
@@ -166,8 +166,11 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       $scope.btnContinue =  true
 
 # ----------------- dependencie methods to the validations ------------------------#
+  # Returns TRUE if the authorized provider data entered by the trader are OK
+  # otherwise returns FLASE
+  # @return [ Boolean ]
   $scope.isEmptyOrUndefinedAnyField = ()->
-    isOk = true
+    isOk = null
     frm = $scope.currentAuthorizedProvider
     if frm.first_name == '' || frm.first_name == undefined
     else if frm.last_name == '' || frm.last_name == undefined
@@ -178,8 +181,9 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else if frm.phone_number == '' || frm.phone_number == undefined
     else if frm.address == '' || frm.address == undefined
     else if frm.address == '' || frm.address == undefined
+    else if frm.profile_photo == '' || frm.profile_photo == undefined
     else
-      isOk = false
+      isOk = true
     return isOk
 #-----------Validations -----------------#
 
@@ -187,10 +191,10 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     validateDocumentationAndUpdate()
 
   validateDocumentationAndUpdate =  ()->
-    if $scope.id_document_file == ''
+    if $scope.id_document_file == '' || $scope.mining_authorization_file == ''
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
-      $scope.pendingPost = true
+      $scope.sendingPost = true
       AuthorizedProviderService.model = $scope.currentAuthorizedProvider
       AuthorizedProviderService.saveModel()
       AuthorizedProviderService.update($scope.currentAuthorizedProvider.id)

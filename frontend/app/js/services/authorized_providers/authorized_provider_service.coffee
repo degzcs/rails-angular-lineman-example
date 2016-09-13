@@ -137,7 +137,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         return file
 
 #------------------------------------------------------------
-      files =[]
+      files = []
       uploadFiles= () ->
         if blobFiles.photoFile
            files.push blobFiles.photoFile
@@ -150,15 +150,15 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           method: 'PUT'
           headers: {'Content-Type': 'application/json'}
           fields:
-            "email":service.model.email,
-            "first_name":service.modelfirst_name,
-            "last_name":service.modellast_name,
-            "phone_number":service.modelphone_number,
-            "address":service.modeladdress,
-            "city_id":service.modelcity_id,
-            "rucom_number":service.model.rucom.rucom_number
+            "authorized_provider[email]":service.model.email,
+            "profile[first_name]":service.model.first_name,
+            "profile[last_name]":service.model.last_name,
+            "profile[phone_number]":service.model.phone_number,
+            "profile[address]":service.model.address,
+            "profile[city_id]":service.model.city_id,
+            "rucom[rucom_number]":service.model.rucom.rucom_number
           file: files
-          fileFormDataName: 'profile[files][]').progress((evt) ->
+          fileFormDataName: 'files[]').progress((evt) ->
           console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
           service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
           return

@@ -12,7 +12,7 @@ describe 'AuthorizedProviders', type: :request do
             id_number = '15535725'
             params_from_view = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: id_number }
 
-            get '/api/v1/autorized_providers/by_id_number', params_from_view, 'Authorization' => "Barer #{@token}"
+            get '/api/v1/authorized_providers/by_id_number', params_from_view, 'Authorization' => "Barer #{@token}"
 
             user = Profile.find_by(document_number: id_number).user
             expected_response = {
@@ -22,8 +22,8 @@ describe 'AuthorizedProviders', type: :request do
               'last_name' => user.profile.last_name,
               'phone_number' => user.profile.phone_number,
               'address' => user.profile.address,
-              'document_number_file' => { 'url' => nil },
-              'mining_register_file' => { 'url' => nil },
+              'id_document_file' => { 'url' => nil },
+              'mining_authorization_file' => { 'url' => nil },
               'photo_file' => { 'url' => nil },
               'email' => user.email,
               'city' => nil,
@@ -54,64 +54,26 @@ describe 'AuthorizedProviders', type: :request do
       end
 
       context 'PUT' do
-        it 'returns a representation of the Autorized Provider with the update fields and code 200' do
+        it 'returns a representation of the Authorized Provider with the update fields and code 200' do
           user = create :user, :with_profile, :with_personal_rucom
           token = user.create_token
 
-          file_path = "#{Rails.root}/spec/support/pdfs/document_number_file.pdf"
+          file_path = "#{Rails.root}/spec/support/pdfs/id_document_file.pdf"
           id_document_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
-          file_path = "#{Rails.root}/spec/support/pdfs/mining_register_file.pdf"
+          file_path = "#{Rails.root}/spec/support/pdfs/mining_authorization_file.pdf"
           mining_authorization_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
-          file_path = "#{Rails.root}/spec/support/images/image.png"
-          photo_file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
+          file_path = "#{Rails.root}/spec/support/images/photo_file.png"
+          photo_file_file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
 
-          city = City.find('85')
-          # new_values ={ user: { email: 'amado.prueba1@barequero.co' },
-          #   profile: {
-          #     first_name: 'AMADO',
-          #     last_name: 'PRUEBA1 MARULO',
-          #     phone_number: '2334455',
-          #     address: 'Calle 45 # 34b-56',
-          #     id_document_file: id_document_file,
-          #     mining_authorization_file: mining_authorization_file,
-          #     photo_file: photo_file,
-          #     city_id: city.id || nil
-          #   },
-          # #  state: nil,
-          # #  company: nil,
-          #   rucom: { rucom_number: '987654321' }
-          # }
+          city = City.find_by(name: 'RIONEGRO')
 
-          #
-          # formato del params enviado desde el frontend
-          #
-          # {
-          #   "data" => "{\"authorized_provider\":{\"email\":\"amado1@prueba.com.co\"},\"profile\":{\"first_name\":\"AMADO\",\"document_number\":\"\",\"last_name\":\"MARULANDA\",\"phone_number\":\"2334455\",\"address\":\"call 12\",\"city_id\":\"\",\"photo_file\":{\"name\":\"photo_file.png\"}},\"rucom\":{\"rucom_number\":\"987654321\"}}",
-          #   "id" => "5"
-          # }
-
-          user_vals = { 'email' => 'amado.prueba1@barequero.co' }
-          files = [photo_file, id_document_file, mining_authorization_file]
-          profile = {
-            'first_name' => 'AMADO',
-            'last_name' => 'PRUEBA1 MARULO',
-            'phone_number' => '2334455',
-            'address' => 'Calle 45 # 34b-56',
-            'id_document_file' => '',
-            'mining_authorization_file' => '',
-            'photo_file' => '',
-            'city_id' => city.id || nil,
-            'files' => files
-          }
-          rucom = { 'rucom_number' => '987654321' }
-          
           url_base = "/test/uploads"
-          document_number_file_url = "/documents/profile/id_document_file/#{user.id}/document_number_file.pdf"
-          mining_register_file_url = "/documents/profile/mining_authorization_file/#{user.id}/mining_register_file.pdf"
+          id_document_file_url = "/documents/profile/id_document_file/#{user.id}/id_document_file.pdf"
+          mining_authorization_file_url = "/documents/profile/mining_authorization_file/#{user.id}/mining_authorization_file.pdf"
           photo_file = "/photos/profile/photo_file/#{user.id}/photo_file.png"
-          
+
           expected_response = {
             'id' => user.id,
             'document_number' => user.profile.document_number,
@@ -119,8 +81,8 @@ describe 'AuthorizedProviders', type: :request do
             'last_name' => 'PRUEBA1 MARULO',
             'phone_number' => '2334455',
             'address' => 'Calle 45 # 34b-56',
-            'document_number_file' => { 'url' => url_base + document_number_file_url },
-            'mining_register_file' => { 'url' => url_base + mining_register_file_url },
+            'id_document_file' => { 'url' => url_base + id_document_file_url },
+            'mining_authorization_file' => { 'url' => url_base + mining_authorization_file_url },
             'photo_file' => { 'url' => url_base + photo_file },
             'email' => 'amado.prueba1@barequero.co',
             'city' => JSON.parse(city.to_json).except('created_at', 'updated_at'),
@@ -140,8 +102,22 @@ describe 'AuthorizedProviders', type: :request do
             },
             'provider_type' => user.rucom.provider_type
           }
-          params_set = { 'authorized_provider' => user_vals, 'profile' => profile, 'rucom' => rucom }
-          put "/api/v1/autorized_providers/#{user.id}", params_set, { "Authorization" => "Barer #{token}" }
+
+          # Data to sent from client to backend
+          user_data = { 'email' => 'amado.prueba1@barequero.co' }
+          profile_data = {
+            'first_name' => 'AMADO',
+            'last_name' => 'PRUEBA1 MARULO',
+            'phone_number' => '2334455',
+            'address' => 'Calle 45 # 34b-56',
+            'city_id' => city.id || nil,
+          }
+          rucom_data = { 'rucom_number' => '987654321' }
+          files = [photo_file_file, id_document_file, mining_authorization_file]
+
+          params_set = { 'authorized_provider' => user_data, 'profile' => profile_data, 'rucom' => rucom_data, 'files' => files }
+
+          put "/api/v1/authorized_providers/#{user.id}", params_set, { "Authorization" => "Barer #{token}" }
 
           res = JSON.parse(response.body)
           # it Removes the datetime attributes to make coincid the hashes
