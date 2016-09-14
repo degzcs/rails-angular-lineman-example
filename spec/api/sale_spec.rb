@@ -1,4 +1,4 @@
-describe 'Sale', :type => :request do
+describe 'Sale', type: :request do
   describe :v1 do
     context '#sales' do
       before :context do
@@ -17,11 +17,9 @@ describe 'Sale', :type => :request do
                                   :with_origin_certificate_file,
                                   :with_proof_of_purchase_file,
                                   buyer: current_seller)
-                                  #performer: @current_user)
           # TODO: change frontend implementation to avoid this.
           selected_purchases = purchases.map { |purchase| { purchase_id: purchase.id } }
           expected_response = {
-            # 'id' => 1,
             'courier_id' => courier.id,
             'buyer' => {
               'id' => current_buyer.id,
@@ -29,36 +27,28 @@ describe 'Sale', :type => :request do
               'last_name' => current_buyer.profile.last_name
             },
             'user_id' => current_seller.id, # TODO: upgrade frontend
-            # 'gold_batch_id' => GoldBatch.last.id + 1,
-            'fine_grams' => 1.5,
-           # 'performer_id' => current_buyer.id
+            'fine_grams' => 1.5
           }
 
           new_gold_batch_values = {
-            # 'id' => expected_response['gold_batch_id'],
-            # 'parent_batches' => ',
             'fine_grams' => 1.5,
-            'grade' => 1,
-            # 'inventory_id' => 1,
+            'grade' => 1
           }
 
           new_sale_values = {
-            # 'id'=>1,
             'courier_id' => courier.id,
             'buyer_id' => current_buyer.id,
-            # 'user_id'=> @current_user.id,
             'price' => 180
-            # 'gold_batch_id' => expected_response['gold_batch_id']
           }
 
           post '/api/v1/sales/', {
             gold_batch: new_gold_batch_values,
             sale: new_sale_values,
-            selected_purchases: selected_purchases },
-            { 'Authorization' => "barcode_htmler #{ @token }" }
+            selected_purchases: selected_purchases
+          }, 'Authorization' => "barcode_htmler #{@token}"
+
           expect(response.status).to eq 201
-          parser_response = JSON.parse(response.body)
-          expect(parser_response).to include expected_response
+          expect(JSON.parse(response.body)).to include expected_response
         end
       end
 
@@ -74,18 +64,14 @@ describe 'Sale', :type => :request do
         context '/' do
           it 'verifies that response has the elements number specified in per_page param' do
             per_page = 5
-            get "/api/v1/sales",
-            { per_page: per_page },
-            { 'Authorization' => "Barer #{ @token }" }
+            get '/api/v1/sales', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to eq per_page
           end
 
           it 'should verifies that the elements are corrects in the configuration of entities sale' do
             per_page = 3
-            get "/api/v1/sales",
-            { per_page: per_page },
-            { 'Authorization' => "Barer #{ @token }" }
+            get '/api/v1/sales', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to eq per_page
           end
@@ -98,14 +84,13 @@ describe 'Sale', :type => :request do
             expected_response = {
               id: sale.id,
               courier_id: sale.courier_id,
-              #buyer: buyer_expected_response.stringify_keys,
               user_id: @legal_representative.id,
               gold_batch_id: sale.gold_batch.id,
               fine_grams: sale.fine_grams,
               code: sale.code,
               barcode_html: sale.barcode_html
             }
-            get "/api/v1/sales/#{sale.id}", {}, { 'Authorization' => "Barer #{@token}" }
+            get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
@@ -122,7 +107,7 @@ describe 'Sale', :type => :request do
 
             seller_expected_response = {
               id: @legal_representative.id,
-              name: "#{ @legal_representative.profile.first_name } #{ @legal_representative.profile.last_name }",
+              name: "#{@legal_representative.profile.first_name} #{@legal_representative.profile.last_name}",
               company_name: @legal_representative.company.name,
               document_type: 'NIT',
               document_number: @legal_representative.company.nit_number,
@@ -137,13 +122,11 @@ describe 'Sale', :type => :request do
               fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: seller_expected_response.stringify_keys,
-              origin_certificate_file: {'url'=>"/test/uploads/documents/document/file/#{ @sale.purchase_files_collection.id }/documento_equivalente_de_venta.pdf"}
+              origin_certificate_file: { 'url' => "/test/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/documento_equivalente_de_venta.pdf" }
             }
             # TODO: upgrade Front end with proof_of_sale and purchase_files_collections files
 
-            get "/api/v1/sales/get_by_code/#{ @sale.code }",
-              {},
-              { 'Authorization' => "Barer #{ @token }" }
+            get "/api/v1/sales/get_by_code/#{@sale.code}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
@@ -153,11 +136,9 @@ describe 'Sale', :type => :request do
           it 'verifies that response has the elements number specified in per_page param' do
             order = Order.last
             total_sold_batches = 30
-            list = create_list(:sold_batch, total_sold_batches, order_id: order.id)
+            create_list(:sold_batch, total_sold_batches, order_id: order.id)
 
-            get "/api/v1/sales/#{ order.id }/batches",
-              {} ,
-              { 'Authorization' => "Barer #{ @token }" }
+            get "/api/v1/sales/#{order.id}/batches", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to be total_sold_batches
           end
