@@ -163,7 +163,9 @@ describe  User, type: :model do
       end
 
       it 'should validate the rucom called personal rucom' do
-        expect{ create(:user, personal_rucom: nil) }.to raise_error "Personal rucom can't be blank"
+        user = build(:user, personal_rucom: nil)
+        user.valid?
+        expect(user.errors.full_messages.last).to eq("Personal rucom can't be blank")
       end
     end
 
