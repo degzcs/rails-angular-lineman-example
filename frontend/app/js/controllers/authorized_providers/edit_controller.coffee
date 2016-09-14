@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProvider, RucomService, LocationService, $mdDialog) ->
+angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProvider, LocationService, $mdDialog) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -7,9 +7,6 @@ angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, 
   # *********************************** VARIABLES **********************************#
   $scope.currentAuthorizedProvider = null
   $scope.saveBtnEnabled = false
-  $scope.rucomIDField =
-    label: 'Número de RUCOM'
-    field: 'num_rucom'
 
   $scope.states = []
   LocationService.getStates.query {}, (states) ->

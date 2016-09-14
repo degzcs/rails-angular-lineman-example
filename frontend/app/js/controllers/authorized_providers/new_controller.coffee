@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, RucomService, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
+angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"

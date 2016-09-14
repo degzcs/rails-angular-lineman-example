@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($timeout, $scope, BarequeroChatarreroOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state, $q, ExternalUser) ->
+angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($timeout, $scope, BarequeroChatarreroOriginCertificateService, $mdDialog, CurrentUser, AuthorizedProviderService, PdfService,$state, $q) ->
 
   $scope.tab = 0
 
@@ -26,7 +26,7 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
   query_for_providers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
-      ExternalUser.query_by_id(query).success (providers)->
+      AuthorizedProviderService.queryById(query).success (providers)->
         $scope.allProviders = []
 
         provs = $scope.setupAllProviders(providers)
@@ -92,7 +92,7 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
         email: providers[i].email
         phone_number: providers[i].phone_number
         photo_file: providers[i].photo_file or 'http://robohash.org/' + providers[i].id
-        num_rucom: providers[i].rucom.num_rucom 
+        num_rucom: providers[i].rucom.num_rucom
         rucom_record: providers[i].rucom.rucom_record
         provider_type: providers[i].rucom.provider_type
         rucom_status: providers[i].rucom.status
@@ -125,5 +125,5 @@ angular.module('app').controller 'BarequeroChatarreroOriginCertificateCtrl', ($t
       return
 
   $scope.createProvider = ->
-    ProviderService.setCallerState('new_origin_certificate.barequero_chatarrero')
+    AuthorizedProviderService.setCallerState('new_origin_certificate.barequero_chatarrero')
     $state.go('search_rucom',{type: 'provider'})

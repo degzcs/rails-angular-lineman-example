@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state , $mdDialog, AuthorizedProviderService, ProviderService) ->
+angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state , $mdDialog, AuthorizedProviderService) ->
   $scope.authorizedProviderService = undefined
   AuthorizedProviderService.clearModel()
 

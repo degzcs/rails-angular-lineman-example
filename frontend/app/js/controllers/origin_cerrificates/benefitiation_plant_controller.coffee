@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($timeout, $scope, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state) ->
+angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($timeout, $scope, BeneficiationPlantOriginCertificateService, $mdDialog, CurrentUser, AuthorizedProviderService, PdfService, $state) ->
 
   $scope.tab = 1
 
@@ -135,5 +135,5 @@ angular.module('app').controller 'BeneficiationPlantOriginCertificateCtrl', ($ti
       return
 
   $scope.createProvider = ->
-    ProviderService.setCallerState('new_origin_certificate.barequero_chatarrero')
+    AuthorizedProviderService.setCallerState('new_origin_certificate.barequero_chatarrero')
     $state.go('search_rucom',{type: 'provider'})

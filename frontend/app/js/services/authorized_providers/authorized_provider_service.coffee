@@ -1,4 +1,4 @@
-angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, $http, $mdDialog, RucomService, $state) ->
+angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, $http, $mdDialog, $state) ->
   service =
 
     uploadProgress: 0
@@ -213,8 +213,6 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
 
     clearModel: ->
-      RucomService.provider_type = ''
-      RucomService.currentRucom = null
       sessionStorage.authorized_provider = null
       service.isCompany= false
       service.model =

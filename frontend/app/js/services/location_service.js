@@ -14,13 +14,6 @@ angular.module('app').factory('LocationService', function($resource) {
 
     var getCityById = $resource('/api/v1/cities/:cityId.json', {cityId:'@cityId'});
 
-    var getPopulationCentersFromCity = $resource('/api/v1/cities/:cityId/population_centers.json', {cityId:'@cityId'});
-
-    // Population Centers Info:
-
-    var getPopulationCenters = $resource('/api/v1/population_centers.json', {});
-
-    var getPopulationCenterById = $resource('/api/v1/population_centers/:populationCenterId.json', {populationCenterId:'@populationCenterId'});
 
     return {
         getStates: getStates,
@@ -28,8 +21,5 @@ angular.module('app').factory('LocationService', function($resource) {
         getCitiesFromState: getCitiesFromState,
         getCities: getCities,
         getCityById: getCityById,
-        getPopulationCentersFromCity: getPopulationCentersFromCity,
-        getPopulationCenters: getPopulationCenters,
-        getPopulationCenterById: getPopulationCenterById
     };
 });
