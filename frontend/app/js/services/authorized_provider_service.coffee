@@ -177,6 +177,18 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           return
 
 #-----------------------------------------------------------------
+
+    byIdNumber: (idNumber) ->
+      return $http
+                url: '/api/v1/authorized_providers/by_id_number'
+                method: 'GET'
+                params: {
+                  rol_name:'Barequero'
+                  id_type: 'CEDULA'
+                  id_number: idNumber
+                }
+#-----------------------------------------------------------------
+
     queryById: (id, per_page, page) ->
       return $http
                 url: 'api/v1/authorized_providers'
@@ -188,14 +200,23 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
                 }
 #-----------------------------------------------------------------
 
-    byIdNumber: (idNumber) ->
+    queryByName: (name,per_page,page)->
       return $http
-                url: '/api/v1/authorized_providers/by_id_number'
+                url: 'api/v1/authorized_providers'
                 method: 'GET'
                 params: {
-                  rol_name:'Barequero'
-                  id_type: 'CEDULA'
-                  id_number: idNumber
+                  per_page: per_page || 10
+                  page: page || 1
+                  query_name: name
+                }
+    queryByRucom_id: (rucomid,per_page,page)->
+      return $http
+                url: 'api/v1/authorized_providers'
+                method: 'GET'
+                params: {
+                  per_page: per_page || 10
+                  page: page || 1
+                  query_rucomid: rucomid
                 }
 
 #-----------------------------------------------------------------
