@@ -1,24 +1,24 @@
 angular.module('app').directive('mdTableProvider', function () {
   return {
     restrict: 'E',
-    scope: { 
-      headers: '=', 
+    scope: {
+      headers: '=',
       content: '=',
       pages: '=',
-      sortable: '=', 
+      sortable: '=',
       filters: '=',
       customClass: '=customClass',
-      thumbs:'=', 
+      thumbs:'=',
       count: '=',
       queryName: '=',
       queryId: '=',
       queryFocus: '='
     },
-    controller: function ($scope, $filter, $location, $window, $state, ProviderService,ExternalUser,$mdDialog) {
+    controller: function ($scope, $filter, $location, $window, $state, AuthorizedProviderService, $mdDialog) {
       var orderBy = $filter('orderBy');
       $scope.tablePage = 0;
       $scope.currentPath = $location.path().substring(1);
-      
+
       format_index_data = function(data){
         var content = [];
         for (var i=0; i<data.length; i++) {
@@ -30,7 +30,7 @@ angular.module('app').directive('mdTableProvider', function () {
             address: data[i].address,
             email: data[i].email,
             phone_number: data[i].phone_number,
-            photo_file: data[i].photo_file || ('http://robohash.org/' + data[i].id),
+            photo_file: data[i].photo_file,
             num_rucom: data[i].rucom.num_rucom,
             rucom_record: data[i].rucom.rucom_record,
             provider_type: data[i].rucom.provider_type,
@@ -59,11 +59,11 @@ angular.module('app').directive('mdTableProvider', function () {
       $scope.goToPage = function (pag, queryFocus) {
         $scope.tablePage = pag;
         if (queryFocus && queryFocus === 'name') {
-          var external_users_petition = ExternalUser.query_by_name($scope.queryName,$scope.count,pag+1);
+          var external_users_petition = AuthorizedProviderService.query_by_name($scope.queryName,$scope.count,pag+1);
         } else if (queryFocus && queryFocus === 'id') {
-          var external_users_petition = ExternalUser.query_by_name($scope.queryId,$scope.count,pag+1);
+          var external_users_petition = AuthorizedProviderService.query_by_name($scope.queryId,$scope.count,pag+1);
         } else{
-          var external_users_petition = ExternalUser.all($scope.count,pag+1);
+          var external_users_petition = AuthorizedProviderService.all($scope.count,pag+1);
         }
         if(external_users_petition){
           external_users_petition.success(function(data, status ,headers){
@@ -77,7 +77,7 @@ angular.module('app').directive('mdTableProvider', function () {
         //ProviderService.setCurrentProv(provider);
         //$scope.currentProvider = provider;
         //console.log('Setting current Provider: ' + JSON.stringify($scope.currentProvider));
-        $state.go("show_external_user", {id: external_user.id});
+        $state.go("show_authorized_provider", {id: external_user.id});
       };
     },
     //template: angular.element(document.querySelector('#md-table-template')).html()

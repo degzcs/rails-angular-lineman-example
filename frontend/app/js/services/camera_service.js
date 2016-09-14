@@ -32,7 +32,6 @@ angular.module('app').factory('CameraService', function($window) {
     var addScanFile = function($datarUrl){
         images.push($datarUrl);
         files.push(dataURItoFile($datarUrl,consecutivo+getDate()+files.length+'.JPEG'));
-        console.log(files);
     };
 //Method to remove scan files
     var removeScanFile= function(){
@@ -45,7 +44,6 @@ angular.module('app').factory('CameraService', function($window) {
     };
 //Method to get the scanned files
     var getScanFiles=function(){
-        console.log("files"+files);
         return files;
     };
 //Method to get the last scan image

@@ -26,52 +26,72 @@ module V1
           requires :id, type: Integer, desc: 'User ID'
         end
 
-        # params :profile do
-        # optional :profile, type: Hash do
-        #   optional :nit_number, type: String, desc: 'nit_number', documentation: { example: 'Rock' }
-        #   optional :name, type: String, desc: 'name', documentation: { example: 'Rock' }
-        #   optional :city, type: String, desc: 'city', documentation: { example: 'Rock' }
-        #   optional :state, type: String, desc: 'state', documentation: { example: 'Rock' }
-        #   optional :country, type: String, desc: 'country', documentation: { example: 'Rock' }
-        #   optional :legal_representative, type: String, desc: 'legal_representative', documentation: { example: 'Rock' }
-        #   optional :id_type_legal_rep, type: String, desc: 'id_type_legal_rep', documentation: { example: 'Rock' }
-        #   optional :id_number_legal_rep, type: String, desc: 'id_number_legal_rep', documentation: { example: 'Rock' }
-        #   optional :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
-        #   optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
-        #   optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
-        #   optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
-        # end
-        # end
+        params :profile do
+          optional :nit_number, type: String, desc: 'nit_number', documentation: { example: '123456789' }
+          optional :first_name, type: String, desc: 'first name', documentation: { example: 'Elquin' }
+          optional :last_name, type: String, desc: 'last name', documentation: { example: 'Ceagnero' }
+          optional :city_id, type: String, desc: 'city', documentation: { example: '1' }
+          optional :address, type: String, desc: 'address', documentation: { example: 'Rock' }
+          optional :phone_number, type: String, desc: 'phone_number', documentation: { example: '3004563456' }
+        end
 
-        params :authorized_provider do
-          optional :authorized_provider, type: Hash do
-            optional :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
-            optional :document_number, type: String, desc: 'document_number', documentation: { example: 'Rock' }
-            optional :first_name, type: String, desc: 'first_name', documentation: { example: 'Rock' }
-            optional :last_name, type: String, desc: 'last_name', documentation: { example: 'Rock' }
-            optional :phone_number, type: String, desc: 'phone_number', documentation: { example: 'Rock' }
-            optional :address, type: String, desc: 'address', documentation: { example: 'Rock' }
-            optional :email, type: String, desc: 'email', documentation: { example: 'Rock' }
-          end
+        params :pagination do
+          optional :page, type: Integer
+          optional :per_page, type: Integer
         end
 
         params :rucom do
-          optional :rucom, type: Hash do
-            optional :rucom_id, type: Integer, desc: 'rucom_id', documentation: { example: 'Rock' }
-            optional :rucom_number, type: String, desc: 'rucom_number', documentation: { example: 'Rock' }
-          end
+          optional :rucom_number, type: Integer
+        end
+
+        params :authorized_provider do
+          optional :email, type: String, desc: 'email', documentation: { example: 'Rock' }
         end
 
         params :files do
-          optional :files, type: Hash do
-            optional :document_number_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
-            optional :mining_register_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
-            optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
-          end
+          optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
+          optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
+          optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
         end
       end
 
-      resource :autorized_providers do
+      resource :authorized_providers do
+
+        #
+        # GET all
+        #
+        desc 'returns all authorized providers', {
+          entity: V1::Entities::AuthorizedProvider,
+          notes: <<-NOTES
+            Returns all existent sessions paginated
+          NOTES
+        }
+        params do
+          use :pagination
+          # use :authorized_provider_query
+        end
+        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          query_name = params[:query_name]
+          query_id = params[:query_id]
+          query_rucomid = params[:query_rucomid]
+          #binding.pry
+          authorized_providers = if query_name
+                                        ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(:page => page, :per_page => per_page)
+                                      elsif query_id
+                                        ::User.authorized_providers.order_by_id.find_by_document_number(query_id).paginate(:page => page, :per_page => per_page)
+                                      elsif query_rucomid
+                                        ::User.authorized_providers.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
+                                      else
+                                        ::User.authorized_providers.order_by_id.paginate(:page => page, :per_page => per_page)
+                                      end
+          #binding.pry
+          header 'total_pages', authorized_providers.total_pages.to_s
+          present authorized_providers, with: V1::Entities::AuthorizedProvider
+        end
+
         #
         # GET by id_number
         #
@@ -98,7 +118,25 @@ module V1
         end
 
         #
-        # PUT -> Update by user id
+        # GET by id
+        #
+        desc 'returns an authorized provider by :id', {
+          entity: V1::Entities::AuthorizedProvider,
+          notes: <<-NOTES
+            Returns an authorized provider by :id
+          NOTES
+        }
+        params do
+          use :id
+        end
+        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          authorized_provider = ::User.authorized_providers.find(params[:id])
+          present authorized_provider, with: V1::Entities::AuthorizedProvider
+        end
+
+        #
+        # PUT by id
         #
         desc 'updates an Autorized Provider',
              entity: V1::Entities::AuthorizedProvider,
@@ -109,7 +147,7 @@ module V1
         params do
           requires :id
           use :authorized_provider
-          # use :profile
+          use :profile
           use :rucom
         end
         put '/:id', http_codes: [
@@ -120,16 +158,18 @@ module V1
         ] do
           content_type 'text/json'
           authorized_provider = ::User.find(params[:id])
-          format_params = V1::Helpers::UserHelper.format_params_files(params)
-          # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
-          authorized_provider.roles << Role.find_by(name: 'authorized_provider')
-          authorized_provider.update_attributes(format_params['authorized_provider']) if format_params['authorized_provider'] && authorized_provider.present?
-          authorized_provider.profile.update_attributes(format_params['profile']) if format_params['profile']
-          authorized_provider.rucom.update_attributes(format_params['rucom']) if format_params['rucom']
-          if authorized_provider.save
-            present authorized_provider, with: V1::Entities::AuthorizedProvider
-          else
-            error!(authorized_provider.errors, 400)
+          if authorized_provider.present?
+            formatted_params = V1::Helpers::UserHelper.authorized_provider_params(params)
+            # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
+            authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
+            authorized_provider.profile.update_attributes(formatted_params[:profile])
+            authorized_provider.update_attributes(formatted_params[:authorized_provider])
+            authorized_provider.rucom.update_attributes(formatted_params[:rucom])
+            if authorized_provider.save
+              present authorized_provider, with: V1::Entities::AuthorizedProvider
+            else
+              error!(authorized_provider.errors, 400)
+            end
           end
         end
       end

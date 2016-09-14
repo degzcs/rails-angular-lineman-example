@@ -18,10 +18,10 @@ module V1
       expose :address, documentation: { type: 'string', desc: 'Address', example: 'Calle falsa n#4233' } do |user, _options|
         user.profile.address
       end
-      expose :document_number_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+      expose :id_document_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.id_document_file
       end
-      expose :mining_register_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+      expose :mining_authorization_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.mining_authorization_file
       end
       expose :photo_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|

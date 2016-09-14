@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService,ProviderService,$sce,CurrentUser,User,SaleService) ->
+angular.module('app').controller 'InventoryShowCtrl', ($scope, PurchaseService, $sce, CurrentUser, User,SaleService) ->
   #Get the current inventory from the sessionStorage using the Inventory Service
   $scope.purchase = PurchaseService.restoreState()
   $scope.seller = null

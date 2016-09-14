@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state, $q, ExternalUser) ->
+angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeout, $scope, AuthorizedMinerOriginCertificateService, $mdDialog, CurrentUser, AuthorizedProviderService, PdfService, $state, $q) ->
 
   $scope.tab = 3
 
@@ -16,7 +16,7 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
     $scope.authorized_miner_origin_certificate.buyer = data
     $scope.authorized_miner_origin_certificate.city = data.city_name
     $scope.authorized_miner_origin_certificate.buyer.type = "Comercializador"
-  
+
 
   #
   # Search one specific provider into the allProviders array
@@ -26,7 +26,7 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
   query_for_providers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
-      ExternalUser.query_by_id(query).success (providers)->
+      AuthorizedProviderService.queryById.success (providers)->
         $scope.allProviders = []
 
         provs = $scope.setupAllProviders(providers)
@@ -131,5 +131,5 @@ angular.module('app').controller 'AuthorizedMinerOriginCertificateCtrl', ($timeo
       return
 
   $scope.createProvider = ->
-    ProviderService.setCallerState('new_origin_certificate.authorized_miner')
+    AuthorizedProviderService.setCallerState('new_origin_certificate.authorized_miner')
     $state.go('search_rucom',{type: 'provider'})

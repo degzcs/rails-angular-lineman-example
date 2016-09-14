@@ -30,7 +30,6 @@ angular.module("app", [
   # Restore the state of models when is reloade the page, e.g. purchase.model on PurchaseService
   window.onload = (e)->
     if sessionStorage.restorestate == 'true'
-      console.log('restoring models...')
       $rootScope.$broadcast 'restorePurchaseState'
       $rootScope.$broadcast 'restoreGoldBatchState'
       #??

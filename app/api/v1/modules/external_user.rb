@@ -117,22 +117,6 @@ module V1
           # binding.pry
           present external_users, with: V1::Entities::ExternalUser
         end
-
-        desc 'returns one existent external_user by :id', {
-          entity: V1::Entities::ExternalUser,
-          notes: <<-NOTES
-            Returns one existent external_user by :id
-          NOTES
-        }
-        params do
-          use :id
-        end
-        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          content_type "text/json"
-          external_user = ::User.authorized_providers.find(params[:id])
-          present external_user, with: V1::Entities::ExternalUser
-        end
-
         # POST
         desc 'creates a new external_user', {
             entity: V1::Entities::ExternalUser,

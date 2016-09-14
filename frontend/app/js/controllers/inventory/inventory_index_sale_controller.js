@@ -1,25 +1,3 @@
- // 	 id: null
- //      courier_id: null
- //      buyer_id: null
- //      user_id: null
- //      gold_batch_id: null
- //      code: null
- //      price: null
- //      purchase_files_collection: null
- //      proof_of_sale: null
- //      barcode_html: null
- //      selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
- //      totalAmount: null
-
-// seller_name --> no sale, tener en cuenta...
-
- // atributos index inventory sales:
- // fecha
- // gramos finos
- // proveedor
- // ganancia (utilidad por gramos) (preocio final - precio inicial)/ cantd. de gramos
- // 
-
 angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdDialog, SaleService, $state){
 
 	$scope.toggleSearch = false;
@@ -156,7 +134,7 @@ angular.module('app').controller('InventorySaleIndexCtrl', function($scope, $mdD
     SaleService.model.price = item.price //no secure
     SaleService.model.purchase_files_collection = item.purchase_files_collection
     SaleService.model.proof_of_sale = item.proof_of_sale;
-    SaleService.saveState();    
+    SaleService.saveState();
     $state.go('show_inventory_sale');
     };
   $scope.infoAlert = function(title, content) {

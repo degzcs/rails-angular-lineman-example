@@ -12,20 +12,18 @@
       %md-button.md-fab.top-nav-button{"aria-label" => "purchases","ng-class"=>"getNavigationClass('new_purchase')","ui-sref" => "new_purchase.step0"}
         %md-icon{"md-svg-icon"=>"action:add_shopping_cart"}
       %h6 Comprar
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "origin_certificates","ng-class"=>"getNavigationClass('new_origin_certificate')","ui-sref" => "new_origin_certificate.barequero_chatarrero"}
-        %md-icon{"md-svg-icon"=>"action:pageview"}
-      %h6 Certificados de Origen
+    / NOTE: This feature was disabled because it is not need for the moment.
+    / If this becomes in a new service will be enalbed and fix it.
+    / .btn-cont
+    /   %md-button.md-fab.top-nav-button{"aria-label" => "origin_certificates","ng-class"=>"getNavigationClass('new_origin_certificate')","ui-sref" => "new_origin_certificate.barequero_chatarrero"}
+    /     %md-icon{"md-svg-icon"=>"action:pageview"}
+    /   %h6 Certificados de Origen
     .btn-cont
       %md-button.md-fab.top-nav-button{"aria-label" => "inventory","ng-class"=>"getNavigationClass('index_inventory')", "ui-sref" => "index_inventory.purchase"}
         %md-icon{"md-svg-icon"=>"action:assignment"}
       %h6 Inventario
     .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "clients","ng-class"=>"getNavigationClass('clients')","ui-sref" => "clients"}
-        %md-icon{"md-svg-icon"=>"social:people_outline"}
-      %h6 Clientes
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "providers","ng-class"=>"getNavigationClass('index_external_user')","ui-sref" => "index_external_user"}
+      %md-button.md-fab.top-nav-button{"aria-label" => "providers","ng-class"=>"getNavigationClass('index_authorized_provider')","ui-sref" => "index_authorized_provider"}
         %md-icon{"md-svg-icon"=>"social:group"}
       %h6 Proveedores
     .btn-cont{"ng-controller"=>"SidebarCtrl"}

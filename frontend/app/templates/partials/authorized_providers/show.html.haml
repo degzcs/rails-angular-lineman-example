@@ -1,0 +1,82 @@
+%div{:layout => "column","ng-hide"=>"showLoading"}
+  %md-tabs{"ng-if"=>"currentAuthorizedProvider", "md-dynamic-height"=>""}
+    /********************************************** PERSONAL DATA ******************************************************/
+    %md-tab{"label"=>"Datos Personales"}
+      .provider-info
+        %div{layout: 'row'}
+          .photo-container{flex: '30'}
+            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.url}}"}
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user({ id: currentAuthorizedProvider.id })"} Editar Información
+
+          .fields-container{flex: '70'}
+            %h2{style: "text-align: left;"}
+              Datos personales:
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Nombre:
+                  {{currentAuthorizedProvider.first_name}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Apellido:
+                  {{currentAuthorizedProvider.last_name}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Número de Identificación:
+                  {{currentAuthorizedProvider.document_number}}
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Teléfono:
+                  {{currentAuthorizedProvider.phone_number}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label E-mail:
+                  {{currentAuthorizedProvider.email}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Dirección:
+                  {{currentAuthorizedProvider.address}}
+            %h2{style: "text-align: left;"} Informacion de Rucom:
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Numero Rucom:
+                  {{currentAuthorizedProvider.rucom.rucom_number}}
+
+              .external-info-container{flex: ""}
+                %h2
+                  %label Tipo:
+                  {{currentAuthorizedProvider.rucom.provider_type}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Estado:
+                  {{currentAuthorizedProvider.rucom.status ? currentAuthorizedProvider.rucom.status : 'Inscrito'}}
+            %h2{style: "text-align: left;"} Centro Poblado:
+            %div{layout: 'row'}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Ciudad:
+                  {{currentAuthorizedProvider.city.name}}
+              .external-info-container{flex: ""}
+                %h2
+                  %label Departamento:
+                  {{currentAuthorizedProvider.state.name}}
+
+            %div.external-user-map{"ng-bind-html"=>"map_iframe"}
+
+    /*************************************************** DOCUMENTATION *********************************************/
+
+    %md-tab{label: "Documentacion"}
+      %md-content.md-padding
+        %div{:layout => "row", "layout-align" => "space-around center", "layout-margin" => "", "layout-sm" => "column"}
+          %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.id_document_file.url}}", :target => "_blank"}
+            %p Cédula de Ciudadanía
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentAuthorizedProvider.id_document_file.preview.url || 'img/pdf.png'}}"}
+
+          %md-button{"ng-if"=>"currentAuthorizedProvider.mining_authorization_file.url",:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.mining_authorization_file.url}}", :target => "_blank"}
+            %p Registro Minero del Usuario
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentAuthorizedProvider.mining_authorization_file.preview.url || 'img/pdf.png'}}"}
+
+%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+

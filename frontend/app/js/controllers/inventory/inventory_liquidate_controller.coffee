@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryLiquidateCtrl', ($scope,SaleService, PurchaseService,ClientService,CourierService,$timeout,$mdDialog,$state,LiquidationService,User, $q) ->
+angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService, PurchaseService,CourierService, $timeout, $mdDialog, $state, LiquidationService, User, $q) ->
   #
   # Redirects to The index inventory if there is no pendinigs liquidations
   #

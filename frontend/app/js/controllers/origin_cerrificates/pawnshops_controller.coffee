@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $scope, PawnshopsOriginCertificateService, $mdDialog, CurrentUser, ProviderService, PdfService,$state) ->
+angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $scope, PawnshopsOriginCertificateService, $mdDialog, CurrentUser, AuthorizedProviderService, PdfService, $state) ->
 
   $scope.tab = 2
 
@@ -116,5 +116,5 @@ angular.module('app').controller 'PawnshopsOriginCertificateCtrl', ($timeout, $s
       return
 
   $scope.createProvider = ->
-    ProviderService.setCallerState('new_origin_certificate.pawnshops')
+    AuthorizedProviderService.setCallerState('new_origin_certificate.pawnshops')
     $state.go('search_rucom',{type: 'provider'})

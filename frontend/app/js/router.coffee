@@ -1,7 +1,8 @@
  angular.module("app").config ($stateProvider, $urlRouterProvider, $authProvider) ->
 
-  #TODO: apply some 'universal resolve' approach to avoid boilerplate code here
+  # TODO: apply some 'universal resolve' approach to avoid boilerplate code here
   # see this link: http://spin.atomicobject.com/2014/10/04/javascript-angularjs-resolve-routes/
+  # TODO: split this file in several ones.
 
   #  --- Static Routes ---- #
 
@@ -145,16 +146,16 @@
         controller: "SessionsNewCtrl"
   )
 
-  #  --- External User Routes ---- #
+  #  --- Authorized Provider Routes ---- #
 
-  .state("index_external_user",
-    url: "/external_users",
+  .state("index_authorized_provider",
+    url: "/authorized_providers",
     ncyBreadcrumb:
       label: 'Proveedores'
     views:
       'content':
-        templateUrl: "partials/external_users/index.html"
-        controller: "ExternalUserIndexCtrl"
+        templateUrl: "partials/authorized_providers/index.html"
+        controller: "AuthorizedProviderIndexCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -171,15 +172,15 @@
         deferred.promise
   )
 
-  .state("show_external_user",
-    url: "/external_user/:id",
+  .state("show_authorized_provider",
+    url: "/authorized_provider/:id",
     ncyBreadcrumb:
       label: 'Detalles proveedor'
-      parent: 'index_external_user'
+      parent: 'index_authorized_provider'
     views:
       'content':
-        templateUrl: "partials/external_users/show.html"
-        controller: "ExternalUserShowCtrl"
+        templateUrl: "partials/authorized_providers/show.html"
+        controller: "AuthorizedProviderShowCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -197,16 +198,15 @@
         deferred.promise
   )
 
-  #---- Step1 external user complete the external user information  -----#
-  .state("external_user_complete_edit",
-    url: "/external_user/:id/complete_edit",
+  .state("new_authorized_provider",
+    url: "/authorized_providers/:id/new",
     ncyBreadcrumb:
       label: 'Edición de proveedor'
-      parent: 'index_external_user' #'show_external_user'
+      parent: 'index_authorized_provider' #'show_authorized_provider'
     views:
       'content':
-        templateUrl: "partials/external_users/complete_edit.html"
-        controller: "ExternalUserCompleteEditCtrl"
+        templateUrl: "partials/authorized_providers/new.html"
+        controller: "AuthorizedProviderNewCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -223,17 +223,41 @@
           deferred.resolve()
         deferred.promise
   )
-  #-----------------------------------------------------------------------#
 
-  .state("edit_external_user",
-    url: "/external_user/:id/edit",
+  .state("search_authorized_provider",
+    url: "/authorized_providers/:id/rucom_search",
     ncyBreadcrumb:
       label: 'Edición de proveedor'
-      parent: 'show_external_user'
+      parent: 'search_authorized_provider' #'show_authorized_provider'
     views:
       'content':
-        templateUrl: "partials/external_users/edit.html"
-        controller: "ExternalUserEditCtrl"
+        templateUrl: "partials/authorized_providers/rucom_search.html"
+        controller: "AuthorizedProviderSearchCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  .state("edit_authorized_provider",
+    url: "/authorized_provider/:id/edit",
+    ncyBreadcrumb:
+      label: 'Edición de proveedor'
+      parent: 'show_authorized_provider'
+    views:
+      'content':
+        templateUrl: "partials/authorized_providers/edit.html"
+        controller: "AuthorizedProviderEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -251,15 +275,15 @@
         deferred.promise
   )
 
-  .state("edit_external_user_company",
-    url: "/external_user/:id/edit_company",
+  .state("edit_authorized_provider_company",
+    url: "/authorized_provider/:id/edit_company",
     ncyBreadcrumb:
       label: 'Edición de compañia'
-      parent: 'show_external_user'
+      parent: 'show_authorized_provider'
     views:
       'content':
-        templateUrl: "partials/external_users/edit_company.html"
-        controller: "ExternalUserCompanyEditCtrl"
+        templateUrl: "partials/authorized_providers/edit_company.html"
+        controller: "AuthorizedProviderCompanyEditCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -296,254 +320,6 @@
         deferred.promise
   )
 
-    .state("create_external_user_type_a",
-      url: "/external_users/type_a",
-      ncyBreadcrumb:
-        label: 'Nuevo Proveedor: Formulario tipo A'
-        parent: 'index_external_user'
-      views:
-        'content':
-          templateUrl: "partials/providers/step0.html"
-          controller: "ExternalUserCreateTypeCtrl"
-        'top-nav':
-          templateUrl: "partials/top-nav.html"
-          controller: "SidebarCtrl"
-        'flying-navbar':
-          templateUrl: "partials/flying-navbar.html"
-          controller: "SidebarCtrl"
-
-      resolve:
-        authenticated: ($q, $location, $auth) ->
-          deferred = $q.defer()
-          unless $auth.isAuthenticated()
-            $location.path "/login"
-          else
-            deferred.resolve()
-          deferred.promise
-    )
-
-    .state("create_external_user_type_b",
-      url: "/external_users/type_b",
-      ncyBreadcrumb:
-        label: 'Nuevo Proveedor: Formulario tipo B'
-        parent: 'index_external_user'
-      views:
-        'content':
-          templateUrl: "partials/external_users/type_b.html"
-          controller: "ExternalUserCreateTypeBCtrl"
-        'top-nav':
-          templateUrl: "partials/top-nav.html"
-          controller: "SidebarCtrl"
-        'flying-navbar':
-          templateUrl: "partials/flying-navbar.html"
-          controller: "SidebarCtrl"
-
-      resolve:
-        authenticated: ($q, $location, $auth) ->
-          deferred = $q.defer()
-          unless $auth.isAuthenticated()
-            $location.path "/login"
-          else
-            deferred.resolve()
-          deferred.promise
-    )
-
-#  --- Clients Routes ---- #
-  #TODO: Rename client states
-    .state("clients",
-    url: "/clients",
-    ncyBreadcrumb:
-      label: 'Clientes'
-    views:
-      'content':
-        templateUrl: "partials/clients/index.html"
-        controller: "ClientIndexCtrl"
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
-
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-    )
-
-    .state("create_client",
-      url: "/client/rucom/:rucomId",
-      ncyBreadcrumb:
-        label: 'Nuevo cliente'
-      views:
-        'content':
-          templateUrl: "partials/clients/new.html"
-          controller: "ClientsCreateCtrl"
-        'top-nav':
-          templateUrl: "partials/top-nav.html"
-          controller: "SidebarCtrl"
-        'flying-navbar':
-          templateUrl: "partials/flying-navbar.html"
-          controller: "SidebarCtrl"
-
-
-      resolve:
-        authenticated: ($q, $location, $auth) ->
-          deferred = $q.defer()
-          unless $auth.isAuthenticated()
-            $location.path "/login"
-          else
-            deferred.resolve()
-          deferred.promise
-    )
-    .state("create_client_no_rucom",
-      url: "/clients/no_rucom_creation",
-      ncyBreadcrumb:
-        label: 'Nuevo Cliente'
-        parent: 'clients'
-      views:
-        'content':
-          templateUrl: "partials/clients/no_rucom.html"
-          controller: "ClientCreateNoRucomCtrl"
-        'top-nav':
-          templateUrl: "partials/top-nav.html"
-          controller: "SidebarCtrl"
-        'flying-navbar':
-          templateUrl: "partials/flying-navbar.html"
-          controller: "SidebarCtrl"
-      resolve:
-        authenticated: ($q, $location, $auth) ->
-          deferred = $q.defer()
-          unless $auth.isAuthenticated()
-            $location.path "/login"
-          else
-            deferred.resolve()
-          deferred.promise
-    )
-
-    .state("show_client",
-      url: "/clients/:id",
-      ncyBreadcrumb:
-        label: 'Detalles cliente'
-        parent: 'clients'
-      views:
-        'content':
-          templateUrl: "partials/clients/show.html"
-          controller: "ClientShowCtrl"
-        'top-nav':
-          templateUrl: "partials/top-nav.html"
-          controller: "SidebarCtrl"
-        'flying-navbar':
-          templateUrl: "partials/flying-navbar.html"
-          controller: "SidebarCtrl"
-
-      resolve:
-        authenticated: ($q, $location, $auth) ->
-          deferred = $q.defer()
-          unless $auth.isAuthenticated()
-            $location.path "/login"
-          else
-            deferred.resolve()
-          deferred.promise
-    )
-
-    .state("edit_client",
-    url: "/clients/:id/edit",
-    ncyBreadcrumb:
-      label: 'Edición de cliente'
-      parent: 'show_client'
-    views:
-      'content':
-        templateUrl: "partials/clients/edit.html"
-        controller: "ClientEditCtrl"
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
-
-
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-    )
-    .state("edit_client_company",
-      url: "/clients/:id/edit_company",
-      ncyBreadcrumb:
-        label: 'Edición de compañia'
-        parent: 'show_client'
-      views:
-        'content':
-          templateUrl: "partials/clients/edit_company.html"
-          controller: "ClientCompanyEditCtrl"
-        'top-nav':
-          templateUrl: "partials/top-nav.html"
-          controller: "SidebarCtrl"
-        'flying-navbar':
-          templateUrl: "partials/flying-navbar.html"
-          controller: "SidebarCtrl"
-
-      resolve:
-        authenticated: ($q, $location, $auth) ->
-          deferred = $q.defer()
-          unless $auth.isAuthenticated()
-            $location.path "/login"
-          else
-            deferred.resolve()
-          deferred.promise
-    )
-
-
-  #  --- Batches Routes ---- #
-
-  .state( "batches",
-    url: "/inventory/all",
-    ncyBreadcrumb:
-      label: 'Inventory'
-    views:
-      'content':
-        templateUrl: "partials/batches/index.html"
-        controller: "BatchesIndexCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-
-
-  .state( "liquidate_batches",
-    url: "/inventory/liquidates",
-    ncyBreadcrumb:
-      label: 'Inventory'
-    views:
-      'content':
-        templateUrl: "partials/batches/liquidate.html"
-        controller: "BatchesLiquidateCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-
-
   #  --- Couriers Routes ---- #
 
   .state("new_courier",
@@ -561,26 +337,6 @@
         templateUrl: "partials/flying-navbar.html"
         controller: "SidebarCtrl"
 
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-
-  # -----Providers Routes ----#
-
-  .state("query_rucom.step0",
-    url: "/providers/step0",
-    ncyBreadcrumb:
-      label: 'Consulta Productor'
-    views:
-      'content':
-        templateUrl: "partials/providers/step0.html"
-        controller: "ProvidersRucomCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
@@ -748,104 +504,107 @@
           deferred.resolve()
         deferred.promise
   )
-  #  --- Origin Certificate Routes ---- #
-  .state("new_origin_certificate",
-    url: "/origin_certificates/new",
-    ncyBreadcrumb:
-      label: 'Seleccion de Certificado de Origen'
-    views:
-      'content':
-        templateUrl: "partials/origin_certificates/new.html"
-        controller: "OriginCertificateCtrl"
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
+  # NOTE: This feature was disabled because it is not need anymore. But
+  # if it is needed we have to fix it before to enable again.
+  #
+  # #  --- Origin Certificate Routes ---- #
+  # .state("new_origin_certificate",
+  #   url: "/origin_certificates/new",
+  #   ncyBreadcrumb:
+  #     label: 'Seleccion de Certificado de Origen'
+  #   views:
+  #     'content':
+  #       templateUrl: "partials/origin_certificates/new.html"
+  #       controller: "OriginCertificateCtrl"
+  #     'top-nav':
+  #       templateUrl: "partials/top-nav.html"
+  #       controller: "SidebarCtrl"
+  #     'flying-navbar':
+  #       templateUrl: "partials/flying-navbar.html"
+  #       controller: "SidebarCtrl"
 
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
+  #   resolve:
+  #     authenticated: ($q, $location, $auth) ->
+  #       deferred = $q.defer()
+  #       unless $auth.isAuthenticated()
+  #         $location.path "/login"
+  #       else
+  #         deferred.resolve()
+  #       deferred.promise
+  # )
 
-  .state("new_origin_certificate.barequero_chatarrero",
-    url: "/origin_certificates/barequero_chatarrero/new",
-    ncyBreadcrumb:
-      label: 'Certificado de Origen Barequeros y Chatarreros'
-    views:
-      'content':
-        templateUrl: "partials/origin_certificates/barequero_chatarrero/new.html"
-        controller: "BarequeroChatarreroOriginCertificateCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
+  # .state("new_origin_certificate.barequero_chatarrero",
+  #   url: "/origin_certificates/barequero_chatarrero/new",
+  #   ncyBreadcrumb:
+  #     label: 'Certificado de Origen Barequeros y Chatarreros'
+  #   views:
+  #     'content':
+  #       templateUrl: "partials/origin_certificates/barequero_chatarrero/new.html"
+  #       controller: "BarequeroChatarreroOriginCertificateCtrl"
+  #   resolve:
+  #     authenticated: ($q, $location, $auth) ->
+  #       deferred = $q.defer()
+  #       unless $auth.isAuthenticated()
+  #         $location.path "/login"
+  #       else
+  #         deferred.resolve()
+  #       deferred.promise
+  # )
 
-  .state("new_origin_certificate.beneficiation_plant",
-    url: "/origin_certificates/beneficiation_plant/new",
-    ncyBreadcrumb:
-      label: 'Certificado de Origen Planta de Beneficio' ######## REFERENCIA ######
-    views:
-      'content':
-        templateUrl: "partials/origin_certificates/beneficiation_plant/new.html"
-        controller: "BeneficiationPlantOriginCertificateCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
+  # .state("new_origin_certificate.beneficiation_plant",
+  #   url: "/origin_certificates/beneficiation_plant/new",
+  #   ncyBreadcrumb:
+  #     label: 'Certificado de Origen Planta de Beneficio' ######## REFERENCIA ######
+  #   views:
+  #     'content':
+  #       templateUrl: "partials/origin_certificates/beneficiation_plant/new.html"
+  #       controller: "BeneficiationPlantOriginCertificateCtrl"
+  #   resolve:
+  #     authenticated: ($q, $location, $auth) ->
+  #       deferred = $q.defer()
+  #       unless $auth.isAuthenticated()
+  #         $location.path "/login"
+  #       else
+  #         deferred.resolve()
+  #       deferred.promise
+  # )
 
-  .state("new_origin_certificate.pawnshops",
-    url: "/origin_certificates/pawnshops/new",
-    ncyBreadcrumb:
-      label: 'Acreditacion de Facturas Casas de Compra y Venta'
-    views:
-      'content':
-        templateUrl: "partials/origin_certificates/pawnshops/new.html"
-        controller: "PawnshopsOriginCertificateCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
+  # .state("new_origin_certificate.pawnshops",
+  #   url: "/origin_certificates/pawnshops/new",
+  #   ncyBreadcrumb:
+  #     label: 'Acreditacion de Facturas Casas de Compra y Venta'
+  #   views:
+  #     'content':
+  #       templateUrl: "partials/origin_certificates/pawnshops/new.html"
+  #       controller: "PawnshopsOriginCertificateCtrl"
+  #   resolve:
+  #     authenticated: ($q, $location, $auth) ->
+  #       deferred = $q.defer()
+  #       unless $auth.isAuthenticated()
+  #         $location.path "/login"
+  #       else
+  #         deferred.resolve()
+  #       deferred.promise
+  # )
 
 
-  .state("new_origin_certificate.authorized_miner",
-    url: "/origin_certificates/authorized_miner/new",
-    ncyBreadcrumb:
-      label: 'Certificado de Origen de Explotador Minero Autorizado'
-    views:
-      'content':
-        templateUrl: "partials/origin_certificates/authorized_miner/new.html"
-        controller: "AuthorizedMinerOriginCertificateCtrl"
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
+  # .state("new_origin_certificate.authorized_miner",
+  #   url: "/origin_certificates/authorized_miner/new",
+  #   ncyBreadcrumb:
+  #     label: 'Certificado de Origen de Explotador Minero Autorizado'
+  #   views:
+  #     'content':
+  #       templateUrl: "partials/origin_certificates/authorized_miner/new.html"
+  #       controller: "AuthorizedMinerOriginCertificateCtrl"
+  #   resolve:
+  #     authenticated: ($q, $location, $auth) ->
+  #       deferred = $q.defer()
+  #       unless $auth.isAuthenticated()
+  #         $location.path "/login"
+  #       else
+  #         deferred.resolve()
+  #       deferred.promise
+  # )
 
   # ------- Inventory routes ----------- #
 
@@ -997,7 +756,7 @@
           $location.path "/login"
         else
           deferred.resolve()
-        deferred.promise  
+        deferred.promise
 
   )
 
@@ -1025,7 +784,6 @@
           deferred.resolve()
         deferred.promise
   )
-
 
   $urlRouterProvider.otherwise "/home"
 

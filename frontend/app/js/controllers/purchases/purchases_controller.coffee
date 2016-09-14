@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, ExternalUser, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, ProviderService, AuthorizedProvider, SignatureService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProviderService, SignatureService) ->
 
   #*** Loading Variables **** #
   $scope.showLoading = false
@@ -39,6 +39,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   fullName = (current_user) ->
     return current_user.first_name + ' ' + current_user.last_name
 
+  #
+  # Get the buyer information who is the legal representative, this current user is not necessary the legal representative,
+  # it could be (most of the time) a worker for the company.
+  # @param current_user [ Object ]
+  # @return [ Object ]
   buyerDataFrom = (current_user)->
     if current_user.company
       {
@@ -72,12 +77,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Search one specific seller into the allsellers array
-  # @return [Array] with the matched options with the query
-
+  # @param query [ String ]
+  # @return [ Array ] with the matched options with the query
   queryForSellers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
-      ExternalUser.query_by_id(query).success (sellers)->
+      AuthorizedProviderService.queryById(query).success (sellers)->
         $scope.allsellers = []
 
         i = 0
@@ -108,10 +113,13 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.allsellers.push prov
           i++
         resolve $scope.allsellers
-
       return
 
-  $scope.searchseller = (query)->
+  #
+  # Calls the authorized provider service to get the seller by BD id
+  # @param query [ String ]
+  # @return []
+  $scope.searchSeller = (query)->
     if query
       promise = queryForSellers(query)
       promise.then ((sellers) ->
@@ -125,9 +133,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
 
   #
-  # Search seller by sale code
-  # @ sale_code [Integer] is the generated code when the sale is created
-  # @return [Array] with the matched options with the query
+  # Searchs seller by sale code
+  # @ sale_code [ Integer ] is the generated code when the sale is created
+  # @return [ Array ] with the matched options with the query
   $scope.searchsellerByCode = (sale_code)->
     SaleService.get_by_code(sale_code).success (data)->
       if data
@@ -151,35 +159,18 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         else
           console.log 'State changed to none'
 
-
   #
-  #
-  #
-  $scope.selectedsellerChange = (seller) ->
-    console.log "Seleccionado"
-    if seller
-      if seller.num_rucom
-        $scope.rucomIDField.label = 'Número de RUCOM'
-        $scope.rucomIDField.field = 'num_rucom'
-        $scope.purchase.model.rucom_id_field = 'num_rucom'
-      else if seller.rucom_record
-        $scope.rucomIDField.label = 'Número de Expediente'
-        $scope.rucomIDField.field = 'rucom_record'
-        $scope.purchase.model.rucom_id_field = 'rucom_record'
-    else
-      console.log 'seller changed to none'
-
-
-  #
-  #
-  #
+  # Gets the last part of the origin certificate URl
+  # @param url [ String ]
+  # @retun [ String ]
   $scope.formatOriginCertificate = (url) ->
     if url
       url.split('/').pop()
 
   #
-  # Create filter function for a query string, just filte by document number field
-  #@returns [Function] with the seller
+  # Creates a filter function for a query by document number
+  # @param query [ String ]
+  # @returns [ Function ] with the seller
   createFilterFor = (query) ->
     lowercaseQuery = angular.lowercase(query)
     (seller) ->
@@ -188,7 +179,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   per_page = 100
   page = 1
 
-  $scope.format_seller = (seller)->
+  #
+  # Gets the useful information to show
+  # @param seller [ Object ]
+  # @return [ Object ]
+  $scope.formatSeller = (seller)->
     rucom = seller.rucom
     return {
       id: seller.id
@@ -212,6 +207,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       address: seller.address
     }
 
+  #
+  # Camara and Scanner config
+  #
+
   # Set the last picture that was took
   $scope.photo=CameraService.getLastScanImage()
   # Set the last certificate file that was
@@ -233,8 +232,13 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.saveState()
     CameraService.setTypeFile(type)
 
-  # Watch and setup measures and total price
-  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.riales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
+  #
+  # Watchers
+  #
+
+  #
+  # Setup measures and total price if any of them have changed
+  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos,  goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -254,7 +258,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Flush Data
-  #
   $scope.flushData =->
     PurchaseService.deleteState()
     GoldBatchService.deleteState()
@@ -282,18 +285,16 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       inventory_id: 1
       total_grams: 0
       total_fine_grams: 0
-    console.log 'deleting models ...'
 
   #
   # Save values in SessionStorage
   $scope.saveState= ->
-    console.log('saving purchase and gold batch states on sessionStore ... ')
     $scope.purchase.saveState()
     $scope.goldBatch.saveState()
   #  $scope.purchase.model.seller_photo_file=CameraService.getLastScanImage()
 
   #
-  # confirm Dialog
+  # confirm Dialog to create a purchase
   $scope.showConfirm = (ev) ->
     # Appending dialog to document.body to cover sidenav in docs app
     confirm = $mdDialog.confirm()
@@ -309,14 +310,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       #PurchaseService.flushModel() #  =>  Flush the model
       return
     ), ->
-      console.log 'purchase canceled'
       $scope.message = 'La compra ha sido cancelada'
       return
 
   #
   # Create a new purschase register in DB
   $scope.create = (ev) ->
-    console.log 'creating purchase ...'
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
     $scope.showUploadingDialog(ev)
 
@@ -336,6 +335,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.loadingMode = "indeterminate"
       return
 
+  #
+  # Stantandar popup
+  # @param title [ String ]
+  # @param content [ String ]
+  # @param error [ Function ]
   $scope.infoAlert = (title, content, error) ->
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK')).finally ->
       #if !error
@@ -343,12 +347,18 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       #return
     return
 
-  $scope.createseller = ->
-    sellerService.setCallerState('new_purchase.step0')
-    $state.go('search_rucom',{type: 'seller'})
+  #
+  #
+  #$scope.createSeller = ->
+  #  sellerService.setCallerState('new_purchase.step0')
+  #  $state.go('search_rucom', {type: 'seller'} )
 
+  #
+  # Search Authorized provider by DB id
+  # @param query [ String ]
+  # TODO: checks if this method do the same that queryForSellers
   $scope.getQuery = (query)->
-    ExternalUser.query_by_id(query).success( (sellers)->
+    AuthorizedProviderService.queryById(query).success( (sellers)->
       $scope.allsellers = []
 
       i = 0
@@ -363,7 +373,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           address: sellers[i].address
           email: sellers[i].email
           phone_number: sellers[i].phone_number || sellers[i].phone
-          photo_file: sellers[i].photo_file or 'http://robohash.org/' + sellers[i].id
+          photo_file: sellers[i].photo_file
           num_rucom: sellers[i].rucom.num_rucom
           rucom_record: sellers[i].rucom.rucom_record
           seller_type: sellers[i].rucom.seller_type
@@ -379,12 +389,16 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         i++
     ).error ()->
 
-  $scope.user_has_enough_credits = ->
+  #
+  # Validates if the current user has enought Credits to buy
+  # @return [ Boolean ]
+  $scope.userHasEnoughCredits = ->
     $scope.current_user.available_credits >= $scope.purchase.model.price
 
   #
-  #  Formatted the provider data returned from ProviderService
-  #
+  # Formatted the provider data returned from ProviderService
+  # @param producer [ Object ]
+  # @return [ Object ]
   formattedContent = (producer)->
     prov =
       id: producer.id
@@ -411,48 +425,50 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Query to return an answer if the rucom exist or no
-  #
+  # @param ev [ Event ]
+  # @param idNumber [ Integer ]
   $scope.queryRucomByIdNumber = (ev, idNumber) ->
     if idNumber
-      ProviderService.basicProvider.get {
-        id_number: idNumber
-      }, ((data, status, headers) ->
-          $scope.showLoading = false
-          $scope.current_user = data
-          $scope.purchase.model.seller = data
-          $scope.purchase.model.seller.provider_type = 'Barequero'
-          $scope.purchase.model.seller.document_type = 'CEDULA'
-          $scope.purchase.model.seller.name = fullName($scope.current_user)
-          $scope.purchase.model.seller.company_name = "NA"
-          $scope.buyer_data = buyerDataFrom($scope.current_user)
-          $scope.prov = formattedContent(data)
-          #$scope.purchase.model.seller.name = full_name($scope.current_user)
-          $scope.purchase.model.seller.company_name = "NA"
-          #AuthorizedProvider.response = $scope.prov
-          #AuthorizedProvider.modelToCreate.user_type = 'Barequero'
-          #AuthorizedProvider.saveModelToCreate()
-          $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-          $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
-          #console.log 'desde typeCrtl devuelve a AuthorizedProvider.response: '
-          #console.log AuthorizedProvider.response
-      ), (error) ->
-          $scope.prov = error
-          $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-          return
+      AuthorizedProviderService.byIdNumber(idNumber)
+      .success((data, status, headers) ->
+        $scope.showLoading = false
+        $scope.current_user = data
+        $scope.purchase.model.seller = data
+        $scope.purchase.model.seller.provider_type = 'Barequero'
+        $scope.purchase.model.seller.document_type = 'CEDULA'
+        $scope.purchase.model.seller.name = fullName($scope.current_user)
+        $scope.purchase.model.seller.company_name = "NA"
+        $scope.buyer_data = buyerDataFrom($scope.current_user)
+        $scope.prov = formattedContent(data)
+        $scope.purchase.model.seller.name = fullName($scope.current_user)
+        $scope.purchase.model.seller.company_name = "NA"
+        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+        $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
+      )
+      .error((error)->
+        $scope.prov = error
+        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+        )
 
   #
   # Signature services
   #
-  # Allows to see if the device is connected.
+
   #
+  # Allows to see if the device is connected.
   $scope.restartSessionDevice = ->
     SignatureService.imageId = 'purchase_signature'
     SignatureService.authorizedProviderName = $scope.purchase.model.seller.name
     SignatureService.restartSession()
 
+  #
+  # Captures the signature from the device
   $scope.captureSignature = ->
     SignatureService.Capture()
+
+  #
+  # Puts it in a img tag
   $scope.saveSignature = ->
     $scope.purchase.model.signature_picture = document.getElementById('purchase_signature').src
 
-         
+
