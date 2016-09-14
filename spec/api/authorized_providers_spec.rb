@@ -7,6 +7,26 @@ describe 'AuthorizedProviders', type: :request do
       end
 
       context 'GET' do
+        context '/:id' do
+          it 'gets an authorized provider by id' do
+            authorized_provider = create(:user, :with_personal_rucom, :with_profile, :with_authorized_provider_role)
+
+            expected_response = {
+              id: authorized_provider.id,
+              document_number: authorized_provider.profile.document_number,
+              first_name: authorized_provider.profile.first_name,
+              last_name: authorized_provider.profile.last_name,
+              phone_number: authorized_provider.profile.phone_number,
+              address: authorized_provider.profile.address,
+              email: authorized_provider.email,
+            }
+
+            get "/api/v1/authorized_providers/#{authorized_provider.id}",{},{ "Authorization" => "Barer #{@token}" }
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+          end
+        end
+
         context '/by_id_number' do
           it 'gets authorized_provider by id' do
             id_number = '15535725'

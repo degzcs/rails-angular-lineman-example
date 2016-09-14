@@ -118,6 +118,24 @@ module V1
         end
 
         #
+        # GET by id
+        #
+        desc 'returns an authorized provider by :id', {
+          entity: V1::Entities::AuthorizedProvider,
+          notes: <<-NOTES
+            Returns an authorized provider by :id
+          NOTES
+        }
+        params do
+          use :id
+        end
+        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          content_type "text/json"
+          authorized_provider = ::User.authorized_providers.find(params[:id])
+          present authorized_provider, with: V1::Entities::AuthorizedProvider
+        end
+
+        #
         # PUT by id
         #
         desc 'updates an Autorized Provider',

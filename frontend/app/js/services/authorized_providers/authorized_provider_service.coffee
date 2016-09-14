@@ -35,7 +35,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
     get: (id)->
       #$mdDialog.show(templateUrl: 'partials/loading.html',disableParentScroll: false)
       return $http
-                url: 'api/v1/external_users/'+id
+                url: 'api/v1/authorized_providers/'+id
                 method: 'GET'
 
 # -----------------------------------------------------------
@@ -177,9 +177,9 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           return
 
 #-----------------------------------------------------------------
-    queryById: (id,per_page,page) ->
+    queryById: (id, per_page, page) ->
       return $http
-                url: 'api/v1/external_users'
+                url: 'api/v1/authorized_providers'
                 method: 'GET'
                 params: {
                   per_page: per_page || 10
