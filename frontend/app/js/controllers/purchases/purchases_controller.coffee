@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProvider, SignatureService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProviderService, SignatureService) ->
 
   #*** Loading Variables **** #
   $scope.showLoading = false
@@ -82,7 +82,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   queryForSellers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
-      AuthorizedProvider.queryById(query).success (sellers)->
+      AuthorizedProviderService.queryById(query).success (sellers)->
         $scope.allsellers = []
 
         i = 0
@@ -358,7 +358,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # @param query [ String ]
   # TODO: checks if this method do the same that queryForSellers
   $scope.getQuery = (query)->
-    AuthorizedProvider.queryById(query).success( (sellers)->
+    AuthorizedProviderService.queryById(query).success( (sellers)->
       $scope.allsellers = []
 
       i = 0
@@ -429,7 +429,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # @param idNumber [ Integer ]
   $scope.queryRucomByIdNumber = (ev, idNumber) ->
     if idNumber
-      AuthorizedProvider.basicProvider(idNumber)
+      AuthorizedProviderService.byIdNumber(idNumber)
       .success((data, status, headers) ->
         $scope.showLoading = false
         $scope.current_user = data
