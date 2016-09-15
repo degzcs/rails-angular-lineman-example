@@ -133,7 +133,7 @@ class Company < ActiveRecord::Base
 
   # this method is to validate that the company does not have orders
   def check_company_orders
-    if self.legal_representative.purchases.present? || self.legal_representative.sales.present?
+    if self.legal_representative&.purchases.present? || self.legal_representative&.sales.present?
       errors.add(:legal_representative, 'Esta compañía no se puede borrar porque esta aún relacionada con almenos una Order')
     end
   end
