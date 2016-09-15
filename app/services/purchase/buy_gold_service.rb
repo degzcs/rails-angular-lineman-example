@@ -22,7 +22,7 @@ module Purchase
     # @params seller [User]
     # @return [ Hash ] with the success or errors
     def call(options = {})
-      validate_sent_options(options)
+      validate_options(options)
       # seller is the gold provider
       @performer_user= options[:current_user]
       @seller= User.find(options[:order_hash]['seller_id'])
@@ -36,7 +36,6 @@ module Purchase
 
     private
 
-    #
     # @return [ Hash ] with the success or errors
     # TODO: define is the purchase will be done as a natural person or as a Copany
     # This will define the rucom and city to be used and the dicount credits to the correct
@@ -46,16 +45,16 @@ module Purchase
         ActiveRecord::Base.transaction do
           purchase_order = setup_purchase_order!
           discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase_order.trazoro
-          pdf_generation_service = ::Purchase::PdfGeneration.new
+          pdf_generation_service = ::PdfGeneration.new
           response = pdf_generation_service.call(
-                        purchase_order: purchase_order,
+                        order: purchase_order,
                         signature_picture: signature_picture,
                         draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
                         document_type: 'equivalent_document',
                         )
 
           response = pdf_generation_service.call(
-                        purchase_order: purchase_order,
+                        order: purchase_order,
                         signature_picture: signature_picture,
                         draw_pdf_service: ::OriginCertificates::DrawAuthorizedProviderOriginCertificate,
                         document_type: 'origin_certificate',
@@ -66,7 +65,7 @@ module Purchase
       response
     end
 
-    # Update the purchase order with the correct values
+    # Creates a basic purchase order with the correct values
     # @return [ Order ]
     def setup_purchase_order!
       order_hash.merge!(type: 'purchase', performer: performer_user)
@@ -132,7 +131,7 @@ module Purchase
 
     # Validates the params passed to this service
     # @param options [ Hash ]
-    def validate_sent_options(options)
+    def validate_options(options)
       raise 'You must to provide a current_user option' if options[:current_user].blank?
       raise 'You must to provide a order_hash option' if options[:order_hash].blank?
       raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?

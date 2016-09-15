@@ -15,11 +15,14 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     order_presenter = options[:order_presenter]
     @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_venta.pdf'))
     draw_file!(order_presenter)
+  end
+
+  # @return [ Purchase::ProofOfPurchase::DrawPDF ]
+  def file
     self
   end
 
-   def draw_file!(order_presenter, counter=' Pending...')
-
+  def draw_file!(order_presenter, counter=' Pending...')
     start_new_page({:template => "#{base_file.path}" , :template_page => 1})
 
     # Header

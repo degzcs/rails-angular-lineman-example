@@ -76,7 +76,7 @@ module V1
             ] do
             authorize! :create, ::Order
             selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
-            registration_service = ::Sale::RegistrationService.new
+            registration_service = ::Sale::SaleGoldService.new
             response = registration_service.call(
               order_hash: params[:sale],
               current_user: current_user,
