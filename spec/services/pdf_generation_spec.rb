@@ -45,7 +45,9 @@ describe PdfGeneration do
     let(:seller) { create :user, :with_company }
     let(:sale_order){ create :sale, seller: seller, gold_batch: gold_batch }
     it 'should to create a pdf file with the correct information' do
-      response = service.call(order: sale_order)
+      response = service.call(order: sale_order,
+                              draw_pdf_service: ::Sale::ProofOfSale::DrawPDF,
+                              document_type: 'equivalent_document' )
       expect(response[:success]).to be true
       expect(sale_order.reload.proof_of_sale.file.path).to match(/equivalent_document.pdf/)
     end
