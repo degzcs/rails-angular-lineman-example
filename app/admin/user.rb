@@ -45,7 +45,7 @@ ActiveAdmin.register User do
   form do |f|
     if f.object.errors.size >= 1
       f.inputs 'Errors' do
-        f.object.errors.full_messages.join('|')
+        f.object.errors.full_messages.join("<br>").html_safe
       end
     end
     f.inputs 'User' do
