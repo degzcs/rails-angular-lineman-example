@@ -40,7 +40,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 VCR.configure do |config|
   config.cassette_library_dir = Rails.root.join('spec', 'support', 'vcr_cassettes')
   config.hook_into :webmock
-  config.ignore_localhost = true # it's recomendable to javascript local test whit capybara 
+  config.ignore_localhost = true # it's recomendable to javascript local test whit capybara
   # config.ignore_request do |request|
   #   URI(request.uri).port == 7777
   # end
@@ -117,8 +117,7 @@ RSpec.configure do |config|
 
   config.after :each do
     DatabaseCleaner.clean!
-    `rm -rf #{Rails.root}/tmp/purchases`
-    `rm -rf #{Rails.root}/tmp/sales`
+    `rm -rf #{Rails.root}/tmp/sale_and_purchase_files`
     `rm -rf #{Rails.root}/tmp/purchase_files_collection`
     `rm -rf #{Rails.root}/public/test`
   end

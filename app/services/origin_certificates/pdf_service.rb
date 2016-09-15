@@ -2,7 +2,7 @@
 # DEPRECATED
 #
 #This Generator get all the necesary values for the pdf service in order to create a sale report
-class Sale::PDFService
+class PDFService
   def initialize(sale_id)
     @sale =  ::Sale.find(sale_id)
   end

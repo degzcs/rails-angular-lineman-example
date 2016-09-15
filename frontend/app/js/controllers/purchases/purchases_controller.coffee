@@ -14,16 +14,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.totalGrams = 0
   $scope.mineralType = 'Oro'
   $scope.measureUnit = 'Gramos Finos'
-  $scope.hover_image = "http://www.gravatar.com/avatar/b76f6e92d9fc0690e6886f7b9d4f32da?s=100";
   $scope.allsellers  = []
   $scope.searchText = null
   $scope.code = null
   $scope.origin_certificate_upload_type = null
   $scope.selectedseller = null
-
-  $scope.rucomIDField =
-    label: 'Número de RUCOM'
-    field: 'num_rucom'
 
   # if $scope.purchase.model.origin_certificate_file.url
   # $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
