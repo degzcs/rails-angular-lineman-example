@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PdfGeneration do
   let(:buyer) { create :user, :with_company }
   let(:gold_batch) { create(:gold_batch, fine_grams: 10, grade: 999, extra_info: { grams: 10 }) }
-  let(:service) { Purchase::PdfGeneration.new }
+  let(:service) { ::PdfGeneration.new }
 
   context 'check purchase process' do
     let(:purchase_order) { create :purchase, buyer: buyer, gold_batch: gold_batch, performer: buyer }
@@ -42,15 +42,12 @@ describe PdfGeneration do
   end
 
   context 'check sale process' do
-    let(:sale_order){ create :sale, seller: current_user, gold_batch: gold_batch }
+    let(:seller) { create :user, :with_company }
+    let(:sale_order){ create :sale, seller: seller, gold_batch: gold_batch }
     it 'should to create a pdf file with the correct information' do
-      response = service.call(sale_order: sale_order)
+      response = service.call(order: sale_order)
       expect(response[:success]).to be true
       expect(sale_order.reload.proof_of_sale.file.path).to match(/equivalent_document.pdf/)
-    end
-
-    it 'raise an error when sale param is empty' do
-      expect{ service.call(sale_order: nil) }.to raise_error 'You must to provide a sale_order param'
     end
   end
 end
