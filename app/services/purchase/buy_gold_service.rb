@@ -7,44 +7,34 @@
 module Purchase
   # Service BuyGoldService
   class BuyGoldService
-    attr_accessor :buyer
-    attr_accessor :seller
-    attr_accessor :purchase_order
-    attr_accessor :order_hash
-    attr_accessor :gold_batch_hash
+    attr_reader :buyer, :seller, :purchase_order, :order_hash, :gold_batch_hash, :performer_user, :signature_picture, :date
     attr_accessor :response
-    attr_accessor :performer_user
+
+    def initialize
+      @response = {}
+      @response[:errors] = []
+    end
 
     #
     # @params order_hash  [Hash]
     # @params bold_batch_hash  [Hash]
     # @params buyer [User]
     # @params seller [User]
-    #
-    def initialize
-      @response = {}
-      @response[:errors] = []
-    end
-
     # @return [ Hash ] with the success or errors
     def call(options = {})
       validate_sent_options(options)
       # seller is the gold provider
-      @performer_user = options[:current_user]
-      @buyer = buyer_from(options[:current_user])
-      @order_hash = options[:order_hash]
-      @gold_batch_hash = options[:gold_batch_hash]
-      @date = options[:date]
+      @performer_user= options[:current_user]
+      @seller= User.find(options[:order_hash]['seller_id'])
+      @buyer= buyer_from(options[:current_user])
+      @order_hash= options[:order_hash]
+      @gold_batch_hash= options[:gold_batch_hash]
+      @date= options[:date]
       @signature_picture = @order_hash.delete('signature_picture')
       buy!
     end
 
-    def validate_sent_options(options)
-      raise 'You must to provide a current_user option' if options[:current_user].blank?
-      raise 'You must to provide a order_hash option' if options[:order_hash].blank?
-      raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
-      raise 'You must to provide a date option' if options[:date].blank?
-    end
+    private
 
     #
     # @return [ Hash ] with the success or errors
@@ -52,37 +42,38 @@ module Purchase
     # This will define the rucom and city to be used and the dicount credits to the correct
     # user as well.
     def buy!
-      # Build purchase
-      if can_buy?(buyer, @order_hash['seller_id'], gold_batch_hash['fine_grams'])
+      if can_buy?(buyer, seller, gold_batch_hash['fine_grams'])
         ActiveRecord::Base.transaction do
-          @purchase_order = set_attributes_purchase!
-          discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless @purchase_order.trazoro
+          purchase_order = setup_purchase_order!
+          discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase_order.trazoro
           pdf_generation_service = ::Purchase::PdfGeneration.new
-          klass_pdf = ::Purchase::ProofOfPurchase::DrawPDF
-          response = pdf_generation_service.call(attrs_to_pdf(@purchase_order, @signature_picture, 'equivalent_document', klass_pdf))
-          klass_pdf = ::OriginCertificates::DrawAuthorizedProviderOriginCertificate
-          response = pdf_generation_service.call(attrs_to_pdf(@purchase_order, @signature_picture, 'origin_certificate', klass_pdf, @date))
+          response = pdf_generation_service.call(
+                        purchase_order: purchase_order,
+                        signature_picture: signature_picture,
+                        draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
+                        document_type: 'equivalent_document',
+                        )
+
+          response = pdf_generation_service.call(
+                        purchase_order: purchase_order,
+                        signature_picture: signature_picture,
+                        draw_pdf_service: ::OriginCertificates::DrawAuthorizedProviderOriginCertificate,
+                        document_type: 'origin_certificate',
+                        date: date,
+                        )
         end
       end
       response
     end
 
-    def attrs_to_pdf(purchase, sg_picture, doc_type, klass_pdf, date = nil)
-      {
-        purchase_order: purchase,
-        signature_picture: sg_picture,
-        document_type: doc_type,
-        draw_pdf_service: klass_pdf,
-        date: date
-      }
-    end
-
-    def set_attributes_purchase!
-      @purchase_order = buyer.purchases.build(order_hash.merge(type: 'purchase'))
-      @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-      @purchase_order.performer = @performer_user
-      @response[:success] = @purchase_order.save!
-      @purchase_order
+    # Update the purchase order with the correct values
+    # @return [ Order ]
+    def setup_purchase_order!
+      order_hash.merge!(type: 'purchase', performer: performer_user)
+      @purchase_order = buyer.purchases.build(order_hash)
+      purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
+      response[:success] = purchase_order.save!
+      purchase_order
     end
 
     # Decides if the current user is who will be buyer or if it is just a worker for a company.
@@ -96,10 +87,13 @@ module Purchase
       end
     end
 
+    # @params buyer [ User ]
+    # @params seller [ User ]
+    # @param buyed_fine_grams [ String ]
     # @return [ Boolean ]
-    def can_buy?(buyer, seller_id, buyed_fine_grams)
+    def can_buy?(buyer, seller, buyed_fine_grams)
       user_can_buy?(buyer, buyed_fine_grams) &&
-        under_monthly_thershold?(seller_id, buyed_fine_grams)
+        under_monthly_thershold?(seller, buyed_fine_grams)
     end
 
     # @param buyer [ User ]
@@ -111,13 +105,13 @@ module Purchase
       response[:success]
     end
 
-    # @param seller_id [ String ]
+    # @param seller [ User ]
     # @param buyed_fine_grams [ String ]
     # @return [ Boolean ]
-    def under_monthly_thershold?(seller_id, buyed_fine_grams)
-      already_buyed_gold = Order.fine_grams_sum_by_date(Date.today, seller_id)
+    def under_monthly_thershold?(seller, buyed_fine_grams)
+      already_buyed_gold = Order.fine_grams_sum_by_date(Date.today, seller.id)
       response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= Settings.instance.monthly_threshold.to_f)
-      seller_name = UserPresenter.new(User.find(seller_id), self).name unless response[:success]
+      seller_name = UserPresenter.new(seller, self).name unless response[:success]
       response[:errors] << error_message(seller_name, already_buyed_gold) unless response[:success]
       response[:success]
     end
@@ -134,6 +128,15 @@ module Purchase
     def discount_credits_to!(buyer, buyed_fine_grams)
       new_credits = buyer.available_credits - buyed_fine_grams.to_f
       buyer.profile.update_column(:available_credits, new_credits)
+    end
+
+    # Validates the params passed to this service
+    # @param options [ Hash ]
+    def validate_sent_options(options)
+      raise 'You must to provide a current_user option' if options[:current_user].blank?
+      raise 'You must to provide a order_hash option' if options[:order_hash].blank?
+      raise 'You must to provide a gold_batch_hash option' if options[:gold_batch_hash].blank?
+      raise 'You must to provide a date option' if options[:date].blank?
     end
   end
 end
