@@ -3,6 +3,7 @@ ActiveAdmin.register User do
 
   permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids:  [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
 
+  # @params params [ Hash ]
   # overwrite controller update to perform upgrade Rucom.
   controller do
     def update
@@ -25,7 +26,10 @@ ActiveAdmin.register User do
       redirect_to admin_user_path(user)
     end
   end
-  # overwrite controller create to create a user with an associated Rucom.
+
+  # @params permitted_params [ Hash ]
+  # @params params [ Hash ]
+  # overwrite controller create for create a user with an associated Rucom.
   controller do
     def create
       if permitted_params[:user][:rucom].blank?
