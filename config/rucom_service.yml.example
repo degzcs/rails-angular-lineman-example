@@ -4,7 +4,7 @@ production:
     browser: :phantomjs
     wait_load: 10
     wait_clic: 1
-    page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
+    page_url: 'http://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf'
     table_body_id: "form:tablaListadosANM_data"
     hidden_elements_id:
       step_0: 'form:trol_panel'
@@ -26,7 +26,7 @@ development:
     browser: :phantomjs
     wait_load: 10
     wait_clic: 1
-    page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
+    page_url: 'http://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf'
     table_body_id: "form:tablaListadosANM_data"
     hidden_elements_id:
       step_0: 'form:trol_panel'
@@ -48,7 +48,7 @@ test:
     browser: :phantomjs
     wait_load: 1
     wait_clic: 1
-    page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
+    page_url: 'http://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf'
     table_body_id: "form:tablaListadosANM_data"
     hidden_elements_id:
       step_0: 'form:trol_panel'
