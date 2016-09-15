@@ -43,6 +43,8 @@ ActiveAdmin.register Rucom do
   filter :status
   filter :provider_type
 
+  # @params permitted_params [ Hash ]
+  # @return [ Hash ] with the success or errors
   # overwrite controller create for create a Rucom using the scraper
   controller do
     def create
