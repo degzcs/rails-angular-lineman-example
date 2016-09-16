@@ -61,6 +61,8 @@ gem 'hashie-forbidden_attributes', '~> 0.1.1'
 gem 'selenium-webdriver', '~> 2.53'
 gem 'virtus'
 gem 'state_machine', git: 'https://github.com/seuros/state_machine.git'
+gem 'audited-activerecord' #, '~> 4.3'
+gem "rails-observers", github: 'rails/rails-observers'
 
 group :development do
   gem 'quiet_assets'
