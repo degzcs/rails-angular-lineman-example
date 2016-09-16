@@ -35,8 +35,6 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true, if: lambda { |user| user.trader?}
   validates :office, presence: true, if: :validate_office? # this field would be validated if user add some information related with company in the registration process.
   validates :personal_rucom, presence: true, if: :validate_personal_rucom? # the rucom has to be present for any user if he-she has no office asociated
-  validates :performer_id, presence: true, :on => [:update], if: lambda { |user| user.inserted_from_rucom? }
-
 
   has_secure_password validations: false
   validates_presence_of :password, :on => :create, if: lambda { |user| user.trader?}
@@ -87,8 +85,6 @@ class User < ActiveRecord::Base
   #
 
   accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles
-  before_save :set_performer
-
 
   #
   # Delegates
@@ -133,10 +129,6 @@ class User < ActiveRecord::Base
   #
   # Instance Methods
   #
-  
-  def set_performer
-    self.performer_id = current_user if self.performer_id.blank? && !self.new_record?
-  end
 
   def there_are_unset_attributes
     self.email.blank? # || self.password.blank?

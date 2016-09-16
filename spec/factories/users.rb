@@ -74,7 +74,6 @@ FactoryGirl.define do
       end
       before :create do |user, e|
         user.personal_rucom = create(:rucom, provider_type: e.provider_type)
-        user.performer_id = 1
       end
     end
 
