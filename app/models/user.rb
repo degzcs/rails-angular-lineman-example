@@ -15,6 +15,11 @@
 
 class User < ActiveRecord::Base
   #
+  # Audit Class
+  # 
+  audited
+  
+  #
   # Associations
   #
 
