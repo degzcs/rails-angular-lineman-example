@@ -18,7 +18,6 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     personal_rucom {}
     office {}
-    profile
     password { 'foobar' }
     password_confirmation { 'foobar' }
 
@@ -51,7 +50,8 @@ FactoryGirl.define do
         city { City.all.sample }
       end
 
-      after :build do |user, e|
+      after :create do |user, e|
+        user.build_profile
         user.profile.first_name = e.first_name
         user.profile.last_name = e.last_name
         user.profile.document_number = e.document_number

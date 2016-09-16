@@ -23,7 +23,6 @@ FactoryGirl.define do
     nit_number { Faker::Number.number(10) }
     name { Faker::Company.name }
     city { City.first }
-    legal_representative { create :user, :with_profile, office: nil, legal_representative: true }
     email { Faker::Internet.email }
     phone_number { Faker::PhoneNumber.phone_number }
     chamber_of_commerce_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
@@ -39,7 +38,7 @@ FactoryGirl.define do
     end
 
     after :create do |company, e|
-      company.legal_representative.update_column :office_id, company.main_office.id
+      company.legal_representative { create :user, :with_profile, office: company.main_office, legal_representative: true }
     end
 
   end
