@@ -19,24 +19,26 @@ city = City.find_by(name: 'MEDELLIN')
 
 begin
   # TODO: add the real files to this company (rut, nit, etc.)
-  legal_representative = FactoryGirl.build(:user, :with_profile,
+  company = FactoryGirl.create(:company,
+                                name: 'MinTrace Colombia SAS',
+                                city: city,
+                                legal_representative: nil,
+                                nit_number: '900848984',
+                                email: 'soport@trazoro.co',
+                                phone_number: '3004322618',
+                                address: 'carrera 44 # 19 A 20',
+                                registration_state: 'completed'
+                              )
+  legal_representative = FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Diego',
         last_name: 'Caicedo',
         email: 'dcm@trazoro.co',
         password: 'A7l(?/]03tal9-%g4',
         password_confirmation: 'A7l(?/]03tal9-%g4' ,
         city: city,
-        office: nil,
+        office: company.main_office,
         legal_representative: true)
-  company = FactoryGirl.create(:company,
-                                name: 'MinTrace Colombia SAS',
-                                city: city,
-                                legal_representative: legal_representative,
-                                nit_number: '900848984',
-                                email: 'soport@trazoro.co',
-                                phone_number: '3004322618',
-                                address: 'carrera 44 # 19 A 20',
-                              )
+  company.update_column(:legal_representative, legal_representative)
 rescue => e
   company = Company.find_by(nit_number: '900848984')
   puts "There was something wrong!. ERROR: #{ e }"
@@ -57,7 +59,7 @@ begin
     password_confirmation: 'A7l(?/]03tal9-%g4',
     )
 
-  FactoryGirl.create(:user, :with_profile,
+  FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Tech',
         last_name: 'Trazoro',
         email: 'tech@trazoro.co',
@@ -66,7 +68,7 @@ begin
         city: city,
         office: office,)
 
-  FactoryGirl.create(:user, :with_profile,
+  FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Diego',
         last_name: 'Gomez',
         email: 'diego.gomez@trazoro.co',
@@ -75,7 +77,7 @@ begin
         city: city,
         office: office,)
 
-  FactoryGirl.create(:user, :with_profile,
+  FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Santiago',
         last_name: 'Lopez',
         email: 'santiago.lopez@trazoro.co',
