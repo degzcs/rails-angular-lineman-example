@@ -34,30 +34,16 @@ class Company < ActiveRecord::Base
   # Validations
   #
 
-  # TODO: change the id_number_legal_rep to legal_representative_id_number and id_type_legal_rep to
-  # legal_representative_id_type; and maybe add this person to the system to.
   validates :nit_number, presence: true
   validates :name, presence: true
-  validates :legal_representative, presence: true
-  validates :email, presence: true
-  validates :phone_number, presence: true
-  validates :chamber_of_commerce_file, presence: true
-  validates :rut_file, presence: true
-  # TODO: this mining_register_file field has to be deleted, it not make sense here
-  # validates :mining_register_file, presence: true
-  validates :rucom, presence: true
-  validates_uniqueness_of :nit_number
+
 
   #
   # Callbacks
   #
 
-  after_save :create_basic_office!
+  after_save :update_basic_office!
   before_destroy :is_deletable?
-
-  #
-  # Scopes
-  #
 
   #
   # Delagates
@@ -76,9 +62,44 @@ class Company < ActiveRecord::Base
 
   # TODO: avoid destroy company if there are users associated to it.
 
+
+  #
+  # State Machine for registration_state field
+  #
+
+  state_machine :registration_state, initial: :inserted_from_rucom do
+    state :draf
+    state :failure
+    state :completed
+
+    before_transition on: :draf, do: :there_are_empty_fields
+    before_transition on: :completed, do: :validate_complementary_attributes
+    after_transition on: :failure, do: :it_has_errors
+  end
+
   #
   # Instance Methods
   #
+
+  def there_are_empty_fields
+  end
+
+  def validate_complementary_attributes
+    validates :legal_representative, presence: true
+    validates :email, presence: true
+    validates :phone_number, presence: true
+    validates :chamber_of_commerce_file, presence: true
+    validates :rut_file, presence: true
+    # TODO: this mining_register_file field has to be deleted, it not make sense here
+    # validates :mining_register_file, presence: true
+    validates :rucom, presence: true
+    validates_uniqueness_of :nit_number
+    validates :address, presence: true
+    validates :city, presence: true
+  end
+
+  def it_has_errors
+  end
 
   # Gets the main office associated to this company
   # @return [ Office ]
@@ -116,7 +137,7 @@ class Company < ActiveRecord::Base
   # This ensure that every company has at least one office after is created or saved
   # To have consistency this office is called PRINCIPAL and it is located in the same
   # place where the company was registered.
-  def create_basic_office!
+  def update_basic_office!
     self.offices.create(name: 'principal', city: self.city, address: self.address) if self.offices.blank?
   end
 
