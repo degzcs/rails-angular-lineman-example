@@ -70,7 +70,7 @@ module Purchase
       order_hash.merge!(type: 'purchase')
       @purchase_order = buyer.purchases.build(order_hash)
       purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-      response[:success] = purchase_order.save!
+      response[:success] = Order.audit_as(buyer) { purchase_order.save! }
       purchase_order
     end
 

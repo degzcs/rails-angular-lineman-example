@@ -49,6 +49,15 @@ describe 'Sale', type: :request do
 
           expect(response.status).to eq 201
           expect(JSON.parse(response.body)).to include expected_response
+
+          # Validate Sale audit actions on Orders
+          order = Order.last
+          expect(order.audits.count).to eq(2) # because it makes 2 actions (create and update)
+          expect(order.audits.first.action).to eq('create')
+          expect(order.audits.first.audited_changes['type']).to eq('sale')
+          expect(order.audits.first.user).to eq(current_seller)
+          expect(order.audits.last.action).to eq('update')
+          # expect(order.audits.last.user).to eq(current_seller) is pending to add the audit_as
         end
       end
 

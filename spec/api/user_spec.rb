@@ -20,11 +20,11 @@ describe 'Auth' do
             'company_name' => nil,
             'company' => nil,
             'photo_file' => {
-              'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
+              'url' => "/test/uploads/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
             }
           }
 
-          get '/api/v1/users/me', {}, { 'Authorization' => "Barer #{token}" }
+          get '/api/v1/users/me', {}, 'Authorization' => "Barer #{token}"
           expect(response.status).to eq 200
           expected_response.each do |key, value|
             expect(JSON.parse(response.body)[key]).to eq value
@@ -42,49 +42,50 @@ describe 'Auth' do
           token = user.create_token
 
           expected_company = {
-             'city' => company.city.name,
-             'state' => company.state.name,
-             'country' => company.state.country.name,
-             'email' => company.email,
-             'id' => company.id,
-             'legal_representative_id' => company.legal_representative_id,
-             'name' => company.name,
-             'nit_number' => company.nit_number,
-             'phone_number' => company.phone_number,
-             'mining_register_file' => {
-              'url'=>"/test/uploads/documents/company/mining_register_file/#{ company.id }/mining_register_file.pdf"},
-             'rut_file' => {
-              'url'=>"/test/uploads/documents/company/rut_file/#{ company.id }/rut_file.pdf"
-              },
-            'chamber_of_commerce_file' => {
-              'url'=>"/test/uploads/documents/company/chamber_of_commerce_file/#{ company.id }/photo_file.png"
-              },
-          }
-
-           expected_response = {
-           'id'=> user.id,
-           'first_name' => user.profile.first_name,
-           'last_name' => user.profile.last_name,
-           'nit' => user.profile.nit_number,
-           'email' => user.email,
-           'document_number' => user.profile.document_number,
-           #'access_token'=> token,
-           'available_credits' => company.available_credits,
-           'phone_number' => user.profile.phone_number,
-           'address' => user.profile.address,
-           'office' => user.office.name,
-           'company_name' => company.name,
-           'company' => expected_company,
-           'photo_file' => {
-             'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
+            'city' => company.city.name,
+            'state' => company.state.name,
+            'country' => company.state.country.name,
+            'email' => company.email,
+            'id' => company.id,
+            'legal_representative_id' => company.legal_representative_id,
+            'name' => company.name,
+            'nit_number' => company.nit_number,
+            'phone_number' => company.phone_number,
+            'mining_register_file' => {
+              'url' => "/test/uploads/documents/company/mining_register_file/#{company.id}/mining_register_file.pdf"
             },
+            'rut_file' => {
+              'url' => "/test/uploads/documents/company/rut_file/#{company.id}/rut_file.pdf"
+            },
+            'chamber_of_commerce_file' => {
+              'url' => "/test/uploads/documents/company/chamber_of_commerce_file/#{company.id}/photo_file.png"
+            }
           }
 
-          get '/api/v1/users/me', {},{ 'Authorization' => "Barer #{ token }" }
+          expected_response = {
+            'id' => user.id,
+            'first_name' => user.profile.first_name,
+            'last_name' => user.profile.last_name,
+            'nit' => user.profile.nit_number,
+            'email' => user.email,
+            'document_number' => user.profile.document_number,
+            # 'access_token'=> token,
+            'available_credits' => company.available_credits,
+            'phone_number' => user.profile.phone_number,
+            'address' => user.profile.address,
+            'office' => user.office.name,
+            'company_name' => company.name,
+            'company' => expected_company,
+            'photo_file' => {
+              'url' => "/test/uploads/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
+            }
+          }
+
+          get '/api/v1/users/me', {}, 'Authorization' => "Barer #{token}"
           expect(response.status).to eq 200
           expected_response.each do |key, value|
             if key == 'company'
-              expected_company.each do |ckey , cvalue|
+              expected_company.each do |ckey, cvalue|
                 expect(JSON.parse(response.body)['company'][ckey]).to eq cvalue
               end
             else
@@ -101,49 +102,50 @@ describe 'Auth' do
           token = user.create_token
 
           expected_company = {
-             'city' => company.city.name,
-             'state' => company.state.name,
-             'country' => company.state.country.name,
-             'email' => company.email,
-             'id' => company.id,
-             'legal_representative_id' => company.legal_representative_id,
-             'name' => company.name,
-             'nit_number' => company.nit_number,
-             'phone_number' => company.phone_number,
-             'mining_register_file' => {
-              'url' => "/test/uploads/documents/company/mining_register_file/#{ company.id }/mining_register_file.pdf"},
-             'rut_file' => {
-              'url' => "/test/uploads/documents/company/rut_file/#{ company.id }/rut_file.pdf"
-              },
+            'city' => company.city.name,
+            'state' => company.state.name,
+            'country' => company.state.country.name,
+            'email' => company.email,
+            'id' => company.id,
+            'legal_representative_id' => company.legal_representative_id,
+            'name' => company.name,
+            'nit_number' => company.nit_number,
+            'phone_number' => company.phone_number,
+            'mining_register_file' => {
+              'url' => "/test/uploads/documents/company/mining_register_file/#{company.id}/mining_register_file.pdf"
+            },
+            'rut_file' => {
+              'url' => "/test/uploads/documents/company/rut_file/#{company.id}/rut_file.pdf"
+            },
             'chamber_of_commerce_file' => {
-              'url' => "/test/uploads/documents/company/chamber_of_commerce_file/#{ company.id }/photo_file.png"
-              },
+              'url' => "/test/uploads/documents/company/chamber_of_commerce_file/#{company.id}/photo_file.png"
+            }
           }
 
           expected_response = {
-           'id'=> user.id,
-           'first_name' => user.profile.first_name,
-           'last_name' => user.profile.last_name,
-           'nit' => user.profile.nit_number,
-           'email' => user.email,
-           'document_number' => user.profile.document_number,
-           #'access_token'=> token,
-           'available_credits' => company.available_credits,
-           'phone_number' => user.profile.phone_number,
-           'address' => user.profile.address,
-           'office' => user.office.name,
-           'company_name' => company.name,
-           'company' => expected_company,
-           'photo_file' => {
-             'url' => "/test/uploads/photos/profile/photo_file/#{ user.profile.id }/photo_file.png"
-            },
+            'id' => user.id,
+            'first_name' => user.profile.first_name,
+            'last_name' => user.profile.last_name,
+            'nit' => user.profile.nit_number,
+            'email' => user.email,
+            'document_number' => user.profile.document_number,
+            # 'access_token'=> token,
+            'available_credits' => company.available_credits,
+            'phone_number' => user.profile.phone_number,
+            'address' => user.profile.address,
+            'office' => user.office.name,
+            'company_name' => company.name,
+            'company' => expected_company,
+            'photo_file' => {
+              'url' => "/test/uploads/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
+            }
           }
 
-          get '/api/v1/users/me', {}, { 'Authorization' => "Barer #{ token }" }
+          get '/api/v1/users/me', {}, 'Authorization' => "Barer #{token}"
           expect(response.status).to eq 200
           expected_response.each do |key, value|
             if key == 'company'
-              expected_company.each do |ckey , cvalue|
+              expected_company.each do |ckey, cvalue|
                 expect(JSON.parse(response.body)['company'][ckey]).to eq cvalue
               end
             else
@@ -159,24 +161,25 @@ describe 'Auth' do
           token = user.create_token
 
           expected_response = {
-           'id' => user.id,
-           'first_name' => 'Armando',
-           'last_name' => 'Casas',
-           'email' => 'armando.casas@fake.com',
-           'available_credits' => user.available_credits
+            'id' => user.id,
+            'first_name' => 'Armando',
+            'last_name' => 'Casas',
+            'email' => 'armando.casas@fake.com',
+            'available_credits' => user.available_credits
           }
 
           new_values = {
-           'first_name' => 'Armando',
-           'last_name' => 'Casas',
-           'email' => 'armando.casas@fake.com',
+            'first_name' => 'Armando',
+            'last_name' => 'Casas',
+            'email' => 'armando.casas@fake.com'
           }
-          put '/api/v1/users/', {user: new_values},{ 'Authorization' => "Barer #{token}" }
+          put '/api/v1/users/', { user: new_values }, 'Authorization' => "Barer #{token}"
           expect(response.status).to eq 200
           expect(JSON.parse(response.body)).to include expected_response
 
           # Those are to test the audit actions on users table and you can check out on audits table
           expect(user.audits.last.user).to eq(user)
+          expect(user.audits.last.action).to eq('update')
           expect(user.audits.last.comment).to eq("Updated from API Request by #{user.profile.first_name}")
         end
       end

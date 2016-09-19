@@ -69,6 +69,12 @@ describe 'Purchase' do
           expected_files.each do |key, value|
             expect(JSON.parse(response.body)[key]['url']).to match value
           end
+
+          # Validate purchase audit actions on Orders
+          order = Order.last
+          expect(order.audits.count).to eq(1)
+          expect(order.audits.last.audited_changes['type']).to eq('purchase')
+          expect(order.audits.last.user).to eq(@buyer.company.legal_representative)
         end
 
         it 'POST buy threshold error' do

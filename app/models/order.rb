@@ -38,7 +38,9 @@ class Order < ActiveRecord::Base
   has_one :gold_batch, class_name: "GoldBatch", as: :goldomable
   has_many :documents, class_name: "Document", as: :documentable, dependent: :destroy
   has_many :batches, class_name: 'SoldBatch' #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
-
+  
+  audited associated_with: :buyer
+  audited associated_with: :seller
   #
   # Validations
   #

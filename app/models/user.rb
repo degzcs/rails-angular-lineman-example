@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   # Audit Class
   # 
   audited
-  
+  has_associated_audits
   #
   # Associations
   #
