@@ -147,6 +147,10 @@ describe 'AuthorizedProviders', type: :request do
 
           expect(response.status).to eq 200
           expect(res).to match expected_response
+
+          # Those are to test the audit actions on users table and you can check out on audits table
+          expect(user.audits.last.user).to eq(user)
+          expect(user.audits.last.comment).to eq("Updated from API Request by #{user.profile.reload.first_name}")
         end
       end
     end

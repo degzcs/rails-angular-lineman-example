@@ -163,7 +163,11 @@ module V1
             # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
             authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
             authorized_provider.profile.update_attributes(formatted_params[:profile])
-            authorized_provider.update_attributes(formatted_params[:authorized_provider])
+            ::User.audit_as(current_user) do
+              authorized_provider.update_attributes(
+                formatted_params[:authorized_provider].merge(audit_comment: "Updated from API Request by #{current_user.profile.first_name}")
+              )
+            end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])
             if authorized_provider.save
               present authorized_provider, with: V1::Entities::AuthorizedProvider
