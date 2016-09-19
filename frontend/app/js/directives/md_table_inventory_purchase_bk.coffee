@@ -271,8 +271,9 @@ angular.module('app').directive 'mdTableInventoryPurchase', ($mdDialog, Liquidat
 
       return
 
+    
 
-    templateUrl: 'partials/inventory/index_purchase.html'
+    templateUrl: 'partials/inventory/purchase_tab.html'
     link: (scope, element, attrs)->
 
       angular.element(element[0].querySelector('#hideButton')).on 'click', ->
