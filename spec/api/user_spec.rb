@@ -180,7 +180,7 @@ describe 'Auth' do
           # Those are to test the audit actions on users table and you can check out on audits table
           expect(user.audits.last.user).to eq(user)
           expect(user.audits.last.action).to eq('update')
-          expect(user.audits.last.comment).to eq("Updated from API Request by #{user.profile.first_name}")
+          expect(user.audits.last.comment).to eq("Updated from API Request by ID: #{user.id}")
         end
       end
     end

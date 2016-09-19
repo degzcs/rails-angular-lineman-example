@@ -123,11 +123,11 @@ module V1
             [404, "Entry not found"],
           ] do
               data = V1::Helpers::UserHelper.rearrange_params(params[:user])
-              audit_message = "Updated from API Request by #{current_user.profile.first_name}"  
+              audit_message = "Updated from API Request by ID: #{current_user.id}"  
               ::User.audit_as(current_user) do
                 current_user.update_attributes!(data[:user_data].merge(audit_comment: audit_message))
+                current_user.profile.update!(data[:profile_data].merge(audit_comment: audit_message))
               end
-              current_user.profile.update!(data[:profile_data])
               present current_user, with: V1::Entities::User
         end
       end

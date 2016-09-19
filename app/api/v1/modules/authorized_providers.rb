@@ -56,38 +56,38 @@ module V1
       end
 
       resource :authorized_providers do
-
         #
         # GET all
         #
-        desc 'returns all authorized providers', {
+        desc 'returns all authorized providers',
           entity: V1::Entities::AuthorizedProvider,
           notes: <<-NOTES
             Returns all existent sessions paginated
           NOTES
-        }
+
         params do
           use :pagination
           # use :authorized_provider_query
         end
-        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          content_type "text/json"
+        get '/', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
+          content_type 'text/json'
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           query_name = params[:query_name]
           query_id = params[:query_id]
           query_rucomid = params[:query_rucomid]
-          #binding.pry
-          authorized_providers = if query_name
-                                        ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(:page => page, :per_page => per_page)
-                                      elsif query_id
-                                        ::User.authorized_providers.order_by_id.find_by_document_number(query_id).paginate(:page => page, :per_page => per_page)
-                                      elsif query_rucomid
-                                        ::User.authorized_providers.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
-                                      else
-                                        ::User.authorized_providers.order_by_id.paginate(:page => page, :per_page => per_page)
-                                      end
-          #binding.pry
+          # binding.pry
+          authorized_providers =
+            if query_name
+              ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(page: page, per_page: per_page)
+            elsif query_id
+              ::User.authorized_providers.order_by_id.find_by_document_number(query_id).paginate(page: page, per_page: per_page)
+            elsif query_rucomid
+              ::User.authorized_providers.order_by_id.where('rucom_id = :rucom_id', rucom_id: query_rucomid).paginate(page: page, per_page: per_page)
+            else
+              ::User.authorized_providers.order_by_id.paginate(page: page, per_page: per_page)
+            end
+          # binding.pry
           header 'total_pages', authorized_providers.total_pages.to_s
           present authorized_providers, with: V1::Entities::AuthorizedProvider
         end
@@ -120,17 +120,17 @@ module V1
         #
         # GET by id
         #
-        desc 'returns an authorized provider by :id', {
+        desc 'returns an authorized provider by :id',
           entity: V1::Entities::AuthorizedProvider,
           notes: <<-NOTES
             Returns an authorized provider by :id
           NOTES
-        }
+
         params do
           use :id
         end
-        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
-          content_type "text/json"
+        get '/:id', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
+          content_type 'text/json'
           authorized_provider = ::User.authorized_providers.find(params[:id])
           present authorized_provider, with: V1::Entities::AuthorizedProvider
         end
@@ -162,10 +162,11 @@ module V1
             formatted_params = V1::Helpers::UserHelper.authorized_provider_params(params)
             # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
             authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
-            authorized_provider.profile.update_attributes(formatted_params[:profile])
+            audit_comment = "Updated from API Request by ID: #{current_user.id}"
             ::User.audit_as(current_user) do
+              authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
               authorized_provider.update_attributes(
-                formatted_params[:authorized_provider].merge(audit_comment: "Updated from API Request by #{current_user.profile.first_name}")
+                formatted_params[:authorized_provider].merge(audit_comment: audit_comment)
               )
             end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])

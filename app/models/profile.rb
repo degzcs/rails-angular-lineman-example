@@ -34,6 +34,11 @@ class Profile < ActiveRecord::Base
   belongs_to :city
 
   #
+  # Audit Class
+  # 
+  audited associated_with: :user
+
+  #
   # Validations
   #
 
