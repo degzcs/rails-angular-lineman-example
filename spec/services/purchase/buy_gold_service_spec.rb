@@ -71,7 +71,7 @@ describe Purchase::BuyGoldService do
 
       it 'should throw a message telling to barequero reach the limin for this month' do
         gold_batch = create :gold_batch, fine_grams: 30
-        create :purchase, seller: @seller, gold_batch: gold_batch, performer: legal_representative
+        create :purchase, seller: @seller, gold_batch: gold_batch
         seller_name = UserPresenter.new(@seller, self).name
         # Try to buy gold
         response = service.call(

@@ -31,7 +31,6 @@ describe 'Purchase' do
     it { expect(purchase.seller_picture).not_to be_nil }
     it { expect(purchase.trazoro).not_to be_nil }
     it { expect(purchase.documents).not_to be_nil }
-    it { expect(purchase.performer).not_to be_nil }
   end
 
   context 'purchase creation' do

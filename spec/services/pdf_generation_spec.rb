@@ -6,7 +6,7 @@ describe PdfGeneration do
   let(:service) { ::PdfGeneration.new }
 
   context 'check purchase process' do
-    let(:purchase_order) { create :purchase, buyer: buyer, gold_batch: gold_batch, performer: buyer }
+    let(:purchase_order) { create :purchase, buyer: buyer, gold_batch: gold_batch }
     before :each do
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
       @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
@@ -43,11 +43,11 @@ describe PdfGeneration do
 
   context 'check sale process' do
     let(:seller) { create :user, :with_company }
-    let(:sale_order){ create :sale, seller: seller, gold_batch: gold_batch }
+    let(:sale_order) { create :sale, seller: seller, gold_batch: gold_batch }
     it 'should to create a pdf file with the correct information' do
       response = service.call(order: sale_order,
                               draw_pdf_service: ::Sale::ProofOfSale::DrawPDF,
-                              document_type: 'equivalent_document' )
+                              document_type: 'equivalent_document')
       expect(response[:success]).to be true
       expect(sale_order.reload.proof_of_sale.file.path).to match(/equivalent_document.pdf/)
     end

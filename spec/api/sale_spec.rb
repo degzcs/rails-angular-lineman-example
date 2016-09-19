@@ -57,7 +57,7 @@ describe 'Sale', type: :request do
           @current_user = create :user, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
-          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative, performer: @current_user)
+          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative)
           @buyer = create(:user, :with_company, :with_trader_role)
         end
 
