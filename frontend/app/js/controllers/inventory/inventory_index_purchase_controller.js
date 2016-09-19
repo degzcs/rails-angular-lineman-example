@@ -94,18 +94,6 @@ angular.module('app').controller('InventoryPurchaseIndexCtrl', function($scope, 
     //   });
   };
 
- $scope.isThisDisabled = function(content) {
-    
-    for (var i in $scope.content) {
-          if ($scope.content[i.sold]) {
-            return true;
-          }
-      }  
-
-     return false;
-  }
-
-
 
   return $scope.show = function(item) {
     console.log('selecciona item' + item.selected);
