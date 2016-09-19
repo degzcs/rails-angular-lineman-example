@@ -4,11 +4,18 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def login
-    render json: {message: 'logging in!'}
+    render json: { message: 'logging in!' }
   end
 
   def logout
-    render json:{message: 'logging out!'}
+    render json: { message: 'logging out!' }
   end
 
+  def authenticated_user
+    if current_admin_user # current_user
+      current_admin_user
+    else
+      'Trazoro System User'
+    end
+  end
 end
