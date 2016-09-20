@@ -25,7 +25,7 @@ FactoryGirl.define do
     city { City.first }
     email { Faker::Internet.email }
     phone_number { Faker::PhoneNumber.phone_number }
-    chamber_of_commerce_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'),"image/jpeg") }
+    chamber_of_commerce_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'chamber_of_commerce_file.pdf'),"application/pdf") }
     mining_register_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'),"application/pdf") }
     rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'),"application/pdf") }
     address { 'Street 123' }
@@ -38,8 +38,9 @@ FactoryGirl.define do
     end
 
     after :create do |company, e|
-      company.legal_representative { create :user, :with_profile, office: company.main_office, legal_representative: true }
+      company.legal_representative = create(:user, :with_profile, office: company.main_office, legal_representative: true)
+      company.save!
+      company.reload
     end
-
   end
 end
