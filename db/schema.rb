@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20160919052451) do
     t.integer  "legal_representative_id"
     t.string   "address"
     t.integer  "city_id"
+    t.string   "registration_state"
   end
 
   add_index "companies", ["city_id"], name: "index_companies_on_city_id", using: :btree
