@@ -68,9 +68,36 @@ class Company < ActiveRecord::Base
   #
 
   state_machine :registration_state, initial: :inserted_from_rucom do
-    state :draf
     state :failure
-    state :completed
+    state :draf, :completed do
+      validates :legal_representative, presence: true
+      validates :email, presence: true
+      validates :phone_number, presence: true
+      validates :chamber_of_commerce_file, presence: true
+      validates :rut_file, presence: true
+      # TODO: this mining_register_file field has to be deleted, it not make sense here
+      # validates :mining_register_file, presence: true
+      validates :rucom, presence: true
+      validates_uniqueness_of :nit_number
+      validates :address, presence: true
+      validates :city, presence: true
+    end
+
+    event :pause do
+      transition [:inserted_from_rucom, :failure, :completed] => :draf
+    end
+
+    event :complete do
+      transition [:inserted_from_rucom, :draf] => :completed
+    end
+
+    event :resume do
+      transition :failure => :draf
+    end
+
+    # event :fail do
+    #   transition [:inserted_from_rucom, :draf, :completed] => :failure
+    # end
 
     before_transition on: :draf, do: :there_are_empty_fields
     before_transition on: :completed, do: :validate_complementary_attributes
@@ -85,17 +112,7 @@ class Company < ActiveRecord::Base
   end
 
   def validate_complementary_attributes
-    validates :legal_representative, presence: true
-    validates :email, presence: true
-    validates :phone_number, presence: true
-    validates :chamber_of_commerce_file, presence: true
-    validates :rut_file, presence: true
-    # TODO: this mining_register_file field has to be deleted, it not make sense here
-    # validates :mining_register_file, presence: true
-    validates :rucom, presence: true
-    validates_uniqueness_of :nit_number
-    validates :address, presence: true
-    validates :city, presence: true
+
   end
 
   def it_has_errors
