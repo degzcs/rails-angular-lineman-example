@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Company::Registration do
   let(:service) { Company::Registration.new }
-  let(:company) { create :company }
+  let(:company) { create :company, legal_representative: nil, offices: [] }
   before :each do
     @legal_representative_data = {
       email: 'lam.ehbotas@thecompany.com',
@@ -28,9 +28,6 @@ describe Company::Registration do
   end
 
   it 'should create a company and its legal representative' do
-    company.legal_representative.destroy!
-    company.offices[0].destroy!
-    company.reload
     @company_data = company.as_json.except!('created_at', 'updated_at')
     response = service.call(legal_representative_data: @legal_representative_data, company_data: @company_data)
     expect(response[:success]).to be true
@@ -38,5 +35,6 @@ describe Company::Registration do
     expect(service.company.rucom.present?).to be true
     expect(service.company.offices.present?).to be true
     expect(service.legal_representative).to be_persisted
+    expect(service.legal_representative.roles[0][:name]).to eq 'trader'
   end
 end
