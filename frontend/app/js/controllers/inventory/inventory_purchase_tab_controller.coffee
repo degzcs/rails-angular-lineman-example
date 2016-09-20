@@ -1,75 +1,42 @@
 angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window) ->
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
+  $scope.totalAmount = 0 
   #Headers of the table
+  # TODO: made this process more simple, just create a table as people uses to do
+  # to avoid the metaprogramming stuff bellow.
   $scope.headers = [
     {
       name: 'Estado'
-      field: 'sold'
+      field: 'purchase.gold_batch.sold'
     }
     {
       name: 'Fecha'
-      field: 'created_at'
+      field: 'purchase.created_at'
     }
     {
-      name: 'Proveedor'
-      field: 'seller_name'
+      name: 'Vendedor'
+      field: "purchase.seller.first_name + ' ' + purchase.seller.last_name"
     }
     {
       name: 'Gramos Finos'
-      field: 'gold_batch_grams'
+      field: 'purchase.gold_batch.grams'
     }
     {
       name: 'Precio'
-      field: 'price'
+      field: 'purchase.price'
     }
-  ]           
-  #Filters
-  $scope.sortable = [
-    'sold'
-    'created_at'
-    'seller_name'
-    'gold_batch_grams'
-    'price'
-    'inventory_remaining_amount'
-  ]
+  ] 
+
   #Variables configuration
-  $scope.selectall = false
-  $scope.grams = value: 0
-  #Header Styles
-  $scope.custom =
-    seller_name: 'grey'
-    gold_batch_grams: 'grey'
-    price: 'grey'
-    created_at: 'bold'
-    inventory_remaining_amount: 'bold'
-    sold: 'bold'
   $scope.pages = 0
   $scope.currentPage = 1
   #---------------- Controller methods -----------------//
   #Purchase service call to api to retrieve all purchases for current user
   PurchaseService.all().success((purchases, status, headers, config) ->
-    content = undefined
-    i = undefined
-    purchase = undefined
-    content = []
-    i = 0
-    while i < purchases.length
-      purchase =
-        id: purchases[i].id
-        price: purchases[i].price
-        created_at: purchases[i].created_at
-        seller: purchases[i].seller
-        sale_id: purchases[i].sale_id
-        seller_name: purchases[i].seller.first_name + ' ' + purchases[i].seller.last_name
-        inventory_remaining_amount: purchases[i].inventory.remaining_amount
-        gold_batch_grams: purchases[i].gold_batch.grams
-        sold: purchases[i].gold_batch.sold
-      content.push purchase
-      i++
     $scope.pages = parseInt(headers().total_pages)
-    $scope.count = content.length
-    $scope.content = content
+    $scope.count = purchases.length
+    $scope.purchases = purchases
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
 
@@ -82,29 +49,26 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
 
     ##Checkboxes behavior #####
 
-  $scope.goldBatchesSelected = []
+  $scope.selectedPurchases = []
 
   window.scope = $scope
 
 
   $scope.toggle = (purchase) ->
-    selectedPurchaseId = $scope.goldBatchesSelected.indexOf(purchase);
+    selectedPurchaseId = $scope.selectedPurchases.indexOf(purchase);
     if ( selectedPurchaseId > -1) 
-      $scope.goldBatchesSelected.splice( selectedPurchaseId, 1);
+      $scope.selectedPurchases.splice( selectedPurchaseId, 1)
+      $scope.totalAmount -= purchase.gold_batch.grams
     else 
-      $scope.goldBatchesSelected.push(purchase)
+      $scope.selectedPurchases.push(purchase)
+      $scope.totalAmount += purchase.gold_batch.grams
 
   $scope.alreadySelected = (purchase) ->
-    return $scope.goldBatchesSelected.indexOf(purchase) > -1
+    return $scope.selectedPurchases.indexOf(purchase) > -1
 
+  ## Golbatch amount selected (button) ###
 
-
-
-
-
-
-
-
+ 
 
 
 
@@ -117,23 +81,11 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
     InventoryService.setItem item
 
 #************************ from directive logic ***************************************
-  $scope.liquidate_selected_items = (ev) ->
-        console.log "scope_dialog_liquid..."
-        confirm_liquidate($scope.totalAmount, ev)
-        # NOTE: this part of code was disable becuase it is not needed to split gold
-        #if $scope.selectedItems.length == 0
-        #  $mdDialog.show(
-        #    $mdDialog.alert()
-        #    .title('Mensaje Inventario')
-        #    .content('Debe seleccionar al menos una cantidad')
-        #    .ariaLabel('Alert Dialog Demo').ok('Ok')
-        #    .targetEvent(ev))
-        #else
-          #enterIngotsNumber(ev)
+  $scope.liquidateSelectedPurchases = (ev) ->
+        confirmLiquidate($scope.totalAmount, ev)
         
-        #return
 
-  confirm_liquidate = (total_grams,ev)->
+  confirmLiquidate = (total_grams,ev)->
       confirm = $mdDialog.confirm()
       .title('Confirmar')
       .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
@@ -141,7 +93,7 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
       .targetEvent(ev)
 
       $mdDialog.show(confirm).then (->
-        LiquidationService.model.selectedPurchases = $scope.selectedItems
+        LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount
         LiquidationService.model.ingotsNumber = 1
         LiquidationService.saveState()

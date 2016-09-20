@@ -12,17 +12,14 @@
               /%md-button.md-icon-button.launch{"ng-click" => "selectAll(content,grams,selectall,$event)"}
               /  %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{selectall ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"selectall ? 'purchase-selected' : ''","aria-label"=>"selectall"}
             %th.md-table-header
-            %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
-              %a{:href => "#", "ng-if" => "handleSort(h.field)", "ng-click" => "reverse=!reverse;order(h.field,reverse)"}
-                {{h.name}}
-                %i.ion-android-arrow-dropup{"ng-show" => "reverse && h.field == predicate"}
-                %i.ion-android-arrow-dropdown{"ng-show" => "!reverse && h.field == predicate"}
-              %span{"ng-if" => "!handleSort(h.field)"} {{h.name}}
+            %th.md-table-header{"ng-repeat" => "h in headers"}
+              {{ h.name }}
+
 
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
-          %tr.md-table-content-row{"ng-repeat" => "purchase in content | filter:filters","ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
+          %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters","ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
             %td.table-checkbox
-              %md-checkbox{"ng-checked" => "alreadySelected(purchase, goldBatchesSelected)", "aria-label" => "none", "ng-click" => "toggle(purchase)" }
+              %md-checkbox{"ng-checked" => "alreadySelected(purchase)", "aria-label" => "none", "ng-click" => "toggle(purchase)" }
               
               {{purchase.amount_picked}}
               
@@ -30,7 +27,7 @@
             %td
               .trazoro-state.tag{"ng-if"=>"purchase.trazoro"}
                 Trazoro
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-class" => "customClass[h.field]", "ng-if" => "h.field != thumbs","ng-click" => "show_inventory_purchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : purchase[h.field]}}
+            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "show_inventory_purchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
 
             
