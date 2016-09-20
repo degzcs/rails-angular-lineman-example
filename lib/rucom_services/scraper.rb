@@ -94,11 +94,12 @@ module RucomServices
     end
 
     def display_hidden_element(browser, id)
-      js_script = "$(\"[id='#{id}']\").css('display', 'block')"
-      browser.execute_script(js_script)
+      # js_script = "$(\"[id='#{id}']\").css('display', 'block')"  -> this is another way using jquery
+      element = browser.find_element(:id, id)
+      browser.execute_script("arguments[0].style.display='block';", element) if element.present?
       true
     rescue StandardError => e
-      raise "display_hidden_element: Error executing script js_script: #{js_script} #{e.message}"
+      raise "display_hidden_element: Error executing script with element: #{id} #{e.message}"
     end
   end
 end

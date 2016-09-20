@@ -18,10 +18,10 @@ describe 'AuthorizedProviders', type: :request do
               last_name: authorized_provider.profile.last_name,
               phone_number: authorized_provider.profile.phone_number,
               address: authorized_provider.profile.address,
-              email: authorized_provider.email,
+              email: authorized_provider.email
             }
 
-            get "/api/v1/authorized_providers/#{authorized_provider.id}",{},{ "Authorization" => "Barer #{@token}" }
+            get "/api/v1/authorized_providers/#{authorized_provider.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to include expected_response.stringify_keys
           end
@@ -89,7 +89,7 @@ describe 'AuthorizedProviders', type: :request do
 
           city = City.find_by(name: 'RIONEGRO')
 
-          url_base = "/test/uploads"
+          url_base = '/test/uploads'
           id_document_file_url = "/documents/profile/id_document_file/#{user.id}/id_document_file.pdf"
           mining_authorization_file_url = "/documents/profile/mining_authorization_file/#{user.id}/mining_authorization_file.pdf"
           photo_file = "/photos/profile/photo_file/#{user.id}/photo_file.png"
@@ -130,14 +130,14 @@ describe 'AuthorizedProviders', type: :request do
             'last_name' => 'PRUEBA1 MARULO',
             'phone_number' => '2334455',
             'address' => 'Calle 45 # 34b-56',
-            'city_id' => city.id || nil,
+            'city_id' => city.id || nil
           }
           rucom_data = { 'rucom_number' => '987654321' }
           files = [photo_file_file, id_document_file, mining_authorization_file]
 
           params_set = { 'authorized_provider' => user_data, 'profile' => profile_data, 'rucom' => rucom_data, 'files' => files }
 
-          put "/api/v1/authorized_providers/#{user.id}", params_set, { "Authorization" => "Barer #{token}" }
+          put "/api/v1/authorized_providers/#{user.id}", params_set, 'Authorization' => "Barer #{token}"
 
           res = JSON.parse(response.body)
           # it Removes the datetime attributes to make coincid the hashes
@@ -147,6 +147,16 @@ describe 'AuthorizedProviders', type: :request do
 
           expect(response.status).to eq 200
           expect(res).to match expected_response
+
+          # Those are to test the audit actions on users table and you can check out on audits table
+          audit_comment = "Updated from API Request by ID: #{user.id}"
+          expect(user.audits.last.user).to eq(user)
+          expect(user.audits.last.comment).to eq(audit_comment)
+
+          # Those are to test the audit actions on users profile table and you can check out on audits table
+          expect(user.profile.audits.last.user).to eq(user)
+          expect(user.profile.audits.last.action).to eq('update')
+          expect(user.profile.audits.last.comment).to eq(audit_comment)
         end
       end
     end

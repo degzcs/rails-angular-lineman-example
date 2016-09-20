@@ -24,12 +24,11 @@ module Purchase
     def call(options = {})
       validate_options(options)
       # seller is the gold provider
-      @performer_user= options[:current_user]
-      @seller= User.find(options[:order_hash]['seller_id'])
-      @buyer= buyer_from(options[:current_user])
-      @order_hash= options[:order_hash]
-      @gold_batch_hash= options[:gold_batch_hash]
-      @date= options[:date]
+      @seller = User.find(options[:order_hash]['seller_id'])
+      @buyer = buyer_from(options[:current_user])
+      @order_hash = options[:order_hash]
+      @gold_batch_hash = options[:gold_batch_hash]
+      @date = options[:date]
       @signature_picture = @order_hash.delete('signature_picture')
       buy!
     end
@@ -47,19 +46,19 @@ module Purchase
           discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase_order.trazoro
           pdf_generation_service = ::PdfGeneration.new
           response = pdf_generation_service.call(
-                        order: purchase_order,
-                        signature_picture: signature_picture,
-                        draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
-                        document_type: 'equivalent_document',
-                        )
+                       order: purchase_order,
+                       signature_picture: signature_picture,
+                       draw_pdf_service: ::Purchase::ProofOfPurchase::DrawPDF,
+                       document_type: 'equivalent_document'
+                     )
 
           response = pdf_generation_service.call(
-                        order: purchase_order,
-                        signature_picture: signature_picture,
-                        draw_pdf_service: ::OriginCertificates::DrawAuthorizedProviderOriginCertificate,
-                        document_type: 'origin_certificate',
-                        date: date,
-                        )
+                       order: purchase_order,
+                       signature_picture: signature_picture,
+                       draw_pdf_service: ::OriginCertificates::DrawAuthorizedProviderOriginCertificate,
+                       document_type: 'origin_certificate',
+                       date: date
+                     )
         end
       end
       response
@@ -68,10 +67,10 @@ module Purchase
     # Creates a basic purchase order with the correct values
     # @return [ Order ]
     def setup_purchase_order!
-      order_hash.merge!(type: 'purchase', performer: performer_user)
+      order_hash.merge!(type: 'purchase')
       @purchase_order = buyer.purchases.build(order_hash)
       purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-      response[:success] = purchase_order.save!
+      response[:success] = Order.audit_as(buyer) { purchase_order.save! }
       purchase_order
     end
 
