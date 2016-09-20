@@ -80,7 +80,7 @@ class Profile < ActiveRecord::Base
   #
 
   def authorized_provider?
-    user.authorized_provider?
+    user.authorized_provider? unless user.blank?
   end
 
   def mining_register_file
