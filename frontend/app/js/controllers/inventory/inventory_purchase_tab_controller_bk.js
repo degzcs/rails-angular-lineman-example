@@ -1,4 +1,4 @@
-angular.module('app').controller('InventoryPurchaseTabCtrl', function($scope, $mdDialog, PurchaseService) {
+angular.module('app').controller('InventoryPurchaseTabCtrl_bk', function($scope, $mdDialog, PurchaseService) {
 
   // ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false;
