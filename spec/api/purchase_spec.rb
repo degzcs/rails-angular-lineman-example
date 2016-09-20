@@ -2,7 +2,7 @@ describe 'Purchase' do
   describe :v1 do
     context '#purchases (buyer is not necessary the company legal representative)' do
       before :context do
-        @buyer = create :user, :with_company, :with_trader_role
+        @buyer = create :user, :with_profile, :with_company, :with_trader_role
         @legal_representative = @buyer.company.legal_representative
         @legal_representative.profile.update_column :available_credits, 20_000
         @token = @buyer.create_token
@@ -22,7 +22,7 @@ describe 'Purchase' do
           'extra_info' => { 'grams' => 1.5 }.to_json
         }
 
-        @seller = create(:user, :with_personal_rucom, provider_type: 'Barequero')
+        @seller = create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero')
 
         @new_purchase_values = {
           'seller_id' => @seller.id,
@@ -104,7 +104,7 @@ describe 'Purchase' do
 
       context 'GET' do
         before(:all) do
-          seller = create(:user, :with_personal_rucom, :with_authorized_provider_role)
+          seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role)
           @purchases = create_list(:purchase, 20,
                                    :with_proof_of_purchase_file,
                                    :with_origin_certificate_file,

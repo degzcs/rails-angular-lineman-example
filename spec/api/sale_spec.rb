@@ -4,13 +4,13 @@ describe 'Sale', type: :request do
       before :context do
         # NOTE: because this user has a company he not necessarily
         # will be the seller, actually, the seller will be the legal_representative
-        @current_user = create :user, :with_company, :with_trader_role
+        @current_user = create :user, :with_profile, :with_company, :with_trader_role
         @token = @current_user.create_token
       end
 
       context 'POST' do
         it 'should create one complete sale with trader role' do
-          current_buyer = create(:user, :with_company, :with_trader_role).company.legal_representative
+          current_buyer = create(:user, :with_profile, :with_company, :with_trader_role).company.legal_representative
           current_seller = @current_user.company.legal_representative
           courier = create(:courier)
           purchases = create_list(:purchase, 2,
@@ -27,7 +27,9 @@ describe 'Sale', type: :request do
               'last_name' => current_buyer.profile.last_name
             },
             'user_id' => current_seller.id, # TODO: upgrade frontend
-            'fine_grams' => 1.5
+            # 'gold_batch_id' => GoldBatch.last.id + 1,
+            'fine_grams' => 1.5,
+            # 'performer_id' => current_buyer.id
           }
 
           new_gold_batch_values = {
@@ -63,7 +65,7 @@ describe 'Sale', type: :request do
 
       context 'GET' do
         before(:all) do
-          @current_user = create :user, :with_company, :with_trader_role
+          @current_user = create :user, :with_profile, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
           @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative)
@@ -93,6 +95,7 @@ describe 'Sale', type: :request do
             expected_response = {
               id: sale.id,
               courier_id: sale.courier_id,
+              # buyer: buyer_expected_response.stringify_keys,
               user_id: @legal_representative.id,
               gold_batch_id: sale.gold_batch.id,
               fine_grams: sale.fine_grams,
