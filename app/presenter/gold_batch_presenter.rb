@@ -28,15 +28,15 @@ class GoldBatchPresenter < BasePresenter
   end
 
   def origin_certificate_number
-    'Pending...'
+    'NA'
   end
 
   def total_fine_grams
-    "#{ fine_grams.round(2) } grams" if fine_grams.present?
+    fine_grams.present? ? "#{ fine_grams.round(2) } grams" : raise('fine grams cannot be blank!!')
   end
 
   def formatted_fine_grams
-    fine_grams.to_s
+    fine_grams.present? ? fine_grams.to_s : raise('fine grams cannot be blank!!')
   end
 
   def seller_presenter
