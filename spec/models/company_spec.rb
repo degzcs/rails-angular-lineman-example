@@ -20,32 +20,28 @@
 
 require 'spec_helper'
 
-describe Company  do
-  context "test factory" do
-    let(:company) { build(:company) }
+describe Company do
+  let(:company) { create(:company) }
+  subject { company.complete! ; company }
+  context 'test factory (on completed)' do
     it { expect(company.nit_number).not_to be_nil }
     it { expect(company.name).not_to be_nil }
-    it { expect(company.city).not_to be_nil}
-    it { expect(company.legal_representative).not_to be_nil}
+    it { expect(company.city).not_to be_nil }
+    it { expect(company.legal_representative).not_to be_nil }
     it { expect(company.email).not_to be_nil }
-    it { expect(company.phone_number).not_to be_nil}
+    it { expect(company.phone_number).not_to be_nil }
     it { expect(company.chamber_of_commerce_file).not_to be_nil }
     it { expect(company.rut_file).not_to be_nil }
     it { expect(company.mining_register_file).not_to be_nil }
-
   end
 
-  context "company creation" do
-    it "should create a new company with valid data " do
-      expect(build(:company)).to be_valid
-    end
-    it { should validate_presence_of(:nit_number) }
-    it { should validate_presence_of(:legal_representative) }
-    it { should validate_presence_of(:email) }
-    it { should validate_presence_of(:phone_number) }
-    it { should validate_presence_of(:rucom) }
-    it { should validate_presence_of(:rut_file)}
-    it { should validate_presence_of(:chamber_of_commerce_file)}
+  context 'company creation' do
+    it { expect(subject).to validate_presence_of(:nit_number) }
+    it { expect(subject).to validate_presence_of(:legal_representative) }
+    it { expect(subject).to validate_presence_of(:email) }
+    it { expect(subject).to validate_presence_of(:phone_number) }
+    it { expect(subject).to validate_presence_of(:rucom) }
+    it { expect(subject.rut_file.present?).to be true }
+    it { expect(subject.chamber_of_commerce_file.present?).to be true }
   end
-
 end
