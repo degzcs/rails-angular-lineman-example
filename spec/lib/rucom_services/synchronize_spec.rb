@@ -171,8 +171,9 @@ describe RucomServices::Synchronize do
     context 'When rucom no exist' do
       it 'returns false as response' do
         VCR.use_cassette('unsuccessful_rucom_response') do
-          @user = build :user, :with_profile
-          @user.save(validates: false)
+          @user = create :user, :with_profile, :with_personal_rucom
+          @user.personal_rucom.destroy!
+          @user.reload
           @data[:id_number] = @user.profile.document_number
           @sync = RucomServices::Synchronize.new(@data)
           @sync.call
