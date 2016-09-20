@@ -3,51 +3,60 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
   # Redirects to The index inventory if there is no pendinigs liquidations
   #
 
+  window.scope = $scope
   if sessionStorage.pendingLiquidation == 'false'
     $state.go "index_inventory"
     return
 
-  liquidation_info = LiquidationService.restoreState()
+  liquidationInfo = LiquidationService.restoreState()
 
-  $scope.selectedPurchases = liquidation_info.selectedPurchases
-  $scope.totalAmount = liquidation_info.totalAmount
+  $scope.selectedPurchases = liquidationInfo.selectedPurchases
+  $scope.totalAmount = liquidationInfo.totalAmount
   $scope.selectedGrade = null
   $scope.selectedWeight  = 0
   $scope.price = 0
-  $scope.per_unit_value = null
+  $scope.perUnitValue = null
 
   $scope.searchClientText = null
   $scope.selectedClient = null
   $scope.searchCourierText = null
   $scope.selectedCourier = null
 
-  $scope.validation_messages = null
+  $scope.validationMessages = null
   $scope.clientVerifiedProgress = false
 
-  $scope.calculate_weight = ->
-    $scope.selectedWeight  = Number(($scope.totalAmount * 999/$scope.selectedGrade).toFixed(2))
+  $scope.weightedLaw = 0
 
-  $scope.calculate_price = ->
-    $scope.price = Number(($scope.totalAmount * $scope.per_unit_value).toFixed(2))
+  $scope.calculateWeight = ->
+    $scope.selectedPurchases.forEach( (purchase, index)->
+      purchase.gold_batch.percentage = purchase.gold_batch.grams/$scope.totalAmount
+      $scope.weightedLaw += (purchase.gold_batch.grade * purchase.gold_batch.percentage)
+    )
+    
+    $scope.selectedWeight = Number(($scope.totalAmount * 999/$scope.selectedGrade).toFixed(2))
 
-  $scope.calculate_law_
+  $scope.calculatePrice = ->
+    $scope.price = Number(($scope.totalAmount * $scope.perUnitValue).toFixed(2))
+
+  $scope.calculateLaw = ->
+    $scope.selectedPurchases.forEach( (purchase, index)->
+      purchase.gold_batch.percentage = purchase.gold_batch.grams/$scope.totalAmount
+      $scope.weightedLaw += (purchase.gold_batch.grade * purchase.gold_batch.percentage)
+    )
   #
   # Seacrch clients by id
   #
 
-  query_for_clients = (query) ->
+  queryForClients = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
       User.query_by_id(query).success (clients,config)->
         resolve clients
       return
 
-
-
-
   $scope.searchClients = (query)->
     if query
-      promise = query_for_clients(query)
+      promise = queryForClients(query)
       promise.then ((clients) ->
         return clients
 
@@ -57,15 +66,11 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
     else
       return []
 
-
-
-
   #
   # Seacrch couriers by id
   #
 
-
-  query_for_couriers = (query) ->
+  queryForCouriers = (query) ->
     # perform some asynchronous operation, resolve or reject the promise when appropriate.
     $q (resolve, reject) ->
       CourierService.query_by_id(query).success (couriers,config)->
@@ -74,7 +79,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
 
   $scope.searchCouriers = (query)->
     if query
-      promise = query_for_couriers(query)
+      promise = queryForCouriers(query)
       promise.then ((couriers) ->
         return couriers
 
@@ -162,62 +167,3 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
       .ok('hecho!')
       duration: 2
     return
-
-
-
-
-
-
-
-
-
-
-
-  #$scope.ingotsNumber = sale_info.ingotsNumber
-  #$scope.ingots = []
-  #$scope.divide_by_equal_amounts = false
-
-
-  #
-  #It creates an array of ingots based on the ingots_number selected by the user
-  ###
-  i=0
-  while i < $scope.ingotsNumber
-    item = {
-      law: null,
-      grams: null
-    }
-    $scope.ingots.push(item)
-    i++
-  ###
-
-  ###
-  #If the amount of ingots is lowe than 1 it doesn`t permit to divide by equal
-  #
-  if $scope.ingotsNumber > 1
-    $scope.allow_equal_divider = true
-  else
-    $scope.allow_equal_divider = false
-    $scope.ingots[0].grams = $scope.totalAmount
-  ###
-
-  #
-  ###
-  $scope.divideIngots = ->
-    i=0
-    while i < $scope.ingots.length
-      if $scope.divide_by_equal_amounts
-        $scope.ingots[i].grams = $scope.totalAmount/$scope.ingotsNumber
-      else
-        $scope.ingots[i].grams = null
-      i++
-    console.log "Ingots Divided"
-  ###
-
-
-
-
-
-
-
-

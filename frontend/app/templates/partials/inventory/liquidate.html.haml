@@ -1,16 +1,16 @@
 /--------------------------- Liquidate invnetory view ------------------------/
 %section.liquidate-inventory-view{layout: "row"}
   /--------------------------- Selected Grams layout ------------------------/
-  %md-card.amounts-picked.md-padding{flex: "25"}
+  %md-card.amounts-picked.md-padding{flex: "15"}
     %h3
       Seleccion (Gramos Finos)
-    %div.selected_amount{"ng-repeat"=> "item in selectedPurchases"} 
-      {{item.amount_picked}} gr
+    %div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"} 
+      {{purchase.gold_batch.grams}} gr
     %div.total_amount
       %strong
         Gramos Finos Totales: 
       {{totalAmount}} gr
-  %md-card.batches{flex: ""}
+  %md-card.batches{flex: "50"}
     /--------------------------- Ingot Creation layout ------------------------/
     %h3
       Lote Resultante
@@ -22,18 +22,17 @@
         //  Lote 
         //  /{{$index +1 }} :
         %md-input-container{flex: ""}
-          %label Precio Gramo
-          %input{"name"=>"per_unit_value","ng-model" => "per_unit_value", required: "","type" => "number", "step"=>"any","ng-change"=>"calculate_price()" }
-          %div{"ng-messages" => "ingotsForm.per_unit_value.$error"}
-            %div{"ng-message" => "number"} Formato Invalido
-        %md-input-container{flex: ""}
           %label Ley
-          %input{"name"=> "selectedGrade","ng-model" => "selectedGrade", required: "", "type" => "number","ng-change"=>"calculate_weight()","min"=> "1","max"=> "999","step"=>"1"}
+          %input{"name"=> "selectedGrade","ng-model" => "selectedGrade", required: "", "type" => "number","ng-change"=>"calculateWeight()","min"=> "1","max"=> "999","step"=>"1"}
           %div{"ng-messages" => "ingotsForm.selectedGrade.$error"}
             %div{"ng-message" => "min"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "max"} La ley debe ser un valor entre 1 y 999
             %div{"ng-message" => "number"} Formato Invalido
-        
+        %md-input-container{flex: ""}
+          %label Precio Gramo
+          %input{"name"=>"perUnitValue","ng-model" => "perUnitValue", required: "","type" => "number", "step"=>"any","ng-change"=>"calculatePrice()" }
+          %div{"ng-messages" => "ingotsForm.perUnitValue.$error"}
+            %div{"ng-message" => "number"} Formato Invalido
       /%div.liquidation-messages{"ng-messages" => "validation_messages"}
       /  %div.valid{"ng-message" => "valid"} Cantidad correcta
       /  %div.invalid{"ng-message" => "invalid"} La cantidad no corresponde con los gramos finos seleccionados
