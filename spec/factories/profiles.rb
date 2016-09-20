@@ -37,5 +37,4 @@ FactoryGirl.define do
     nit_number { Faker::Number.number(10) }
     city { City.all.sample }
   end
-
 end
