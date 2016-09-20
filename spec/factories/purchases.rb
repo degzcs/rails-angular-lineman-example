@@ -17,8 +17,8 @@
 
 FactoryGirl.define do
   factory :purchase, class: Order do
-    seller { create(:user, :with_company) } # seller
-    buyer { create(:user, :with_company) } # seller
+    seller { create(:user, :with_profile, :with_company) } # seller
+    buyer { create(:user, :with_profile, :with_company) } # seller
     gold_batch { create(:gold_batch) }
     type 'purchase'
     # origin_certificate_sequence { Faker::Code.isbn }
