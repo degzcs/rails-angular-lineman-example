@@ -65,6 +65,7 @@ FactoryGirl.define do
         user.profile.id_document_file = e.id_document_file
         user.profile.nit_number = e.nit_number
         user.profile.city = e.city
+        user.save!
       end
     end
 
@@ -80,7 +81,7 @@ FactoryGirl.define do
     trait :with_company do
       transient do
         city { City.all.sample }
-        name { 'MinTrace SAS' }
+        name { "Test company SAS #{ Company.count }" }
         nit_number { Faker::Number.number(10) }
         rucom { build :rucom }
       end
