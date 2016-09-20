@@ -273,6 +273,6 @@ class User < ActiveRecord::Base
   # NOTE: this conditional (!self.has_office?  && !self.trader?) is because we havent the feature to know if
   # user is natural or legal person.
   def validate_personal_rucom?
-    self.authorized_provider? || (!self.has_office?  && !self.trader?)
+    (self.authorized_provider? && !self.has_office?) || (!self.has_office? && !self.trader?)
   end
 end
