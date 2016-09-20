@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService) ->
+angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window) ->
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   #Headers of the table
@@ -12,10 +12,6 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
       field: 'created_at'
     }
     {
-      name: 'ID Compra'
-      field: 'id'
-    }
-    {
       name: 'Proveedor'
       field: 'seller_name'
     }
@@ -27,7 +23,7 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
       name: 'Precio'
       field: 'price'
     }
-  ]
+  ]           
   #Filters
   $scope.sortable = [
     'sold'
@@ -43,7 +39,6 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
   #Header Styles
   $scope.custom =
     seller_name: 'grey'
-    id: 'bold'
     gold_batch_grams: 'grey'
     price: 'grey'
     created_at: 'bold'
@@ -62,21 +57,10 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
     while i < purchases.length
       purchase =
         id: purchases[i].id
-        user_id: purchases[i].user_id
         price: purchases[i].price
-        origin_certificate_file: purchases[i].origin_certificate_file
-        seller_picture: purchases[i].seller_picture
-        origin_certificate_sequence: purchases[i].origin_certificate_sequence
         created_at: purchases[i].created_at
-        reference_code: purchases[i].reference_code
-        access_token: purchases[i].access_token
         seller: purchases[i].seller
-        gold_batch: purchases[i].gold_batch
-        inventory: purchases[i].inventory
-        trazoro: purchases[i].trazoro
         sale_id: purchases[i].sale_id
-        barcode_html: purchases[i].barcode_html
-        code: purchases[i].code
         seller_name: purchases[i].seller.first_name + ' ' + purchases[i].seller.last_name
         inventory_remaining_amount: purchases[i].inventory.remaining_amount
         gold_batch_grams: purchases[i].gold_batch.grams
@@ -95,6 +79,38 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
     #     $window.history.back();
     #   });
     return
+
+    ##Checkboxes behavior #####
+
+  $scope.goldBatchesSelected = []
+
+  window.scope = $scope
+
+
+  $scope.toggle = (purchase) ->
+    selectedPurchaseId = $scope.goldBatchesSelected.indexOf(purchase);
+    if ( selectedPurchaseId > -1) 
+      $scope.goldBatchesSelected.splice( selectedPurchaseId, 1);
+    else 
+      $scope.goldBatchesSelected.push(purchase)
+
+  $scope.alreadySelected = (purchase) ->
+    return $scope.goldBatchesSelected.indexOf(purchase) > -1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   $scope.show = (item) ->
     console.log 'selecciona item' + item.selected
@@ -117,25 +133,25 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
         
         #return
 
-  $scope.confirm_liquidate = (total_grams,ev)->
-        confirm = $mdDialog.confirm()
-        .title('Confirmar')
-        .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
-        .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
-        .targetEvent(ev)
+  confirm_liquidate = (total_grams,ev)->
+      confirm = $mdDialog.confirm()
+      .title('Confirmar')
+      .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
+      .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
+      .targetEvent(ev)
 
-        $mdDialog.show(confirm).then (->
-          LiquidationService.model.selectedPurchases = $scope.selectedItems
-          LiquidationService.model.totalAmount = $scope.totalAmount
-          LiquidationService.model.ingotsNumber = 1
-          LiquidationService.saveState()
+      $mdDialog.show(confirm).then (->
+        LiquidationService.model.selectedPurchases = $scope.selectedItems
+        LiquidationService.model.totalAmount = $scope.totalAmount
+        LiquidationService.model.ingotsNumber = 1
+        LiquidationService.saveState()
 
-          $state.go 'liquidate_inventory'
-          return
-        ), ->
-          #If the response in negative sets the checkbox to true again
-          return
-        return      
+        $state.go 'liquidate_inventory'
+        return
+      ), ->
+        #If the response in negative sets the checkbox to true again
+        return
+      return      
 
 
   $scope.show_inventory_purchase = (item)->
