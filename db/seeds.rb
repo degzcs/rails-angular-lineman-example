@@ -27,7 +27,6 @@ begin
                                 email: 'soport@trazoro.co',
                                 phone_number: '3004322618',
                                 address: 'carrera 44 # 19 A 20',
-                                registration_state: 'completed'
                               )
   legal_representative = FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Diego',
@@ -38,7 +37,8 @@ begin
         city: city,
         office: company.main_office,
         legal_representative: true)
-  company.update_column(:legal_representative, legal_representative)
+  company.update_column(:legal_representative_id, legal_representative.id)
+  company.update_column(registration_state: 'completed')
 rescue => e
   company = Company.find_by(nit_number: '900848984')
   puts "There was something wrong!. ERROR: #{ e }"
