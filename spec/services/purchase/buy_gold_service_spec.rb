@@ -41,7 +41,7 @@ describe Purchase::BuyGoldService do
       }
     end
 
-    it 'should to make a purchase order and discount credits from de company' do
+    it 'should to make a purchase order and discount credits from company' do
       expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
       response = service.call(
         order_hash: @order_hash,
