@@ -33,7 +33,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       code: ''
       rucom_id_field: ''
       signature_picture: ''
-      env: ''
+      use_wacom_device: 'true'
 
     #
     # HTTP resquests
@@ -48,7 +48,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
         seller_picture_blob.name= 'seller_picture.png'
         signature_picture_blob = ''
 
-        if purchase.env == 'development'
+        if purchase.use_wacom_device == 'false'
           signature_picture_blob = seller_picture_blob
           signature_picture_blob.name = 'signature.png'
           files = [seller_picture_blob, signature_picture_blob]

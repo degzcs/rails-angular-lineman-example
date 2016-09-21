@@ -25,7 +25,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    $scope.purchase.model.env = data.env
+    $scope.purchase.model.use_wacom_device = data.use_wacom_device
     $scope.buyer_data = buyerDataFrom($scope.current_user)
 
   #
