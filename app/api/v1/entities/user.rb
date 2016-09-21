@@ -51,6 +51,9 @@ module V1
       expose :rucom, documentation: { type: "hash", desc: "rucom", example: "" } do |user, options|
         user.rucom.as_json
       end
+      expose :use_wacom_device, documentation: { type: 'string', desc: 'enviroment', example: 'true, false' } do |user, _options|
+        APP_CONFIG[:USE_WACOM_DEVICE]
+      end
     end
   end
 end

@@ -25,6 +25,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
+    $scope.purchase.model.use_wacom_device = data.use_wacom_device
     $scope.buyer_data = buyerDataFrom($scope.current_user)
 
   #
@@ -54,7 +55,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         document_number: current_user.company.nit_number,
         phone: current_user.company.phone_number,
         city: current_user.company.city,
-        state: current_user.company.state,
+        state: current_user.company.state
       }
     else
       {

@@ -33,6 +33,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       code: ''
       rucom_id_field: ''
       signature_picture: ''
+      use_wacom_device: true
 
     #
     # HTTP resquests
@@ -47,19 +48,25 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
         seller_picture_blob.name= 'seller_picture.png'
         signature_picture_blob = ''
 
-        blobUtil.imgSrcToBlob(purchase.signature_picture).then( (signature_picture_blob) ->
+        if purchase.use_wacom_device == false
+          signature_picture_blob = seller_picture_blob
           signature_picture_blob.name = 'signature.png'
           files = [seller_picture_blob, signature_picture_blob]
           service.uploadFiles(files, purchase, gold_batch)
-        ).catch (err) ->
-        console.log '[SERVICE-ERROR]: image failed to load!!'
-        location.path('/purchases/new/purchases/step4')
-        $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
-        $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
-        service.restoreState()
+        else
+          blobUtil.imgSrcToBlob(purchase.signature_picture).then( (signature_picture_blob) ->
+            signature_picture_blob.name = 'signature.png'
+            files = [seller_picture_blob, signature_picture_blob]
+            service.uploadFiles(files, purchase, gold_batch)
+          ).catch (err) ->
+            console.log '[SERVICE-ERROR]: image signature failed to load!!'
+            location.path('/purchases/new/purchases/step4')
+            $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
+            $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
+            service.restoreState()
       )
       .catch (err) ->
-        console.log '[SERVICE-ERROR]: image failed to load!!' + err
+        console.log '[SERVICE-ERROR]: image seller_picture failed to load!!' + err
         $location.path('/purchases/new/purchases/step4')
         $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
         $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')

@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, PdfService, $timeout, $q, $mdDialog, CurrentUser,  $sce) ->
+angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, $timeout, $q, $mdDialog, CurrentUser,  $sce) ->
 
   #
   # Instances

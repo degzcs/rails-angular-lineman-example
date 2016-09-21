@@ -21,7 +21,8 @@ describe 'Auth' do
             'company' => nil,
             'photo_file' => {
               'url' => "/test/uploads/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
-            }
+            },
+            'env' => Rails.env
           }
 
           get '/api/v1/users/me', {}, 'Authorization' => "Barer #{token}"
