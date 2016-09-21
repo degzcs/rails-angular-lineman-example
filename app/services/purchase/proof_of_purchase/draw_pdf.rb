@@ -103,13 +103,12 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     move_cursor_to 362
 
     text_box gold_batch_presenter.total_fine_grams, :at => [400, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    # Trazoro transation cost
+    #Costo trazoro gramo fino ttal * IVA
     move_cursor_to 345
-    text_box "1000", :at => [400, cursor], :with => 125, :size => 10, :height => 10, :overflow => :shrink_to_fit
-    # Trazoro transation vat
+    text_box order_presenter.trazoro_transaction_cost, :at => [400, cursor], :with => 125, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    #IVA
     move_cursor_to 328
-    text_box "160", :at => [400, cursor], :with => 125, :size => 10, :height => 10, :overflow => :shrink_to_fit
-
+    text_box order_presenter.trazoro_transaction_vat, :at => [400, cursor], :with => 125, :size => 10, :height => 10, :overflow => :shrink_to_fit
     move_cursor_to 286
     text_box order_presenter.fine_gram_price.to_s, :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 286

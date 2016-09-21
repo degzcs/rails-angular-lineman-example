@@ -37,6 +37,23 @@ class OrderPresenter < BasePresenter
     end
   end
 
+  # NOTE: The trazoro transaction cost will be implemented in a model CreditBilling (ServiceBilling) and not in the presenter
+  def setting_presenter
+    SettingsPresenter.new(Setting.intance, h)
+  end
+
+  def trazoro_transaction_vat
+    "$#{ trazoro_transaction_cost_value * setting_presenter.vat_percentage }"
+  end
+
+  def trazoro_transaction_cost
+    "$#{ trazoro_transaction_cost_value }"
+  end
+
+  def trazoro_transaction_cost_value
+    gold_batch.fine_grams * setting_presenter.fine_gram_value
+  end
+  
   def grams
     fine_grams # TODO: check what this field means in the equivalent document
   end
