@@ -5,7 +5,7 @@ class Sale::CreatePurchaseFilesCollection
   def initialize(options={})
   end
 
-  def call(options={})
+  def calls(options={})
     raise 'You must to set the sale_order option' if options[:sale_order].blank?
     @sale_order = options[:sale_order]
     files = options[:files] || []

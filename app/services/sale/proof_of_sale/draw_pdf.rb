@@ -124,5 +124,6 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     text_box order_presenter.grade.to_s, :at => [465,cursor], :width => 90 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 179
     text_box order_presenter.price.to_s, :at => [465,cursor], :width => 90 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    
   end
 end

@@ -239,7 +239,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
     $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
-    $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.riales)
+    $scope.rialesToGrams = MeasureConverterService.rialesToGrams($scope.goldBatch.model.reales)
     $scope.granosToGrams = MeasureConverterService.granosToGrams($scope.goldBatch.model.granos)
 
     $scope.grams = $scope.goldBatch.model.grams
@@ -275,7 +275,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       castellanos: 0
       ozs: 0
       tomines: 0
-      riales: 0
+      reales: 0
       granos: 0
       inventory_id: 1
       total_grams: 0

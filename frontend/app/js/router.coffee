@@ -635,14 +635,14 @@
 
 
   .state("index_inventory.purchase",
-    url: "/index_purchase",
+    url: "/purchase_tab",
     ncyBreadcrumb:
       label: 'Inventario de compras'
     views:
       'content':
         # partials/inventory/index_purchase.html partial list_inventory (tab purchase)
-        templateUrl: "partials/inventory/index.html" # TODO: Refactor to leave the old version
-        controller: "InventoryPurchaseIndexCtrl"
+        templateUrl: "partials/inventory/purchase_tab.html" # TODO: Refactor to leave the old version
+        controller: "InventoryPurchaseTabCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"

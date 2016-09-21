@@ -102,15 +102,21 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box gold_batch_presenter.grade.to_s, :at => [400, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 362
     text_box gold_batch_presenter.total_fine_grams, :at => [400, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    #Costo trazoro
+    move_cursor_to 345
+    text_box "1000", :at => [400, cursor], :with => 125, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    #IVA
+    move_cursor_to 328
+    text_box "160", :at => [400, cursor], :with => 125, :size => 10, :height => 10, :overflow => :shrink_to_fit
     move_cursor_to 286
     text_box order_presenter.fine_gram_price, :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 286
     text_box order_presenter.price.to_s, :at => [400, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-
+    
     move_cursor_to 230
     signature = signature_picture.is_a?(Hash) ? OpenStruct.new(signature_picture) : signature_picture
     image(signature.tempfile, :at => [280, cursor], :fit => [200, 100])
 
-    image(signature.tempfile, :at => [36, cursor], :fit => [200, 100])
+    # image(signature.tempfile, :at => [36, cursor], :fit => [200, 100])
   end
 end
