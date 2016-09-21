@@ -3,7 +3,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
   # Redirects to The index inventory if there is no pendinigs liquidations
   #
 
-  window.scope = $scope
+  
   if sessionStorage.pendingLiquidation == 'false'
     $state.go "index_inventory"
     return
