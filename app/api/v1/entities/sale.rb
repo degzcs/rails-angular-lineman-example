@@ -26,13 +26,13 @@ module V1
         sale.batches.map do |batch|
           purchase = batch.gold_batch.goldomable
           purchase.as_json.merge(
-              fine_grams: purchase.fine_grams, # This method is delagated to gold_batch model
-              seller: {
-                first_name: purchase.seller.profile.first_name,
-                last_name: purchase.seller.profile.last_name,
-                provider_type: purchase.seller.provider_type,
-              }
-            )
+            fine_grams: purchase.fine_grams, # This method is delagated to gold_batch model
+            seller: {
+              first_name: purchase.seller.profile.first_name,
+              last_name: purchase.seller.profile.last_name,
+              provider_type: purchase.seller.provider_type,
+            }
+          )
         end.as_json
       end
       expose :created_at, documentation: { type: 'created at', desc: 'date', example: 'date' } do |purchase, _options|
@@ -46,6 +46,9 @@ module V1
       end
       expose :proof_of_sale, documentation: { type: 'file', desc: 'proof_of_sale', example: 'document_equivalent.pdf' } do |sale, _options|
         sale.proof_of_sale.as_json
+      end
+      expose :shipment, documentation: { type: 'file', desc: 'file', example: '...' } do |sale, _options|
+        sale.shipment.as_json
       end
       expose :price, documentation: { type: 'float', desc: 'price', example: '123399' }
       expose :purchases_total_value, documentation: { type: 'float', desc: 'purchases_total_value', example: '3000.0' }

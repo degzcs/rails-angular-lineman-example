@@ -4,13 +4,14 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
 
     model:
       id: null
-      courier_id: null
-      buyer_id: null
+      courier: null
+      buyer: null
       user_id: null
       gold_batch_id: null
       code: null
       price: null
       purchase_files_collection: null
+      shipment: null
       proof_of_sale: null
       barcode_html: null
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}

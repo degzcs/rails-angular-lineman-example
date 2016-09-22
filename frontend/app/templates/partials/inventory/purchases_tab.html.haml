@@ -27,7 +27,7 @@
             %td
               .trazoro-state.tag{"ng-if"=>"purchase.trazoro"}
                 Trazoro
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "show_inventory_purchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
+            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
 
             

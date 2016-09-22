@@ -608,13 +608,13 @@
 
   # ------- Inventory routes ----------- #
 
-  .state("index_inventory",
+  .state("inventory",
     url: "/inventory", # <-- inventory
     ncyBreadcrumb:
       label: 'Inventario'
     views:
       'content':
-        templateUrl: "partials/inventory/list_inventory.html" # partial list_inventory (tabs control)
+        templateUrl: "partials/inventory/tabs.html" # partial list_inventory (tabs control)
         controller: "InventoryTabsCtrl" # tab inventory controller
       'top-nav':
         templateUrl: "partials/top-nav.html"
@@ -634,15 +634,14 @@
   )
 
 
-  .state("index_inventory.purchase",
-    url: "/purchase_tab",
+  .state("inventory.purchases",
+    url: "/purchases",
     ncyBreadcrumb:
       label: 'Inventario de compras'
     views:
       'content':
-        # partials/inventory/index_purchase.html partial list_inventory (tab purchase)
-        templateUrl: "partials/inventory/purchase_tab.html" # TODO: Refactor to leave the old version
-        controller: "InventoryPurchaseTabCtrl"
+        templateUrl: "partials/inventory/purchases_tab.html" # TODO: Refactor to leave the old version
+        controller: "PurchasesTabCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -659,40 +658,14 @@
           deferred.resolve()
         deferred.promise
   )
-
-  .state("index_inventory.sale",
-    url: "/index_sale",
-    ncyBreadcrumb:
-      label: 'Inventario de ventas'
-    views:
-      'content':
-        templateUrl: "partials/inventory/index_sale.html"
-        controller: "InventorySaleIndexCtrl"
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
-
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-
-  .state("show_inventory",
-    url: "/inventory/detail",
+  .state("inventory.purchase_details",
+    url: "/purchase/details",
     ncyBreadcrumb:
       label: 'Detalle de compra'
     views:
       'content':
-        templateUrl: "partials/inventory/show.html"
-        controller: "InventoryShowCtrl"
+        templateUrl: "partials/inventory/purchase_details.html"
+        controller: "PurchaseDetailsCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
         controller: "SidebarCtrl"
@@ -708,6 +681,55 @@
         else
           deferred.resolve()
         deferred.promise
+  )
+  .state("inventory.sales",
+    url: "/sales",
+    ncyBreadcrumb:
+      label: 'Inventario de ventas'
+    views:
+      'content':
+        templateUrl: "partials/inventory/sales_tab.html"
+        controller: "SalesTabCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  .state("inventory.sale_details",
+    url: "/sale/details",
+    ncyBreadcrumb:
+      label: 'Detalle de venta'
+    views:
+      'content':
+        templateUrl:'partials/inventory/sale_details.html'
+        controller:'SaleDetailsCtrl'
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+
   )
   .state("liquidate_inventory",
     url: "/inventory/liquidate",
@@ -733,33 +755,6 @@
           deferred.resolve()
         deferred.promise
   )
-
-  .state("show_inventory_sale",
-    url: "inventory/saledetail",
-    ncyBreadcrumb:
-      label: 'Detalle de venta'
-    views:
-      'content':
-        templateUrl:'partials/inventory/show_sale.html'
-        controller:'InventoryShowSaleCtrl'
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
-
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-
-  )
-
   .state("show_sale",
     url: "/sale/info",
     ncyBreadcrumb:

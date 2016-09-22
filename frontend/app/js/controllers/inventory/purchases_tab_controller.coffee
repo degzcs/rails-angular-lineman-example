@@ -1,4 +1,4 @@
-angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state) ->
+angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state) ->
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0 
@@ -83,8 +83,8 @@ angular.module('app').controller 'InventoryPurchaseTabCtrl', ($scope, $mdDialog,
         return
       return      
 
-  $scope.showInventoryPurchase = (purchase)->
+  $scope.showPurchase = (purchase)->
     PurchaseService.model = purchase
     PurchaseService.saveState()
-    $state.go('show_inventory')
+    $state.go('inventory.purchase_details')
     return

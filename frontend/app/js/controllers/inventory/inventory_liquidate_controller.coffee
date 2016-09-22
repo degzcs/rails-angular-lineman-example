@@ -5,7 +5,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
 
   
   if sessionStorage.pendingLiquidation == 'false'
-    $state.go "index_inventory"
+    $state.go "inventory"
     return
 
   liquidationInfo = LiquidationService.restoreState()
