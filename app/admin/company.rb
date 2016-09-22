@@ -58,10 +58,10 @@ ActiveAdmin.register Company do
         company_data: company_params,
         legal_representative_data: legal_representative_params
       )
-      if response[:success]
-        redirect_to admin_companies_path, notice: 'La compañia se actualizo correctamente'
-      elsif response[:errors]
+      if response[:errors].present? && response[:success] == false
         redirect_to edit_admin_company_path, notice: response[:errors]
+      elsif response[:success]
+        redirect_to admin_companies_path, notice: 'La compañia se actualizo correctamente'
       end
     end
   end
@@ -148,21 +148,28 @@ ActiveAdmin.register Company do
 
   show do
     attributes_table do
-      row :nit_number, label: 'NIT'
-      row :name, label: 'Nombre'
-      row :city, label: 'Ciudad'
-      row :address, label: 'Direccion'
-      row :state, label: 'Departamento'
-      row :legal_representative, label: 'Representante legal'
-      row :phone_number, label: 'Telefono'
-      row :chamber_of_commerce_file, label: 'PDF camara de comercio' do |u|
-        link_to(image_tag(u.chamber_of_commerce_file.try(:preview).try(:url)), u.chamber_of_commerce_file.url, :target => '_blank')
-      end
-      row :rut_file, label: 'PDF Rut' do |u|
-        link_to(image_tag(u.rut_file.try(:preview).try(:url)), u.rut_file.url, :target => '_blank') if u.rut_file
-      end
-      row :mining_register_file, label: 'PDF registro minero' do |u|
-        link_to(image_tag(u.mining_register_file.try(:preview).try(:url)), u.mining_register_file.url, :target => '_blank')
+      company_id = params[:id]
+      company = Company.find(company_id)
+      if company.registration_state == 'completed'
+        row :nit_number, label: 'NIT'
+        row :name, label: 'Nombre'
+        row :city, label: 'Ciudad'
+        row :email, label: 'Email Compañia'
+        row :address, label: 'Direccion'
+        row :state, label: 'Departamento'
+        row :legal_representative, label: 'Representante legal'
+        row :phone_number, label: 'Telefono'
+        row :chamber_of_commerce_file, label: 'PDF camara de comercio' do |u|
+          link_to(image_tag(u.chamber_of_commerce_file.try(:preview).try(:url)), u.chamber_of_commerce_file.url, :target => '_blank')
+        end
+        row :rut_file, label: 'PDF Rut' do |u|
+          link_to(image_tag(u.rut_file.try(:preview).try(:url)), u.rut_file.url, :target => '_blank') if u.rut_file
+        end
+        row :mining_register_file, label: 'PDF registro minero' do |u|
+          link_to(image_tag(u.mining_register_file.try(:preview).try(:url)), u.mining_register_file.url, :target => '_blank')
+        end
+      else
+        row :nit_number, label: 'NIT'
       end
       row :rucom, label: 'Rucom de compañia'
     end
