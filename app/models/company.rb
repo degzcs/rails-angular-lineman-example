@@ -35,8 +35,8 @@ class Company < ActiveRecord::Base
   #
 
   validates :nit_number, presence: true
-  validates :name, presence: true
-
+  validates :address, presence: true
+  validates :city, presence: true
 
   #
   # Callbacks
@@ -60,16 +60,33 @@ class Company < ActiveRecord::Base
   mount_uploader :mining_register_file, DocumentUploader
   mount_uploader :chamber_of_commerce_file, DocumentUploader
 
-  # TODO: avoid destroy company if there are users associated to it.
-
-
   #
   # State Machine for registration_state field
   #
 
   state_machine :registration_state, initial: :inserted_from_rucom do
-    state :failure
-    state :draf, :completed do
+    # after_transition on: :complete, do: :complementary_attributes
+    # before_transition on: :inserted_from_rucom, do: :complementary_attributes
+    # before_transition on: :draf, do: :there_are_empty_fields
+    after_failure :on => :failure, :do => :it_has_errors
+    event :pause do
+      transition [:inserted_from_rucom, :failure] => :draft
+    end
+    event :complete do
+      transition [:inserted_from_rucom, :draft] => :completed
+    end
+    event :failure do
+      transition [:inserted_from_rucom, :draft, :completed] => :failed
+    end
+
+    state :failed
+    state :draft do
+      validates :nit_number, presence: true
+      validates :address, presence: true
+      validates :city, presence: true
+    end
+    state :completed do
+      validates :name, presence: true
       validates :legal_representative, presence: true
       validates :email, presence: true
       validates :phone_number, presence: true
@@ -82,40 +99,14 @@ class Company < ActiveRecord::Base
       validates :address, presence: true
       validates :city, presence: true
     end
-
-    event :pause do
-      transition [:inserted_from_rucom, :failure, :completed] => :draf
-    end
-
-    event :complete do
-      transition [:inserted_from_rucom, :draf] => :completed
-    end
-
-    event :resume do
-      transition :failure => :draf
-    end
-
-    # event :fail do
-    #   transition [:inserted_from_rucom, :draf, :completed] => :failure
-    # end
-
-    before_transition on: :draf, do: :there_are_empty_fields
-    before_transition on: :completed, do: :validate_complementary_attributes
-    after_transition on: :failure, do: :it_has_errors
   end
 
   #
   # Instance Methods
   #
 
-  def there_are_empty_fields
-  end
-
-  def validate_complementary_attributes
-
-  end
-
   def it_has_errors
+    self.registration_state = 'failed'
   end
 
   # Gets the main office associated to this company
