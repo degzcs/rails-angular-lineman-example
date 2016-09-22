@@ -42,6 +42,7 @@ class Ability
     # (a) can :update, Profile, :registration_state == "authorized?"
     can [:create, :read], Order
     can :read, User
+    can :read, Settings
   end
 
   def authorized_provider
