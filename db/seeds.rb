@@ -38,7 +38,7 @@ begin
         office: company.main_office,
         legal_representative: true)
   company.update_column(:legal_representative_id, legal_representative.id)
-  company.update_column(registration_state: 'completed')
+  company.complete!
 rescue => e
   company = Company.find_by(nit_number: '900848984')
   puts "There was something wrong!. ERROR: #{ e }"
