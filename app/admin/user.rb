@@ -104,6 +104,7 @@ ActiveAdmin.register User do
     column(:roles) { |user|
       user.roles.map(& :name)
     }
+    column :rucom
     actions
   end
 
