@@ -20,6 +20,8 @@ class Company::Registration
     @response
   end
 
+  # @param user_email[ String ]
+  # @param legal_representative_data[ Hash ]
   def validates_user_exist(user_email, legal_representative_data)
     if User.find_by(email: user_email)
       update_legal_representative_from(legal_representative_data)
@@ -29,7 +31,7 @@ class Company::Registration
         @legal_representative = create_legal_representative_from(user_data)
         # associate legal representative with the main company office
         company.update_attributes(legal_representative: legal_representative)
-        company.complete || company.pause
+        company.complete || company.pause # NOTE: if the company registration state doesn't apply to completed state it is going to stay on draft state
       rescue Exception => e
         @response[:errors] << e
       end
@@ -73,7 +75,7 @@ class Company::Registration
     company_id = company_data[:id]
     company = Company.find(company_id)
     if company.update_attributes(company_data)
-      company.complete || company.pause
+      company.complete || company.pause # NOTE: if the company registration state doesn't apply to completed state it is going to stay on draft state
       @response[:success] = true
       company
     else
