@@ -3,8 +3,12 @@ angular.module('app').factory 'CourierService', ($resource, $upload , $http) ->
     per_page: '@per_page'
     page: '@page'
     id_document_number: '@id_document_number')
-  retrieveCourierById = $resource('/api/v1/couriers/:courierId', courierId: '@courierId')
 
+  retrieveCourierById = (id) ->
+    return $http
+              url: '/api/v1/couriers/'+ id, 
+              method: 'GET'
+  
   create = (courier) ->
     $resource '/api/v1/couriers/', {}, 'save':
       method: 'POST'
@@ -37,9 +41,9 @@ angular.module('app').factory 'CourierService', ($resource, $upload , $http) ->
         'courier[company_name]': courier.company_name
         'courier[nit_company_number]': courier.nit_company_number
 
-  query_by_id = (id,per_page,page)->
+  queryById = (id, per_page, page)->
     return $http
-              url: 'api/v1/couriers'
+              url: 'api/v1/couriers/'
               method: 'GET'
               params: {
                 per_page: per_page || 10
@@ -51,6 +55,6 @@ angular.module('app').factory 'CourierService', ($resource, $upload , $http) ->
     retrieveCouriers: retrieveCouriers
     create: create
     edit: edit
-    query_by_id: query_by_id
+    query_by_id: queryById
     retrieveCourierById: retrieveCourierById
   }

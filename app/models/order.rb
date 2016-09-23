@@ -96,6 +96,10 @@ class Order < ActiveRecord::Base
     documents.where(type: 'equivalent_document').first
   end
 
+  def shipment
+    documents.where(type: 'shipment').first
+  end
+
   def barcode_html
     barcode = Barby::EAN13.new(self.code)
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html

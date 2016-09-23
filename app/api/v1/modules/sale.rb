@@ -75,7 +75,7 @@ module V1
             [404, 'Entry not found'],
             ] do
             authorize! :create, ::Order
-            selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:purchase_id] }
+            selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:id] }
             registration_service = ::Sale::SaleGoldService.new
             response = registration_service.call(
               order_hash: params[:sale],
@@ -188,6 +188,11 @@ module V1
           batches = legal_representative.sales.where(id: params[:id], type: 'sale').last.batches
           present batches, with: V1::Entities::SoldBatch
         end
+
+        #
+        # GET shipment
+        #
+
       end
     end
   end
