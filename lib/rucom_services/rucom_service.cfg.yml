@@ -1,11 +1,11 @@
-scraper: 
+scraper:
   driver: Selenium::WebDriver
   browser: :phantomjs
   wait_load: 20
   wait_clic: 1
-  page_url: 'http://tramites.anm.gov.co:8080/Portal/pages/consultaListados/anonimoListados.jsf'
-  table_body_id: "form:tablaListadosANM_data"  
-  hidden_elements_id: 
+  page_url: 'http://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf'
+  table_body_id: "form:tablaListadosANM_data"
+  hidden_elements_id:
     step_0: 'form:trol_panel'
     step_1: 'form:tIdentificacion_panel'
     step_2: 'form:numId'
@@ -15,7 +15,6 @@ scraper:
     response_class: "AutorizedProviderResponse"
   trader:
     select_options: ["Comerciante", "CEDULA", "NIT"]
-    response_class: "TraderResponse"  
+    response_class: "TraderResponse"
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  

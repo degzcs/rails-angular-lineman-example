@@ -58,7 +58,7 @@ describe  User, type: :model do
     end
 
     it 'should create a user with 0 available credits by default' do
-      user = create(:user, :with_personal_rucom)
+      user = create(:user, :with_profile, :with_personal_rucom)
       expect(user.profile.available_credits).to eq(0.0)
     end
 
@@ -77,13 +77,13 @@ describe  User, type: :model do
 
   context 'scopes' do
     before :each do
-      @users = create_list(:user, 5, :with_personal_rucom) # or internal traders
+      @users = create_list(:user, 5, :with_personal_rucom, :with_profile) # or internal traders
 
       @user_with_trader_role = create_list(:user, 3, :with_company, :with_personal_rucom, :with_trader_role)
       @user_with_final_client_role = create_list(:user, 3, :with_personal_rucom, :with_final_client_role)
       @user_with_transporter_role = create_list(:user, 3, :with_personal_rucom, :with_transporter_role)
 
-      @users_with_any_rucom = create_list(:user, 5, :with_personal_rucom)
+      @users_with_any_rucom = create_list(:user, 5, :with_personal_rucom, :with_profile)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil)
 
       @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)

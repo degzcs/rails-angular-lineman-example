@@ -89,10 +89,10 @@ describe 'AuthorizedProviders', type: :request do
 
           city = City.find_by(name: 'RIONEGRO')
 
-          url_base = '/test/uploads'
-          id_document_file_url = "/documents/profile/id_document_file/#{user.id}/id_document_file.pdf"
-          mining_authorization_file_url = "/documents/profile/mining_authorization_file/#{user.id}/mining_authorization_file.pdf"
-          photo_file = "/photos/profile/photo_file/#{user.id}/photo_file.png"
+          url_base = "/test/uploads"
+          id_document_file_url = "/documents/profile/id_document_file/#{user.profile.id}/id_document_file.pdf"
+          mining_authorization_file_url = "/documents/profile/mining_authorization_file/#{user.profile.id}/mining_authorization_file.pdf"
+          photo_file = "/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
 
           expected_response = {
             'id' => user.id,

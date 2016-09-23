@@ -264,14 +264,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  # NOTE: all users marked as an external are users which will belong to the client role.
   # NOTE: We are waiting the meeting with accounter to define the validations when a
   # trader is legal person and natural person and his relantionship with the model Office
   def validate_office?
     self.trader?
   end
 
+  # NOTE: this conditional (!self.has_office?  && !self.trader?) is because we havent the feature to know if
+  # user is natural or legal person.
   def validate_personal_rucom?
-    !self.has_office? && !self.profile.legal_representative
+    (self.authorized_provider? && !self.has_office?) || (!self.has_office? && !self.trader?)
   end
 end

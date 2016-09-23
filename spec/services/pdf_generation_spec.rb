@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PdfGeneration do
-  let(:buyer) { create :user, :with_company }
+  let(:buyer) { create :user, :with_profile, :with_company }
   let(:gold_batch) { create(:gold_batch, fine_grams: 10, grade: 999, extra_info: { grams: 10 }) }
   let(:service) { ::PdfGeneration.new }
 
@@ -42,8 +42,8 @@ describe PdfGeneration do
   end
 
   context 'check sale process' do
-    let(:seller) { create :user, :with_company }
-    let(:sale_order) { create :sale, seller: seller, gold_batch: gold_batch }
+    let(:seller) { create :user, :with_profile, :with_company }
+    let(:sale_order){ create :sale, seller: seller, gold_batch: gold_batch }
     it 'should to create a pdf file with the correct information' do
       response = service.call(order: sale_order,
                               draw_pdf_service: ::Sale::ProofOfSale::DrawPDF,

@@ -1,10 +1,8 @@
 describe 'Auth', :type => :request do
-
   describe :v1 do
     context '#login' do
-
       before :context do
-        @user = create :user, :with_company, email: "elcho.esquillas#{ User.count + 100 }@fake.com", password: 'super_password', password_confirmation: 'super_password'
+        @user = create :user, :with_profile, :with_company, email: "elcho.esquillas#{ User.count + 100 }@fake.com", password: 'super_password', password_confirmation: 'super_password'
       end
 
       context 'POST' do
@@ -27,7 +25,6 @@ describe 'Auth', :type => :request do
           expect(@user.reload.authenticate('another_super_password')).to  be_kind_of  User
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end
-
       end
 
       context 'GET' do
@@ -42,7 +39,6 @@ describe 'Auth', :type => :request do
           expect(JSON.parse(response.body)["access_token"]).not_to be_nil
         end
       end
-
     end
   end
 end

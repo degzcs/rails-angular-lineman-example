@@ -47,11 +47,10 @@ class Profile < ActiveRecord::Base
   validates :document_number, presence: true
   validates :phone_number, presence: true
   validates :address, presence: true
-  # TODO: change external feature to roles feature
-  # validates :id_document_file, presence: true, unless: :external
-  # validates :rut_file, presence: true
-  # validates :mining_authorization_file, presence: true
-  # validates :photo_file, presence: true, unless: :external
+  validates :id_document_file, presence: true
+  validates :rut_file, presence: true, unless: :authorized_provider?
+  validates :mining_authorization_file, presence: true, if: :authorized_provider?
+  validates :photo_file, presence: true
   validates :city, presence: true
 
   #
@@ -80,6 +79,10 @@ class Profile < ActiveRecord::Base
   # Instance Methods
   #
 
+  def authorized_provider?
+    user.authorized_provider? unless user.blank?
+  end
+
   def mining_register_file
     self.mining_authorization_file
   end
@@ -106,7 +109,7 @@ class Profile < ActiveRecord::Base
     raise EmptyCredits if new_amount <= 0
     update_attribute(:available_credits, new_amount)
   end
-  
+
   def there_are_unset_attributes
     self.first_name.blank? ||
     self.last_name.blank? ||
@@ -116,7 +119,7 @@ class Profile < ActiveRecord::Base
     self.photo_file.url.blank? ||
     self.id_document_file.url.blank? ||
     self.mining_register_file.url.blank?
-  end  
+  end
 
   protected
 
