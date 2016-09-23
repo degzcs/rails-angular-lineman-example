@@ -41,7 +41,12 @@ module Sale
           draw_pdf_service: ::Sale::ProofOfSale::DrawPDF,
           document_type: 'equivalent_document' # TODO: invoice here
         )
-        # response = Shipment::ShipmentService.new
+
+        shipment_service = Shipment::ShipmentService.new
+        response = shipment_service.call(
+          current_user: @seller,
+          order: sale_order
+        )
       end
       response
     end
