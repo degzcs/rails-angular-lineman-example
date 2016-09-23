@@ -18,7 +18,7 @@ describe 'Sale', type: :request do
                                   :with_proof_of_purchase_file,
                                   buyer: current_seller)
           # TODO: change frontend implementation to avoid this.
-          selected_purchases = purchases.map { |purchase| { purchase_id: purchase.id } }
+          selected_purchases = purchases.map { |purchase| { id: purchase.id } }
           expected_response = {
             'courier_id' => courier.id,
             'buyer' => {
