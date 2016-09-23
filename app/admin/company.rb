@@ -85,6 +85,7 @@ ActiveAdmin.register Company do
     column :legal_representative
     column :email
     column :rucom
+    column :registration_state
     actions
   end
 
