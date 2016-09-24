@@ -43,6 +43,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_shipment_file do
+      after :create do |sale, _e|
+        sale.documents.build(
+          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'shipment.pdf')),
+          type: 'shipment'
+        )
+        sale.save!
+      end
+    end
+
     trait :with_batches do
       transient do
         number_of_batches { 3 }

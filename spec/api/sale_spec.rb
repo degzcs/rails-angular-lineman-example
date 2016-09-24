@@ -59,6 +59,7 @@ describe 'Sale', type: :request do
           expect(order.audits.first.audited_changes['type']).to eq('sale')
           expect(order.audits.first.user).to eq(current_seller)
           expect(order.audits.last.action).to eq('update')
+          expect(order.shipment.file.path).to match('shipment.pdf')
           # expect(order.audits.last.user).to eq(current_seller) is pending to add the audit_as
         end
       end
@@ -68,7 +69,7 @@ describe 'Sale', type: :request do
           @current_user = create :user, :with_profile, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
-          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, seller: @legal_representative)
+          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative)
           @buyer = create(:user, :with_company, :with_trader_role)
         end
 
@@ -89,22 +90,36 @@ describe 'Sale', type: :request do
         end
 
         context '/:id' do
-          it 'gets purchase by id with role trader' do
+          it 'gets sale by id with role trader' do
             sale = @sales.last
 
-            expected_response = {
-              id: sale.id,
-              courier_id: sale.courier_id,
-              # buyer: buyer_expected_response.stringify_keys,
-              user_id: @legal_representative.id,
-              gold_batch_id: sale.gold_batch.id,
-              fine_grams: sale.fine_grams,
-              code: sale.code,
-              barcode_html: sale.barcode_html
+            expected_buyer = {
+              'id' => sale.buyer.id,
+              'first_name' => sale.buyer.profile.first_name,
+              'last_name' => sale.buyer.profile.last_name
             }
+
+            expected_response = {
+              'id' => sale.id,
+              'courier_id' => sale.courier_id,
+              'associated_purchases' => [],
+              # 'buyer' => buyer_expected_response.stringify_keys,
+              'user_id' => @legal_representative.id,
+              'gold_batch_id' => sale.gold_batch.id,
+              'fine_grams' => sale.fine_grams,
+              'code' => sale.code,
+              'barcode_html' => sale.barcode_html,
+              'shipment' => sale.shipment.as_json,
+              'buyer' => expected_buyer,
+              'price' => sale.price,
+              'proof_of_sale' => sale.proof_of_sale.as_json,
+              'purchase_files_collection' => sale.purchase_files_collection.as_json,
+              'purchases_total_value' => sale.purchases_total_value,
+              'total_gain' => sale.total_gain
+            }.deep_reject_keys!('created_at','updated_at')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
-            expect(JSON.parse(response.body)).to include expected_response.stringify_keys
+            expect(expected_response).to include JSON.parse(response.body).deep_reject_keys!('created_at','updated_at')
           end
         end
 

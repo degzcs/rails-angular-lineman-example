@@ -1,5 +1,5 @@
 # Draw application shipment authorization and/or
-class Shipment::DrawPDF < Prawn::Document
+class Shipment::DrawPdf < Prawn::Document
   attr_accessor :base_file
 
   def initialize(options = {})
