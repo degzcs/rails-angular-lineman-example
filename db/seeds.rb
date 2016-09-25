@@ -98,7 +98,7 @@ puts 'Setting user roles ...'
 trade_role = Role.find_by(name: 'trader')
 trazoro_users.each do |user|
   begin
-    user.roles << trade_role
+    user.roles << trade_role unless user.roles.include?(trade_role)
   rescue => e
     puts "ERROR: #{ e }"
   end
