@@ -17,6 +17,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
       associatedPurchases: null
       totalAmount: null
+      fixed_sale_agreetment: null
 
 
     create: (sale_params, gold_batch_params, selectedPurchases)->
@@ -41,6 +42,9 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
 
     getBatches: (id)->
       return $http.get("api/v1/sales/"+id+"/batches")
+
+    getFixedSaleAgreetment: ->
+      return $http.get("api/v1/agreetments/fixed_sale")
 
     #
     # Get all sales paged for the current user  
