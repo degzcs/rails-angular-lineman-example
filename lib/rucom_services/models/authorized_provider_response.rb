@@ -10,12 +10,13 @@ module RucomServices
       attribute :minerals, String
       attribute :localization, String
       attribute :original_name, String
-      attribute :provider_type, String, default: :set_underscore_class_name
+      attribute :provider_type, String
 
       # Validations
       validates :name, presence: true
       validates :minerals, presence: true
       validates :original_name, presence: true
+      validates :provider_type, presence: true
 
       def save
         if valid?
@@ -24,10 +25,6 @@ module RucomServices
         else
           false
         end
-      end
-
-      def set_underscore_class_name
-        self.class.name.gsub(/^RucomServices::Models::|Response$/, '').underscore
       end
 
       private
