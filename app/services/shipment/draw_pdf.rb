@@ -23,7 +23,7 @@ class Shipment::DrawPdf < Prawn::Document
 
     # Header
     # move_down 60
-    move_cursor_to 995
+    move_cursor_to 1200
     text_box "Prueba de que dibuja"
   end
 end
