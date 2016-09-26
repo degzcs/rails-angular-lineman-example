@@ -810,6 +810,7 @@
         deferred.promise
   )
 
+# Fixed Sale Agreetment
   .state("new_sale.step1",
     url: "/sales/step1",
     ncyBreadcrumb:
@@ -835,6 +836,31 @@
         deferred.promise
   )
 
+#
+  .state("new_sale.step2",
+    url: "/sales/step2",
+    ncyBreadcrumb:
+      label: 'Selección de Bloques de Oro'
+    views:
+      'content':
+        templateUrl: "partials/sales/step2.html"
+        controller: "SalesCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
 # --------- End Sales Routes ------------------#
 
   $urlRouterProvider.otherwise "/home"
