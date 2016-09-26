@@ -96,6 +96,12 @@ describe RucomServices::Synchronize do
             # it 'creates a rucom row in the database'
             expect(@sync.rucom.blank?).to eq(false)
             expect(@sync.rucom).to eq(@rucom)
+            expect(@rucom.name).to eq 'AMADO  MARULANDA'
+            expect(@rucom.original_name).to eq 'AMADO  MARULANDA'
+            expect(@rucom.minerals).to eq 'ORO'
+            expect(@rucom.status).to eq 'Activo'
+            expect(@rucom.provider_type).to eq 'barequero'
+            expect(@rucom.rucomeable_type).to eq 'User'
 
             # it 'creates a user profile row in the database'
             @profile = Profile.find_by(document_number: @data[:id_number])

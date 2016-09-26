@@ -19,6 +19,9 @@ module RucomServices
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance)
       @is_there_rucom = validate_got_results(html_page_data)
       formatted_data = @is_there_rucom ? formater_elements(html_page_data) : []
+      # NOTE: this line fix correct provider_type assignament, however this have to be changed
+      # along with the formatted feature
+      formatted_data[:provider_type] = @data_to_find[:rol_name].downcase unless formatted_data.blank?
       virtus_model_name = @setting.response_class
       @virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
       @setting.driver_instance.quit
@@ -42,6 +45,7 @@ module RucomServices
       html_results.xpath("//*[@id='#{@setting.table_body_id}']").children.css('tr > td')
     end
 
+    # @return [ Hash ] with elements formated
     def formater_elements(html_page_data)
       options = { data: html_page_data, format: @setting.response_class.underscore.to_sym }
       RucomServices::Formater.new.call(options)
