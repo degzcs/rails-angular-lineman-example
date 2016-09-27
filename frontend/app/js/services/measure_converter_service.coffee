@@ -36,8 +36,8 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # @params riales [Integer]
     # @return [Float]
     #
-    rialesToGrams: (riales)->
-      (riales*4.6)/16
+    realesToGrams: (reales)->
+      (reales*4.6)/16
 
     #
     # Convert from Granos to Grams

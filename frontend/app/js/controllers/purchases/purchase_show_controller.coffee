@@ -24,9 +24,9 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
         company_name: current_user.company.name,
         office: current_user.office,
         nit: current_user.company.nit_number,
-        rucom_record: current_user.company.rucom.rucom_record,
-        first_name: current_user.company.legal_representative.first_name,
-        last_name: current_user.company.legal_representative.last_name,
+        rucom_number: current_user.company.rucom.rucom_number,
+        first_name: current_user.company.legal_representative.profile.first_name,
+        last_name: current_user.company.legal_representative.profile.last_name,
         address: current_user.company.address,
         phone: current_user.company.phone_number,
       }
@@ -35,7 +35,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
         company_name: 'NA',
         office: 'NA',
         nit: 'NA',
-        rucom_record: 'NA',
+        rucom_number: 'NA',
         first_name: current_user.first_name,
         last_name: current_user.last_name,
         address: current_user.address,
@@ -66,7 +66,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       castellanos: 0
       ozs: 0
       tomines: 0
-      riales: 0
+      reales: 0
       inventory_id: 1
       total_grams: 0
       total_fine_grams: 0

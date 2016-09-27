@@ -21,7 +21,7 @@
             %td.md-table-td-more
               Rucom:
             %td.md-table-td-more.value
-              {{buyer_data.rucom_record}}
+              {{buyer_data.rucom_number}}
           %tr
             %td.md-table-td-more
               Nombre de usuario:
@@ -62,7 +62,7 @@
               %td.md-table-td-more
                 Rucom:
               %td.md-table-td-more.value
-                {{purchase.model.seller.rucom_record}}
+                {{purchase.model.seller.rucom.rucom_number}}
             %tr
               %td.md-table-td-more
                 Nombre de usuario
@@ -161,7 +161,7 @@
             Rial(es)
           %td.md-table-td-more{colspan: 5}
             %md-input-container
-              %span {{goldBatch.model.riales}}
+              %span {{goldBatch.model.reales}}
   .error-message{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
     %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'"}
       El usario no tiene suficientes creditos para realizar esta compra!

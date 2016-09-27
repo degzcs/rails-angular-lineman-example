@@ -21,7 +21,7 @@
               %td.md-table-td-more
                 Rucom:
               %td.md-table-td-more.value
-                {{buyer_data.rucom_record}}
+                {{buyer_data.rucom_number}}
             %tr
               %td.md-table-td-more
                 Nombre de usuario:
@@ -62,7 +62,7 @@
                 %td.md-table-td-more
                   Rucom:
                 %td.md-table-td-more.value
-                  {{purchase.model.seller.rucom_record}}
+                  {{purchase.model.seller.rucom.rucom_number}}
               %tr
                 %td.md-table-td-more
                   Nombre de usuario
@@ -167,7 +167,7 @@
               Rial(es)
             %td.md-table-td-more{colspan: 5}
               %md-input-container
-                %span {{goldBatch.model.riales}}
+                %span {{goldBatch.model.reales}}
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
       %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-href" =>"{{purchase.model.proof_of_purchase_file_url}}", 'target' => '_blank'} Documento Equivalente
       %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-href" =>"{{purchase.model.origin_certificate_file_url}}", 'target' => '_blank'} Certificado de Origen
