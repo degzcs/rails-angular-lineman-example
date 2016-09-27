@@ -95,9 +95,9 @@ angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, 
     return
 
   $scope.save = ->
-    AuthorizedProvider.modul.phone_number = $scope.currentAuthorizedProvider.phone_number
-    AuthorizedProvider.modul.email = $scope.currentAuthorizedProvider.email
-    AuthorizedProvider.modul.address = $scope.currentAuthorizedProvider.address
+    AuthorizedProvider.model.phone_number = $scope.currentAuthorizedProvider.phone_number
+    AuthorizedProvider.model.email = $scope.currentAuthorizedProvider.email
+    AuthorizedProvider.model.address = $scope.currentAuthorizedProvider.address
 
     AuthorizedProvider.update($scope.currentAuthorizedProvider.id).success (data)->
       #$mdDialog.cancel()
