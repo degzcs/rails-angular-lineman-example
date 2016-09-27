@@ -12,7 +12,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
     $scope.buyer_data = buyer_data_from($scope.current_user)
-    window.scope = $scope
+    # window.scope = $scope
 
   #
   # Fuctions
@@ -72,6 +72,13 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       total_fine_grams: 0
 
     console.log 'deleting sessionStorage ...'
+
+
+  $scope.DownloadPurchaseFiles =->
+    window.open($scope.purchase.model.proof_of_purchase_file_url, "_blank")
+    window.open($scope.purchase.model.origin_certificate_file_url, "_blank")
+    return true
+
 
   #
   # Flush data on change state
