@@ -42,18 +42,25 @@ class OrderPresenter < BasePresenter
     SettingsPresenter.new(Settings.instance, h)
   end
 
-  def trazoro_transaction_vat
-    "$#{ trazoro_transaction_cost_value * settings_presenter.vat_percentage }"
+  def trazoro_transaction_cost_value
+    gold_batch.fine_grams * settings_presenter.fine_gram_value
   end
 
+  # Costo trazoro = gramo fino * precio trazoro
   def trazoro_transaction_cost
     "$#{ trazoro_transaction_cost_value }"
   end
 
-  def trazoro_transaction_cost_value
-    gold_batch.fine_grams * settings_presenter.fine_gram_value
+  # IVA
+  def trazoro_transaction_vat
+    "$#{ trazoro_transaction_cost_value * settings_presenter.vat_percentage }"
   end
-  
+
+  # C. trazoro total = Costo trazoro + IVA
+  def trazoro_transaction_total_cost
+    "$#{ trazoro_transaction_cost + trazoro_transaction_vat }"
+  end
+
   def grams
     fine_grams # TODO: check what this field means in the equivalent document
   end
