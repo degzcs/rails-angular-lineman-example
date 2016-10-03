@@ -36,10 +36,10 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
         office: 'NA',
         nit: 'NA',
         rucom_number: 'NA',
-        first_name: current_user.first_name,
-        last_name: current_user.last_name,
-        address: current_user.address,
-        phone: current_user.phone_number,
+        first_name: current_user.profile.first_name,
+        last_name: current_user.profile.last_name,
+        address: current_user.profile.address,
+        phone: current_user.profile.phone_number,
       }
 
 
