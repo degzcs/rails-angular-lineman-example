@@ -1,7 +1,13 @@
 %section{:flex => "", :layout => "column", "layout-fill" => ""}
-  %md-subheader.md-primary.inventory-options-head
-    %md-button.md-raised.md-primary.btn-save{"ng-click" => "liquidateSelectedPurchases($event)"}
-      Liquidar {{totalAmount}} Gramos
+  %md-card.amounts-picked.md-padding{flex: "15"}
+    %h3
+      Seleccion (Gramos Finos)
+    #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"} 
+    #  {{purchase.gold_batch.grams}} 
+    %div.total_amount
+      %strong
+        Gramos Finos Totales: 
+      {{totalAmount}} gr
      
   %md-content
     .table-container
@@ -17,7 +23,7 @@
 
 
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
-          %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters","ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
+          %tr.md-table-content-row{"ng-repeat" => "purchase in purchases", "ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
             %td.table-checkbox
               %md-checkbox{"ng-checked" => "alreadySelected(purchase)", "aria-label" => "none", "ng-click" => "toggle(purchase)" }
               
@@ -27,7 +33,8 @@
             %td
               .trazoro-state.tag{"ng-if"=>"purchase.trazoro"}
                 Trazoro
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
+            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} 
+              {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
 
             
@@ -35,3 +42,6 @@
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
         Registros cargados: {{count}}
+
+.wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+  %md-button.btn-save{ flex: "20", "ng-click" => "liquidateSelectedPurchases($event)"} Continuar

@@ -1,4 +1,5 @@
-angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchService, CameraService, MeasureConverterService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProviderService, SignatureService, PurchaseService) ->
+
+angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchService, CameraService, MeasureConverterService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter, AuthorizedProviderService, SignatureService, PurchaseService, LiquidationService) ->
   
   #
   # Instances
@@ -6,8 +7,15 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
   $scope.sale = SaleService
   $scope.chkAgreetmentActive = false
 
+  $scope.toggleSearch = false
+  $scope.totalAmount = 0
+  #Variables configuration
+  $scope.pages = 0
+  $scope.currentPage = 1
+  $scope.count = 0
 
 # -----------------Step1 ----------------------------------
+
  # Returns the Fixed Sale Agreetmen from Settings instance
   SaleService.getFixedSaleAgreetment().success ((data)->
     console.log 'OK getFixedSaleAgreetment'
@@ -17,23 +25,25 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
  
  # Monitoring the Agreetment check
   $scope.handlerContinue =  ->
-    console.log $scope.chkAgreetmentActive
+    # console.log $scope.chkAgreetmentActive
     res = if $scope.chkAgreetmentActive == true then true else false
-    console.log 'res: ' + res
+    # console.log 'res: ' + res
     return res
 # --------------End Step1 ---------------------------------
 
 # ---------------- Step2 ----------------------------------
-  $scope.toggleSearch = false
-  $scope.totalAmount = 0 
+  # Filter the purchase with state equal to Disponible to be sale
+  $scope.purchaseFreeFilter = (purchase) ->
+    return  purchase.state == 'Disponible'
+
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
   $scope.headers = [
-    {
-      name: 'Estado'
-      field: 'purchase.gold_batch.sold'
-    }
+    #{
+    #  name: 'Estado'
+    #  field: 'purchase.gold_batch.sold'
+    #}
     {
       name: 'Fecha'
       field: 'purchase.created_at'
@@ -52,16 +62,14 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     }
   ] 
 
-  #Variables configuration
-  $scope.pages = 0
-  $scope.currentPage = 1
   #---------------- Controller methods -----------------//
-  #Purchase service call to api to retrieve all purchases for current user
-  PurchaseService.all().success((purchases, status, headers, config) ->
+  # Purchase service call to api to retrieve all Free purchases for current user
+  PurchaseService.all_free().success((purchases, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = purchases.length
     $scope.purchases = purchases
   ).error (data, status, headers, config) ->
+    console.log 'error: ' + data
     $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
 
   $scope.infoAlert = (title, content) ->
@@ -88,22 +96,32 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     confirmLiquidate($scope.totalAmount, ev)
         
   confirmLiquidate = (total_grams,ev)->
-    confirm = $mdDialog.confirm()
-    .title('Confirmar')
-    .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
-    .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
-    .targetEvent(ev)
+    if total_grams <= 0
+      message = 'Debe seleccionar primero algún Bloque de Oro'
+      confirm = $mdDialog.alert()
+      .title('Alerta')
+      .content(message)
+      .ariaLabel('Lucky day').ok('cerrar')
+      .targetEvent(ev)
+      $mdDialog.show(confirm)
+    else
+      message = 'Esta seguro de liquidar ' +total_grams.toFixed(3) + ' gramos?'
+      confirm = $mdDialog.confirm()
+      .title('Confirmar')
+      .content(message)
+      .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
+      .targetEvent(ev)
+      $mdDialog.show(confirm).then (->
+        LiquidationService.model.selectedPurchases = $scope.selectedPurchases
+        LiquidationService.model.totalAmount = $scope.totalAmount
+        LiquidationService.model.ingotsNumber = 1
+        LiquidationService.saveState()
 
-    $mdDialog.show(confirm).then (->
-      LiquidationService.model.selectedPurchases = $scope.selectedPurchases
-      LiquidationService.model.totalAmount = $scope.totalAmount
-      LiquidationService.model.ingotsNumber = 1
-      LiquidationService.saveState()
+        $state.go 'new_sale.step3'
+        return
+      ), ->
+        #If the response in negative sets the checkbox to true again
+        return
+      return
 
-      $state.go 'liquidate_inventory'
-      return
-    ), ->
-      #If the response in negative sets the checkbox to true again
-      return
-    return
 # ------------End Step2 -------------------------------------
