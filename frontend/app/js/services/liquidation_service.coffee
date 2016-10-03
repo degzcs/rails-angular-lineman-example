@@ -4,6 +4,10 @@ angular.module('app').factory 'LiquidationService', ($http)->
     model:
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
       totalAmount: 0
+      selectedClient: null
+      price: 0
+      weightedLaw: 0
+
     
     saveState: ->
       sessionStorage.pendingLiquidation = 'true'

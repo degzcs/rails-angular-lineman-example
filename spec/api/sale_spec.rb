@@ -24,7 +24,11 @@ describe 'Sale', type: :request do
             'buyer' => {
               'id' => current_buyer.id,
               'first_name' => current_buyer.profile.first_name,
-              'last_name' => current_buyer.profile.last_name
+              'last_name' => current_buyer.profile.last_name,
+              'document_number' => current_buyer.profile.document_number,
+              'phone_number' => current_buyer.profile.phone_number,
+              'address' => current_buyer.profile.address,
+              'email' => current_buyer.email
             },
             'user_id' => current_seller.id, # TODO: upgrade frontend
             # 'gold_batch_id' => GoldBatch.last.id + 1,
@@ -96,7 +100,11 @@ describe 'Sale', type: :request do
             expected_buyer = {
               'id' => sale.buyer.id,
               'first_name' => sale.buyer.profile.first_name,
-              'last_name' => sale.buyer.profile.last_name
+              'last_name' => sale.buyer.profile.last_name,
+              'document_number' => sale.buyer.profile.document_number,
+              'phone_number' => sale.buyer.profile.phone_number,
+              'address' => sale.buyer.profile.address,
+              'email' => sale.buyer.email
             }
 
             expected_response = {

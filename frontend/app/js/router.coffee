@@ -836,7 +836,7 @@
         deferred.promise
   )
 
-#
+# GoldBatch Select
   .state("new_sale.step2",
     url: "/sales/step2",
     ncyBreadcrumb:
@@ -861,6 +861,59 @@
           deferred.resolve()
         deferred.promise
   )
+
+# Sale Detail
+  .state("new_sale.step3",
+    url: "/sales/step3",
+    ncyBreadcrumb:
+      label: 'Fijación de Precio'
+    views:
+      'content':
+        templateUrl: "partials/sales/step3.html"
+        controller: "SaleOrderLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+# Sale Order Detail
+  .state("new_sale.step4",
+    url: "/sales/step4",
+    ncyBreadcrumb:
+      label: 'Detalle de Orden de Venta'
+    views:
+      'content':
+        templateUrl: "partials/sales/step4.html"
+        controller: "SaleOrderLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
 # --------- End Sales Routes ------------------#
 
   $urlRouterProvider.otherwise "/home"

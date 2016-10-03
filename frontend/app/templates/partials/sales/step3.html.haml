@@ -1,0 +1,110 @@
+/--------------------------- Liquidate invnetory view ------------------------/
+%section.liquidate-inventory-view{layout: "row"}
+  /--------------------------- Selected Grams layout ------------------------/
+  %md-card.amounts-picked.md-padding{flex: "15"}
+    %div.total_amount
+      %strong
+        Gramos Finos Totales: 
+      {{totalAmount}} gr
+    %div.selected_amount
+      %strong
+        Ley Resultante: 
+      {{weightedLaw.toFixed(3)}} 
+    
+    /%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"} 
+  %md-card.batches{flex: "50"}
+    /--------------------------- Ingot Creation layout ------------------------/
+    %h3
+      Lote Resultante
+
+    %form.sale-form{name: "ingotsForm","ng-submit"=>"submitSale()", :data-ng-init => "calculateWeight();"}
+      %md-content.ingot_form{:layout => "row", "layout-padding" => "", "md-theme" => "docs-dark"}
+        //%h3{flex: "30"} 
+        //  Lote 
+        //  /{{$index +1 }} :
+        %md-input-container{flex: ""}
+          /%label Ley Resultante
+          /%input{"name"=> "selectedGrade", required: "", "type" => "number",:ng-value =>"weightedLaw.toFixed(3)"}
+          /%input{"name"=> "selectedGrade","ng-model" => "selectedGrade", required: "", "type" => "number","ng-change"=>"calculateWeight()","min"=> "1","max"=> "999","step"=>"1"}
+          %div{"ng-messages" => "ingotsForm.selectedGrade.$error"}
+            %div{"ng-message" => "min"} La ley debe ser un valor entre 1 y 999
+            %div{"ng-message" => "max"} La ley debe ser un valor entre 1 y 999
+            %div{"ng-message" => "number"} Formato Invalido
+        %md-input-container{flex: ""}
+          %label Precio Gramo
+          %input{"name"=>"perUnitValue","ng-model" => "perUnitValue", required: "","type" => "number", "step"=>"any","ng-change"=>"calculatePrice()" }
+          %div{"ng-messages" => "ingotsForm.perUnitValue.$error"}
+            %div{"ng-message" => "number"} Formato Invalido
+      /%div.liquidation-messages{"ng-messages" => "validation_messages"}
+      /  %div.valid{"ng-message" => "valid"} Cantidad correcta
+      /  %div.invalid{"ng-message" => "invalid"} La cantidad no corresponde con los gramos finos seleccionados
+      .inventory-total-values{layout: "row"}
+        %h1{flex: ""}
+          Peso Total:
+          {{selectedWeight}} gr
+        %h1{flex: ""}
+          Precio Total:
+          $ {{price | currency}}
+        
+      .customer-form{layout: "row"}
+        /--------------------------- Client info ------------------------/
+        .customer-info{flex: ""}
+          %fieldset.standard.tr-fieldset{:layout => "column"}
+            %legend 
+              %h3 
+                Seleccione un cliente
+            %md-autocomplete{"md-selected-item"=>"selectedClient", "md-search-text"=> "searchClientText", "md-items" => "client in searchClients(searchClientText)", "md-no-cache" => "true", "md-item-text"=>"client.first_name", "placeholder" => "Buscar Clientes por Cedula","md-selected-item-change"=>"setSelectedClient(selectedClient)"}
+              %span{"md-highlight-text" => "searchClientText"} {{client.document_number}} - {{client.first_name}} {{client.last_name}} 
+            %div.fieldset-inputs
+              %div{layout: "row"}
+                %md-input-container{flex: ""}
+                  %label Nombre
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.first_name","readOnly"=>"true"}
+                %md-input-container{flex: ""}
+                  %label Apellido
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.last_name","readOnly"=>"true"} 
+              %div.inventory-client-names{layout: "row"}
+                %md-input-container{flex: }
+                  %label Cedula
+                  %input{:disabled => "disabled", "ng-model" => "selectedClient.document_number","readOnly"=>"true"}
+              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
+                %md-progress-circular{"md-mode" => "indeterminate"}
+          %br
+          /%a.md-button{"ui-sref"=>"search_rucom({type: 'client'})"}  crear cliente
+        /--------------------------- Client Photo  -----------------------/
+        %div{flex: ""}
+          // ---------------------- seller photo ------------------- //
+          %md-content{"flex"=> "30", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
+            .image.row
+              .photo
+                %img.face.cam{'alt'=>'Foto Vendedor {{client.photo_file.url}}', 'ng-src' => "{{selectedClient.photo_file.url}}"}
+
+        /--------------------------- Courier info ------------------------/
+        /.courier-info{flex: ""}
+        /  %fieldset.standard.tr-fieldset{:layout => "column"}
+        /    %legend 
+        /      %h3 
+        /        Seleccione un Transportador
+        /    %md-autocomplete{"md-selected-item" => "selectedCourier", "md-search-text" => "searchCourierText", "md-items" => "courier in searchCouriers(searchCourierText)", "md-no-cache" => "true", "/md-item-text"=>"courier.first_name", "placeholder" => "Buscar Transportadores por Cedula","md-selected-item-change" => "setSelectedCourier(selectedCourier)"}
+        /      %span{"md-highlight-text" => "searchClientText"} {{courier.id_document_number}} - {{courier.first_name}} {{courier.last_name}}
+        /    %div.fieldset-inputs
+        /      %div{layout: "row"}
+        /        %md-input-container{flex: ""}
+        /          %label Nombre
+        /          %input{:disabled => "disabled", "ng-model" => "selectedCourier.first_name"}
+        /        %md-input-container{flex: ""}
+        /          %label Apellido
+        /          %input{:disabled => "disabled", "ng-model" => "selectedCourier.last_name"} 
+        /      %div.inventory-client-names{layout: "row"}
+        /        %md-input-container{flex: }
+        /          %label Cedula
+        /          %input{:disabled => "disabled", "ng-model" => "selectedCourier.id_document_number"}
+        /      %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"courierVerifiedProgress"}
+        /        %md-progress-circular{"md-mode" => "indeterminate"}
+        /  %br
+        /  %a.md-button{"ui-sref"=>"new_courier"} crear transportador
+      /%md-button.submit-button.ingot-submit-btn.md-raised{type: "submit"} Crear Venta
+
+.wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+  %md-button.btn-cancel{ flex: "20", "ui-sref"=> "new_sale.step2", "ng-click" => "saveState()"} Volver
+  %md-button.btn-save{ flex: "20", "ng-desabled" => 'ingotsForm.$invalid',"ng-click" => "submitSale();saveState()"} Generar Orden

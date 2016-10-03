@@ -34,6 +34,10 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       else
         sessionStorage.restoreSale = 'false'
 
+    deleteState: ->
+      sessionStorage.pendingLiquidation = 'false'
+      sessionStorage.saleService = null  
+
     get_by_code: (code)->
       return $http.get("api/v1/sales/get_by_code/"+code)
 
