@@ -63,7 +63,8 @@ class Order < ActiveRecord::Base
 
   scope :fine_grams_sum_by_date, ->(date, seller_id) { where(created_at: (date.beginning_of_month .. date.end_of_month)).where(seller_id: seller_id).joins(:gold_batch).sum('gold_batches.fine_grams') }
   scope :remaining_amount_for, ->(buyer) { where(buyer_id: buyer.id).joins(:gold_batch).where('gold_batches.sold IS NOT true').sum('gold_batches.fine_grams') }
-
+  scope :purchases, ->(ids) { where(type: 'purchase', id: ids) }
+  scope :purchases_free, ->(buyer) { where(type: 'purchase', buyer: buyer).includes(:gold_batch).where(gold_batches: { sold: false }) }
   #
   # Instance Methods
   #

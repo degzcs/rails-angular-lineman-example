@@ -128,15 +128,13 @@ module V1
           authorize! :read, ::Order
           content_type 'text/json'
           if params[:purchase_list].present?
-            purchases = ::Order.where(id: params[:purchase_list], type: 'purchase')
+            purchases = ::Order.purchases(params[:purchase_list])
           else
             page = params[:page] || 1
             per_page = params[:per_page] || 10
             legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
-            purchases =
-              Order.where(type: 'purchase', buyer: legal_representative)
-                   .includes(:gold_batch).where(gold_batches: { sold: false })
-                   .order('orders.id DESC').paginate(page: page, per_page: per_page)
+            purchases =  
+              Order.purchases_free(legal_representative).order('orders.id DESC').paginate(page: page, per_page: per_page)
             header 'total_pages', purchases.total_pages.to_s
           end
           present purchases, with: V1::Entities::Purchase
