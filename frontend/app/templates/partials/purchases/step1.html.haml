@@ -11,7 +11,7 @@
             %md-input-container{flex: ""}
               %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
                 %md-radio-button{:value => "seller", :ng-click => 'flushData()'} Directamente desde proveedor
-                %md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
+                /md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
 
 
   %section{layout: "row"}
@@ -74,4 +74,4 @@
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
     %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step0", "ng-click" => ""} Volver
-    %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-save.md-button{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
