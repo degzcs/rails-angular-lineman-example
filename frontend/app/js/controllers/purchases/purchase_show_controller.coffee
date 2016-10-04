@@ -12,7 +12,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
     $scope.buyer_data = buyer_data_from($scope.current_user)
-    window.scope = $scope
+    # window.scope = $scope
 
   #
   # Fuctions
@@ -36,10 +36,10 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
         office: 'NA',
         nit: 'NA',
         rucom_number: 'NA',
-        first_name: current_user.first_name,
-        last_name: current_user.last_name,
-        address: current_user.address,
-        phone: current_user.phone_number,
+        first_name: current_user.profile.first_name,
+        last_name: current_user.profile.last_name,
+        address: current_user.profile.address,
+        phone: current_user.profile.phone_number,
       }
 
 
@@ -72,6 +72,13 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       total_fine_grams: 0
 
     console.log 'deleting sessionStorage ...'
+
+
+  $scope.DownloadPurchaseFiles =->
+    window.open($scope.purchase.model.proof_of_purchase_file_url, "_blank")
+    window.open($scope.purchase.model.origin_certificate_file_url, "_blank")
+    return true
+
 
   #
   # Flush data on change state

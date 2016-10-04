@@ -3,7 +3,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   # Redirects to The index sale if there is no pendinigs liquidations
   #
 
-  
+
   if sessionStorage.pendingLiquidation == 'false'
     $state.go "new_sale"
     return
@@ -19,7 +19,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       purchase.gold_batch.percentage = purchase.gold_batch.grams/$scope.totalAmount
       $scope.weightedLaw += (purchase.gold_batch.grade * purchase.gold_batch.percentage)
     )
-  
+
   #calculateLaw()
   $scope.selectedGrade = null
   $scope.selectedWeight  = 0
@@ -47,7 +47,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       purchase.gold_batch.percentage = purchase.gold_batch.grams/$scope.totalAmount
       $scope.weightedLaw += (purchase.gold_batch.grade * purchase.gold_batch.percentage)
     )
-    
+
     ##$scope.selectedWeight = Number(($scope.totalAmount * 999/$scope.selectedGrade).toFixed(2))
     $scope.selectedWeight = Number(($scope.totalAmount * 999/$scope.weightedLaw).toFixed(2))
 
@@ -157,18 +157,18 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
         $mdDialog.cancel dialog
         console.log 'Sale Object: '
         console.log sale
-      
+
         LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount
         LiquidationService.saveState()
-       
+
         SaleService.model = sale
         SaleService.saveState()
 
         $state.go('new_sale.step4')
       ).error (data, status, headers, config) ->
         $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud')
-    
+
   $scope.newSaleOrder = ->
     LiquidationService.deleteState()
     SaleService.deleteState()
@@ -182,3 +182,9 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       .ok('hecho!')
       duration: 2
     return
+
+  $scope.DownloadSaleFiles =->
+    window.open($scope.saleOrder.purchase_files_collection.file.url, "_blank")
+    window.open($scope.saleOrder.proof_of_sale.file.url, "_blank")
+    window.open($scope.saleOrder.shipment.file.url, "_blank")
+    return true
