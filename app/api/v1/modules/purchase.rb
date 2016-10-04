@@ -2,6 +2,7 @@ require 'cancancan'
 
 module V1
   module Modules
+    # Purchase EndPoint
     class Purchase < Grape::API
       before_validation do
         authenticate!
@@ -26,38 +27,37 @@ module V1
       #
 
       resource :purchases do
-        desc 'Creates a purchase for the current user', {
-            notes: <<-NOTE
-              ### Description
-              Create a new purchase made for the current user. \n
-              It returns the purchase values created. \n
+        desc 'Creates a purchase for the current user',
+          notes: <<-NOTE
+            ### Description
+            Create a new purchase made for the current user. \n
+            It returns the purchase values created. \n
 
-              ### Example successful response
+            ### Example successful response
 
-                  {
-                    "id"=>1,
-                     "user_id"=>1,
-                     "provider_id"=>1,
-                     "gold_batch_id" => 1,
-                     "price" => 1.5,
-                     "origin_certificate_file" => "image.png",
-                     "origin_certificate_sequence"=>"123456789",
-                     "barcode_html" => "table html code",
-                     "code" => '123456789012',
-                  }
-            NOTE
-          }
+                {
+                  "id"=>1,
+                   "user_id"=>1,
+                   "provider_id"=>1,
+                   "gold_batch_id" => 1,
+                   "price" => 1.5,
+                   "origin_certificate_file" => "image.png",
+                   "origin_certificate_sequence"=>"123456789",
+                   "barcode_html" => "table html code",
+                   "code" => '123456789012',
+                }
+          NOTE
 
         params do
-           requires :purchase, type: Hash
+          requires :purchase, type: Hash
         end
 
         post '/', http_codes: [
-            [200, "Successful"],
-            [400, "Invalid parameter"],
-            [401, "Unauthorized"],
-            [404, "Entry not found"],
-          ]do
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found']
+        ] do
           authorize! :create, ::Order
           # update params
           date = '2016/07/15'.to_date
@@ -68,42 +68,73 @@ module V1
             gold_batch_hash: new_params[:gold_batch],
             current_user: current_user,
             date: date
-            )
-
+          )
           if service_response[:success]
-            present gold_purchase_service.purchase_order , with: V1::Entities::Purchase
+            present gold_purchase_service.purchase_order, with: V1::Entities::Purchase
           else
-            error!({ error: "unexpected error", detail: service_response[:errors] }, 409)
+            error!({ error: 'unexpected error', detail: service_response[:errors] }, 409)
           end
-
         end
 
         #
         # GET
         #
 
-        desc 'returns all existent purchases for the current user', {
+        desc 'returns all existent purchases for the current user',
           entity: V1::Entities::Purchase,
           notes: <<-NOTES
             Returns all existent sessions paginated
           NOTES
-        }
 
         params do
           use :pagination
-          optional :purchase_list, type: Array #Array of purchase ids
+          optional :purchase_list, type: Array # Array of purchase ids
         end
 
-        get '/', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           authorize! :read, ::Order
-          content_type "text/json"
+          content_type 'text/json'
           if params[:purchase_list]
             purchases = ::Order.where(id: params[:purchase_list], type: 'purchase')
           else
             page = params[:page] || 1
             per_page = params[:per_page] || 10
             legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
-            purchases = legal_representative.purchases.order("id DESC").paginate(:page => page, :per_page => per_page)
+            purchases = legal_representative.purchases.order('id DESC').paginate(page: page, per_page: per_page)
+            header 'total_pages', purchases.total_pages.to_s
+          end
+          present purchases, with: V1::Entities::Purchase
+        end
+
+        #
+        # GET by State field
+        #
+        #
+        # GET
+        #
+
+        desc 'returns all Free purchases to Sale for the current user',
+          entity: V1::Entities::Purchase,
+          notes: <<-NOTES
+            Returns all Free purchases to Sale sessions paginated
+          NOTES
+
+        params do
+          use :pagination
+          optional :purchase_list, type: Array # Array of purchase ids
+        end
+
+        get '/free_to_sale', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          if params[:purchase_list].present?
+            purchases = ::Order.purchases(params[:purchase_list])
+          else
+            page = params[:page] || 1
+            per_page = params[:per_page] || 10
+            legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+            purchases =  
+              Order.purchases_free(legal_representative).order('orders.id DESC').paginate(page: page, per_page: per_page)
             header 'total_pages', purchases.total_pages.to_s
           end
           present purchases, with: V1::Entities::Purchase
@@ -113,20 +144,19 @@ module V1
         # GET by id
         #
 
-        desc 'returns one existent provider by :id', {
+        desc 'returns one existent provider by :id',
           entity: V1::Entities::Purchase,
           notes: <<-NOTES
             Returns one existent purchase by :id
           NOTES
-        }
 
         params do
           requires :id, type: Integer, desc: 'Purchase ID'
         end
 
-        get '/:id', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/:id', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           authorize! :read, ::Order
-          content_type "text/json"
+          content_type 'text/json'
           purchase = ::Order.where(id: params[:id], type: 'purchase').last
           authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase

@@ -9,11 +9,26 @@ module V1
         expose :id, documentation: { type: 'integer', desc: 'buyer id' } do |sale, _options|
           sale.buyer.id
         end
-        expose :first_name, documentation: { type: 'integer', desc: 'first_name of the buyer, who buys a gold batch in inventory sale' } do |sale, _options|
+        expose :first_name, documentation: { type: 'string', desc: 'first_name of the buyer, who buys a gold batch in inventory sale' } do |sale, _options|
           sale.buyer.profile.first_name
         end
-        expose :last_name, documentation: { type: 'integer', desc: 'last_name of the buyer, who buys a gold batch in inventory sale' } do |sale, _options|
+        expose :last_name, documentation: { type: 'string', desc: 'last_name of the buyer, who buys a gold batch in inventory sale' } do |sale, _options|
           sale.buyer.profile.last_name
+        end
+        # expose :document_type, documentation: { type: 'integer', desc: 'document_type of the buyer, who buys a gold batch in inventory sale' } do |sale, _options|
+        #   sale.buyer.profile.last_name
+        # end
+        expose :document_number, documentation: { type: 'integer', desc: 'document_number of the buyer, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.buyer.profile.document_number
+        end
+        expose :phone_number, documentation: { type: 'integer', desc: 'phone_number of the buyer, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.buyer.profile.phone_number
+        end
+        expose :address, documentation: { type: 'string', desc: 'adress of the buyer, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.buyer.profile.address
+        end
+        expose :email, documentation: { type: 'string', desc: 'email of the buyer, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.buyer.email
         end
       end
       expose :user_id, documentation: { type: 'integer', desc: 'user id', example: '1' } do |sale, _options|

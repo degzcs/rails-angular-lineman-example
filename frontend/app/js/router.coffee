@@ -755,6 +755,10 @@
           deferred.resolve()
         deferred.promise
   )
+
+  # ------- Sales routes ----------- #
+
+  # this route is called from inventory sale and It should be reubicated inside sales folder
   .state("show_sale",
     url: "/sale/info",
     ncyBreadcrumb:
@@ -779,6 +783,138 @@
           deferred.resolve()
         deferred.promise
   )
+# new sales routes 
+
+  .state("new_sale",
+    url: "/sales/new",
+    ncyBreadcrumb:
+      label: 'Nueva Venta'
+    views:
+      'content':
+        templateUrl: "partials/sales/new.html"
+        controller: "SalesCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+# Fixed Sale Agreetment
+  .state("new_sale.step1",
+    url: "/sales/step1",
+    ncyBreadcrumb:
+      label: 'Aceptación Acuerdo'
+    views:
+      'content':
+        templateUrl: "partials/sales/step1.html"
+        controller: "SalesCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+# GoldBatch Select
+  .state("new_sale.step2",
+    url: "/sales/step2",
+    ncyBreadcrumb:
+      label: 'Selección de Bloques de Oro'
+    views:
+      'content':
+        templateUrl: "partials/sales/step2.html"
+        controller: "SalesCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+# Sale Detail
+  .state("new_sale.step3",
+    url: "/sales/step3",
+    ncyBreadcrumb:
+      label: 'Fijación de Precio'
+    views:
+      'content':
+        templateUrl: "partials/sales/step3.html"
+        controller: "SaleOrderLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+# Sale Order Detail
+  .state("new_sale.step4",
+    url: "/sales/step4",
+    ncyBreadcrumb:
+      label: 'Detalle de Orden de Venta'
+    views:
+      'content':
+        templateUrl: "partials/sales/step4.html"
+        controller: "SaleOrderLiquidateCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+# --------- End Sales Routes ------------------#
 
   $urlRouterProvider.otherwise "/home"
 

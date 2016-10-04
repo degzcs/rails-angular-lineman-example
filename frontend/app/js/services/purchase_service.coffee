@@ -140,6 +140,21 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
         return $http
                  method: "GET"
                  url: "api/v1/purchases"
+
+    #
+    # Get all Free paginated purchases to Sale for the current user
+    #
+    all_free: (page)->
+      if page
+        return $http
+                 method: "GET"
+                 url: "api/v1/purchases/free_to_sale"
+                 params: page: page
+      else
+        return $http
+                 method: "GET"
+                 url: "api/v1/purchases/free_to_sale"
+
     #
     # Get a single purchase by id
     #

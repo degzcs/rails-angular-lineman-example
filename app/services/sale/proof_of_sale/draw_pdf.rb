@@ -86,18 +86,18 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
 
     # Carrier
 
-    courier_presenter = order_presenter.courier_presenter
-    move_cursor_to 591
-    text_box courier_presenter.first_name, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box courier_presenter.phone_number, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    move_cursor_to 573
-    text_box courier_presenter.last_name, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box courier_presenter.address, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    move_cursor_to 554
-    text_box courier_presenter.id_document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box courier_presenter.company_name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    move_cursor_to 538
-    text_box courier_presenter.nit_company_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # courier_presenter = order_presenter.courier_presenter
+    # move_cursor_to 591
+    # text_box courier_presenter.first_name, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # text_box courier_presenter.phone_number, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # move_cursor_to 573
+    # text_box courier_presenter.last_name, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # text_box courier_presenter.address, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # move_cursor_to 554
+    # text_box courier_presenter.id_document_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # text_box courier_presenter.company_name, :at => [380,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    # move_cursor_to 538
+    # text_box courier_presenter.nit_company_number, :at => [130,cursor], :width => 170, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     # Selected Batches
 
@@ -110,7 +110,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
       text_box seller_presenter.company_name, :at => [233,cursor], :width => 120 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       text_box gold_batch_presenter.origin_certificate_number, :at => [392,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       text_box gold_batch_presenter.fine_grams.to_s, :at => [477,cursor], :width => 70, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-      text_box seller_presenter.rucom_number, :at => [560,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
+      text_box seller_presenter.rucom_number.to_s, :at => [560,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       move_down 20
     end
 

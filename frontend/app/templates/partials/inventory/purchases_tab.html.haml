@@ -1,6 +1,6 @@
 %section{:flex => "", :layout => "column", "layout-fill" => ""}
   %md-subheader.md-primary.inventory-options-head
-    %md-button.md-raised.md-primary.btn-save{"ng-click" => "liquidateSelectedPurchases($event)"}
+    /%md-button.md-raised.md-primary.btn-save{"ng-click" => "liquidateSelectedPurchases($event)"}
       Liquidar {{totalAmount}} Gramos
      
   %md-content
@@ -18,12 +18,7 @@
 
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
           %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters","ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
-            %td.table-checkbox
-              %md-checkbox{"ng-checked" => "alreadySelected(purchase)", "aria-label" => "none", "ng-click" => "toggle(purchase)" }
-              
-              {{purchase.amount_picked}}
-              
-              
+            %td
             %td
               .trazoro-state.tag{"ng-if"=>"purchase.trazoro"}
                 Trazoro
