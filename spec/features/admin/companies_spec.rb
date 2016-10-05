@@ -132,4 +132,54 @@ describe 'all test the companies view', :js do
     click_button('Create Company')
     expect(page).to have_content 'Rucom No Existe en la pagina ANM'
   end
+
+  it 'Company draft state' do
+    company = FactoryGirl.build(:company, name: nil, email: nil, phone_number: nil, chamber_of_commerce_file: nil, mining_register_file: nil, rut_file: nil, legal_representative_id: nil, address: nil, city_id: nil, nit_number: '1110001')
+    company.save(validate: false)
+    expected_response = {
+      address: 'calle 45 # 32',
+      city: City.first.name,
+      phone_number: '3445565'
+    }
+    visit '/admin/companies'
+    within("#company_#{ company.id }") do
+      click_link('Edit')
+    end
+    select(expected_response[:city], from: 'company_city_id')
+    fill_in 'company_phone_number', with: expected_response[:phone_number]
+    fill_in 'company_address', with: expected_response[:address]
+    click_button('Update Company')
+    expect(company.reload.address).to eq expected_response[:address]
+    expect(company.city.name).to eq expected_response[:city]
+    expect(company.phone_number).to eq expected_response[:phone_number]
+    expect(company.offices.present?).to eq true
+    expect(company.rucom.present?).to eq true
+    expect(company.draft?).to eq true
+  end
+
+  it 'Company draft state a completed state' do
+    expected_response = {
+      name: 'Test',
+      email: 'xxxx@gmail.com',
+      phone_number: '3445565'
+    }
+    company = create(:company, name: nil, email: nil, phone_number: nil)
+    company.pause
+    expect(company.draft?).to eq true
+    visit '/admin/companies'
+    within("#company_#{ company.id }") do
+      click_link('Edit')
+    end
+    fill_in 'company_name', with: expected_response[:name]
+    fill_in 'company_email', with: expected_response[:email]
+    fill_in 'company_phone_number', with: expected_response[:phone_number]
+    click_button('Update Company')
+    expect(company.reload.name).to eq expected_response[:name]
+    expect(company.email).to eq expected_response[:email]
+    expect(company.phone_number).to eq expected_response[:phone_number]
+    expect(company.completed?).to eq true
+    expect(company.offices.present?).to eq true
+    expect(company.rucom.present?).to eq true
+    expect(company.legal_representative.present?).to eq true
+  end
 end
