@@ -40,7 +40,11 @@ module RucomServices
           original_name: original_name,
           provider_type: provider_type
         }
-        Rucom.create!(model_fields)
+        if model_fields[:minerals].include?('ORO' || 'oro')
+          Rucom.create!(model_fields)
+        else
+          raise 'Este productor no puede comercializar ORO'
+        end
       end
     end
   end
