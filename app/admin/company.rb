@@ -32,9 +32,11 @@ ActiveAdmin.register Company do
       parameters = permitted_params[:company]
       params_values = { rol_name: parameters['name'], id_type: parameters['address'], id_number: parameters['nit_number'] }
       response = RucomServices::Synchronize.new(params_values).call
-      if response.response[:errors][0] == "Sincronize.call: error => The rucom dosen't exist for this id_number: #{params_values[:id_number]}"
+      if response.response[:errors][0] == "Sincronize.call: error => El rucom no existe con este documento de identidad: #{params_values[:id_number]}"
         redirect_to admin_companies_path, notice: 'Rucom No Existe en la pagina ANM'
-      elsif response.scraper.virtus_model.present? || response.scraper.is_there_rucom.present?
+      elsif response.response[:errors][0] == "Sincronize.call: error => Esta compañia no puede comercializar ORO"
+        redirect_to admin_companies_path, notice: 'Esta compañia no puede comercializar ORO'
+      elsif response.scraper.virtus_model.present? && response.scraper.is_there_rucom.present?
         redirect_to admin_companies_path, notice: 'La compañia y el rucom de esta se han creado correctamente'
       elsif response.response[:errors][0] == "Sincronize.call: error => create_rucom: [\"RucomService::Scraper.call: Net::ReadTimeout\"]"
         redirect_to admin_companies_path, notice: 'Se ha agotado el tiempo de espera!'
