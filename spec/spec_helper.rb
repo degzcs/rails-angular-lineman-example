@@ -38,8 +38,10 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # Setup VCR: Improve the performance to scraper web page and in this case for Synchronize Service from Rucom
 #
 VCR.configure do |config|
+  config.allow_http_connections_when_no_cassette = true
   config.cassette_library_dir = Rails.root.join('spec', 'support', 'vcr_cassettes')
   config.hook_into :webmock
+  config.ignore_hosts 'localhost', '127.0.0.1'#, '0.0.0.0'
   # NOTE: The line below does not allow save the VCR cassettes
   # config.ignore_localhost = true # it's recomendable to javascript local test whit capybara
   # config.ignore_request do |request|
