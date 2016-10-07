@@ -395,7 +395,7 @@
   .state("new_purchase.step1",
     url: "/purchases/step1",
     ncyBreadcrumb:
-      label: 'Provedor y Certificado de Origen'
+      label: 'Aceptación de Acuerdo de Compra'
     views:
       'content':
         templateUrl: "partials/purchases/step1.html"
@@ -410,10 +410,11 @@
         deferred.promise
   )
 
+
   .state("new_purchase.step2",
-    url: "/step2",
+    url: "/purchases/step2",
     ncyBreadcrumb:
-      label: 'Pesaje y Compra'
+      label: 'Provedor y Certificado de Origen'
     views:
       'content':
         templateUrl: "partials/purchases/step2.html"
@@ -431,7 +432,7 @@
   .state("new_purchase.step3",
     url: "/step3",
     ncyBreadcrumb:
-      label: 'Certificado de Origen'
+      label: 'Pesaje y Compra'
     views:
       'content':
         templateUrl: "partials/purchases/step3.html"
@@ -449,10 +450,28 @@
   .state("new_purchase.step4",
     url: "/step4",
     ncyBreadcrumb:
-      label: 'Previsualizar Factura'
+      label: 'Certificado de Origen'
     views:
       'content':
         templateUrl: "partials/purchases/step4.html"
+        controller: "PurchasesCtrl"
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_purchase.step5",
+    url: "/step5",
+    ncyBreadcrumb:
+      label: 'Previsualizar Factura'
+    views:
+      'content':
+        templateUrl: "partials/purchases/step5.html"
         controller: "PurchasesCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->

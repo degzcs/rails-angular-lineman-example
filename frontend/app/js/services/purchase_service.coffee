@@ -34,6 +34,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       rucom_id_field: ''
       signature_picture: ''
       use_wacom_device: true
+      buy_agreetment: ''
 
     #
     # HTTP resquests
@@ -154,6 +155,20 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
         return $http
                  method: "GET"
                  url: "api/v1/purchases/free_to_sale"
+
+    #
+    # Get the buy agreetment from settings             
+    #
+    buy_agreetment: (page) ->
+      if page
+        return $http
+                   method: "GET"
+                   url: "api/v1/agreetments/buy_agreetment"
+                   params: page: page
+      else
+        return $http
+                   method: "GET"
+                   url: "api/v1/agreetments/buy_agreetment" 
 
     #
     # Get a single purchase by id

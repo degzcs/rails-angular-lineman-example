@@ -435,13 +435,26 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.prov = formattedContent(data)
         $scope.purchase.model.seller.name = fullName($scope.current_user)
         $scope.purchase.model.seller.company_name = "NA"
-        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-        $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
+        PurchaseService.buy_agreetment().success( (data) ->
+          $scope.purchase.model.buy_agreetment = data.buy_agreetment
+          $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+          $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
+        ).error (error) ->
+          $scope.prov = error
+          $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+      
       )
       .error((error)->
         $scope.prov = error
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
         )
+
+  # Monitoring the Agreetment check
+  $scope.handlerContinue =  ->
+    # console.log $scope.chkAgreetmentActive
+    res = if $scope.chkAgreetmentActive == true then true else false
+    # console.log 'res: ' + res
+    return res    
 
   #
   # Signature services

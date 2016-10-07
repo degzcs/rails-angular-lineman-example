@@ -1,101 +1,100 @@
-%form.purchase-form{:name => "originCertificateForm", "novalidate" => "novalidate"}
-  %div{:layout => "column"}
+//---------------------- Purchase TAB ---------------------------------------
+%form{:name => "purchaseForm"}
+  %section{"class"=>"md-padding autocomplete"}
+    .seller
+      .row{:layout => "", "layout-sm" => "column"}
+        .select-law{'flex' => ''}
+          %h5 Digite el numero de ley
+          %md-input-container
+            %label Ley
+            %input{ "type" => "number", "string-to-number"=>"", :min => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre'}
+            %div{"ng-messages" => "purchaseForm.degre.$error"}
+              %div{"ng-message" => "required"} * Este campo es requerido.
+        .fine-gram-unit-price{'flex' => ''}
+          %h5 Valor gramo fino de vender en COP
+          %md-input-container
+            %label Precio de gramo fino por unidad
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1"}
+            %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
+              %div{"ng-message" => "required"} * Este campo es requerido.
+        .price-to-buy{ 'flex' => ''}
+          %h5 Valor gramo fino de comprar en COP
+          %md-input-container
+            %label Precio de gramo fino por unidad
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1"}
 
-    %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-      %md-input-container{"flex"=>"33"}
-        %label Fecha
-        %input{"ng-model" => "date", "type" => "text", :readOnly => "true"}
+      .row{:layout => "", "layout-sm" => "column"}
+        .convertion-section{'flex' => ''}
+          %h5 Medidas
+          %table.md-table
+            %thead
+              %tr.md-table-headers-row
+                %th.md-table-header
+                  Medida
+                %th.md-table-header
+                  Cantidad
+                %th.md-table-header
+                  Total gramos
+                %th.md-table-header
+                  Total gramos finos
+                %th.md-table-header
+                  Precio Total
+            %tbody
+              %tr
+                %td.md-table-td-more
+                  %p Gramo(s)
+                %td.md-table-td-more
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>""}
+                %td.md-table-td-more.total-grams
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.total_grams",  :min => "1", :requiered => '', :readOnly => 'true', "type" => "number", "string-to-number"=>"", :name => 'total_grams'}
+                    %div{"ng-messages" => "purchaseForm.total_grams.$error"}
+                      %div{"ng-message" => "required"} * Tiene que seleccionar la cantidad de oro a facturar mayor a 1 gramo.
+                %td.md-table-td-more.total-fine-grams
+                  %md-input-container
+                    {{ goldBatch.model.total_fine_grams | number:3}}
+                %td.md-table-td-more
+                  %md-input-container
+                    $ {{ purchase.model.price | number:2}}
+              %tr
+                %td.md-table-td-more
+                  Castellano(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Onza(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Tomine(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Real(es)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Grano(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>""}
 
-      %md-input-container{"flex"=>"66"}
-        %label Ciudad
-        %input{"ng-model" => "buyer_data.city", "type" => "text", :readOnly=>"true"}
-
-    %section{flex: "", layout: "row"}
-      ////-----------------------Provider section ------------------------------////////
-      %div.origin-certificate-padding{flex: ""}
-        %fieldset.standard.tr-fieldset{:layout => "column"}
-          %legend
-            %h3
-              Informacion del Productor de Mineral
-          %div.fieldset-inputs
-            %div{layout: "row"}
-              %md-input-container{flex: ""}
-                %md-radio-group{"ng-model" => "purchase.model.seller.provider_type", :required => "", :name => 'provider_type'}
-                  %md-radio-button{:value => "Barequero", :readOnly => 'true'} Barequero
-                  %md-radio-button{:value => "Chatarrero", :readOnly => 'true'} Chatarrero
-            %div{layout: "row"}
-              %md-input-container{flex: ""}
-                %label Nombre Proveedor
-                %input{"ng-model" => "purchase.model.seller.first_name",  :name => 'provider_name', :readOnly => 'true'}
-              %md-input-container{flex: ""}
-                %label Tipo de Documento
-                %input{"ng-model" => "purchase.model.seller.document_type",  :name => 'provider_name', :readOnly => 'true'}
-              %md-input-container{flex: ""}
-                %label Numero de Documento
-                %input{"ng-model" => "purchase.model.seller.document_number",  :name => 'provider_name', :readOnly => 'true'}
-            %div{layout: "row"}
-              %md-input-container{flex: ""}
-                %label Departamento
-                %input{"ng-model" => "purchase.model.seller.state.name",  :name => 'provider_name', :readOnly => 'true'}
-              %md-input-container{flex: ""}
-                %label Ciudad
-                %input{"ng-model" => "purchase.model.seller.city.name",  :name => 'provider_name', :readOnly => 'true'}
-              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
-                %md-progress-circular{"md-mode" => "indeterminate"}
-        .button
-          /%a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proveedor
-        ////-----------------------Mineral section ------------------------------////////
-      %div.origin-certificate-padding{flex: "30"}
-        %fieldset.standard.tr-fieldset.mineral{:layout => "column"}
-          %legend
-            %h3
-              Mineral
-          %div.fieldset-inputs
-            %div{layout: "column"}
-              %md-input-container{flex: ""}
-                %label Mineral Extraido y Vendido
-                %input{"ng-model" => "mineralType", "type" => "text", :readOnly=>"true"}
-
-              %md-input-container{flex: ""}
-                %label Cantidad
-                %input{"ng-model" => "goldBatch.model.total_fine_grams", "type" => "text", :name => 'amount', :readOnly=>"true"}
-
-              %md-input-container{flex: ""}
-                %label Unidad de Medida
-                %input{"ng-model" => "measureUnit", "type" => "text", :readOnly=>"true"}
-
-    ////-----------------------Buyer section ------------------------------////////
-    %section{flex: "", layout: "row"}
-      %div.origin-certificate-padding{flex: ""}
-        %fieldset.standard.tr-fieldset{:layout => "column"}
-          %legend
-            %h3
-              Informacion del Comprador del Mineral
-
-          %div.fieldset-inputs
-            %div{layout: "row"}
-              %md-input-container{"flex"=>""}
-                %label Nombres y Apellidos o Razon Social
-                %input{"readonly" => "true", "ng-model" => "buyer_data.company_name", "type" => "text"}
-
-              %md-input-container{"flex"=>""}
-                %label Tipo de Documento
-                %input{:readonly => "true", "ng-model" => "buyer_data.document_type", "type" => "text"}
-
-              %md-input-container{"flex"=>""}
-                %label Numero de Indentificacion
-                %input{"readonly" => "true", "ng-model" => "buyer_data.nit", "type" => "text"}
-    %section.signature-section.md-padding{flex: '', layout: 'column'}
-      %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-        %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
-      %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-        #imageBox{}
-      %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
-        .signature-text
-          Firma
-
-    .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"end end"}
-      %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
-      %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
-      %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
-      %md-button.btn-save{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "20", "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
+  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
+    %md-button.btn-save{ "ng-disabled" => 'purchaseForm.$invalid', flex: "20", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
