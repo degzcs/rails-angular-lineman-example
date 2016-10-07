@@ -420,9 +420,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Query to return an answer if the rucom exist or no
   # @param ev [ Event ]
   # @param idNumber [ Integer ]
-  $scope.queryRucomByIdNumber = (ev, idNumber) ->
-    if idNumber
-      AuthorizedProviderService.byIdNumber(idNumber)
+  $scope.queryRucomByIdNumber = (ev, idNumber, rolName) ->
+    if idNumber && rolName
+      AuthorizedProviderService.byIdNumber(idNumber, rolName)
       .success((data, status, headers) ->
         $scope.showLoading = false
         $scope.current_user = data

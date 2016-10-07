@@ -12,10 +12,10 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
   # Search an authorized provider by its id number
   # @param ev [ Event ]
   # @param idNumber [ Integer ]
-  $scope.queryRucomByIdNumber = (ev, idNumber) ->
-    if idNumber
-      $scope.showLoading = true
-      AuthorizedProviderService.byIdNumber(idNumber)
+  # @param rolName [ String ]
+  $scope.queryRucomByIdNumber = (ev, idNumber, rolName) ->
+    if idNumber 
+      AuthorizedProviderService.byIdNumber(idNumber, rolName)
       .success((data, status, headers) ->
         $scope.showLoading = false
         AuthorizedProviderService.model = data

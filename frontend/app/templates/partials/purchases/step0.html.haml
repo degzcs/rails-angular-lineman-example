@@ -3,9 +3,17 @@
     // ---------------------- seller info ------------------- ///
     %div.md-padding{flex: ""}
       %fieldset.standard.tr-fieldset{:layout => "column"}
+        %h3
+          %legend
+            1. Seleccione el tipo de productor autorizado:
+            %md-radio-group{"ng-model" => "provider.rolName", "ng-name" => "rolName"}
+              %md-radio-button.md-primary{ "value" => "Barequero" }Barequero
+              %md-radio-button{ "value" => "Chatarrero" } Chatarrero
+              %span.radioValue{:type => "hidden", "ng-name" => "rolName","ng-model" => "provider.rolName"} {{ provider.rolName }}
+      %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3
-            1. Ingrese el documento del Productor
+            2. Ingrese el documento del Productor
         %div.fieldset-inputs.find-provider
           %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
 
@@ -14,4 +22,4 @@
             %md-not-found
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar
+    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.rolName)"} Consultar
