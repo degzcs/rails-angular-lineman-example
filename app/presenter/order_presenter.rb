@@ -42,6 +42,14 @@ class OrderPresenter < BasePresenter
     SettingsPresenter.new(Settings.instance, h)
   end
 
+  def iva
+    settings_presenter.vat_percentage.to_f
+  end
+
+  def tfgv
+    settings_presenter.fine_gram_value.to_f
+  end
+
   def trazoro_transaction_cost_value
     gold_batch.fine_grams.to_f * settings_presenter.fine_gram_value.to_f
   end
