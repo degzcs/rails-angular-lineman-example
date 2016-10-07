@@ -17,7 +17,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
         $state.go 'new_authorized_provider', { id: AuthorizedProviderService.model.id }
       )
       .error((error)->
-        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content('Productor no se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
         )
 
   #
