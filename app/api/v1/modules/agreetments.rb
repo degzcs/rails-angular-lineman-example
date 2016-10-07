@@ -40,6 +40,26 @@ module V1
           settings = ::Settings.instance
           present settings, with: V1::Entities::Agreetment
         end
+
+        desc 'returns the buy agreetment between trader and authorized provider text from settings which is set in ActiveAdmin app', {
+          entity: V1::Entities::Agreetment,
+          notes: <<-NOTES
+            returns the buy agreetment between trader and authorized provider
+          NOTES
+        }
+
+        params do
+          #use :pagination
+        end
+
+        get '/buy_agreetment', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          authorize! :read, ::Settings
+          content_type "text/json"
+          
+          settings = ::Settings.instance
+          present settings, with: V1::Entities::Agreetment
+        end
+
       end
     end
   end
