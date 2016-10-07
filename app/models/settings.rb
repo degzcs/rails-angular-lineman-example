@@ -34,7 +34,7 @@ class Settings < ActiveRecord::Base
     end
   end
 
-  serialized_attr_accessor :monthly_threshold, :fine_gram_value, :vat_percentage, :fixed_sale_agreetment
+  serialized_attr_accessor :monthly_threshold, :fine_gram_value, :vat_percentage, :fixed_sale_agreetment, :buy_agreetment
 
   public_class_method :allocate, :new
 end
