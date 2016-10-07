@@ -40,7 +40,8 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 VCR.configure do |config|
   config.cassette_library_dir = Rails.root.join('spec', 'support', 'vcr_cassettes')
   config.hook_into :webmock
-  config.ignore_localhost = true # it's recomendable to javascript local test whit capybara
+  # NOTE: The line below does not allow save the VCR cassettes
+  # config.ignore_localhost = true # it's recomendable to javascript local test whit capybara
   # config.ignore_request do |request|
   #   URI(request.uri).port == 7777
   # end
