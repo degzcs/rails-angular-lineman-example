@@ -2,7 +2,7 @@ angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, GoldBa
   #
   # Deletes the last liquidation
   LiquidationService.deleteState()
-  window.scope = $scope
+  
   #
   #
   #Get info
