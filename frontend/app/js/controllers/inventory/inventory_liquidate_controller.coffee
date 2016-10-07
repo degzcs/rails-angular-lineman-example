@@ -141,19 +141,7 @@ angular.module('app').controller 'InventoryLiquidateCtrl', ($scope, SaleService,
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La venta ha sido realizada')
         $mdDialog.cancel dialog
-        SaleService.model.id = sale.id
-        SaleService.model.courier_id = sale.courier_id
-        SaleService.model.buyer_id = sale.buyer_id
-        SaleService.model.user_id = sale.user_id
-        SaleService.model.gold_batch_id = sale.gold_batch_id
-        SaleService.model.fine_grams = sale.fine_grams
-        SaleService.model.code = sale.code
-        SaleService.model.barcode_html = sale.barcode_html
-        SaleService.model.selectedPurchases = $scope.selectedPurchases
-        SaleService.model.totalAmount = $scope.totalAmount
-        SaleService.model.price = sale.price
-        SaleService.model.purchase_files_collection = sale.purchase_files_collection
-        SaleService.model.proof_of_sale = sale.proof_of_sale
+        SaleService.model = sale
         SaleService.saveState()
         $state.go('show_sale')
       ).error (data, status, headers, config) ->
