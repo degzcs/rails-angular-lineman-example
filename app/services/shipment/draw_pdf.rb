@@ -6,7 +6,7 @@ class Shipment::DrawPdf < Prawn::Document
   attr_accessor :base_file, :order_presenter
 
   def initialize(options = {})
-    super(skip_page_creation: false)
+    super(skip_page_creation: true)
     @response = {}
     @response[:errors] = []
   end
@@ -31,12 +31,19 @@ class Shipment::DrawPdf < Prawn::Document
 
   def draw_file!( order_presenter, counter = 'Pending...')
     start_new_page({ :template => "#{base_file.path}", :template_page => 1 })
-
+    buyer_presenter = order_presenter.buyer_presenter
     # Header
     # move_down 60
-    move_cursor_to 1200
-    text_box "Prueba de que dibuja"
+    # 100y/x equivale a 3cm
+    # 500 -> 600 es el limite de ancho hacia la derecha (+x)
+    move_cursor_to 450
+    text_box buyer_presenter.city_name, :at => [500, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
     ##### Buyer #######
-    
+    move_cursor_to 586
+    text_box buyer_presenter.first_name, :at => [400, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box buyer_presenter.last_name, :at => [220, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+
+    move_cursor_to 255
+    text_box "trasportador",:at => [100, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
   end
 end
