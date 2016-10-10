@@ -6,7 +6,7 @@ describe 'all test the rucom view', :js do
     login_as(admin_user, scope: :admin_user)
   end
 
-  it 'New Rucom' do
+  it 'New Rucom and rucom alredy Exits' do
     visit '/admin/rucoms/new'
     expected_response = {
       rol: 'Barequero',
@@ -22,6 +22,14 @@ describe 'all test the rucom view', :js do
     expect(last_rucom[:rucomeable_id]).to eq last_user.id
     expect(last_rucom[:name]).to eq last_user.profile.first_name
     expect(last_user.profile.document_number).to eq expected_response[:identification_number]
+    expect(page).to have_content 'El rucom y el usuario se han creado correctamente'
+    # Rucom(user) alredy Exits
+    visit '/admin/rucoms/new'
+    select(expected_response[:rol], from: 'rucom_name')
+    select(expected_response[:type_identification], from: 'rucom_provider_type')
+    fill_in 'rucom_rucom_number', with: expected_response[:identification_number]
+    click_button('Create Rucom')
+    expect(page).to have_content 'El rucom(usuario) ya Existe!'
   end
 
   # it 'Edit Rucom' do
@@ -59,6 +67,18 @@ describe 'all test the rucom view', :js do
     select(expected_response[:type_identification], from: 'rucom_provider_type')
     fill_in 'rucom_rucom_number', with: expected_response[:identification_number]
     click_button('Create Rucom')
-    expect(page).to have_content 'Rucom No Existe en la pagina ANM'
+    expect(page).to have_content "Sincronize.call: error => El rucom no existe con este documento de identidad: #{expected_response[:identification_number]}"
+  end
+
+  xit 'When the Rucom(user) can not market oro' do
+    visit '/admin/rucoms/new'
+    expected_response = {
+      identification_number: ' '
+    }
+    select('Barequero', from: 'rucom_name')
+    select('CEDULA', from: 'rucom_provider_type')
+    fill_in 'rucom_rucom_number', expected_response[:identification_number]
+    click_button('Create Rucom')
+    expect(page).to have_content 'Sincronize.call: error => Este productor no puede comercializar ORO'
   end
 end
