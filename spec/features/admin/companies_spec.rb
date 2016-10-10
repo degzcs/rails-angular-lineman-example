@@ -9,7 +9,7 @@ describe 'all test the companies view', :js do
   it 'New Company and comapany alredy Exits' do
     visit '/admin/companies/new'
     expected_response = {
-      nit: '900058021'
+      nit: '900498208'
     }
     select('Comercializadores', from: 'company_name')
     select('NIT', from: 'company_address')
@@ -21,11 +21,12 @@ describe 'all test the companies view', :js do
     expect(last_company.rucom).to eq last_rucom
     expect(last_rucom.rucomeable_id).to eq last_company.id
     expect(last_rucom.rucomeable_type).to eq 'Company'
+    expect(page).to have_content 'La compañia y el rucom de esta se han creado correctamente'
     # comapany alredy Exits
     visit '/admin/companies/new'
     select('Comercializadores', from: 'company_name')
     select('NIT', from: 'company_address')
-    fill_in 'company_nit_number', with: '900058021'
+    fill_in 'company_nit_number', with: '900498208'
     click_button('Create Company')
     expect(page).to have_content 'la compañia ya Existe!'
   end
@@ -130,7 +131,7 @@ describe 'all test the companies view', :js do
     select('NIT', from: 'company_address')
     fill_in 'company_nit_number', with: expected_response[:nit]
     click_button('Create Company')
-    expect(page).to have_content 'Rucom No Existe en la pagina ANM'
+    expect(page).to have_content "Sincronize.call: error => El rucom no existe con este documento de identidad: #{expected_response[:nit]}"
   end
 
   it 'Company draft state' do
@@ -181,5 +182,17 @@ describe 'all test the companies view', :js do
     expect(company.offices.present?).to eq true
     expect(company.rucom.present?).to eq true
     expect(company.legal_representative.present?).to eq true
+  end
+
+  it 'When the company can not market oro' do
+    visit '/admin/companies/new'
+    expected_response = {
+      nit: '900058021'
+    }
+    select('Comercializadores', from: 'company_name')
+    select('NIT', from: 'company_address')
+    fill_in 'company_nit_number', with: expected_response[:nit]
+    click_button('Create Company')
+    expect(page).to have_content 'Sincronize.call: error => Esta compañia no puede comercializar ORO'
   end
 end
