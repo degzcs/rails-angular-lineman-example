@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://127.0.0.1:8912/session
+    uri: http://127.0.0.1:8922/session
     body:
       encoding: UTF-8
       string: '{"desiredCapabilities":{"browserName":"phantomjs","version":"","platform":"ANY","javascriptEnabled":true,"cssSelectorsEnabled":true,"takesScreenshot":true,"nativeEvents":false,"rotatable":false}}'
@@ -30,7 +30,65 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"abc62980-60fa-11e6-bf94-9149e8846982","status":0,"value":{"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}'
+      string: '{"sessionId":"31ac21c0-8cc1-11e6-891d-4b4cbecc88cb","status":0,"value":{"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}'
     http_version: 
-  recorded_at: Sat, 13 Aug 2016 02:07:22 GMT
+  recorded_at: Fri, 07 Oct 2016 19:06:47 GMT
+- request:
+    method: delete
+    uri: http://127.0.0.1:8922/session/31ac21c0-8cc1-11e6-891d-4b4cbecc88cb
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache:
+      - no-cache
+      Content-Length:
+      - '74'
+      Content-Type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"sessionId":"31ac21c0-8cc1-11e6-891d-4b4cbecc88cb","status":0,"value":{}}'
+    http_version: 
+  recorded_at: Fri, 07 Oct 2016 19:06:47 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:8922/shutdown
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache:
+      - no-cache
+      Content-Length:
+      - '36'
+      Content-Type:
+      - text/html;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: "<html><body>Closing...</body></html>"
+    http_version: 
+  recorded_at: Fri, 07 Oct 2016 19:06:47 GMT
 recorded_with: VCR 3.0.3

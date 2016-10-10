@@ -12,7 +12,7 @@
               %div{layout: "row"}
 
               %md-input-container{"name"=>"idNumber"}
-                %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number"}
+                %input{"ng-model"=>"provider.idNumber", "name"=>"idNumber", :required => "", "ng-minlength"=>"7", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number"}
                 //%span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} 155357
                 %md-not-found
         %br
@@ -20,7 +20,7 @@
         %p{"color"=>"red", :ng-if=> "anyErrors()"} No se encontró el proveedor
 
       .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-        %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar
+        %md-button.btn-save.md-button.md-raised{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar
         %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
 
       %br

@@ -58,7 +58,7 @@ module RucomServices
     end
 
     def raises_no_exist_rucom(message = false)
-      msg = message || "The rucom dosen't exist for this id_number: #{@data[:id_number]}"
+      msg = message || "El rucom no existe con este documento de identidad: #{@data[:id_number]}"
       raise msg
     end
 

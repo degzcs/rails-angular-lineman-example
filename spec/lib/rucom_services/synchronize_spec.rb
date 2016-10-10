@@ -119,7 +119,7 @@ describe RucomServices::Synchronize do
               @data[:id_number] = '1234567'
               @sync = RucomServices::Synchronize.new(@data).call
               expect(@sync.response[:errors].count).to eq(1)
-              expect(@sync.response[:errors]).to include(/The rucom dosen't exist for this id_number:/)
+              expect(@sync.response[:errors]).to include(/El rucom no existe con este documento de identidad:/)
             end
           end
         end
@@ -203,7 +203,7 @@ describe RucomServices::Synchronize do
 
   context '#call' do
     it 'executes sucessfully' do
-      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900498208' }
       @sync = RucomServices::Synchronize.new(@data)
       VCR.use_cassette('successful_rucom_response') do
         @sync.call
@@ -241,7 +241,7 @@ describe RucomServices::Synchronize do
 
   context '#first_or_create_company_from_rucom' do
     before do
-      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900498208' }
       @sync = RucomServices::Synchronize.new(@data)
     end
 
@@ -261,7 +261,7 @@ describe RucomServices::Synchronize do
           VCR.use_cassette('successful_rucom_response') do
             clean_company_rucom_data(@data[:id_number])
             @sync.call
-            @rucom = Rucom.find_by(name: 'Q Y M SAS')
+            @rucom = Rucom.find_by(name: 'INVERSIONES LETONIA S.A.S.')
 
             # returns the virtus model to the class response
             expect(@sync.scraper.virtus_model.present?).to eq(true)
@@ -282,7 +282,7 @@ describe RucomServices::Synchronize do
 
   context 'company_exist?' do
     before do
-      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900498208' }
       @sync = RucomServices::Synchronize.new(@data)
     end
 
@@ -304,8 +304,7 @@ describe RucomServices::Synchronize do
 
   context '#company_rucom_exist?' do
     before do
-      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
-      @sync = RucomServices::Synchronize.new(@data)
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900498208' }
     end
 
     context 'When rucom exist' do
@@ -326,5 +325,25 @@ describe RucomServices::Synchronize do
     rucom = company.rucom
     Company.destroy(company)
     Rucom.destroy(rucom) if rucom.present?
+  end
+
+  it 'When the company can not market oro' do
+    @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+    @sync = RucomServices::Synchronize.new(@data).call
+    expect(@sync.response[:success]).to eq(false)
+    expect(@sync.response[:errors]).to include(/Esta compañia no puede comercializar ORO/)
+    expect(@sync.rucom.blank?).to eq(true)
+    expect(@sync.rucom.present?).to eq(false)
+  end
+
+  xit 'When the authorized_provider can not market oro' do
+    VCR.use_cassette('barequero_other_mineral_rucom_response') do
+      @data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: 'xxxxxxxx' }
+      @sync = RucomServices::Synchronize.new(@data).call
+      expect(@sync.response[:success]).to eq(false)
+      expect(@sync.response[:errors]).to include(/Este productor no puede comercializar ORO/)
+      expect(@sync.rucom.blank?).to eq(true)
+      expect(@sync.rucom.present?).to eq(false)
+    end
   end
 end

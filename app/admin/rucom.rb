@@ -51,14 +51,14 @@ ActiveAdmin.register Rucom do
       parameters = permitted_params[:rucom]
       params_values = { rol_name: parameters['name'], id_type: parameters['provider_type'], id_number: parameters['rucom_number'] }
       response = RucomServices::Synchronize.new(params_values).call
-      if response.response[:errors][0] == "Sincronize.call: error => The rucom dosen't exist for this id_number: #{params_values[:id_number]}"
-        redirect_to admin_rucoms_path, notice: 'Rucom No Existe en la pagina ANM'
-      elsif response.scraper.virtus_model.present? || response.scraper.is_there_rucom.present?
-        redirect_to admin_rucoms_path, notice: 'El rucom y el usuario se han creado correctamente'
-      elsif response.response[:errors][0] == "Sincronize.call: error => create_rucom: [\"RucomService::Scraper.call: Net::ReadTimeout\"]"
+      if response.response[:errors][0] == "Sincronize.call: error => create_rucom: [\"RucomService::Scraper.call: Net::ReadTimeout\"]"
         redirect_to admin_rucoms_path, notice: 'Se ha agotado el tiempo de espera!'
+      elsif response.response[:errors][0]
+        redirect_to admin_rucoms_path, notice: response.response[:errors]
+      elsif response.scraper.virtus_model.present? && response.scraper.is_there_rucom.present?
+        redirect_to admin_rucoms_path, notice: 'El rucom y el usuario se han creado correctamente'
       elsif response.scraper.virtus_model.nil? && response.scraper.is_there_rucom == false
-        redirect_to admin_rucoms_path, notice: 'El rucom ya Existe!'
+        redirect_to admin_rucoms_path, notice: 'El rucom(usuario) ya Existe!'
       end
     end
   end
