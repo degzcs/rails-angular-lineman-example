@@ -14,6 +14,9 @@ production:
     barequero:
       select_options: ["Barequero", "CEDULA"]
       response_class: "AuthorizedProviderResponse"
+    chatarrero:
+      select_options: ["Chatarreros", "CEDULA", "NIT"]
+      response_class: "AuthorizedProviderResponse"
     trader:
       select_options: ["Comercializadores", "CEDULA", "NIT"]
       response_class: "TraderResponse"
@@ -36,6 +39,9 @@ development:
     barequero:
       select_options: ["Barequero", "CEDULA"]
       response_class: "AuthorizedProviderResponse"
+    chatarrero:
+      select_options: ["Chatarreros", "CEDULA", "NIT"]
+      response_class: "AuthorizedProviderResponse"
     trader:
       select_options: ["Comercializadores", "CEDULA", "NIT"]
       response_class: "TraderResponse"
@@ -57,6 +63,9 @@ test:
     clic_button_id: 'form:consultar'
     barequero:
       select_options: ["Barequero", "CEDULA"]
+      response_class: "AuthorizedProviderResponse"
+    chatarrero:
+      select_options: ["Chatarreros", "CEDULA", "NIT"]
       response_class: "AuthorizedProviderResponse"
     trader:
       select_options: ["Comercializadores", "CEDULA", "NIT"]

@@ -34,10 +34,12 @@ module RucomServices
       case rol_name
       when 'Barequero'
         first_or_create_user_from_rucom
+      when 'Chatarrero'
+        first_or_create_user_from_rucom
       when 'Comercializadores'
         first_or_create_company_from_rucom
       else
-        raise 'Role name No Valid!'
+        raise 'Role name No Valid!' + rol_name
       end
     end
 
