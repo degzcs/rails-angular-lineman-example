@@ -76,7 +76,6 @@ module V1
           query_name = params[:query_name]
           query_id = params[:query_id]
           query_rucomid = params[:query_rucomid]
-          # binding.pry
           authorized_providers =
             if query_name
               ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(page: page, per_page: per_page)
@@ -108,6 +107,7 @@ module V1
 
         get '/by_id_number', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           content_type 'text/json'
+          binding.pry
           options_from_view = { rol_name: params['rol_name'], id_type: params['id_type'], id_number: params['id_number'] }
           sync = RucomServices::Synchronize.new(options_from_view).call
           if sync.success
