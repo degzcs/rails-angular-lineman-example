@@ -10,7 +10,7 @@ describe Shipment::DrawPdf do
   		@order = create(:sale)
   	end
     it 'should check the consistency of the document' do
-      expected_hash = 'f7d9c940556349de8983bfa1de1e4dc8316e24a5719a811c20a2418ded517c57'
+      expected_hash = 'f28ca5f29c4f9f5f1868488a4677e4d2045a155e81aec89e9c7e9ea41db07829'
       response = service.call(
         current_user: @current_buyer,
         order: @order,
