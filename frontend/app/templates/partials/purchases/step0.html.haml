@@ -6,10 +6,10 @@
         %h3
           %legend
             1. Seleccione el tipo de productor autorizado:
-            %md-radio-group{"ng-model" => "provider.rolName", "ng-name" => "rolName"}
+            %md-radio-group{"ng-model"=>"provider.rolName", "name" => "rolName" }
               %md-radio-button.md-primary{ "value" => "Barequero" }Barequero
               %md-radio-button{ "value" => "Chatarrero" } Chatarrero
-              %span.radioValue{:type => "hidden", "ng-name" => "rolName","ng-model" => "provider.rolName"} {{ provider.rolName }}
+              /%span.radioValue{:type => "hidden", "ng-name" => "rolName","ng-model" => "provider.rolName"} {{ provider.rolName }}
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3
