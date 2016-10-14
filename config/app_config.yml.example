@@ -6,6 +6,8 @@ development:
   <<: *defaults
   USE_AWS_S3: false
   USE_WACOM_DEVICE: false
+  ALEGRA_USERNAME: <value>
+  ALEGRA_TOKEN: <value>
   RDS_DB_NAME: <value>
   RDS_USERNAME: <value>
   RDS_PASSWORD: <value>
@@ -19,11 +21,15 @@ development:
 test:
   <<: *defaults
   domain: test.host
+  ALEGRA_USERNAME: <value>
+  ALEGRA_TOKEN: <value>
   USE_WACOM_DEVICE: true
   USE_AWS_S3: false
 
 staging:
   <<: *defaults
+  ALEGRA_USERNAME: <value>
+  ALEGRA_TOKEN: <value>
   USE_AWS_S3: true
   USE_WACOM_DEVICE: true
 
@@ -31,6 +37,8 @@ production:
   <<: *defaults
   USE_AWS_S3: true
   USE_WACOM_DEVICE: true
+  ALEGRA_USERNAME: <value>
+  ALEGRA_TOKEN: <value>
   RDS_DB_NAME: <value>
   RDS_USERNAME: <value>
   RDS_PASSWORD: <value>
