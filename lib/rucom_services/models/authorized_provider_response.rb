@@ -33,7 +33,14 @@ module RucomServices
       end
 
       def format_values!(fields)
-        self.remove_spaces_and_remove_special_characters!(fields)
+        formatted_fields = remove_spaces_and_remove_special_characters!(fields.slice(:name, :minerals, :location))
+        formatted_fields[:provider_type] = downcase_field(fields[:provider_type])
+        merge_values(fields, formatted_fields)
+      end
+
+      def merge_values(fields, formatted_fields)
+        not_formatted_fields = formatted_fields.diff(fields)
+        formatted_fields.merge(not_formatted_fields)
       end
 
       def save

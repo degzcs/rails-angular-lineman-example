@@ -6,16 +6,12 @@ module RucomServices
 
     def remove_spaces_and_remove_special_characters!(data)
       store_and_raise_error("format!: data parameter can't be empty") if data.blank?
-      res = {}
-      d = data.except(:rucom_number) if data[:rucom_number].present?
-      d ||= data
-      d.each do |k, v|
-        res[k] = remove_spaces(d[k])
-        res[k] = remove_special_characters(d[k])
+      formatted_values = {}
+      data.each do |k, v|
+        formatted_values[k] = remove_spaces(data[k])
+        formatted_values[k] = remove_special_characters(data[k])
       end
-      res[:provider_type] = downcase_field(res[:provider_type])
-      res[:rucom_number] = data[:rucom_number] if data[:rucom_number].present?
-      res
+      formatted_values
     end
 
     def downcase_field(field)

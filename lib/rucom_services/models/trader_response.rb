@@ -1,3 +1,4 @@
+require_relative '../utilities/hash'
 module RucomServices
   module Models
     # This Class allows to valid and persist the data from the Formater Service
@@ -29,14 +30,22 @@ module RucomServices
       def initialize(params = {})
         @rucom_number = params[:value_1]
         @name = params[:value_2]
-        @minerals = params[:value_3] # quitar
+        @minerals = params[:value_3]
         @status = params[:value_4]
         @original_name = params[:value_5]
         @provider_type = params[:value_6]
       end
 
       def format_values!(fields)
-        self.remove_spaces_and_remove_special_characters!(fields)
+        formatted_fields = remove_spaces_and_remove_special_characters!(fields.slice(:minerals, :name, :status))
+        formatted_fields[:provider_type] = downcase_field(fields[:provider_type])
+        formatted_fields[:rucom_number] = remove_spaces(fields[:rucom_number])
+        merge_values(fields, formatted_fields)
+      end
+
+      def merge_values(fields, formatted_fields)
+        not_formatted_fields = formatted_fields.diff(fields)
+        formatted_fields.merge(not_formatted_fields)
       end
 
       def save

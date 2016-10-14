@@ -43,11 +43,11 @@ describe RucomServices::Models::AuthorizedProviderResponse do
         value_2: ['PLATA'],
         value_3: 'COLOMBIA',
         value_4: 'AMADO',
-        value_5: 'BAREQUERO'
+        value_5: 'Barequero'
       }
     end
 
-    it 'should validate BAREQUERO is able to trade GOLD' do
+    it 'should validate Barequero is able to trade GOLD' do
       virtus_model = virtus_model_class.new(@parser_result)
       virtus_model.save
       expect(virtus_model.errors.full_messages).to include('Minerals Este productor no puede comercializar ORO')
@@ -58,16 +58,16 @@ describe RucomServices::Models::AuthorizedProviderResponse do
     it 'should formated all the fields' do
       @parser_result = {
         value_1: '  AR1MA0ND$O CE|-BA|LLO~ ',
-        value_2: ['ORO'],
+        value_2: [' O-R||1O'],
         value_3: ' CO54RD$OBA - PUER|TO LIBE-|R|T$AD1OR   ',
-        value_4: ' AR1MA0ND$O CE|-BA|LLO~ ',
-        value_5: '   BAREQUERO'
+        value_4: '  AR1MA0ND$O CE|-BA|LLO~ ',
+        value_5: 'Barequero'
       }
       expected_response = {
         name: 'ARMANDO CEBALLO',
         minerals: 'ORO',
         location: 'CORDOBA  PUERTO LIBERTADOR',
-        original_name: 'ARMANDO CEBALLO',
+        original_name: '  AR1MA0ND$O CE|-BA|LLO~ ',
         provider_type: 'barequero'
       }
       virtus_model = virtus_model_class.new(@parser_result)

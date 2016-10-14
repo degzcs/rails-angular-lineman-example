@@ -11,7 +11,7 @@ describe RucomServices::Models::TraderResponse do
         value_3: ['ORO'],
         value_4: 'Certificado',
         value_5: 'INVERSIONES LETONIA S.A.S.',
-        value_6: 'comercializador'
+        value_6: 'comercializadores'
       }
     end
 
@@ -47,11 +47,11 @@ describe RucomServices::Models::TraderResponse do
         value_3: ['PLATA'],
         value_4: 'Certificado',
         value_5: 'INVERSIONES LETONIA S.A.S.',
-        value_6: 'Comercializador'
+        value_6: 'Comercializadores'
       }
     end
 
-    it 'should validate Comercializador is able to trade GOLD' do
+    it 'should validate comercializadores is able to trade GOLD' do
       virtus_model = virtus_model_class.new(@parser_result)
       virtus_model.save
       expect(virtus_model.errors.full_messages).to include('Minerals Esta compañia no puede comercializar ORO')
@@ -61,20 +61,20 @@ describe RucomServices::Models::TraderResponse do
   context 'format data' do
     it 'should formated all the fields' do
       @parser_result = {
-        value_1: 'RUCOM-201403173059',
-        value_2: 'IN5VE5RSIO54NES LE5TO54NIA S|.A|$.S.',
-        value_3: ['O-R||1O'],
-        value_4: 'Ce$rtificado',
-        value_5: 'IN5VE5RSIO54NES LE5TO54NIA S|.A|$.S.',
-        value_6: 'Com$e-rc||ia67liz887ador'
+        value_1: '  RUCOM-201403173059 ',
+        value_2: '  IN5VE5RSIO54NES LE5TO54NIA S|.A|$.S.  ',
+        value_3: [' O-R||1O'],
+        value_4: '  Ce$rtificado  ',
+        value_5: '  IN5VE5RSIO54NES LE5TO54NIA S|.A|$.S.  ',
+        value_6: 'Comercializadores'
       }
       expected_response = {
         rucom_number: 'RUCOM-201403173059',
         name: 'INVERSIONES LETONIA S.A.S.',
         minerals: 'ORO',
         status: 'Certificado',
-        original_name: 'INVERSIONES LETONIA S.A.S.',
-        provider_type: 'comercializador'
+        original_name: '  IN5VE5RSIO54NES LE5TO54NIA S|.A|$.S.  ',
+        provider_type: 'comercializadores'
       }
       virtus_model = virtus_model_class.new(@parser_result)
       virtus_model.save
