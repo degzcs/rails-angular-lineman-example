@@ -4,22 +4,40 @@ module RucomServices
     class TraderResponse
       include ActiveModel::Model
       include Virtus.model(nullify_blank: true)
+      include ::RucomServices::Formater
 
       attr_accessor :rucom
       attribute :rucom_number, String
       attribute :name, String
-      attribute :minerals, String
+      attribute :minerals, Array
       attribute :status, String
       attribute :original_name, String
       attribute :provider_type, String
 
       # Validations
-      validates :rucom_number, presence: true
-      validates :name, presence: true
-      validates :minerals, presence: true
-      validates :status, presence: true
-      validates :original_name, presence: true
-      validates :provider_type, presence: true
+      validates_presence_of :rucom_number
+      validates_presence_of :name
+      validates_presence_of :minerals
+      validates_presence_of :status
+      validates_presence_of :original_name
+      validates_presence_of :provider_type
+
+      #
+      # Instance Methods
+      #
+
+      def initialize(params = {})
+        @rucom_number = params[:value_1]
+        @name = params[:value_2]
+        @minerals = params[:value_3] # quitar
+        @status = params[:value_4]
+        @original_name = params[:value_5]
+        @provider_type = params[:value_6]
+      end
+
+      def format_values!(fields)
+        self.remove_spaces_and_remove_special_characters!(fields)
+      end
 
       def save
         if valid?
@@ -33,18 +51,19 @@ module RucomServices
       private
 
       def persist!
-        model_fields = {
+        fields_mapping = {
           rucom_number: rucom_number,
           name: name,
-          minerals: minerals,
+          minerals: minerals.first, # TODO: update rucom#minerals field type to Array
           status: status,
           original_name: original_name,
           provider_type: provider_type
         }
-        if model_fields[:minerals].include?('ORO' || 'oro')
-          Rucom.create!(model_fields)
+        formatted_values = format_values!(fields_mapping)
+        if formatted_values[:minerals].include?('ORO' || 'oro')
+          Rucom.create!(formatted_values)
         else
-          raise 'Esta compañia no puede comercializar ORO'
+          errors.add(:minerals, 'Esta compañia no puede comercializar ORO')
         end
       end
     end

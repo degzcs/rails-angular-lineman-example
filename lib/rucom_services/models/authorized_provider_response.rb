@@ -2,7 +2,7 @@ module RucomServices
   module Models
     # The  Autorized providers are: Chatarreros and Barequeros
     class AuthorizedProviderResponse
-      include ActiveModel::Validations
+      include ActiveModel::Model
       include Virtus.model(nullify_blank: true)
       include ::RucomServices::Formater
 
@@ -19,18 +19,21 @@ module RucomServices
       validates_presence_of :original_name
       validates_presence_of :provider_type
       validates_presence_of :location
-      validate :can_buy_gold?
 
       #
       # Instance Methods
       #
 
-      def initialize(params={})
+      def initialize(params = {})
         @name = params[:value_1]
         @minerals = params[:value_2]
         @location = params[:value_3]
         @original_name = params[:value_4]
         @provider_type = params[:value_5]
+      end
+
+      def format_values!(fields)
+        self.remove_spaces_and_remove_special_characters!(fields)
       end
 
       def save
@@ -44,10 +47,6 @@ module RucomServices
 
       private
 
-      def can_buy_gold?
-        errors.add(:minerals, 'Este productor no puede comercializar ORO') unless self.minerals.include?('ORO' || 'oro')
-      end
-
       def persist!
         # Status: values = 'Activo' | 'Inactivo'
         # This field dosen't return from rucom it will be set as:
@@ -60,9 +59,12 @@ module RucomServices
           original_name: original_name,
           provider_type: provider_type
         }
-
-          # r = format_values!(fields_mapping)
-          Rucom.create!(fields_mapping)
+        formatted_values = format_values!(fields_mapping)
+        if formatted_values[:minerals].include?('ORO' || 'oro')
+          Rucom.create!(formatted_values)
+        else
+          errors.add(:minerals, 'Este productor no puede comercializar ORO')
+        end
       end
     end
   end
