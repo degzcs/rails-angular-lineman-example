@@ -46,5 +46,6 @@ describe 'Module Formater' do
 
   it 'errors' do
     response = dummy_class.new.remove_spaces_and_remove_special_characters!(nil)
+    expect(response[:errors][0]).to include("data can't the blank")
   end
 end
