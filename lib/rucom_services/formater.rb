@@ -5,23 +5,21 @@ module RucomServices
     attr_accessor :response
 
     def remove_spaces_and_remove_special_characters!(data)
-      store_and_raise_error("format!: data parameter can't be empty") if data.blank?
+      self.response = {}
+      @response[:errors] = []
       formatted_values = {}
       data.each do |k, v|
         formatted_values[k] = remove_spaces(data[k])
         formatted_values[k] = remove_special_characters(data[k])
       end
       formatted_values
+    rescue StandardError => e
+      response[:errors] << "Error: data can't the blank #{e.message}"
+      response
     end
 
     def downcase_field(field)
       field.downcase unless field.blank?
-    end
-
-    def store_and_raise_error(str_message, do_raise = true)
-      @response[:errors] = []
-      @response[:errors] << str_message
-      raise str_message if do_raise
     end
 
     def remove_special_characters(field_val)
