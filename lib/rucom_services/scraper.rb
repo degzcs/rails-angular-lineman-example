@@ -2,6 +2,7 @@ module RucomServices
   #  RucomServices Module Allows to handle all the service to extract the data from de Rucom page.
   class Scraper
     attr_accessor :response, :setting, :data_to_find, :virtus_model, :is_there_rucom
+    VIRTUS_MODELS_NAMES = %i(authorized_provider_response trader_response).freeze
 
     def initialize(data = {})
       self.response = {}
@@ -18,12 +19,14 @@ module RucomServices
       raise 'Error loading settings from rucom_service.yml file' unless @setting.success
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance)
       @is_there_rucom = validate_got_results(html_page_data)
-      formatted_data = @is_there_rucom ? formater_elements(html_page_data) : []
+      @format = @setting.response_class.underscore.to_sym
+      field_names = assign_fields(html_page_data)
+      parced_data = @is_there_rucom ? parcer_response(field_names, html_page_data) : []
       # NOTE: this line fix correct provider_type assignament, however this have to be changed
       # along with the formatted feature
-      formatted_data[:provider_type] = @data_to_find[:rol_name].downcase unless formatted_data.blank?
+      parced_data[:provider_type] = @data_to_find[:rol_name] unless parced_data.blank?
       virtus_model_name = @setting.response_class
-      @virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
+      @virtus_model = convert_to_virtus_model(parced_data, virtus_model_name)
       @setting.driver_instance.quit
       self
     rescue StandardError => e
@@ -45,15 +48,29 @@ module RucomServices
       html_results.xpath("//*[@id='#{@setting.table_body_id}']").children.css('tr > td')
     end
 
-    # @return [ Hash ] with elements formated
-    def formater_elements(html_page_data)
-      options = { data: html_page_data, format: @setting.response_class.underscore.to_sym }
-      RucomServices::Formater.new.call(options)
+    def assign_fields(html_page_data)
+      if VIRTUS_MODELS_NAMES.include?(@format)
+        virtus_model = Object.const_get "RucomServices::Models::#{@format.to_s.camelize}"
+        virtus_model.new.attributes.keys
+      else
+        @response[:errors] << "assign_fields: format option doesn't match: #{@format}"
+        raise 'Error: ' if @response[:errors].count > 0
+      end
     end
 
-    def convert_to_virtus_model(formatted_data, virtus_model_name)
+    def parcer_response(field_names, xml_rucom)
+      res = {}
+      field_names.each_with_index do |key, index|
+        res[key] = xml_rucom[index].present? ? xml_rucom[index].content : nil
+      end
+      res[:original_name] = res[:name]
+      res[:minerals] = [res[:minerals]]
+      res
+    end
+
+    def convert_to_virtus_model(parced_data, virtus_model_name)
       virtus_model = Object.const_get "RucomServices::Models::#{virtus_model_name}"
-      formatted_data.blank? || formatted_data.class != Hash ? virtus_model.new : virtus_model.new(formatted_data)
+      parced_data.blank? || parced_data.class != Hash ? virtus_model.new : virtus_model.new(parced_data)
     end
 
     def validate_got_results(html_results)
