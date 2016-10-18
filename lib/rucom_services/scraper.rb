@@ -23,10 +23,12 @@ module RucomServices
       parced_data = @is_there_rucom ? parce_response(html_page_data) : []
       # NOTE: this line fix correct provider_type assignament, however this have to be changed
       # along with the formatted feature
-      parced_data[:provider_type] = @data_to_find[:rol_name] unless parced_data.blank?
-      virtus_model_name = @setting.response_class
-      @virtus_model = convert_to_virtus_model(parced_data, virtus_model_name)
-      @setting.driver_instance.quit
+      if parced_data.present?
+        parced_data[:provider_type] = @data_to_find[:rol_name]
+        virtus_model_name = @setting.response_class
+        @virtus_model = convert_to_virtus_model(parced_data, virtus_model_name)
+        @setting.driver_instance.quit
+      end
       self
     rescue StandardError => e
       @response[:errors] << "RucomService::Scraper.call: #{e.message}"
