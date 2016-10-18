@@ -28,12 +28,12 @@ module RucomServices
       #
 
       def initialize(params = {})
-        @rucom_number = params[:value_1]
-        @name = params[:value_2]
-        @minerals = params[:value_3]
-        @status = params[:value_4]
-        @original_name = params[:value_5]
-        @provider_type = params[:value_6]
+        @rucom_number = params[:value_0]
+        @name = params[:value_1]
+        @minerals = params[:value_2].split(',') unless params[:value_2].blank?
+        @status = params[:value_3]
+        @original_name = params[:value_1]
+        @provider_type = params[:provider_type]
       end
 
       def format_values!(fields)
@@ -63,7 +63,7 @@ module RucomServices
         fields_mapping = {
           rucom_number: rucom_number,
           name: name,
-          minerals: minerals.first, # TODO: update rucom#minerals field type to Array
+          minerals: minerals.first, # TODO: update rucom minerals field type to Array
           status: status,
           original_name: original_name,
           provider_type: provider_type
@@ -72,7 +72,7 @@ module RucomServices
         if formatted_values[:minerals].include?('ORO' || 'oro')
           Rucom.create!(formatted_values)
         else
-          errors.add(:minerals, 'Esta compañia no puede comercializar ORO')
+          raise 'Esta compañia no puede comercializar ORO'
         end
       end
     end
