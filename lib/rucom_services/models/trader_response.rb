@@ -30,7 +30,7 @@ module RucomServices
       def initialize(params = {})
         @rucom_number = params[:value_0]
         @name = params[:value_1]
-        @minerals = params[:value_2].split(',') unless params[:value_2].blank?
+        @minerals = params[:value_2].split(',')
         @status = params[:value_3]
         @original_name = params[:value_1]
         @provider_type = params[:provider_type]

@@ -26,7 +26,7 @@ module RucomServices
 
       def initialize(params = {})
         @name = params[:value_0]
-        @minerals = params[:value_1].split(',') unless params[:value_1].blank?
+        @minerals = params[:value_1].split(',')
         @location = params[:value_2]
         @original_name = params[:value_0]
         @provider_type = params[:provider_type]
