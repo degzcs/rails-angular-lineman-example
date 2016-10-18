@@ -70,4 +70,33 @@ describe RucomServices::Scraper, type: :service do
       end
     end
   end
+  context 'validates method parce_response' do
+    it 'validates parce_response of a comercializador' do
+      html = '<tr data-ri="56" class="ui-widget-content ui-datatable-even" role="row">
+                  <td role="gridcell"><span style="white-space:normal">RUCOM-20131218132</span></td>
+                  <td role="gridcell"><span style="white-space:normal">   FUNDICIÓN RAMIREZ ZONA FRANCA S.A.S.</span></td>
+                  <td role="gridcell"><span style="white-space:normal">MINERALES DE ORO Y SUS CONCENTRADOS</span></td>
+                  <td role="gridcell"><span style="white-space:normal">Certificado</span></td>
+                </tr>'
+      tds_results_html = Nokogiri::HTML(html).children.css('tr > td')
+      response = rss.parce_response(tds_results_html)
+      expect(response[:value_0]).to eq 'RUCOM-20131218132'
+      expect(response[:value_1]).to eq '   FUNDICIÓN RAMIREZ ZONA FRANCA S.A.S.'
+      expect(response[:value_2]).to eq 'MINERALES DE ORO Y SUS CONCENTRADOS'
+      expect(response[:value_3]).to eq 'Certificado'
+    end
+
+    it 'validates parce_response of a authorized_provider' do
+      html = '<tr>
+                      <td role="gridcell"><span style="white-space:normal">AMADO  MARULANDA </span></td>
+                      <td role="gridcell"><span style="white-space:normal">ORO</span></td>
+                      <td role="gridcell"><span style="white-space:normal">CORDOBA - PUERTO LIBERTADOR</span></td>
+                    </tr>'
+      tds_results_html = Nokogiri::HTML(html).children.css('tr > td')
+      response = rss.parce_response(tds_results_html)
+      expect(response[:value_0]).to eq 'AMADO  MARULANDA '
+      expect(response[:value_1]).to eq 'ORO'
+      expect(response[:value_2]).to eq 'CORDOBA - PUERTO LIBERTADOR'
+    end
+  end
 end

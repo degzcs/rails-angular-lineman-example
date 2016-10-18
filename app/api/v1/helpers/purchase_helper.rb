@@ -2,7 +2,6 @@ module V1
   module Helpers
     module PurchaseHelper
       class << self
-
         def format_params(params)
           params.tap do
             trazoro = false
@@ -22,7 +21,6 @@ module V1
             params[:purchase].except!(:files).merge!(seller_picture: seller_picture, signature_picture: signature_picture, trazoro: trazoro)
           end
         end
-
       end
     end
   end

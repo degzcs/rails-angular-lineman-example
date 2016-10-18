@@ -2,11 +2,13 @@ module RucomServices
   #  RucomServices Module Allows to handle all the service to extract the data from de Rucom page.
   class Scraper
     attr_accessor :response, :setting, :data_to_find, :virtus_model, :is_there_rucom
+    VIRTUS_MODELS_TYPES = %i(authorized_provider_response trader_response).freeze
 
     def initialize(data = {})
       self.response = {}
       @response[:errors] = []
       self.setting = nil
+      # TODO: rol_name has to change to role_name or provider_type.
       self.data_to_find = data # {rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725'}
       self.is_there_rucom = false
       @virtus_model = nil
@@ -18,13 +20,15 @@ module RucomServices
       raise 'Error loading settings from rucom_service.yml file' unless @setting.success
       html_page_data = navigate_and_get_results_from_searching(@setting.driver_instance)
       @is_there_rucom = validate_got_results(html_page_data)
-      formatted_data = @is_there_rucom ? formater_elements(html_page_data) : []
+      parced_data = @is_there_rucom ? parce_response(html_page_data) : []
       # NOTE: this line fix correct provider_type assignament, however this have to be changed
       # along with the formatted feature
-      formatted_data[:provider_type] = @data_to_find[:rol_name].downcase unless formatted_data.blank?
-      virtus_model_name = @setting.response_class
-      @virtus_model = convert_to_virtus_model(formatted_data, virtus_model_name)
-      @setting.driver_instance.quit
+      if parced_data.present?
+        parced_data[:provider_type] = @data_to_find[:rol_name]
+        virtus_model_name = @setting.response_class
+        @virtus_model = convert_to_virtus_model(parced_data, virtus_model_name)
+        @setting.driver_instance.quit
+      end
       self
     rescue StandardError => e
       @response[:errors] << "RucomService::Scraper.call: #{e.message}"
@@ -35,6 +39,7 @@ module RucomServices
       @setting = RucomServices::Setting.new.call(data_to_find)
     end
 
+    # @return [ Nokogiri::XML::NodeSet ]
     def navigate_and_get_results_from_searching(driver)
       driver.navigate.to @setting.page_url
       display_and_select_options_fields(driver)
@@ -45,15 +50,27 @@ module RucomServices
       html_results.xpath("//*[@id='#{@setting.table_body_id}']").children.css('tr > td')
     end
 
-    # @return [ Hash ] with elements formated
-    def formater_elements(html_page_data)
-      options = { data: html_page_data, format: @setting.response_class.underscore.to_sym }
-      RucomServices::Formater.new.call(options)
+    # Parse the rucom html data into a hash
+    # @param html_page_data
+    # @return [ Hash ] in the next form
+    #     {
+    #       value_0: 'Barequero name',
+    #       value_1: 'mineral name',
+    #       ...
+    #     }
+    def parce_response(html_page_data)
+      res = {}
+      html_page_data.each_with_index do |nokogiri_element, index|
+        res["value_#{ index }".to_sym] = nokogiri_element.content
+      end
+      res
     end
 
-    def convert_to_virtus_model(formatted_data, virtus_model_name)
+    # @param parced_data [ Hash ]
+    # @param virtus_model_name [ String ]
+    def convert_to_virtus_model(parced_data, virtus_model_name)
       virtus_model = Object.const_get "RucomServices::Models::#{virtus_model_name}"
-      formatted_data.blank? || formatted_data.class != Hash ? virtus_model.new : virtus_model.new(formatted_data)
+      parced_data.blank? || parced_data.class != Hash ? virtus_model.new : virtus_model.new(parced_data)
     end
 
     def validate_got_results(html_results)
