@@ -138,7 +138,7 @@ module RucomServices
     end
 
     def create_user_and_profile
-      profile_arguments = { document_number: @data[:id_number], first_name: @scraper.virtus_model.name }
+      profile_arguments = { document_number: @data[:id_number], first_name: @scraper.virtus_model.rucom.name }
       # @user_profile = User.new({ profile_attributes: profile_arguments }, personal_rucom: @rucom)
       @user = User.new(profile_attributes: profile_arguments)
       @user.save!(validate: false)
