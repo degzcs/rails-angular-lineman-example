@@ -8,10 +8,9 @@
 #  courier_id     :integer
 #  type           :string(255)
 #  code           :string(255)
-#  price          :string(255)
+#  price          :float
 #  seller_picture :string(255)
 #  trazoro        :boolean          default(FALSE), not null
-#  boolean        :boolean          default(FALSE), not null
 #  created_at     :datetime
 #  updated_at     :datetime
 #
@@ -97,6 +96,8 @@ class Order < ActiveRecord::Base
     documents.where(type: 'equivalent_document').first
   end
 
+  # 
+  # @return [ Document ]
   def shipment
     documents.where(type: 'shipment').first
   end
