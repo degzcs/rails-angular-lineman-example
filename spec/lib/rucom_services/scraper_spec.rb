@@ -47,25 +47,27 @@ describe RucomServices::Scraper, type: :service do
 
       expect(scraper.setting.success).to be true
 
-      if scraper.response[:errors].include?('RucomService::Scraper.call: Net::ReadTimeout')
-        p 'Timeout error in the conexion, It seems not be enable at this moment this conexion'
-      else
-        expect(scraper.response[:errors].count).to be(0)
-      end
+      # if scraper.response[:errors].include?('RucomService::Scraper.call: Net::ReadTimeout')
+      #   p 'Timeout error in the conexion, It seems not be enable at this moment this conexion'
+      # else
+      expect(scraper.response[:errors].count).to be(0)
+      # end
     end
 
     context 'When sends a Trader data to search inside Rucom' do
       it 'returns the correct data from Rucom it belongs to the Trader without errors of any kind' do
-        data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
-        rs_scraper = RucomServices::Scraper.new(data)
-        scraper = rs_scraper.call
+        VCR.use_cassette('successful_trader_rucom_response') do
+          data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+          rs_scraper = RucomServices::Scraper.new(data)
+          scraper = rs_scraper.call
 
-        expect(scraper.setting.success).to be true
+          expect(scraper.setting.success).to be true
 
-        if scraper.response[:errors].include?('RucomService::Scraper.call: Net::ReadTimeout')
-          p 'Timeout error in the conexion, It seems not be enable at this moment this conexion'
-        else
+          # if scraper.response[:errors].include?('RucomService::Scraper.call: Net::ReadTimeout')
+          #   p 'Timeout error in the conexion, It seems not be enable at this moment this conexion'
+          # else
           expect(scraper.response[:errors].count).to be(0)
+          # end
         end
       end
     end

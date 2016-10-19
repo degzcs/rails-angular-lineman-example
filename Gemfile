@@ -63,6 +63,7 @@ gem 'virtus'
 gem 'state_machine', git: 'https://github.com/seuros/state_machine.git'
 gem 'audited-activerecord' #, '~> 4.3'
 gem "rails-observers", github: 'rails/rails-observers'
+gem 'alegra'
 
 group :development do
   gem 'quiet_assets'

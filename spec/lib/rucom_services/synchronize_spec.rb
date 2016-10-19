@@ -12,7 +12,7 @@ describe RucomServices::Synchronize do
 
   context '#call' do
     it 'executes sucessfully' do
-      VCR.use_cassette('successful_rucom_response') do
+      VCR.use_cassette('successful_authorized_provider_rucom_response') do
         @sync.call
 
         # sets data attribute with the data sended
@@ -49,7 +49,7 @@ describe RucomServices::Synchronize do
     end
 
     it 'executes unsucessfully' do
-      VCR.use_cassette('unsuccessful_rucom_response') do
+      VCR.use_cassette('unsuccessful_authorized_provider_rucom_response') do
         @data[:id_number] = '1234567'
         @sync = RucomServices::Synchronize.new(@data).call
 
@@ -75,20 +75,21 @@ describe RucomServices::Synchronize do
       context 'When the user registration state is not completed' do
         context 'when rucom exist in the local database' do
           it 'returns the respective rucom row' do
-            @user = create :user, :with_profile, :with_personal_rucom
-            @data[:id_number] = @user.profile.document_number
-            rucom = @user.rucom
-            @sync = RucomServices::Synchronize.new(@data).call
-            expect(@sync.rucom).to eq(rucom)
+            VCR.use_cassette('successful_authorized_provider_rucom_response') do
+              @user = create :user, :with_profile, :with_personal_rucom
+              @data[:id_number] = @user.profile.document_number
+              rucom = @user.rucom
+              @sync = RucomServices::Synchronize.new(@data).call
+              expect(@sync.rucom).to eq(rucom)
+            end
           end
         end
 
         it 'creates rucom from scraper service' do
-          VCR.use_cassette('successful_rucom_response') do
+          VCR.use_cassette('successful_authorized_provider_rucom_response') do
             clean_user_profile_rucom_data(@data[:id_number])
             @sync.call
             @rucom = Rucom.find_by(name: 'AMADO  MARULANDA')
-
             # returns the virtus model to the class response
             expect(@sync.scraper.virtus_model.present?).to eq(true)
             expect(@sync.scraper.virtus_model.class.name).to eq("RucomServices::Models::#{@sync.scraper.setting.response_class}")
@@ -115,7 +116,7 @@ describe RucomServices::Synchronize do
 
         context 'when rucom dosen\'t exist in the Rucom Remote database' do
           it 'raises an error and set the response error with it' do
-            VCR.use_cassette('unsuccessful_rucom_response') do
+            VCR.use_cassette('unsuccessful_authorized_provider_rucom_response') do
               @data[:id_number] = '1234567'
               @sync = RucomServices::Synchronize.new(@data).call
               expect(@sync.response[:errors].count).to eq(1)
@@ -141,17 +142,21 @@ describe RucomServices::Synchronize do
 
     context 'When the producer Profile dosen\'t exist' do
       it 'returns false as a result' do
-        expect(@sync.user_profile_exist?).to eq false
+        VCR.use_cassette('successful_authorized_provider_rucom_response') do
+          expect(@sync.user_profile_exist?).to eq false
+        end
       end
     end
 
     context 'When the producer Profile exists' do
       it 'returns true as a result' do
-        @user = create :user, :with_profile, :with_personal_rucom
-        @data[:id_number] = @user.profile.document_number
-        @sync = RucomServices::Synchronize.new(@data)
+        VCR.use_cassette('successful_authorized_provider_rucom_response') do
+          @user = create :user, :with_profile, :with_personal_rucom
+          @data[:id_number] = @user.profile.document_number
+          @sync = RucomServices::Synchronize.new(@data)
 
-        expect(@sync.user_profile_exist?).to eq true
+          expect(@sync.user_profile_exist?).to eq true
+        end
       end
     end
   end
@@ -164,7 +169,7 @@ describe RucomServices::Synchronize do
 
     context 'When rucom exist' do
       it 'returns true as response' do
-        VCR.use_cassette('unsuccessful_rucom_response') do
+        VCR.use_cassette('successful_authorized_provider_rucom_response') do
           @user = create :user, :with_profile, :with_personal_rucom
           @data[:id_number] = @user.profile.document_number
           @sync = RucomServices::Synchronize.new(@data)
@@ -176,7 +181,7 @@ describe RucomServices::Synchronize do
 
     context 'When rucom no exist' do
       it 'returns false as response' do
-        VCR.use_cassette('unsuccessful_rucom_response') do
+        VCR.use_cassette('unsuccessful_authorized_provider_rucom_response') do
           @user = create :user, :with_profile, :with_personal_rucom
           @user.personal_rucom.destroy!
           @user.reload
@@ -205,7 +210,7 @@ describe RucomServices::Synchronize do
     it 'executes sucessfully' do
       @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900498208' }
       @sync = RucomServices::Synchronize.new(@data)
-      VCR.use_cassette('successful_rucom_response') do
+      VCR.use_cassette('successful_trader_rucom_response') do
         @sync.call
 
         # sets data attribute with the data sended
@@ -249,16 +254,18 @@ describe RucomServices::Synchronize do
       context '' do
         context 'when rucom exist in the local database' do
           it 'returns the respective rucom row' do
-            @company = create :company
-            @data[:id_number] = @company.nit_number
-            rucom = @company.rucom
-            @sync = RucomServices::Synchronize.new(@data).call
-            expect(@sync.rucom).to eq(rucom)
+            VCR.use_cassette('successful_trader_rucom_response') do
+              @company = create :company
+              @data[:id_number] = @company.nit_number
+              rucom = @company.rucom
+              @sync = RucomServices::Synchronize.new(@data).call
+              expect(@sync.rucom).to eq(rucom)
+            end
           end
         end
 
         it 'creates rucom from scraper service' do
-          VCR.use_cassette('successful_rucom_response') do
+          VCR.use_cassette('successful_trader_rucom_response') do
             clean_company_rucom_data(@data[:id_number])
             @sync.call
             @rucom = Rucom.find_by(name: 'INVERSIONES LETONIA S.A.S.')
@@ -288,16 +295,20 @@ describe RucomServices::Synchronize do
 
     context 'When the producer Profile dosen\'t exist' do
       it 'returns false as a result' do
-        expect(@sync.company_exist?).to eq false
+        VCR.use_cassette('successful_trader_rucom_response') do
+          expect(@sync.company_exist?).to eq false
+        end
       end
     end
 
     context 'When the producer Profile exists' do
       it 'returns true as a result' do
-        @company = create :company
-        @data[:id_number] = @company.nit_number
-        @sync = RucomServices::Synchronize.new(@data)
-        expect(@sync.company_exist?).to eq true
+        VCR.use_cassette('successful_trader_rucom_response') do
+          @company = create :company
+          @data[:id_number] = @company.nit_number
+          @sync = RucomServices::Synchronize.new(@data)
+          expect(@sync.company_exist?).to eq true
+        end
       end
     end
   end
@@ -309,7 +320,7 @@ describe RucomServices::Synchronize do
 
     context 'When rucom exist' do
       it 'returns true as response' do
-        VCR.use_cassette('unsuccessful_rucom_response') do
+        VCR.use_cassette('unsuccessful_trader_rucom_response') do
           @company = create :company
           @data[:id_number] = @company.nit_number
           @sync = RucomServices::Synchronize.new(@data)
@@ -328,15 +339,17 @@ describe RucomServices::Synchronize do
   end
 
   it 'When the company can not market oro' do
-    @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
-    @sync = RucomServices::Synchronize.new(@data).call
-    expect(@sync.response[:success]).to eq(false)
-    expect(@sync.response[:errors]).to include(/Esta compañia no puede comercializar ORO/)
-    expect(@sync.rucom.blank?).to eq(true)
-    expect(@sync.rucom.present?).to eq(false)
+    VCR.use_cassette('unsuccessful_trader_rucom_response2') do
+      @data = { rol_name: 'Comercializadores', id_type: 'NIT', id_number: '900058021' }
+      @sync = RucomServices::Synchronize.new(@data).call
+      expect(@sync.response[:success]).to eq(false)
+      expect(@sync.response[:errors]).to include(/Esta compañia no puede comercializar ORO/)
+      expect(@sync.rucom.blank?).to eq(true)
+      expect(@sync.rucom.present?).to eq(false)
+    end
   end
 
-  xit 'When the authorized_provider can not market oro' do
+  it 'When the authorized_provider can not market oro' do
     VCR.use_cassette('barequero_other_mineral_rucom_response') do
       @data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: 'xxxxxxxx' }
       @sync = RucomServices::Synchronize.new(@data).call
