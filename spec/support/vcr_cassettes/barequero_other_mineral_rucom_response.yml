@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session
+    uri: http://127.0.0.1:8910/session
     body:
       encoding: UTF-8
       string: '{"desiredCapabilities":{"browserName":"phantomjs","version":"","platform":"ANY","javascriptEnabled":true,"cssSelectorsEnabled":true,"takesScreenshot":true,"nativeEvents":false,"rotatable":false}}'
@@ -25,17 +25,17 @@ http_interactions:
       Cache:
       - no-cache
       Content-Length:
-      - '536'
+      - '534'
       Content-Type:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"browserName":"phantomjs","version":"1.9.7","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:10 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:33 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/url
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/url
     body:
       encoding: UTF-8
       string: '{"url":"http://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf"}'
@@ -63,12 +63,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:12 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:35 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element
     body:
       encoding: UTF-8
       string: '{"using":"id","value":"form:trol_panel"}'
@@ -96,15 +96,15 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"ELEMENT":":wdc:1475866152615"}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"ELEMENT":":wdc:1476908375044"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:12 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:35 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/execute
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/execute
     body:
       encoding: UTF-8
-      string: '{"script":"arguments[0].style.display=''block'';","args":[{"ELEMENT":":wdc:1475866152615","element-6066-11e4-a52e-4f735466cecf":":wdc:1475866152615"}]}'
+      string: '{"script":"arguments[0].style.display=''block'';","args":[{"ELEMENT":":wdc:1476908375044","element-6066-11e4-a52e-4f735466cecf":":wdc:1476908375044"}]}'
     headers:
       Accept:
       - application/json
@@ -129,12 +129,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":null}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":null}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:12 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:35 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element
     body:
       encoding: UTF-8
       string: '{"using":"xpath","value":"//*[@data-label=''Barequero'']"}'
@@ -162,12 +162,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"ELEMENT":":wdc:1475866152616"}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"ELEMENT":":wdc:1476908375045"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:12 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:35 GMT
 - request:
     method: get
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element/:wdc:1475866152616/displayed
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element/:wdc:1476908375045/displayed
     body:
       encoding: US-ASCII
       string: ''
@@ -193,12 +193,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":true}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":true}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:12 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:35 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element/:wdc:1475866152616/click
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element/:wdc:1476908375045/click
     body:
       encoding: UTF-8
       string: "{}"
@@ -224,12 +224,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:12 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:35 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element
     body:
       encoding: UTF-8
       string: '{"using":"id","value":"form:tIdentificacion_panel"}'
@@ -257,15 +257,15 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"ELEMENT":":wdc:1475866152617"}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"ELEMENT":":wdc:1476908375046"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:13 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:36 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/execute
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/execute
     body:
       encoding: UTF-8
-      string: '{"script":"arguments[0].style.display=''block'';","args":[{"ELEMENT":":wdc:1475866152617","element-6066-11e4-a52e-4f735466cecf":":wdc:1475866152617"}]}'
+      string: '{"script":"arguments[0].style.display=''block'';","args":[{"ELEMENT":":wdc:1476908375046","element-6066-11e4-a52e-4f735466cecf":":wdc:1476908375046"}]}'
     headers:
       Accept:
       - application/json
@@ -290,12 +290,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":null}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":null}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:13 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:36 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element
     body:
       encoding: UTF-8
       string: '{"using":"xpath","value":"//*[@data-label=''CEDULA'']"}'
@@ -323,12 +323,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"ELEMENT":":wdc:1475866152618"}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"ELEMENT":":wdc:1476908375047"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:13 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:36 GMT
 - request:
     method: get
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element/:wdc:1475866152618/displayed
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element/:wdc:1476908375047/displayed
     body:
       encoding: US-ASCII
       string: ''
@@ -354,12 +354,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":true}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":true}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:13 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:36 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element/:wdc:1475866152618/click
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element/:wdc:1476908375047/click
     body:
       encoding: UTF-8
       string: "{}"
@@ -385,12 +385,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:13 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:36 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element
     body:
       encoding: UTF-8
       string: '{"using":"xpath","value":"//*[@id=''form:numId'']"}'
@@ -418,12 +418,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"ELEMENT":":wdc:1475866152619"}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"ELEMENT":":wdc:1476908375048"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:14 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:37 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element/:wdc:1475866152619/value
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element/:wdc:1476908375048/value
     body:
       encoding: UTF-8
       string: '{"value":["15535725"]}'
@@ -451,12 +451,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":null}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":null}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:14 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:37 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element
     body:
       encoding: UTF-8
       string: '{"using":"id","value":"form:consultar"}'
@@ -484,12 +484,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{"ELEMENT":":wdc:1475866152620"}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{"ELEMENT":":wdc:1476908375049"}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:14 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:37 GMT
 - request:
     method: post
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/element/:wdc:1475866152620/click
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/element/:wdc:1476908375049/click
     body:
       encoding: UTF-8
       string: "{}"
@@ -515,12 +515,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:15 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:37 GMT
 - request:
     method: get
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8/source
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/source
     body:
       encoding: US-ASCII
       string: ''
@@ -541,7 +541,7 @@ http_interactions:
       Cache:
       - no-cache
       Content-Length:
-      - '17411'
+      - '17413'
       Content-Type:
       - application/json;charset=UTF-8
     body:
@@ -935,10 +935,10 @@ http_interactions:
         aGlnaGxpZ2h0XCIgZGF0YS1sYWJlbD1cIkNFRFVMQVwiPkNFRFVMQTwvbGk+
         PC91bD48L2Rpdj48L2Rpdj48L2JvZHk+PC9odG1sPiJ9
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:16 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:38 GMT
 - request:
     method: delete
-    uri: http://127.0.0.1:8919/session/bc15d0c0-8cbe-11e6-b3be-8f7195be0df8
+    uri: http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295
     body:
       encoding: US-ASCII
       string: ''
@@ -962,12 +962,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"bc15d0c0-8cbe-11e6-b3be-8f7195be0df8","status":0,"value":{}}'
+      string: '{"sessionId":"59527fe0-9639-11e6-916a-31ab47c7c295","status":0,"value":{}}'
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:19 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:38 GMT
 - request:
     method: get
-    uri: http://127.0.0.1:8919/shutdown
+    uri: http://127.0.0.1:8910/shutdown
     body:
       encoding: US-ASCII
       string: ''
@@ -993,5 +993,5 @@ http_interactions:
       encoding: UTF-8
       string: "<html><body>Closing...</body></html>"
     http_version:
-  recorded_at: Fri, 07 Oct 2016 18:49:19 GMT
+  recorded_at: Wed, 19 Oct 2016 20:19:38 GMT
 recorded_with: VCR 3.0.3

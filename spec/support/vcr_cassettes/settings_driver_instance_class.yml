@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://127.0.0.1:8922/session
+    uri: http://127.0.0.1:8910/session
     body:
       encoding: UTF-8
       string: '{"desiredCapabilities":{"browserName":"phantomjs","version":"","platform":"ANY","javascriptEnabled":true,"cssSelectorsEnabled":true,"takesScreenshot":true,"nativeEvents":false,"rotatable":false}}'
@@ -25,17 +25,17 @@ http_interactions:
       Cache:
       - no-cache
       Content-Length:
-      - '536'
+      - '534'
       Content-Type:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"31ac21c0-8cc1-11e6-891d-4b4cbecc88cb","status":0,"value":{"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}'
+      string: '{"sessionId":"231709f0-963e-11e6-a1a8-4ffdca11cb18","status":0,"value":{"browserName":"phantomjs","version":"1.9.7","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-unknown-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}'
     http_version: 
-  recorded_at: Fri, 07 Oct 2016 19:06:47 GMT
+  recorded_at: Wed, 19 Oct 2016 20:53:50 GMT
 - request:
     method: delete
-    uri: http://127.0.0.1:8922/session/31ac21c0-8cc1-11e6-891d-4b4cbecc88cb
+    uri: http://127.0.0.1:8910/session/231709f0-963e-11e6-a1a8-4ffdca11cb18
     body:
       encoding: US-ASCII
       string: ''
@@ -59,12 +59,12 @@ http_interactions:
       - application/json;charset=UTF-8
     body:
       encoding: UTF-8
-      string: '{"sessionId":"31ac21c0-8cc1-11e6-891d-4b4cbecc88cb","status":0,"value":{}}'
+      string: '{"sessionId":"231709f0-963e-11e6-a1a8-4ffdca11cb18","status":0,"value":{}}'
     http_version: 
-  recorded_at: Fri, 07 Oct 2016 19:06:47 GMT
+  recorded_at: Wed, 19 Oct 2016 20:53:50 GMT
 - request:
     method: get
-    uri: http://127.0.0.1:8922/shutdown
+    uri: http://127.0.0.1:8910/shutdown
     body:
       encoding: US-ASCII
       string: ''
@@ -90,5 +90,5 @@ http_interactions:
       encoding: UTF-8
       string: "<html><body>Closing...</body></html>"
     http_version: 
-  recorded_at: Fri, 07 Oct 2016 19:06:47 GMT
+  recorded_at: Wed, 19 Oct 2016 20:53:50 GMT
 recorded_with: VCR 3.0.3
