@@ -67,6 +67,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       ozs: 0
       tomines: 0
       reales: 0
+      granos: 0
       inventory_id: 1
       total_grams: 0
       total_fine_grams: 0
