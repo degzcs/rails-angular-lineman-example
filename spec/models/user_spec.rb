@@ -9,7 +9,6 @@
 #  password_digest    :string(255)
 #  reset_token        :string(255)
 #  office_id          :integer
-#  external           :boolean          default(FALSE), not null
 #  registration_state :string(255)
 #
 
