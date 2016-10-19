@@ -29,7 +29,7 @@ angular.module('app').factory 'GoldBatchService', ($rootScope)->
       else
         sessionStorage.restorestate = 'false'
     deleteState: ->
-      sessionStorage.goldBatchService =[]
+      sessionStorage.goldBatchService = []
 
   #
   # Listeners
