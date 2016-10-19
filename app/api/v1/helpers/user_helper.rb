@@ -34,11 +34,12 @@ module V1
           photo_file = files.select{|file| file[:filename] =~ /photo_file/}.first
           id_document_file = files.select{|file| file[:filename] =~ /id_document_file/}.first
           mining_authorization_file = files.select{|file| file[:filename] =~ /mining_authorization_file/}.last
-
+          habeas_data_agreetment_file = files.select{|file| file[:filename] =~ /habeas_data_agreetment_file/}.first
           add_files_to_profile = {
             :photo_file => photo_file,
             :id_document_file => id_document_file,
-            :mining_authorization_file => mining_authorization_file
+            :mining_authorization_file => mining_authorization_file,
+            :habeas_data_agreetment_file => habeas_data_agreetment_file
           }
           params.except!(:files)
           params[:profile].merge!(add_files_to_profile)
