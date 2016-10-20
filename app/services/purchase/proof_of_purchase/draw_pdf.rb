@@ -102,7 +102,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     text_box gold_batch_presenter.grade.to_s, :at => [400, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 362
     text_box gold_batch_presenter.total_fine_grams.to_s, :at => [400, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    # 1.costo trazoro 
+    # 1.costo trazoro
     move_cursor_to 345
     text_box "Costo Trazoro", :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     text_box order_presenter.trazoro_transaction_cost.to_s, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
@@ -119,10 +119,9 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     move_cursor_to 286
     text_box order_presenter.price.to_s, :at => [400, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
-    move_cursor_to 230
-    signature = signature_picture.is_a?(Hash) ? OpenStruct.new(signature_picture) : signature_picture
-    image(signature.tempfile, :at => [280, cursor], :fit => [200, 100])
-
-    # image(signature.tempfile, :at => [36, cursor], :fit => [200, 100])
+    service = ::GenerateSignatureWithoutBackground.new
+    signature_path = service.call(signature_picture)
+    move_cursor_to 240
+    image(signature_path, :at => [280, cursor], :fit => [200, 100])
   end
 end
