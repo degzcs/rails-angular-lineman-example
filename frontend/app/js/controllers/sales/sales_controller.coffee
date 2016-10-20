@@ -4,6 +4,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
   #
   # Instances
   #
+  LiquidationService.deleteState()
   $scope.sale = SaleService
   $scope.chkAgreetmentActive = false
 
@@ -114,6 +115,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
       $mdDialog.show(confirm).then (->
         LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount
+        LiquidationService.model.weightedLaw = 0
         LiquidationService.model.ingotsNumber = 1
         LiquidationService.saveState()
 

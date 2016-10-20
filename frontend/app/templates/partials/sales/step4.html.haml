@@ -1,5 +1,5 @@
 %md-content.md-padding.sale-show-content
-
+  
   %div{layout: "row"}
     /------------------------ CLIENT CARD ---------------------/
     %md-card.sell-card-info{flex:""}
@@ -111,33 +111,45 @@
       %md-card-content
         .card-inputs
           %table.sale-table
+            %tr.table-last{ layout: "row", layout-align: "end end" }
+              %td  
+                %h4 Gramos Totales:
+                %strong                  
+                  {{totalAmount}} grs
+              %td  
+                %h4 Ley Resultante:                
+                %strong                  
+                  {{weightedLaw.toFixed(0)}}
+              %td
+                %h4 Precio Total:
+                %strong
+                  {{saleOrder.price | currency}}
+              %td
+              %td
+        
+            %tr.table-last{ layout: "row", layout-align: "end end" }
+
             %tr.table-head
               %th Fecha Compra
               %th Nombre Proveedor
               %th Tipo Proveedor
               %th Gramos (Finos)
             %tr.stripped{"ng-repeat" => "associatedPurchase in saleOrder.associated_purchases"}
-              %th {{associatedPurchase.created_at}}
+              %td {{associatedPurchase.created_at}}
               %td {{associatedPurchase.seller.first_name}} {{associatedPurchase.seller.last_name}}
-              %td {{associatedPurchase.seller.provider_type}}
+              %td {{associatedPurchase.seller.provider_type}} 
               %td {{associatedPurchase.fine_grams}}
               %td
-            %tr.table-last{ layout: "row", layout-align: "end end" }
-              %td
-                %h2
-                  %strong
-                    Gramos Totales:
-
-                    {{saleOrder.fine_grams}} grs
-              %td
-                %h2
-                  %strong
-                    Precio Total:
-
-                    ${{saleOrder.price}}
   %div{layout: "row"}
     %div{flex: ""}
       %h2
-        %a.md-button{flex: "20", "ng-click" => 'DownloadSaleFiles()', 'target' => '_blank'}
-          Descargar Archivos
+        %a.md-button{href: "{{saleOrder.purchase_files_collection.file.url}}", :target => "_blank"}
+          Certificados de origen adjuntos
+      %h2
+        %a.md-button{href: "{{saleOrder.proof_of_sale.file.url}}", :target => "_blank"}
+          Reporte de Venta
+      %h2
+        %a.md-button{href: "{{saleOrder.shipment.file.url}}", :target => "_blank"}
+          Solicitud de autorización de embarque
+          newSaleOrder
 %md-button.btn-save{ flex: "20", "ng-click" => "newSaleOrder();"} Nueva Venta

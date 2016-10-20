@@ -18,6 +18,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       associatedPurchases: null
       totalAmount: null
       fixed_sale_agreetment: null
+      weightedLaw: null
 
 
     create: (sale_params, gold_batch_params, selectedPurchases)->

@@ -107,8 +107,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   $scope.setSelectedClient = (selectedClient)->
     #$scope.searchClientText = null
     $scope.selectedClient = selectedClient
-    console.log 'selectedClient: '
-    console.log selectedClient
     $scope.clientVerifiedProgress = true
     $timeout (->
       $scope.clientVerifiedProgress = false
@@ -139,6 +137,9 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
     if $scope.selectedClient == null # || $scope.selectedCourier == null
       $scope.infoAlert('Atencion', 'Por favor elija un cliente para su Orden de Venta')
       return
+    else if $scope.price == 0 || $scope.price == null
+      $scope.infoAlert('Atencion', 'Por favor debe ingresar el precio a Fijar para la orden de Venta')
+      return
     else
       gold_batch_params = {
         fine_grams: $scope.totalAmount,
@@ -160,9 +161,11 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
 
         LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount
+        #LiquidationService.model.weightedLaw = $scope.weightedLaw
         LiquidationService.saveState()
 
         SaleService.model = sale
+        SaleService.model.weightedLaw = $scope.weightedLaw
         SaleService.saveState()
 
         $state.go('new_sale.step4')
