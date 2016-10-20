@@ -10,6 +10,8 @@
 #  reset_token        :string(255)
 #  office_id          :integer
 #  registration_state :string(255)
+#  alegra_id          :integer
+#  alegra_sync        :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
