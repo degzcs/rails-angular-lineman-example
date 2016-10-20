@@ -24,7 +24,7 @@ describe Purchase::BuyGoldService do
       seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
       seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
 
-      signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
+      signature_picture_path = "#{Rails.root}/spec/support/images/signature.jpg"
       @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
 
       @gold_batch_hash = {
