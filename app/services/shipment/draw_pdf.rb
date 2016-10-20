@@ -29,7 +29,7 @@ class Shipment::DrawPdf < Prawn::Document
     self
   end
 
-  def draw_file!( order_presenter, counter = 'Pending...')
+  def draw_file!( order_presenter)
     start_new_page({ :template => "#{base_file.path}", :template_page => 1 })
     buyer_presenter = order_presenter.buyer_presenter
     # Header
