@@ -17,14 +17,13 @@
 
 FactoryGirl.define do
   factory :courier do
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
-    phone_number { Faker::PhoneNumber.phone_number }
-    company_name { Faker::Company.name }
-    address { Faker::Address.street_address}
-    nit_company_number { Faker::Number.number(10) }
-    id_document_type { Faker::Hacker.abbreviation }
-    id_document_number { Faker::Number.number(10) }
+    first_name { "courier name" }
+    last_name { "courier last_name" }
+    phone_number { 1231231 }
+    company_name { "courier company_name" }
+    address { "courier address"}
+    nit_company_number { 1234567890 }
+    id_document_type { "id_document_type courier" }
+    id_document_number { 1234456763 }
   end
-
 end

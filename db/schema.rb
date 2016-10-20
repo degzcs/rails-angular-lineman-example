@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(version: 20161014193248) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "habeas_data_agreetment_file"
   end
 
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree

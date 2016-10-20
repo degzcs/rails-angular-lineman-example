@@ -7,7 +7,7 @@ development:
   USE_AWS_S3: false
   USE_WACOM_DEVICE: false
   ALEGRA_USERNAME: <value>
-  ALEGRA_TOKEN: <value>
+  ALEGRA_TOKEN: <value>  
   RDS_DB_NAME: <value>
   RDS_USERNAME: <value>
   RDS_PASSWORD: <value>

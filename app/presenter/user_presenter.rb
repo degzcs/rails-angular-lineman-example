@@ -18,6 +18,14 @@ class UserPresenter < BasePresenter
     "#{ profile.first_name } #{ profile.last_name }"
   end
 
+  def first_name
+    user.profile.first_name
+  end
+
+  def last_name
+    user.profile.last_name
+  end
+
   # TODO: this have to change asap. because will cause data inconsistencies
   def company_name
     user.company_name || name
