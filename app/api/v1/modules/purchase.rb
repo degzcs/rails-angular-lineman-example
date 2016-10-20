@@ -60,7 +60,7 @@ module V1
         ] do
           authorize! :create, ::Order
           # update params
-          date = '2016/07/15'.to_date
+          date = Date.today.to_date
           new_params = V1::Helpers::PurchaseHelper.format_params(params)
           gold_purchase_service = ::Purchase::BuyGoldService.new
           service_response = gold_purchase_service.call(
