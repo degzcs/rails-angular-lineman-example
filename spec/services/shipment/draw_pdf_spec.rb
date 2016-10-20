@@ -5,7 +5,7 @@ describe Shipment::DrawPdf do
     }
     let(:courier) { create :courier }
     let(:rucom) { create :rucom, rucom_number: '7767899877' }
-    let(:buyer) { create :user, :with_profile, :with_company, :with_trader_role, city: City.find_by(name: 'MEDELLIN'), name: 'Aquiles S.A', nit_number: '0987654321', rucom: rucom, first_name: 'nametest', last_name: 'last_nametest', document_number: '1234567890', city: City.find_by(name: 'MEDELLIN') }
+    let(:buyer) { create :user, :with_profile, :with_company, :with_trader_role, name: 'Aquiles S.A', nit_number: '0987654321', rucom: rucom, first_name: 'nametest', last_name: 'last_nametest', document_number: '1234567890', city: City.find_by(name: 'MEDELLIN') }
     let(:gold_batch) { create :gold_batch }
     let(:sale_order) { create :sale, seller: seller, buyer: buyer, gold_batch: gold_batch, courier: courier }
 
