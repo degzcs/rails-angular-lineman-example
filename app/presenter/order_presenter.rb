@@ -42,6 +42,10 @@ class OrderPresenter < BasePresenter
     SettingsPresenter.new(Settings.instance, h)
   end
 
+  def buy_agreetment_text
+    settings_presenter.buy_agreetment
+  end
+
   def iva
     settings_presenter.vat_percentage.to_f/100
   end
