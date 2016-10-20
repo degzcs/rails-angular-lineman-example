@@ -206,7 +206,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
 
   # Set the last picture that was took
-  $scope.photo=CameraService.getLastScanImage()
+  $scope.photo= CameraService.getLastScanImage()
   # Set the last certificate file that was
   if(ScannerService.getScanFiles() and ScannerService.getScanFiles().length>0)
     $scope.file= ScannerService.getScanFiles()
@@ -427,7 +427,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.showLoading = false
         $scope.current_user = data
         $scope.purchase.model.seller = data
-        $scope.purchase.model.seller.provider_type = 'Barequero'
+        $scope.purchase.model.seller.provider_type = rolName
         $scope.purchase.model.seller.document_type = 'CEDULA'
         $scope.purchase.model.seller.name = fullName($scope.current_user)
         $scope.purchase.model.seller.company_name = "NA"
