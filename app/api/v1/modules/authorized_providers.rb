@@ -107,7 +107,6 @@ module V1
 
         get '/by_id_number', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           content_type 'text/json'
-          binding.pry
           options_from_view = { rol_name: params['rol_name'], id_type: params['id_type'], id_number: params['id_number'] }
           sync = RucomServices::Synchronize.new(options_from_view).call
           if sync.success
@@ -156,18 +155,24 @@ module V1
           [401, 'Unauthorized'],
           [404, 'Entry not found']
         ] do
+          binding.pry
           content_type 'text/json'
           authorized_provider = ::User.find(params[:id])
           if authorized_provider.present?
             formatted_params = V1::Helpers::UserHelper.authorized_provider_params(params)
             # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
-            authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
-            audit_comment = "Updated from API Request by ID: #{current_user.id}"
-            ::User.audit_as(current_user) do
-              authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
-              authorized_provider.update_attributes(
-                formatted_params[:authorized_provider].merge(audit_comment: audit_comment)
-              )
+           ActiveRecord::Base.transaction do
+              authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
+              audit_comment = "Updated from API Request by ID: #{current_user.id}"
+              
+              ::User.audit_as(current_user) do
+                authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
+                authorized_provider.update_attributes(
+                  formatted_params[:authorized_provider].merge(audit_comment: audit_comment)
+                )
+              end
+              # service pdf habeas data agreetment
+              
             end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])
             if authorized_provider.save
