@@ -1,77 +1,103 @@
-%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
-  %section{layout: "row"}
-    %div.md-padding{flex: ""}
-      // ---Purchase Type
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            1. Seleccione El Tipo de Compra
-        %div.fieldset-inputs
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
-                %md-radio-button{:value => "seller", :ng-click => 'flushData()'} Directamente desde proveedor
-                /md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
+//---------------------- Purchase TAB ---------------------------------------
+%form{:name => "purchaseForm"}
+  %section{"class"=>"md-padding autocomplete"}
+    .seller
+      .row{:layout => "", "layout-sm" => "column"}
+        .select-law{'flex' => ''}
+          %h5 Digite el numero de ley
+          %md-input-container
+            %label Ley
+            %input{ "type" => "number", "string-to-number"=>"", :min => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre'}
+            %div{"ng-messages" => "purchaseForm.degre.$error"}
+              %div{"ng-message" => "required"} * Este campo es requerido.
+        .fine-gram-unit-price{'flex' => ''}
+          %h5 Valor gramo fino de vender en COP
+          %md-input-container
+            %label Precio de gramo fino por unidad
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1"}
+            %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
+              %div{"ng-message" => "required"} * Este campo es requerido.
+        .price-to-buy{ 'flex' => ''}
+          %h5 Valor gramo fino de comprar en COP
+          %md-input-container
+            %label Precio de gramo fino por unidad
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1"}
+
+      .row{:layout => "", "layout-sm" => "column"}
+        .convertion-section{'flex' => ''}
+          %h5 Medidas
+          %table.md-table
+            %thead
+              %tr.md-table-headers-row
+                %th.md-table-header
+                  Medida
+                %th.md-table-header
+                  Cantidad
+                %th.md-table-header
+                  Total gramos
+                %th.md-table-header
+                  Total gramos finos
+                %th.md-table-header
+                  Precio Total
+            %tbody
+              %tr
+                %td.md-table-td-more
+                  %p Gramo(s)
+                %td.md-table-td-more
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>""}
+                %td.md-table-td-more.total-grams
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.total_grams",  :min => "1", :requiered => '', :readOnly => 'true', "type" => "number", "string-to-number"=>"", :name => 'total_grams'}
+                    %div{"ng-messages" => "purchaseForm.total_grams.$error"}
+                      %div{"ng-message" => "required"} * Tiene que seleccionar la cantidad de oro a facturar mayor a 1 gramo.
+                %td.md-table-td-more.total-fine-grams
+                  %md-input-container
+                    {{ goldBatch.model.total_fine_grams | number:3}}
+                %td.md-table-td-more
+                  %md-input-container
+                    $ {{ purchase.model.price | number:2}}
+              %tr
+                %td.md-table-td-more
+                  Castellano(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Onza(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Tomine(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Real(es)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>""}
+              %tr
+                %td.md-table-td-more
+                  Grano(s)
+                %td.md-table-td-more{colspan: 1}
+                  %md-input-container
+                    %label
+                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>""}
+
+  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
+    %md-button.btn-save{ "ng-disabled" => 'purchaseForm.$invalid', flex: "20", "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
 
 
-  %section{layout: "row"}
-    // ---------------------- seller info ------------------- ///
-    %div.md-padding{flex: ""}
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3{:ng-if => "purchase.model.type == 'seller'"}
-            2. Proveedor
-          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-            2. Ingrese el codigo de barras
 
-        %div.fieldset-inputs
-          %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
-            %md-input-container{flex: ''}
-              %label Numero de codigo de barras de la Venta
-              %input{"ng-model" => "code", :name => 'seller_name'}
-            %md-input-container{flex: 30}
-              %a.md-button.md-raised.md-primary.find-seller-button{:ng-click =>"searchsellerByCode(code)"}  Buscar
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Nombre Proveedor
-              %input{"ng-model" => "purchase.model.seller.name", :required => "", :name => 'seller_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Nombre de la Compania
-              %input{"ng-model" => "purchase.model.seller.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
-          %div{layout: "row"}
-            / %md-input-container{flex: "20"}
-            /   %label tipo doc.
-            /   %input{"ng-model" => "purchase.model.seller.document_type", :required => "", :name => 'seller_document_type', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Numero de Documento
-              %input{"ng-model" => "purchase.model.seller.document_number", :required => "", :name => 'seller_document_number', :readOnly => 'true'}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Registro Rucom
-              %input{"ng-model" => "purchase.model.seller.rucom.rucom_number", :name => 'seller_rucom', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Estado Rucom
-              %input{"ng-model" => "purchase.model.seller.rucom.status", :name => 'seller_rucom_status', :readOnly => 'true'}
-
-          %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
-            %md-progress-circular{"md-mode" => "indeterminate"}
-      /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
-    %div{flex: ""}
-      // ---------------------- seller photo ------------------- //
-      %fieldset.standard.tr-fieldset.photo-fieldset
-        %legend
-          %h3{:ng-if => "purchase.model.type == 'seller'"}
-            3. Tome una foto al Provedor
-          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-            3. Tome una foto al Transportador
-
-        %md-input-container.row
-          .photo
-            %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
-              /%md-tooltip{'md-direction'=> 'right'}
-              /  Tomar Foto
-
-  .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step0", "ng-click" => ""} Volver
-    %md-button.btn-save.md-button{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar

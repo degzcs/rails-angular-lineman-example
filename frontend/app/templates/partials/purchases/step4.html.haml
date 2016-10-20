@@ -1,101 +1,176 @@
-%form.purchase-form{:name => "originCertificateForm", "novalidate" => "novalidate"}
-  %div{:layout => "column"}
+%div.main-content-purchase{ "ng-hide"=>"showLoading"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center center"}
+    %h1 Reporte de Compra Trazoro
+  %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
+    %md-content{"flex"=> "40", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"start start"}
+      %h5{"flex"=> "10"}
+        Comprador
+      %table.md-table{"flex"=> ""}
+        %tbody
+          %tr
+            %td.md-table-td-more
+              Razon social:
+            %td.md-table-td-more.value
+              {{buyer_data.company_name}}
+          %tr
+            %td.md-table-td-more
+              Nit:
+            %td.md-table-td-more.value
+              {{buyer_data.nit}}
+          %tr
+            %td.md-table-td-more
+              Rucom:
+            %td.md-table-td-more.value
+              {{buyer_data.rucom_number}}
+          %tr
+            %td.md-table-td-more
+              Nombre de usuario:
+            %td.md-table-td-more
+              {{buyer_data.first_name}} {{buyer_data.last_name}}
+          %tr
+            %td.md-table-td-more
+              Sucursal:
+            %td.md-table-td-more
+              {{buyer_data.office}}
+          %tr
+            %td.md-table-td-more
+              Direccion:
+            %td.md-table-td-more.value
+              {{buyer_data.address}}
+          %tr
+            %td.md-table-td-more
+              Telefono:
+            %td.md-table-td-more.value
+              {{buyer_data.phone}}
+    %md-content{"flex"=> "", "class"=>"", "layout"=>"row", "layout-align"=>"center start"}
+      %md-content{"flex"=> "", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center start"}
+        %h5{"flex"=> ""}
+          Vendedor
+        %table.md-table{'flex' => ''}
+          %tbody
+            %tr.row
+              %td.md-table-td-more
+                Razon social:
+              %td.md-table-td-more.value
+                {{purchase.model.seller.company_name}}
+            %tr
+              %td.md-table-td-more
+                Nit:
+              %td.md-table-td-more.value
+                {{purchase.model.seller.nit}}
+            %tr
+              %td.md-table-td-more
+                Rucom:
+              %td.md-table-td-more.value
+                {{purchase.model.seller.rucom.rucom_number}}
+            %tr
+              %td.md-table-td-more
+                Nombre de usuario
+              %td.md-table-td-more
+                {{purchase.model.seller.name}}
+            %tr
+              %td.md-table-td-more
+                Cedula
+              %td.md-table-td-more
+                {{purchase.model.seller.document_number}}
+            %tr
+              %td.md-table-td-more
+                Direccion:
+              %td.md-table-td-more.value
+                {{purchase.model.seller.address}}
+            %tr
+              %td.md-table-td-more
+                Telefono:
+              %td.md-table-td-more.value
+                {{purchase.model.seller.phone_number}}
+      %md-content{"flex"=> "30", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
+        .image.row
+          .photo
+            %img.face.cam{'alt'=>'Foto Vendedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
 
-    %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
-      %md-input-container{"flex"=>"33"}
-        %label Fecha
-        %input{"ng-model" => "date", "type" => "text", :readOnly => "true"}
+  %md-content{"class"=>"", "layout"=>"row"}
+    %h4
+      Datos de la Compra
+  %md-content{"class"=>"", "layout"=>"row"}
+    .purchase-info{'flex' => ''}
+      .row{'layout' => 'row'}
+        .oc-number{'flex' => ''}
+          %p
+            Numero de Certificado de Origen
+          %p
+            {{purchase.model.origin_certificate_sequence}}
+    .select-law{'flex' => ''}
+      %p
+        Ley
+      %p
+        {{goldBatch.model.grade}}
 
-      %md-input-container{"flex"=>"66"}
-        %label Ciudad
-        %input{"ng-model" => "buyer_data.city", "type" => "text", :readOnly=>"true"}
+  %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+    %h4
+      Peso comprado
+  %md-content{"class"=>"", "layout"=>"row"}
+    %table.md-table{'flex' => ''}
+      %thead
+        %tr.md-table-headers-row
+          %th.md-table-header
+            Medida
+          %th.md-table-header
+            Cantidad
+          %th.md-table-header
+            Total gramos
+          %th.md-table-header
+            Total gramos finos
+          %th.md-table-header
+            Precio Total
+      %tbody
+        %tr
+          %td.md-table-td-more
+            %p Gramo(s)
+          %td.md-table-td-more
+            %md-input-container
+              %span {{goldBatch.model.grams | number:3}}
+          %td.md-table-td-more
+            %md-input-container
+              {{ goldBatch.model.total_grams | number:2}}
+          %td.md-table-td-more
+            %md-input-container
+              {{ goldBatch.model.total_fine_grams | number:3}}
+          %td.md-table-td-more
+            %md-input-container
+              $ {{ purchase.model.price | number:2}}
+        %tr
+          %td.md-table-td-more
+            Castellano(s)
+          %td.md-table-td-more{colspan: 5}
+            %md-input-container
+              %span {{goldBatch.model.castellanos}}
+        %tr
+          %td.md-table-td-more
+            Onza(s)
+          %td.md-table-td-more{colspan: 5}
+            %md-input-container
+              %span {{goldBatch.model.ozs}}
+        %tr
+          %td.md-table-td-more
+            Tomine(s)
+          %td.md-table-td-more{colspan: 5}
+            %md-input-container
+              %span {{goldBatch.model.tomines}}
+        %tr
+          %td.md-table-td-more
+            Rial(es)
+          %td.md-table-td-more{colspan: 5}
+            %md-input-container
+              %span {{goldBatch.model.reales}}
+  .error-message{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'"}
+      El usario no tiene suficientes creditos para realizar esta compra!
+  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+    %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step3"} Volver
+    %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'trazoro'", flex: "20", "ui-sref"=>"new_purchase.step1"} Volver
+    %md-button.btn-save{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'", flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
 
-    %section{flex: "", layout: "row"}
-      ////-----------------------Provider section ------------------------------////////
-      %div.origin-certificate-padding{flex: ""}
-        %fieldset.standard.tr-fieldset{:layout => "column"}
-          %legend
-            %h3
-              Informacion del Productor de Mineral
-          %div.fieldset-inputs
-            %div{layout: "row"}
-              %md-input-container{flex: ""}
-                %md-radio-group{"ng-model" => "purchase.model.seller.provider_type", :required => "", :name => 'provider_type'}
-                  %md-radio-button{:value => "Barequero", :readOnly => 'true'} Barequero
-                  %md-radio-button{:value => "Chatarrero", :readOnly => 'true'} Chatarrero
-            %div{layout: "row"}
-              %md-input-container{flex: ""}
-                %label Nombre Proveedor
-                %input{"ng-model" => "purchase.model.seller.first_name",  :name => 'provider_name', :readOnly => 'true'}
-              %md-input-container{flex: ""}
-                %label Tipo de Documento
-                %input{"ng-model" => "purchase.model.seller.document_type",  :name => 'provider_name', :readOnly => 'true'}
-              %md-input-container{flex: ""}
-                %label Numero de Documento
-                %input{"ng-model" => "purchase.model.seller.document_number",  :name => 'provider_name', :readOnly => 'true'}
-            %div{layout: "row"}
-              %md-input-container{flex: ""}
-                %label Departamento
-                %input{"ng-model" => "purchase.model.seller.state.name",  :name => 'provider_name', :readOnly => 'true'}
-              %md-input-container{flex: ""}
-                %label Ciudad
-                %input{"ng-model" => "purchase.model.seller.city.name",  :name => 'provider_name', :readOnly => 'true'}
-              %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
-                %md-progress-circular{"md-mode" => "indeterminate"}
-        .button
-          /%a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proveedor
-        ////-----------------------Mineral section ------------------------------////////
-      %div.origin-certificate-padding{flex: "30"}
-        %fieldset.standard.tr-fieldset.mineral{:layout => "column"}
-          %legend
-            %h3
-              Mineral
-          %div.fieldset-inputs
-            %div{layout: "column"}
-              %md-input-container{flex: ""}
-                %label Mineral Extraido y Vendido
-                %input{"ng-model" => "mineralType", "type" => "text", :readOnly=>"true"}
 
-              %md-input-container{flex: ""}
-                %label Cantidad
-                %input{"ng-model" => "goldBatch.model.total_fine_grams", "type" => "text", :name => 'amount', :readOnly=>"true"}
+%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 
-              %md-input-container{flex: ""}
-                %label Unidad de Medida
-                %input{"ng-model" => "measureUnit", "type" => "text", :readOnly=>"true"}
 
-    ////-----------------------Buyer section ------------------------------////////
-    %section{flex: "", layout: "row"}
-      %div.origin-certificate-padding{flex: ""}
-        %fieldset.standard.tr-fieldset{:layout => "column"}
-          %legend
-            %h3
-              Informacion del Comprador del Mineral
-
-          %div.fieldset-inputs
-            %div{layout: "row"}
-              %md-input-container{"flex"=>""}
-                %label Nombres y Apellidos o Razon Social
-                %input{"readonly" => "true", "ng-model" => "buyer_data.company_name", "type" => "text"}
-
-              %md-input-container{"flex"=>""}
-                %label Tipo de Documento
-                %input{:readonly => "true", "ng-model" => "buyer_data.document_type", "type" => "text"}
-
-              %md-input-container{"flex"=>""}
-                %label Numero de Indentificacion
-                %input{"readonly" => "true", "ng-model" => "buyer_data.nit", "type" => "text"}
-    %section.signature-section.md-padding{flex: '', layout: 'column'}
-      %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-        %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
-      %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-        #imageBox{  flex: ''}
-      %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
-        .signature-text
-          Firma
-
-    .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"end end"}
-      %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
-      %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
-      %md-button.btn-cancel{ :ng-if => "purchase.model.type == 'seller'", flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
-      %md-button.btn-save{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "20", "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
