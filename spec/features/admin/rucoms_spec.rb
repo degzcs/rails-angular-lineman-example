@@ -57,17 +57,19 @@ describe 'all test the rucom view', :js do
   # end
 
   it 'Rucom not exist in the page ANM' do
-    visit '/admin/rucoms/new'
-    expected_response = {
-      rol: 'Barequero',
-      type_identification: 'CEDULA',
-      identification_number: '1036661567'
-    }
-    select(expected_response[:rol], from: 'rucom_name')
-    select(expected_response[:type_identification], from: 'rucom_provider_type')
-    fill_in 'rucom_rucom_number', with: expected_response[:identification_number]
-    click_button('Create Rucom')
-    expect(page).to have_content "Sincronize.call: error => El rucom no existe con este documento de identidad: #{expected_response[:identification_number]}"
+    VCR.use_cassette('barequero_not_exist_in_rucom_anm') do
+      visit '/admin/rucoms/new'
+      expected_response = {
+        rol: 'Barequero',
+        type_identification: 'CEDULA',
+        identification_number: '1036661567'
+      }
+      select(expected_response[:rol], from: 'rucom_name')
+      select(expected_response[:type_identification], from: 'rucom_provider_type')
+      fill_in 'rucom_rucom_number', with: expected_response[:identification_number]
+      click_button('Create Rucom')
+      expect(page).to have_content "Sincronize.call: error => El rucom no existe con este documento de identidad: #{expected_response[:identification_number]}"
+    end
   end
 
   xit 'When the Rucom(user) can not market oro' do
