@@ -105,8 +105,10 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
 
     move_cursor_to 112
     text_box buyer_presenter.rucom_number, :at => [350, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    move_cursor_to 86
-    signature = signature_picture.is_a?(Hash) ? OpenStruct.new(signature_picture) : signature_picture
-    image(signature.tempfile, :at => [280, cursor], :fit => [200, 100])
+
+    service = ::GenerateSignatureWithoutBackground.new
+    signature_path = service.call(signature_picture)
+    move_cursor_to 100
+    image(signature_path, :at => [400, cursor], :fit => [500, 60])
   end
 end

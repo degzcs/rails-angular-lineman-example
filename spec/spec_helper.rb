@@ -105,7 +105,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation, { except: static_info_tables }
   end
 
-
   config.before :each do |example|
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
@@ -119,6 +118,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean!
     `rm -rf #{Rails.root}/tmp/sale_and_purchase_files`
     `rm -rf #{Rails.root}/tmp/purchase_files_collection`
+    `rm -rf #{Rails.root}/tmp/signatures`
     `rm -rf #{Rails.root}/public/test`
   end
 

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
-
   let(:seller) { create :user, :with_profile, :with_personal_rucom, provider_type: 'Barequero', first_name: 'Alam', last_name: 'brito', document_number: '1234567890', city: City.find_by(name: 'MEDELLIN')
   }
   let(:rucom) { create :rucom, rucom_number: '7767899877' }
@@ -13,16 +12,16 @@ describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
 
   context 'check consistency of the pdf' do
     before :each do
-     signature_picture_path = "#{ Rails.root }/spec/support/images/signature.png"
-     @signature_picture =  Rack::Test::UploadedFile.new(signature_picture_path, "image/jpeg")
+      signature_picture_path = "#{ Rails.root }/spec/support/images/signature.jpg"
+      @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
     end
 
     it 'test the execution signature' do
-      expected_hash = "174cd197bad6ca1ac9e1c5e33246b13757607af00bb4ee8ecb9cb85d35e3e4c8"
+      expected_hash = '294d73a305a70598e8f46240ca026c13567a67fc243670a65deea04553384d46'
       response = service.call(
-       order: purchase_order,
-       signature_picture: @signature_picture,
-       date: '2016/07/15'.to_date,
+        order: purchase_order,
+        signature_picture: @signature_picture,
+        date: '2016/07/15'.to_date,
       )
 
       system "mkdir -p #{ Rails.root }/tmp/origin_certificates"
