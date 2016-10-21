@@ -45,6 +45,16 @@ FactoryGirl.define do
           Rack::Test::UploadedFile
             .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'), 'application/pdf')
         end
+        habeas_data_agreetment do
+          Rack::Test::UploadedFile
+            .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'habeas_data_agreetment.pdf'), 'application/pdf')
+        end
+
+        signature_picture_file do
+          Rack::Test::UploadedFile
+            .new(File.join(Rails.root, 'spec', 'support', 'images', 'signature_picture.png'), 'image/jpeg')
+        end
+
         nit_number { Faker::Number.number(10) }
         city { City.all.sample }
       end
@@ -62,6 +72,8 @@ FactoryGirl.define do
         user.profile.mining_authorization_file = e.mining_authorization_file
         user.profile.legal_representative = e.legal_representative
         user.profile.id_document_file = e.id_document_file
+        user.profile.habeas_data_agreetment_file = e.habeas_data_agreetment
+        user.profile.signature_picture_file = e.signature_picture_file
         user.profile.nit_number = e.nit_number
         user.profile.city = e.city
         user.save!
