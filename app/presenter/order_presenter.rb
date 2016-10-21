@@ -43,10 +43,10 @@ class OrderPresenter < BasePresenter
   end
 
   def iva
-    settings_presenter.vat_percentage.to_f
+    settings_presenter.vat_percentage.to_f/100
   end
 
-  def trazoro_fine_grame_value
+  def trazoro_fine_gram_value
     settings_presenter.fine_gram_value.to_f
   end
 
@@ -56,12 +56,12 @@ class OrderPresenter < BasePresenter
 
   # Costo trazoro = gramo fino * precio trazoro
   def trazoro_transaction_cost
-    "$#{ trazoro_transaction_cost_value.to_f }"
+    trazoro_transaction_cost_value.round(2)
   end
 
   # IVA
   def trazoro_transaction_vat
-    "$#{ (trazoro_transaction_cost_value.to_f * settings_presenter.vat_percentage.to_f).round(2) }"
+    (trazoro_transaction_cost_value.to_f * iva).round(2)
   end
 
   # C. trazoro total = Costo trazoro + IVA
