@@ -54,7 +54,7 @@ class Profile < ActiveRecord::Base
   validates :photo_file, presence: true
   validates :city, presence: true
   validates :habeas_data_agreetment_file, presence: true, if: :authorized_provider?
-
+  validates :signature_picture_file, presence: true, if: :authorized_provider?
   #
   # Uploaders
   #
@@ -64,6 +64,7 @@ class Profile < ActiveRecord::Base
   mount_uploader :rut_file, DocumentUploader
   mount_uploader :mining_authorization_file, DocumentUploader
   mount_uploader :habeas_data_agreetment_file, DocumentUploader
+  mount_uploader :signature_picture_file, PhotoUploader
 
   #
   # Callbacks
