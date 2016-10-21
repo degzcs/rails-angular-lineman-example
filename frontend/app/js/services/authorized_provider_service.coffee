@@ -15,9 +15,9 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       id_document_file: ''
       mining_authorization_file: ''
       photo_file: ''
+      signature_picture: ''
       city_id: ''
       state_id: ''
-      signature_picture: ''
       rucom:
         rucom_number: ''
 
@@ -60,7 +60,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         idDocumentFile: service.model.id_document_file,
         miningAuthorizationFile: service.model.mining_authorization_file,
         photoFile: service.model.photo_file,
-        signaturePicture: service.model.signature_picture,
+        signaturePicture: service.model.signature_picture
       }
 
       # Final files that will be uplaoded by the $upload service
