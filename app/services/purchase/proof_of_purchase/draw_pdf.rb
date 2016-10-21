@@ -105,15 +105,15 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     # 1.costo trazoro
     move_cursor_to 345
     text_box "Costo Trazoro", :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box order_presenter.trazoro_transaction_cost.to_s, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    text_box order_presenter.trazoro_transaction_cost, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
     # 2. IVA
     move_cursor_to 328
     text_box "IVA", :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box order_presenter.trazoro_transaction_vat.to_s, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    text_box order_presenter.trazoro_transaction_vat, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
     # 3. costo trazoro total
     move_cursor_to 311
     text_box "Costo Trazoro Total", :at => [140, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    text_box order_presenter.trazoro_transaction_total_cost.to_s, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    text_box order_presenter.trazoro_transaction_total_cost, :at => [400, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
     move_cursor_to 286
     text_box order_presenter.fine_gram_price.to_s, :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 286
