@@ -52,6 +52,7 @@ module V1
           optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
           optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
           optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
+          optional :signature_picture_file, type: File, desc: 'signature_picture_file', documentation: { example: '...' }
         end
       end
 
@@ -155,7 +156,6 @@ module V1
           [401, 'Unauthorized'],
           [404, 'Entry not found']
         ] do
-          binding.pry
           content_type 'text/json'
           authorized_provider = ::User.find(params[:id])
           if authorized_provider.present?
@@ -172,6 +172,7 @@ module V1
                 )
               end
               # service pdf habeas data agreetment
+
               
             end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])
