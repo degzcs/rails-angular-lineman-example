@@ -41,7 +41,7 @@ FactoryGirl.define do
     trait :with_proof_of_purchase_file do
       after :build do |purchase, _e|
         purchase.documents.build(
-          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_compra.pdf')),
+          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'factura_digital_trazoro.pdf')),
           type: 'equivalent_document'
         )
         # purchase.save!
