@@ -63,12 +63,12 @@ describe 'Sale' do
   context 'documentation' do
     it 'should create a sale with proof of sale file' do
       sale = create :sale, :with_proof_of_sale_file
-      expect(sale.proof_of_sale.file.path).to match(/documento_equivalente_de_venta.pdf/)
+      expect(sale.proof_of_sale.file.path).to match(/compendio_trazoro.pdf/)
     end
 
     it 'should create a sale with purchase files collection file' do
       sale = create :sale, :with_purchase_files_collection_file
-      expect(sale.purchase_files_collection.file.path).to match(/documento_equivalente_de_venta.pdf/)
+      expect(sale.purchase_files_collection.file.path).to match(/compendio_trazoro.pdf/)
     end
   end
 

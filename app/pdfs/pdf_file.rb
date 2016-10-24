@@ -409,7 +409,7 @@ class PdfFile < Prawn::Document
 
   # Generar certificado de compra
   def generate_purchase_report(values,date)
-    file = File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_compra.pdf'))
+    file = File.open(File.join(Rails.root, 'vendor','pdfs','factura_digital_trazoro.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header
@@ -522,7 +522,7 @@ class PdfFile < Prawn::Document
 
   def generate_sales_report(values,gold_group,date,counter)
 
-    file = File.open(File.join(Rails.root, 'vendor','pdfs','documento_equivalente_de_venta.pdf'))
+    file = File.open(File.join(Rails.root, 'vendor','pdfs','compendio_trazoro.pdf'))
     start_new_page({:template => "#{file.path}" , :template_page => 1})
 
     # header

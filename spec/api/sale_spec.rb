@@ -157,7 +157,7 @@ describe 'Sale', type: :request do
               fine_grams: @sale.fine_grams,
               code: @sale.code,
               provider: seller_expected_response.stringify_keys,
-              origin_certificate_file: { 'url' => "/test/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/documento_equivalente_de_venta.pdf" }
+              origin_certificate_file: { 'url' => "/test/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/compendio_trazoro.pdf" }
             }
             # TODO: upgrade Front end with proof_of_sale and purchase_files_collections files
 

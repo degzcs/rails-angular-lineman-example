@@ -85,4 +85,8 @@ class OrderPresenter < BasePresenter
   def state
     gold_batch.sold? ? 'Vendido' : 'Disponible'
   end
+
+  def total
+    trazoro_transaction_cost_value.to_f + trazoro_transaction_vat.to_f + price
+  end
 end

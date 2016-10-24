@@ -26,7 +26,7 @@ FactoryGirl.define do
     trait :with_proof_of_sale_file do
       after :create do |sale, _e|
         sale.documents.build(
-          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
+          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'compendio_trazoro.pdf')),
           type: 'equivalent_document'
         )
         sale.save!
@@ -36,7 +36,7 @@ FactoryGirl.define do
     trait :with_purchase_files_collection_file do
       after :create do |sale, _e|
         sale.documents.build(
-          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'documento_equivalente_de_venta.pdf')),
+          file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'compendio_trazoro.pdf')),
           type: 'purchase_files_collection'
         )
         sale.save!
