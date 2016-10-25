@@ -663,6 +663,10 @@ GEM
     state_machines-activerecord (0.4.0)
       activerecord (>= 4.1, < 5.1)
       state_machines-activemodel (>= 0.3.0)
+    state_machines_rspec (0.3.2)
+      activesupport
+      rspec (~> 3.3)
+      state_machines
     term-ansicolor (1.3.2)
       tins (~> 1.0)
     therubyracer (0.12.2)
@@ -776,6 +780,7 @@ DEPENDENCIES
   spring-commands-rspec
   state_machines
   state_machines-activerecord
+  state_machines_rspec
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
