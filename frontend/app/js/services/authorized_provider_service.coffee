@@ -1,4 +1,4 @@
-angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, $http, $mdDialog, $state) ->
+angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, $http, $mdDialog, $state, SignatureService) ->
   service =
 
     uploadProgress: 0
@@ -18,6 +18,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       signature_picture: ''
       city_id: ''
       state_id: ''
+      use_wacom_device: true
       rucom:
         rucom_number: ''
 
@@ -71,12 +72,24 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         signaturePicture: ''
       }
 
+      convert_files
+
       blobUtil.imgSrcToBlob(filesToUpload.photoFile).then (photoFile) ->
         blobFiles.photoFile = photoFile
         blobFiles.photoFile.name = 'photo_file.png'
         # Other Files
         filesRemaining = 0;
+        if AuthorizedProviderService.use_wacom_device == false
+          signaturePicture = photoFile
+          signaturePicture.name = 'signature_picture.png'
 
+        else
+          blobUtil.imgSrcToBlob(AuthorizedProviderService.signature_picture).then( (signaturePicture) ->
+            signaturePicture.name = 'signature_picture.png'
+
+
+          ).catch (err) ->
+            console.log '[SERVICE-ERROR]: image signature failed to load!!'
 # -----------------------------------------------------------
         # Id Document File
         if filesToUpload.idDocumentFile
@@ -121,8 +134,8 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 #-------------------------------------------------------------------------
         # signature_picture file
         if filesToUpload.signaturePicture
-          signaturePictureFileCopy = filesToUpload.miningAuthorizationFile
-          miningAuthorizationReader = new FileReader
+          signaturePictureFileCopy = filesToUpload.signaturePicture
+          signaturePictureReader = new FileReader
 
           signaturePictureReader.onload = ->
             signaturePictureArray = createBinaryFile(@result)
@@ -172,6 +185,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 #------------------------------------------------------------
       files = []
       uploadFiles= () ->
+        console.log blobFiles.signaturePicture
         if blobFiles.photoFile
           files.push blobFiles.photoFile
         if blobFiles.idDocumentFile

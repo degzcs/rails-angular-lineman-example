@@ -4,10 +4,11 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     $scope.authorizedProvider = null
     $scope.prov = null
     $scope.chkAgreetmentActive = false
-
         
     $scope.authorizedProvider = AuthorizedProviderService.restoreModel()
 
+    #window.scope = $scope
+    hp = $scope
     $scope.continue = ->
       AuthorizedProviderService.saveModel()
       $state.go 'new_authorized_provider', { id: AuthorizedProviderService.model.id }
@@ -26,7 +27,7 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     # Allows to see if the device is connected.
     $scope.restartSessionDevice = ->
       SignatureService.imageId = 'authorized_provider_signature'
-      SignatureService.authorizedProviderName = $scope.authorizedProviderService.model.seller.name
+      SignatureService.authorizedProviderName = hp.authorizedProvider.first_name
       SignatureService.restartSession()
 
     #

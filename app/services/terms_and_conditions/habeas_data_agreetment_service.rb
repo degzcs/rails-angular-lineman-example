@@ -1,6 +1,6 @@
 
 module TermsAndConditions
-	# Service incarged to associate the acceptance of term and conditions pdf files in memory to an specific provider
+  # Service incarged to associate the acceptance of term and conditions pdf files in memory to an specific provider
   class HabeasDataAgreetmentService
     attr_reader :signature_picture, :authorized_provider
     attr_accessor :response
@@ -12,7 +12,6 @@ module TermsAndConditions
 
     # @params seller [User]
     def call(options = {})
-      binding.pry
       @authorized_provider = options[:authorized_provider]
       @signature_picture = options[:signature_picture]
       @draw_pdf_service = ::TermsAndConditions::DrawPdf.new
@@ -29,7 +28,6 @@ module TermsAndConditions
     def define_temporal_dir_and_file(options)
       timestamp = options[:timestamp] || Time.now.to_i
       document_name = 'habeas_data_agreetment'
-
       temporal_folder_path = "#{Rails.root}/tmp/terms_and_conditions/#{timestamp}"
       temporal_file_path = "#{temporal_folder_path}/#{document_name}.pdf"
       tmp = Struct.new(:temporal_folder_path, :temporal_file_path)
@@ -44,7 +42,6 @@ module TermsAndConditions
       )
       file = @draw_pdf_service.file
       file.render_file(temporal_file_path)
-      binding.pry
       authorized_provider.profile.habeas_data_agreetment_file = File.open(temporal_file_path)
     end
 

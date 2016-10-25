@@ -39,9 +39,9 @@ module V1
             :photo_file => photo_file,
             :id_document_file => id_document_file,
             :mining_authorization_file => mining_authorization_file,
-            :signature_picture_file => signature_picture
           }
           params.except!(:files)
+          params[:signature_picture] = signature_picture  
           params[:profile].merge!(add_files_to_profile)
           params
         end

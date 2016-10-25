@@ -172,8 +172,8 @@ module V1
                 )
               end
               # service pdf habeas data agreetment
-
-              
+              binding.pry
+              ::TermsAndConditions::HabeasDataAgreetmentService.new.call(authorized_provider: authorized_provider, signature_picture: formatted_params[:signature_picture])
             end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])
             if authorized_provider.save
