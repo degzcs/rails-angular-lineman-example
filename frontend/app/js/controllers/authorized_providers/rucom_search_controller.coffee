@@ -2,6 +2,11 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
   $scope.authorizedProviderService = undefined
   AuthorizedProviderService.clearModel()
 
+  #*** Loading Variables **** #
+  $scope.showLoading = false
+  $scope.loadingMode = "indeterminate"
+  $scope.loadingMessage = "Consultado..."
+
   ##***************************************************************************************************************************##
 
   # Search an authorized provider by its id number
@@ -9,6 +14,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
   # @param idNumber [ Integer ]
   $scope.queryRucomByIdNumber = (ev, idNumber) ->
     if idNumber
+      $scope.showLoading = true
       AuthorizedProviderService.byIdNumber(idNumber)
       .success((data, status, headers) ->
         $scope.showLoading = false
@@ -17,6 +23,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
         $state.go 'new_authorized_provider', { id: AuthorizedProviderService.model.id }
       )
       .error((error)->
+        $scope.showLoading = false
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
         )
 
