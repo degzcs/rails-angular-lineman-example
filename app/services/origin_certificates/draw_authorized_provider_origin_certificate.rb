@@ -77,7 +77,7 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
     text_box 'Oro', :at => [300, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     move_cursor_to 294
-    text_box gold_batch_presenter.formatted_fine_grams, :at => [300, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box gold_batch_presenter.formatted_fine_grams.to_s, :at => [300, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     move_cursor_to 267
     text_box 'Gramos', :at => [350, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit

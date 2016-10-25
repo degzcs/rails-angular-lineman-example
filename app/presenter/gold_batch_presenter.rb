@@ -36,7 +36,7 @@ class GoldBatchPresenter < BasePresenter
   end
 
   def formatted_fine_grams
-    fine_grams.present? ? fine_grams.to_s : raise('fine grams cannot be blank!!')
+    fine_grams.present? ? fine_grams.round(3) : raise('fine grams cannot be blank!!')
   end
 
   def seller_presenter
