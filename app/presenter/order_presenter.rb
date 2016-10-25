@@ -87,6 +87,6 @@ class OrderPresenter < BasePresenter
   end
 
   def total
-    trazoro_transaction_cost_value.to_f + trazoro_transaction_vat.to_f + price
+    (trazoro_transaction_cost_value.to_f + trazoro_transaction_vat.to_f + price).round(2)
   end
 end

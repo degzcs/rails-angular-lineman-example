@@ -121,7 +121,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     # Costo del oro
     move_cursor_to 166
-    text_box order_presenter.price.to_s, :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.total_price.to_s, :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to 88
     text_box order_presenter.total.to_s, :at => [410, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -136,7 +136,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     service = ::GenerateSignatureWithoutBackground.new
     signature_path = service.call(signature_picture)
-    move_cursor_to 40
-    image(signature_path, :at => [340, cursor], :fit => [200, 100])
+    move_cursor_to 78
+    image(signature_path, :at => [340, cursor], :fit => [200, 80])
   end
 end

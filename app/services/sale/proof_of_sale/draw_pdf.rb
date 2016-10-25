@@ -12,7 +12,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
   def call(options={})
     raise "You must to provide a order_presenter option" if options[:order_presenter].blank?
     order_presenter = options[:order_presenter]
-    @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor','pdfs','compendio_trazoro.pdf'))
+    @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor', 'pdfs', 'watermark_compendio_trazoro.pdf'))
     draw_file!(order_presenter)
   end
 
@@ -23,6 +23,11 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
 
   def draw_file!(order_presenter)
     start_new_page({:template => "#{base_file.path}" , :template_page => 1})
+
+    # move_cursor_to 460
+    # transparent(0.2) do
+    # text_box "BORRADOR", at: [100, cursor], rotate: 55, :width =>200, :size => 100, :height =>  200, :overflow => :shrink_to_fit
+    # end
 
     # Header
     # move_down 60
@@ -131,6 +136,6 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     move_cursor_to 105
     text_box order_presenter.grade.to_s, :at => [86, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 85
-    text_box order_presenter.price.to_s, :at => [86, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.total_price.to_s, :at => [86, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
   end
 end
