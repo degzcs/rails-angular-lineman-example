@@ -179,9 +179,10 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.string   "code"
     t.float    "price"
     t.string   "seller_picture"
-    t.boolean  "trazoro",        default: false, null: false
+    t.boolean  "trazoro",           default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "transaction_state"
   end
 
   create_table "profiles", force: true do |t|
@@ -201,7 +202,6 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.string   "habeas_data_agreetment_file"
   end
 
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
