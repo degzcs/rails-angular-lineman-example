@@ -20,8 +20,8 @@
         %p{"color"=>"red", :ng-if=> "anyErrors()"} No se encontró el proveedor
 
       .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-        %md-button.btn-save.md-button.md-raised{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)"} Consultar
+        %md-button.btn-save.md-button.md-raised{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)", "ng-hide"=>"showLoading"} Consultar
         %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
 
-      %br
       %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
+    %tr-loading-view{ "ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
