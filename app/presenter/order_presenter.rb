@@ -77,16 +77,16 @@ class OrderPresenter < BasePresenter
     "$#{ (price/gold_batch.fine_grams).round(2) }"
   end
 
-  def total_price
-    "$#{ price.round(2) }"
-  end
-
   # presenter of sold's state
   def state
     gold_batch.sold? ? 'Vendido' : 'Disponible'
   end
 
-  def total
-    (trazoro_transaction_cost_value.to_f + trazoro_transaction_vat.to_f + price).round(2)
+  def total_price
+    (price).round(2)
+  end
+
+  def real_gold_cost
+    total_price - (trazoro_transaction_cost_value + trazoro_transaction_vat)
   end
 end
