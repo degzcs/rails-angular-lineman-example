@@ -121,10 +121,11 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     # Costo del oro
     move_cursor_to 166
-    text_box order_presenter.total_price.to_s, :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-
+    text_box order_presenter.real_gold_cost.to_s, :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    
+    # valor total
     move_cursor_to 88
-    text_box order_presenter.total.to_s, :at => [410, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.total_price.to_s, :at => [410, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to -5
     barcode = Barby::EAN13.new(order_presenter.code)
