@@ -73,7 +73,6 @@ FactoryGirl.define do
         user.profile.legal_representative = e.legal_representative
         user.profile.id_document_file = e.id_document_file
         user.profile.habeas_data_agreetment_file = e.habeas_data_agreetment
-        user.profile.signature_picture_file = e.signature_picture_file
         user.profile.nit_number = e.nit_number
         user.profile.city = e.city
         user.save!

@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< 063047538fcbba91e3c4931c4a9f59242c5fc4c7
-<<<<<<< e1731146be505b606a13289b93f9a457e2dd89d8
-ActiveRecord::Schema.define(version: 20161014193248) do
-=======
-ActiveRecord::Schema.define(version: 20161013205647) do
->>>>>>> add column habeas data file to profile
-=======
-ActiveRecord::Schema.define(version: 20161021153856) do
->>>>>>> add column signature picture file
+ActiveRecord::Schema.define(version: 20161026200603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,7 +200,6 @@ ActiveRecord::Schema.define(version: 20161021153856) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "habeas_data_agreetment_file"
-    t.string   "signature_picture_file"
   end
 
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
