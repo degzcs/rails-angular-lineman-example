@@ -28,7 +28,7 @@ module V1
         user.profile.photo_file
       end
       expose :signature_picture, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
-        user.profile.signature_picture_file
+        user.profile.habeas_data_agreetment_file
       end
       expose :email, documentation: { type: 'string', desc: 'E-mail address', example: 'provider@example.com' }
       expose :city, documentation: { type: 'string', desc: 'City name', example: 'Medellín' } do |user, _options|
