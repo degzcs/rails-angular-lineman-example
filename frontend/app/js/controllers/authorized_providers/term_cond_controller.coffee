@@ -7,7 +7,6 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     $scope.authorizedProvider = AuthorizedProviderService.restoreModel()
 
     window.scope = $scope
-    hp = $scope
     $scope.continue = ->
       saveSignature()
       AuthorizedProviderService.model = $scope.authorizedProvider
