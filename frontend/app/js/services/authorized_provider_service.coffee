@@ -77,8 +77,8 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         blobFiles.photoFile.name = 'photo_file.png'
         # Other Files
         if service.use_wacom_device == false
-          signaturePicture = photoFile
-          signaturePicture.name = 'signature_picture.png'
+          blobFiles.signaturePicture = photoFile
+          blobFiles.signaturePicture.name = 'signature_picture.png'
           convertAndUploadFiles(filesToUpload, blobFiles)
         else
           blobUtil.imgSrcToBlob(filesToUpload.signaturePicture).then((signaturePicture) ->
