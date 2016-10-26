@@ -72,26 +72,30 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         signaturePicture: ''
       }
 
-      convert_files
-
-      blobUtil.imgSrcToBlob(filesToUpload.photoFile).then (photoFile) ->
+      blobUtil.imgSrcToBlob(filesToUpload.photoFile).then((photoFile) ->
         blobFiles.photoFile = photoFile
         blobFiles.photoFile.name = 'photo_file.png'
         # Other Files
-        filesRemaining = 0;
-        if AuthorizedProviderService.use_wacom_device == false
+        if service.use_wacom_device == false
           signaturePicture = photoFile
           signaturePicture.name = 'signature_picture.png'
-
+          convertAndUploadFiles(filesToUpload, blobFiles)
         else
-          blobUtil.imgSrcToBlob(AuthorizedProviderService.signature_picture).then( (signaturePicture) ->
-            signaturePicture.name = 'signature_picture.png'
-
-
+          blobUtil.imgSrcToBlob(filesToUpload.signaturePicture).then((signaturePicture) ->
+            blobFiles.signaturePicture = signaturePicture
+            blobFiles.signaturePicture.name = 'signature_picture.png'
+            convertAndUploadFiles(filesToUpload, blobFiles)
           ).catch (err) ->
-            console.log '[SERVICE-ERROR]: image signature failed to load!!'
-# -----------------------------------------------------------
+            console.log '[SERVICE-ERROR]: image signature failed to load: ' + err
+      ).catch (err) ->
+        console.log '[SERVICE-ERROR]: image photo failed to load: ' + err
+#------------------------------------------------------------
+      #
+      # Funtion to convert the files 
+      #
+      convertAndUploadFiles= (filesToUpload, blobFiles) ->
         # Id Document File
+        filesRemaining = 0
         if filesToUpload.idDocumentFile
           # if !(filesToUpload.id_document_file[0] instanceof File)
           #   filesToUpload.id_document_file[0].name = 'id_document_file.pdf'
@@ -105,13 +109,13 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             blobFiles.idDocumentFile = createBlobFile(idDocumentArray, 'id_document_file', idDocumentFileCopy[0])
             --filesRemaining
             if filesRemaining <= 0
-              uploadFiles()
+              uploadFiles(blobFiles)
             return
 
           idDocumentReader.readAsBinaryString idDocumentFileCopy[0]
           filesRemaining++
 
-#--------------------------------------------------------------------
+        #--------------------------------------------------------------------
         # mining_authorization file
         if filesToUpload.miningAuthorizationFile
           # if !(filesToUpload.mining_authorization_file[0] instanceof File)
@@ -126,12 +130,12 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             blobFiles.miningAuthorizationFile = createBlobFile(miningAuthorizationArray, 'mining_authorization_file', miningAuthorizationFileCopy[0])
             --filesRemaining
             if filesRemaining <= 0
-              uploadFiles()
+              uploadFiles(blobFiles)
             return
 
           miningAuthorizationReader.readAsBinaryString miningAuthorizationFileCopy[0]
           filesRemaining++
-#-------------------------------------------------------------------------
+        #-------------------------------------------------------------------------
         # signature_picture file
         if filesToUpload.signaturePicture
           signaturePictureFileCopy = filesToUpload.signaturePicture
@@ -142,7 +146,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             blobFiles.signaturePicture = createBlobFile(signaturePictureArray, 'signature_picture', signaturePictureFileCopy[0])
             --filesRemaining
             if filesRemaining <= 0
-              uploadFiles()
+              uploadFiles(blobFiles)
             return
 
           signaturePictureReader.readAsBinaryString signaturePictureFileCopy[0]
@@ -150,7 +154,9 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
         #Files Upload
         if filesRemaining <= 0
-          uploadFiles()
+          uploadFiles(blobFiles)
+        return
+
 
 #------------------------------------------------------------
       #
@@ -184,7 +190,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
 #------------------------------------------------------------
       files = []
-      uploadFiles= () ->
+      uploadFiles= (blobFiles) ->
         console.log blobFiles.signaturePicture
         if blobFiles.photoFile
           files.push blobFiles.photoFile

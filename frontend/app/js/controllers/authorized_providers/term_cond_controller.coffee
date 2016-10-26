@@ -1,15 +1,16 @@
 angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
   ($scope, $sce, $state, $stateParams, AuthorizedProviderService, SignatureService, $mdDialog) ->
     # var initialize
-    $scope.authorizedProvider = null
     $scope.prov = null
     $scope.chkAgreetmentActive = false
         
     $scope.authorizedProvider = AuthorizedProviderService.restoreModel()
 
-    #window.scope = $scope
+    window.scope = $scope
     hp = $scope
     $scope.continue = ->
+      saveSignature()
+      AuthorizedProviderService.model = $scope.authorizedProvider
       AuthorizedProviderService.saveModel()
       $state.go 'new_authorized_provider', { id: AuthorizedProviderService.model.id }
 
@@ -27,7 +28,7 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     # Allows to see if the device is connected.
     $scope.restartSessionDevice = ->
       SignatureService.imageId = 'authorized_provider_signature'
-      SignatureService.authorizedProviderName = hp.authorizedProvider.first_name
+      SignatureService.authorizedProviderName = $scope.authorizedProvider.first_name
       SignatureService.restartSession()
 
     #
@@ -37,7 +38,7 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
 
     #
     # Puts it in a img tag
-    $scope.saveSignature = ->
-      $scope.authorizedProviderService.model.signature_picture = document.getElementById('authorized_provider_signature').src
+    saveSignature = ->
+      $scope.authorizedProvider.signature_picture = document.getElementById('authorized_provider_signature').src
 
 
