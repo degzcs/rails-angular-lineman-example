@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'all test the credit_billings view', :js do
+  let(:user) { create(:user, :with_profile,:with_company, :with_trader_role, first_name: 'Alan', last_name: 'Britho', alegra_id: 1, legal_representative: true) }
+
   before :each do
     admin_user = AdminUser.find_by(email: 'soporte@trazoro.co')
     login_as(admin_user, scope: :admin_user)
@@ -15,7 +17,7 @@ describe 'all test the credit_billings view', :js do
 
   it 'action discount test' do
     expected_response = 10.0
-    credit_billing = create(:credit_billing, paid: false, payment_date: nil, total_amount: 1000000)
+    credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
     visit '/admin/credit_billings'
     within("#credit_billing_#{credit_billing.id}") do
       click_on('Actions')
@@ -28,8 +30,9 @@ describe 'all test the credit_billings view', :js do
     expect(page).to have_content 'Credit billing was successfully updated.'
   end
 
+  # TODO: use the alegra send mail feature instead of this implementation
   it 'action invoice test' do
-    credit_billing = create(:credit_billing, paid: false, payment_date: nil, total_amount: 1000000)
+    credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
     visit '/admin/credit_billings'
     within("#credit_billing_#{credit_billing.id}") do
       click_on('Actions')
@@ -43,22 +46,24 @@ describe 'all test the credit_billings view', :js do
   end
 
   it 'action mark as paid out test' do
-    expected_response = {
-      payment_date: 'Fri, 19 Aug 2016 09:00:00 UTC +00:00',
-      paid: true
-    }
-    credit_billing = create(:credit_billing, paid: false, payment_date: nil, total_amount: 1000000)
-    visit '/admin/credit_billings'
-    within("#credit_billing_#{credit_billing.id}") do
-      click_on('Actions')
-      click_on('Marcar como pagado')
-    end
-    expect(page).to have_content 'Ingrese la fecha en la que el usuario pago esta factura'
-    fill_in 'credit_billing_payment_date', with: '2016/08/19, 09:00 AM'
-    click_button('Marcar como pagado')
-    page.execute_script 'window.confirm = function () { return true }'
-    expect(credit_billing.reload.payment_date).to eq expected_response[:payment_date]
-    expect(credit_billing.reload.paid).to eq expected_response[:paid]
-    expect(page).to have_content 'La factura fue marcada como pagada satisfactoriamente'
+    # VCR.use_cassette('alegra_create_credits_invoice_paid') do
+      expected_response = {
+        payment_date: 'Fri, 19 Aug 2016 09:00:00 UTC +00:00',
+        paid: true
+      }
+      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
+      visit '/admin/credit_billings'
+      within("#credit_billing_#{credit_billing.id}") do
+        click_on('Actions')
+        click_on('Marcar como pagado')
+      end
+      expect(page).to have_content 'Ingrese la fecha en la que el usuario pago esta factura'
+      fill_in 'credit_billing_payment_date', with: '2016/08/19, 09:00 AM'
+      click_button('Marcar como pagado')
+      page.execute_script 'window.confirm = function () { return true }'
+      expect(credit_billing.reload.payment_date).to eq expected_response[:payment_date]
+      expect(credit_billing.reload.paid).to eq expected_response[:paid]
+      expect(page).to have_content 'La factura fue marcada como pagada satisfactoriamente'
+    # end
   end
 end

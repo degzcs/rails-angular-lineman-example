@@ -21,7 +21,7 @@ class CreditBilling::Acceptance
       update_credit_billings_with!(new_credit_billing_values)
       update_credits_buyer_with(current_available_credits, credit_billing.quantity) if credit_billing.reload.paid?
       service = Alegra::Credits::CreateInvoice.new
-      @response = service.call(trader_user: credits_buyer, payment_method: 'card', credit_billing: credit_billing)
+      @response = service.call(payment_method: 'card', credit_billing: credit_billing)
     end
     rescue Exception => e
       @response[:errors] << e.message

@@ -55,7 +55,7 @@ module Alegra
         {
           date: options[:credit_billing].payment_date.to_s,
           due_date: options[:credit_billing].payment_date.to_s,
-          client: options[:trader_user].alegra_id,
+          client: options[:credit_billing].user.alegra_id,
           items: items_from(options),
           # account_number: options[:trader_user].&account_number,
           payment_method: options[:payment_method],
@@ -89,7 +89,6 @@ module Alegra
       private
 
       def validate_options(options)
-        raise 'You must to provide a trader_user option' unless options[:trader_user].present?
         raise 'You must to provide a payment_method option' unless options[:payment_method].present?
         raise 'You must to provide a credit_billing option' unless options[:credit_billing].present?
       end
