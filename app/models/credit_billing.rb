@@ -46,7 +46,7 @@ class CreditBilling < ActiveRecord::Base
   #
 
   def init
-    self..discount = 0.0
+    self.discount_percentage ||= 0.0
     self.unit_price = Settings.instance.fine_gram_value
   end
 
@@ -68,8 +68,7 @@ class CreditBilling < ActiveRecord::Base
   # Before save a new credit_billing calculate the discount and the total
   def calculate_total
     subtotal = self.quantity * self.unit_price
-    discount = subtotal * self.discount_percentage/100
-    self.discount = discount
-    self.total_amount = subtotal - discount
+    self.discount = subtotal * self.discount_percentage/100
+    self.total_amount = subtotal - self.discount
   end
 end

@@ -4,6 +4,10 @@ module Alegra
       attr_reader :client
       attr_accessor :response
 
+      ITEMS_MAPPING = {
+        credits: 1
+      }
+
       def initialize(options={})
         @response = {}
         @response[:success] = false
@@ -15,6 +19,7 @@ module Alegra
         validate_options(options)
         ActiveRecord::Base.transaction do
           invoice = client.invoices.create(invoice_mapping(options))
+          binding.pry
           @response[:success] = options[:credit_billing].update_attributes(invoiced: true, alegra_id: invoice[:id])
         end
         rescue Exception => e
@@ -39,11 +44,11 @@ module Alegra
       def items_from(options)
         [
           {
-            id: 1, # TODO: create items to charge this user. Ex. buy credits for trazoro.co
+            id: ITEMS_MAPPING[:credits],
             price: options[:credit_billing].unit_price, #
             quantity: options[:credit_billing].quantity,
-            discount: options[:credit_billing].discount,
-            description: 'Créditos Trazoro',
+            discount: options[:credit_billing].discount_percentage,
+            description: 'Créditos para usar los servicios Trazoro.',
             tax: [
                     {
                       id: 3, #TODO: create iva id on alegra
