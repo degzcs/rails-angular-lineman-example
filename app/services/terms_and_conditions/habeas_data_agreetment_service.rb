@@ -2,7 +2,7 @@
 module TermsAndConditions
   # Service incarged to associate the acceptance of term and conditions pdf files in memory to an specific provider
   class HabeasDataAgreetmentService
-    attr_reader :signature_picture, :authorized_provider
+    attr_accessor :signature_picture, :authorized_provider
     attr_accessor :response
 
     def initialize(_options = {})
@@ -36,8 +36,9 @@ module TermsAndConditions
 
     # @params[user]
     def generate_file_for!(authorized_provider, signature_picture, temporal_file_path)
+      @authorized_provider_presenter = UserPresenter.new(authorized_provider, nil)
       @draw_pdf_service.call(
-        authorized_provider_presenter: UserPresenter.new(authorized_provider, nil),
+        authorized_provider_presenter: @authorized_provider_presenter,
         signature_picture: signature_picture
       )
       file = @draw_pdf_service.file
