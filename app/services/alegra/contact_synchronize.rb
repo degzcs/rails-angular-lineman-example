@@ -18,7 +18,7 @@ module Alegra
     def call
       ActiveRecord::Base.transaction do
         contact = client.contacts.create(user_attributes)
-        @response[:success] = user.update_attributes(alegra_id: contact['id'], alegra_sync: true)
+        @response[:success] = user.update_attributes(alegra_id: contact[:id], alegra_sync: true)
       end
       rescue Exception => e
         user.update_attributes(alegra_sync: false)
