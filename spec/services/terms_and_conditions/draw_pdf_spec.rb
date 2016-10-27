@@ -5,13 +5,13 @@ describe TermsAndConditions::DrawPdf do
 
   context 'creation of the pdf in the service habeas_data_agreetment draw' do
     before :each do
-      seller = create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero')
+      seller = create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero', document_number: '1234567890')
       @seller_presenter = UserPresenter.new(seller, nil)
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
       @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
     end
     it 'should check the consistency of the document' do
-      expected_hash = '00948c31cb0b1420b45b2ae29617c2db4aefe8cfc7a42df5801fc8c158cc6a41'
+      expected_hash = 'e3cbdf21b64970ed6401e0be0c269ea993aaf4dadadd004f6d2a3164ba55c784'
       response = service.call(
         authorized_provider_presenter: @seller_presenter,
         signature_picture: @signature_picture
