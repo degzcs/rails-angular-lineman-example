@@ -4,34 +4,30 @@
 #
 #  id                  :integer          not null, primary key
 #  user_id             :integer
-#  unit                :integer
-#  per_unit_value      :float
-#  payment_flag        :boolean          default(FALSE)
 #  payment_date        :datetime
 #  discount_percentage :float            default(0.0), not null
 #  created_at          :datetime
 #  updated_at          :datetime
 #  total_amount        :float            default(0.0), not null
 #  discount            :float            default(0.0), not null
+#  paid                :boolean          default(FALSE)
+#  quantity            :float
+#  unit_price          :float
 #
 
 require 'spec_helper'
 
 describe CreditBilling  do
   context "test factory" do
-    let(:credit_billing) {build(:credit_billing)}
-    it {expect(credit_billing.user_id).not_to be_nil }
-    it {expect(credit_billing.unit).not_to be_nil }
-    it {expect(credit_billing.per_unit_value).not_to be_nil}
-    it {expect(credit_billing.payment_flag).not_to be_nil}
-    it {expect(credit_billing.payment_date).not_to be_nil}
-    it {expect(credit_billing.discount_percentage).not_to be_nil }
+    it 'should be valid' do
+      credit_billing = build(:credit_billing)
+      expect(credit_billing).to be_valid
+    end
   end
 
   context "credit billing creation" do
-
     it "should not allow to create without user_id" do
-      credit_billing = build(:credit_billing,user_id: nil)
+      credit_billing = build(:credit_billing, user_id: nil)
       expect(credit_billing).to_not be_valid
     end
 
@@ -42,15 +38,14 @@ describe CreditBilling  do
       expect { credit_billing.save! }.to raise_error.with_message(/Este usuario no esta autorizado para comprar creditos/)
     end
 
-    it "should not allow to create without unit" do
-      credit_billing = build(:credit_billing, unit: nil)
+    it "should not allow to create without quantity" do
+      credit_billing = build(:credit_billing, quantity: nil)
       expect(credit_billing).to_not be_valid
     end
 
-    it "should not allow to create without per_unit_value" do
-      credit_billing = build(:credit_billing, per_unit_value: nil)
+    it "should not allow to create without unit_price" do
+      credit_billing = build(:credit_billing, unit_price: nil)
       expect(credit_billing).to_not be_valid
     end
-
   end
 end
