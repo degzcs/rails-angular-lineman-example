@@ -22,7 +22,7 @@ describe 'Agreetments', type: :request do
               settings.save!
               expected_response = {
                 'fixed_sale_agreetment' => 'wherever complicated text',
-                'buy_agreetment' => ''
+                'buy_agreetment' => 'acuerdo para agreetment...'
               }
               get '/api/v1/agreetments/fixed_sale', {}, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
@@ -61,8 +61,8 @@ describe 'Agreetments', type: :request do
               settings[:data][:buy_agreetment] = 'wherever complicated text'
               settings.save!
               expected_response = {
-                'fixed_sale_agreetment' => '',
-                'buy_agreetment' => 'wherever complicated text'
+                'fixed_sale_agreetment' => 'wherever complicated text',
+                'buy_agreetment' => 'acuerdo para agreetment...'
               }
               get '/api/v1/agreetments/buy_agreetment', {}, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
