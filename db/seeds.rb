@@ -5,7 +5,7 @@ end
 
 puts 'Create basic settings ...'
 settings = Settings.instance
-settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
+settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16, fixed_sale_agreetment: "acuerdo para agreetment...", buy_agreetment: "acuerdo para proveedores autorizados..." }
 settings.save!
 
 puts 'Creating cities and states ...'

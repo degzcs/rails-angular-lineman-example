@@ -68,4 +68,13 @@ class UserPresenter < BasePresenter
       profile.city.name
     end
   end
+
+  def settings_presenter
+    SettingsPresenter.new(Settings.instance, h)
+  end
+
+  def buy_agreetment_text
+    settings_presenter.buy_agreetment
+  end
+
 end

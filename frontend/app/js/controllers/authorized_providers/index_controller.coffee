@@ -1,5 +1,5 @@
 angular.module('app').controller 'AuthorizedProviderIndexCtrl', ($scope, AuthorizedProviderService, $mdDialog, $state) ->
-  #*** Loading Variables **** #
+  #*** Loading Variables ***#
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
   $scope.loadingMessage = "Cargando ..."

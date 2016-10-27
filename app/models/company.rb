@@ -16,6 +16,7 @@
 #  legal_representative_id  :integer
 #  address                  :string(255)
 #  city_id                  :integer
+#  registration_state       :string(255)
 #
 
 class Company < ActiveRecord::Base

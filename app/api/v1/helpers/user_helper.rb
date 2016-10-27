@@ -34,13 +34,14 @@ module V1
           photo_file = files.select{|file| file[:filename] =~ /photo_file/}.first
           id_document_file = files.select{|file| file[:filename] =~ /id_document_file/}.first
           mining_authorization_file = files.select{|file| file[:filename] =~ /mining_authorization_file/}.last
-
+          signature_picture = files.select{|file| file[:filename] =~ /signature_picture/}.first
           add_files_to_profile = {
             :photo_file => photo_file,
             :id_document_file => id_document_file,
-            :mining_authorization_file => mining_authorization_file
+            :mining_authorization_file => mining_authorization_file,
           }
           params.except!(:files)
+          params[:signature_picture] = signature_picture  
           params[:profile].merge!(add_files_to_profile)
           params
         end

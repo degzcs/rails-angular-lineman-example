@@ -95,6 +95,11 @@ module RucomServices
       @barequero = @response[:config]['scraper']['barequero'].fetch('select_options', [])
     end
 
+    def chatarrero
+      include_warning_inside_errors?('chatarrero')
+      @chatarrero = @response[:config]['scraper']['chatarrero'].fetch('select_options', [])
+    end
+
     def trader
       include_warning_inside_errors?('trader')
       @trader = @response[:config]['scraper']['trader'].fetch('select_options', [])
@@ -118,6 +123,8 @@ module RucomServices
         'trader'
       elsif barequero.include?(@response[:send_data][:rol_name])
         'barequero'
+      elsif chatarrero.include?(@response[:send_data][:rol_name])
+        'chatarrero'
       else
         'unknown'
       end

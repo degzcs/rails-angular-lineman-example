@@ -52,6 +52,7 @@ module V1
           optional :id_document_file, type: File, desc: 'id_document_file', documentation: { example: '...' }
           optional :mining_authorization_file, type: File, desc: 'mining_authorization_file', documentation: { example: '...' }
           optional :photo_file, type: File, desc: 'photo_file', documentation: { example: '...' }
+          optional :signature_picture_file, type: File, desc: 'signature_picture_file', documentation: { example: '...' }
         end
       end
 
@@ -76,7 +77,6 @@ module V1
           query_name = params[:query_name]
           query_id = params[:query_id]
           query_rucomid = params[:query_rucomid]
-          # binding.pry
           authorized_providers =
             if query_name
               ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(page: page, per_page: per_page)
@@ -161,13 +161,18 @@ module V1
           if authorized_provider.present?
             formatted_params = V1::Helpers::UserHelper.authorized_provider_params(params)
             # NOTE: ADD ASSIGMENT OF ROLE AUTHORIZED_PROVIDERS IN RUCOM
-            authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
-            audit_comment = "Updated from API Request by ID: #{current_user.id}"
-            ::User.audit_as(current_user) do
-              authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
-              authorized_provider.update_attributes(
-                formatted_params[:authorized_provider].merge(audit_comment: audit_comment)
-              )
+           ActiveRecord::Base.transaction do
+              authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
+              audit_comment = "Updated from API Request by ID: #{current_user.id}"
+              
+              ::User.audit_as(current_user) do
+                authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
+                authorized_provider.update_attributes(
+                  formatted_params[:authorized_provider].merge(audit_comment: audit_comment)
+                )
+              end
+              # service pdf habeas data agreetment
+              ::TermsAndConditions::HabeasDataAgreetmentService.new.call(authorized_provider: authorized_provider, signature_picture: formatted_params[:signature_picture])
             end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])
             if authorized_provider.save

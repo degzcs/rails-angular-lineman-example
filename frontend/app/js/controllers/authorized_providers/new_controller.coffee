@@ -191,7 +191,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     validateDocumentationAndUpdate()
 
   validateDocumentationAndUpdate =  ()->
-    if $scope.id_document_file == '' || $scope.mining_authorization_file == ''
+    if $scope.currentAuthorizedProvider.id_document_file == '' || $scope.currentAuthorizedProvider.mining_authorization_file == ''
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
       $scope.sendingPost = true

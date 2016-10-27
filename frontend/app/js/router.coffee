@@ -198,6 +198,32 @@
         deferred.promise
   )
 
+  .state("term_and_cond_authorized_provider",
+    url: "/authorized_providers/:id/term_and_cond",
+    ncyBreadcrumb:
+      label: 'Aceptación de Manejo de información'
+      parent: 'index_authorized_provider' #'show_authorized_provider'
+    views:
+      'content':
+        templateUrl: "partials/authorized_providers/terms_and_cond.html"
+        controller: "AuthorizedProviderTermCondCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   .state("new_authorized_provider",
     url: "/authorized_providers/:id/new",
     ncyBreadcrumb:

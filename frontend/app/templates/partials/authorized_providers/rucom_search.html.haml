@@ -4,6 +4,10 @@
       %section{layout: "row"}
         // ---------------------- seller info ------------------- ///
         %div.md-padding{flex: ""}
+          %md-select{ "placeholder"=>"Seleccione el tipo de proveedor", "ng-model"=>"provider.rolName", "name" => "rolName" }
+            %md-option{"value"=>"Barequero"}Barequero
+            %md-option{"value"=>"Chatarrero"}Chatarrero
+
           %fieldset.standard.tr-fieldset{:layout => "column"}
             %legend
               %h3
@@ -20,7 +24,7 @@
         %p{"color"=>"red", :ng-if=> "anyErrors()"} No se encontró el proveedor
 
       .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-        %md-button.btn-save.md-button.md-raised{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event,provider.idNumber)", "ng-hide"=>"showLoading"} Consultar
+        %md-button.btn-save.md-button.md-raised{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.rolName)"} Consultar
         %md-button.btn-save.md-button{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} Continuar
 
       %md-button.md-primary{"ng-click" => "cancel()"} Cancelar

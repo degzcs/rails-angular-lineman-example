@@ -188,11 +188,6 @@ module V1
           batches = legal_representative.sales.where(id: params[:id], type: 'sale').last.batches
           present batches, with: V1::Entities::SoldBatch
         end
-
-        #
-        # GET shipment
-        #
-
       end
     end
   end
