@@ -14,6 +14,7 @@
 #  quantity            :float
 #  unit_price          :float
 #  invoiced            :boolean          default(FALSE)
+#  alegra_id           :integer
 #
 
 class CreditBilling < ActiveRecord::Base
