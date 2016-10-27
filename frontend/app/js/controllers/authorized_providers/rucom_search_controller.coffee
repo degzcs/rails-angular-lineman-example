@@ -22,9 +22,6 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
       .success((data, status, headers) ->
         $scope.showLoading = false
         AuthorizedProviderService.model = data
-
-        console.log "provider service" + AuthorizedProviderService
-        console.log "data" + data
         AuthorizedProviderService.buy_agreetment().success( (data) ->
           AuthorizedProviderService.model.buy_agreetment = data.buy_agreetment
           AuthorizedProviderService.saveModel()
