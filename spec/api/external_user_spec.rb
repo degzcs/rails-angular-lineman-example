@@ -24,7 +24,7 @@ describe 'ExternalUser', :type => :request do
 
       context 'GET' do
 
-        it 'verifies that response has the elements number specified in per_page param' do
+        xit 'verifies that response has the elements number specified in per_page param' do
           per_page = 5
           get '/api/v1/external_users', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
@@ -57,7 +57,7 @@ describe 'ExternalUser', :type => :request do
       context 'POST (this specs will be deprecated, the external users will be created from the backend)' do
 
         context "without rucom" do
-          it 'returns a representation of the new external user created and code 201' do
+          xit 'returns a representation of the new external user created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
             rucom = create :rucom, provider_type: 'Barequero'
@@ -183,7 +183,7 @@ describe 'ExternalUser', :type => :request do
       end
 
       xcontext 'PUT (This is deprecated, the external user will be updated from the backend)' do
-        it 'returns a representation of the updated external user and code 200' do
+        xit 'returns a representation of the updated external user and code 200' do
           rucom = create(:rucom)
           population_center = create(:population_center)
           external_user = create( :external_user, personal_rucom: rucom, population_center_id: population_center.id)

@@ -17,7 +17,7 @@ module Alegra
     # @return [ Boolean ] true if the user was sync successfuly and false if not
     def call
       ActiveRecord::Base.transaction do
-        contact = client.invoices.create(user_attributes)
+        contact = client.contacts.create(user_attributes)
         @response[:success] = user.update_attributes(alegra_id: contact[:id], alegra_sync: true)
       end
       rescue Exception => e
