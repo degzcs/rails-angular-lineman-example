@@ -13,6 +13,7 @@
 #  paid                :boolean          default(FALSE)
 #  quantity            :float
 #  unit_price          :float
+#  invoiced            :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
