@@ -220,3 +220,25 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.isSet = (selectedValue) ->
     return $scope.setTab == selectedValue
+
+    pressed = false
+    chars = []
+    $(window).keypress (e) ->
+      if e.which >= 8 and e.which <= 57
+        chars.push String.fromCharCode(e.which)
+      console.log e.which + ':' + chars.join('|')
+      if pressed == false
+        setTimeout (->
+          if chars.length >= 10
+            barcode = chars.join('')
+            console.log 'Barcode Scanned: ' + barcode
+            # assign value to some input (or do whatever you want)
+            # $('#barcode').val barcode
+          chars = []
+          pressed = false
+          return
+        ), 500
+      pressed = true
+      return
+    return
+ 
