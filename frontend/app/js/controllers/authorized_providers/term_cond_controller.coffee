@@ -1,16 +1,20 @@
 angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
-  ($scope, $sce, $state, $stateParams, AuthorizedProviderService, SignatureService, $mdDialog) ->
+  ($scope, $sce, $state, $stateParams, AuthorizedProviderService, SignatureService, $mdDialog, CurrentUser) ->
     # var initialize
     $scope.prov = null
     $scope.chkAgreetmentActive = false
         
     $scope.authorizedProvider = AuthorizedProviderService.restoreModel()
 
+    CurrentUser.get().success (data) ->
+      $scope.authorizedProvider.use_wacom_device = data.use_wacom_device
+
     $scope.continue = ->
-      saveSignature()
-      AuthorizedProviderService.model = $scope.authorizedProvider
-      AuthorizedProviderService.saveModel()
-      $state.go 'new_authorized_provider', { id: AuthorizedProviderService.model.id }
+        saveSignature()
+        AuthorizedProviderService.model = $scope.authorizedProvider
+        AuthorizedProviderService.saveModel()
+        $state.go 'new_authorized_provider', { id: AuthorizedProviderService.model.id }
+
 
     $scope.handlerContinue = ->
     # console.log $scope.chkAgreetmentActive
@@ -37,6 +41,9 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     #
     # Puts it in a img tag
     saveSignature = ->
-      $scope.authorizedProvider.signature_picture = document.getElementById('authorized_provider_signature').src
+      if $scope.authorizedProvider.use_wacom_device == false
+        $scope.authorizedProvider.signature_picture = null
+      else
+        $scope.authorizedProvider.signature_picture = document.getElementById('authorized_provider_signature').src
 
 
