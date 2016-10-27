@@ -16,7 +16,7 @@ class CreditBilling::Acceptance
 
     ActiveRecord::Base.transaction do
       response = update_credit_billings_with!(new_credit_billing_values)
-      response = update_credits_buyer_with(current_available_credits, credit_billing.unit) if response[:success]
+      response = update_credits_buyer_with(current_available_credits, credit_billing.quantity) if(response[:success] && @credit_billing.reload.paid?)
     end
     response
   end

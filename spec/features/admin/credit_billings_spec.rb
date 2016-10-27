@@ -15,7 +15,7 @@ describe 'all test the credit_billings view', :js do
 
   it 'action discount test' do
     expected_response = 10.0
-    credit_billing = create(:credit_billing, payment_flag: false, payment_date: nil, total_amount: 1000000)
+    credit_billing = create(:credit_billing, paid: false, payment_date: nil, total_amount: 1000000)
     visit '/admin/credit_billings'
     within("#credit_billing_#{credit_billing.id}") do
       click_on('Actions')
@@ -29,7 +29,7 @@ describe 'all test the credit_billings view', :js do
   end
 
   it 'action invoice test' do
-    credit_billing = create(:credit_billing, payment_flag: false, payment_date: nil, total_amount: 1000000)
+    credit_billing = create(:credit_billing, paid: false, payment_date: nil, total_amount: 1000000)
     visit '/admin/credit_billings'
     within("#credit_billing_#{credit_billing.id}") do
       click_on('Actions')
@@ -45,9 +45,9 @@ describe 'all test the credit_billings view', :js do
   it 'action mark as paid out test' do
     expected_response = {
       payment_date: 'Fri, 19 Aug 2016 09:00:00 UTC +00:00',
-      payment_flag: true
+      paid: true
     }
-    credit_billing = create(:credit_billing, payment_flag: false, payment_date: nil, total_amount: 1000000)
+    credit_billing = create(:credit_billing, paid: false, payment_date: nil, total_amount: 1000000)
     visit '/admin/credit_billings'
     within("#credit_billing_#{credit_billing.id}") do
       click_on('Actions')
@@ -58,7 +58,7 @@ describe 'all test the credit_billings view', :js do
     click_button('Marcar como pagado')
     page.execute_script 'window.confirm = function () { return true }'
     expect(credit_billing.reload.payment_date).to eq expected_response[:payment_date]
-    expect(credit_billing.reload.payment_flag).to eq expected_response[:payment_flag]
+    expect(credit_billing.reload.paid).to eq expected_response[:paid]
     expect(page).to have_content 'La factura fue marcada como pagada satisfactoriamente'
   end
 end

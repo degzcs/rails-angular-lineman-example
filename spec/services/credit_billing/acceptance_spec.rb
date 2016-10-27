@@ -8,10 +8,10 @@ describe CreditBilling::Acceptance do
 
     it 'should buy credits for single user without company' do
       user = create :user, :with_profile, :with_personal_rucom, nit_number: nil, available_credits: 7.0
-      credit_billing = create :credit_billing, user: user, unit: 10.0
+      credit_billing = create :credit_billing, user: user, quantity: 10.0
 
       new_credit_billing_values = {
-        payment_flag: true,
+        paid: true,
         payment_date: Time.now,
         discount_percentage: 0
       }
@@ -28,10 +28,10 @@ describe CreditBilling::Acceptance do
       legal_representative = user.company.legal_representative
       legal_representative.profile.update_column :available_credits, 5.0
 
-      credit_billing = create :credit_billing, user: legal_representative, unit: 10.0
+      credit_billing = create :credit_billing, user: legal_representative, quantity: 10.0
 
       new_credit_billing_values = {
-        payment_flag: true,
+        paid: true,
         payment_date: Time.now,
         discount_percentage: 0
       }

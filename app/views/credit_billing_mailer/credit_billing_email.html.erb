@@ -31,7 +31,7 @@
      </td>
       <td>
         <h5>
-          <%= @credit_billing.unit %>
+          <%= @credit_billing.quantity %>
         </h5>
       </td>
     </tr>
@@ -45,7 +45,7 @@
      </td>
       <td>
         <h5>
-          <%= @credit_billing.per_unit_value %>
+          <%= @credit_billing.unit_price %>
         </h5>
       </td>
     </tr>
@@ -59,7 +59,7 @@
      </td>
       <td>
         <h5>
-          <%= @credit_billing.unit * @credit_billing.per_unit_value %>
+          <%= @credit_billing.quantity * @credit_billing.unit_price %>
         </h5>
       </td>
     </tr>
