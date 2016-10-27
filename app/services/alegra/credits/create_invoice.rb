@@ -19,7 +19,6 @@ module Alegra
         validate_options(options)
         ActiveRecord::Base.transaction do
           invoice = client.invoices.create(invoice_mapping(options))
-          binding.pry
           @response[:success] = options[:credit_billing].update_attributes(invoiced: true, alegra_id: invoice[:id])
         end
         rescue Exception => e

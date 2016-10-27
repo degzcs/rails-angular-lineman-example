@@ -65,7 +65,7 @@ gem 'state_machines-activerecord'
 gem 'micromachine'
 gem 'audited-activerecord' #, '~> 4.3'
 gem "rails-observers", github: 'rails/rails-observers'
-gem 'alegra', '~> 0.1.2'
+gem 'alegra', '~> 0.1.2.2'
 
 group :development do
   gem 'quiet_assets'
