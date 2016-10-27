@@ -157,9 +157,6 @@ describe 'AuthorizedProviders', type: :request do
           expect(user.audits.last.user).to eq(user)
           expect(user.audits.last.comment).to eq(audit_comment)
 
-          # This is to test the creation of habeas data agreetmen pdf
-          expect()
-
           # Those are to test the audit actions on users profile table and you can check out on audits table
           expect(user.profile.audits.last.user).to eq(user)
           expect(user.profile.audits.last.action).to eq('update')
