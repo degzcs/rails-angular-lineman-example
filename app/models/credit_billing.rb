@@ -44,6 +44,7 @@ class CreditBilling < ActiveRecord::Base
   #
 
   def init
+    self..discount = 0.0
     self.unit_price = Settings.instance.fine_gram_value
   end
 

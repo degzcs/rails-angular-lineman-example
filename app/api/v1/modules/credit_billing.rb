@@ -10,7 +10,7 @@ module V1
       content_type :json, 'application/json'
 
       helpers do
-        
+
         params :pagination do
           optional :page, type: Integer
           optional :per_page, type: Integer
@@ -23,11 +23,15 @@ module V1
         params :credit_billing do
           requires :credit_billing, type: Hash do
             requires  :user_id, type: Integer, desc: 'unit', documentation: { example: '...' }
-            requires  :unit, type: String, desc: 'unit', documentation: { example: '...' }
+            requires  :quantity, type: String, desc: 'unit', documentation: { example: '...' }
           end
         end
 
       end
+
+      #
+      # GET /
+      #
 
       resource :credit_billings do
         desc 'returns all existent credit billings', {
@@ -48,7 +52,10 @@ module V1
           present credit_billings, with: V1::Entities::CreditBilling
         end
 
-        
+        #
+        # GET /:id
+        #
+
         desc 'returns one existent credit_billing by :id', {
           entity: V1::Entities::CreditBilling,
           notes: <<-NOTES
@@ -63,7 +70,11 @@ module V1
           provider = ::CreditBilling.find(params[:id])
           present provider, with: V1::Entities::CreditBilling
         end
-        # POST
+
+        #
+        # POST /
+        #
+
         desc 'creates a new credit billing', {
             entity: V1::Entities::CreditBilling,
             notes: <<-NOTE
@@ -82,14 +93,13 @@ module V1
         ]  do
           content_type "text/json"
           credit_billing = ::CreditBilling.new(params[:credit_billing])
-          #m
-          credit_billing.discount = 0.0
+
           if credit_billing.save
             present credit_billing, with: V1::Entities::CreditBilling
           else
             error!(credit_billing.errors.inspect, 400)
+            Rails.logger.info(credit_billing.errors.inspect)
           end
-          Rails.logger.info(credit_billing.errors.inspect)
         end
       end
     end
