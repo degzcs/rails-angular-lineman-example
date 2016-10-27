@@ -40,7 +40,7 @@ module Alegra
         [
           {
             id: 1, # TODO: create items to charge this user. Ex. buy credits for trazoro.co
-            price: options[:credit_billing].total_amount, #
+            price: options[:credit_billing].unit_price, #
             quantity: options[:credit_billing].quantity,
             discount: options[:credit_billing].discount,
             description: 'Créditos Trazoro',
