@@ -81,6 +81,9 @@ describe 'AuthorizedProviders', type: :request do
           file_path = "#{Rails.root}/spec/support/images/signature_picture.png"
           signature_picture_file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
 
+          file_path = "#{Rails.root}/spec/support/pdfs/habeas_data_agreetment.pdf"
+          habeas_data_agreetment_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
+
           file_path = "#{Rails.root}/spec/support/pdfs/id_document_file.pdf"
           id_document_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
@@ -96,7 +99,7 @@ describe 'AuthorizedProviders', type: :request do
           id_document_file_url = "/documents/profile/id_document_file/#{user.profile.id}/id_document_file.pdf"
           mining_authorization_file_url = "/documents/profile/mining_authorization_file/#{user.profile.id}/mining_authorization_file.pdf"
           photo_file = "/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
-          signature_picture_file_url = "/photos/profile/signature_picture_file/#{user.profile.id}/signature_picture.png"
+          habeas_data_agreetment_file_url = "/documents/profile/habeas_data_agreetment_file/#{user.profile.id}/habeas_data_agreetment.pdf"
           expected_response = {
             'id' => user.id,
             'document_number' => user.profile.document_number,
@@ -107,7 +110,7 @@ describe 'AuthorizedProviders', type: :request do
             'id_document_file' => { 'url' => url_base + id_document_file_url },
             'mining_authorization_file' => { 'url' => url_base + mining_authorization_file_url },
             'photo_file' => { 'url' => url_base + photo_file },
-            'signature_picture' => { 'url' => url_base + signature_picture_file_url },
+            'signature_picture' => { 'url' => url_base + habeas_data_agreetment_file_url },
             'email' => 'amado.prueba1@barequero.co',
             'city' => JSON.parse(city.to_json).except('created_at', 'updated_at'),
             'state' => JSON.parse(city.state.to_json).except('created_at', 'updated_at'),
@@ -137,7 +140,7 @@ describe 'AuthorizedProviders', type: :request do
             'city_id' => city.id || nil
           }
           rucom_data = { 'rucom_number' => '987654321' }
-          files = [photo_file_file, id_document_file, mining_authorization_file, signature_picture_file]
+          files = [photo_file_file, id_document_file, mining_authorization_file, signature_picture_file, habeas_data_agreetment_file]
 
           params_set = { 'authorized_provider' => user_data, 'profile' => profile_data, 'rucom' => rucom_data, 'files' => files }
 

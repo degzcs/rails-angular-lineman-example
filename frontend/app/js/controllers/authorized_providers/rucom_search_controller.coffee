@@ -18,6 +18,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
 
   $scope.queryRucomByIdNumber = (ev, idNumber, rolName) ->
     if idNumber 
+      $scope.showLoading = true
       AuthorizedProviderService.byIdNumber(idNumber, rolName)
       .success((data, status, headers) ->
         $scope.showLoading = false
@@ -29,6 +30,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
           $state.go 'term_and_cond_authorized_provider', { id: AuthorizedProviderService.model.id }
         )
         .error((error)->
+          $scope.showLoading = false
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
         )  
       )
