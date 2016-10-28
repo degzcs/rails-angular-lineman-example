@@ -92,6 +92,7 @@ module Alegra
       def validate_options(options)
         raise 'You must to provide a payment_method option' unless options[:payment_method].present?
         raise 'You must to provide a credit_billing option' unless options[:credit_billing].present?
+        raise 'The trader has to be synchronized with alegra before to create an invoice' unless options[:credit_billing].user.alegra_id.present?
       end
     end
   end

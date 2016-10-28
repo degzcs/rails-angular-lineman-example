@@ -95,6 +95,9 @@
 </p>
 </body>
 <h2>
+  <%=link_to "Crear Factura en Alegra", create_invoice_admin_credit_billing_path(@credit_billing.id),  data: {confirm: "Esta seguro de crear esta factura"}%>
+</h2>
+<h2>
   <%=link_to "Enviar Factura a usuario", send_billing_admin_credit_billing_path(@credit_billing.id),  data: {confirm: "Esta seguro de enviar esta factura"}%>
 </h2>
 <h2>

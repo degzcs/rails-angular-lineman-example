@@ -15,7 +15,7 @@ describe 'all test the credit_billings view', :js do
     credit_billing.destroy! if credit_billing.present?
   end
 
-  it 'action discount test' do
+  it 'should apply a discount to the invoice' do
     expected_response = 10.0
     credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
     visit '/admin/credit_billings'
@@ -30,23 +30,42 @@ describe 'all test the credit_billings view', :js do
     expect(page).to have_content 'Credit billing was successfully updated.'
   end
 
-  # TODO: use the alegra send mail feature instead of this implementation
-  it 'action invoice test' do
-    credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
-    visit '/admin/credit_billings'
-    within("#credit_billing_#{credit_billing.id}") do
-      click_on('Actions')
-      click_on('Facturar')
-    end
-    expect(page).to have_content 'Datos de Transaccion'
-    click_link('Enviar Factura a usuario')
-    # click_link('Cancelar Envio de factura')
-    page.execute_script 'window.confirm = function () { return true }'
-    expect(page).to have_content "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+  it 'should create an invoice into Alegra' do
+      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
+      visit '/admin/credit_billings'
+      within("#credit_billing_#{credit_billing.id}") do
+        click_on('Actions')
+        click_on('Facturar')
+      end
+      VCR.use_cassette('alegra_create_credits_invoice_as_admin') do
+        expect(page).to have_content 'Datos de Transaccion'
+        click_link('Crear Factura en Alegra')
+      end
+      # click_link('Cancelar Envio de factura')
+      page.execute_script 'window.confirm = function () { return true }'
+      expect(page).to have_content "La fatura a sido creada satisfactoriamente"
+      expect(credit_billing.reload.invoiced).to eq true
   end
 
-  it 'action mark as paid out test' do
-    # VCR.use_cassette('alegra_create_credits_invoice_paid') do
+  # TODO: use the alegra send mail feature instead of this implementation
+  it 'should send the invoice  by email' do
+     # VCR.use_cassette('alegra_send_credits_invoice_by_email_as_admin') do
+      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
+      visit '/admin/credit_billings'
+      within("#credit_billing_#{credit_billing.id}") do
+        click_on('Actions')
+        click_on('Facturar')
+      end
+      expect(page).to have_content 'Datos de Transaccion'
+      click_link('Enviar Factura a usuario')
+      # click_link('Cancelar Envio de factura')
+      page.execute_script 'window.confirm = function () { return true }'
+      expect(page).to have_content "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+    # end
+  end
+
+  it 'should mark the invoice as paid out' do
+    # VCR.use_cassette('alegra_update_credits_invoice_to_paid') do
       expected_response = {
         payment_date: 'Fri, 19 Aug 2016 09:00:00 UTC +00:00',
         paid: true

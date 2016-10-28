@@ -7,7 +7,7 @@ ActiveAdmin.register CreditBilling do
   # under the dir app/views/admin/credit_billings/<action>
 
 
-  # updates a credit billing with paid to true, and add a new available_credit value to the user
+  # Updates a credit billing with paid to true, and add a new available_credit value to the user
   member_action :update_payment, method: :patch do
     @credit_billing = CreditBilling.find(params[:id])
 
@@ -25,12 +25,24 @@ ActiveAdmin.register CreditBilling do
     redirect_to admin_credit_billings_path, notice: message
   end
 
-  # renders a template where the admin can select the date when the credit billing was payed
+  # Renders a template where the admin can select the date when the credit billing was paid
   member_action :mark do
     @credit_billing = CreditBilling.find(params[:id])
   end
 
-  # renders a template where the user can select a discount percentage value
+  # Incharge to create an invoice into Alegra plataform.
+  member_action :create_invoice do
+    @credit_billing = CreditBilling.find(params[:id])
+    service = Alegra::Credits::CreateInvoice.new
+    response = service.call(payment_method: 'card', credit_billing: @credit_billing)
+    if response[:success]
+      redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: "La fatura a sido creada satisfactoriamente"
+    else
+      render :back, notice: response[:errors].join(" ")
+    end
+  end
+
+  # Renders a template where the user can select a discount percentage value
   member_action :edit_discount do
     @credit_billing = CreditBilling.find(params[:id])
   end
@@ -38,7 +50,7 @@ ActiveAdmin.register CreditBilling do
   # sends an email to the user with the information about the credit billing
   member_action :send_billing do
     credit_billing = CreditBilling.find(params[:id])
-    CreditBillingMailer.credit_billing_email(credit_billing).deliver
+    # TODO: call alegra service to send email here.
     redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
   end
 

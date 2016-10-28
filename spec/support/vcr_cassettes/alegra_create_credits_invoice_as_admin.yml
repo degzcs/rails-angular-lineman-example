@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 27 Oct 2016 22:18:09 GMT
+      - Fri, 28 Oct 2016 20:06:26 GMT
       Content-Type:
       - text/html; charset=UTF-8
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       X-Powered-By:
       - PHP/7.0.9
       Set-Cookie:
-      - PHPSESSID=oegfua496r9qb1e6ec5v0mge91; expires=Sat, 27-Oct-2018 22:18:09 GMT;
+      - PHPSESSID=0ldupo0armqqt9id5u81aj8ch3; expires=Sun, 28-Oct-2018 20:06:26 GMT;
         Max-Age=63072000; path=/; secure; HttpOnly
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
@@ -69,13 +69,14 @@ http_interactions:
       string: '[{"id":1,"name":"Cr\u00e9ditos Trazoro","description":null,"reference":"buy_credits","status":"active","category":{"id":"3","name":"Ventas"},"price":[{"idPriceList":"1","name":"General","price":"120000.0000"}],"tax":[{"id":"3","name":"IVA","percentage":"16.00","description":""}]},{"id":2,"name":"item2","description":"item2
         de venta","reference":"ref2","status":"active","category":{"id":"3","name":"Ventas"},"price":[{"idPriceList":"1","name":"General","price":"80.0000"}],"tax":[{"id":"3","name":"IVA","percentage":"16.00","description":""}]}]'
     http_version: 
-  recorded_at: Thu, 27 Oct 2016 22:18:09 GMT
+  recorded_at: Fri, 28 Oct 2016 20:06:27 GMT
 - request:
     method: post
     uri: https://app.alegra.com/api/v1/invoices
     body:
       encoding: UTF-8
-      string: '{"date":"2016-10-27 22:18:08 UTC","dueDate":"2016-10-27 22:18:08 UTC","client":1,"items":[{"id":1,"price":1000.0,"quantity":10.0,"discount":0.0,"description":"Créditos
+      string: '{"date":"2016-10-28 15:06:25 -0500","dueDate":"2016-10-28 15:06:25
+        -0500","client":1,"items":[{"id":1,"price":1000.0,"quantity":10.0,"discount":0.0,"description":"Créditos
         para usar los servicios Trazoro.","tax":[{"id":3}]}],"paymentMethod":"card","stamp":{"generateStamp":true}}'
     headers:
       User-Agent:
@@ -94,7 +95,7 @@ http_interactions:
       message: Created
     headers:
       Date:
-      - Thu, 27 Oct 2016 22:18:11 GMT
+      - Fri, 28 Oct 2016 20:06:29 GMT
       Content-Type:
       - text/html; charset=UTF-8
       Transfer-Encoding:
@@ -106,7 +107,7 @@ http_interactions:
       X-Powered-By:
       - PHP/7.0.9
       Set-Cookie:
-      - PHPSESSID=4u2pij4gak4qk79m3oorg65b50; expires=Sat, 27-Oct-2018 22:18:10 GMT;
+      - PHPSESSID=hnggkt6sh3kei5mscqq9am7s67; expires=Sun, 28-Oct-2018 20:06:28 GMT;
         Max-Age=63072000; path=/; secure; HttpOnly
       Expires:
       - Thu, 19 Nov 1981 08:52:00 GMT
@@ -132,18 +133,18 @@ http_interactions:
       X-Rate-Limit-Limit:
       - '150'
       X-Rate-Limit-Reset:
-      - '59'
+      - '58'
       X-Rate-Limit-Remaining:
       - '148'
     body:
       encoding: UTF-8
-      string: '{"id":"19","date":"2016-10-27","dueDate":"2016-10-27","observations":null,"anotation":null,"termsConditions":"Esta
+      string: '{"id":"35","date":"2016-10-28","dueDate":"2016-10-28","observations":null,"anotation":null,"termsConditions":"Esta
         factura se asimila en todos sus efectos a una letra de cambio de conformidad
         con el Art. 774 del c\u00f3digo de comercio. Autorizo que en caso de incumplimiento
         de esta obligaci\u00f3n sea reportado a las centrales de riesgo, se cobraran
         intereses por mora.","status":"draft","client":{"id":"1","name":"Test","identification":"123456789","phonePrimary":"","phoneSecondary":"","fax":"","mobile":"3004232123","email":"cliente@test.com","address":{"address":"calle
-        1 # 3-2","city":"Medellin"}},"numberTemplate":{"id":"1","prefix":null,"number":"19","text":null},"total":11600,"totalPaid":0,"seller":null,"priceList":null,"items":[{"id":1,"name":"Cr\u00e9ditos
+        1 # 3-2","city":"Medellin"}},"numberTemplate":{"id":"1","prefix":null,"number":"35","text":null},"total":11600,"totalPaid":0,"balance":11600,"seller":null,"priceList":null,"items":[{"id":1,"name":"Cr\u00e9ditos
         Trazoro","description":"Cr\u00e9ditos para usar los servicios Trazoro.","price":1000,"discount":"0","reference":null,"quantity":10,"tax":[{"id":"3","name":"IVA","percentage":"16.00","description":"","type":"IVA"}],"total":11600}]}'
     http_version: 
-  recorded_at: Thu, 27 Oct 2016 22:18:11 GMT
+  recorded_at: Fri, 28 Oct 2016 20:06:29 GMT
 recorded_with: VCR 3.0.3
