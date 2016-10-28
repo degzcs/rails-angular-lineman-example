@@ -1,8 +1,8 @@
 module Alegra
   module Credits
     class CreateInvoice
+      attr_accessor :response, :date
       attr_reader :client
-      attr_accessor :response
 
       def initialize(options={})
         @response = {}
@@ -16,13 +16,14 @@ module Alegra
       #
       def call(options={})
         validate_options(options)
+        @date = options[:credit_billing].payment_date || Time.now
         ActiveRecord::Base.transaction do
           invoice = client.invoices.create(invoice_mapping(options))
-          @response[:success] = options[:credit_billing].update_attributes(invoiced: true, alegra_id: invoice[:id])
+          @response[:success] = options[:credit_billing].update_attributes(invoiced: true, alegra_id: invoice[:id], payment_date: @date)
           @response
         end
         rescue Exception => e
-          options[:credit_billing].update_attributes(invoiced: true)
+          options[:credit_billing].update_attributes(invoiced: false)
           @response[:errors] << e.message
           @response
       end
@@ -53,8 +54,8 @@ module Alegra
       # @return [ Hash ]
       def invoice_mapping(options)
         {
-          date: options[:credit_billing].payment_date.to_s,
-          due_date: options[:credit_billing].payment_date.to_s,
+          date: @date,
+          due_date: @date,
           client: options[:credit_billing].user.alegra_id,
           items: items_from(options),
           # account_number: options[:trader_user].&account_number,
