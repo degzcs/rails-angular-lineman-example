@@ -20,7 +20,8 @@ class CreditBilling::Acceptance
     ActiveRecord::Base.transaction do
       update_credit_billings_with!(new_credit_billing_values)
       update_credits_buyer_with(current_available_credits, credit_billing.quantity) if credit_billing.reload.paid?
-      # TODO: Update invoice to paid. I think the invoice should be changed to open in Alegra at this point
+      service = Alegra::Credits::UpdateInvoice.new
+      @response = service.call(credit_billing: credit_billing)
     end
     rescue Exception => e
       @response[:errors] << e.message
