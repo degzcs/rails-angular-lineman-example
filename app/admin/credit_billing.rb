@@ -47,11 +47,16 @@ ActiveAdmin.register CreditBilling do
     @credit_billing = CreditBilling.find(params[:id])
   end
 
-  # sends an email to the user with the information about the credit billing
+  # Sends an email to the user with the information about the credit billing
   member_action :send_billing do
     credit_billing = CreditBilling.find(params[:id])
-    # TODO: call alegra service to send email here.
-    redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+    service = Alegra::Credits::SendEmailInvoice.new
+    response = service.call(credit_billing: credit_billing)
+    if response[:success]
+      redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+    else
+      render :back, notice: response[:errors].join(" ")
+    end
   end
 
   # renders a template with info that will be sended to the user about the credit billing

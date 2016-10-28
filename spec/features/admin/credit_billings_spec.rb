@@ -49,19 +49,19 @@ describe 'all test the credit_billings view', :js do
   end
 
   it 'should send the invoice  by email' do
-     # VCR.use_cassette('alegra_send_credits_invoice_by_email_as_admin') do
-      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
+      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000, alegra_id: 1)
       visit '/admin/credit_billings'
       within("#credit_billing_#{credit_billing.id}") do
         click_on('Actions')
         click_on('Facturar')
       end
       expect(page).to have_content 'Datos de Transaccion'
-      click_link('Enviar Factura a usuario')
-      # click_link('Cancelar Envio de factura')
-      page.execute_script 'window.confirm = function () { return true }'
+      VCR.use_cassette('alegra_send_credits_invoice_by_email_as_admin') do
+        click_link('Enviar Factura a usuario')
+        # click_link('Cancelar Envio de factura')
+        page.execute_script 'window.confirm = function () { return true }'
+      end
       expect(page).to have_content "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
-    # end
   end
 
   it 'should mark the invoice as paid out' do
