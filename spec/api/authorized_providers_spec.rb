@@ -166,6 +166,28 @@ describe 'AuthorizedProviders', type: :request do
           expect(user.profile.audits.last.comment).to be_nil
         end
       end
+
+      context 'PUT' do
+        it '/update_basic_info/:id' do
+          user = create :user, :with_profile, :with_authorized_provider_role, :with_personal_rucom
+          token = user.create_token
+          params = {
+            'authorized_provider' => {
+              'email' => 'amado@gmail.com'
+            },
+            'profile' => {
+              'address' => 'calle 45',
+              'phone_number' => '3456789'
+            }
+          }
+          put "/api/v1/authorized_providers/update_basic_info/#{user.id}", params, 'Authorization' => "Barer #{token}"
+          res = JSON.parse(response.body)
+          expect(response.status).to eq 200
+          expect(res['email']).to match params['authorized_provider']['email']
+          expect(res['address']).to match params['profile']['address']
+          expect(res['phone_number']).to match params['profile']['phone_number']
+        end
+      end
     end
   end
 end
