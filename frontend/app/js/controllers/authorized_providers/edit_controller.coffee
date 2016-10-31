@@ -1,5 +1,5 @@
 
-angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProvider, LocationService, $mdDialog) ->
+angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProviderService, LocationService, $mdDialog) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -20,7 +20,7 @@ angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, 
   $scope.cityDisabled = true
   # ********************************************************************************#
   if $stateParams.id
-    AuthorizedProvider.get($stateParams.id).success (data)->
+    AuthorizedProviderService.get($stateParams.id).success (data)->
       $scope.showLoading = false
       $scope.currentAuthorizedProvider = data
 
@@ -95,15 +95,14 @@ angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, 
     return
 
   $scope.save = ->
-    AuthorizedProvider.model.phone_number = $scope.currentAuthorizedProvider.phone_number
-    AuthorizedProvider.model.email = $scope.currentAuthorizedProvider.email
-    AuthorizedProvider.model.address = $scope.currentAuthorizedProvider.address
-
-    AuthorizedProvider.update($scope.currentAuthorizedProvider.id).success (data)->
+    AuthorizedProviderService.model.phone_number = $scope.currentAuthorizedProvider.phone_number
+    AuthorizedProviderService.model.email = $scope.currentAuthorizedProvider.email
+    AuthorizedProviderService.model.address = $scope.currentAuthorizedProvider.address
+    # window.scope = $scope
+    AuthorizedProviderService.updateBasicInfo($scope.currentAuthorizedProvider.id).success (data)->
       #$mdDialog.cancel()
       $state.go "show_authorized_provider", {id: $scope.currentAuthorizedProvider.id}
       $mdDialog.show $mdDialog.alert().title('Mensaje').content('Información actualizada correctamente.').ariaLabel('Alert Dialog Demo').ok('ok!')
-
     return
 
   $scope.back = ->
