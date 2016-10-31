@@ -219,7 +219,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   # and take action ver the viwe flows.
   $scope.validatePersonalFields = ()->
     res = $scope.isEmptyOrUndefinedAnyField()
-    if res == true
+    if res == false
       $scope.validPersonalData = false
       $scope.tabIndex.selectedIndex = 0
       $scope.btnContinue = false
@@ -233,7 +233,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   # otherwise returns FLASE
   # @return [ Boolean ]
   $scope.isEmptyOrUndefinedAnyField = ()->
-    isOk = null
+    isOk = false
     frm = $scope.currentAuthorizedProvider
     if frm.first_name == '' || frm.first_name == undefined
     else if frm.last_name == '' || frm.last_name == undefined
@@ -243,8 +243,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else if frm.document_number == '' || frm.document_number == undefined
     else if frm.phone_number == '' || frm.phone_number == undefined
     else if frm.address == '' || frm.address == undefined
-    else if frm.address == '' || frm.address == undefined
-    else if frm.profile_photo == '' || frm.profile_photo == undefined
+    else if frm.photo_file == '' || frm.photo_file == undefined
     else
       isOk = true
     return isOk
