@@ -164,7 +164,7 @@ module V1
            ActiveRecord::Base.transaction do
               authorized_provider.roles << Role.find_by(name: 'authorized_provider') unless authorized_provider.authorized_provider?
               audit_comment = "Updated from API Request by ID: #{current_user.id}"
-              
+
               ::User.audit_as(current_user) do
                 authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
                 authorized_provider.update_attributes(
@@ -176,6 +176,39 @@ module V1
             end
             authorized_provider.rucom.update_attributes(formatted_params[:rucom])
             if authorized_provider.save
+              present authorized_provider, with: V1::Entities::AuthorizedProvider
+            else
+              error!(authorized_provider.errors, 400)
+            end
+          end
+        end
+
+        desc 'update basic informationn Autorized Provider',
+             entity: V1::Entities::AuthorizedProvider,
+             notes: <<-NOTE
+                          ### Description
+                          It updates an Autorized Provider
+                     NOTE
+
+        params do
+          requires :id
+          use :authorized_provider
+          use :profile
+        end
+        put '/update_basic_info/:id', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter in entry'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found']
+        ] do
+          content_type 'text/json'
+          authorized_provider = ::User.find(params[:id])
+          if authorized_provider.present?
+            ActiveRecord::Base.transaction do
+              authorized_provider.update_attributes(email: params[:authorized_provider][:email])
+              authorized_provider.profile.update_attributes(address: params[:profile][:address], phone_number: params[:profile][:phone_number])
+            end
+            if authorized_provider.save(validate: false)
               present authorized_provider, with: V1::Entities::AuthorizedProvider
             else
               error!(authorized_provider.errors, 400)
