@@ -72,18 +72,20 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         signaturePicture: ''
       }
 
-      blobUtil.imgSrcToBlob(filesToUpload.photoFile).then((photoFile) ->
-        blobFiles.photoFile = photoFile
-        blobFiles.photoFile.name = 'photo_file.png'
+      blobUtil.imgSrcToBlob(filesToUpload.photoFile).then( (photoFileBlob) ->
+        photoFileBlob.name = 'photo_file.png'
         # Other Files
         if service.model.use_wacom_device == false
-          blobFiles.signaturePicture = photoFile
-          blobFiles.signaturePicture.name = 'signature_picture.png'
+          signaturePictureBlob = service.clone(photoFileBlob)
+          signaturePictureBlob.name = 'signature_picture.png'
+          blobFiles.photoFile = photoFileBlob
+          blobFiles.signaturePicture = signaturePictureBlob
           convertAndUploadFiles(filesToUpload, blobFiles)
         else
-          blobUtil.imgSrcToBlob(filesToUpload.signaturePicture).then((signaturePicture) ->
-            blobFiles.signaturePicture = signaturePicture
-            blobFiles.signaturePicture.name = 'signature_picture.png'
+          blobUtil.imgSrcToBlob(filesToUpload.signaturePicture).then( (signaturePictureBlob) ->
+            signaturePictureBlob.name = 'signature_picture.png'
+            blobFiles.signaturePicture = signaturePictureBlob
+            blobFiles.photoFile = photoFileBlob
             convertAndUploadFiles(filesToUpload, blobFiles)
           ).catch (err) ->
             console.log '[SERVICE-ERROR]: image signature failed to load: ' + err
@@ -136,22 +138,6 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           miningAuthorizationReader.readAsBinaryString miningAuthorizationFileCopy[0]
           filesRemaining++
         #-------------------------------------------------------------------------
-        # signature_picture file
-        if filesToUpload.signaturePicture
-          signaturePictureFileCopy = filesToUpload.signaturePicture
-          signaturePictureReader = new FileReader
-
-          signaturePictureReader.onload = ->
-            signaturePictureArray = createBinaryFile(@result)
-            blobFiles.signaturePicture = createBlobFile(signaturePictureArray, 'signature_picture', signaturePictureFileCopy[0])
-            --filesRemaining
-            if filesRemaining <= 0
-              uploadFiles(blobFiles)
-            return
-
-          signaturePictureReader.readAsBinaryString signaturePictureFileCopy[0]
-          filesRemaining++
-
         #Files Upload
         if filesRemaining <= 0
           uploadFiles(blobFiles)
@@ -191,7 +177,6 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 #------------------------------------------------------------
       files = []
       uploadFiles= (blobFiles) ->
-        console.log blobFiles.signaturePicture
         if blobFiles.photoFile
           files.push blobFiles.photoFile
         if blobFiles.idDocumentFile
@@ -323,5 +308,16 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
                   'authorized_provider[email]': service.model.email,
                   'profile[phone_number]': service.model.phone_number,
                   'profile[address]': service.model.address
+
+
+    # function for clone Blobs objects this avoid the references object issue
+    clone: (obj) ->
+      if null == obj or 'object' != typeof obj
+       return obj
+      copy = new Blob
+      for attr of obj
+       if obj.hasOwnProperty(attr)
+         copy[attr] = obj[attr]
+      copy
 
   return service
