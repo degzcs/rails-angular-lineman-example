@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
+angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $document, $stateParams, $window, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -9,6 +9,8 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.validPersonalData = false
   $scope.tabIndex =
     selectedIndex: 0
+  rawDataFromDocument = []
+  dataFromDocument = []
 
   $scope.sendingPost = false
 
@@ -17,50 +19,51 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   # **************************************************************************
   # Fill up form with retrieved values
-
-  $scope.currentAuthorizedProvider = AuthorizedProviderService.model
+  $scope.currentAuthorizedProvider = AuthorizedProviderService.restoreModel()
   $scope.showLoading = false
 
-  $scope.arrayValueid = ""
-
-
   #--------------- scanner barcode----------------
-  chars = [];
-  button = document.querySelector('btn-cap')
-
   
   $scope.initBarcodeScanner = ->
-    console.log "adentro"
     window.onkeydown = (e) ->
       if !e.metaKey
-        console.log e.keyCode
         if e.keyCode != 12 and e.keyCode != 187 and e.keyCode != 16 and e.keyCode != 9 and e.keyCode != 13
-          chars.push String.fromCharCode(e.keyCode)
+          rawDataFromDocument.push String.fromCharCode(e.keyCode)
         else
           e.preventDefault()
-          chars.push ','
-    #console.log(chars.join().toString());
+          rawDataFromDocument.push ','
+
+  # TODO: convert the above function into an indepent function in order to bind it or unbnd it.
   
-  
-  $scope.capt = ->
-    console.log "entro"
-    $scope.initBarcodeScanner
-    arr = chars.join('').replace(/,,/g, ',')
-    arrayFinal = arr.split(",")
-    console.log arrayFinal
-    $scope.arrayValueid = arrayFinal[1].toString()
-    console.log $scope.arrayValueid
-    if $scope.currentAuthorizedProvider.document_number != $scope.arrayValueid
-      alert "Cedula incorrecta"
+  $scope.copyDataFromIdDocument = ->
+    rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
+    dataFromDocument = rawDataFromDocumentString.split(",")
+    idDocumentNumber = dataFromDocument[1].toString()
+    validateIdDocumentNumber(idDocumentNumber)
+    firstLastName = dataFromDocument[2].toString() # TODO: made and object to map this info
+    computeNameFrom(firstLastName)
+    #$scope.currentAuthorizedProvider.first_name = dataFromDocument[2] 
+     # alert "apellido incorrecta"
+      #$state.go 'index_authorized_provider'
+    #else
+     # console.log "no hay problema"
+
+  # TODO: made function to remove black values from rawDataFromDocument
+  validateIdDocumentNumber = (idDocumentNumber) -> 
+    if $scope.currentAuthorizedProvider.document_number != idDocumentNumber
+      alert "Cedula incorrecta" # TODO: put standard popup mdDilaog here
       $state.go 'index_authorized_provider'
     else
-      console.log "no hay problema"
-    console.log $scope.currentAuthorizedProvider.document_number
-    if $scope.currentAuthorizedProvider.last_name != arrayFinal[2] 
-      alert "apellido incorrecta"
-      $state.go 'index_authorized_provider'
-    else
-      console.log "no hay problema"
+      console.log "no hay problema" # TODO: put standard popup mdDilaog here
+
+  computeNameFrom = (firstLastName) ->
+    fullNameArray = $scope.currentAuthorizedProvider.fullName.toUpperCase().split(' ')
+    position = fullNameArray.indexOf(firstLastName.toUpperCase())
+    console.log position
+    firstName = fullNameArray.slice(0, position).join(' ')
+    lastName = fullNameArray.slice(position).join(' ')
+    $scope.currentAuthorizedProvider.first_name = firstName
+    $scope.currentAuthorizedProvider.last_name = lastName
 
 
     return

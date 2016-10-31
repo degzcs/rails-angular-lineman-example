@@ -23,6 +23,8 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
       .success((data, status, headers) ->
         $scope.showLoading = false
         AuthorizedProviderService.model = data
+        AuthorizedProviderService.model.fullName = data.first_name # NOTE: the rucom save in the first name the full name of a persona, because it does not know which untill the next step that we can compare with the ID docuement data
+        AuthorizedProviderService.model.first_name = '' # TODO: learn how to use correctly remove function.
         AuthorizedProviderService.buy_agreetment().success( (data) ->
           AuthorizedProviderService.model.buy_agreetment = data.buy_agreetment
           AuthorizedProviderService.saveModel()
