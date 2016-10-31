@@ -86,42 +86,22 @@ describe  User, type: :model do
 
       @users_with_any_rucom = create_list(:user, 5, :with_personal_rucom, :with_profile)
       @external_traders = create_list(:user, 6, :with_personal_rucom, password: nil, password_confirmation: nil)
-
-      @clients_with_fake_personal_rucom = create_list(:client_with_fake_personal_rucom, 3)
-      @clients_with_fake_rucom = create_list(:client_with_fake_rucom, 6)
-
       # add credits to buy gold
       @users.last.profile.update_attribute(:available_credits, 2000)
       @users_with_any_rucom.last.profile.update_attribute(:available_credits, 2000)
     end
 
-    it 'should return all users except with authorized_provider user role' do
+    xit 'should return all users except with authorized_provider user role' do
       expect(User.not_authorize_providers_users.count).to eq [@user_with_trader_role, @user_with_final_client_role, @user_with_transporter_role].flatten.compact.uniq.count
-    end
-
-    xit 'should return all system users, it means, all uses that be logged in the platform (This scope has to be upgraded based on the new specifications)' do
-      expect(User.system_users.count).to eq @users.count
-    end
-
-    xit 'should return all extenal users, they can have one of the next personal_rucom or company rucom' do
-      expect(User.users.count).to eq [@users_with_any_rucom, @external_traders].flatten.compact.uniq.count
     end
 
     it 'should select all user that can provider gold (providers)' do
       expect(User.providers.count).to eq 2
     end
 
-    xit 'should select all users with fake rucom (This scope has to be removed asap!!!)' do
-      expect(User.clients_with_fake_rucom.count).to be [@clients_with_fake_personal_rucom, @clients_with_fake_rucom].flatten.compact.uniq.count
-    end
-
     xit 'should select all users that are comercializadores' do
       # NOTE:we have to ask to the client if all users that can register in the platform have associated (by their company) to one rucom which its provider is the type 'Comercializador'
       expect(User.comercializadores.count).to be 5
-    end
-
-    xit 'should select all users called clients (This scope has to has to be changed in line with the new requirements)' do
-      expect(User.clients.count).to eq  [@users, @comercializadores, @clients_with_fake_personal_rucom, @clients_with_fake_rucom].flatten.compact.uniq.count
     end
   end
 

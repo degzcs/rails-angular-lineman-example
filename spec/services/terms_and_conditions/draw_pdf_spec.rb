@@ -9,6 +9,9 @@ describe TermsAndConditions::DrawPdf do
       @seller_presenter = UserPresenter.new(seller, nil)
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
       @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
+      settings = Settings.instance
+      settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16, fixed_sale_agreetment: "fixed sale agreetment text", buy_agreetment: "habeas agreetment text" }
+      settings.save!
     end
     it 'should check the consistency of the document' do
       expected_hash = 'e3cbdf21b64970ed6401e0be0c269ea993aaf4dadadd004f6d2a3164ba55c784'

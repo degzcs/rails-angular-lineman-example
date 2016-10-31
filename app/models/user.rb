@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   scope :find_by_document_number, -> (document_number){ joins(:profile).where("profiles.document_number LIKE :document_number",
               { document_number: "%#{ document_number.gsub('%', '\%').gsub('_', '\_') }%" }) }
   # static scope
-  scope :not_authorize_providers_users, -> { joins(:roles).where('roles.name <> ? ', 'authorized_provider') }
+  # scope :not_authorize_providers_users, -> { joins(:roles).where('roles.name <> ? ', 'authorized_provider') }
   scope :authorized_providers, -> {joins(:roles).where('roles.name = ?', 'authorized_provider')}
   # TODO: this name no make sense here. Update it asap!!!
   scope :providers, -> { joins(:profile).where('profiles.available_credits > ?', 0) }
