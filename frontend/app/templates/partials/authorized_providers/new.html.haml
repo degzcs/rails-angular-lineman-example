@@ -13,7 +13,7 @@
             %md-input-container.row{"layout-align" => "center center"}
               .photo{:style => "max-width:150px;"}
                 %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{currentAuthorizedProvider.photo_file.url || 'img/default-user.png'}}","ng-model" => "currentAuthorizedProvider.photo_file", "check-image" => ''}
+                  %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{currentAuthorizedProvider.photo_file || 'img/default-user.png'}}", "ng-model" => "currentAuthorizedProvider.photo_file", required: ""}
                   /%md-tooltip{'md-direction'=> 'bottom'}
                   /  Tomar Foto
           %fieldset.standard.fieldset-information{:flex => ""}
@@ -44,7 +44,7 @@
                 /  %span.ion-android-checkmark-circle &nbsp;válido
               %md-input-container{:flex => ""}
                 %label Tipo de Proveedor
-                %input{:readonly => true,:name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
+                %input{:readonly => true, :name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
             %md-content.md-padding{:layout => "", "layout-sm" => "column"}
               %md-input-container{:flex => ""}
                 %label Teléfono
@@ -78,7 +78,7 @@
               %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar
               %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
               %md-button.md-primary.btn-cap{"ng-click" => "copyDataFromIdDocument()"} Capturar
-              %md-switch.md-primary{ "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"} 
+              %md-switch.md-primary{ "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"}
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
 
       /****************************   DOCUMENTATION ***********************************/
