@@ -77,8 +77,8 @@
             .rucom-selection
               %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar
               %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
-              %md-button.md-primary{"ng-click" => "initBarcodeScanner()"} Iniciar Lector de firmar
               %md-button.md-primary.btn-cap{"ng-click" => "copyDataFromIdDocument()"} Capturar
+              %md-switch.md-primary{ "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"} 
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
 
       /****************************   DOCUMENTATION ***********************************/

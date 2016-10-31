@@ -21,6 +21,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   # Fill up form with retrieved values
   $scope.currentAuthorizedProvider = AuthorizedProviderService.restoreModel()
   $scope.showLoading = false
+  $scope.toggleOff = false 
 
   #--------------- scanner barcode----------------
   
@@ -32,6 +33,15 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
         else
           e.preventDefault()
           rawDataFromDocument.push ','
+
+ #------------- Switch variables----------------
+
+  $scope.onChange = (toggleState) ->
+    if toggleState == true
+      $scope.initBarcodeScanner()
+    else 
+      console.log "false"
+      false
 
   # TODO: convert the above function into an indepent function in order to bind it or unbnd it.
   
