@@ -27,7 +27,7 @@ describe 'all test the roles view', :js do
     expected_response = {
       name: 'RolPrueba'
     }
-    role = Role.create(name: 'joyero')
+    role = Role.find_by(name: 'transporter')
     visit '/admin/roles/'
     within("#role_#{role.id}") do
       click_link('Edit')
