@@ -45,7 +45,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
 
       ###### Convert data:image base 64 to Blob and use the callback to send the request to save the purchase in DB
       blobUtil.imgSrcToBlob(purchase.seller_picture).then( (seller_picture_blob) ->
-        seller_picture_blob.name= 'seller_picture.png'
+        seller_picture_blob.name = 'seller_picture.png'
         signature_picture_blob = ''
 
         if purchase.use_wacom_device == false
