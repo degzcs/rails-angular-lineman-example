@@ -6,7 +6,7 @@
         %div{layout: 'row'}
           .photo-container{flex: '30'}
             %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.url}}"}
-            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_external_user({ id: currentAuthorizedProvider.id })"} Editar Información
+            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_authorized_provider({ id: currentAuthorizedProvider.id })"} Editar Información
 
           .fields-container{flex: '70'}
             %h2{style: "text-align: left;"}
