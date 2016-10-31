@@ -23,7 +23,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         rucom_number: ''
 
     #
-    # Get the buy agreetment from settings             
+    # Get the buy agreetment from settings
     #
     buy_agreetment: (page) ->
       if page
@@ -34,7 +34,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       else
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment" 
+                   url: "api/v1/agreetments/buy_agreetment"
 
 # -----------------------------------------------------------
      all: (per_page,page)->
@@ -76,7 +76,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         blobFiles.photoFile = photoFile
         blobFiles.photoFile.name = 'photo_file.png'
         # Other Files
-        if service.use_wacom_device == false
+        if service.model.use_wacom_device == false
           blobFiles.signaturePicture = photoFile
           blobFiles.signaturePicture.name = 'signature_picture.png'
           convertAndUploadFiles(filesToUpload, blobFiles)
@@ -91,7 +91,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
         console.log '[SERVICE-ERROR]: image photo failed to load: ' + err
 #------------------------------------------------------------
       #
-      # Funtion to convert the files 
+      # Funtion to convert the files
       #
       convertAndUploadFiles= (filesToUpload, blobFiles) ->
         # Id Document File
@@ -314,5 +314,14 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           chamber_of_commerce_file: ''
           rut_file: ''
           signature_picture: ''
+
+    updateBasicInfo: (id)->
+      return $http
+                url: '/api/v1/authorized_providers/update_basic_info/' + id
+                method: 'PUT'
+                params:
+                  'authorized_provider[email]': service.model.email,
+                  'profile[phone_number]': service.model.phone_number,
+                  'profile[address]': service.model.address
 
   return service
