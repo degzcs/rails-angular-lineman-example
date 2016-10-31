@@ -6,7 +6,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.btnContinue = false
   # *********************************** VARIABLES **********************************#
   $scope.currentAuthorizedProvider = null
-
   $scope.validPersonalData = false
   $scope.tabIndex =
     selectedIndex: 0
@@ -21,6 +20,57 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.currentAuthorizedProvider = AuthorizedProviderService.model
   $scope.showLoading = false
+
+  $scope.arrayValueid = ""
+
+
+  #--------------- scanner barcode----------------
+  chars = [];
+  button = document.querySelector('btn-cap')
+
+  
+  $scope.initBarcodeScanner = ->
+    console.log "adentro"
+    window.onkeydown = (e) ->
+      if !e.metaKey
+        console.log e.keyCode
+        if e.keyCode != 12 and e.keyCode != 187 and e.keyCode != 16 and e.keyCode != 9 and e.keyCode != 13
+          chars.push String.fromCharCode(e.keyCode)
+        else
+          e.preventDefault()
+          chars.push ','
+    #console.log(chars.join().toString());
+  
+  
+  $scope.capt = ->
+    console.log "entro"
+    $scope.initBarcodeScanner
+    arr = chars.join('').replace(/,,/g, ',')
+    arrayFinal = arr.split(",")
+    console.log arrayFinal
+    $scope.arrayValueid = arrayFinal[1].toString()
+    console.log $scope.arrayValueid
+    if $scope.currentAuthorizedProvider.document_number != $scope.arrayValueid
+      alert "Cedula incorrecta"
+      $state.go 'index_authorized_provider'
+    else
+      console.log "no hay problema"
+    console.log $scope.currentAuthorizedProvider.document_number
+    if $scope.currentAuthorizedProvider.last_name != arrayFinal[2] 
+      alert "apellido incorrecta"
+      $state.go 'index_authorized_provider'
+    else
+      console.log "no hay problema"
+
+
+    return
+
+    #$scope.$watch 'currentAuthorizedProvider.document_number', (oldVal, newVal) ->
+     # if oldVal and newVal != oldVal
+      #  console.log "alerta!"
+      #else 
+       # console.log "no hay problema"
+
 
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the AuthorizedProviderService model to check for pendind scaned files
@@ -221,24 +271,5 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.isSet = (selectedValue) ->
     return $scope.setTab == selectedValue
 
-    pressed = false
-    chars = []
-    $(window).keypress (e) ->
-      if e.which >= 8 and e.which <= 57
-        chars.push String.fromCharCode(e.which)
-      console.log e.which + ':' + chars.join('|')
-      if pressed == false
-        setTimeout (->
-          if chars.length >= 10
-            barcode = chars.join('')
-            console.log 'Barcode Scanned: ' + barcode
-            # assign value to some input (or do whatever you want)
-            # $('#barcode').val barcode
-          chars = []
-          pressed = false
-          return
-        ), 500
-      pressed = true
-      return
-    return
+    
  
