@@ -274,4 +274,41 @@ describe  User, type: :model do
       end
     end
   end
+
+  context 'Micromachine' do
+    let(:user) { create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero') }
+
+    states = {
+      initialized: 'initialized',
+      completed: 'completed',
+      failure: 'failure'
+    }
+
+    it 'has all the user states required' do
+      expect(user.status.states.count).to eq(states.count)
+      user.status.states.each do |state|
+        expect(state).to eq(states[state.to_sym])
+      end
+    end
+
+    it 'sets as initial state the \'initialized\' value in transaction_state field' do
+      expect(user.registration_state).to eq('initialized')
+    end
+
+    it 'sets as completed value in registration_state field' do
+      user.complete!
+      expect(user.status.state).to eq('completed')
+      user.save
+      expect(user.registration_state).to eq('completed')
+      expect(user.completed?).to eq(true)
+    end
+
+    it 'sets as failure value in registration_state field' do
+      user.crash!
+      expect(user.status.state).to eq('failure')
+      user.save
+      expect(user.registration_state).to eq('failure')
+      expect(user.failure?).to eq(true)
+    end
+  end
 end
