@@ -32,7 +32,7 @@
                   %div{"ng-message" => "required"} Este campo es requerido.
               %md-input-container{:flex => ""}
                 %label Número de Identificación
-                %input{:readonly => "true", :name => "document_number", "ng-model" => "currentAuthorizedProvider.document_number", :required => "", :ng-value => "content.document_number" }
+                %input{:readonly => "true", :name => "document_number", "ng-model" => "currentAuthorizedProvider.document_number", :required => "", :ng-value => "content.document_number || arrayValueid" }
                 %div{"ng-messages" => "providerEditionForm.document_number.$error"}
                   %div{"ng-message" => "required"} Este campo es requerido.
 
@@ -77,6 +77,8 @@
             .rucom-selection
               %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar
               %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
+              %md-button.md-primary{"ng-click" => "initBarcodeScanner()"} Iniciar Lector de firmar
+              %md-button.md-primary.btn-cap{"ng-click" => "capt()"} Capturar
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
 
       /****************************   DOCUMENTATION ***********************************/
