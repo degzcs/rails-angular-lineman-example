@@ -71,6 +71,7 @@ module V1
       # expose :access_token, documentation: { type: 'string', desc: 'authentication token', example: 'sjahdkfjhasdfhaskdj' } do |purchase, _options|
       # sale.user.create_token
       # end
+      expose :transaction_state, documentation: { type: 'string', desc: 'sale state', example: 'pending, dispatched, paid, canceled, approved' }
     end
   end
 end

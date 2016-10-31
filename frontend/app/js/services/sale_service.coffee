@@ -19,6 +19,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       totalAmount: null
       fixed_sale_agreetment: null
       weightedLaw: null
+      transaction_state: null
 
 
     create: (sale_params, gold_batch_params, selectedPurchases)->
@@ -64,6 +65,12 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
         return $http
                  method: "GET"
                  url: "api/v1/sales"
+
+    #
+    # Get all sales  by transaction state
+    #
+    get_all_by_state: (state) ->
+      return $http.get('api/v1/sales/'+state)
 
     #
     #Get all sales

@@ -25,6 +25,10 @@ module V1
           optional :page, type: Integer
           optional :per_page, type: Integer
         end
+
+        params :state do
+          requires :state, type: String, desc: 'State string to transactions type sale example: pending, canceled, approved'
+        end
       end
 
       rescue_from ::CanCan::AccessDenied do
@@ -188,6 +192,39 @@ module V1
           batches = legal_representative.sales.where(id: params[:id], type: 'sale').last.batches
           present batches, with: V1::Entities::SoldBatch
         end
+
+        #
+        # GET
+        #
+
+        desc 'returns all existent sale by state for the current user', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales by state paginated
+          NOTES
+        }
+
+        params do
+          use :pagination
+          use :state
+        end
+
+        get '/', http_codes: [
+          [200, 'Successful'],
+          [401, 'Unauthorized']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          state = params[:state].to_sym
+          legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          sales = legal_representative.sales.send(state).paginate(:page => page, :per_page => per_page)
+          header 'total_pages', sales.total_pages.to_s
+          present sales, with: V1::Entities::Sale
+        end
+
+
       end
     end
   end
