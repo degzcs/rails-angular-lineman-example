@@ -8,8 +8,13 @@ ActiveAdmin.register CreditBilling do
 
   member_action :update do
     @credit_billing = CreditBilling.find(params[:id])
-    @credit_billing.update_attributes(discount_percentage: permitted_params[:credit_billing][:discount_percentage])
-    redirect_to admin_credit_billings_path, notice: @credit_billing.errors.full_messages
+    response = @credit_billing.update_attributes(discount_percentage: permitted_params[:credit_billing][:discount_percentage])
+    message = if response
+      'Credit billing was successfully updated.'
+    else
+      @credit_billing.errors.full_messages
+    end
+    redirect_to admin_credit_billings_path, notice: message
   end
 
   # Updates a credit billing with paid to true, and add a new available_credit value to the user
