@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $stateParams, $window, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
+angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $document, $stateParams, $window, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -6,10 +6,11 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.btnContinue = false
   # *********************************** VARIABLES **********************************#
   $scope.currentAuthorizedProvider = null
-
   $scope.validPersonalData = false
   $scope.tabIndex =
     selectedIndex: 0
+  rawDataFromDocument = []
+  dataFromDocument = []
 
   $scope.sendingPost = false
 
@@ -18,9 +19,71 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   # **************************************************************************
   # Fill up form with retrieved values
-
-  $scope.currentAuthorizedProvider = AuthorizedProviderService.model
+  $scope.currentAuthorizedProvider = AuthorizedProviderService.restoreModel()
   $scope.showLoading = false
+  $scope.toggleOff = false 
+
+  #--------------- scanner barcode----------------
+  
+  $scope.initBarcodeScanner = ->
+    window.onkeydown = (e) ->
+      if !e.metaKey
+        if e.keyCode != 12 and e.keyCode != 187 and e.keyCode != 16 and e.keyCode != 9 and e.keyCode != 13
+          rawDataFromDocument.push String.fromCharCode(e.keyCode)
+        else
+          e.preventDefault()
+          rawDataFromDocument.push ','
+
+ #------------- Switch variables----------------
+
+  $scope.onChange = (toggleState) ->
+    if toggleState == true
+      $scope.initBarcodeScanner()
+    else 
+      console.log "false"
+      false
+
+  # TODO: convert the above function into an indepent function in order to bind it or unbnd it.
+  
+  $scope.copyDataFromIdDocument = ->
+    rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
+    dataFromDocument = rawDataFromDocumentString.split(",")
+    idDocumentNumber = dataFromDocument[1].toString()
+    validateIdDocumentNumber(idDocumentNumber)
+    firstLastName = dataFromDocument[2].toString() # TODO: made and object to map this info
+    computeNameFrom(firstLastName)
+    #$scope.currentAuthorizedProvider.first_name = dataFromDocument[2] 
+     # alert "apellido incorrecta"
+      #$state.go 'index_authorized_provider'
+    #else
+     # console.log "no hay problema"
+
+  # TODO: made function to remove black values from rawDataFromDocument
+  validateIdDocumentNumber = (idDocumentNumber) -> 
+    if $scope.currentAuthorizedProvider.document_number != idDocumentNumber
+      alert "Cedula incorrecta" # TODO: put standard popup mdDilaog here
+      $state.go 'index_authorized_provider'
+    else
+      console.log "no hay problema" # TODO: put standard popup mdDilaog here
+
+  computeNameFrom = (firstLastName) ->
+    fullNameArray = $scope.currentAuthorizedProvider.fullName.toUpperCase().split(' ')
+    position = fullNameArray.indexOf(firstLastName.toUpperCase())
+    console.log position
+    firstName = fullNameArray.slice(0, position).join(' ')
+    lastName = fullNameArray.slice(position).join(' ')
+    $scope.currentAuthorizedProvider.first_name = firstName
+    $scope.currentAuthorizedProvider.last_name = lastName
+
+
+    return
+
+    #$scope.$watch 'currentAuthorizedProvider.document_number', (oldVal, newVal) ->
+     # if oldVal and newVal != oldVal
+      #  console.log "alerta!"
+      #else 
+       # console.log "no hay problema"
+
 
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the AuthorizedProviderService model to check for pendind scaned files
@@ -220,3 +283,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   $scope.isSet = (selectedValue) ->
     return $scope.setTab == selectedValue
+
+    
+ 
