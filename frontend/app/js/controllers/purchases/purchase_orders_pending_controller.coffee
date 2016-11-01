@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseService, GoldBatchService,  SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
+angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseService, GoldBatchService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0 
@@ -37,8 +37,8 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   $scope.currentPage = 1
 # wacom device
   $scope.chkAgreetmentActive = false
-  $scope.saleService = SaleService.restoreModel()
-  
+  $scope.saleService = SaleService.restoreModel() || SaleService.model
+
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
@@ -65,22 +65,18 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     $scope.current_sale_id = null 
 
 
-# when click the button to see the buy agreetment
+# when click the button to see the fixed sale agreetment
   $scope.agreetment = (sale_id)->
     console.log 'sale_id = ' + sale_id
     $scope.current_sale_id = sale_id
-    SaleService.model.id = sale_id
-    console.log 'ingresa a buy_agreetment'
-    SaleService.buy_agreetment().success( (data) ->
+    SaleService.fixed_sale_agreetment().success( (data) ->
       $scope.saleService.fixed_sale_agreetment = data.fixed_sale_agreetment
       SaleService.model.fixed_sale_agreetment = data.fixed_sale_agreetment
-      console.log 'fixed_sale_agreetment data:'
-      console.log data
-
+      SaleService.model.id = $scope.current_sale_id
+      console.log 'SaleService.model'
+      console.log SaleService.model
       SaleService.saveModel()
-      console.log 'SaleService.model.id:'
-      console.log SaleService.model.id
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Acuerdo de Compra recuperado').ariaLabel('Alert Dialog ').ok('ok')
       $state.go 'new_purchase.orders_pending_agreetment', { id: SaleService.model.id }
     )
     .error((error)->
@@ -97,16 +93,39 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     return res
 
   $scope.agreeOrCancel = (transition)->
-    console.log 'transition: '
-    console.log transition
-    console.log 'sale id:'
+    console.log '$scope.saleService.id'
     console.log $scope.saleService.id
-    SaleService.trigger_transition($scope.saleService.id, transition).success( (data) ->
-      console.log 'sale transaction_state:'
-      console.log  data
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Orden Actualizada Exitosamente!').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
+    if transition == 'cancel!' || 'agree!'
+      console.log 'can_exec_transition: ' + can_exec_transition()
+      if can_exec_transition()
+        if transition == 'cancel!'
+          confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
+          $mdDialog.show(confirm).then (->
+            exec_transition(transition)
+            $state.go 'new_purchase.orders_pending'
+          ), ->
+            console.log 'You decided don\'t change the order state to canceled.'
+            return
+        else
+          exec_transition(transition)
+      else
+        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
+#
+# This funtion executes the method to call the sale end-point called transition trought the SaleService
+#
+  exec_transition = (transition_name)->
+    SaleService.trigger_transition($scope.saleService.id, transition_name).success( (data) ->
+      $scope.saleService.transaction_state = data.transaction_state
+      console.log '$scope.saleService.transaction_state: ' + $scope.saleService.transaction_state
+      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Ejecución exitosa!').content('Orden Actualizada Exitosamente!').ariaLabel('Alert Dialog ').ok('ok')
     )
     .error((error)->
       $scope.showLoading = false
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
     )
+ 
+  can_exec_transition = ->
+    if  $scope.saleService.transaction_state == 'canceled' || $scope.saleService.transaction_state == 'approved'
+      return false
+    else
+      return true

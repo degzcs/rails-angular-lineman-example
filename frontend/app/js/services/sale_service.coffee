@@ -85,11 +85,11 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     #
     # Get the buy agreetment from settings             
     #
-    buy_agreetment: (page) ->
+    fixed_sale_agreetment: (page) ->
       if page
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment"
+                   url: "api/v1/agreetments/fixed_sale"
                    params: page: page
       else
         return $http
@@ -110,9 +110,9 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     restoreModel: ->
       if sessionStorage.saleService != null
         service.model = angular.fromJson(sessionStorage.saleService)
-        service.model
+        return service.model
       else
-        service.model
+        return service.model
 
 
     clearModel: ->
