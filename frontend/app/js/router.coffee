@@ -399,6 +399,31 @@
         deferred.promise
   )
 
+  .state("new_purchase.orders_pending_agreetment",
+    url: "/purchases/orders_pending/agreetment",
+    ncyBreadcrumb:
+      label: 'Ordenes de Compra Pendientes'
+    views:
+      'content':
+        templateUrl: "partials/purchases/orders_pending_agreetment.html"
+        controller: "PurchaseOrdersPendingCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
 
   .state("new_purchase",
     url: "/purchases/new",

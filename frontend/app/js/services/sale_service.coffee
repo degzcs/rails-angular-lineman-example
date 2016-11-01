@@ -20,6 +20,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       fixed_sale_agreetment: null
       weightedLaw: null
       transaction_state: null
+      use_wacom_device: true
 
 
     create: (sale_params, gold_batch_params, selectedPurchases)->
@@ -70,7 +71,31 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     # Get all sales  by transaction state
     #
     get_all_by_state: (state) ->
-      return $http.get('api/v1/sales/'+state)
+      return $http.get('api/v1/sales/by_state/'+state)
+
+    #
+    # Trigger a transaction on transaction state field by the transition
+    #
+    trigger_transition: (id, transition) ->
+      return $http
+                  method: 'GET'
+                  url: 'api/v1/sales/'+id+'/transition'
+                  params: transition: transition
+
+    #
+    # Get the buy agreetment from settings             
+    #
+    buy_agreetment: (page) ->
+      if page
+        return $http
+                   method: "GET"
+                   url: "api/v1/agreetments/buy_agreetment"
+                   params: page: page
+      else
+        return $http
+                   method: "GET"
+                   url: "api/v1/agreetments/buy_agreetment" 
+
 
     #
     #Get all sales
@@ -78,14 +103,40 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     get_list: (ids)->
       return $http.get('api/v1/sales', params:
                 "sales_list[]": ids)
-    #setSaleInfo: function(sale_info){
-    #  sessionStorage.setItem('saleInfo',JSON.stringify(sale_info));
-    #  console.log(JSON.parse(sessionStorage.getItem('saleInfo')));
-    #},
-    #getSaleInfo: function(){
-    #  sale_info =JSON.parse(sessionStorage.getItem('saleInfo'));
-    #  return sale_info;
-    #}
+    
+    saveModel: ->
+      sessionStorage.saleService = angular.toJson(service.model)
+
+    restoreModel: ->
+      if sessionStorage.saleService != null
+        service.model = angular.fromJson(sessionStorage.saleService)
+        service.model
+      else
+        service.model
+
+
+    clearModel: ->
+      sessionStorage.saleService = null
+      service.model =
+        id: null
+        courier: null
+        buyer: null
+        user_id: null
+        gold_batch_id: null
+        code: null
+        price: null
+        purchase_files_collection: null
+        shipment: null
+        proof_of_sale: null
+        barcode_html: null
+        selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
+        associatedPurchases: null
+        totalAmount: null
+        fixed_sale_agreetment: null
+        weightedLaw: null
+        transaction_state: null
+        use_wacom_device: true
+
   #
   # Return
   #
