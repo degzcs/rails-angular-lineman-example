@@ -44,14 +44,13 @@ describe 'Purchase', type: :request do
             'gold_batch' => {
               'grams' => 1.5,
               'grade' => 1
-            },
+            },  
             'trazoro' => false
           }
 
           expected_files = {
             'seller_picture' => 'seller_picture.png'
           }
-
           post '/api/v1/purchases/', {
             gold_batch: @new_gold_batch_values,
             purchase: @new_purchase_values
@@ -69,9 +68,13 @@ describe 'Purchase', type: :request do
           expected_files.each do |key, value|
             expect(JSON.parse(response.body)[key]['url']).to match value
           end
-
-          # Validate purchase audit actions on Orders
+          
           order = Order.last
+          
+          # validate the transaction state after is saved
+          expect(order.paid?).to eq(true)
+          
+          # Validate purchase audit actions on Orders
           expect(order.audits.count).to eq(1)
           expect(order.audits.last.audited_changes['type']).to eq('purchase')
           expect(order.audits.last.user).to eq(@buyer.company.legal_representative)

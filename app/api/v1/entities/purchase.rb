@@ -25,7 +25,7 @@ module V1
       expose :access_token, documentation: { type: "string", desc: "authentication token", example: "sjahdkfjhasdfhaskdj" } do |purchase, options|
         purchase.buyer.create_token
       end
-      expose :state, documentation: {type: "boolean", desc: "State to determinate if a gold_batch is sold or not", example: 'true'}
+      expose :gold_state, documentation: {type: "boolean", desc: "State to determinate if a gold_batch is sold or not", example: 'true'}
       expose :seller do
         expose :id, documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
           purchase.seller.id # TODO: change provider for saller in the front end

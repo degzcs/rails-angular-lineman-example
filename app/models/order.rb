@@ -20,7 +20,6 @@ require 'barby/barcode/ean_13'
 require 'barby/outputter/html_outputter'
 # TODO create a state machine to handle the order stauts
 class Order < ActiveRecord::Base
-
   #
   # STI config
   #
@@ -49,6 +48,7 @@ class Order < ActiveRecord::Base
   #
 
   before_save :generate_barcode
+  before_save :persist_status
 
   #
   # Uploaders
@@ -65,10 +65,16 @@ class Order < ActiveRecord::Base
   scope :purchases, ->(ids) { where(type: 'purchase', id: ids) }
   scope :purchases_free, ->(buyer) { where(type: 'purchase', buyer: buyer).includes(:gold_batch).where(gold_batches: { sold: false }) }
   scope :sales_by_state, ->(buyer, state) { where(type: 'sale', buyer: buyer, transaction_state: state) }
+
+  #
+  # State Machine for transaction_state field
+  #
+  include StateMachines::OrderStates
+
   #
   # Instance Methods
   #
-
+  
   # NOTE: temporal method to avoid break the app. It must to be removed asap.
   def origin_certificate_file
     self.origin_certificate.file
@@ -140,7 +146,7 @@ class Order < ActiveRecord::Base
   end
 
   # presenter of sold's state
-  def state
+  def gold_state
     gold_batch.sold? ? 'Vendido' : 'Disponible'
   end
 
