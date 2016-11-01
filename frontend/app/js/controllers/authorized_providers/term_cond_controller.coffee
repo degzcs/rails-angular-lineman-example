@@ -36,8 +36,6 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     #
     # Captures the signature from the device
     $scope.captureSignature = ->
-      window.scope = $scope
-      window.ss = SignatureService
       SignatureService.Capture()
 
     #
