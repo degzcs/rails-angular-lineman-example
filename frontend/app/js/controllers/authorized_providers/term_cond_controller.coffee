@@ -3,7 +3,7 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     # var initialize
     $scope.prov = null
     $scope.chkAgreetmentActive = false
-        
+
     $scope.authorizedProvider = AuthorizedProviderService.restoreModel()
 
     CurrentUser.get().success (data) ->
@@ -30,12 +30,14 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     # Allows to see if the device is connected.
     $scope.restartSessionDevice = ->
       SignatureService.imageId = 'authorized_provider_signature'
-      SignatureService.authorizedProviderName = $scope.authorizedProvider.first_name
+      SignatureService.authorizedProviderName = $scope.authorizedProvider.fullName
       SignatureService.restartSession()
 
     #
     # Captures the signature from the device
     $scope.captureSignature = ->
+      window.scope = $scope
+      window.ss = SignatureService
       SignatureService.Capture()
 
     #
