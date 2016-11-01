@@ -20,32 +20,31 @@ require 'spec_helper'
 RSpec.describe Order, type: :model do
   context 'Micromachine' do
     let(:seller) { create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero') }
-    let(:gold_batch){ create :gold_batch, fine_grams: 30 }
-    let(:purchase) {  create :purchase, seller: seller, gold_batch: gold_batch }
+    let(:gold_batch) { create :gold_batch, fine_grams: 30 }
+    let(:purchase) { create :purchase, seller: seller, gold_batch: gold_batch }
 
     states = {
-      initialized: "initialized",
-      paid: "paid",
-      failed: "failed",
-      dispatched: "dispatched",
-      approved: "approved",
-      canceled: "canceled"
+      initialized: 'initialized',
+      paid: 'paid',
+      failed: 'failed',
+      dispatched: 'dispatched',
+      approved: 'approved',
+      canceled: 'canceled'
     }
 
-
     context 'purchase' do
-      it 'has all the order states required to handle purchase and sale transactions' do 
+      it 'has all the order states required to handle purchase and sale transactions' do
         expect(purchase.status.states.count).to eq(states.count)
         purchase.status.states.each do |state|
           expect(state).to eq(states[state.to_sym])
         end
       end
 
-      it 'sets as initial state the \'initialized\' value in transaction_state field' do 
+      it 'sets as initial state the \'initialized\' value in transaction_state field' do
         expect(purchase.transaction_state).to eq('initialized')
       end
 
-      it 'sets as paid value in transaction_state field' do 
+      it 'sets as paid value in transaction_state field' do
         purchase.end_transaction!
         expect(purchase.status.state).to eq('paid')
 
@@ -54,7 +53,7 @@ RSpec.describe Order, type: :model do
         expect(purchase.paid?).to eq(true)
       end
 
-      it 'has not changes when trigger an event different to end_transaction or crash to purchases transaction' do 
+      it 'has not changes when trigger an event different to end_transaction or crash to purchases transaction' do
         purchase.send_info!
         expect(purchase.status.state).to eq('initialized')
         expect(purchase.dispatched?).not_to eq(true)
@@ -62,7 +61,7 @@ RSpec.describe Order, type: :model do
         purchase.agree!
         expect(purchase.status.state).to eq('initialized')
         expect(purchase.approved?).not_to eq(true)
-       
+
         purchase.cancel!
         expect(purchase.status.state).to eq('initialized')
         expect(purchase.not_approved?).not_to eq(true)
@@ -71,7 +70,6 @@ RSpec.describe Order, type: :model do
         expect(purchase.transaction_state).to eq('initialized')
       end
     end
-
 
     before(:all) do
       @current_user = create :user, :with_profile, :with_company, :with_trader_role
@@ -83,15 +81,15 @@ RSpec.describe Order, type: :model do
     context 'sale' do
       let(:sale) { @sales.last }
 
-      it 'has all the order states required to handle purchase and sale transactions' do 
-        expect(sale.status.states).to eq(states)
+      it 'has all the order states required to handle purchase and sale transactions' do
+        expect(sale.status.states).to eq(states.keys.map(&:to_s))
       end
 
-      it 'sets as initialized state the \'initialized\' value in transaction_state field' do 
+      it 'sets as initialized state the \'initialized\' value in transaction_state field' do
         expect(sale.transaction_state).to eq('initialized')
       end
 
-      it 'sets as dispatched value in transaction_state field' do 
+      it 'sets as dispatched value in transaction_state field' do
         sale.send_info!
         expect(sale.status.state).to eq('dispatched')
 
@@ -100,16 +98,25 @@ RSpec.describe Order, type: :model do
         expect(sale.dispatched?).to eq(true)
       end
 
-      it 'sets as canceled value in transaction_state field' do 
+      it 'sets as canceled value in transaction_state field' do
         sale.cancel!
         expect(sale.status.state).to eq('canceled')
 
         sale.save
         expect(sale.transaction_state).to eq('canceled')
-        expect(sale.dispatched?).to eq(true)
+        expect(sale.not_approved?).to eq(true)
       end
 
-      it 'sets as approved value in transaction_state field' do 
+      it 'sets as failed value in transaction_state field' do
+        sale.crash!
+        expect(sale.status.state).to eq('failed')
+
+        sale.save
+        expect(sale.transaction_state).to eq('failed')
+        expect(sale.failed?).to eq(true)
+      end
+
+      it 'sets as approved value in transaction_state field' do
         sale.agree!
         expect(sale.status.state).to eq('approved')
 
@@ -118,7 +125,7 @@ RSpec.describe Order, type: :model do
         expect(sale.approved?).to eq(true)
       end
 
-      it 'sets as paid value in transaction_state field' do 
+      it 'sets as paid value in transaction_state field' do
         sale.end_transaction!
         expect(sale.status.state).to eq('paid')
 
@@ -126,8 +133,8 @@ RSpec.describe Order, type: :model do
         expect(sale.transaction_state).to eq('paid')
         expect(sale.paid?).to eq(true)
       end
-      
-      xit 'raises an error when executes a triggers with a not permited transition ' do 
+
+      xit 'raises an error when executes a triggers with a not permited transition ' do
         # the last state was paid so it should reject the approved state as shown below
         expect { sale.send_info! }.to raise_error(MicroMachine::InvalidState)
         expect { sale.send_info! }.to raise_error('Event \'send_info\' not valid from state \'paid\'')
@@ -139,7 +146,7 @@ RSpec.describe Order, type: :model do
         expect { sale.cancel! }.to raise_error('Event \'cancel\' not valid from state \'paid\'')
       end
 
-      xit 'has not changes when trigger an event different to end_transaction or crash to sales transaction' do 
+      xit 'has not changes when trigger an event different to end_transaction or crash to sales transaction' do
         sale.send_info!
         expect(sale.status.state).to eq('initialized')
         expect(sale.dispatched?).not_to eq(true)
@@ -147,7 +154,7 @@ RSpec.describe Order, type: :model do
         sale.agree!
         expect(sale.status.state).to eq('initialized')
         expect(sale.approved?).not_to eq(true)
-       
+
         sale.cancel!
         expect(sale.status.state).to eq('initialized')
         expect(sale.not_approved?).not_to eq(true)
@@ -156,6 +163,5 @@ RSpec.describe Order, type: :model do
         expect(sale.transaction_state).to eq('initialized')
       end
     end
-
   end
 end
