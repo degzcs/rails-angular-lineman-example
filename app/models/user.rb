@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   #
   audited
   has_associated_audits
+
+  include ::StateMachines::UserStates
+
   #
   # Associations
   #
@@ -100,34 +103,18 @@ class User < ActiveRecord::Base
   delegate :provider_type, to: :rucom
 
   #
-  # State Machine for registration_state field
+  # Methods for MicroMachine
   #
 
-  state_machine :registration_state, initial: :inserted_from_rucom, use_transactions: true do
-
-    before_transition :on => :insert_from_rucom, :do => :there_are_unset_attributes
-    before_transition :on => :paused, :do => :has_profile_or_rucom_unset_attributes
-    before_transition :on => :complete, :do => :check_if_it_can_be_completed
-
-    after_transition any => :completed do |user, transition|
-      user.syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
+  def user_complete?
+    if check_if_it_can_be_completed
+      status.trigger(:complete)
     end
+  end
 
-    state :inserted_from_rucom
-    state :paused
-    state :failure
-    state :completed
-
-    event :complete do
-      transition :from => [:inserted_from_rucom, :paused], :to => :completed
-    end
-
-    event :error do
-      transition :from => [:paused, :inserted_from_rucom], :to => :failure
-    end
-
-    event :pause do
-      transition :inserted_from_rucom => :paused
+  def alegra
+    if self.completed?
+      self.syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
     end
   end
 
@@ -161,7 +148,6 @@ class User < ActiveRecord::Base
     self.rucom.there_are_unset_attributes
   end
 
-  #
   # Get the user activity based on rucom, barequero (authorized provider)
   def activity
     self.authorized_provider? ? personal_rucom.activity : company.rucom.activity
