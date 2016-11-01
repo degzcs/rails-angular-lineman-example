@@ -8,6 +8,7 @@ module Alegra
     # @param user [ User ]
     def initialize(user)
       @response = {}
+      @response[:success] = false
       @response[:errors] = []
       @user = user
       @client = Alegra::Client.new(APP_CONFIG[:ALEGRA_USERNAME], APP_CONFIG[:ALEGRA_TOKEN])
@@ -16,13 +17,12 @@ module Alegra
     # @return [ Boolean ] true if the user was sync successfuly and false if not
     def call
       ActiveRecord::Base.transaction do
-        contact = client.contacts.create({})
-        @response[:success] = user.update_attributes(alegra_id: contact['id'], alegra_sync: true)
+        contact = client.contacts.create(user_attributes)
+        @response[:success] = user.update_attributes(alegra_id: contact[:id], alegra_sync: true)
       end
       rescue Exception => e
         user.update_attributes(alegra_sync: false)
         @response[:errors] << e.message
-
     end
 
     private

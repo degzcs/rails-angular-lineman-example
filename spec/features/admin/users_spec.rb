@@ -69,7 +69,7 @@ describe 'all test the user view', js: true do
   end
 
   it 'Edit User' do
-    user = create(:user, :with_profile, :with_personal_rucom, email: 'santiago.lopez@trazoro.co')
+    user = create(:user, :with_profile, :with_personal_rucom, email: 'test.email@trazoro.co')
     expected_response = {
       address: 'calle #40',
       phone_number: '5555555-5'

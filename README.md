@@ -83,6 +83,9 @@ rspec spec
 cap production deploy
 ```
 
+## Issues
+We have some problems with Selenium Webdriver and VCR, this problemas were re the dynamic port that it is using with phantomjs. So, to fix it we make a mokey patch for test environment, please check this file for more information `service/support/helper/phantomjs_fix_for_test.rb`
+
 ##Issues (Mac OSX 10.11.3)
 
 To fix the next issues related with rmagick

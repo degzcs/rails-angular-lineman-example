@@ -4,15 +4,16 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
   $scope.loadingMode = "indeterminate"
   $scope.loadingMessage = "Cargando datos personales ..."
   # Get the current user logged!
-  
+
   $scope.newCreditBilling = {}
-  $scope.unit = null
+  $scope.quantity = null
   $scope.available_credits = null
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
     $scope.available_credits = Number(data.available_credits.toFixed(2))
+    $scope.unit_price = data.unit_price # TODO: temporal fix.
     $scope.showLoading = false
-  
+
   # Shows a form that allows to the user choose an amount of credits
   $scope.showCreditBillingForm = (ev) ->
     $mdDialog.show(
@@ -26,15 +27,15 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
       return
     return
 
-  # Ask if the ammount chosen was correct and prevents an empty value 
+  # Ask if the ammount chosen was correct and prevents an empty value
   $scope.confirmCreditBilling = ->
-    if($scope.unit != null)
-      price = $scope.unit * 500
+    if($scope.quantity != null && $scope.unit_price != null)
+      price = $scope.quantity * $scope.unit_price
       confirm = $mdDialog.confirm()
         .title('Confirmacion solicitud de creditos')
-        .content("Esta seguro de comprar #{$scope.unit} por un total de $#{price.formatMoney(2)} COP")
+        .content("Esta seguro de comprar #{$scope.quantity} por un total de $#{price.formatMoney(2)} COP")
         .ariaLabel('Lucky day').ok('Solicitar Factura').cancel('Cancelar')
-        
+
       $mdDialog.show(confirm).then (->
         $scope.submitCreditBilling()
         return
@@ -44,13 +45,12 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
 
     else
       $scope.infoAlert('Hubo un problema',"No selecciono una cantidad de creditos")
-    
+
   # Submit the credit billing and if it gets saved shows a dialog alert
   $scope.submitCreditBilling = ->
-
     $scope.newCreditBilling = {
       user_id: $scope.currentUser.id
-      unit: $scope.unit
+      quantity: $scope.quantity
     }
 
     CreditBilling.create($scope.newCreditBilling).success((data) ->

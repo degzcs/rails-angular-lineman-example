@@ -89,7 +89,7 @@ GEM
     afm (0.2.2)
     airbrussh (1.1.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    alegra (0.1.0)
+    alegra (0.1.2.2)
       faraday (~> 0.9)
       json (~> 1.7)
     annotate (2.7.1)
@@ -596,6 +596,8 @@ GEM
       rspec-expectations (~> 3.5.0)
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
+    rspec-retry (0.5.2)
+      rspec-core (> 3.3, < 3.6)
     rspec-support (3.5.0)
     rubocop (0.42.0)
       parser (>= 2.3.1.1, < 3.0)
@@ -709,7 +711,7 @@ PLATFORMS
 DEPENDENCIES
   active_attr
   activeadmin (~> 1.0.0.pre4)
-  alegra
+  alegra (~> 0.1.2.2)
   annotate
   audited-activerecord
   barby
@@ -762,6 +764,7 @@ DEPENDENCIES
   rails_best_practices (~> 1.15.7)
   rmagick
   rspec-rails
+  rspec-retry
   rubocop (~> 0.42.0)
   rubycritic (~> 2.7.0)
   sass

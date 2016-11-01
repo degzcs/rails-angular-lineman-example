@@ -10,12 +10,14 @@
 #  reset_token        :string(255)
 #  office_id          :integer
 #  registration_state :string(255)
+#  alegra_id          :integer
+#  alegra_sync        :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
   #
   # Audit Class
-  # 
+  #
   audited
   has_associated_audits
   #
@@ -54,7 +56,7 @@ class User < ActiveRecord::Base
   scope :find_by_document_number, -> (document_number){ joins(:profile).where("profiles.document_number LIKE :document_number",
               { document_number: "%#{ document_number.gsub('%', '\%').gsub('_', '\_') }%" }) }
   # static scope
-  scope :not_authorize_providers_users, -> { joins(:roles).where('roles.name <> ? ', 'authorized_provider') }
+  # scope :not_authorize_providers_users, -> { joins(:roles).where('roles.name <> ? ', 'authorized_provider') }
   scope :authorized_providers, -> {joins(:roles).where('roles.name = ?', 'authorized_provider')}
   # TODO: this name no make sense here. Update it asap!!!
   scope :providers, -> { joins(:profile).where('profiles.available_credits > ?', 0) }
@@ -105,16 +107,16 @@ class User < ActiveRecord::Base
 
     before_transition :on => :insert_from_rucom, :do => :there_are_unset_attributes
     before_transition :on => :paused, :do => :has_profile_or_rucom_unset_attributes
-    before_transition :on => :complete, :do => :are_set_all_attributes
+    before_transition :on => :complete, :do => :check_if_it_can_be_completed
+
+    after_transition any => :completed do |user, transition|
+      user.syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
+    end
 
     state :inserted_from_rucom
-    state :completed
-    state :failure
     state :paused
-
-    # event :insert_from_rucom do
-    #     transition :basic => :inserted_from_rucom
-    # end
+    state :failure
+    state :completed
 
     event :complete do
       transition :from => [:inserted_from_rucom, :paused], :to => :completed
@@ -124,7 +126,7 @@ class User < ActiveRecord::Base
       transition :from => [:paused, :inserted_from_rucom], :to => :failure
     end
 
-    event :pause_ do
+    event :pause do
       transition :inserted_from_rucom => :paused
     end
   end
@@ -132,6 +134,12 @@ class User < ActiveRecord::Base
   #
   # Instance Methods
   #
+
+  # Checks if user can pass to the next state
+  def check_if_it_can_be_completed
+    self.are_set_all_attributes &&
+      self.trader?
+  end
 
   def there_are_unset_attributes
     self.email.blank? # || self.password.blank?
@@ -253,6 +261,18 @@ class User < ActiveRecord::Base
 
   def state_basic?
     self.registration_state == 'basic' && there_are_unset_attributes
+  end
+
+  # Sync this user with Alegra
+  # @param sync [ Boolean ] it is false by default to avoid synchroize user when it's not needed
+  # @return [ Hash ]
+  #           - success [ Boolean ]
+  #           - errors [ Array ]
+  def syncronize_with_alegra!(sync=false)
+    service = Alegra::ContactSynchronize.new(self)
+    service.call if sync
+    self.errors.add(:alegra_sync, "El comercializador fue guardado pero no se ha sincronizado con Alegra. El error es: #{ service.response[:errors] }" ) if service.response[:errors].present?
+    service.response
   end
 
   protected

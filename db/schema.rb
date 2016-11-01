@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161026200603) do
+ActiveRecord::Schema.define(version: 20161027192102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,15 +123,17 @@ ActiveRecord::Schema.define(version: 20161026200603) do
 
   create_table "credit_billings", force: true do |t|
     t.integer  "user_id"
-    t.integer  "unit"
-    t.float    "per_unit_value"
-    t.boolean  "payment_flag",        default: false
     t.datetime "payment_date"
     t.float    "discount_percentage", default: 0.0,   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "total_amount",        default: 0.0,   null: false
     t.float    "discount",            default: 0.0,   null: false
+    t.boolean  "paid",                default: false
+    t.float    "quantity"
+    t.float    "unit_price"
+    t.boolean  "invoiced",            default: false
+    t.integer  "alegra_id"
   end
 
   add_index "credit_billings", ["user_id"], name: "index_credit_billings_on_user_id", using: :btree

@@ -10,6 +10,8 @@
 #  reset_token        :string(255)
 #  office_id          :integer
 #  registration_state :string(255)
+#  alegra_id          :integer
+#  alegra_sync        :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
@@ -126,16 +128,6 @@ FactoryGirl.define do
         role = Role.find_by(name: 'transporter')
         user.roles << role
       end
-    end
-
-    factory :client_with_fake_personal_rucom, class: User do
-      personal_rucom { create(:rucom, :for_clients) }
-      office nil
-    end
-
-    factory :client_with_fake_rucom, class: User do
-      personal_rucom nil
-      office { create(:company).main_office }
     end
   end
 end

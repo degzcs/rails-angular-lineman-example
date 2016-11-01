@@ -7,12 +7,11 @@ ActiveAdmin.register CreditBilling do
   # under the dir app/views/admin/credit_billings/<action>
 
 
-  # updates a credit billing with payment_flag to true, and add a new available_credit value to the user
+  # Updates a credit billing with paid to true, and add a new available_credit value to the user
   member_action :update_payment, method: :patch do
     @credit_billing = CreditBilling.find(params[:id])
 
-    credit_billing_params = params.require(:credit_billing).permit(:payment_flag, :payment_date, :discount_percentage)
-
+    credit_billing_params = params.require(:credit_billing).permit(:paid, :payment_date, :discount_percentage)
     credit_billing_acceptance = CreditBilling::Acceptance.new
     response = credit_billing_acceptance.call(
       credit_billing: @credit_billing,
@@ -26,21 +25,38 @@ ActiveAdmin.register CreditBilling do
     redirect_to admin_credit_billings_path, notice: message
   end
 
-  # renders a template where the admin can select the date when the credit billing was payed
+  # Renders a template where the admin can select the date when the credit billing was paid
   member_action :mark do
     @credit_billing = CreditBilling.find(params[:id])
   end
 
-  # renders a template where the user can select a discount percentage value
+  # Incharge to create an invoice into Alegra plataform.
+  member_action :create_invoice do
+    @credit_billing = CreditBilling.find(params[:id])
+    service = Alegra::Credits::CreateInvoice.new
+    response = service.call(payment_method: 'card', credit_billing: @credit_billing)
+    if response[:success]
+      redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: "La fatura a sido creada satisfactoriamente"
+    else
+      render :back, notice: response[:errors].join(" ")
+    end
+  end
+
+  # Renders a template where the user can select a discount percentage value
   member_action :edit_discount do
     @credit_billing = CreditBilling.find(params[:id])
   end
 
-  # sends an email to the user with the information about the credit billing
+  # Sends an email to the user with the information about the credit billing
   member_action :send_billing do
     credit_billing = CreditBilling.find(params[:id])
-    CreditBillingMailer.credit_billing_email(credit_billing).deliver
-    redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+    service = Alegra::Credits::SendEmailInvoice.new
+    response = service.call(credit_billing: credit_billing)
+    if response[:success]
+      redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+    else
+      render :back, notice: response[:errors].join(" ")
+    end
   end
 
   # renders a template with info that will be sended to the user about the credit billing
@@ -51,23 +67,23 @@ ActiveAdmin.register CreditBilling do
 
   actions :index , :edit , :update , :lock , :billing
 
-  permit_params :payment_flag, :payment_date, :discount_percentage
+  permit_params :paid, :payment_date, :discount_percentage
 
   index do
     selectable_column
     id_column
     column "Usuario", :user
-    column "Creditos solicitados", :unit
-    column "Valor credito",:per_unit_value
-    column "% Descuento",:discount_percentage
-    column("Estado",:payment_flag) do |credit|
-      credit.payment_flag? ? status_tag( "Pagado", :ok ) : status_tag( "Sin Pago" )
+    column "Creditos solicitados", :quantity
+    column "Valor credito",:unit_price
+    column "%Descuento",:discount_percentage
+    column("Estado",:paid) do |credit|
+      credit.paid? ? status_tag( "Pagado", :ok ) : status_tag( "Sin Pago" )
     end
     column "Fecha de pago",:payment_date
     column("TOTAL", :total_amount)
 
     actions defaults: false, dropdown: true do |credit_billing|
-      if credit_billing.payment_flag
+      if credit_billing.paid?
         item 'Factura pagada!'
       else
         item "Descuento", edit_discount_admin_credit_billing_path(credit_billing.id)
@@ -79,9 +95,9 @@ ActiveAdmin.register CreditBilling do
   end
 
   filter :user_email ,:as => :string
-  filter :unit
-  filter :per_unit_value
-  filter :payment_flag
+  filter :quantity
+  filter :unit_price
+  filter :paid
   filter :payment_date
   filter :discount_percentage
 
@@ -89,7 +105,7 @@ ActiveAdmin.register CreditBilling do
   form do |f|
     f.inputs "Detalles de Factura" do
       f.input :discount_percentage, label: "% Descuento"
-      f.input :payment_flag ,label: "Marcar como pagada"
+      f.input :paid ,label: "Marcar como pagada"
       f.input :payment_date , as: :datepicker, datepicker_options: { max_date: "D" }, label: "Fecha de pago"
     end
     f.actions

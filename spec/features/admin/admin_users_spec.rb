@@ -7,8 +7,8 @@ describe 'all test the admin_user view', :js do
   end
 
   after :each do
-    admin_user = AdminUser.find_by(email: 'adminuser@prueba.com')
-    admin_user.destroy! if admin_user.present?
+    admin_users = AdminUser.where(email: ['adminuser@prueba.com', 'emailtobeedited@prueba.com'])
+    admin_users.destroy_all if admin_users.present?
   end
 
   it 'Create New AdminUser' do
@@ -31,7 +31,7 @@ describe 'all test the admin_user view', :js do
       email: 'adminuser@prueba.com',
       password: '123123123'
     }
-    admin_user = AdminUser.create(email: 'Emailtobeedite@prueba.com', password: '123123123', password_confirmation: '123123123')
+    admin_user = AdminUser.create(email: 'emailtobeedited@prueba.com', password: '123123123', password_confirmation: '123123123')
     visit '/admin/admin_users/'
     within("#admin_user_#{admin_user.id}") do
       click_link('Edit')

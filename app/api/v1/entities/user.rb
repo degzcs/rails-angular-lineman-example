@@ -54,6 +54,9 @@ module V1
       expose :use_wacom_device, documentation: { type: 'string', desc: 'enviroment', example: 'true, false' } do |user, _options|
         APP_CONFIG[:USE_WACOM_DEVICE]
       end
+      expose :unit_price, documentation: {} do |_user, _options|
+        Settings.instance.fine_gram_value
+      end
     end
   end
 end

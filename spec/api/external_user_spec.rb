@@ -4,27 +4,27 @@ describe 'ExternalUser', :type => :request do
     context 'authorized_provider' do
 
       before :context do
-        @user = create :user, :with_company
-        @token = @user.create_token
-        create_list(:user, :with_authorized_provider_role, 20)
+        # @user = create :user, :with_company
+        # @token = @user.create_token
+        # create_list(:user, :with_authorized_provider_role, 20)
 
-           document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
-           mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
-           rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
-           chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
-           photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
-           document_number_file = Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
-           mining_register_file = Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
-           rut_file = Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
-           chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
-           photo_file = Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
-           @user_files = [photo_file,document_number_file]
-           @user_and_company_files = [photo_file,document_number_file, mining_register_file, rut_file, chamber_commerce_file]
+        #    document_number_file_path = "#{Rails.root}/spec/support/images/document_number_file.png"
+        #    mining_register_file_path = "#{Rails.root}/spec/support/images/mining_register_file.png"
+        #    rut_file_path = "#{Rails.root}/spec/support/images/rut_file.png"
+        #    chamber_commerce_file_path = "#{Rails.root}/spec/support/images/chamber_of_commerce_file.png"
+        #    photo_file_path = "#{Rails.root}/spec/support/images/photo_file.png"
+        #    document_number_file = Rack::Test::UploadedFile.new(document_number_file_path, "image/jpeg")
+        #    mining_register_file = Rack::Test::UploadedFile.new(mining_register_file_path, "image/jpeg")
+        #    rut_file = Rack::Test::UploadedFile.new(rut_file_path, "image/jpeg")
+        #    chamber_commerce_file = Rack::Test::UploadedFile.new(chamber_commerce_file_path, "image/jpeg")
+        #    photo_file = Rack::Test::UploadedFile.new(photo_file_path, "image/jpeg")
+        #    @user_files = [photo_file,document_number_file]
+        #    @user_and_company_files = [photo_file,document_number_file, mining_register_file, rut_file, chamber_commerce_file]
       end
 
       context 'GET' do
 
-        it 'verifies that response has the elements number specified in per_page param' do
+        xit 'verifies that response has the elements number specified in per_page param' do
           per_page = 5
           get '/api/v1/external_users', { per_page: per_page } , { "Authorization" => "Barer #{@token}" }
           expect(response.status).to eq 200
@@ -57,7 +57,7 @@ describe 'ExternalUser', :type => :request do
       context 'POST (this specs will be deprecated, the external users will be created from the backend)' do
 
         context "without rucom" do
-          it 'returns a representation of the new external user created and code 201' do
+          xit 'returns a representation of the new external user created and code 201' do
             #   file_path = "#{Rails.root}/spec/support/images/image.png"
             # @file =  Rack::Test::UploadedFile.new(file_path, "image/jpeg")
             rucom = create :rucom, provider_type: 'Barequero'
@@ -183,7 +183,7 @@ describe 'ExternalUser', :type => :request do
       end
 
       xcontext 'PUT (This is deprecated, the external user will be updated from the backend)' do
-        it 'returns a representation of the updated external user and code 200' do
+        xit 'returns a representation of the updated external user and code 200' do
           rucom = create(:rucom)
           population_center = create(:population_center)
           external_user = create( :external_user, personal_rucom: rucom, population_center_id: population_center.id)

@@ -2,13 +2,10 @@ require 'spec_helper'
 
 describe 'all test the roles view', :js do
   before :each do
-    admin_user = AdminUser.find_by(email: 'soporte@trazoro.co')
-    login_as(admin_user, scope: :admin_user)
-  end
-
-  after :each do
     rol = Role.find_by(name: 'RolPrueba')
     rol.destroy! if rol.present?
+    admin_user = AdminUser.find_by(email: 'soporte@trazoro.co')
+    login_as(admin_user, scope: :admin_user)
   end
 
   it 'Create new Rol' do
@@ -27,7 +24,7 @@ describe 'all test the roles view', :js do
     expected_response = {
       name: 'RolPrueba'
     }
-    role = Role.create(name: 'joyero')
+    role = Role.create(name: 'RolPrueba')
     visit '/admin/roles/'
     within("#role_#{role.id}") do
       click_link('Edit')

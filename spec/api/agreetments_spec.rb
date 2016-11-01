@@ -18,11 +18,11 @@ describe 'Agreetments', type: :request do
           context 'When the current user role is a Trader' do
             it 'gets the fixed sale agreetment text from settings' do
               settings = Settings.instance
-              settings[:data][:fixed_sale_agreetment] = 'wherever complicated text'
+              settings.fixed_sale_agreetment= 'wherever complicated text'
               settings.save!
               expected_response = {
                 'fixed_sale_agreetment' => 'wherever complicated text',
-                'buy_agreetment' => 'acuerdo para agreetment...'
+                'buy_agreetment' => 'habeas agreetment text'
               }
               get '/api/v1/agreetments/fixed_sale', {}, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
@@ -58,11 +58,11 @@ describe 'Agreetments', type: :request do
           context 'When the current user role is a Trader' do
             it 'gets the buy agreetment text from settings' do
               settings = Settings.instance
-              settings[:data][:buy_agreetment] = 'wherever complicated text'
+              settings.buy_agreetment= 'wherever complicated text'
               settings.save!
               expected_response = {
-                'fixed_sale_agreetment' => 'wherever complicated text',
-                'buy_agreetment' => 'acuerdo para agreetment...'
+                'fixed_sale_agreetment' => 'fixed sale agreetment text',
+                'buy_agreetment' => 'wherever complicated text'
               }
               get '/api/v1/agreetments/buy_agreetment', {}, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
