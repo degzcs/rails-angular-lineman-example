@@ -28,27 +28,31 @@ module StateMachines
       registration_state == 'failure'
     end
 
-    def crash!
-      status.trigger(:crash)
+    def fail!
+      status.trigger(:fail)
+      save!
     end
 
     def complete!
       status.trigger!(:complete)
+      save!
     end
 
     def status
       @status ||= begin
                     mcm = MicroMachine.new(registration_state || 'initialized')
-                    mcm.when(:crash, 'initialized' => 'failure')
+                    mcm.when(:fail, 'initialized' => 'failure')
                     mcm.when(:complete, 'initialized' => 'completed')
-                    #
-                    # Callbacks
-                    #
-                    mcm.on('completed') do
-                      syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
-                    end
+                    callbacks(mcm)
                     mcm
                   end
+    end
+
+    # @param mcm [ MicroMachine ]
+    def callbacks(mcm)
+      mcm.on('completed') do
+        syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
+      end
     end
 
     module ClassMethods

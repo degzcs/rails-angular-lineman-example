@@ -299,15 +299,13 @@ describe  User, type: :model do
     it 'sets as completed value in registration_state field' do
       user.complete!
       expect(user.status.state).to eq('completed')
-      user.save
       expect(user.registration_state).to eq('completed')
       expect(user.completed?).to eq(true)
     end
 
     it 'sets as failure value in registration_state field' do
-      user.crash!
+      user.fail!
       expect(user.status.state).to eq('failure')
-      user.save
       expect(user.registration_state).to eq('failure')
       expect(user.failure?).to eq(true)
     end
