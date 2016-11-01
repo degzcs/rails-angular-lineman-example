@@ -41,14 +41,6 @@ module Trazoro
     Dir[File.join(Rails.root, 'lib', 'rucom_services', '**/*')].each do |file|
        config.autoload_paths << file
    end
-
-   # Micromachines
-    config.paths.add File.join('lib', 'state_machines'), :glob => File.join('**', '*.rb')
-    Dir[Rails.root.join('lib/state_machines/**/*.rb')].each { |f| require f }
-    Dir[File.join(Rails.root, 'lib', 'state_machines', '**/*')].each do |file|
-       config.autoload_paths << file
-   end
-
   end
 end
 
