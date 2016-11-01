@@ -33,12 +33,13 @@ ActiveAdmin.register CreditBilling do
   # Incharge to create an invoice into Alegra plataform.
   member_action :create_invoice do
     @credit_billing = CreditBilling.find(params[:id])
+    @user = @credit_billing.user
     service = Alegra::Credits::CreateInvoice.new
     response = service.call(payment_method: 'card', credit_billing: @credit_billing)
     if response[:success]
       redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: "La fatura a sido creada satisfactoriamente"
     else
-      render :back, notice: response[:errors].join(" ")
+      render :new_billing, notice: response[:errors].join(" ")
     end
   end
 
@@ -49,13 +50,14 @@ ActiveAdmin.register CreditBilling do
 
   # Sends an email to the user with the information about the credit billing
   member_action :send_billing do
-    credit_billing = CreditBilling.find(params[:id])
+    @credit_billing = CreditBilling.find(params[:id])
+    @user = @credit_billing.user
     service = Alegra::Credits::SendEmailInvoice.new
-    response = service.call(credit_billing: credit_billing)
+    response = service.call(credit_billing: @credit_billing)
     if response[:success]
-      redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+      redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{ @credit_billing.user.email } satisfactoriamente"
     else
-      render :back, notice: response[:errors].join(" ")
+      render :new_billing, notice: response[:errors].join(" ")
     end
   end
 
