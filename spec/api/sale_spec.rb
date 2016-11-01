@@ -123,7 +123,8 @@ describe 'Sale', type: :request do
               'proof_of_sale' => sale.proof_of_sale.as_json,
               'purchase_files_collection' => sale.purchase_files_collection.as_json,
               'purchases_total_value' => sale.purchases_total_value,
-              'total_gain' => sale.total_gain
+              'total_gain' => sale.total_gain,
+              'transaction_state' => sale.transaction_state
             }.deep_reject_keys!('created_at','updated_at')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
@@ -178,6 +179,68 @@ describe 'Sale', type: :request do
             expect(JSON.parse(response.body).count).to be total_sold_batches
           end
         end
+
+        context 'Sale orders pending' do
+          context 'CurrentUser as Buyer' do
+            before(:all) do
+              @current_user = create :user, :with_profile, :with_company, :with_trader_role
+              @token = @current_user.create_token
+              @legal_representative = @current_user.company.legal_representative
+              @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, buyer: @current_user)
+              #@buyer = create(:user, :with_company, :with_trader_role)
+            end
+            context 'by_state' do
+              before :each do
+                @sale = @sales.last
+              end
+
+              it 'gets sales by state' do
+                sale_first = @sales.first
+                sale_first.send_info!
+                sale_first.save!
+                state = 'dispatched'
+                dispatched_sales = Order.sales_by_state(sale_first.buyer, state)
+                
+                # test  sales_by_state scope
+                expect(dispatched_sales.count).to eq 1
+
+                get "/api/v1/sales/by_state/#{state}",{}, 'Authorization' => "Barer #{@token}"
+                expect(response.status).to eq 200
+
+                res = JSON.parse(response.body)
+
+                expect(res.count).to eq 1
+                expect(res.first['transaction_state']).to eq state
+                
+              end
+            end
+
+            context 'when trigger a transition' do
+              before :each do
+                @sale = @sales.last
+              end
+
+              it 'sets the transaction field with its respective state' do
+                @sale.send_info!
+                @sale.save!
+                get "/api/v1/sales/#{@sale.id}/transition", {transition: 'cancel!'}, 'Authorization' => "Barer #{@token}"
+
+                expect(response.status).to eq 200
+                expect(JSON.parse(response.body)['transaction_state']).to eq 'canceled'
+                
+                @sale.crash!
+                @sale.save!
+                get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token}"
+
+                expect(response.status).to eq 200
+                expect(JSON.parse(response.body)['transaction_state']).to eq 'approved'
+                
+              end
+            end
+          end
+        end
+
+        
       end
     end
   end

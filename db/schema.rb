@@ -179,9 +179,10 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.string   "code"
     t.float    "price"
     t.string   "seller_picture"
-    t.boolean  "trazoro",        default: false, null: false
+    t.boolean  "trazoro",           default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "transaction_state"
   end
 
   create_table "profiles", force: true do |t|

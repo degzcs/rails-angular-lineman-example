@@ -69,9 +69,12 @@ module Purchase
     def setup_purchase_order!
       order_hash.merge!(type: 'purchase')
       @purchase_order = buyer.purchases.build(order_hash)
-      purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-      response[:success] = Order.audit_as(buyer) { purchase_order.save! }
-      purchase_order
+     
+      @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
+      @purchase_order.end_transaction!
+      response[:success] = Order.audit_as(buyer) { @purchase_order.save! }
+      
+      @purchase_order
     end
 
     # Decides if the current user is who will be buyer or if it is just a worker for a company.

@@ -14,6 +14,7 @@ require 'cancan/matchers'
 require 'vcr'
 require 'webmock/rspec'
 require 'rspec/retry'
+require 'state_machines/core'
 
 # include seeds
 require "#{Rails.root}/db/seeds.rb"
@@ -160,4 +161,7 @@ RSpec.configure do |config|
   config.after :each do
     Warden.test_reset!
   end
+
+   # Adds to load inside the state machines tests the matchers
+  config.include StateMachinesRspec::Matchers
 end

@@ -41,7 +41,6 @@ module Trazoro
     Dir[File.join(Rails.root, 'lib', 'rucom_services', '**/*')].each do |file|
        config.autoload_paths << file
    end
-
   end
 end
 

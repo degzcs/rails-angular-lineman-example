@@ -25,6 +25,11 @@ module V1
           optional :page, type: Integer
           optional :per_page, type: Integer
         end
+
+        params :transition do
+          requires :id, type: Integer, desc: 'Sale Id'
+          requires :transition, type: String, desc: 'Transition string to trigger and set the transaction state field example: send_info!, agree!, cancel!, crash!'
+        end
       end
 
       rescue_from ::CanCan::AccessDenied do
@@ -188,6 +193,68 @@ module V1
           batches = legal_representative.sales.where(id: params[:id], type: 'sale').last.batches
           present batches, with: V1::Entities::SoldBatch
         end
+
+        #
+        # GET by state
+        #
+
+        desc 'returns all existent sales by state for the current user', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales by state paginated
+          NOTES
+        }
+
+        params  do
+          use :pagination
+          requires :state, type: String, desc: 'State string to transactions type sale example: dispatched, canceled, approved'
+        end
+
+        get '/by_state/:state', http_codes: [
+            [200, 'Successful'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          state = params[:state]
+          #legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          sales = ::Order.sales_by_state(current_user, state).paginate(:page => page, :per_page => per_page)
+          header 'total_pages', sales.total_pages.to_s
+          present sales, with: V1::Entities::Sale
+        end
+
+        #
+        # GET by transition
+        #
+
+        desc 'Trigger a transition for transaction state field', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns the sale with its transaction state field update by the transition
+          NOTES
+        }
+
+        get '/:id/transition', http_codes: [
+            [200, 'Successful'],
+            [400, 'Invalid parameter'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          # page = params[:page] || 1
+          # per_page = params[:per_page] || 10
+          @sale = ::Order.find(params[:id])
+          transition = params[:transition].to_sym
+          @sale.send(transition)
+          @sale.save!
+          #header 'total_pages', @sale.total_pages.to_s
+          present @sale, with: V1::Entities::Sale
+        end
+
       end
     end
   end

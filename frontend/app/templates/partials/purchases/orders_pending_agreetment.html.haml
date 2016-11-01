@@ -1,0 +1,42 @@
+%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
+  %section{layout: "row"}
+    %div.md-padding{flex: ""}
+      // ---Purchase Type
+      %fieldset.standard.tr-fieldset{:layout => "column"}
+        %legend
+          %h3
+            Por favor lea con atención la aceptación del Acuerdo.
+        %div.fieldset-inputs
+          %md-input-container{class: "md-block", flex: '100' }
+            %textarea{:rows => '7', :readOnly => 'true',
+                      "ng-model" => "saleService.fixed_sale_agreetment",
+                      :name => 'buy_agreetment'}
+          %div{layout: "row"}
+            %md-input-container{flex: ""}
+              %md-checkbox{ :ng-model => 'chkAgreetmentActive',
+                            :required => ''} Acepto los términos y condiciones
+
+
+      %section.signature-section.md-padding{flex: '', layout: 'column'}
+        %div{flex: '', layout: 'row', "layout-align"=>"center center"}
+          %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
+        %div{flex: '', layout: 'row', "layout-align"=>"center center"}
+          #imageBox{  flex: ''}
+        %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
+          .signature-text
+            Firma
+
+      .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"end end"}
+        %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
+        %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
+
+  %md-button.btn-save.md-button{ flex: "20",
+                                 "ng-disabled" => "handlerReject()", 
+                                 "ng-click" => "agreeOrCancel('cancel!')"}Rechazar
+  .wizard-buttons{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"end end"}
+
+
+    %md-button.btn-save.md-button{ flex: "20",
+                                   "ng-show" => "handlerContinue()",
+                                   "ng-click" => "agreeOrCancel('agree!')"} Aceptar
+
