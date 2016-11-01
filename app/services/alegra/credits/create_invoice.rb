@@ -56,6 +56,7 @@ module Alegra
         {
           date: @date,
           due_date: @date,
+          status: 'open',
           client: options[:credit_billing].user.alegra_id,
           items: items_from(options),
           # account_number: options[:trader_user].&account_number,

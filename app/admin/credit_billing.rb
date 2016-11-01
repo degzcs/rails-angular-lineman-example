@@ -6,6 +6,11 @@ ActiveAdmin.register CreditBilling do
   # every action has a route od /admin/credit_bilings/:id/<Action> and it will render a template
   # under the dir app/views/admin/credit_billings/<action>
 
+  member_action :update do
+    @credit_billing = CreditBilling.find(params[:id])
+    @credit_billing.update_attributes(discount_percentage: permitted_params[:credit_billing][:discount_percentage])
+    redirect_to admin_credit_billings_path, notice: @credit_billing.errors.full_messages
+  end
 
   # Updates a credit billing with paid to true, and add a new available_credit value to the user
   member_action :update_payment, method: :patch do
@@ -39,13 +44,14 @@ ActiveAdmin.register CreditBilling do
     if response[:success]
       redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: "La fatura a sido creada satisfactoriamente"
     else
-      render :new_billing, notice: response[:errors].join(" ")
+      redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: response[:errors].join(" ")
     end
   end
 
   # Renders a template where the user can select a discount percentage value
   member_action :edit_discount do
     @credit_billing = CreditBilling.find(params[:id])
+    @user = @credit_billing.user
   end
 
   # Sends an email to the user with the information about the credit billing
@@ -57,7 +63,7 @@ ActiveAdmin.register CreditBilling do
     if response[:success]
       redirect_to admin_credit_billings_path, notice: "El correo ha sido enviado a #{ @credit_billing.user.email } satisfactoriamente"
     else
-      render :new_billing, notice: response[:errors].join(" ")
+      redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: response[:errors].join(" ")
     end
   end
 
