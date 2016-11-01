@@ -112,12 +112,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def alegra
-    if self.completed?
-      self.syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
-    end
-  end
-
   #
   # Instance Methods
   #

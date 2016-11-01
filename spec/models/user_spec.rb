@@ -267,9 +267,8 @@ describe  User, type: :model do
     it 'should synchronize a trader when it is created' do
       VCR.use_cassette('trader_alegra_sync_response') do
         user = create :user, :with_profile, :with_company, :with_trader_role
-        user.user_complete
+        user.complete!
         user.save
-        user.alegra
         expect(user.completed?).to eq true
         expect(user.alegra_id).not_to eq nil
         expect(user.alegra_sync).to eq true

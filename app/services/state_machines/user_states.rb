@@ -41,6 +41,12 @@ module StateMachines
                     mcm = MicroMachine.new(registration_state || 'initialized')
                     mcm.when(:crash, 'initialized' => 'failure')
                     mcm.when(:complete, 'initialized' => 'completed')
+                    #
+                    # Callbacks
+                    #
+                    mcm.on('completed') do
+                      syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
+                    end
                     mcm
                   end
     end
