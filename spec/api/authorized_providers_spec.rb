@@ -161,9 +161,9 @@ describe 'AuthorizedProviders', type: :request do
           expect(user.audits.last.comment).to eq(audit_comment)
 
           # Those are to test the audit actions on users profile table and you can check out on audits table
-          expect(user.profile.audits.last.user).to eq(user)
+          expect(user.profile.audits.last.user).to be_nil
           expect(user.profile.audits.last.action).to eq('update')
-          expect(user.profile.audits.last.comment).to eq(audit_comment)
+          expect(user.profile.audits.last.comment).to be_nil
         end
       end
     end
