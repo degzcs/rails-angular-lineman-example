@@ -46,6 +46,12 @@ describe Sale::SaleGoldService do
         selected_purchase_ids: @selected_purchase_ids
       )
       expect(response[:success]).to be true
+
+      # test the state machine on transaction state
+      sale = Order.last
+      
+      expect(sale.dispatched?).to eq(true)
+      expect(sale.transaction_state).to eq('dispatched')
     end
   end
 end

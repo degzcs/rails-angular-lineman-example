@@ -47,7 +47,7 @@ describe Purchase::BuyGoldService do
         order_hash: @order_hash,
         gold_batch_hash: @gold_batch_hash,
         current_user: legal_representative, # TODO: worker
-        date: Date.today #'2016/07/15'.to_date
+        date: Date.today 
       )
       expect(response[:success]).to be true
       expect(service.purchase_order.persisted?).to be true
