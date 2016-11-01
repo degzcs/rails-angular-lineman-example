@@ -14,7 +14,7 @@ describe TermsAndConditions::DrawPdf do
       settings.save!
     end
     it 'should check the consistency of the document' do
-      expected_hash = 'e3cbdf21b64970ed6401e0be0c269ea993aaf4dadadd004f6d2a3164ba55c784'
+      expected_hash = '74679ccbc3c3e4373a04885cf7abb55a3ccf6027894013a3117750046e30af9b'
       response = service.call(
         authorized_provider_presenter: @seller_presenter,
         signature_picture: @signature_picture

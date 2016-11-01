@@ -99,6 +99,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rspec-retry'
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'

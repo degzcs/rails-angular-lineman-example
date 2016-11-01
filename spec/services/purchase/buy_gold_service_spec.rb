@@ -69,7 +69,7 @@ describe Purchase::BuyGoldService do
         expect(service.purchase_order).to be nil
       end
 
-      it 'should throw a message telling to barequero reach the limin for this month' do
+      it 'should throw a message telling to barequero reach the limit for this month' do
         gold_batch = create :gold_batch, fine_grams: 30
         create :purchase, seller: @seller, gold_batch: gold_batch
         seller_name = UserPresenter.new(@seller, self).name
@@ -78,15 +78,15 @@ describe Purchase::BuyGoldService do
           order_hash: @order_hash,
           gold_batch_hash: @gold_batch_hash,
           current_user: legal_representative, # TODO: worker
-          date: '2016/07/15'.to_date
+          date: Date.today.to_date
         )
 
         msg = 'Usted no puede realizar esta compra, debido a que con esta compra el'
         msg += ' barequero exederia el limite permitido por mes. El total comprado hasta el momento'
         msg += " por #{seller_name} es: 30.0 gramos finos"
 
-        expect(response[:success]).to be false
         expect(response[:errors]).to include msg
+        expect(response[:success]).to be false
         expect(service.purchase_order).to be nil
       end
     end

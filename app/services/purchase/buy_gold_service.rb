@@ -107,7 +107,7 @@ module Purchase
     # @param buyed_fine_grams [ String ]
     # @return [ Boolean ]
     def under_monthly_thershold?(seller, buyed_fine_grams)
-      already_buyed_gold = Order.fine_grams_sum_by_date(Date.today, seller.id)
+      already_buyed_gold = Order.fine_grams_sum_by_date(Time.now, seller.id)
       response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= Settings.instance.monthly_threshold.to_f)
       seller_name = UserPresenter.new(seller, self).name unless response[:success]
       response[:errors] << error_message(seller_name, already_buyed_gold) unless response[:success]
