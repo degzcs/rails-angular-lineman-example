@@ -23,6 +23,17 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.showLoading = false
   $scope.toggleOff = false 
 
+  detectOS = ->
+    OSName = 'Unknown OS'
+    if navigator.appVersion.indexOf('Win') != -1
+      OSName = 'Windows'
+    if navigator.appVersion.indexOf('Mac') != -1
+      OSName = 'MacOS'
+    if navigator.appVersion.indexOf('X11') != -1
+      OSName = 'UNIX'
+    if navigator.appVersion.indexOf('Linux') != -1
+      OSName = 'Linux'
+    return OSName
   #--------------- scanner barcode----------------
   
   $scope.initBarcodeScanner = ->
@@ -48,10 +59,19 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.copyDataFromIdDocument = ->
     rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
     dataFromDocument = rawDataFromDocumentString.split(",")
-    idDocumentNumber = dataFromDocument[1].toString()
-    validateIdDocumentNumber(idDocumentNumber)
-    firstLastName = dataFromDocument[2].toString() # TODO: made and object to map this info
-    computeNameFrom(firstLastName)
+    console.log
+    if detectOS == "Windows"
+      idDocumentNumber = dataFromDocument[0].toString()
+      validateIdDocumentNumber(idDocumentNumber)
+      firstLastName = dataFromDocument[1].toString() # TODO: made and object to map this info
+      computeNameFrom(firstLastName)
+
+    else
+      idDocumentNumber = dataFromDocument[1].toString()
+      validateIdDocumentNumber(idDocumentNumber)
+      firstLastName = dataFromDocument[2].toString() # TODO: made and object to map this info
+      computeNameFrom(firstLastName)
+
     #$scope.currentAuthorizedProvider.first_name = dataFromDocument[2] 
      # alert "apellido incorrecta"
       #$state.go 'index_authorized_provider'
