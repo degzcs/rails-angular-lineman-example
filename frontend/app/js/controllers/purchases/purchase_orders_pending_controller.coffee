@@ -37,7 +37,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   $scope.currentPage = 1
 # wacom device
   $scope.chkAgreetmentActive = false
-  $scope.saleService = SaleService.restoreModel() || SaleService.model
+  $scope.saleService =  SaleService.model
 
 
   #---------------- Controller methods -----------------//
@@ -55,7 +55,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    $scope.saleService.use_wacom_device = data.use_wacom_device
+    #$scope.saleService.use_wacom_device = data.use_wacom_device
     $scope.current_sale_id = null 
 
 
