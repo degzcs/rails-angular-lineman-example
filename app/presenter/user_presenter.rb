@@ -73,8 +73,8 @@ class UserPresenter < BasePresenter
     SettingsPresenter.new(Settings.instance, h)
   end
 
-  def buy_agreetment_text
-    settings_presenter.buy_agreetment
+  def habeas_data_agreetment_text
+    settings_presenter.habeas_data_agreetment
   end
 
 end
