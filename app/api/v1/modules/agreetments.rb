@@ -52,7 +52,7 @@ module V1
           #use :pagination
         end
 
-        get '/buy_agreetment', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        get '/habeas_data_agreetment', http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           authorize! :read, ::Settings
           content_type "text/json"
           

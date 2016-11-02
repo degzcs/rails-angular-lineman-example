@@ -25,16 +25,16 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
     #
     # Get the buy agreetment from settings
     #
-    buy_agreetment: (page) ->
+    habeas_data_agreetment: (page) ->
       if page
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment"
+                   url: "api/v1/agreetments/habeas_data_agreetment"
                    params: page: page
       else
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment"
+                   url: "api/v1/agreetments/habeas_data_agreetment"
 
 # -----------------------------------------------------------
      all: (per_page,page)->
