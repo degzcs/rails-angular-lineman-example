@@ -11,7 +11,7 @@
 #  fine_gram_value :float
 #
 
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe UserSetting, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
