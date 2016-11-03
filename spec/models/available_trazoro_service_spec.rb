@@ -20,7 +20,7 @@ describe AvailableTrazoroService, type: :model do
 
     context 'Validations' do
       it { should validate_presence_of(:name) }
-      it { should validate_presence_of(:credist) }
+      it { should validate_presence_of(:credits) }
     end
   end
 
