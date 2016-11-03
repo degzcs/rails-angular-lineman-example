@@ -4,7 +4,7 @@ class CreateContactInfos < ActiveRecord::Migration
       t.integer :user_id
       t.integer :contact_id
       t.integer :contact_alegra_id
-      t.boolean :contact_alegra_sync
+      t.boolean :contact_alegra_sync, default: false
 
       t.timestamps
     end
