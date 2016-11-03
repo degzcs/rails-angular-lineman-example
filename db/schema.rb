@@ -276,7 +276,7 @@ ActiveRecord::Schema.define(version: 20161103181355) do
   end
 
   create_table "user_settings", force: true do |t|
-    t.boolean  "state"
+    t.boolean  "state",           default: false
     t.string   "alegra_token"
     t.integer  "profile_id"
     t.datetime "created_at"
