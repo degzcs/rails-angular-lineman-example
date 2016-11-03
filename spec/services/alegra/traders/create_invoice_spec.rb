@@ -6,7 +6,7 @@ describe Alegra::Traders::CreateInvoice do
         :with_profile,:with_company, :with_trader_role,
         first_name: 'Seller',
         last_name: 'Britho',
-        alegra_id: 12,
+        alegra_id: 12, # NOTE: this alegra id is for Trazoro account
         legal_representative: true,
         email: 'ejemploapi@dayrep.com',
         setting: build(:user_setting, alegra_token: '066b3ab09e72d4548e88')
@@ -17,7 +17,7 @@ describe Alegra::Traders::CreateInvoice do
       :with_profile,:with_company, :with_trader_role,
       first_name: 'Buyer',
       last_name: 'Britho',
-      alegra_id: 13,
+      alegra_id: 13, # NOTE: this alegra id is for Trazoro account
       legal_representative: true
     )
   end
