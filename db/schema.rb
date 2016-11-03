@@ -109,6 +109,17 @@ ActiveRecord::Schema.define(version: 20161103181355) do
   add_index "companies", ["city_id"], name: "index_companies_on_city_id", using: :btree
   add_index "companies", ["legal_representative_id"], name: "index_companies_on_legal_representative_id", using: :btree
 
+  create_table "contact_infos", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "contact_id"
+    t.integer  "contact_alegra_id"
+    t.boolean  "contact_alegra_sync"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contact_infos", ["user_id", "contact_id"], name: "index_contact_infos_on_user_id_and_contact_id", unique: true, using: :btree
+
   create_table "countries", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
