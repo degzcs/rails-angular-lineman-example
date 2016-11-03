@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103160444) do
+ActiveRecord::Schema.define(version: 20161103162725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,7 +217,6 @@ ActiveRecord::Schema.define(version: 20161103160444) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "habeas_data_agreetment_file"
-    t.float    "fine_gram_value"
   end
 
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
@@ -282,6 +281,7 @@ ActiveRecord::Schema.define(version: 20161103160444) do
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "fine_gram_value"
   end
 
   add_index "user_settings", ["profile_id"], name: "index_user_settings_on_profile_id", using: :btree
