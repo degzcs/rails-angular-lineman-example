@@ -12,4 +12,18 @@
 #
 
 class ContactInfo < ActiveRecord::Base
+  #
+  # Associations
+  #
+
+  belongs_to :user
+  belongs_to :contact, class_name: 'User'
+
+  #
+  # Validations
+  #
+
+  validates_presence_of :user_id
+  validates_presence_of :contact_id
+
 end
