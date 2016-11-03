@@ -14,6 +14,9 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  transaction_state :string(255)
+#  alegra_id         :integer
+#  invoiced          :boolean          default(FALSE)
+#  payment_date      :datetime
 #
 
 require 'barby'
@@ -34,7 +37,7 @@ class Order < ActiveRecord::Base
   belongs_to :buyer, class_name: "User"
   belongs_to :seller, class_name: "User"
   belongs_to :courier
-  has_one :gold_batch, class_name: "GoldBatch", as: :goldomable
+  has_one :gold_batch, class_name: "GoldBatch", as: :goldomable # TODO: remove polymophims it is deprecated, use a regular rails asssociation instead.
   has_many :documents, class_name: "Document", as: :documentable, dependent: :destroy
   has_many :batches, class_name: 'SoldBatch' #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
 
@@ -75,7 +78,7 @@ class Order < ActiveRecord::Base
   #
   # Instance Methods
   #
-  
+
   # NOTE: temporal method to avoid break the app. It must to be removed asap.
   def origin_certificate_file
     self.origin_certificate.file
@@ -92,12 +95,18 @@ class Order < ActiveRecord::Base
     documents.where(type: 'purchase_files_collection').first
   end
 
+  # The #proof_of_purchase and #proof_of_sale have to be set up as invoices and their names should be more specific to avoid
+  # issues when this order has more than one invoice (if it is possible)
+  # Check the next  possibilities to know the correct name in each case:
+  # - Buy to authorized provider (Barequero, chatarrero)
+  # - Buy to another trader (Jeweler, Local trader, CI, exporter)
   # For now it is selcting the equivalente document.
   # TODO: upgrade to select the correct invoice or equivalent document
   def proof_of_purchase
     documents.where(type: 'equivalent_document').first
   end
 
+  # TODO: This document has to change to invoice, and not equivalente document anymore.
   # It could be a equivalent_document or invoice, for now it is using the first one only.
   # @return [ Document ]
   def proof_of_sale

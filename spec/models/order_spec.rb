@@ -14,6 +14,9 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  transaction_state :string(255)
+#  alegra_id         :integer
+#  invoiced          :boolean          default(FALSE)
+#  payment_date      :datetime
 #
 
 require 'spec_helper'

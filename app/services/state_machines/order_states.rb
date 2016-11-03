@@ -63,7 +63,8 @@ module StateMachines
     end
 
     def approve!
-      status.trigger!(:approve) if self.type == 'sale'
+      status.trigger!(:approve) if self.type == 'sale' # TODO: it should be a different condition more like: self.buyer == current_buyer
+      # TODO: call the invoice generation here
     end
 
     def cancel!
@@ -73,16 +74,16 @@ module StateMachines
     def status
       @status ||= begin
                     fsm = MicroMachine.new(transaction_state || "initialized")
-                    # purchases transaction states 
+                    # purchases transaction states
                     fsm.when(:end_purchase, 'initialized' => 'paid', 'failed' => 'paid')
-                    
+
                     # sales transaction states
                     fsm.when(:send_info, 'initialized' => 'dispatched', 'failed' => 'dispatched')
                     fsm.when(:agree, 'dispatched' => 'approved', 'failed' => 'approved')
                     fsm.when(:cancel, 'dispatched' => 'canceled', 'failed' => 'canceled')
                     fsm.when(:end_sale, 'approved' => 'paid', 'failed' => 'paid')
                     fsm.when(:crash, 'initialized' => 'failed', 'dispatched' => 'failed', "approved" => "failed", "canceled" => "failed")
-                    
+
                     fsm
                   end
     end
