@@ -12,6 +12,17 @@
 #
 
 class UserSetting < ActiveRecord::Base
+  #
+  # Associations
+  #
+
   belongs_to :profile
-  has_and_belongs_to_many :available_trazoro_service, :join_table => :plans
+  has_and_belongs_to_many :available_trazoro_services, :join_table => :plans
+
+  #
+  # Validations
+  #
+
+  validates :state, inclusion: { in: [true, false] }
+  validates :profile, presence: true
 end
