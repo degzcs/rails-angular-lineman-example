@@ -3,7 +3,7 @@
 # Table name: user_settings
 #
 #  id              :integer          not null, primary key
-#  state           :boolean
+#  state           :boolean          default(FALSE)
 #  alegra_token    :string(255)
 #  profile_id      :integer
 #  created_at      :datetime
