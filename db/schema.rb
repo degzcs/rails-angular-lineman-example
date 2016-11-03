@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161027192102) do
+ActiveRecord::Schema.define(version: 20161103160444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,13 @@ ActiveRecord::Schema.define(version: 20161027192102) do
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
   add_index "audits", ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
+
+  create_table "available_trazoro_services", force: true do |t|
+    t.string   "name"
+    t.float    "credist"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cities", force: true do |t|
     t.string   "name"
@@ -185,6 +192,13 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.string   "transaction_state"
   end
 
+  create_table "plans", force: true do |t|
+    t.integer "available_trazoro_service_id"
+    t.integer "user_setting_id"
+  end
+
+  add_index "plans", ["available_trazoro_service_id", "user_setting_id"], name: "index_plans_on_available_trazoro_service_id_and_user_setting_id", unique: true, using: :btree
+
   create_table "profiles", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -203,6 +217,7 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "habeas_data_agreetment_file"
+    t.float    "fine_gram_value"
   end
 
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
@@ -260,6 +275,16 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.integer  "country_id"
     t.string   "code"
   end
+
+  create_table "user_settings", force: true do |t|
+    t.boolean  "state"
+    t.string   "alegra_token"
+    t.integer  "profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_settings", ["profile_id"], name: "index_user_settings_on_profile_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
