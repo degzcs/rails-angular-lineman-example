@@ -45,7 +45,7 @@ ActiveAdmin.register CreditBilling do
     @credit_billing = CreditBilling.find(params[:id])
     @user = @credit_billing.user
     service = Alegra::Credits::CreateInvoice.new
-    response = service.call(payment_method: 'card', credit_billing: @credit_billing)
+    response = service.call(payment_method: 'transfer', credit_billing: @credit_billing)
     if response[:success]
       redirect_to new_billing_admin_credit_billing_path(@credit_billing.id), notice: "La fatura a sido creada satisfactoriamente"
     else

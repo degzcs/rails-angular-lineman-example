@@ -4,9 +4,9 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
-#  credist    :float
 #  created_at :datetime
 #  updated_at :datetime
+#  credits    :float
 #
 
 require 'spec_helper'

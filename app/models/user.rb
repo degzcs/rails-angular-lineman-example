@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_many :sales, dependent: :destroy, class_name: 'Order', foreign_key: 'seller_id'
   has_one :personal_rucom, class_name: 'Rucom', as: :rucomeable
   has_many :credit_billings, dependent: :destroy
-  has_many :contact_infos
+  has_many :contact_infos, dependent: :destroy
   belongs_to :office
   has_one :company, through: :office
   has_and_belongs_to_many :roles
