@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103162725) do
+ActiveRecord::Schema.define(version: 20161103181355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,9 +74,9 @@ ActiveRecord::Schema.define(version: 20161103162725) do
 
   create_table "available_trazoro_services", force: true do |t|
     t.string   "name"
-    t.float    "credist"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "credits"
   end
 
   create_table "cities", force: true do |t|
