@@ -64,7 +64,8 @@ module StateMachines
 
     def approve!
       status.trigger!(:approve) if self.type == 'sale' # TODO: it should be a different condition more like: self.buyer == current_buyer
-      # TODO: call the invoice generation here
+      service = Alegra::Traders::CreateInvoice.new
+      service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
     end
 
     def cancel!
