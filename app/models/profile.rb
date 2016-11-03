@@ -20,7 +20,6 @@
 #  updated_at                  :datetime
 #  user_id                     :integer
 #  habeas_data_agreetment_file :string(255)
-#  fine_gram_value             :float
 #
 
 class Profile < ActiveRecord::Base
@@ -34,6 +33,7 @@ class Profile < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :city
+  has_one :setting, class_name: 'UserSetting', dependent: :destroy
 
   #
   # Audit Class
