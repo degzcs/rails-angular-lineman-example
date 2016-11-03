@@ -14,7 +14,7 @@
 FactoryGirl.define do
   factory :user_setting do
     state true
-    alegra_token ''
+    alegra_token {"fakeToken#{ UserSetting.count + 1 }"}
     profile
 
     trait :with_available_trazoro_service do

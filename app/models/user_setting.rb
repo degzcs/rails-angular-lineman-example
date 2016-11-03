@@ -25,4 +25,5 @@ class UserSetting < ActiveRecord::Base
 
   validates :state, inclusion: { in: [true, false] }
   validates :profile, presence: true
+  validates_uniqueness_of :alegra_token
 end
