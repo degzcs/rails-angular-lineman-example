@@ -25,16 +25,16 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
     #
     # Get the buy agreetment from settings
     #
-    buy_agreetment: (page) ->
+    habeas_data_agreetment: (page) ->
       if page
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment"
+                   url: "api/v1/agreetments/habeas_data_agreetment"
                    params: page: page
       else
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment"
+                   url: "api/v1/agreetments/habeas_data_agreetment"
 
 # -----------------------------------------------------------
      all: (per_page,page)->
@@ -218,12 +218,12 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
 
 #-----------------------------------------------------------------
 
-    byIdNumber: (idNumber, rolName) ->
+    byIdNumber: (idNumber, providerType) ->
       return $http
                 url: '/api/v1/authorized_providers/by_id_number'
                 method: 'GET'
                 params: {
-                  rol_name: rolName # 'Barequero o chatarrero'
+                  rol_name: providerType # 'Barequero o chatarrero'
                   id_type: 'CEDULA'
                   id_number: idNumber
                 }

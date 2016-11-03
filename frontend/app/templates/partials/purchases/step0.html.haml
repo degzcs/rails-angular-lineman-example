@@ -6,10 +6,10 @@
         %h3
           %legend
             1. Seleccione el tipo de productor autorizado:
-            %md-radio-group{"ng-model"=>"provider.rolName", "name" => "rolName" }
+            %md-radio-group{"ng-model"=>"provider.providerType", "name" => "providerType" }
               %md-radio-button.md-primary{ "value" => "Barequero" }Barequero
               %md-radio-button{ "value" => "Chatarrero" } Chatarrero
-              /%span.radioValue{:type => "hidden", "ng-name" => "rolName","ng-model" => "provider.rolName"} {{ provider.rolName }}
+              /%span.radioValue{:type => "hidden", "ng-name" => "providerType","ng-model" => "provider.providerType"} {{ provider.providerType }}
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3
@@ -22,4 +22,4 @@
             %md-not-found
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.rolName)"} Consultar
+    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.providerType)"} Consultar

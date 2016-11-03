@@ -12,21 +12,21 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
   # Search an authorized provider by its id number
   # @param ev [ Event ]
   # @param idNumber [ Integer ]
-  # @param rolName [ String ]
+  # @param providerType [ String ]
 
 
 
-  $scope.queryRucomByIdNumber = (ev, idNumber, rolName) ->
-    if idNumber 
+  $scope.queryRucomByIdNumber = (ev, idNumber, providerType) ->
+    if idNumber && providerType
       $scope.showLoading = true
-      AuthorizedProviderService.byIdNumber(idNumber, rolName)
+      AuthorizedProviderService.byIdNumber(idNumber, providerType)
       .success((data, status, headers) ->
         $scope.showLoading = false
         AuthorizedProviderService.model = data
         AuthorizedProviderService.model.fullName = data.first_name # NOTE: the rucom save in the first name the full name of a persona, because it does not know which untill the next step that we can compare with the ID docuement data
         AuthorizedProviderService.model.first_name = '' # TODO: learn how to use correctly remove function.
-        AuthorizedProviderService.buy_agreetment().success( (data) ->
-          AuthorizedProviderService.model.buy_agreetment = data.buy_agreetment
+        AuthorizedProviderService.habeas_data_agreetment().success( (data) ->
+          AuthorizedProviderService.model.habeas_data_agreetment = data.habeas_data_agreetment
           AuthorizedProviderService.saveModel()
           $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
           $state.go 'term_and_cond_authorized_provider', { id: AuthorizedProviderService.model.id }

@@ -22,7 +22,7 @@ describe 'Agreetments', type: :request do
               settings.save!
               expected_response = {
                 'fixed_sale_agreetment' => 'wherever complicated text',
-                'buy_agreetment' => 'habeas agreetment text'
+                'habeas_data_agreetment' => 'habeas agreetment text'
               }
               get '/api/v1/agreetments/fixed_sale', {}, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
@@ -43,7 +43,7 @@ describe 'Agreetments', type: :request do
               token = user.create_token
               expected_response = {
                 'fixed_sale_agreetment' => 'wherever complicated text',
-                'buy_agreetment' => ''
+                'habeas_data_agreetment' => ''
               }
               expect do
                 get '/api/v1/agreetments/fixed_sale', {}, 'Authorization' => "Barer #{token}"
@@ -54,17 +54,17 @@ describe 'Agreetments', type: :request do
       end
 
       context 'GET' do
-        context '/buy_agreetment' do
+        context '/habeas_data_agreetment' do
           context 'When the current user role is a Trader' do
             it 'gets the buy agreetment text from settings' do
               settings = Settings.instance
-              settings.buy_agreetment= 'wherever complicated text'
+              settings.habeas_data_agreetment = 'wherever complicated text'
               settings.save!
               expected_response = {
                 'fixed_sale_agreetment' => 'fixed sale agreetment text',
-                'buy_agreetment' => 'wherever complicated text'
+                'habeas_data_agreetment' => 'wherever complicated text'
               }
-              get '/api/v1/agreetments/buy_agreetment', {}, 'Authorization' => "Barer #{@token}"
+              get '/api/v1/agreetments/habeas_data_agreetment', {}, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
               expect(JSON.parse(response.body)).to match(expected_response)
             end

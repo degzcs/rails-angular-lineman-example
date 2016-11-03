@@ -39,7 +39,7 @@ class TermsAndConditions::DrawPdf < Prawn::Document
     # 500 -> 600 es el limite de ancho hacia la derecha (+x)
     move_cursor_to 586
     span(400, :position => :center) do
-      text authorized_provider_presenter.buy_agreetment_text * 1
+      text authorized_provider_presenter.habeas_data_agreetment_text * 1
     end
 
     move_cursor_to 255
