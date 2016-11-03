@@ -30,6 +30,7 @@ FactoryGirl.define do
         phone_number { Faker::PhoneNumber.cell_phone }
         available_credits { 0 }
         address { Faker::Address.street_address }
+        setting { create :user_setting }
         rut_file do
           Rack::Test::UploadedFile
             .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'), 'application/pdf')
@@ -77,6 +78,7 @@ FactoryGirl.define do
         user.profile.habeas_data_agreetment_file = e.habeas_data_agreetment
         user.profile.nit_number = e.nit_number
         user.profile.city = e.city
+        user.profile.setting = e.setting
         user.save!
       end
     end
