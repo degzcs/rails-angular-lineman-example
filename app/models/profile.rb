@@ -20,6 +20,7 @@
 #  updated_at                  :datetime
 #  user_id                     :integer
 #  habeas_data_agreetment_file :string(255)
+#  fine_gram_value             :float
 #
 
 class Profile < ActiveRecord::Base
