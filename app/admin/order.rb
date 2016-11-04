@@ -20,15 +20,17 @@ ActiveAdmin.register Order do
   menu priority: 7, label: 'Ordenes (Transacciones)'
 
   actions :index, :show
-  permit_params :buyer_id, :seller_id, :gold_batch_id, :origin_certificate_file , :price, :seller_id
+  permit_params :buyer_id, :seller_id, :gold_batch_id, :origin_certificate_file, :price, :seller_id
 
   index do
     selectable_column
     id_column
-    column :user
-    column(:seller_id) { |purchase|
+    column(:buyer_id) do |purchase|
+      purchase.buyer_id
+    end
+    column(:seller_id) do |purchase|
       purchase.seller_id
-    }
+    end
     column(:gold_batch) do |purchase|
       purchase.gold_batch.fine_grams
     end
@@ -37,14 +39,11 @@ ActiveAdmin.register Order do
     actions
   end
 
-  filter :user
+  # filter :user
   filter :seller_id
   filter :buyer_id
   filter :rucom_record
   filter :gold_batch
   filter :documents
   filter :price
-
-
-
 end
