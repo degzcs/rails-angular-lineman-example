@@ -92,8 +92,8 @@ module Alegra
             discount: 0,
             description: 'Compra de Oro',
             tax: [
-                    {
-                      id: 3, #TODO: create iva id on alegra
+                    { ##TODO: create iva id on alegra
+                      id: 1, ## id 1 is for 0% VAT, but it has to change dinamically based on buyer role (exporter||trader||refinery)
                     }
                  ],
           }
