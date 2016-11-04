@@ -96,6 +96,7 @@ describe 'all test the companies view', :js do
     expect(company.legal_representative.profile.first_name).to eq expected_response[:first_name]
     expect(company.legal_representative.profile.phone_number).to eq expected_response[:phone_number]
     expect(company.legal_representative.profile.nit_number).to eq expected_response[:nit_number]
+    expect(company.legal_representative.profile.setting.present?).to eq true
     expect(company.rucom.present?).to eq true
     expect(company.offices.present?).to eq true
     expect(company.completed?).to eq true

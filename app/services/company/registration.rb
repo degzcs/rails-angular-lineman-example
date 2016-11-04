@@ -50,6 +50,8 @@ class Company::Registration
     end
     user.build_profile(user_data[:profile_attributes])
     user.profile.legal_representative = true
+    user_setting = UserSetting.new(fine_gram_value: 0.0)
+    user.profile.setting = user_setting
     @response[:success] = user.save
     @response[:errors] << user.errors.full_messages
     user
