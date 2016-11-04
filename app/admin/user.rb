@@ -150,6 +150,13 @@ ActiveAdmin.register User do
         end
       end
     end
+    panel 'Servicios adquiridos por este usuario' do
+      attributes_table_for user.profile do
+        row :NombreServicios do |p|
+          p.setting ? p.setting.available_trazoro_services.map(& :name).join(',  ') : 'Este usuario no cuenta con preferencias de usuario'
+        end
+      end
+    end
     # active_admin_comments
   end
 end
