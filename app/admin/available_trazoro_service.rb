@@ -3,6 +3,22 @@ ActiveAdmin.register AvailableTrazoroService do
 
   permit_params :name, :credits
 
+  controller do
+    # This code is evaluated within the controller class
+    def available_trazoro_service
+      # Instance method
+      AvailableTrazoroService.find(params[:id])
+    end
+  end
+
+  sidebar 'Lista de usuarios activos con este Servicio', only: [:show] do
+    ul do
+      available_trazoro_service.user_settings.each do |service|
+        li service.profile.first_name
+      end
+    end
+  end
+
   index do
     selectable_column
     id_column
