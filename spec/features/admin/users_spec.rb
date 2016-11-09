@@ -66,6 +66,8 @@ describe 'all test the user view', js: true do
     expect(last_user[:profile][:photo_file]['url']).to match(/photo_file.png/)
     expect(last_user[:profile][:mining_authorization_file]['url']).to match(/mining_register_file.pdf/)
     expect(last_user[:profile][:id_document_file]['url']).to match(/document_number_file.pdf/)
+    last_user = User.last
+    expect(last_user.roles.first.name).to eq 'authorized_provider'
   end
 
   it 'Edit User' do
