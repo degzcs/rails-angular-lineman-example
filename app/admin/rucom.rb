@@ -2,6 +2,7 @@ ActiveAdmin.register Rucom do
   menu priority: 3, label: 'Rucoms'
 
   actions :index, :show, :edit, :create, :new, :update
+  config.clear_action_items!
   permit_params :id, :rucom_number, :name, :original_name, :minerals, :location, :status, :provider_type, :rucomeable_id, :rucomeable_type, :updated_at, :created_at
 
   index do
