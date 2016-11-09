@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
   has_many :contact_infos, dependent: :destroy
   belongs_to :office
   has_one :company, through: :office
+  has_one :setting, through: :profile
+  has_one :trazoro_services, through: :setting
   has_and_belongs_to_many :roles
 
   #
