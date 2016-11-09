@@ -28,9 +28,7 @@ describe 'all test the user view', js: true do
         city: expected_city.name
       }
     }
-    visit '/admin'
-    find('#users').click # link header of users
-    find('.action_item').click # button new user
+    visit '/admin/users/new'
     select('authorized_provider', from: 'user_role_ids')
     fill_in 'Correo', with: expected_response[:email]
     select(expected_response[:office], from: 'user_office_id')
