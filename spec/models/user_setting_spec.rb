@@ -23,7 +23,7 @@ describe UserSetting, type: :model do
   end
 
   context 'associations with available_trazoro_services' do
-    it { should have_and_belong_to_many :available_trazoro_services }
+    it { should have_and_belong_to_many :trazoro_services }
   end
 
   context 'should show error of Validations' do
@@ -35,8 +35,8 @@ describe UserSetting, type: :model do
 
     it 'should validate unique association between user setting and available trazoro services' do
       user_setting = create(:user_setting, :with_available_trazoro_service)
-      available_trazoro_service = user_setting.available_trazoro_services.last
-      expect { user_setting.available_trazoro_services << available_trazoro_service }.to raise_error(ActiveRecord::RecordNotUnique)
+      available_trazoro_service = user_setting.trazoro_services.last
+      expect { user_setting.trazoro_services << available_trazoro_service }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 end

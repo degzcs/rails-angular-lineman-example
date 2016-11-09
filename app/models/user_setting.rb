@@ -17,7 +17,7 @@ class UserSetting < ActiveRecord::Base
   #
 
   belongs_to :profile
-  has_and_belongs_to_many :available_trazoro_services, :join_table => :plans
+  has_and_belongs_to_many :trazoro_services, :join_table => :plans, class_name: 'AvailableTrazoroService'
 
   #
   # Validations

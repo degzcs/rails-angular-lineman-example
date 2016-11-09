@@ -24,7 +24,7 @@ FactoryGirl.define do
         credits 0
       end
       after :create do |user_setting, e|
-        user_setting.available_trazoro_services << create(:available_trazoro_service, name: e.name, credits: e.credits)
+        user_setting.trazoro_services << create(:available_trazoro_service, name: e.name, credits: e.credits)
       end
     end
   end
