@@ -143,6 +143,7 @@ module RucomServices
       profile_arguments = { document_number: @data[:id_number], first_name: @scraper.virtus_model.rucom.name }
       # @user_profile = User.new({ profile_attributes: profile_arguments }, personal_rucom: @rucom)
       @user = User.new(profile_attributes: profile_arguments)
+      @user.roles << Role.find_by(name: 'authorized_provider')
       @user.save!(validate: false)
       @user_profile = @user.profile
       @user.personal_rucom = @rucom
