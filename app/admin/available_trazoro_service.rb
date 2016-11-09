@@ -13,8 +13,8 @@ ActiveAdmin.register AvailableTrazoroService do
 
   sidebar 'Lista de usuarios activos con este Servicio', only: [:show] do
     ul do
-      available_trazoro_service.user_settings.each do |service|
-        li service.profile.first_name
+      available_trazoro_service.user_settings.each do |setting|
+        li setting.profile.first_name
       end
     end
   end
