@@ -19,11 +19,12 @@ module Alegra
         @client = Alegra::Client.new(options[:order].seller.email, options[:order].seller.profile.setting.alegra_token)
         ActiveRecord::Base.transaction do
           invoice = client.invoices.create(invoice_mapping(options))
-          @response[:success] = options[:order].update_attributes(invoiced: true, alegra_id: invoice[:id], payment_date: @date)
+          @response[:success] = options[:order].update_attributes(alegra_id: invoice[:id], payment_date: @date)
+          @response = Alegra::Traders::SendEmailInvoice.new.call(order: options[:order]) if @response[:success]
           @response
         end
         rescue Exception => e
-          options[:order].update_attributes(invoiced: false)
+          options[:order].update_attributes(alegra_id: nil)
           @response[:errors] << e.message
           @response
       end
