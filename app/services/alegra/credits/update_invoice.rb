@@ -32,7 +32,8 @@ module Alegra
       def invoice_mapping(options)
         {
           date: options[:credit_billing].payment_date,
-          due_date: options[:credit_billing].payment_date
+          due_date: options[:credit_billing].payment_date,
+          status: 'closed'
         }
       end
 
