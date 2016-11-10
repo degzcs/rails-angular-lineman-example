@@ -5,20 +5,31 @@
       .user-photo-container
         %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
       .info-container
-        %h4 
+        %h4
           Nombre:
           .info
             {{currentUser.first_name}} {{currentUser.last_name}}
-        %h4 
+        %h4
           Numero de Documento:
           .info
             {{currentUser.document_number}}
-        %h4 
+        %h4
           Email:
           .info
             {{currentUser.email}}
+  .dashboard-credit-info{"ng-hide" => "!currentUser.legal_representative"}
+    .credits
+      %h3
+        %span Servicios Adquiridos
+      %md-content
+        %md-list
+          %h3{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
+          %md-list-item.md-3-line{"ng-repeat" => "services in currentUser.trazoro_services"}
+            .md-list-item-text
+              %h3 {{services.name}}
+            %md-divider{"ng-if" => "!$last"}
   .dashboard-credit-info
-    .credits 
+    .credits
       %h3
         Creditos Restantes
       .value
