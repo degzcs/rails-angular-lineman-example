@@ -57,6 +57,12 @@ module V1
       expose :unit_price, documentation: {} do |_user, _options|
         Settings.instance.fine_gram_value
       end
+      expose :trazoro_services, documentation: { type: "array", desc: "Trazoro Services", example: "Servicio registro barequero" } do |user, options|
+        user.setting.trazoro_services.as_json(only: [:id, :name]) if user.setting.trazoro_services.present?
+      end
+      expose :legal_representative, documentation: { type: "string", desc: "if is legal representative", example: "true" } do |user, options|
+        user.profile.legal_representative?
+      end
     end
   end
 end
