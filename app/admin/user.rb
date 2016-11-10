@@ -5,11 +5,11 @@ ActiveAdmin.register User do
 
   config.clear_action_items!
 
-  action_item :escoger, only: :index do
+  action_item :new_rucom, only: :index do
     link_to 'Crear proveedor autorizado', new_admin_rucom_path
   end
 
-  action_item :new, only: :index do
+  action_item :new_user, only: :index do
     link_to 'Crear comercializador', new_admin_user_path
   end
 
