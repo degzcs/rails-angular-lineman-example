@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161027192102) do
+ActiveRecord::Schema.define(version: 20161103200045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,13 @@ ActiveRecord::Schema.define(version: 20161027192102) do
   add_index "audits", ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
+  create_table "available_trazoro_services", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "credits"
+  end
+
   create_table "cities", force: true do |t|
     t.string   "name"
     t.integer  "state_id"
@@ -101,6 +108,17 @@ ActiveRecord::Schema.define(version: 20161027192102) do
 
   add_index "companies", ["city_id"], name: "index_companies_on_city_id", using: :btree
   add_index "companies", ["legal_representative_id"], name: "index_companies_on_legal_representative_id", using: :btree
+
+  create_table "contact_infos", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "contact_id"
+    t.integer  "contact_alegra_id"
+    t.boolean  "contact_alegra_sync", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contact_infos", ["user_id", "contact_id"], name: "index_contact_infos_on_user_id_and_contact_id", unique: true, using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "name"
@@ -183,7 +201,17 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "transaction_state"
+    t.integer  "alegra_id"
+    t.boolean  "invoiced",          default: false
+    t.datetime "payment_date"
   end
+
+  create_table "plans", force: true do |t|
+    t.integer "available_trazoro_service_id"
+    t.integer "user_setting_id"
+  end
+
+  add_index "plans", ["available_trazoro_service_id", "user_setting_id"], name: "index_plans_on_available_trazoro_service_id_and_user_setting_id", unique: true, using: :btree
 
   create_table "profiles", force: true do |t|
     t.string   "first_name"
@@ -260,6 +288,17 @@ ActiveRecord::Schema.define(version: 20161027192102) do
     t.integer  "country_id"
     t.string   "code"
   end
+
+  create_table "user_settings", force: true do |t|
+    t.boolean  "state",           default: false
+    t.string   "alegra_token"
+    t.integer  "profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "fine_gram_value"
+  end
+
+  add_index "user_settings", ["profile_id"], name: "index_user_settings_on_profile_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"

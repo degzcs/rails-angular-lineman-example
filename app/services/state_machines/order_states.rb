@@ -55,15 +55,14 @@ module StateMachines
     end
 
     def agree!
-      status.trigger!(:agree) if self.type == 'sale'
+      if self.type == 'sale' # TODO: it should be a different condition more like: self.buyer == current_buyer
+        status.trigger!(:agree)
+        save!
+      end
     end
 
     def send_info!
       status.trigger!(:send_info) if self.type == 'sale'
-    end
-
-    def approve!
-      status.trigger!(:approve) if self.type == 'sale'
     end
 
     def cancel!
@@ -73,18 +72,25 @@ module StateMachines
     def status
       @status ||= begin
                     fsm = MicroMachine.new(transaction_state || "initialized")
-                    # purchases transaction states 
+                    # purchases transaction states
                     fsm.when(:end_purchase, 'initialized' => 'paid', 'failed' => 'paid')
-                    
+
                     # sales transaction states
                     fsm.when(:send_info, 'initialized' => 'dispatched', 'failed' => 'dispatched')
                     fsm.when(:agree, 'dispatched' => 'approved', 'failed' => 'approved')
                     fsm.when(:cancel, 'dispatched' => 'canceled', 'failed' => 'canceled')
                     fsm.when(:end_sale, 'approved' => 'paid', 'failed' => 'paid')
                     fsm.when(:crash, 'initialized' => 'failed', 'dispatched' => 'failed', "approved" => "failed", "canceled" => "failed")
-                    
+                    callbacks(fsm)
                     fsm
                   end
+    end
+
+    def callbacks(machine)
+      machine.on('approved') do
+        service = Alegra::Traders::CreateInvoice.new
+        service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
+      end
     end
 
     module ClassMethods

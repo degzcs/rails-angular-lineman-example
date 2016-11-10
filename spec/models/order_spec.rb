@@ -2,17 +2,21 @@
 #
 # Table name: orders
 #
-#  id             :integer          not null, primary key
-#  buyer_id       :integer
-#  seller_id      :integer
-#  courier_id     :integer
-#  type           :string(255)
-#  code           :string(255)
-#  price          :float
-#  seller_picture :string(255)
-#  trazoro        :boolean          default(FALSE), not null
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id                :integer          not null, primary key
+#  buyer_id          :integer
+#  seller_id         :integer
+#  courier_id        :integer
+#  type              :string(255)
+#  code              :string(255)
+#  price             :float
+#  seller_picture    :string(255)
+#  trazoro           :boolean          default(FALSE), not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  transaction_state :string(255)
+#  alegra_id         :integer
+#  invoiced          :boolean          default(FALSE)
+#  payment_date      :datetime
 #
 
 require 'spec_helper'
@@ -71,14 +75,20 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    before(:all) do
-      @current_user = create :user, :with_profile, :with_company, :with_trader_role
-      @token = @current_user.create_token
-      @legal_representative = @current_user.company.legal_representative
-      @sales = create_list(:sale, 2, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative)
-      @buyer = create(:user, :with_company, :with_trader_role)
-    end
     context 'sale' do
+      before(:all) do
+        @current_user = create :user, :with_profile, :with_company, :with_trader_role
+        @token = @current_user.create_token
+        @legal_representative = @current_user.company.legal_representative
+        ## NOTE: Config legal representative (seller) as alegre user and add buyer as alegra contact
+        ## This is what contact synchronize do.
+        @legal_representative.update_column(:email, 'ejemploapi@dayrep.com')
+        @legal_representative.profile.setting.update_column(:alegra_token, '066b3ab09e72d4548e88')
+        @buyer = create(:user, :with_company, :with_trader_role).company.legal_representative
+        @sales = create_list(:sale, 2, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative, buyer: @buyer)
+        @legal_representative.contact_infos.create(contact: @buyer, contact_alegra_id: 1)
+      end
+
       let(:sale) { @sales.last }
 
       it 'has all the order states required to handle purchase and sale transactions' do
@@ -117,12 +127,16 @@ RSpec.describe Order, type: :model do
       end
 
       it 'sets as approved value in transaction_state field' do
-        sale.agree!
-        expect(sale.status.state).to eq('approved')
-
-        sale.save
-        expect(sale.transaction_state).to eq('approved')
-        expect(sale.approved?).to eq(true)
+        VCR.use_cassette('alegra_create_traders_invoice') do
+          sale.send_info!
+          sale.agree!
+          expect(sale.status.state).to eq('approved')
+          expect(sale.transaction_state).to eq('approved')
+          expect(sale.approved?).to eq(true)
+          expect(sale.invoiced).to eq true
+          expect(sale.alegra_id.present?).to eq true
+          expect(sale.payment_date.to_date).to eq Time.now.to_date
+        end
       end
 
       it 'sets as paid value in transaction_state field' do
