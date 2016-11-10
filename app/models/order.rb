@@ -113,6 +113,10 @@ class Order < ActiveRecord::Base
     documents.where(type: 'equivalent_document').first
   end
 
+  def purchase_files_collection_with_watermark
+    documents.where(type: 'purchase_files_collection_with_watermark').first
+  end
+
   #
   # @return [ Document ]
   def shipment
