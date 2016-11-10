@@ -43,10 +43,11 @@ ActiveAdmin.register User do
     f.inputs 'User' do
       if params[:action] == 'edit'
         columns "Este Usuario Cuenta Actualmente Con #{user.office ? 'Rucom de empresa' : 'Rucom personal'}: #{user.rucom.name} - Numero: #{user.rucom.rucom_number}"
+        f.input :roles, label: 'Rol'
       end
-      f.input :roles, label: 'Rol', collection: Role.all.map { |r| ["#{r.name if r.name == 'trader'}", r.id] }
       f.input :email, label: 'Correo'
       if params[:action] == 'new'
+        f.input :roles, label: 'Rol', collection: Role.all.map { |r| ["#{r.name if r.name == 'trader'}", r.id] }
         f.input :office, label: 'oficina', :collection => Office.all.map { |o| ["#{o.company.name if o.company} - #{o.name}", o.id] }
       end
       unless user.authorized_provider?
