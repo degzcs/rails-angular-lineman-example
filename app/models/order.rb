@@ -117,6 +117,12 @@ class Order < ActiveRecord::Base
     documents.where(type: 'purchase_files_collection_with_watermark').first
   end
 
+  # TODO: Change proof_of_sale and proof_of_purchase because is ambiguous, 
+  # in SaleGoldService the document_type should be compendium and the service ProofOfSale should rename to Compendium too
+  def compendium
+    documents.where(type: 'compendium').first
+  end
+
   #
   # @return [ Document ]
   def shipment
