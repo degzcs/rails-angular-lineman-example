@@ -21,14 +21,15 @@ module TrazoroMandrill
       #       "reject_reason" => nil
       #      }
       #     ]
-      def send_email(template_name, subject, merge_vars, emails, options={})
+      def send_email(template_name, subject, merge_vars, emails, options={}, attachments=[])
         mailer =  TrazoroMandrill::Mailer.setup(subject: subject,
                                         from_name: 'A name here',
                                         from_email: 'no-reply@trazoro.co',
                                         template: template_name,
-                                        global_merge_vars: options[:global_merge_vars] || default_global_merge_vars)
+                                        global_merge_vars: options[:global_merge_vars] || default_global_merge_vars,
+                                        attachments: attachments.present? ? get_file_attachments(attachments) : attachments)
         service_log.info "Sending emails to: #{ emails.join(', ') } \n"
-        response = if ['development', 'test', 'staging'].include? Rails.env #if Rails.env.staging?
+        response = if ['test', 'staging'].include? Rails.env #if Rails.env.staging?
                     send_fake_email!(mailer)
                   else
                     emails.map do |email|
@@ -54,7 +55,7 @@ module TrazoroMandrill
       # @param merge_vars [ Hash ] not implemented yet
       # @return [ OpenStruct ] with the basic attributes that the Mandrill Mailer needs to be setup
       def recipient_from(email, merge_vars)
-        user = user_by_email(email).decorate
+        user = user_by_email(email)
         OpenStruct.new(
         {
           to: to_values_from(user),
@@ -72,21 +73,22 @@ module TrazoroMandrill
       end
 
       # @param email [ String ]
-      # @return [ User ]
+      # @return [ UserPresenter ]
       def user_by_email(email)
-        User.where(email: email).first
+        user = User.where(email: email).first
+        UserPresenter.new(user,nil)
       end
 
       # @param user [ User ]
       # @return [ Hash ]
       def to_values_from(user)
-        { email: user.email, name: user.try(:name) }
+        { email: user.try(:email), name: user.try(:name) }
       end
 
       # @return [ Hash ] with the form
       # { rcpt: <email address>, vars: [{ <SYMBOL_KEY> => <value>} , ... ] }
       def merge_vars_values_from(user, merge_vars)
-        { rcpt: user.email, vars: vars_from(user, merge_vars) }
+        { rcpt: user.try(:email), vars: vars_from(user, merge_vars) }
       end
 
       # @param [ User ]
@@ -122,6 +124,25 @@ module TrazoroMandrill
       # Sends the fake email to the fake recipient
       def send_fake_email!(mailer)
         mailer.send_one!(fake_recipient)
+      end
+
+      # Returns the structure required to attachments files to send by email
+      def get_file_attachments(attachments)
+        attachments.map do |file_attach|
+          {
+            type: file_attach.file.content_type,
+            name: file_attach.type.to_s + '.' + file_attach.file.content_type.split('/').to_s ,
+            content: Base64.encode64(open_file_attach(file_attach.file))
+          }
+        end
+      end
+
+      def open_file_attach(attachment)
+        file = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
+                  Open(attachment.file.url)
+               else
+                  File.read(attachment.file.path)
+               end
       end
     end
   end

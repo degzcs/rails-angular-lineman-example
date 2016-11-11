@@ -26,6 +26,8 @@ module TrazoroMandrill
     attribute :global_merge_vars, default: []
     # Use this when sending to multiple
     attribute :custom_html_data
+    # Use this when sending attachment files
+    attribute :attachments, default: []
     # API response
     attribute :responses, default: []
 
@@ -123,7 +125,8 @@ module TrazoroMandrill
         text: text,
         html: html,
         from_email: from_email,
-        merge: use_merge_vars
+        merge: use_merge_vars,
+        attachments: attachments
       }.merge(recipient_data(recipients)).delete_if { |_key, value| value.blank? }.merge(global_merge_vars: global_merge_vars)
     end
 
