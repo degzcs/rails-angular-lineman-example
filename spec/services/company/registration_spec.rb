@@ -42,6 +42,7 @@ describe Company::Registration do
     expect(service.legal_representative.profile).to be_persisted
     expect(service.legal_representative.profile.setting.present?).to eq true
     expect(service.legal_representative.roles[0][:name]).to eq 'trader'
+    expect(service.company.legal_representative.completed?).to eq true
     expect(service.company.completed?).to eq true
   end
 
