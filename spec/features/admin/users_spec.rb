@@ -74,8 +74,8 @@ describe 'all test the user view', js: true do
     expect(last_user.completed?).to eq true
   end
 
-  it 'Edit User' do
-    user = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, email: 'test.email@trazoro.co')
+  it 'Edit User(trader)' do
+    user = create(:user, :with_profile, :with_company, :with_trader_role, email: 'test.email@trazoro.co')
     expected_response = {
       address: 'calle #40',
       phone_number: '5555555-5'
