@@ -62,11 +62,34 @@ module StateMachines
     end
 
     def send_info!
-      status.trigger!(:send_info) if self.type == 'sale'
+      if self.type == 'sale'
+        status.trigger!(:send_info)
+        #res = send_mandrill_email(status.state)
+      end
     end
 
     def cancel!
       status.trigger!(:cancel) if self.type == 'sale'
+    end
+
+    # 
+    # state => String = With the current state name of the state machine
+    # emails => Array = With email strings
+    # return => Array = With inside a hash for each email sent like this :
+    # [
+    #   {
+    #           "email" => "pcarmonaz@gmail.com",
+    #          "status" => "sent",
+    #             "_id" => "d8ff38c5f5404cdf9090668e4a5344bb",
+    #   "reject_reason" => nil
+    #   }
+    # ]
+    def send_mandrill_email(state, emails=[])
+      TrazoroMandrill::Service.send_email!(template_name(state), 'Buy Order Pending to Approved', {}, emails)
+    end
+
+    def template_name(state)
+      "#{self.class.name.lower}_#{state}_template"
     end
 
     def status
@@ -81,7 +104,21 @@ module StateMachines
                     fsm.when(:cancel, 'dispatched' => 'canceled', 'failed' => 'canceled')
                     fsm.when(:end_sale, 'approved' => 'paid', 'failed' => 'paid')
                     fsm.when(:crash, 'initialized' => 'failed', 'dispatched' => 'failed', "approved" => "failed", "canceled" => "failed")
+
                     callbacks(fsm)
+                    
+                    fsm.on(:dispatched) do
+                      send_mandrill_email('dispatched', [self.buyer.email])
+                    end
+
+                    fsm.on(:approved) do
+                      send_mandrill_email('dispatched', [self.buyer.email]) if self.type == 'sale'
+                    end
+
+                    fsm.on(:canceled) do
+                      send_mandrill_email('dispatched', [self.buyer.email]) if self.type == 'sale'
+                    end
+
                     fsm
                   end
     end
