@@ -97,6 +97,7 @@ describe 'all test the companies view', :js do
     expect(company.legal_representative.profile.phone_number).to eq expected_response[:phone_number]
     expect(company.legal_representative.profile.nit_number).to eq expected_response[:nit_number]
     expect(company.legal_representative.profile.setting.present?).to eq true
+    expect(company.legal_representative.completed?).to eq true
     expect(company.rucom.present?).to eq true
     expect(company.offices.present?).to eq true
     expect(company.completed?).to eq true
@@ -104,6 +105,8 @@ describe 'all test the companies view', :js do
 
   it 'Edit Company' do
     company = create(:company)
+    legal_representative = company.legal_representative
+    legal_representative.complete!
     expected_response = {
       company_name: 'compañia de prueba',
       legal_representative_name: 'Representante legal'
@@ -118,6 +121,7 @@ describe 'all test the companies view', :js do
     click_button('Update Company')
     expect(company.reload.name).to eq expected_response[:company_name]
     expect(company.legal_representative.profile.first_name).to eq expected_response[:legal_representative_name]
+    expect(company.legal_representative.completed?).to eq true
     expect(company.rucom.present?).to eq true
     expect(company.offices.present?).to eq true
     expect(company.completed?).to eq true
@@ -136,8 +140,7 @@ describe 'all test the companies view', :js do
   end
 
   it 'Company draft state' do
-    company = FactoryGirl.build(:company, name: nil, email: nil, phone_number: nil, chamber_of_commerce_file: nil, mining_register_file: nil, rut_file: nil, legal_representative_id: nil, address: nil, city_id: nil, nit_number: '1110001')
-    company.save(validate: false)
+    company = FactoryGirl.create(:company, name: nil, email: nil, phone_number: nil, chamber_of_commerce_file: nil, mining_register_file: nil, rut_file: nil, nit_number: '1110001')
     expected_response = {
       address: 'calle 45 # 32',
       city: City.first.name,
