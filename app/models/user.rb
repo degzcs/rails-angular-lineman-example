@@ -109,9 +109,9 @@ class User < ActiveRecord::Base
   # Methods for MicroMachine
   #
 
-  def user_complete
+  def user_complete?
     if check_if_it_can_be_completed
-      status.trigger(:complete)
+      complete!
     end
   end
 
