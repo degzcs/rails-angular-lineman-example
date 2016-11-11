@@ -7,7 +7,7 @@ describe 'all test the user view', js: true do
     login_as(admin_user, scope: :admin_user)
   end
 
-  it 'visit user view and create new user' do
+  it 'visit user view and create new user(trader)' do
     expected_office = create(:company).main_office
     expected_city = City.first
     expected_response = {
@@ -50,7 +50,7 @@ describe 'all test the user view', js: true do
     click_button('Create User')
 
     last_user = User.order(:created_at).last.as_json(include: :profile).with_indifferent_access
-    expect(page).to have_content 'User was successfully created.'
+    expect(page).to have_content 'El usuario se ha creado satisfactoriamente'
 
     expect(last_user[:email]).to eq expected_response[:email]
     expect(last_user[:office_id]).to eq expected_office.id
@@ -71,6 +71,7 @@ describe 'all test the user view', js: true do
     expect(last_user.office.company.name).to eq expected_office.company.name
     expect(last_user.profile.legal_representative?).to eq false
     expect(last_user.office.company.legal_representative.email).to eq expected_office.company.legal_representative.email
+    expect(last_user.completed?).to eq true
   end
 
   it 'Edit User' do
@@ -92,6 +93,7 @@ describe 'all test the user view', js: true do
 
     expect(user.reload.profile.address).to eq expected_response[:address]
     expect(user.profile.phone_number).to eq expected_response[:phone_number]
+    expect(user.completed?).to eq true
   end
 
   it 'Show User' do
