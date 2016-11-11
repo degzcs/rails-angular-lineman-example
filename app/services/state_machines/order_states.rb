@@ -84,8 +84,8 @@ module StateMachines
     #   "reject_reason" => nil
     #   }
     # ]
-    def send_mandrill_email(state, emails=[])
-      TrazoroMandrill::Service.send_email!(template_name(state), 'Buy Order Pending to Approved', {}, emails)
+    def send_mandrill_email(state, emails=[], merge_vars={}, attachments=[])
+      TrazoroMandrill::Service.send_email!(template_name(state), 'Buy Order Pending to Approved', merge_vars, emails, attachments)
     end
 
     def template_name(state)
@@ -107,26 +107,44 @@ module StateMachines
 
                     callbacks(fsm)
                     
-                    fsm.on(:dispatched) do
-                      send_mandrill_email('dispatched', [self.buyer.email])
-                    end
+                    # fsm.on(:dispatched) do
+                    #   send_mandrill_email('dispatched', [self.buyer.email])
+                    # end
 
-                    fsm.on(:approved) do
-                      send_mandrill_email('dispatched', [self.buyer.email]) if self.type == 'sale'
-                    end
+                    # fsm.on(:approved) do
+                    #   send_mandrill_email('approved', [self.buyer.email]) if self.type == 'sale'
+                    # end
 
-                    fsm.on(:canceled) do
-                      send_mandrill_email('dispatched', [self.buyer.email]) if self.type == 'sale'
-                    end
+                    # fsm.on(:canceled) do
+                    #   send_mandrill_email('canceled', [self.buyer.email]) if self.type == 'sale'
+                    # end
 
                     fsm
                   end
     end
 
     def callbacks(machine)
-      machine.on('approved') do
-        service = Alegra::Traders::CreateInvoice.new
-        service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
+      return unless self.type == 'sale'
+      state = machine.state
+
+      case state
+      when 'dispatched'
+        machine.on(state) do
+          send_mandrill_email(state, [self.buyer.email], {NAME: UserPresenter.new(self.buyer, nil).name}, [self.proof_of_sale])
+        end
+      when 'approved'
+        machine.on(state) do
+          response = ::Sale::PurchaseFilesCollection::Generation.new.call(sale_order: self)
+          send_mandrill_email(state, [self.buyer.email])
+          service = Alegra::Traders::CreateInvoice.new
+          service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
+        end
+      when 'canceled'
+        machine.on(state) do
+          send_mandrill_email(state, [self.buyer.email])
+        end
+      else
+        # Don't do anything!
       end
     end
 
