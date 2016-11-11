@@ -16,6 +16,7 @@ FactoryGirl.define do
     state true
     alegra_token {"fakeToken#{ UserSetting.count + 1 }"}
     profile
+    fine_gram_value 0.0
 
     trait :with_available_trazoro_service do
       transient do
@@ -23,7 +24,7 @@ FactoryGirl.define do
         credits 0
       end
       after :create do |user_setting, e|
-        user_setting.available_trazoro_services << create(:available_trazoro_service, name: e.name, credits: e.credits)
+        user_setting.trazoro_services << create(:available_trazoro_service, name: e.name, credits: e.credits)
       end
     end
   end

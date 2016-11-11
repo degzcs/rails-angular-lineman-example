@@ -54,6 +54,7 @@ class Profile < ActiveRecord::Base
   validates :mining_authorization_file, presence: true, if: :authorized_provider?
   validates :photo_file, presence: true
   validates :city, presence: true
+  # This is a document that must be signed by the barequero or scrap dealer to authorize the handling of your information
   validates :habeas_data_agreetment_file, presence: true, if: :authorized_provider?
   #
   # Uploaders

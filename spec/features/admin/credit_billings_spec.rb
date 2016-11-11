@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'all test the credit_billings view', :js do
-  let(:user) { create(:user, :with_profile,:with_company, :with_trader_role, first_name: 'Alan', last_name: 'Britho', alegra_id: 1, legal_representative: true) }
+  let(:user) { create(:user, :with_profile, :with_company, :with_trader_role, first_name: 'Alan', last_name: 'Britho', alegra_id: 1, legal_representative: true) }
 
   before :each do
     admin_user = AdminUser.find_by(email: 'soporte@trazoro.co')
@@ -31,58 +31,58 @@ describe 'all test the credit_billings view', :js do
   end
 
   it 'should create an invoice into Alegra' do
-      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
-      visit '/admin/credit_billings'
-      within("#credit_billing_#{credit_billing.id}") do
-        click_on('Actions')
-        click_on('Facturar')
-      end
-      expect(page).to have_content 'Datos de Transaccion'
+    credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000)
+    visit '/admin/credit_billings'
+    within("#credit_billing_#{credit_billing.id}") do
+      click_on('Actions')
+      click_on('Facturar')
+    end
+    expect(page).to have_content 'Datos de Transaccion'
 
-      VCR.use_cassette('alegra_create_credits_invoice_as_admin') do
-        click_link('Crear Factura en Alegra')
-      # click_link('Cancelar Envio de factura')
-      page.execute_script 'window.confirm = function () { return true }'
-      end
-      expect(page).to have_content "La fatura a sido creada satisfactoriamente"
-      expect(credit_billing.reload.invoiced).to eq true
+    VCR.use_cassette('alegra_create_credits_invoice_as_admin') do
+      click_link('Crear Factura en Alegra')
+    # click_link('Cancelar Envio de factura')
+    page.execute_script 'window.confirm = function () { return true }'
+    end
+    expect(page).to have_content "La fatura a sido creada satisfactoriamente"
+    expect(credit_billing.reload.invoiced).to eq true
   end
 
-  it 'should send the invoice  by email' do
-      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000, alegra_id: 1)
-      visit '/admin/credit_billings'
-      within("#credit_billing_#{credit_billing.id}") do
-        click_on('Actions')
-        click_on('Facturar')
-      end
-      expect(page).to have_content 'Datos de Transaccion'
-      VCR.use_cassette('alegra_send_credits_invoice_by_email_as_admin') do
-        click_link('Enviar Factura a usuario')
-        # click_link('Cancelar Envio de factura')
-        page.execute_script 'window.confirm = function () { return true }'
-      end
-      expect(page).to have_content "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
+  it 'should send the invoice by email' do
+    credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000, alegra_id: 1)
+    visit '/admin/credit_billings'
+    within("#credit_billing_#{credit_billing.id}") do
+      click_on('Actions')
+      click_on('Facturar')
+    end
+    expect(page).to have_content 'Datos de Transaccion'
+    VCR.use_cassette('alegra_send_credits_invoice_by_email_as_admin') do
+      click_link('Enviar Factura a usuario')
+      # click_link('Cancelar Envio de factura')
+      page.execute_script 'window.confirm = function () { return true }'
+    end
+    expect(page).to have_content "El correo ha sido enviado a #{credit_billing.user.email} satisfactoriamente"
   end
 
   it 'should mark the invoice as paid out' do
-      expected_response = {
-        payment_date: 'Fri, 19 Aug 2016 09:00:00 UTC +00:00',
-        paid: true
-      }
-      credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000, alegra_id: 1)
-      visit '/admin/credit_billings'
-      within("#credit_billing_#{credit_billing.id}") do
-        click_on('Actions')
-        click_on('Marcar como pagado')
-      end
-      expect(page).to have_content 'Ingrese la fecha en la que el usuario pago esta factura'
-      fill_in 'credit_billing_payment_date', with: '2016/08/19, 09:00 AM'
-      VCR.use_cassette('alegra_update_credits_invoice_as_admin') do
-        click_button('Marcar como pagado')
-        page.execute_script 'window.confirm = function () { return true }'
-      end
-      expect(credit_billing.reload.payment_date).to eq expected_response[:payment_date]
-      expect(credit_billing.paid).to eq expected_response[:paid]
-      expect(page).to have_content 'La factura fue marcada como pagada satisfactoriamente'
+    expected_response = {
+      payment_date: 'Fri, 19 Aug 2016 09:00:00 UTC +00:00',
+      paid: true
+    }
+    credit_billing = create(:credit_billing, user: user, paid: false, payment_date: nil, total_amount: 1000000, alegra_id: 1)
+    visit '/admin/credit_billings'
+    within("#credit_billing_#{credit_billing.id}") do
+      click_on('Actions')
+      click_on('Marcar como pagado')
+    end
+    expect(page).to have_content 'Ingrese la fecha en la que el usuario pago esta factura'
+    fill_in 'credit_billing_payment_date', with: '2016/08/19, 09:00 AM'
+    VCR.use_cassette('alegra_update_credits_invoice_as_admin') do
+      click_button('Marcar como pagado')
+      page.execute_script 'window.confirm = function () { return true }'
+    end
+    expect(credit_billing.reload.payment_date).to eq expected_response[:payment_date]
+    expect(credit_billing.paid).to eq expected_response[:paid]
+    expect(page).to have_content 'La factura fue marcada como pagada satisfactoriamente'
   end
 end

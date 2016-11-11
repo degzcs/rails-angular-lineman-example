@@ -82,9 +82,10 @@ class Company < ActiveRecord::Base
 
     state :failed
     state :draft do
-      validates :nit_number, presence: true
+      validates_uniqueness_of :nit_number
       validates :address, presence: true
       validates :city, presence: true
+      validates :legal_representative, presence: true
     end
     state :completed do
       validates :name, presence: true

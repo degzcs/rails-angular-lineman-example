@@ -7,7 +7,7 @@ describe 'all test the user view', js: true do
     login_as(admin_user, scope: :admin_user)
   end
 
-  it 'visit user view and create new user' do
+  it 'visit user view and create new user(trader)' do
     expected_office = create(:company).main_office
     expected_city = City.first
     expected_response = {
@@ -28,10 +28,8 @@ describe 'all test the user view', js: true do
         city: expected_city.name
       }
     }
-    visit '/admin'
-    find('#users').click # link header of users
-    find('.action_item').click # button new user
-    select('authorized_provider', from: 'user_role_ids')
+    visit '/admin/users/new'
+    select('trader', from: 'user_role_ids')
     fill_in 'Correo', with: expected_response[:email]
     select(expected_response[:office], from: 'user_office_id')
     # select('Empresa falsa # 0', from: 'user_rucom')
@@ -52,7 +50,7 @@ describe 'all test the user view', js: true do
     click_button('Create User')
 
     last_user = User.order(:created_at).last.as_json(include: :profile).with_indifferent_access
-    expect(page).to have_content 'User was successfully created.'
+    expect(page).to have_content 'El usuario se ha creado satisfactoriamente'
 
     expect(last_user[:email]).to eq expected_response[:email]
     expect(last_user[:office_id]).to eq expected_office.id
@@ -66,10 +64,18 @@ describe 'all test the user view', js: true do
     expect(last_user[:profile][:photo_file]['url']).to match(/photo_file.png/)
     expect(last_user[:profile][:mining_authorization_file]['url']).to match(/mining_register_file.pdf/)
     expect(last_user[:profile][:id_document_file]['url']).to match(/document_number_file.pdf/)
+
+    last_user = User.last
+    expect(last_user.roles.first.name).to eq 'trader'
+    expect(last_user.office).to eq expected_office
+    expect(last_user.office.company.name).to eq expected_office.company.name
+    expect(last_user.profile.legal_representative?).to eq false
+    expect(last_user.office.company.legal_representative.email).to eq expected_office.company.legal_representative.email
+    expect(last_user.completed?).to eq true
   end
 
-  it 'Edit User' do
-    user = create(:user, :with_profile, :with_personal_rucom, email: 'test.email@trazoro.co')
+  it 'Edit User(trader)' do
+    user = create(:user, :with_profile, :with_company, :with_trader_role, email: 'test.email@trazoro.co')
     expected_response = {
       address: 'calle #40',
       phone_number: '5555555-5'
@@ -87,6 +93,7 @@ describe 'all test the user view', js: true do
 
     expect(user.reload.profile.address).to eq expected_response[:address]
     expect(user.profile.phone_number).to eq expected_response[:phone_number]
+    expect(user.completed?).to eq true
   end
 
   it 'Show User' do

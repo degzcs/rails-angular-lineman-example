@@ -91,7 +91,7 @@ end
 
 puts 'Associating trazoro users ...'
 # Add to the trazoro Office
-trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'jesus.munoz@trazoro.co', 'tech@trazoro.co', 'dcm@trazoro.co', 'santiago.lopez@trazoro.co'])
+trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'tech@trazoro.co', 'dcm@trazoro.co', 'santiago.lopez@trazoro.co'])
 trazoro_users.update_all(office_id: office.id)
 
 puts 'Setting user roles ...'
@@ -99,6 +99,7 @@ trade_role = Role.find_by(name: 'trader')
 trazoro_users.each do |user|
   begin
     user.roles << trade_role unless user.roles.include?(trade_role)
+    user.complete! if user.registration_state = 'initialized'
   rescue => e
     puts "ERROR: #{ e }"
   end

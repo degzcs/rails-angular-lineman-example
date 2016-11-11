@@ -2,6 +2,7 @@ ActiveAdmin.register Rucom do
   menu priority: 3, label: 'Rucoms'
 
   actions :index, :show, :edit, :create, :new, :update
+  config.clear_action_items!
   permit_params :id, :rucom_number, :name, :original_name, :minerals, :location, :status, :provider_type, :rucomeable_id, :rucomeable_type, :updated_at, :created_at
 
   index do
@@ -52,19 +53,19 @@ ActiveAdmin.register Rucom do
       params_values = { rol_name: parameters['name'], id_type: parameters['provider_type'], id_number: parameters['rucom_number'] }
       response = RucomServices::Synchronize.new(params_values).call
       if response.response[:errors][0] == "Sincronize.call: error => create_rucom: [\"RucomService::Scraper.call: Net::ReadTimeout\"]"
-        redirect_to admin_rucoms_path, notice: 'Se ha agotado el tiempo de espera!'
+        redirect_to admin_users_path, notice: 'Se ha agotado el tiempo de espera!'
       elsif response.response[:errors][0]
-        redirect_to admin_rucoms_path, notice: response.response[:errors]
+        redirect_to admin_users_path, notice: response.response[:errors]
       elsif response.scraper.virtus_model.present? && response.scraper.is_there_rucom.present?
-        redirect_to admin_rucoms_path, notice: 'El rucom y el usuario se han creado correctamente'
+        redirect_to admin_users_path, notice: 'El rucom y el usuario se han creado correctamente'
       elsif response.scraper.virtus_model.nil? && response.scraper.is_there_rucom == false
-        redirect_to admin_rucoms_path, notice: 'El rucom(usuario) ya Existe!'
+        redirect_to admin_users_path, notice: 'El rucom(usuario) ya Existe!'
       end
     end
   end
 
   form do |f|
-    f.inputs 'Rucom Details' do
+    f.inputs 'Detalles de busqueda' do
       if params[:action] == 'new'
         f.input :name, label: 'Rol', collection: %w(Barequero)
         f.input :provider_type, label: 'Tipo Identificacion', collection: %w(CEDULA)
