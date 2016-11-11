@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids:  [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
 
   config.clear_action_items!
 
@@ -14,7 +14,6 @@ ActiveAdmin.register User do
   end
 
   # @params params [ Hash ]
-  # overwrite controller update to perform upgrade Rucom.
   controller do
     def update
       user = User.find(params[:id])
@@ -27,9 +26,23 @@ ActiveAdmin.register User do
         end
         user.update_attributes(permitted_params[:user].except(:profile_attributes))
         user.profile.update_attributes(permitted_params[:user][:profile_attributes])
-        # implementar maquina de estados
+        user.user_complete? unless user.completed?
       end
       redirect_to admin_user_path(user)
+    end
+  end
+
+  # @params params [ Hash ]
+  controller do
+    def create
+      user = User.new(permitted_params[:user])
+      user.save
+      user.user_complete?
+      if user.errors.full_messages.present?
+        redirect_to admin_users_path, notice: user.errors.full_messages
+      else
+        redirect_to admin_users_path, notice: 'El usuario se ha creado satisfactoriamente'
+      end
     end
   end
 
@@ -90,9 +103,6 @@ ActiveAdmin.register User do
     column(:document_number) do |user|
       user.profile.document_number
     end
-    column(:phone_number) do |user|
-      user.profile.phone_number
-    end
     column(:roles) do |user|
       user.roles.map(& :name)
     end
@@ -100,6 +110,7 @@ ActiveAdmin.register User do
     column(:legal_representative) do |user|
       user.profile.legal_representative?
     end
+    column :registration_state
     actions
   end
 
