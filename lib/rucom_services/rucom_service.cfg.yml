@@ -17,7 +17,7 @@ scraper:
     select_options: ["Comercializadores", "CEDULA", "NIT"]
     response_class: "TraderResponse"
   chatarrero:
-      select_options: ["Chatarrero", "CEDULA"]
-      response_class: ["AuthorizedProviderResponse"]
+    select_options: ["Chatarrero", "CEDULA"]
+    response_class: ["AuthorizedProviderResponse"]
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling

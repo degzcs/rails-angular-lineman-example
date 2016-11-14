@@ -67,7 +67,7 @@ describe RucomServices::Synchronize do
 
   context '#first_or_create_user_from_rucom' do
     before do
-      @data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: '15535725' }
+      @data = { rol_name: 'barequero', id_type: 'CEDULA', id_number: '15535725' }
       @sync = RucomServices::Synchronize.new(@data)
     end
 
@@ -94,7 +94,7 @@ describe RucomServices::Synchronize do
             expect(@sync.scraper.virtus_model.present?).to eq(true)
             expect(@sync.scraper.virtus_model.class.name).to eq("RucomServices::Models::#{@sync.scraper.setting.response_class}")
 
-            # it 'creates a rucom row in the database'
+            it 'creates a rucom row in the database'
             expect(@sync.rucom.blank?).to eq(false)
             expect(@sync.rucom).to eq(@rucom)
             expect(@rucom.name).to eq 'AMADO  MARULANDA'
@@ -104,11 +104,11 @@ describe RucomServices::Synchronize do
             expect(@rucom.provider_type).to eq 'barequero'
             expect(@rucom.rucomeable_type).to eq 'User'
 
-            # it 'creates a user profile row in the database'
+            it 'creates a user profile row in the database'
             @profile = Profile.find_by(document_number: @data[:id_number])
             expect(@sync.user_profile).to eq(@profile)
 
-            # it 'creates a user row in the database'
+            it 'creates a user row in the database'
             @user = @rucom.rucomeable
             expect(@sync.user).to eq(@user)
           end
@@ -142,7 +142,7 @@ describe RucomServices::Synchronize do
 
     context 'When the producer Profile dosen\'t exist' do
       it 'returns false as a result' do
-        VCR.use_cassette('successful_authorized_provider_rucom_response') do
+        VCR.use_cassette('') do
           expect(@sync.user_profile_exist?).to eq false
         end
       end

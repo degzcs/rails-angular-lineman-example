@@ -43,7 +43,7 @@ VCR.configure do |config|
   config.allow_http_connections_when_no_cassette = true
   config.cassette_library_dir = Rails.root.join('spec', 'support', 'vcr_cassettes')
   config.hook_into :webmock
-  # config.ignore_hosts 'localhost', '127.0.0.1'#, '0.0.0.0'
+  config.ignore_hosts 'http://127.0.0.1:8910/session/59527fe0-9639-11e6-916a-31ab47c7c295/execute'
   # NOTE: The line below does not allow save the VCR cassettes
   # config.ignore_localhost = true # it's recomendable to javascript local test whit capybara
 end
