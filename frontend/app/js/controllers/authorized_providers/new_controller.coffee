@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $document, $stateParams, $window, LocationService, $mdDialog, CameraService, ScannerService, AuthorizedProviderService) ->
+angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $document, $stateParams, $window, LocationService, $mdDialog, $mdToast,CameraService, ScannerService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -11,7 +11,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     selectedIndex: 0
   rawDataFromDocument = []
   dataFromDocument = []
-
+  $scope.captureDisable = true
   $scope.sendingPost = false
 
   $scope.goToDocumentation = ->
@@ -44,22 +44,24 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
         else
           e.preventDefault()
           rawDataFromDocument.push ','
-
  #------------- Switch variables----------------
 
   $scope.onChange = (toggleState) ->
     if toggleState == true
       $scope.initBarcodeScanner()
+      $mdToast.show $mdToast.simple().content('Lector de barras activado')
+      $scope.captureDisable = false
     else 
       console.log "false"
-      false
+      window.defaultStatus = "Default status bar message."
+      $mdToast.show $mdToast.simple().content('Lector de barras desactivado')
+      $scope.captureDisable = true
 
   # TODO: convert the above function into an indepent function in order to bind it or unbnd it.
   
   $scope.copyDataFromIdDocument = ->
     rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
     dataFromDocument = rawDataFromDocumentString.split(",")
-    console.log
     if detectOS == "Windows"
       idDocumentNumber = dataFromDocument[0].toString()
       validateIdDocumentNumber(idDocumentNumber)
@@ -71,12 +73,6 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       validateIdDocumentNumber(idDocumentNumber)
       firstLastName = dataFromDocument[2].toString() # TODO: made and object to map this info
       computeNameFrom(firstLastName)
-
-    #$scope.currentAuthorizedProvider.first_name = dataFromDocument[2] 
-     # alert "apellido incorrecta"
-      #$state.go 'index_authorized_provider'
-    #else
-     # console.log "no hay problema"
 
   # TODO: made function to remove black values from rawDataFromDocument
   validateIdDocumentNumber = (idDocumentNumber) -> 
@@ -97,8 +93,8 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
 
     return
-
-    #$scope.$watch 'currentAuthorizedProvider.document_number', (oldVal, newVal) ->
+  
+     #$scope.$watch 'currentAuthorizedProvider.document_number', (oldVal, newVal) ->
      # if oldVal and newVal != oldVal
       #  console.log "alerta!"
       #else 

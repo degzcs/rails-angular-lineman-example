@@ -71,15 +71,21 @@
                   %span{"md-highlight-text" => "searchStateText"} {{state.name}}
 
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCityText)", "md-no-cache" => "true", "md-search-text" => "searchCityText", "md-search-text-change" => "searchTextCityChange(searchCityText)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
-                  %span{"md-highlight-text" => "searchCityText"} {{city.name}}
+                %span{"md-highlight-text" => "searchCityText"} {{city.name}}
+                
               / end error
-
             .rucom-selection
-              %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar
-              %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
-              %md-button.md-primary.btn-cap{"ng-click" => "copyDataFromIdDocument()"} Capturar
-              %md-switch.md-primary{ "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"}
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+                %fieldset.standard.fieldset-information{:flex => "100"}
+                  %legend
+                    %h3 Lector de codigo de barras
+                  %div{:layout => "row", "layout-align" => "start center", "layout-sm" => "column", :style => "padding: 1px;"}
+                    %h2 Activar/desactivar:
+                    %md-switch.md-primary{ "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"}
+                    %md-button.md-primary.md-raised{"ng-click" => "copyDataFromIdDocument()", "ng-disabled" => "captureDisable"} Capturar
+              %md-content.md-padding{:layout => "", "layout-sm" => "column"}
+                %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar
+                %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
 
       /****************************   DOCUMENTATION ***********************************/
       %h2 Paso 2: Ingrese Documentacion
