@@ -1,4 +1,39 @@
 //--------- Home Styles ----------- //
+
+.site-content-toolbar{
+  height: 90px;
+  background: #fff !important;
+  color: #202020 !important;
+  z-index: 3;
+}
+
+.button-toolbar{
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 25px !important;
+  margin-bottom: 0px;
+  height: 30px !important;
+  background: black !important;
+}
+
+.a-toolbar{
+  font-size: x-small;
+  position: relative;
+  right: 200px;
+  top: 60px;
+  height: 15px;
+}
+
+
+.icon-toolbar{
+  width: 200px;
+  height: 90px;
+}
+
+.img-home{
+  -webkit-filter: brightness(50%);
+}
+
 .div-trazoro.gold{
   text-align: center;
   color: rgba(255,255,255,0.87);
@@ -12,17 +47,14 @@
 .div-trazoro.footer{
   text-align: center;
   width: 100%;
-  height: 100px;
-  background: url("/img/footer.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  height: 115px !important;
+  background: #1a1a1a;
+  
 }
 
-.div-trazoro.gray{
+.div-trazoro.golden{
 
-  background: #ebeae5;
+  background: #edcf36;
   text-align: center;
   padding-bottom: 40px;
   padding-top: 30px;
@@ -42,7 +74,7 @@
 
 .div-trazoro.white{
 
-  background: white;
+  background: #fff !important;
   text-align: center;
   padding-bottom: 40px;
   padding-top: 30px;
@@ -70,19 +102,43 @@
   background-size: cover;
   width: 100%;
   height: 300px;
+
 }
 .div-trazoro.image-barequero{
   text-align: center;
   color: rgba(255,255,255,0.87);
-  background: url("/img/barequero.jpg");
+  background: url("/img/quienes.png");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   width: 100%;
-  height: 300px;
+  height: 600px;
 }
 
+.div-trazoro.image-loquehacemos{
+  text-align: center;
+  color: rgba(255,255,255,0.87);
+  background: url("/img/loquehacemos.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 600px;
+}
+
+.div-trazoro.image-beneficios{
+  text-align: center;
+  color: rgba(255,255,255,0.87);
+  background: url("/img/beneficios.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 600px;
+}
 
 .login-form{
   width: 400px;

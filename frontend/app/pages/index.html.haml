@@ -80,16 +80,14 @@
     /----------------- PAGE CONTENT -------------------------/
     #wrapper
       #header
-        %md-content{ "flex"=>"", "class"=>"", "layout"=>"row" }
-          .mini-top-bar{'flex' => '' }
-            %img.trazoro-icon-small{ :src => "/img/trazoro_icon_small.png" }
+        
         %div{"ui-view" => "top-nav"}
       #content
         %div{:layout => "row", :layout-align => "center center"}
           /#dwtcontrolContainer
         %section{"ui-view" => "content"}
       #footer.div-trazoro.footer
-        %img.logo-bitbang{:src => "/img/logo_bitbang.png"}
+        %img{:src => "/img/trazoro-icon-footer.png"}
 
     //------------------------------------------------ SCANNER DRIVER ALERT  ----------- /
 
