@@ -14,7 +14,7 @@
             .trazoro-state.tag{"ng-if"=>"sale.trazoro"}
               Trazoro
             //.wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-            %md-button.btn-save.md-button.md-raised{ "ng-click" => "agreetment(sale.id)"} Ver Acuerdo
+            //%md-button.btn-save.md-button.md-raised{ "ng-click" => "agreetment(sale.id)"} Ver Acuerdo
 
           %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "showSale(sale)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
 
