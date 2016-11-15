@@ -103,7 +103,7 @@ RSpec.describe Order, type: :model do
         sale.send_info!
         expect(sale.status.state).to eq('dispatched')
 
-        sale.save
+        #sale.save
         expect(sale.transaction_state).to eq('dispatched')
         expect(sale.dispatched?).to eq(true)
       end
@@ -112,7 +112,6 @@ RSpec.describe Order, type: :model do
         sale.cancel!
         expect(sale.status.state).to eq('canceled')
 
-        sale.save
         expect(sale.transaction_state).to eq('canceled')
         expect(sale.not_approved?).to eq(true)
       end
@@ -121,21 +120,22 @@ RSpec.describe Order, type: :model do
         sale.crash!
         expect(sale.status.state).to eq('failed')
 
-        sale.save
         expect(sale.transaction_state).to eq('failed')
         expect(sale.failed?).to eq(true)
       end
 
       it 'sets as approved value in transaction_state field' do
         VCR.use_cassette('alegra_create_traders_invoice') do
-          sale.send_info!
-          sale.agree!
-          expect(sale.status.state).to eq('approved')
-          expect(sale.transaction_state).to eq('approved')
-          expect(sale.approved?).to eq(true)
-          expect(sale.invoiced).to eq true
-          expect(sale.alegra_id.present?).to eq true
-          expect(sale.payment_date.to_date).to eq Time.now.to_date
+          @sale =  create(:sale, :with_batches, :with_proof_of_sale_file)
+          @sale.send_info!
+          @sale.agree!
+          expect(@sale.status.state).to eq('approved')
+          expect(@sale.transaction_state).to eq('approved')
+          expect(@sale.approved?).to eq(true)
+          
+          expect(@sale.invoiced).to eq true
+          expect(@sale.alegra_id.present?).to eq true
+          expect(@sale.payment_date.to_date).to eq Time.now.to_date
         end
       end
 
@@ -143,7 +143,6 @@ RSpec.describe Order, type: :model do
         sale.end_transaction!
         expect(sale.status.state).to eq('paid')
 
-        sale.save
         expect(sale.transaction_state).to eq('paid')
         expect(sale.paid?).to eq(true)
       end
@@ -173,7 +172,7 @@ RSpec.describe Order, type: :model do
         expect(sale.status.state).to eq('initialized')
         expect(sale.not_approved?).not_to eq(true)
 
-        sale.save
+        #sale.save
         expect(sale.transaction_state).to eq('initialized')
       end
     end

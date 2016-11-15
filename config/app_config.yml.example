@@ -19,6 +19,7 @@ development:
   AWS_S3_ACCESS_KEY_ID: <value>
   AWS_S3_SECRET_ACCESS_KEY: <value>
   AWS_S3_REGION: <value>
+  MANDRILL_API_KEY: <value>
 
 test:
   <<: *defaults
@@ -28,6 +29,7 @@ test:
   ALEGRA_SYNC: false
   USE_WACOM_DEVICE: true
   USE_AWS_S3: false
+  MANDRILL_API_KEY: <value>
 
 staging:
   <<: *defaults
@@ -35,6 +37,7 @@ staging:
   ALEGRA_TOKEN: <value>
   USE_AWS_S3: true
   USE_WACOM_DEVICE: true
+  MANDRILL_API_KEY: <value>
 
 production:
   <<: *defaults
@@ -51,3 +54,4 @@ production:
   AWS_S3_ACCESS_KEY_ID: <value>
   AWS_S3_SECRET_ACCESS_KEY: <value>
   AWS_S3_REGION: <value>
+  MANDRILL_API_KEY: <value>

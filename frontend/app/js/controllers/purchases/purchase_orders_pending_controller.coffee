@@ -24,7 +24,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     }
     {
       name: 'Gramos Finos'
-      field: 'sale.gold_batch.grams'
+      field: 'sale.fine_grams'
     }
     {
       name: 'Precio'
@@ -46,6 +46,8 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
+    console.log 'sales: '
+    console.log sales
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
 

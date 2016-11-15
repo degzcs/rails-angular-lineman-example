@@ -31,6 +31,32 @@ module V1
           sale.buyer.email
         end
       end
+      expose :seller do
+        expose :id, documentation: { type: 'integer', desc: 'buyer id' } do |sale, _options|
+          sale.seller.id
+        end
+        expose :first_name, documentation: { type: 'string', desc: 'first_name of the seller, who buys a gold batch in inventory sale' } do |sale, _options|
+          sale.seller.profile.first_name
+        end
+        expose :last_name, documentation: { type: 'string', desc: 'last_name of the seller, who buys a gold batch in inventory sale' } do |sale, _options|
+          sale.seller.profile.last_name
+        end
+        # expose :document_type, documentation: { type: 'integer', desc: 'document_type of the seller, who buys a gold batch in inventory sale' } do |sale, _options|
+        #   sale.seller.profile.last_name
+        # end
+        expose :document_number, documentation: { type: 'integer', desc: 'document_number of the seller, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.seller.profile.document_number
+        end
+        expose :phone_number, documentation: { type: 'integer', desc: 'phone_number of the seller, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.seller.profile.phone_number
+        end
+        expose :address, documentation: { type: 'string', desc: 'adress of the seller, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.seller.profile.address
+        end
+        expose :email, documentation: { type: 'string', desc: 'email of the seller, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.seller.email
+        end
+      end
       expose :user_id, documentation: { type: 'integer', desc: 'user id', example: '1' } do |sale, _options|
         sale.seller.id
       end

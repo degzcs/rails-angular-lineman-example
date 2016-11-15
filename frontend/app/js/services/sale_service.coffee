@@ -94,7 +94,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       else
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/buy_agreetment" 
+                   url: "api/v1/agreetments/fixed_sale" 
 
 
     #

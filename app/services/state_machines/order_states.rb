@@ -45,28 +45,56 @@ module StateMachines
     def end_transaction!
       if self.type == 'purchase'
         status.trigger!(:end_purchase) if initialized?
-      else
-        status.trigger!(:end_sale) if approved?
+      elsif approved? || failed?
+        status.trigger!(:end_sale)
+        self.save!
       end
     end
 
     def crash!
       status.trigger(:crash)
+      self.save!
     end
 
     def agree!
-      if self.type == 'sale' # TODO: it should be a different condition more like: self.buyer == current_buyer
-        status.trigger!(:agree)
-        save!
-      end
+      return unless self.type == 'sale' # TODO: it should be a different condition more like: self.buyer == current_buyer
+      status.trigger!(:agree)
+      self.save!
+      callbacks(status)
     end
 
     def send_info!
-      status.trigger!(:send_info) if self.type == 'sale'
+      return unless self.type == 'sale'
+      status.trigger!(:send_info)
+      self.save!
+      callbacks(status)
     end
 
     def cancel!
-      status.trigger!(:cancel) if self.type == 'sale'
+      return unless self.type == 'sale'
+      status.trigger!(:cancel)
+      self.save!
+      callbacks(status)
+    end
+
+    # 
+    # state => String = With the current state name of the state machine
+    # emails => Array = With email strings
+    # return => Array = With inside a hash for each email sent like this :
+    # [
+    #   {
+    #           "email" => "pcarmonaz@gmail.com",
+    #          "status" => "sent",
+    #             "_id" => "d8ff38c5f5404cdf9090668e4a5344bb",
+    #   "reject_reason" => nil
+    #   }
+    # ]
+    def send_mandrill_email(state, emails=[], merge_vars={}, attachments=[], options={})
+      TrazoroMandrill::Service.send_email(template_name(state), 'Buy Order ' + state, merge_vars, emails, options, attachments)
+    end
+
+    def template_name(state)
+      "#{self.class.name.downcase}_#{state}_template"
     end
 
     def status
@@ -81,16 +109,36 @@ module StateMachines
                     fsm.when(:cancel, 'dispatched' => 'canceled', 'failed' => 'canceled')
                     fsm.when(:end_sale, 'approved' => 'paid', 'failed' => 'paid')
                     fsm.when(:crash, 'initialized' => 'failed', 'dispatched' => 'failed', "approved" => "failed", "canceled" => "failed")
-                    callbacks(fsm)
+
                     fsm
                   end
     end
 
     def callbacks(machine)
-      machine.on('approved') do
+      return unless self.type == 'sale'
+      state = machine.state
+      response = {}
+
+      case state
+      when 'dispatched'
+          self.response = send_mandrill_email(state, [self.buyer.email], {NAME: :name}, [self.proof_of_sale])
+
+      when 'approved'
+        response = ::Sale::PurchaseFilesCollection::Generation.new.call(sale_order: self)
+        response = send_mandrill_email(state, [self.seller.email], {NAME: :name, COMPANY_NAME: :company_name}, [self.proof_of_sale])
         service = Alegra::Traders::CreateInvoice.new
-        service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
+        response = service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
+
+      when 'canceled'
+          response  = send_mandrill_email(state, [self.buyer.email])
+
+      else
+        # Don't do anything!
       end
+      response
+    rescue Exception => error
+      response[:error] = error
+      response
     end
 
     module ClassMethods

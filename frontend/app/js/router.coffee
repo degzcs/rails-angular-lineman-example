@@ -424,6 +424,55 @@
         deferred.promise
   )
 
+  .state("new_purchase.orders_approved",
+    url: "/purchases/orders_approved",
+    ncyBreadcrumb:
+      label: 'Ordenes de Compra Aprobadas'
+    views:
+      'content':
+        templateUrl: "partials/purchases/orders_approved.html"
+        controller: "PurchaseOrdersApprovedCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_purchase.orders_canceled",
+    url: "/purchases/orders_canceled",
+    ncyBreadcrumb:
+      label: 'Ordenes de Compra Rechazadas'
+    views:
+      'content':
+        templateUrl: "partials/purchases/orders_approved.html"
+        controller: "PurchaseOrdersCanceledCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
 
   .state("new_purchase",
     url: "/purchases/new",

@@ -250,7 +250,7 @@ module V1
           @sale = ::Order.find(params[:id])
           transition = params[:transition].to_sym
           @sale.send(transition)
-          @sale.save!
+          #@sale.save!
           #header 'total_pages', @sale.total_pages.to_s
           present @sale, with: V1::Entities::Sale
         end

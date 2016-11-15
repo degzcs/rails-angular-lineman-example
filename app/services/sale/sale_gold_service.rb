@@ -48,6 +48,9 @@ module Sale
           current_user: @seller,
           order: sale_order
         )
+
+        # TODO: send email, sms or other service to buyer
+        response = @sale_order.send_info!
       end
       response
     end
@@ -58,8 +61,6 @@ module Sale
       order_hash.merge!(type: 'sale')
       @sale_order = seller.sales.build(order_hash)
       @sale_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-      # TODO: send email, sms or other service to buyer
-      @sale_order.send_info!
       response[:success] = Order.audit_as(seller) { @sale_order.save! } # This save both the new sale and gold_batch
       @sale_order
     end
