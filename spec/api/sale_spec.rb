@@ -58,7 +58,7 @@ describe 'Sale', type: :request do
 
           # Validate Sale audit actions on Orders
           order = Order.last
-          expect(order.audits.count).to eq(2) # because it makes 2 actions (create and update)
+          expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
           expect(order.audits.first.action).to eq('create')
           expect(order.audits.first.audited_changes['type']).to eq('sale')
           expect(order.audits.first.user).to eq(current_seller)
@@ -107,6 +107,16 @@ describe 'Sale', type: :request do
               'email' => sale.buyer.email
             }
 
+            expected_seller = {
+              'id' => sale.seller.id,
+              'first_name' => sale.seller.profile.first_name,
+              'last_name' => sale.seller.profile.last_name,
+              'document_number' => sale.seller.profile.document_number,
+              'phone_number' => sale.seller.profile.phone_number,
+              'address' => sale.seller.profile.address,
+              'email' => sale.seller.email
+            }
+
             expected_response = {
               'id' => sale.id,
               'courier_id' => sale.courier_id,
@@ -119,6 +129,7 @@ describe 'Sale', type: :request do
               'barcode_html' => sale.barcode_html,
               'shipment' => sale.shipment.as_json,
               'buyer' => expected_buyer,
+              'seller' => expected_seller,
               'price' => sale.price,
               'proof_of_sale' => sale.proof_of_sale.as_json,
               'purchase_files_collection' => sale.purchase_files_collection.as_json,
@@ -197,7 +208,6 @@ describe 'Sale', type: :request do
               it 'gets sales by state' do
                 sale_first = @sales.first
                 sale_first.send_info!
-                sale_first.save!
                 state = 'dispatched'
                 dispatched_sales = Order.sales_by_state(sale_first.buyer, state)
                 
@@ -217,24 +227,23 @@ describe 'Sale', type: :request do
 
             context 'when trigger a transition' do
               before :each do
-                @sale = @sales.last
+                @sale =  create(:sale, :with_batches, :with_proof_of_sale_file) # @sales.last
               end
 
               it 'sets the transaction field with its respective state' do
-                @sale.send_info!
-                @sale.save!
-                get "/api/v1/sales/#{@sale.id}/transition", {transition: 'cancel!'}, 'Authorization' => "Barer #{@token}"
+                VCR.use_cassette 'sale_order_states_trigger_transitions' do
+                  @sale.send_info!
+                  get "/api/v1/sales/#{@sale.id}/transition", {transition: 'cancel!'}, 'Authorization' => "Barer #{@token}"
 
-                expect(response.status).to eq 200
-                expect(JSON.parse(response.body)['transaction_state']).to eq 'canceled'
-                
-                @sale.crash!
-                @sale.save!
-                get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token}"
+                  expect(response.status).to eq 200
+                  expect(JSON.parse(response.body)['transaction_state']).to eq 'canceled'
+                  
+                  @sale.crash!
+                  get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token}"
 
-                expect(response.status).to eq 200
-                expect(JSON.parse(response.body)['transaction_state']).to eq 'approved'
-                
+                  expect(response.status).to eq 200
+                  expect(JSON.parse(response.body)['transaction_state']).to eq 'approved'
+                end
               end
             end
           end

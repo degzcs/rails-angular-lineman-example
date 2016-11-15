@@ -33,7 +33,7 @@ FactoryGirl.define do
           file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'origin_certificate_file.pdf')),
           type: 'origin_certificate'
         )
-        # purchase.save!
+        purchase.save!
       end
     end
 
@@ -43,7 +43,7 @@ FactoryGirl.define do
           file: File.open(File.join(Rails.root, 'spec', 'support', 'pdfs', 'factura_digital_trazoro.pdf')),
           type: 'equivalent_document'
         )
-        # purchase.save!
+        purchase.save!
       end
     end
   end
