@@ -58,7 +58,11 @@ module V1
         Settings.instance.fine_gram_value
       end
       expose :trazoro_services, documentation: { type: "array", desc: "Trazoro Services", example: "Servicio registro barequero" } do |user, options|
-        user.setting.trazoro_services.as_json(only: [:id, :name]) if user.setting.trazoro_services.present?
+        if user.setting
+          user.setting.trazoro_services.as_json(only: [:id, :name]) if user.setting.trazoro_services.present?
+        else
+          []
+        end
       end
       expose :legal_representative, documentation: { type: "string", desc: "if is legal representative", example: "true" } do |user, options|
         user.profile.legal_representative?
