@@ -48,7 +48,7 @@ module V1
           if query_name
             users = ::User.order_by_id.find_by_name(name).paginate(:page => page, :per_page => per_page)
           elsif query
-            users = ::User.order_by_id.find_by_document_number(query).paginate(:page => page, :per_page => per_page)
+            users = ::User.legal_representatives.order_by_id.find_by_document_number(query).exclude(current_user).paginate(:page => page, :per_page => per_page)
           elsif query_rucomid
             users = ::User.order_by_id.where("rucom_id = :rucom_id", {rucom_id: query_rucomid}).paginate(:page => page, :per_page => per_page)
           else
@@ -123,7 +123,7 @@ module V1
             [404, "Entry not found"],
           ] do
               data = V1::Helpers::UserHelper.rearrange_params(params[:user])
-              audit_message = "Updated from API Request by ID: #{current_user.id}"  
+              audit_message = "Updated from API Request by ID: #{current_user.id}"
               ::User.audit_as(current_user) do
                 current_user.update_attributes!(data[:user_data].merge(audit_comment: audit_message))
                 current_user.profile.update!(data[:profile_data].merge(audit_comment: audit_message))

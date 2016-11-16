@@ -91,6 +91,10 @@ class User < ActiveRecord::Base
   # Finally, this scope gets all users that can be logged in the platform
   scope :system_users, -> { where('users.password_digest IS NOT NULL')}
 
+  scope :traders, -> { joins(:roles).where("roles.name = 'trader'") }
+  scope :exclude, -> (user) { where.not(id: user.id) }
+  scope :legal_representatives, -> { joins(:profile).where('profiles.legal_representative = true') }
+
   #
   # Calbacks
   #
