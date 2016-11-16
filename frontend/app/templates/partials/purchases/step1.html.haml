@@ -1,20 +1,5 @@
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
   %section{layout: "row"}
-    %div.md-padding{flex: ""}
-      // ---Purchase Type
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            1. Seleccione El Tipo de Compra
-        %div.fieldset-inputs
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "purchase.model.type", :required => "", :name => 'purchase_type'}
-                %md-radio-button{:value => "seller", :ng-click => 'flushData()'} Directamente desde proveedor
-                /md-radio-button{:value => "trazoro", :ng-click => 'flushData()'} Trazoro
-
-
-  %section{layout: "row"}
     // ---------------------- seller info ------------------- ///
     %div.md-padding{flex: ""}
       %fieldset.standard.tr-fieldset{:layout => "column"}

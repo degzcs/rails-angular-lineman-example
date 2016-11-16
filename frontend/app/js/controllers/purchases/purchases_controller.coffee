@@ -257,7 +257,6 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     GoldBatchService.deleteState()
 
     PurchaseService.model =
-      type: ''
       price: 0
       # seller_picture: ''
       seller: {}
@@ -436,7 +435,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
         $scope.purchase.model.seller.name = fullName($scope.current_user)
         $scope.purchase.model.seller.company_name = "NA"
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Productor si se encuentra en el RUCOM').ariaLabel('Alert Dialog ').ok('ok')
-        $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}      
+        $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
       )
       .error((error)->
         $scope.prov = error
@@ -448,7 +447,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     # console.log $scope.chkAgreetmentActive
     res = if $scope.chkAgreetmentActive == true then true else false
     # console.log 'res: ' + res
-    return res    
+    return res
 
   #
   # Signature services
