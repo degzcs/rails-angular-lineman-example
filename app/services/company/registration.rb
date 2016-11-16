@@ -27,8 +27,9 @@ class Company::Registration
   # @param user_email[ String ]
   # @param legal_representative_data[ Hash ]
   def validates_user_exist(user_email, legal_representative_data)
-    if User.find_by(email: user_email)
-      update_legal_representative_from(legal_representative_data)
+    user = User.find_by(email: user_email)
+    if user.present?
+      update_legal_representative_from(user, legal_representative_data)
     else
       user_data = legal_representative_data.merge(office: company.main_office)
       @legal_representative = create_legal_representative_from(user_data)
@@ -52,12 +53,12 @@ class Company::Registration
     user
   end
 
+  # @param user [ User ]
   # @param user_data [ Hash ]
   # @return [ User ]
-  def update_legal_representative_from(user_data)
-    user_id = user_data[:id]
-    user = User.find(user_id)
-    user.update_attributes(user_data.except(:profile_attributes)) && user.profile.update_attributes(user_data[:profile_attributes])
+  def update_legal_representative_from(user, user_data)
+    user.update_attributes(user_data.except(:profile_attributes))
+    user.profile.update_attributes(user_data[:profile_attributes])
     user
   end
 
