@@ -22,9 +22,9 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.currentAuthorizedProvider = AuthorizedProviderService.restoreModel()
   $scope.showLoading = false
   $scope.toggleOff = false 
+  OSName = 'Unknown OS'
 
   detectOS = ->
-    OSName = 'Unknown OS'
     if navigator.appVersion.indexOf('Win') != -1
       OSName = 'Windows'
     if navigator.appVersion.indexOf('Mac') != -1
@@ -44,6 +44,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
         else
           e.preventDefault()
           rawDataFromDocument.push ','
+          console.log rawDataFromDocument.push ','
  #------------- Switch variables----------------
 
   $scope.onChange = (toggleState) ->
@@ -62,16 +63,17 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.copyDataFromIdDocument = ->
     rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
     dataFromDocument = rawDataFromDocumentString.split(",")
-    if detectOS == "Windows"
+    console.log detectOS()
+
+    if OSName == "Windows"
       idDocumentNumber = dataFromDocument[0].toString()
       validateIdDocumentNumber(idDocumentNumber)
-      firstLastName = dataFromDocument[1].toString() # TODO: made and object to map this info
-      computeNameFrom(firstLastName)
-
-    else
-      idDocumentNumber = dataFromDocument[1].toString()
-      validateIdDocumentNumber(idDocumentNumber)
       firstLastName = dataFromDocument[2].toString() # TODO: made and object to map this info
+      computeNameFrom(firstLastName)
+    else
+      idDocumentNumber = dataFromDocument[2].toString()
+      validateIdDocumentNumber(idDocumentNumber)
+      firstLastName = dataFromDocument[4].toString() # TODO: made and object to map this info
       computeNameFrom(firstLastName)
 
   # TODO: made function to remove black values from rawDataFromDocument
