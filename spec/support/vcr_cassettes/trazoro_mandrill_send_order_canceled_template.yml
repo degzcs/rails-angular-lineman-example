@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://mandrillapp.com/api/1.0/messages/send-template.json
+    body:
+      encoding: UTF-8
+      string: '{"template_name":"order_canceled_template","template_content":"","message":{"subject":"Buy
+        Order canceled - test","from_name":"A name here","from_email":"no-reply@trazoro.co","merge":true,"to":[{"email":"pcarmonaz@gmail.com","name":"Fake
+        name"}],"merge_vars":[{"rcpt":"pcarmonaz@gmail.com","vars":[]}],"global_merge_vars":[{"name":"POSTAL_ADDRESS","content":"Ruta
+        N, Medellín - Antioquia"},{"name":"COMPANY_EMAIL","content":"soporte@trazoro.co"},{"name":"COMPANY_SITE","content":"www.trazoro.co"},{"name":"PHONE_NUMBER","content":"+(57)
+        516-77-70 ext: 1035"}]},"async":false,"ip_pool":null,"send_at":null,"key":"3rQlxqb1FHr693HAu_c1XQ"}'
+    headers:
+      User-Agent:
+      - excon/0.51.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Server:
+      - nginx/1.8.0
+      Date:
+      - Fri, 18 Nov 2016 20:35:57 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Credentials:
+      - 'false'
+    body:
+      encoding: UTF-8
+      string: '[{"email":"pcarmonaz@gmail.com","status":"sent","_id":"24a8b36ffddd4eefab1267595326a46e","reject_reason":null}]'
+    http_version: 
+  recorded_at: Fri, 18 Nov 2016 20:35:57 GMT
+recorded_with: VCR 3.0.3
