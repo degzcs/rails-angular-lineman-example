@@ -35,7 +35,7 @@ RSpec.describe Order, type: :model do
       approved: 'approved',
       canceled: 'canceled'
     }
-    
+
     it '#buyer?' do
       current_user = purchase.buyer
       expect(purchase.buyer?(current_user)).to be_truthy
@@ -51,7 +51,7 @@ RSpec.describe Order, type: :model do
         current_user = purchase.buyer
         expect(purchase.seller?(current_user)).to be_falsey
     end
-    
+
     context 'purchase' do
       let(:current_user) { purchase.buyer }
 
@@ -65,7 +65,7 @@ RSpec.describe Order, type: :model do
       it 'sets as initial state the \'initialized\' value in transaction_state field' do
         expect(purchase.transaction_state).to eq('initialized')
       end
-      
+
       context 'When seller is an authorized provider' do
         it 'sets as paid value the transaction_state field to finish the purchase' do
           purchase.end_transaction!(current_user)
@@ -119,7 +119,7 @@ RSpec.describe Order, type: :model do
             expect( sale.agree!(@current_user)).to be nil
             expect( sale.cancel!(@current_user)).to be nil
             expect { sale.end_transaction!(@current_user) }.to raise_error 'Este usuario no está autorizado para finalizar la transacción'
-            
+
             expect(sale.initialized?).to be true
             expect(sale.dispatched?).to be false
             expect(sale.approved?).to be false
@@ -150,7 +150,7 @@ RSpec.describe Order, type: :model do
 
       context 'when current user is the legal representative' do
         context 'And he is the seller' do
-          let(:current_user_as_seller) do 
+          let(:current_user_as_seller) do
             sale.seller.roles  = [ Role.find_by(name: 'trader') ]
             sale.seller.save
             sale.seller
@@ -214,18 +214,17 @@ RSpec.describe Order, type: :model do
           end
 
           it 'sets as approved value in transaction_state field' do
-            VCR.use_cassette('alegra_create_traders_invoice') do
-              #@sale =  create(:sale, :with_batches, :with_proof_of_sale_file)
+            VCR.use_cassette('alegra_create_traders_invoice_for_state_machine') do
               sale.crash!
-              @sale.send_info!(current_user_as_buyer)
-              @sale.agree!(current_user_as_buyer)
-              expect(@sale.status.state).to eq('approved')
-              expect(@sale.transaction_state).to eq('approved')
-              expect(@sale.approved?).to eq(true)
-              
-              expect(@sale.invoiced).to eq true
-              expect(@sale.alegra_id.present?).to eq true
-              expect(@sale.payment_date.to_date).to eq Time.now.to_date
+              sale.send_info!(current_user_as_buyer)
+              sale.agree!(current_user_as_buyer)
+              expect(sale.status.state).to eq('approved')
+              expect(sale.transaction_state).to eq('approved')
+              expect(sale.approved?).to eq(true)
+
+              expect(sale.invoiced).to eq true
+              expect(sale.alegra_id.present?).to eq true
+              expect(sale.payment_date.to_date).to eq Time.now.to_date
             end
           end
         end

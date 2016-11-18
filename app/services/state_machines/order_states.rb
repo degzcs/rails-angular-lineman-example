@@ -137,7 +137,7 @@ module StateMachines
 
       case state
       when 'dispatched'
-          self.response = send_mandrill_email(state, [self.buyer.email], {NAME: :name}, [self.proof_of_sale])
+        response = send_mandrill_email(state, [self.buyer.email], {NAME: :name}, [self.proof_of_sale])
 
       when 'approved'
         response = ::Sale::PurchaseFilesCollection::Generation.new.call(sale_order: self)
