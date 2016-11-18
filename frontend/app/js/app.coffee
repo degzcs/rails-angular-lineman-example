@@ -60,6 +60,7 @@ angular.module("app", [
     .iconSet('notification', 'img/icons/sets/notification-icons.svg', 24)
     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
     .iconSet('toggle', 'img/icons/sets/toggle-icons.svg', 24)
+    .iconSet('logo_trazoro_black', 'img/icons/landing/logo-trazoro-black.svg', 24)
     .defaultIconSet 'img/icons/sets/core-icons.svg', 24
   return
 

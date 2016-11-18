@@ -23,7 +23,23 @@
   top: 60px;
   height: 15px;
 }
+  
+.div-rectangule{
+  width: 265px !important; 
+  height: 188px !important; 
+  border: 0.5px solid #1b1b1b;
+}
 
+.div-rectangule-black{
+  background: #1b1b1b;
+  color: white;
+  width: 100% !important;
+}
+
+img.icon-rectangule{
+  
+  height: 75px !important;
+}
 
 .icon-toolbar{
   width: 200px;
@@ -36,11 +52,8 @@
 
 .div-trazoro.gold{
   text-align: center;
-  color: rgba(255,255,255,0.87);
-  background: url("/img/background1.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  color: ;
+  background: rgb(238, 206, 86);
   background-size: cover;
 }
 
