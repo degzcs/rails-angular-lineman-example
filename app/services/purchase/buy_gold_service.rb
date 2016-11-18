@@ -7,7 +7,8 @@
 module Purchase
   # Service BuyGoldService
   class BuyGoldService
-    attr_reader :buyer, :seller, :purchase_order, :order_hash, :gold_batch_hash, :performer_user, :signature_picture, :date
+    attr_reader :buyer, :seller, :purchase_order, :order_hash, :gold_batch_hash, :performer_user, :signature_picture, :date,
+                :current_user
     attr_accessor :response
 
     def initialize
@@ -25,7 +26,8 @@ module Purchase
       validate_options(options)
       # seller is the gold provider
       @seller = User.find(options[:order_hash]['seller_id'])
-      @buyer = buyer_from(options[:current_user])
+      @current_user = options[:current_user]
+      @buyer = buyer_from(@current_user)
       @order_hash = options[:order_hash]
       @gold_batch_hash = options[:gold_batch_hash]
       @date = options[:date]
@@ -71,7 +73,7 @@ module Purchase
       @purchase_order = buyer.purchases.build(order_hash)
      
       @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
-      @purchase_order.end_transaction!
+      @purchase_order.end_transaction!(current_user)
       response[:success] = Order.audit_as(buyer) { @purchase_order.save! }
       
       @purchase_order

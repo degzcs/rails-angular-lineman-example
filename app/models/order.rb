@@ -170,6 +170,21 @@ class Order < ActiveRecord::Base
     gold_batch.sold? ? 'Vendido' : 'Disponible'
   end
 
+  def buyer?(current_user)
+    current_user == buyer
+  end
+
+  def seller?(current_user)
+    current_user == seller
+  end
+
+  # Select the correct seller based on he is a natual or legal person.
+    # @param current_user [ User ]
+    # @return [ User ]
+    def legal_representative?(current_user)
+        current_user.profile.legal_representative?
+    end
+
   protected
 
   # Before the sale is saved generate a barcode and its html representation
