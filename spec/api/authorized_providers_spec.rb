@@ -32,7 +32,9 @@ describe 'AuthorizedProviders', type: :request do
             id_number = '15535725'
             params_from_view = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: id_number }
 
-            get '/api/v1/authorized_providers/by_id_number', params_from_view, 'Authorization' => "Barer #{@token}"
+            VCR.use_cassette('successful_authorized_provider_rucom_response') do
+              get '/api/v1/authorized_providers/by_id_number', params_from_view, 'Authorization' => "Barer #{@token}"
+            end
 
             user = Profile.find_by(document_number: id_number).user
             expected_response = {

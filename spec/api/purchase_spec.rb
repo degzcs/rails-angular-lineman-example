@@ -22,7 +22,7 @@ describe 'Purchase', type: :request do
           'extra_info' => { 'grams' => 1.5 }.to_json
         }
 
-        @seller = create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero')
+        @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero')
 
         @new_purchase_values = {
           'seller_id' => @seller.id,
@@ -44,7 +44,7 @@ describe 'Purchase', type: :request do
             'gold_batch' => {
               'grams' => 1.5,
               'grade' => 1
-            },  
+            },
             'trazoro' => false
           }
 
@@ -68,12 +68,12 @@ describe 'Purchase', type: :request do
           expected_files.each do |key, value|
             expect(JSON.parse(response.body)[key]['url']).to match value
           end
-          
+
           order = Order.last
-          
+
           # validate the transaction state after is saved
           expect(order.paid?).to eq(true)
-          
+
           # Validate purchase audit actions on Orders
           expect(order.audits.count).to eq(1)
           expect(order.audits.last.audited_changes['type']).to eq('purchase')

@@ -132,6 +132,9 @@ RSpec.configure do |config|
     `rm -rf #{Rails.root}/tmp/purchase_files_collection`
     `rm -rf #{Rails.root}/tmp/purchase_files_collection_with_watermark`
     `rm -rf #{Rails.root}/tmp/signatures`
+    `rm -rf #{Rails.root}/tmp/terms_and_conditions`
+    `rm -rf #{Rails.root}/tmp/origin_certificates`
+    `rm -rf #{Rails.root}/tmp/shipment`
     `rm -rf #{Rails.root}/public/test`
   end
 

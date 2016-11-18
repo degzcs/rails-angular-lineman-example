@@ -10,61 +10,63 @@ describe 'Sale', type: :request do
 
       context 'POST' do
         it 'should create one complete sale with trader role' do
-          current_buyer = create(:user, :with_profile, :with_company, :with_trader_role).company.legal_representative
-          current_seller = @current_user.company.legal_representative
-          courier = create(:courier)
-          purchases = create_list(:purchase, 2,
-                                  :with_origin_certificate_file,
-                                  :with_proof_of_purchase_file,
-                                  buyer: current_seller)
-          # TODO: change frontend implementation to avoid this.
-          selected_purchases = purchases.map { |purchase| { id: purchase.id } }
-          expected_response = {
-            'courier_id' => courier.id,
-            'buyer' => {
-              'id' => current_buyer.id,
-              'first_name' => current_buyer.profile.first_name,
-              'last_name' => current_buyer.profile.last_name,
-              'document_number' => current_buyer.profile.document_number,
-              'phone_number' => current_buyer.profile.phone_number,
-              'address' => current_buyer.profile.address,
-              'email' => current_buyer.email
-            },
-            'user_id' => current_seller.id, # TODO: upgrade frontend
-            # 'gold_batch_id' => GoldBatch.last.id + 1,
-            'fine_grams' => 1.5,
-            # 'performer_id' => current_buyer.id
-          }
+          VCR.use_cassette('create_complete_sale_from_endpoint') do
+            current_buyer = create(:user, :with_profile, :with_company, :with_trader_role).company.legal_representative
+            current_seller = @current_user.company.legal_representative
+            courier = create(:courier)
+            purchases = create_list(:purchase, 2,
+                                    :with_origin_certificate_file,
+                                    :with_proof_of_purchase_file,
+                                    buyer: current_seller)
+            # TODO: change frontend implementation to avoid this.
+            selected_purchases = purchases.map { |purchase| { id: purchase.id } }
+            expected_response = {
+              'courier_id' => courier.id,
+              'buyer' => {
+                'id' => current_buyer.id,
+                'first_name' => current_buyer.profile.first_name,
+                'last_name' => current_buyer.profile.last_name,
+                'document_number' => current_buyer.profile.document_number,
+                'phone_number' => current_buyer.profile.phone_number,
+                'address' => current_buyer.profile.address,
+                'email' => current_buyer.email
+              },
+              'user_id' => current_seller.id, # TODO: upgrade frontend
+              # 'gold_batch_id' => GoldBatch.last.id + 1,
+              'fine_grams' => 1.5,
+              # 'performer_id' => current_buyer.id
+            }
 
-          new_gold_batch_values = {
-            'fine_grams' => 1.5,
-            'grade' => 1
-          }
+            new_gold_batch_values = {
+              'fine_grams' => 1.5,
+              'grade' => 1
+            }
 
-          new_sale_values = {
-            'courier_id' => courier.id,
-            'buyer_id' => current_buyer.id,
-            'price' => 180
-          }
+            new_sale_values = {
+              'courier_id' => courier.id,
+              'buyer_id' => current_buyer.id,
+              'price' => 180
+            }
 
-          post '/api/v1/sales/', {
-            gold_batch: new_gold_batch_values,
-            sale: new_sale_values,
-            selected_purchases: selected_purchases
-          }, 'Authorization' => "barcode_htmler #{@token}"
+            post '/api/v1/sales/', {
+              gold_batch: new_gold_batch_values,
+              sale: new_sale_values,
+              selected_purchases: selected_purchases
+            }, 'Authorization' => "barcode_htmler #{@token}"
 
-          expect(response.status).to eq 201
-          expect(JSON.parse(response.body)).to include expected_response
+            expect(response.status).to eq 201
+            expect(JSON.parse(response.body)).to include expected_response
 
-          # Validate Sale audit actions on Orders
-          order = Order.last
-          expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
-          expect(order.audits.first.action).to eq('create')
-          expect(order.audits.first.audited_changes['type']).to eq('sale')
-          expect(order.audits.first.user).to eq(current_seller)
-          expect(order.audits.last.action).to eq('update')
-          expect(order.shipment.file.path).to match('shipment.pdf')
-          # expect(order.audits.last.user).to eq(current_seller) is pending to add the audit_as
+            # Validate Sale audit actions on Orders
+            order = Order.last
+            expect(order.audits.count).to eq(2) # because it makes 2 actions (create and update)
+            expect(order.audits.first.action).to eq('create')
+            expect(order.audits.first.audited_changes['type']).to eq('sale')
+            expect(order.audits.first.user).to eq(current_seller)
+            expect(order.audits.last.action).to eq('update')
+            expect(order.shipment.file.path).to match('shipment.pdf')
+            # expect(order.audits.last.user).to eq(current_seller) is pending to add the audit_as
+          end
         end
       end
 
@@ -207,10 +209,10 @@ describe 'Sale', type: :request do
 
               it 'gets sales by state' do
                 sale_first = @sales.first
-                sale_first.send_info!
+                sale_first.send_info!(@current_user)
                 state = 'dispatched'
                 dispatched_sales = Order.sales_by_state(sale_first.buyer, state)
-                
+
                 # test  sales_by_state scope
                 expect(dispatched_sales.count).to eq 1
 
@@ -221,7 +223,7 @@ describe 'Sale', type: :request do
 
                 expect(res.count).to eq 1
                 expect(res.first['transaction_state']).to eq state
-                
+
               end
             end
 
@@ -237,7 +239,7 @@ describe 'Sale', type: :request do
 
                   expect(response.status).to eq 200
                   expect(JSON.parse(response.body)['transaction_state']).to eq 'canceled'
-                  
+
                   @sale.crash!
                   get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token}"
 
@@ -248,8 +250,6 @@ describe 'Sale', type: :request do
             end
           end
         end
-
-        
       end
     end
   end
