@@ -16,7 +16,7 @@ describe Purchase::BuyGoldService do
       settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
       settings.save!
       @initial_credits = 100
-      @seller = create(:user, :with_profile, :with_personal_rucom, provider_type: 'Barequero')
+      @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero')
 
       file_path = "#{Rails.root}/spec/support/pdfs/origin_certificate_file.pdf"
       Rack::Test::UploadedFile.new(file_path, 'application/pdf')

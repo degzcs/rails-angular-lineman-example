@@ -2,7 +2,8 @@
 module Sale
   # Service SaleGoldService
   class SaleGoldService
-    attr_reader :sale_order, :selected_purchase_ids, :seller, :buyer, :order_hash, :gold_batch_hash
+    attr_reader :sale_order, :selected_purchase_ids, :seller, :buyer, :order_hash, :gold_batch_hash,
+                :current_user
     attr_accessor :response
 
     def initialize
@@ -14,7 +15,8 @@ module Sale
     # @return [ Hash ]
     def call(options = {})
       validate_options(options)
-      @seller = seller_based_on(options[:current_user])
+      @current_user = options[:current_user]
+      @seller = seller_based_on(@current_user)
       @order_hash = options[:order_hash]
       @gold_batch_hash = options[:gold_batch_hash]
       # @buyer= buyer
@@ -50,7 +52,7 @@ module Sale
         )
 
         # TODO: send email, sms or other service to buyer
-        response = @sale_order.send_info!
+        response = @sale_order.send_info!(current_user)
       end
       response
     end

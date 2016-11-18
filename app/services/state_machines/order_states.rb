@@ -42,13 +42,28 @@ module StateMachines
       transaction_state == 'paid'
     end
 
-    def end_transaction!
-      if self.type == 'purchase'
-        status.trigger!(:end_purchase) if initialized?
-      elsif approved? || failed?
+    def end_transaction!(current_user)
+      if self.seller.authorized_provider?
+        raise message[:error_transition] unless initialized? || failed?
+        status.trigger!(:end_purchase)
+      else
+        raise message[:legal_representative] unless self.legal_representative?(current_user)
+        raise message[:trader_seller_approved_failed] unless can_end_transaction?(current_user)
         status.trigger!(:end_sale)
         self.save!
       end
+    end
+
+    def can_end_transaction?(current_user)
+      self.seller.trader? && self.seller?(current_user) && (approved? || failed?)
+    end
+
+    def message
+      {
+        error_transition: 'No se puede cambiar de estado de la transacción desde el estado actual',
+        legal_representative: 'Este usuario no está autorizado para finalizar la transacción',
+        trader_seller_approved_failed: 'Verifique que el usuario puede terminar la transacción y que la transacción esté en estado aprobado o fallido'
+      }
     end
 
     def crash!
@@ -56,28 +71,29 @@ module StateMachines
       self.save!
     end
 
-    def agree!
-      return unless self.type == 'sale' # TODO: it should be a different condition more like: self.buyer == current_buyer
+    def agree!(current_user)
+      return unless self.buyer?(current_user)
       status.trigger!(:agree)
       self.save!
       callbacks(status)
     end
 
-    def send_info!
-      return unless self.type == 'sale'
+    def send_info!(current_user)
+      return unless self.seller?(current_user)
       status.trigger!(:send_info)
       self.save!
       callbacks(status)
     end
 
-    def cancel!
-      return unless self.type == 'sale'
+    def cancel!(current_user)
+      return unless self.buyer?(current_user)
       status.trigger!(:cancel)
       self.save!
       callbacks(status)
     end
 
-    # 
+    # Send emails using the Trazoro Mandrill Service
+    # Params:
     # state => String = With the current state name of the state machine
     # emails => Array = With email strings
     # return => Array = With inside a hash for each email sent like this :
