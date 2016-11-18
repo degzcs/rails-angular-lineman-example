@@ -171,15 +171,16 @@ RSpec.describe Order, type: :model do
           end
 
           it 'sets as dispatched value in transaction_state field' do
-            sale.send_info!(current_user_as_seller)
-            expect(sale.status.state).to eq('dispatched')
+            VCR.use_cassette('trazoro_mandrill_send_order_dispathed_template') do
+              sale.send_info!(current_user_as_seller)
+              expect(sale.status.state).to eq('dispatched')
 
-            expect(sale.transaction_state).to eq('dispatched')
-            expect(sale.dispatched?).to eq(true)
+              expect(sale.transaction_state).to eq('dispatched')
+              expect(sale.dispatched?).to eq(true)
+            end
           end
 
           it 'sets as paid value in transaction_state field' do
-
             sale.crash! #currently the sale is dispatched , failed allows to change to whatever state
             sale.end_transaction!(current_user_as_seller)
             expect(sale.status.state).to eq('paid')
@@ -206,17 +207,21 @@ RSpec.describe Order, type: :model do
           end
 
           it 'sets as canceled value in transaction_state field' do
-            sale.cancel!(current_user_as_buyer)
-            expect(sale.status.state).to eq('canceled')
+            VCR.use_cassette('trazoro_mandrill_send_order_canceled_template') do
+              sale.crash!
+              sale.cancel!(current_user_as_buyer)
+              expect(sale.status.state).to eq('canceled')
 
-            expect(sale.transaction_state).to eq('canceled')
-            expect(sale.not_approved?).to eq(true)
+              expect(sale.transaction_state).to eq('canceled')
+              expect(sale.not_approved?).to eq(true)
+            end
           end
 
           it 'sets as approved value in transaction_state field' do
             VCR.use_cassette('alegra_create_traders_invoice_for_state_machine') do
+              @current_user_as_seller = sale.seller
               sale.crash!
-              sale.send_info!(current_user_as_buyer)
+              sale.send_info!(@current_user_as_seller)
               sale.agree!(current_user_as_buyer)
               expect(sale.status.state).to eq('approved')
               expect(sale.transaction_state).to eq('approved')
