@@ -127,7 +127,7 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
-  config.after :each do
+  config.after :suite do
     DatabaseCleaner.clean!
     `rm -rf #{Rails.root}/tmp/sale_and_purchase_files`
     `rm -rf #{Rails.root}/tmp/purchase_files_collection`
