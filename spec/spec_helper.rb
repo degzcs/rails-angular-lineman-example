@@ -128,12 +128,15 @@ RSpec.configure do |config|
   end
 
   config.after :suite do
-    DatabaseCleaner.clean!
     `rm -rf #{Rails.root}/tmp/sale_and_purchase_files`
     `rm -rf #{Rails.root}/tmp/purchase_files_collection`
     `rm -rf #{Rails.root}/tmp/purchase_files_collection_with_watermark`
     `rm -rf #{Rails.root}/tmp/signatures`
     `rm -rf #{Rails.root}/public/test`
+  end
+
+  config.after :each do
+    DatabaseCleaner.clean!
   end
 
   # Factory Girl methods
