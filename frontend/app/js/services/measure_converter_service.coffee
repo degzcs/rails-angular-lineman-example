@@ -77,7 +77,7 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # @params fineGramUnitPrice [Integer]
     # @return [Integer]
     #
-    rialesUnitPriceFrom: (fineGramUnitPrice)->
+    realesUnitPriceFrom: (fineGramUnitPrice)->
       (4.6*fineGramUnitPrice)/16
 
     #
@@ -107,6 +107,9 @@ angular.module('app').factory 'MeasureConverterService', ()->
     #
     fineGramsToGrams: (fine_grams, grade)->
         (999*fine_grams)/grade
+
+
+
 
   #
   # Return
