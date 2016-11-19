@@ -44,11 +44,11 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "min" => "0"}
                 %td.md-table-td-more
                   {{ gramsUnitPrice | number:2 }}
                 %td.md-table-td-more
-                  {{ subtotalGrams | number:2}} 
+                  {{ subtotalGrams | number:2}}
                 / %td.md-table-td-more.total-grams
                 /   %md-input-container
                 /     %label
@@ -67,49 +67,48 @@
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "min" => "0"}
                 %td.md-table-td-more
                   {{ castellanosUnitPrice | number:2 }}
                 %td.md-table-td-more
-                  {{ subtotalCastellano | number:2}} 
+                  {{ subtotalCastellano | number:2}}
               %tr
                 %td.md-table-td-more
                   Tomine(s)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "min" => "0"}
                 %td.md-table-td-more
                   {{ tominesUnitPriceFrom | number:2 }}
                 %td.md-table-td-more
-                  {{ subtotalTomines | number:2}}    
+                  {{ subtotalTomines | number:2}}
               %tr
                 %td.md-table-td-more
                   Real(es)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "0"}
                 %td.md-table-td-more
                   {{ realesUnitPriceFrom | number:2 }}
                 %td.md-table-td-more
-                  {{ subtotalReales | number:2}}    
+                  {{ subtotalReales | number:2}}
               %tr
                 %td.md-table-td-more
                   Grano(s)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>"", "min" => "0"}
                 %td.md-table-td-more
                   {{ granosUnitPriceFrom | number:2}}
                 %td.md-table-td-more
-                  {{ subtotalGranos | number:2}}    
+                  {{ subtotalGranos | number:2}}
               %tr
-                %td.md-table-td-more{colspan: 3}
-                  %md-input-container
-                    %label
-                    TOTAL: 
+                %td.md-table-td-more{colspan: 2}
+                %td.md-table-td-more{"layout-align"=>"end end"}
+                  %h3 TOTAL:
                 %td.md-table-td-more
                   $ {{ purchase.model.price | number:2}}
 
