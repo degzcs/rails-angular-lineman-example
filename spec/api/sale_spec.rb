@@ -13,6 +13,9 @@ describe 'Sale', type: :request do
           VCR.use_cassette('create_complete_sale_from_endpoint') do
             current_buyer = create(:user, :with_profile, :with_company, :with_trader_role).company.legal_representative
             current_seller = @current_user.company.legal_representative
+            current_seller.roles = [Role.find_by(name: 'trader')]
+            current_seller.save
+            @token_seller = current_seller.create_token
             courier = create(:courier)
             purchases = create_list(:purchase, 2,
                                     :with_origin_certificate_file,
@@ -52,14 +55,14 @@ describe 'Sale', type: :request do
               gold_batch: new_gold_batch_values,
               sale: new_sale_values,
               selected_purchases: selected_purchases
-            }, 'Authorization' => "barcode_htmler #{@token}"
+            }, 'Authorization' => "barcode_htmler #{@token_seller}"
 
             expect(response.status).to eq 201
             expect(JSON.parse(response.body)).to include expected_response
 
             # Validate Sale audit actions on Orders
             order = Order.last
-            expect(order.audits.count).to eq(2) # because it makes 2 actions (create and update)
+            expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
             expect(order.audits.first.action).to eq('create')
             expect(order.audits.first.audited_changes['type']).to eq('sale')
             expect(order.audits.first.user).to eq(current_seller)
@@ -198,6 +201,8 @@ describe 'Sale', type: :request do
             before(:all) do
               @current_user = create :user, :with_profile, :with_company, :with_trader_role
               @token = @current_user.create_token
+              @current_user_as_seller = create :user, :with_profile, :with_company, :with_trader_role
+              @token_to_seller = @current_user_as_seller.create_token
               @legal_representative = @current_user.company.legal_representative
               @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, buyer: @current_user)
               #@buyer = create(:user, :with_company, :with_trader_role)
@@ -208,40 +213,48 @@ describe 'Sale', type: :request do
               end
 
               it 'gets sales by state' do
-                sale_first = @sales.first
-                sale_first.send_info!(@current_user)
-                state = 'dispatched'
-                dispatched_sales = Order.sales_by_state(sale_first.buyer, state)
+                VCR.use_cassette('sale_end_point_gets_sales_by_state') do
+                  sale_first = @sales.first
+                  current_user_as_seller = sale_first.seller
+                  sale_first.send_info!(current_user_as_seller)
+                  state = 'dispatched'
+                  dispatched_sales = Order.sales_by_state(sale_first.buyer, state)
 
-                # test  sales_by_state scope
-                expect(dispatched_sales.count).to eq 1
+                  # test  sales_by_state scope
+                  expect(dispatched_sales.count).to eq 1
 
-                get "/api/v1/sales/by_state/#{state}",{}, 'Authorization' => "Barer #{@token}"
-                expect(response.status).to eq 200
+                  get "/api/v1/sales/by_state/#{state}",{}, 'Authorization' => "Barer #{@token}"
+                  expect(response.status).to eq 200
 
-                res = JSON.parse(response.body)
+                  res = JSON.parse(response.body)
 
-                expect(res.count).to eq 1
-                expect(res.first['transaction_state']).to eq state
-
+                  expect(res.count).to eq 1
+                  expect(res.first['transaction_state']).to eq state
+                end
               end
             end
 
             context 'when trigger a transition' do
               before :each do
-                @sale =  create(:sale, :with_batches, :with_proof_of_sale_file) # @sales.last
+                @current_user_as_buyer = create :user, :with_profile, :with_company, :with_trader_role
+                @legal_representative = @current_user_as_buyer.company.legal_representative
+                @legal_representative.roles = [ Role.find_by(name: 'trader')]
+                @legal_representative.save
+                @token_buyer = @legal_representative.create_token
+                @sale =  create(:sale, :with_batches, :with_proof_of_sale_file, buyer: @legal_representative) # @sales.last
               end
 
               it 'sets the transaction field with its respective state' do
                 VCR.use_cassette 'sale_order_states_trigger_transitions' do
-                  @sale.send_info!
-                  get "/api/v1/sales/#{@sale.id}/transition", {transition: 'cancel!'}, 'Authorization' => "Barer #{@token}"
+                  current_user_as_seller = @sale.seller
+                  @sale.send_info!(current_user_as_seller)
+                  get "/api/v1/sales/#{@sale.id}/transition", {transition: 'cancel!'}, 'Authorization' => "Barer #{@token_buyer}"
 
                   expect(response.status).to eq 200
                   expect(JSON.parse(response.body)['transaction_state']).to eq 'canceled'
 
                   @sale.crash!
-                  get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token}"
+                  get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token_buyer}"
 
                   expect(response.status).to eq 200
                   expect(JSON.parse(response.body)['transaction_state']).to eq 'approved'

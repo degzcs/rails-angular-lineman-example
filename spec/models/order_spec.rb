@@ -75,22 +75,24 @@ RSpec.describe Order, type: :model do
           expect(purchase.transaction_state).to eq('paid')
           expect(purchase.paid?).to eq(true)
         end
+        context 'When trigger an event different to end_transaction or crash to purchases transaction' do
+          it 'raises an exception and has not changes' do
+            message = 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
+            expect { purchase.send_info!(@current_user) }.to raise_error message
+            expect(purchase.status.state).to eq('initialized')
+            expect(purchase.dispatched?).to be false
 
-        it 'has not changes when trigger an event different to end_transaction or crash to purchases transaction' do
-          purchase.send_info!(@current_user)
-          expect(purchase.status.state).to eq('initialized')
-          expect(purchase.dispatched?).not_to eq(true)
+            expect { purchase.agree!(current_user) }.to raise_error "Event 'agree' not valid from state 'initialized'"
+            expect(purchase.status.state).to eq('initialized')
+            expect(purchase.approved?).not_to eq(true)
 
-          expect { purchase.agree!(current_user) }.to raise_error "Event 'agree' not valid from state 'initialized'"
-          expect(purchase.status.state).to eq('initialized')
-          expect(purchase.approved?).not_to eq(true)
+            expect {purchase.cancel!(current_user)}.to raise_error "Event 'cancel' not valid from state 'initialized'"
+            expect(purchase.status.state).to eq('initialized')
+            expect(purchase.not_approved?).not_to eq(true)
 
-          expect {purchase.cancel!(current_user)}.to raise_error "Event 'cancel' not valid from state 'initialized'"
-          expect(purchase.status.state).to eq('initialized')
-          expect(purchase.not_approved?).not_to eq(true)
-
-          purchase.save
-          expect(purchase.transaction_state).to eq('initialized')
+            purchase.save
+            expect(purchase.transaction_state).to eq('initialized')
+          end
         end
       end
 
@@ -114,10 +116,11 @@ RSpec.describe Order, type: :model do
 
       context 'When the current user not is the seller' do
         context 'when the current user not is the buyer' do
-          it 'returns nil and change the sale state to failed' do
-            expect( sale.send_info!(@current_user)).to be nil
-            expect( sale.agree!(@current_user)).to be nil
-            expect( sale.cancel!(@current_user)).to be nil
+          it 'raises an error ' do
+            message = 'Este usuario no es el comprador, no está autizado para cambiar el estado de la orden'
+            expect{ sale.send_info!(@current_user) }.to raise_error 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
+            expect{ sale.agree!(@current_user) }.to raise_error message
+            expect{ sale.cancel!(@current_user) }.to raise_error message
             expect { sale.end_transaction!(@current_user) }.to raise_error 'Este usuario no está autorizado para finalizar la transacción'
 
             expect(sale.initialized?).to be true
@@ -140,7 +143,8 @@ RSpec.describe Order, type: :model do
 
       context 'When the current user not is a legal representative' do
         it 'should dosen\'t change the sale state and return nil' do
-          expect(sale.send_info!(@current_user)).to be nil
+          message = 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
+          expect { sale.send_info!(@current_user)}.to raise_error message
           expect(sale.status.state).to eq('initialized')
 
           expect(sale.transaction_state).to eq('initialized')
@@ -229,7 +233,7 @@ RSpec.describe Order, type: :model do
 
               expect(sale.invoiced).to eq true
               expect(sale.alegra_id.present?).to eq true
-              expect(sale.payment_date.to_date).to eq Time.now.to_date
+              expect(sale.payment_date.to_date).to eq Time.now.utc.to_date
             end
           end
         end

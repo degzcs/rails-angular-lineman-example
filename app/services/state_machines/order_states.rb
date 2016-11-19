@@ -62,7 +62,9 @@ module StateMachines
       {
         error_transition: 'No se puede cambiar de estado de la transacción desde el estado actual',
         legal_representative: 'Este usuario no está autorizado para finalizar la transacción',
-        trader_seller_approved_failed: 'Verifique que el usuario puede terminar la transacción y que la transacción esté en estado aprobado o fallido'
+        trader_seller_approved_failed: 'Verifique que el usuario puede terminar la transacción y que la transacción esté en estado aprobado o fallido',
+        current_user_not_is_the_buyer: 'Este usuario no es el comprador, no está autizado para cambiar el estado de la orden',
+        current_user_not_is_the_seller: 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
       }
     end
 
@@ -72,21 +74,21 @@ module StateMachines
     end
 
     def agree!(current_user)
-      return unless self.buyer?(current_user)
+      raise message[:current_user_not_is_the_buyer] unless self.buyer?(current_user)
       status.trigger!(:agree)
       self.save!
       callbacks(status)
     end
 
     def send_info!(current_user)
-      return unless self.seller?(current_user)
+      raise message[:current_user_not_is_the_seller] unless self.seller?(current_user)
       status.trigger!(:send_info)
       self.save!
       callbacks(status)
     end
 
     def cancel!(current_user)
-      return unless self.buyer?(current_user)
+      raise message[:current_user_not_is_the_buyer] unless self.buyer?(current_user)
       status.trigger!(:cancel)
       self.save!
       callbacks(status)
