@@ -20,6 +20,12 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.origin_certificate_upload_type = null
   $scope.selectedseller = null
 
+  #subtotals variables
+  $scope.subtotalCastellano = 0
+  $scope.subtotalTomines = 0
+  $scope.subtotalReales = 0
+  $scope.subtotalGranos = 0
+
   # if $scope.purchase.model.origin_certificate_file.url
   # $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
 
@@ -232,7 +238,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Setup measures and total price if any of them have changed
-  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos, goldBatch.model.ozs, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
+  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -248,7 +254,23 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
     #Price
     $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
-    $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 1000)
+    $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999)
+    
+    #
+    # Measures Unit Price
+    $scope.gramsUnitPrice = $scope.purchase.model.fine_gram_unit_price_to_buy
+    $scope.castellanosUnitPrice = MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+    $scope.tominesUnitPriceFrom = MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+    $scope.realesUnitPriceFrom = MeasureConverterService.realesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+    $scope.granosUnitPriceFrom = MeasureConverterService.granosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+
+    #
+    #subtotals
+    $scope.subtotalGrams = $scope.gramsUnitPrice * $scope.goldBatch.model.grams
+    $scope.subtotalCastellano = $scope.castellanosUnitPrice * $scope.goldBatch.model.castellanos
+    $scope.subtotalTomines = $scope.tominesUnitPriceFrom * $scope.goldBatch.model.tomines
+    $scope.subtotalReales = $scope.realesUnitPriceFrom * $scope.goldBatch.model.reales
+    $scope.subtotalGranos = $scope.granosUnitPriceFrom * $scope.goldBatch.model.granos
 
   #
   # Flush Data

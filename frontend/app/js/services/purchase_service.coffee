@@ -24,6 +24,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       origin_certificate_file_url: ''
       proof_of_purchase_file_url: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
+      fine_gram_unit_price_to_buy: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
       barcode_html: ''
       code: ''

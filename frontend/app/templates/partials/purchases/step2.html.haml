@@ -4,28 +4,28 @@
     .seller
       .row{:layout => "", "layout-sm" => "column"}
         .select-law{'flex' => ''}
-          %h5 Digite el numero de ley
+          %h5 1. Digite el numero de ley
           %md-input-container
             %label Ley
-            %input{ "type" => "number", "string-to-number"=>"", :min => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre'}
+            %input{ "type" => "number", "string-to-number"=>"", min: => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre'}
             %div{"ng-messages" => "purchaseForm.degre.$error"}
               %div{"ng-message" => "required"} * Este campo es requerido.
         .fine-gram-unit-price{'flex' => ''}
-          %h5 Valor gramo fino de vender en COP
+          %h5 2. Valor gramo fino de vender en COP
           %md-input-container
             %label Precio de gramo fino por unidad
             %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1"}
             %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
               %div{"ng-message" => "required"} * Este campo es requerido.
         .price-to-buy{ 'flex' => ''}
-          %h5 Valor gramo fino de comprar en COP
+          %h5 3. Valor gramo fino de comprar en COP
           %md-input-container
             %label Precio de gramo fino por unidad
-            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1"}
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => ""}
 
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
-          %h5 Medidas
+          %h5 4. Medidas
           %table.md-table
             %thead
               %tr.md-table-headers-row
@@ -34,9 +34,7 @@
                 %th.md-table-header
                   Cantidad
                 %th.md-table-header
-                  Total gramos
-                %th.md-table-header
-                  Total gramos finos
+                  Precio Unitario
                 %th.md-table-header
                   Precio Total
             %tbody
@@ -46,54 +44,74 @@
                 %td.md-table-td-more
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>""}
-                %td.md-table-td-more.total-grams
-                  %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.total_grams",  :min => "1", :requiered => '', :readOnly => 'true', "type" => "number", "string-to-number"=>"", :name => 'total_grams'}
-                    %div{"ng-messages" => "purchaseForm.total_grams.$error"}
-                      %div{"ng-message" => "required"} * Tiene que seleccionar la cantidad de oro a facturar mayor a 1 gramo.
-                %td.md-table-td-more.total-fine-grams
-                  %md-input-container
-                    {{ goldBatch.model.total_fine_grams | number:3}}
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "min" => "1"}
                 %td.md-table-td-more
-                  %md-input-container
-                    $ {{ purchase.model.price | number:2}}
+                  {{ gramsUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ subtotalGrams | number:2}} 
+                / %td.md-table-td-more.total-grams
+                /   %md-input-container
+                /     %label
+                /     %input{"ng-model" => "goldBatch.model.total_grams",  :min => "1", :requiered => '', :readOnly => 'true', "type" => "number", "string-to-number"=>"", "min" => "1", :name => 'total_grams'}
+                /     %div{"ng-messages" => "purchaseForm.total_grams.$error"}
+                /       %div{"ng-message" => "required"} * Tiene que seleccionar la cantidad de oro a facturar mayor a 1 gramo.
+                / %td.md-table-td-more.total-fine-grams
+                /   %md-input-container
+                /     {{ goldBatch.model.total_fine_grams | number:3}}
+                / %td.md-table-td-more
+                /   %md-input-container
+                /     {{   | number:2 }}
               %tr
                 %td.md-table-td-more
                   Castellano(s)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>""}
-              %tr
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "min" => "1"}
                 %td.md-table-td-more
-                  Onza(s)
-                %td.md-table-td-more{colspan: 1}
-                  %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.ozs", "type" => "number", "string-to-number"=>""}
+                  {{ castellanosUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ subtotalCastellano | number:2}} 
               %tr
                 %td.md-table-td-more
                   Tomine(s)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>""}
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                %td.md-table-td-more
+                  {{ tominesUnitPriceFrom | number:2 }}
+                %td.md-table-td-more
+                  {{ subtotalTomines | number:2}}    
               %tr
                 %td.md-table-td-more
                   Real(es)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>""}
+                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                %td.md-table-td-more
+                  {{ realesUnitPriceFrom | number:2 }}
+                %td.md-table-td-more
+                  {{ subtotalReales | number:2}}    
               %tr
                 %td.md-table-td-more
                   Grano(s)
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %label
-                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>""}
+                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>"", "min" => "1"}
+                %td.md-table-td-more
+                  {{ granosUnitPriceFrom | number:2}}
+                %td.md-table-td-more
+                  {{ subtotalGranos | number:2}}    
+              %tr
+                %td.md-table-td-more{colspan: 3}
+                  %md-input-container
+                    %label
+                    TOTAL: 
+                %td.md-table-td-more
+                  $ {{ purchase.model.price | number:2}}
 
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
     %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => ""} Volver
