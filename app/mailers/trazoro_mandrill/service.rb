@@ -127,22 +127,83 @@ module TrazoroMandrill
       end
 
       # Returns the structure required to attachments files to send by email
+      # def get_file_attachments(attachments)
+      #   attachments.map do |file_attach|
+      #     {
+      #       type: file_attach.file.content_type,
+      #       name: file_attach.type.to_s + '.' + file_attach.file.content_type.split('/').to_s ,
+      #       content: Base64.encode64(open_file_attach(file_attach.file))
+      #     }
+      #   end
+      # end
+
       def get_file_attachments(attachments)
         attachments.map do |file_attach|
-          {
-            type: file_attach.file.content_type,
-            name: file_attach.type.to_s + '.' + file_attach.file.content_type.split('/').to_s ,
-            content: Base64.encode64(open_file_attach(file_attach.file))
-          }
+          mime_types = get_mime_types(file_attach)
+          get_attachment_structure(mime_types, file_attach)
         end
       end
 
+
+      #  MIME::Types.type_for(file_name)
+      #  @param file_name as String
+      #  Return Array with a MimeType Object inside
+      #  Guess the content-type when you pass as argument the file based on its extension
+      # returns an Array with a MimeType Object inside like this:
+      #   [
+      # [0] {
+      #                    "Content-Type" => "application/pdf",
+      #       "Content-Transfer-Encoding" => "base64",
+      #                      "Extensions" => [
+      #                                     [0] "pdf"
+      #                                      ],
+      #                          "System" => nil,
+      #                        "Obsolete" => nil,
+      #                            "Docs" => nil,
+      #                             "URL" => [
+      #                                       [0] "IANA",
+      #                                       [1] "RFC3778"
+      #                                      ],
+      #                      "Registered" => true
+      #     }
+      #   ]
+      def get_attachment_structure(mime_types, file_attach)
+        {
+          type: mime_types.content_type,
+          name: file_attach.attributes['file'],
+          content: Base64.encode64(open_file_attach(file_attach.file))
+        }
+      end
+
+      # file_attach.attributes
+      # returns a Hash with the attributes of the Model
+      # {
+      #                  "id" => 151,
+      #                "file" => "equivalent_document.pdf",
+      #                "type" => "equivalent_document",
+      #     "documentable_id" => "60",
+      #   "documentable_type" => "Order",
+      #          "created_at" => Wed, 16 Nov 2016 12:44:07 UTC +00:00,
+      #          "updated_at" => Wed, 16 Nov 2016 12:44:07 UTC +00:00
+      # }
+
+      def get_mime_types(file_attach)
+        MIME::Types.type_for(file_attach.attributes['file']).first
+      end
+
+      # def get_mime_type(file_attach)
+      #   file_attach.file.try(content_type).blank? ? MIME::Types.type_for(file_attach.attributes['file']).first : file_attach.file.content_type
+      # end
+
+
       def open_file_attach(attachment)
         file = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
-                  Open(attachment.file.url)
+                  open(attachment.file.url).read
                else
                   File.read(attachment.file.path)
                end
+      rescue Exception => error
+        service_log.error "open_file_attach: Time: #{Time.now} - Error => #{error}"
       end
     end
   end
