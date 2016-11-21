@@ -50,12 +50,12 @@ class Profile < ActiveRecord::Base
   validates :phone_number, presence: true
   validates :address, presence: true
   validates :id_document_file, presence: true
-  validates :rut_file, presence: true, unless: :authorized_provider?
-  validates :mining_authorization_file, presence: true, if: :authorized_provider?
+  validates :rut_file, presence: true, unless: :authorized_provider? # NOTE: this is not necessary for this kind of user, but eventually it will be. So keep an eye on how the business is changing to remove this condition.
   validates :photo_file, presence: true
   validates :city, presence: true
   # This is a document that must be signed by the barequero or scrap dealer to authorize the handling of your information
   validates :habeas_data_agreetment_file, presence: true, if: :authorized_provider?
+
   #
   # Uploaders
   #
