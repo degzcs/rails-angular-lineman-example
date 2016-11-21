@@ -96,6 +96,19 @@ describe 'all test the user view', js: true do
     expect(user.completed?).to eq true
   end
 
+  it 'Edit User(legal_representative)' do
+    create(:available_trazoro_service)
+    user = create(:user, :with_profile, :with_company, :with_trader_role, email: 'test.copañia@trazoro.co', legal_representative: true)
+    visit '/admin/users/'
+    within("#user_#{ user.id }") do
+      click_link('Edit')
+    end
+    check 'user_available_trazoro_service_id_1'
+    click_button('Update User')
+    expect(user.reload.setting.trazoro_services.present?).to eq true
+    expect(user.reload.setting.trazoro_services.first.name).to eq 'test'
+  end
+
   it 'Show User' do
     expected_response = {
       first_name: 'Elchim',
