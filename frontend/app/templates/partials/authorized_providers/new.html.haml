@@ -72,7 +72,7 @@
 
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCityText)", "md-no-cache" => "true", "md-search-text" => "searchCityText", "md-search-text-change" => "searchTextCityChange(searchCityText)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
                 %span{"md-highlight-text" => "searchCityText"} {{city.name}}
-                
+
               / end error
             .rucom-selection
               %md-content.md-padding{:layout => "", "layout-sm" => "column"}
@@ -126,21 +126,19 @@
           %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
             %div{flex: '30'}
               %h4 Subir la autorizacion minera del proveedor (puede ser registro minero o carnet del rucom)
-              %md-select.uploader-selector{"ng-model" => "mining_authorization_uplaod_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
+              %md-select.uploader-selector{"ng-model" => "rut_uplaod_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
                 %md-option{:value => "by_upload"} Desde el PC
                 %md-option{:value => "by_scan"} Por Escaner
                 %md-option{:value => "by_photo"} por Camara
             %div{flex: ''}
               .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'mining_authorization_uplaod_type'}
+                .button-action.md-padding{:ng-switch => '', :on => 'rut_uplaod_type'}
                   %md-input-container
                     %label Nombre del archivo
-                    %input{"ng-model" => "currentAuthorizedProvider.mining_authorization_file[0].name", :readOnly => 'true',:required => "", :name => 'mining_authorization'}
-                    %div{"ng-messages" => "providerEditionForm.mining_authorization.$error"}
-                      %div{"ng-message" => "required"} * Debe seleccionar el documento de registro minero
+                    %input{"ng-model" => "currentAuthorizedProvider.rut_file[0].name", :readOnly => 'true', :name => 'rut'}
 
                   .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.mining_authorization_file', name: 'mining_authorization_file'}
+                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.rut_file', name: 'rut_file'}
                       Subir desde PC
                       %md-icon{"md-svg-icon"=>"file:file_upload"}
 
@@ -151,7 +149,7 @@
 
                   .by_photo{"ng-switch-when" =>'by_photo'}
                     .md-tile-left.cam
-                      %md-button.btn-save{"aria-label" => "Registro Minero", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
+                      %md-button.btn-save{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
                         Escanear con camara
                         %md-icon{"md-svg-icon" => "image:camera_alt"}
 

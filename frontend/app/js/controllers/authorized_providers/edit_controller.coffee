@@ -1,4 +1,3 @@
-
 angular.module('app').controller 'AuthorizedProviderEditCtrl', ($scope, $state, $stateParams, $window, AuthorizedProviderService, LocationService, $mdDialog) ->
   #*** Loading Variables **** #
   $scope.showLoading = true

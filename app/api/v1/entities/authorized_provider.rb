@@ -21,8 +21,8 @@ module V1
       expose :id_document_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.id_document_file
       end
-      expose :mining_authorization_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
-        user.profile.mining_authorization_file
+      expose :rut_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+        user.profile.rut_file
       end
       expose :photo_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.photo_file

@@ -21,7 +21,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   # Fill up form with retrieved values
   $scope.currentAuthorizedProvider = AuthorizedProviderService.restoreModel()
   $scope.showLoading = false
-  $scope.toggleOff = false 
+  $scope.toggleOff = false
   OSName = 'Unknown OS'
 
   detectOS = ->
@@ -35,7 +35,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       OSName = 'Linux'
     return OSName
   #--------------- scanner barcode----------------
-  
+
   $scope.initBarcodeScanner = ->
     window.onkeydown = (e) ->
       if !e.metaKey
@@ -52,14 +52,14 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       $scope.initBarcodeScanner()
       $mdToast.show $mdToast.simple().content('Lector de barras activado')
       $scope.captureDisable = false
-    else 
+    else
       console.log "false"
       window.defaultStatus = "Default status bar message."
       $mdToast.show $mdToast.simple().content('Lector de barras desactivado')
       $scope.captureDisable = true
 
   # TODO: convert the above function into an indepent function in order to bind it or unbnd it.
-  
+
   $scope.copyDataFromIdDocument = ->
     rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
     dataFromDocument = rawDataFromDocumentString.split(",")
@@ -77,7 +77,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       computeNameFrom(firstLastName)
 
   # TODO: made function to remove black values from rawDataFromDocument
-  validateIdDocumentNumber = (idDocumentNumber) -> 
+  validateIdDocumentNumber = (idDocumentNumber) ->
     if $scope.currentAuthorizedProvider.document_number != idDocumentNumber
       alert "Cedula incorrecta" # TODO: put standard popup mdDilaog here
       $state.go 'index_authorized_provider'
@@ -95,11 +95,11 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
 
     return
-  
+
      #$scope.$watch 'currentAuthorizedProvider.document_number', (oldVal, newVal) ->
      # if oldVal and newVal != oldVal
       #  console.log "alerta!"
-      #else 
+      #else
        # console.log "no hay problema"
 
 
@@ -125,7 +125,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       goToDocumentation()
 
     if CameraService.getTypeFile() == 3
-      $scope.currentAuthorizedProvider.mining_authorization_file = $scope.file
+      $scope.currentAuthorizedProvider.rut_file = $scope.file
       # AuthorizedProviderService.saveModel()
       goToDocumentation()
 
@@ -140,7 +140,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       goToDocumentation()
 
     if CameraService.getTypeFile() == 6
-      $scope.currentAuthorizedProvider.mining_authorization_file = $scope.file
+      $scope.currentAuthorizedProvider.rut_file = $scope.file
       goToDocumentation()
     #AuthorizedProviderService.saveModel()
     CameraService.clearData()
@@ -271,7 +271,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     validateDocumentationAndUpdate()
 
   validateDocumentationAndUpdate =  ()->
-    if $scope.currentAuthorizedProvider.id_document_file == '' || $scope.currentAuthorizedProvider.mining_authorization_file == ''
+    if $scope.currentAuthorizedProvider.id_document_file == '' || $scope.currentAuthorizedProvider.rut_file == ''
       $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
     else
       $scope.sendingPost = true
@@ -301,5 +301,4 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.isSet = (selectedValue) ->
     return $scope.setTab == selectedValue
 
-    
- 
+

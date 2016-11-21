@@ -14,6 +14,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       address: ''
       id_document_file: ''
       mining_authorization_file: ''
+      rut_file: ''
       photo_file: ''
       signature_picture: ''
       city_id: ''
@@ -59,7 +60,8 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       # Rearrange all files to upload to get them easyly
       filesToUpload = {
         idDocumentFile: service.model.id_document_file,
-        miningAuthorizationFile: service.model.mining_authorization_file,
+        #miningAuthorizationFile: service.model.mining_authorization_file,
+        rutFile: service.model.rut_file,
         photoFile: service.model.photo_file,
         signaturePicture: service.model.signature_picture
       }
@@ -67,7 +69,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       # Final files that will be uplaoded by the $upload service
       blobFiles = {
         idDocumentFile: '',
-        miningAuthorizationFile: '',
+        rutFile: '',
         photoFile: '',
         signaturePicture: ''
       }
@@ -118,24 +120,24 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           filesRemaining++
 
         #--------------------------------------------------------------------
-        # mining_authorization file
-        if filesToUpload.miningAuthorizationFile
-          # if !(filesToUpload.mining_authorization_file[0] instanceof File)
-          #   filesToUpload.mining_authorization_file[0].name = 'mining_authorization_file.pdf'
+        # rut file
+        if filesToUpload.rutFile
+          # if !(filesToUpload.rut_file[0] instanceof File)
+          #   filesToUpload.rut_file[0].name = 'rut_file.pdf'
           # else
           # NOTE: this part is used to convert the image/ in a blob image and can change the filename
-          miningAuthorizationFileCopy = filesToUpload.miningAuthorizationFile
-          miningAuthorizationReader = new FileReader
+          rutFileCopy = filesToUpload.rutFile
+          rutReader = new FileReader
 
-          miningAuthorizationReader.onload = ->
-            miningAuthorizationArray = createBinaryFile(@result)
-            blobFiles.miningAuthorizationFile = createBlobFile(miningAuthorizationArray, 'mining_authorization_file', miningAuthorizationFileCopy[0])
+          rutReader.onload = ->
+            rutArray = createBinaryFile(@result)
+            blobFiles.rutFile = createBlobFile(rutArray, 'rut_file', rutFileCopy[0])
             --filesRemaining
             if filesRemaining <= 0
               uploadFiles(blobFiles)
             return
 
-          miningAuthorizationReader.readAsBinaryString miningAuthorizationFileCopy[0]
+          rutReader.readAsBinaryString rutFileCopy[0]
           filesRemaining++
         #-------------------------------------------------------------------------
         #Files Upload

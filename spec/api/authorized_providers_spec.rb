@@ -45,7 +45,7 @@ describe 'AuthorizedProviders', type: :request do
               'phone_number' => user.profile.phone_number,
               'address' => user.profile.address,
               'id_document_file' => { 'url' => nil },
-              'mining_authorization_file' => { 'url' => nil },
+              'rut_file' => { 'url' => nil },
               'signature_picture' => { 'url' => nil },
               'photo_file' => { 'url' => nil },
               'email' => user.email,
@@ -89,8 +89,8 @@ describe 'AuthorizedProviders', type: :request do
           file_path = "#{Rails.root}/spec/support/pdfs/id_document_file.pdf"
           id_document_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
-          file_path = "#{Rails.root}/spec/support/pdfs/mining_authorization_file.pdf"
-          mining_authorization_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
+          file_path = "#{Rails.root}/spec/support/pdfs/rut_file.pdf"
+          rut_file = Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
           file_path = "#{Rails.root}/spec/support/images/photo_file.png"
           photo_file_file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
@@ -99,7 +99,7 @@ describe 'AuthorizedProviders', type: :request do
 
           url_base = '/test/uploads'
           id_document_file_url = "/documents/profile/id_document_file/#{user.profile.id}/id_document_file.pdf"
-          mining_authorization_file_url = "/documents/profile/mining_authorization_file/#{user.profile.id}/mining_authorization_file.pdf"
+          rut_file_url = "/documents/profile/rut_file/#{user.profile.id}/rut_file.pdf"
           photo_file = "/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
           habeas_data_agreetment_file_url = "/documents/profile/habeas_data_agreetment_file/#{user.profile.id}/habeas_data_agreetment.pdf"
           expected_response = {
@@ -110,7 +110,7 @@ describe 'AuthorizedProviders', type: :request do
             'phone_number' => '2334455',
             'address' => 'Calle 45 # 34b-56',
             'id_document_file' => { 'url' => url_base + id_document_file_url },
-            'mining_authorization_file' => { 'url' => url_base + mining_authorization_file_url },
+            'rut_file' => { 'url' => url_base + rut_file_url },
             'photo_file' => { 'url' => url_base + photo_file },
             'signature_picture' => { 'url' => url_base + habeas_data_agreetment_file_url },
             'email' => 'amado.prueba1@barequero.co',
@@ -142,7 +142,7 @@ describe 'AuthorizedProviders', type: :request do
             'city_id' => city.id || nil
           }
           rucom_data = { 'rucom_number' => '987654321' }
-          files = [photo_file_file, id_document_file, mining_authorization_file, signature_picture_file, habeas_data_agreetment_file]
+          files = [photo_file_file, id_document_file, rut_file, signature_picture_file, habeas_data_agreetment_file]
 
           params_set = { 'authorized_provider' => user_data, 'profile' => profile_data, 'rucom' => rucom_data, 'files' => files }
 
