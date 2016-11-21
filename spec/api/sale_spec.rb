@@ -9,7 +9,7 @@ describe 'Sale', type: :request do
       end
 
       context 'POST' do
-        it 'should create one complete sale with trader role' do
+        it 'should create one complete sale with trader role (this is the first stage in the trader sale process)' do
           VCR.use_cassette('create_complete_sale_from_endpoint') do
             current_buyer = create(:user, :with_profile, :with_company, :with_trader_role).company.legal_representative
             current_seller = @current_user.company.legal_representative

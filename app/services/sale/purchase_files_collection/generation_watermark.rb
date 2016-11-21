@@ -33,7 +33,7 @@ module Sale
       # @param file [ File ]
       # @return [ Hash ] with the response
       def generate_file_for!(sale_order, file)
-        
+
         sale_order.documents.build(
           file: open(file),
           type: 'purchase_files_collection_with_watermark'
@@ -146,7 +146,7 @@ module Sale
         # ID
         files << purchase_order.seller.profile.id_document_file
         # barequero id OR miner register OR resolution
-        files << purchase_order.seller.profile.mining_authorization_file
+        files << purchase_order.seller.profile.mining_authorization_file if purchase_order.seller.profile.mining_authorization_file.file.present?
         # purchase_order equivalent document
         files << purchase_order.proof_of_purchase.file
         end
@@ -163,7 +163,7 @@ module Sale
         # ID
         file_paths << Rails.root.join(purchase_order.seller.profile.id_document_file.path)
         # barequero id OR miner register OR resolution
-        file_paths << Rails.root.join(purchase_order.seller.profile.mining_authorization_file.path)
+        file_paths << Rails.root.join(purchase_order.seller.profile.mining_authorization_file.path) if purchase_order.seller.profile.mining_authorization_file.file.present?
         # purchase_order equivalent document
         file_paths << Rails.root.join(purchase_order.proof_of_purchase.file.path)
         end

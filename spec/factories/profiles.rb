@@ -32,7 +32,7 @@ FactoryGirl.define do
     address { Faker::Address.street_address }
     rut_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'rut_file.pdf'), 'application/pdf') }
     photo_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'images', 'photo_file.png'), 'image/jpeg') }
-    mining_authorization_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'), 'application/pdf') }
+    # mining_authorization_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'mining_register_file.pdf'), 'application/pdf') } # NOTE: this file is not needed any more. But I will keep it if the bussines change again.
     legal_representative { false }
     id_document_file { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'), 'application/pdf') }
     nit_number { Faker::Number.number(10) }

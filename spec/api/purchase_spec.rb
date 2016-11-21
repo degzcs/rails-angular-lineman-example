@@ -7,14 +7,12 @@ describe 'Purchase', type: :request do
         @legal_representative.profile.update_column :available_credits, 20_000
         @token = @buyer.create_token
 
-        file_path = "#{Rails.root}/spec/support/images/image.png"
         seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
         signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
-        file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
         seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
         signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
         # add signature.picture in @files for sending parameters correct
-        @files = [file, seller_picture, signature_picture]
+        @files = [seller_picture, signature_picture]
 
         @new_gold_batch_values = {
           'fine_grams' => 1.5,
@@ -22,7 +20,7 @@ describe 'Purchase', type: :request do
           'extra_info' => { 'grams' => 1.5 }.to_json
         }
 
-        @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero')
+        @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'barequero')
 
         @new_purchase_values = {
           'seller_id' => @seller.id,
@@ -80,7 +78,6 @@ describe 'Purchase', type: :request do
           expect(order.audits.last.user).to eq(@buyer.company.legal_representative)
         end
 
-        # TODO: This is the test that is raising some errors but is the only one to fix it
         it 'POST buy threshold error' do
           # Create a purchase with 30 fine grams for the current seller
           gold_batch = create :gold_batch, fine_grams: 30
