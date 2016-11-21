@@ -117,6 +117,7 @@ class Profile < ActiveRecord::Base
   def there_are_unset_attributes
     self.first_name.blank? ||
     self.last_name.blank? ||
+    self.document_number.blank? ||
     self.phone.blank? ||
     self.address.blank? ||
     self.city_id.blank? ||
