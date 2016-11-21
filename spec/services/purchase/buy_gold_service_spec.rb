@@ -10,16 +10,13 @@ describe Purchase::BuyGoldService do
 
   subject(:service) { Purchase::BuyGoldService.new }
 
-  context 'non trazoro user (from externanl user)' do
+  context 'Buy directly from an authorized provider (no trader)' do
     before :each do
       settings = Settings.instance
       settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
       settings.save!
       @initial_credits = 100
       @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero')
-
-      file_path = "#{Rails.root}/spec/support/pdfs/origin_certificate_file.pdf"
-      Rack::Test::UploadedFile.new(file_path, 'application/pdf')
 
       seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
       seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
@@ -42,12 +39,12 @@ describe Purchase::BuyGoldService do
     end
 
     it 'should to make a purchase order and discount credits from company' do
-      expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this is a fine grams
+      expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this are fine grams
       response = service.call(
         order_hash: @order_hash,
         gold_batch_hash: @gold_batch_hash,
         current_user: legal_representative, # TODO: worker
-        date: Date.today 
+        date: Date.today
       )
       expect(response[:success]).to be true
       expect(service.purchase_order.persisted?).to be true
