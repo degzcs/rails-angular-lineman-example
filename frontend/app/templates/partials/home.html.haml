@@ -1,6 +1,6 @@
 %md-toolbar.site-content-toolbar{:layout => "row"}
   %md-icon.icon-toolbar{ "md-svg-src" => "/img/logo-trazoro.svg" }
-  %div{:style => "margin-right: 150px;"}
+  %div{:style => "margin-right: 80px;"}
     %md-content{"ng-controller"=>"SessionsNewCtrl"}
       %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
         %div{:layout => "", "layout-sm" => "column"}
@@ -9,8 +9,9 @@
           %md-input-container.md-default-theme{"md-no-float" => "", :flex => "", :style => "margin-top: 25px;"}
             %input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
           %div{:layout => "", "layout-sm" => "row"}
-          %md-button.md-primary.button-toolbar
+          %md-button.md-primary.button-black
             INGRESAR
+            %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
           %a.a-toolbar{:ng-href => "#sendtoken"} ¿Olvidó sus datos?
 
 
@@ -19,11 +20,15 @@
   .text-content
     %h2
       %p 
-        %br lorem arguno trulli mento ipsum dolor sit 
-        %br amet, trementor, seconsectetur adipiscing 
+        %br lorem arguno trulli mento ipsum dolor sit amet,
+        %br trementor, seconsectetur adipiscing 
         %br elit dolor amet
-  %div
-    %img{:src => "/img/descubrir.png"}
+
+  %md-button.button-yellow
+    DESCUBRIR 
+    %md-icon{ "md-svg-icon"=>"/img/icons/landing/icono-apunta-abajo.svg" }
+
+
 
 
 %md-content.md-padding.div-trazoro.gold
@@ -32,28 +37,29 @@
   %h3
     %p
       %br Lorem ipsum dolor sit amet, consectetur adipiscing elit.   
-      %br Proin finibusest quis ligula pretium, eu mollis elit facilisis. Aliquam eget diam lectus.
+      %br Proin finibusest quis ligula pretium, eu mollis elit facilisis.
+      %br Aliquam eget diam lectus.
 
   %div.trazoro-padding{:layout => "row", "layout-margin" => ""}
-    %div.div-rectangule{:layout => "column", "flex" => "", "flex-order"=>"3", "layout-align" => "center center"}
+    %div.div-rectangule{:layout => "column", "layout-align" => "center center"}
       %div
         %img.icon-rectangule{:src => "/img/icons/landing/icono-hojas.svg"}
-      %div
+      %div.div-rectangule-black
         TRANSPARENCIA
+        
       %div
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin finibus est quis ligula pretium, eu mollis elit facilisis.
-    %div.div-rectangule{:layout => "column", "layout-align" => "center center", "flex" => "", "flex-order"=>"2"}
+    %div.div-rectangule{:layout => "column", "layout-align" => "center center"}
       %div
         %img.icon-rectangule{:src => "/img/icons/landing/icono-candado.svg"}
-      %div
-        %div.div-rectangule-black
-          
+      .div-rectangule-black
+        TRANQUILIDAD  
       %div
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin finibus est quis ligula pretium, eu mollis elit facilisis.
-    %div.div-rectangule{:layout => "column", "layout-align" => "center center", "flex" => "", "flex-order"=>"1"}
+    %div.div-rectangule{:layout => "column", "layout-align" => "center center"}
       %div
         %img.icon-rectangule{:src => "/img/icons/landing/icono-grafico.svg"}
-      %div
+      .div-rectangule-black
         TRAZABILIDAD
       %div
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin finibus est quis ligula pretium, eu mollis elit facilisis.
@@ -62,11 +68,105 @@
 
    
 
-%md-content.md-padding.div-trazoro.image-beneficios
+%md-content.md-padding.div-trazoro.beneficios
+  %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
+    %h1
+      BENEFICIOS
+
+  %div{"layout"=>"row", "layout-margin" => "", "layout-padding" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+    
+    %div{:flex  }
+      %div{"layout"=>"row", "layout-wrap"}
+        %div{:flex => "33"}
+          %img{:src => "/img/icons/landing/1.png"}
+        %div{"layout"=>"column"}
+          %div.title-num{:flex}
+            TRANSPARENCIA
+          %div.text-num{:flex}
+            I'm above on mobile.1
+        
+  
+    %div{:flex  }
+      %div{"layout"=>"row", "layout-wrap"}
+        %div{:flex => "33"}
+          %img{:src => "/img/icons/landing/2.png"}
+        %div{"layout"=>"column"}
+          %div.title-num{:flex}
+            TRANSPARENCIA
+          %div.text-num{:flex}
+            I'm above on mobile.2
+  
+    %div{:flex  }
+      %div{"layout"=>"row", "layout-wrap"}
+        %div{:flex => "33"}
+          %img{:src => "/img/icons/landing/3.png"}
+        %div{"layout"=>"column"}
+          %div.title-num{:flex}
+            TRANSPARENCIA
+          %div.text-num{:flex}
+            I'm above on mobile.3
+
+  %div{"layout"=>"row", "layout-margin" => "", "layout-padding" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+    
+    %div{:flex  }
+      %div{"layout"=>"row", "layout-wrap"}
+        %div{:flex => "33"}
+          %img{:src => "/img/icons/landing/4.png"}
+        %div{"layout"=>"column"}
+          %div.title-num{:flex}
+            TRANSPARENCIA
+          %div.text-num{:flex}
+            I'm above on mobile.4
+  
+    %div{:flex  }
+      %div{"layout"=>"row", "layout-wrap"}
+        %div{:flex => "33"}
+          %img{:src => "/img/icons/landing/5.png"}
+        %div{"layout"=>"column"}
+          %div.title-num{:flex}
+            TRANSPARENCIA
+          %div.text-num{:flex}
+            I'm above on mobile.5
+  
+    %div{:flex  }
+      %div{"layout"=>"row", "layout-wrap"}
+        %div{:flex => "33"}
+          %img{:src => "/img/icons/landing/6.png"}
+        %div{"layout"=>"column"}
+          %div.title-num{:flex}
+            TRANSPARENCIA
+          %div.text-num{:flex}
+            I'm above on mobile.6
 
 
 
-%md-content.md-padding.div-trazoro.image-barequero.trazoro-padding
+%md-content.md-padding.div-trazoro.quienes.trazoro-padding
+  %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
+    %h2
+      QUIENES LO PUEDEN USAR
+
+  %div{"layout"=>"row", "layout-margin" => "", "layout-fill" => "","layout-padding" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+
+    %div{:flex  }
+      %div.rectangule-quienes{"layout"=>"column"}
+        %div.padding-icon-quienes{:flex}
+          %img{:src =>"/img/icons/landing/icono-perfil.svg"}
+        %div..padding-text-quienes{:flex}
+          %br Lorem ipsum dolor sit amet, consectetur 
+          %br adi piscing elit Proin finibus est quis ligula pretium.
+        %div{:flex}
+          %md-icon{"md-svg-icon"=>"/img/icons/landing/icono-mas.svg"}
+  
+    %div{:flex  }
+      %div.rectangule-quienes{"layout"=>"column"}
+        %div.padding-icon-quienes{:flex}
+          %img{:src => "/img/icons/landing/icono-perfil.svg"}
+        %div.padding-text-quienes{:flex}
+          %br Lorem ipsum dolor sit amet, consectetur 
+          %br adi piscing elit Proin finibus est quis ligula pretium.
+        %div{:flex}
+          %md-icon{"md-svg-icon"=>"/img/icons/landing/icono-mas.svg"}
+
 
 %md-content.md-padding.div-trazoro.white.trazoro-padding
   .text-content
@@ -87,15 +187,16 @@
         %input{"ng-model" => "user.firstName", :placeholder => "Email"}
       %md-input-container{:flex => "", "md-no-float" => ""}
         %input{"ng-model" => "theMax", :placeholder => "Celular"}
-    %md-select{"ng-model" => "someVal", :placeholder => "Tipo de solicitud", :flex => ""}
+    %md-select{"ng-model" => "someVal", :placeholder => "Tipo de solicituds", :flex => ""}
       %md-option{:value => "1"} One
       %md-option{:value => "2"} Two
 
-    %md-input-container{:flex => ""}
-      %textarea{:columns => "1", "md-maxlength" => "150", "ng-model" => "user.biography", :placeholder => "Otra"}
-
-  %div
-    %img{:src => "/img/enviar.png"}
+    %md-input-container{:flex => "", "md-no-float" => ""}
+      %textarea{:columns => "1",:row => "3" , "md-maxlength" => "150", "ng-model" => "user.biography", :placeholder => "Otra", }
+    %md-button.md-primary.button-black{ "aria-label"=>"Custom Icon Button"}
+      Enviar
+      %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
+    
     
 
 
