@@ -29,7 +29,6 @@ module V1
         # @return [ Hash ]
         def authorized_provider_params(params)
           params = params.deep_symbolize_keys
-          # trazoro = false
           files = params[:files]
           photo_file = files.select{|file| file[:filename] =~ /photo_file/}.first
           id_document_file = files.select{|file| file[:filename] =~ /id_document_file/}.first

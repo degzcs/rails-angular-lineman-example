@@ -60,7 +60,6 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
       # Rearrange all files to upload to get them easyly
       filesToUpload = {
         idDocumentFile: service.model.id_document_file,
-        #miningAuthorizationFile: service.model.mining_authorization_file,
         rutFile: service.model.rut_file,
         photoFile: service.model.photo_file,
         signaturePicture: service.model.signature_picture
@@ -183,8 +182,8 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           files.push blobFiles.photoFile
         if blobFiles.idDocumentFile
           files.push blobFiles.idDocumentFile
-        if blobFiles.miningAuthorizationFile
-          files.push blobFiles.miningAuthorizationFile
+        if blobFiles.rutFile
+          files.push blobFiles.rutFile
         if blobFiles.signaturePicture
           files.push blobFiles.signaturePicture
         $upload.upload(
