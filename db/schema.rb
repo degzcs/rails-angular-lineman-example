@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122160535) do
+ActiveRecord::Schema.define(version: 20161122161943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,12 +291,13 @@ ActiveRecord::Schema.define(version: 20161122160535) do
   end
 
   create_table "user_settings", force: true do |t|
-    t.boolean  "state",           default: false
+    t.boolean  "state",                     default: false
     t.string   "alegra_token"
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "fine_gram_value"
+    t.integer  "last_transaction_sequence", default: 0
   end
 
   add_index "user_settings", ["profile_id"], name: "index_user_settings_on_profile_id", using: :btree
