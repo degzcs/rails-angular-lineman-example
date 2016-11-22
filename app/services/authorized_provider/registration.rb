@@ -29,8 +29,9 @@ module AuthorizedProvider
           @response[:success] = authorized_provider.profile.update_attributes(formatted_params[:profile].merge(audit_comment: audit_comment))
           @response[:success] = authorized_provider.update_attributes(
             formatted_params[:authorized_provider].merge(audit_comment: audit_comment)
-        )
+          )
           @response[:success] = authorized_provider.rucom.update_attributes(formatted_params[:rucom])
+          authorized_provider.authorized_provider_complete? unless authorized_provider.completed?
         end
         # TODO: Has this service reponse?
         habeas_service = ::TermsAndConditions::HabeasDataAgreetmentService.new
@@ -40,9 +41,9 @@ module AuthorizedProvider
         )
         @response
       end
-      rescue Exception => e
-        @response[:errors] << e.message
-        @response
+    rescue StandardError => e
+      @response[:errors] << e.message
+      @response
     end
 
     def validate_options(options)
