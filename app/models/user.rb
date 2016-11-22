@@ -119,6 +119,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def authorized_provider_complete?
+    if self.provider_complete && self.authorized_provider?
+      complete!
+    end
+  end
+
   #
   # Instance Methods
   #
@@ -147,6 +153,10 @@ class User < ActiveRecord::Base
 
   def has_rucom_unset_attributes
     self.rucom.there_are_unset_attributes
+  end
+
+  def provider_complete
+    self.profile.all_fields_authorized_provider
   end
 
   # Get the user activity based on rucom, barequero (authorized provider)
