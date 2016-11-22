@@ -126,6 +126,17 @@ class Profile < ActiveRecord::Base
     self.mining_register_file.url.blank?
   end
 
+  def all_fields_authorized_provider
+    self.first_name.present? &&
+    self.last_name.present? &&
+    self.document_number.present? &&
+    self.phone.present? &&
+    self.address.present? &&
+    self.city_id.present? &&
+    self.photo_file.url.present? &&
+    self.id_document_file.url.present?
+  end
+
   protected
 
   def init
