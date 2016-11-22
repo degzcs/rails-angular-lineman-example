@@ -186,15 +186,15 @@ class Order < ActiveRecord::Base
   end
 
   # Generate the sequence to every transaction based on last_transation_sequence from settings
-  def save_with_sequence
+  def save_with_sequence(current_user)
     raise ActiveRecord::RecordInvalid.new(self) unless valid?
-    order = self
-    Settings.instance.with_lock do
-      order.with_lock do
-        seq = Settings.instance.last_transaction_sequence + 1
-        order.transaction_sequence = seq
-        order.save!
-        Settings.instance.update_attributes!(last_transaction_sequence: seq)
+    setting = current_user.setting
+    setting.with_lock do
+      self.with_lock do
+        seq = setting.last_transaction_sequence + 1
+        self.transaction_sequence = seq
+        self.save!
+        setting.update_attributes!(last_transaction_sequence: seq)
       end
     end
   end

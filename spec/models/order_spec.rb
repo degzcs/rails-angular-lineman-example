@@ -37,9 +37,10 @@ RSpec.describe Order, type: :model do
     }
     
     it '#save_with_sequence' do
-      purchase.save_with_sequence
+      current_user = purchase.buyer
+      purchase.save_with_sequence(current_user)
       expect(purchase.transaction_sequence).to be 1
-      expect(Settings.instance.last_transaction_sequence).to be 1
+      expect(current_user.setting.last_transaction_sequence).to be 1
     end
 
     it '#buyer?' do
