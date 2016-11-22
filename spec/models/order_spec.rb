@@ -23,7 +23,7 @@ require 'spec_helper'
 
 RSpec.describe Order, type: :model do
   context 'Micromachine' do
-    let(:seller) { create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role,  provider_type: 'Barequero') }
+    let(:seller) { create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero') }
     let(:gold_batch) { create :gold_batch, fine_grams: 30 }
     let(:purchase) { create :purchase, seller: seller, gold_batch: gold_batch }
 
@@ -35,6 +35,12 @@ RSpec.describe Order, type: :model do
       approved: 'approved',
       canceled: 'canceled'
     }
+    
+    it '#save_with_sequence' do
+      purchase.save_with_sequence
+      expect(purchase.transaction_sequence).to be 1
+      expect(Settings.instance.last_transaction_sequence).to be 1
+    end
 
     it '#buyer?' do
       current_user = purchase.buyer
