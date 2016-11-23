@@ -17,6 +17,7 @@ FactoryGirl.define do
     alegra_token {"fakeToken#{ UserSetting.count + 1 }"}
     profile
     fine_gram_value 0.0
+    last_transaction_sequence 0
 
     trait :with_available_trazoro_service do
       transient do

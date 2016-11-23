@@ -179,11 +179,34 @@ class Order < ActiveRecord::Base
   end
 
   # Select the correct seller based on he is a natual or legal person.
-    # @param current_user [ User ]
-    # @return [ User ]
-    def legal_representative?(current_user)
-        current_user.profile.legal_representative?
+  # @param current_user [ User ]
+  # @return [ User ]
+  def legal_representative?(current_user)
+      current_user.profile.legal_representative?
+  end
+
+  # Generate the sequence to every transaction based on last_transation_sequence from settings
+  def save_with_sequence(current_user)
+    raise ActiveRecord::RecordInvalid.new(self) unless valid?
+    setting = current_user.setting
+    setting.with_lock do
+      self.with_lock do
+        seq = setting.last_transaction_sequence + 1
+        self.transaction_sequence = seq
+        self.save!
+        setting.update_attributes!(last_transaction_sequence: seq)
+      end
     end
+  end
+
+  # TODO: define the Right format to show the sequence number
+  def sequence_number
+    if transaction_sequence
+      sprintf '%s-%05d', created_at.year,transaction_sequence
+    else
+      "–"
+    end
+  end
 
   protected
 
