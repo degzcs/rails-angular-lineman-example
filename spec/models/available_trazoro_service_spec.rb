@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  credits    :float
+#  reference  :string(255)
 #
 
 require 'spec_helper'
@@ -21,6 +22,7 @@ describe AvailableTrazoroService, type: :model do
     context 'Validations' do
       it { should validate_presence_of(:name) }
       it { should validate_presence_of(:credits) }
+      it { should validate_presence_of(:reference) }
     end
   end
 

@@ -7,12 +7,14 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  credits    :float
+#  reference  :string(255)
 #
 
 FactoryGirl.define do
   factory :available_trazoro_service do
-    name 'test'
+    name { Faker::Name.first_name }
     credits 1.5
+    reference { Faker::Name.first_name }
 
     trait :with_user_setting do
       transient do
