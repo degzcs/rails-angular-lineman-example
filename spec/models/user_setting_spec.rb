@@ -2,13 +2,14 @@
 #
 # Table name: user_settings
 #
-#  id              :integer          not null, primary key
-#  state           :boolean          default(FALSE)
-#  alegra_token    :string(255)
-#  profile_id      :integer
-#  created_at      :datetime
-#  updated_at      :datetime
-#  fine_gram_value :float
+#  id                        :integer          not null, primary key
+#  state                     :boolean          default(FALSE)
+#  alegra_token              :string(255)
+#  profile_id                :integer
+#  created_at                :datetime
+#  updated_at                :datetime
+#  fine_gram_value           :float
+#  last_transaction_sequence :integer          default(0)
 #
 
 require 'spec_helper'

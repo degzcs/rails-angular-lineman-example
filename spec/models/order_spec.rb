@@ -2,21 +2,22 @@
 #
 # Table name: orders
 #
-#  id                :integer          not null, primary key
-#  buyer_id          :integer
-#  seller_id         :integer
-#  courier_id        :integer
-#  type              :string(255)
-#  code              :string(255)
-#  price             :float
-#  seller_picture    :string(255)
-#  trazoro           :boolean          default(FALSE), not null
-#  created_at        :datetime
-#  updated_at        :datetime
-#  transaction_state :string(255)
-#  alegra_id         :integer
-#  invoiced          :boolean          default(FALSE)
-#  payment_date      :datetime
+#  id                   :integer          not null, primary key
+#  buyer_id             :integer
+#  seller_id            :integer
+#  courier_id           :integer
+#  type                 :string(255)
+#  code                 :string(255)
+#  price                :float
+#  seller_picture       :string(255)
+#  trazoro              :boolean          default(FALSE), not null
+#  created_at           :datetime
+#  updated_at           :datetime
+#  transaction_state    :string(255)
+#  alegra_id            :integer
+#  invoiced             :boolean          default(FALSE)
+#  payment_date         :datetime
+#  transaction_sequence :integer
 #
 
 require 'spec_helper'
