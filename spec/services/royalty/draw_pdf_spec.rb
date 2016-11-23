@@ -2,39 +2,35 @@ require 'spec_helper'
 
 describe Royalty::DrawPdf do
   let(:seller) do
-    trader1 = create(
+    create(
       :user, :with_profile, :with_company, :with_trader_role,
       name: 'Seller Company S.A.S',
       first_name: 'seller first_name',
       last_name: 'seller last_name',
       nit_number: '900123456789',
+      address: 'Street 123',
       document_number: '1010101010',
+      phone_number: '3101010101',
+      legal_representative: true,
+      company_email: 'seller.email@test.com',
       city: City.find_by(name: 'MEDELLIN')
     )
-    trader1.company.legal_representative
   end
 
   let(:buyer) do
-    trader2 = create(
+    create(
       :user, :with_profile, :with_company, :with_trader_role,
       name: 'Aquiles S.A',
       nit_number: '0987654321',
+      address: 'Street 456',
       first_name: 'buyer first_name',
       last_name: 'buyer last_name',
       document_number: '2020202020',
+      phone_number: '3202020202',
+      legal_representative: true,
+      company_email: 'buyer.email@test.com',
       city: City.find_by(name: 'MEDELLIN')
     )
-    trader2.company.legal_representative
-  end
-
-  let(:gold_batches) do
-    3.times.map { |index|  create(:gold_batch, fine_grams: index + 1) } # NOTE: gold batches with 1, 2 and 3 fine grams
-  end
-
-  let(:accepted_sale_orders) do
-    gold_batches.map do |gold_batch|
-      create :sale, seller: seller, buyer: buyer, gold_batch: gold_batch
-    end
   end
 
   subject(:service) { Royalty::DrawPdf.new }
@@ -44,13 +40,22 @@ describe Royalty::DrawPdf do
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.jpg"
       signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
       # expected_hash = '2ebeaa2e22115cb5a6d84aad646f808e3aafe20f389ee73515becca13198d1d7'
-      response = service.call(
-        current_user: seller,
-        orders: accepted_sale_orders,
+      report = OpenStruct.new(
+        mineral_type: 'ORO',
+        fine_grams: '52',
+        unit: 'gramos',
+        base_liquidation_price: '88.87463',
+        royalty_percentage: '4',
+        total: '181.000',
+        period: 4,
+        year: Time.now.strftime("%y"), # ex. 16
+        company: seller.company,
         mineral_presentation: 'Amalgama',
-        royalty_period: 4,
-        royalty_year: Time.now.strftime("%y"), # ex. 16
-        date: Time.now,
+        destination: buyer.company,
+      )
+      response = service.call(
+        report: report,
+        date: Time.now.strftime("%Y-%m-%d"),
         signature_picture: signature_picture
       )
       system "mkdir -p #{ Rails.root }/tmp/royalty"
