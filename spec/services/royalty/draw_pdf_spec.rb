@@ -39,14 +39,14 @@ describe Royalty::DrawPdf do
     it 'should check the consistency of the document' do
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.jpg"
       signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
-      expected_hash = '40b25c9ba37c5ab5546951e9e178e12d23b7e049b938b800f98992ce31d91d44'
+      expected_hash = '5662065bc294ba64c559ded86305c1762efcdbf7023c5117b63b14ff899c103e'
       report = OpenStruct.new(
         mineral_type: 'ORO',
-        fine_grams: '52',
+        fine_grams: 52,
         unit: 'gramos',
-        base_liquidation_price: '88.87463',
-        royalty_percentage: '4',
-        total: '181.000',
+        base_liquidation_price: 88.87463,
+        royalty_percentage: 4,
+        total: 181.000,
         period: 4,
         year: Time.now.strftime("%y"), # ex. 16
         company: seller.company,

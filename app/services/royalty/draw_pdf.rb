@@ -22,9 +22,9 @@ class Royalty::DrawPdf < Prawn::Document
         options[:signature_picture]
         )
       @response[:success] = true
-    # rescue => exception
-    #   @response[:success] = false
-    #   @response[:errors] << exception.message
+    rescue => exception
+      @response[:success] = false
+      @response[:errors] << exception.message
     end
     @response
   end
@@ -87,17 +87,17 @@ class Royalty::DrawPdf < Prawn::Document
     #
     move_cursor_to 350
     text_box report.mineral_type, :at => [40, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.fine_grams, :at => [125, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.fine_grams.to_s, :at => [125, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.unit, :at => [165, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.base_liquidation_price, :at => [225, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.base_liquidation_price.to_s, :at => [225, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     text_box report.unit, :at => [300, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.royalty_percentage, :at => [370, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.total, :at => [440, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.royalty_percentage.to_s, :at => [370, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.total.to_s, :at => [440, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     # TODO: What happen here when there are more than 1 destination?????
     text_box report.destinations.first.name, :at => [50, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.total, :at => [440, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.total.to_s, :at => [440, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     #
     # Destination section
@@ -107,7 +107,7 @@ class Royalty::DrawPdf < Prawn::Document
     text_box report.destinations.first.name, :at => [40, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.destinations.first.address, :at => [225, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.destinations.first.city.name, :at => [360, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.fine_grams, :at => [455, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.fine_grams.to_s, :at => [455, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     #
     # Signature section

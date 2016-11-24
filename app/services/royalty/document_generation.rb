@@ -1,7 +1,7 @@
 # Service module
 module Royalty
   # Service
-  class ReportGeneration
+  class DocumentGeneration
     attr_accessor :response
     attr_reader :pdf
 
