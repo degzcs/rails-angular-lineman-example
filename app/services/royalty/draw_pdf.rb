@@ -95,16 +95,18 @@ class Royalty::DrawPdf < Prawn::Document
     text_box report.royalty_percentage, :at => [370, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.total, :at => [440, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
-    text_box report.destination.name, :at => [50, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    # TODO: What happen here when there are more than 1 destination?????
+    text_box report.destinations.first.name, :at => [50, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.total, :at => [440, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     #
     # Destination section
     #
+    # TODO: allow fill up when there are 2 more destinations
     move_cursor_to 300
-    text_box report.destination.name, :at => [40, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.destination.address, :at => [225, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
-    text_box report.destination.city.name, :at => [360, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.destinations.first.name, :at => [40, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.destinations.first.address, :at => [225, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.destinations.first.city.name, :at => [360, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.fine_grams, :at => [455, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     #

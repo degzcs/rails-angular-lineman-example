@@ -51,7 +51,7 @@ describe Royalty::DrawPdf do
         year: Time.now.strftime("%y"), # ex. 16
         company: seller.company,
         mineral_presentation: 'Amalgama',
-        destination: buyer.company,
+        destinations: [buyer.company],
       )
       response = service.call(
         report: report,
