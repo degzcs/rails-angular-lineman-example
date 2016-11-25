@@ -22,6 +22,7 @@ module V1
         end
         get 'royalties' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           # values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
+          #binding.pry
           time = Time.now
           royalty_service = ::Reports::Royalty::DocumentGeneration.new
           royalty_service.call(
@@ -34,9 +35,13 @@ module V1
             base_liquidation_price: params[:base_liquidation_price],
             royalty_percentage: params[:royalty_percentage]
           )
-          header['Content-Disposition'] = "attachment; filename=royalties_#{time}.pdf"
-          env['api.format'] = :pdf
-          body royalty_service.pdf
+          if royalty_service.response[:success]
+            header['Content-Disposition'] = "attachment; filename=royalties_#{time}.pdf"
+            env['api.format'] = :pdf
+            body royalty_service.pdf
+          else
+           error!({ error: 'unexpected error', detail: royalty_service.response[:errors] }, 409)
+          end
         end
       end
     end

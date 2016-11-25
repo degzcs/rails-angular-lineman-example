@@ -15,6 +15,9 @@ module Reports
       def call(options = {})
         validate_options(options)
         generate!(options)
+      rescue => exception
+        @response[:success] = false
+        @response[:errors] << exception.message
       end
 
       def generate!(options)
@@ -26,11 +29,6 @@ module Reports
           signature_picture: options[:signature_picture]
         )
         @pdf = draw_service.render
-        @response
-      rescue => exception
-        @response[:success] = false
-        @response[:errors] << exception.message
-        @response
       end
 
       def validate_options(options)

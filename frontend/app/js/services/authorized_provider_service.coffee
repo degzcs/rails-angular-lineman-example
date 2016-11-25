@@ -199,7 +199,8 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             "profile[city_id]":service.model.city_id,
             "rucom[rucom_number]":service.model.rucom.rucom_number
           file: files
-          fileFormDataName: 'files[]').progress((evt) ->
+          fileFormDataName: 'files[]')
+        .progress((evt) ->
           console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
           service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
           return

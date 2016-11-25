@@ -50,7 +50,7 @@ h1,h2,h3,h4,h5 {
 md-toolbar.md-default-theme {
   color: rgba(255,255,255,0.87);
   //background: url("/img/background1.png");
-  //background: #ebeae5;  
+  //background: #ebeae5;
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -75,7 +75,7 @@ a{
 
 .trazoro-padding{
   padding-left: 50px!important;
-  padding-right: 50px!important; 
+  padding-right: 50px!important;
 }
 
 md-input-container.md-default-theme .md-input {
@@ -179,5 +179,9 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-i
 }
 
 .tr-fieldset md-input-container {
-  padding-bottom: none!important; 
+  padding-bottom: none!important;
+}
+
+.elongate-height{
+  min-height: 100%;
 }
