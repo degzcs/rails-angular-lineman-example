@@ -12,14 +12,14 @@ describe 'Reports', type: :request do
         gold_batches = 3.times.map { |i| create(:gold_batch, fine_grams: i+1) } # NOTE: gold baches with 1, 2, 3 fine grams
         payment_date = '02-02-2016'.to_date
         orders = gold_batches.each_with_index.map do |gold_batch, i|
-        create(:order,
-          seller: seller,
-          buyer: buyer,
-          transaction_state: 'completed',
-          gold_batch: gold_batch,
-          payment_date: payment_date + i,
-          price: 10_000
-          )
+          create(:order,
+            seller: seller,
+            buyer: buyer,
+            transaction_state: 'completed',
+            gold_batch: gold_batch,
+            payment_date: payment_date + i,
+            price: 10_000
+            )
         end
         @token = seller.create_token
       end

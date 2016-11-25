@@ -15,9 +15,6 @@ class GenerateSignatureWithoutBackground
     File.write(folder_config.income_image_path, signature_file)
     was_convert = remove_background_for(folder_config.income_image_path, folder_config.outcome_image_path)
     was_convert ? folder_config.outcome_image_path : raise('The image background cannot be remove!!!')
-  rescue StandardError => e
-    response[:errors] << "Error: #{e.message}"
-    response
   end
 
   # @param income_image_path [ String ]

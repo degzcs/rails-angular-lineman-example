@@ -23,11 +23,12 @@ module Reports
       def generate!(options)
         report = ::Reports::Royalty::Report.new
         draw_service = ::Reports::Royalty::DrawPdf.new
-        @reponse = draw_service.call(
+        @response = draw_service.call(
           report: report.call(options),
           date: Time.now.strftime("%Y-%m-%d"), # TODO: ask if this day is dynamic
           signature_picture: options[:signature_picture]
         )
+
         @pdf = draw_service.render
       end
 
