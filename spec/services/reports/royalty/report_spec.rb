@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Royalty::DrawPdf do
+describe Reports::Royalty::DrawPdf do
   let(:seller) do
     create(:user, :with_company, :with_trader_role).company.legal_representative
   end
@@ -9,7 +9,7 @@ describe Royalty::DrawPdf do
     create(:user, :with_company, :with_trader_role).company.legal_representative
   end
 
-  subject(:service) { Royalty::Report.new }
+  subject(:service) { Reports::Royalty::Report.new }
 
   context 'for one destination' do
     context 'for period 1' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Royalty::DrawPdf do
+describe Reports::Royalty::DrawPdf do
   let(:seller) do
     create(
       :user, :with_profile, :with_company, :with_trader_role,
@@ -33,7 +33,7 @@ describe Royalty::DrawPdf do
     )
   end
 
-  subject(:service) { Royalty::DrawPdf.new }
+  subject(:service) { Reports::Royalty::DrawPdf.new }
 
   context 'Draw the royalty document for current user (it should be legal_representative)' do
     it 'should check the consistency of the document' do
