@@ -35,6 +35,7 @@ module Reports
 
       def validate_options(options)
         raise 'You must to provide a current_user option' if options[:current_user].blank?
+        raise 'You must to be the legal representative to generate this report' unless options[:current_user]&.profile&.legal_representative?
         raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
       end
     end

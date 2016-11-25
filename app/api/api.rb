@@ -38,6 +38,7 @@ class API < Grape::API
   mount V1::Modules::City
   mount V1::Modules::CreditBilling
   mount V1::Modules::File
+  mount V1::Modules::Reports
   mount V1::Modules::Courier
   mount V1::Modules::Sale
   mount V1::Modules::AuthorizedProviders
