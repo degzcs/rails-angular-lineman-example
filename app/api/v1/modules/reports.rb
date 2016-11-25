@@ -20,9 +20,8 @@ module V1
         params do
           # use params
         end
-        get 'royalties' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+        post 'royalties' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
           # values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
-          #binding.pry
           time = Time.now
           royalty_service = ::Reports::Royalty::DocumentGeneration.new
           royalty_service.call(

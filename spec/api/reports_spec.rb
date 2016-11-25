@@ -36,7 +36,7 @@ describe 'Reports', type: :request do
           'royalty_percentage' => '4'
         }
 
-        get "/api/v1/reports/royalties", params, 'Authorization' => "Barer #{ @token }"
+        post "/api/v1/reports/royalties", params, 'Authorization' => "Barer #{ @token }"
         expect(response.body).not_to be_empty # IMPROVE: verify the PDF file content.
       end
     end

@@ -7,7 +7,7 @@ angular.module('app').factory 'ReportsService', ($resource, $upload, $http, $mdD
       uploadFile= (signaturePictureBlob) ->
         $upload.upload(
           url: '/api/v1/reports/royalties'
-          method: 'GET'
+          method: 'POST'
           headers: {'Content-Type': 'application/pdf'}
           fields:
             "period": period,
