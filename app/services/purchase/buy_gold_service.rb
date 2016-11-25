@@ -42,10 +42,14 @@ module Purchase
     # This will define the rucom and city to be used and the dicount credits to the correct
     # user as well.
     def buy!
-      if can_buy?(buyer, seller, gold_batch_hash['fine_grams'])
+      if can_buy?(seller, gold_batch_hash['fine_grams'])
         ActiveRecord::Base.transaction do
+          discount_credits_service = ::DiscountCredits.new
+          discount_credits_service.call(
+            buyer: buyer,
+            buyed_fine_grams: gold_batch_hash['fine_grams']
+          )
           purchase_order = setup_purchase_order!
-          discount_credits_to!(buyer, gold_batch_hash['fine_grams']) unless purchase_order.trazoro
           pdf_generation_service = ::PdfGeneration.new
           response = pdf_generation_service.call(
                        order: purchase_order,
@@ -63,6 +67,9 @@ module Purchase
                      )
         end
       end
+    rescue StandardError => e
+      response[:errors] << e.message
+      response[:success] = false
       response
     end
 
@@ -71,11 +78,9 @@ module Purchase
     def setup_purchase_order!
       order_hash.merge!(type: 'purchase')
       @purchase_order = buyer.purchases.build(order_hash)
-     
       @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
       @purchase_order.end_transaction!(current_user)
       response[:success] = Order.audit_as(buyer) { @purchase_order.save! }
-      
       @purchase_order
     end
 
@@ -94,18 +99,8 @@ module Purchase
     # @params seller [ User ]
     # @param buyed_fine_grams [ String ]
     # @return [ Boolean ]
-    def can_buy?(buyer, seller, buyed_fine_grams)
-      user_can_buy?(buyer, buyed_fine_grams) &&
-        under_monthly_thershold?(seller, buyed_fine_grams)
-    end
-
-    # @param buyer [ User ]
-    # @param buyed_fine_grams [ String ]
-    # @return [ Boolean ]
-    def user_can_buy?(buyer, buyed_fine_grams)
-      response[:success] = buyer.available_credits >= buyed_fine_grams.to_f # TODO: change to price
-      response[:errors] << 'No tienes los suficientes creditos para hacer esta compra' unless response[:success]
-      response[:success]
+    def can_buy?(seller, buyed_fine_grams)
+      under_monthly_thershold?(seller, buyed_fine_grams)
     end
 
     # @param seller [ User ]
@@ -115,7 +110,7 @@ module Purchase
       already_buyed_gold = Order.fine_grams_sum_by_date(Time.now, seller.id)
       response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= Settings.instance.monthly_threshold.to_f)
       seller_name = UserPresenter.new(seller, self).name unless response[:success]
-      response[:errors] << error_message(seller_name, already_buyed_gold) unless response[:success]
+      raise error_message(seller_name, already_buyed_gold) unless response[:success]
       response[:success]
     end
 
