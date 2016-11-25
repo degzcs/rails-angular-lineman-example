@@ -8,30 +8,28 @@ describe DiscountCredits do
   end
 
   it 'should show message error When an option is not provided ' do
-    response = service.call
-    expect(response[:success]).to eq false
-    expect(response[:errors]).to include 'You must to provide a buyer'
+    expect { service.call }.to raise_error('You must to provide a buyer')
   end
 
   it 'should show message error When the buyer does not have enough credits' do
     buyer = company.legal_representative
-    response = service.call(
-      buyer: buyer,
-      buyed_fine_grams: @fine_grams
-    )
-    expect(response[:success]).to eq false
-    expect(response[:errors]).to include 'No tienes los suficientes creditos para hacer esta compra'
+    expect do
+      service.call(
+        buyer: buyer,
+        buyed_fine_grams: @fine_grams
+      )
+    end.to raise_error('No tienes los suficientes creditos para hacer esta compra')
   end
 
   it 'should show message error When the buyer i do not have trazoro_services' do
     company.legal_representative.profile.update_column :available_credits, 100
     buyer = company.legal_representative
-    response = service.call(
-      buyer: buyer,
-      buyed_fine_grams: @fine_grams
-    )
-    expect(response[:success]).to eq false
-    expect(response[:errors]).to include 'No cuentas con servicios trazoro'
+    expect do
+      service.call(
+        buyer: buyer,
+        buyed_fine_grams: @fine_grams
+      )
+    end.to raise_error('No cuentas con servicios trazoro')
   end
 
   it 'should discount credits' do
@@ -52,11 +50,11 @@ describe DiscountCredits do
     company.legal_representative.profile.update_column :available_credits, 100
     buyer = company.legal_representative
     buyer.setting.trazoro_services << trazoro_service
-    response = service.call(
-      buyer: buyer,
-      buyed_fine_grams: @fine_grams
-    )
-    expect(response[:success]).to eq false
-    expect(response[:errors]).to include 'Usted no cuenta con el servicio de compra de oro trazoro'
+    expect do
+      service.call(
+        buyer: buyer,
+        buyed_fine_grams: @fine_grams
+      )
+    end.to raise_error('Usted no cuenta con el servicio de compra de oro trazoro')
   end
 end
