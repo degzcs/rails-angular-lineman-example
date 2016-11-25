@@ -96,7 +96,7 @@ class Royalty::DrawPdf < Prawn::Document
     text_box report.total.to_s, :at => [440, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     # TODO: What happen here when there are more than 1 destination?????
-    text_box report.destinations.first.name, :at => [50, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box report.company.name, :at => [50, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
     text_box report.total.to_s, :at => [440, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     #

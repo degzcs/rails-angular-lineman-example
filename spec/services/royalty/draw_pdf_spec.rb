@@ -39,7 +39,7 @@ describe Royalty::DrawPdf do
     it 'should check the consistency of the document' do
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.jpg"
       signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
-      expected_hash = '5662065bc294ba64c559ded86305c1762efcdbf7023c5117b63b14ff899c103e'
+      expected_hash = 'e2c07cc3127892b6dadb5256737a9e8d05dd59595c138fbacd5d6aecc1ca1c8d'
       report = OpenStruct.new(
         mineral_type: 'ORO',
         fine_grams: 52,

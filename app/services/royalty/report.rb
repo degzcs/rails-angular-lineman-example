@@ -20,6 +20,7 @@ module Royalty
       @unit = 'gramos'
     end
 
+    # @return [ Royalty::Report ]
     def call(options = {})
       validate_options(options)
       @seller = seller_based_on(options[:current_user])
