@@ -15,18 +15,13 @@ module Reports
       @report = options[:report]
       @user_presenter = ::UserPresenter.new(options[:current_user], nil)
       @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor','pdfs','regalias.pdf'))
-      begin
-        draw_file!(
-          user_presenter,
-          report,
-          options[:date],
-          options[:signature_picture]
-          )
-        @response[:success] = true
-      rescue => exception
-        @response[:success] = false
-        @response[:errors] << exception.message
-      end
+      draw_file!(
+        user_presenter,
+        report,
+        options[:date],
+        options[:signature_picture]
+      )
+      @response[:success] = true
       @response
     end
 

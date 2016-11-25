@@ -31,11 +31,8 @@ module Reports
         @base_liquidation_price = options[:base_liquidation_price].to_f.round(3)
         @royalty_percentage = options[:royalty_percentage].to_f
         report_for!(period, selected_year)
+        @response[:success] = true
         self
-      rescue => exception
-        @response[:success] = false
-        @response[:errors] << exception.message
-        @response
       end
 
       # NOTE: this method will be neccesary when the shipment service will be charged in a independent service
