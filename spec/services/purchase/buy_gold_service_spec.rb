@@ -39,7 +39,11 @@ describe Purchase::BuyGoldService do
     end
 
     it 'should to make a purchase order and discount credits from company' do
-      expected_credits = @initial_credits - @gold_batch_hash['fine_grams'] # <-- this are fine grams
+      trazoro_service = create(:available_trazoro_service, credits: 1.0, reference: 'buy_gold')
+      res = @gold_batch_hash['fine_grams'] * trazoro_service.credits
+      expected_credits = @initial_credits - res
+
+      legal_representative.setting.trazoro_services << trazoro_service
       response = service.call(
         order_hash: @order_hash,
         gold_batch_hash: @gold_batch_hash,
@@ -49,6 +53,32 @@ describe Purchase::BuyGoldService do
       expect(response[:success]).to be true
       expect(service.purchase_order.persisted?).to be true
       expect(company.reload.available_credits).to eq expected_credits
+    end
+
+    it 'should show message error When the buyer i do not have trazoro_services' do
+      response = service.call(
+        order_hash: @order_hash,
+        gold_batch_hash: @gold_batch_hash,
+        current_user: legal_representative, # TODO: worker
+        date: Date.today
+      )
+      expect(response[:success]).to be false
+      expect(service.purchase_order).to be nil
+      expect(response[:errors]).to include 'No cuentas con servicios trazoro'
+    end
+
+    it 'When the buyer does not have the service buy_gold' do
+      trazoro_service = create(:available_trazoro_service, credits: 1.0, reference: 'silver_gold')
+      legal_representative.setting.trazoro_services << trazoro_service
+      response = service.call(
+        order_hash: @order_hash,
+        gold_batch_hash: @gold_batch_hash,
+        current_user: legal_representative, # TODO: worker
+        date: Date.today
+      )
+      expect(response[:success]).to be false
+      expect(service.purchase_order).to be nil
+      expect(response[:errors]).to include 'Usted no cuenta con el servicio de compra de oro trazoro'
     end
 
     context 'show validation message' do
