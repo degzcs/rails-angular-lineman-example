@@ -42,3 +42,4 @@ spec/uploads/*
 .env*
 public/development
 public/test
+public/tmp

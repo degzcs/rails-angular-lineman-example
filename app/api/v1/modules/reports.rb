@@ -6,8 +6,8 @@ module V1
         authenticate!
       end
 
-      content_type :pdf , 'application/pdf'
-      format :pdf
+      content_type :json , 'application/json'
+      format :json
       resource :reports do
         #
         # GET royalties
@@ -35,9 +35,13 @@ module V1
             royalty_percentage: params[:royalty_percentage]
           )
           if royalty_service.response[:success]
-            header['Content-Disposition'] = "attachment; filename=royalties_#{time}.pdf"
-            env['api.format'] = :pdf
-            body royalty_service.pdf
+            # header['Content-Disposition'] = "attachment; filename=royalties_#{time}.pdf"
+            # env['api.format'] = :pdf
+            # body royalty_service.pdf
+            `rm -rf #{ Rails.root }/public/tmp/`
+            `mkdir -p #{ Rails.root }/public/tmp/royalty`
+            file = royalty_service.pdf.render_file("#{ Rails.root }/public/tmp/royalty/royalty_#{ time.to_i }.pdf")
+            present "/tmp/royalty/royalty_#{ time.to_i }.pdf"
           else
            error!({ error: 'unexpected error', detail: royalty_service.response[:errors] }, 409)
           end
