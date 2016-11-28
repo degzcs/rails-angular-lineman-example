@@ -48,14 +48,14 @@ describe Reports::Royalty::DrawPdf do
         royalty_percentage: 4,
         total: 181.000,
         period: 4,
-        year: Time.now.strftime("%y"), # ex. 16
+        year: "01/01/2016".to_date.strftime("%y"), # ex. 16
         company: seller.company,
         mineral_presentation: 'Amalgama',
         destinations: [buyer.company],
       )
       response = service.call(
         report: report,
-        date: Time.now.strftime("%Y-%m-%d"),
+        date: '25/11/2016'.to_date.strftime("%Y-%m-%d"),
         signature_picture: signature_picture
       )
       system "mkdir -p #{ Rails.root }/tmp/royalty"

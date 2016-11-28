@@ -38,10 +38,7 @@ module V1
             # header['Content-Disposition'] = "attachment; filename=royalties_#{time}.pdf"
             # env['api.format'] = :pdf
             # body royalty_service.pdf
-            `rm -rf #{ Rails.root }/public/tmp/`
-            `mkdir -p #{ Rails.root }/public/tmp/royalty`
-            file = royalty_service.pdf.render_file("#{ Rails.root }/public/tmp/royalty/royalty_#{ time.to_i }.pdf")
-            present "/tmp/royalty/royalty_#{ time.to_i }.pdf"
+            present royalty_service.pdf_url(time.to_i)
           else
            error!({ error: 'unexpected error', detail: royalty_service.response[:errors] }, 409)
           end

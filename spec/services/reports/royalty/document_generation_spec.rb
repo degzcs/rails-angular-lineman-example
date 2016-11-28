@@ -42,8 +42,9 @@ describe Reports::Royalty::DocumentGeneration do
       }
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.jpg"
       signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
+      time_now = '25/11/2016'.to_time
       service.call(
-        date: Time.now.strftime("%Y-%m-%d"),
+        date: time_now.strftime("%Y-%m-%d"),
         signature_picture: signature_picture,
         current_user: seller,
         period: expected_response[:period],
@@ -53,8 +54,8 @@ describe Reports::Royalty::DocumentGeneration do
         royalty_percentage: expected_response[:royalty_percentage]
       )
       expect(service.response[:errors]).to eq []
-      expect(service.pdf.class).to eq String
-      expect(service.pdf).not_to be_empty
+      expect(service.pdf.class).to eq Reports::Royalty::DrawPdf
+      expect(service.pdf_url(time_now.to_i)).to match(/royalty_#{time_now.to_i}.pdf/)
     end
 
     it 'should create a document in CSV format with the royalty report'
