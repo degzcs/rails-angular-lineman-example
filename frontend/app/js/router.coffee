@@ -881,6 +881,31 @@
         deferred.promise
   )
 
+  .state('inventory.royalties',
+    url: '/inventory/royalties',
+    ncyBreadcrumb:
+      label: 'Regalias'
+    views:
+      'content':
+        templateUrl: 'partials/inventory/royalties.html'
+        controller: 'RoyaltiesTabCtrl'
+      'top-nav':
+        templateUrl: 'partials/top-nav.html'
+        controller: 'SidebarCtrl'
+      'flying-navbar':
+        templateUrl: 'partials/flying-navbar.html'
+        controller: 'SidebarCtrl'
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   # ------- Sales routes ----------- #
 
   # this route is called from inventory sale and It should be reubicated inside sales folder
@@ -908,7 +933,7 @@
           deferred.resolve()
         deferred.promise
   )
-# new sales routes 
+# new sales routes
 
   .state("new_sale",
     url: "/sales/new",

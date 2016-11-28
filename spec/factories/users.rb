@@ -98,9 +98,20 @@ FactoryGirl.define do
         name { "Test company SAS #{ Company.count }" }
         nit_number { Faker::Number.number(10) }
         rucom { build :rucom }
+        address { Faker::Address.street_address }
+        phone_number { Faker::PhoneNumber.cell_phone }
+        company_email { Faker::Internet.email }
       end
       before :create do |user, e|
-        user.office = create(:company, city: e.city, name: e.name, nit_number: e.nit_number, rucom: e.rucom).main_office
+        user.office = create(:company,
+                              city: e.city,
+                              name: e.name,
+                              nit_number: e.nit_number,
+                              rucom: e.rucom,
+                              address: e.address,
+                              phone_number: e.phone_number,
+                              email: e.company_email
+                            ).main_office
       end
     end
 

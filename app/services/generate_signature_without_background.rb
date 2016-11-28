@@ -15,16 +15,13 @@ class GenerateSignatureWithoutBackground
     File.write(folder_config.income_image_path, signature_file)
     was_convert = remove_background_for(folder_config.income_image_path, folder_config.outcome_image_path)
     was_convert ? folder_config.outcome_image_path : raise('The image background cannot be remove!!!')
-  rescue StandardError => e
-    response[:errors] << "Error: #{e.message}"
-    response
   end
 
   # @param income_image_path [ String ]
   # @param outcome_image_path [ String ]
   # @return [ Boolean ] truen when the command runs perfectly and false in other cases.
   def remove_background_for(income_image_path, outcome_image_path)
-    system "convert #{ income_image_path } -fill none -fuzz 1% -draw 'matte 0,0 floodfill' -flop  -draw 'matte 0,0 floodfill' -flop #{ outcome_image_path }"
+    system "convert #{ income_image_path } -fill none -fuzz 10% -draw 'matte 0,0 floodfill' -flop  -draw 'matte 0,0 floodfill' -flop #{ outcome_image_path }"
   end
 
   # @param folder_path [ String ] where the files will be saved temporarily

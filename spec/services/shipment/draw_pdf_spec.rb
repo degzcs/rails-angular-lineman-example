@@ -12,10 +12,6 @@ describe Shipment::DrawPdf do
     subject(:service) { Shipment::DrawPdf.new }
 
   context 'creation of the pdf in the service shipment draw' do
-    before :each do
-      @current_buyer = create(:user, :with_company, :with_trader_role).company.legal_representative
-      @order = create(:sale)
-    end
     it 'should check the consistency of the document' do
       expected_hash = '2ebeaa2e22115cb5a6d84aad646f808e3aafe20f389ee73515becca13198d1d7'
       response = service.call(

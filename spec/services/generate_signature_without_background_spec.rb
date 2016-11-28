@@ -13,8 +13,7 @@ describe GenerateSignatureWithoutBackground do
 
     it 'should throw a exception' do
       signature_picture = nil
-      response = service.call(signature_picture)
-      expect(response[:errors]).to include("Error: undefined method `tempfile' for nil:NilClass")
+      expect{service.call(signature_picture)}.to raise_error("undefined method `tempfile' for nil:NilClass")
     end
   end
 end

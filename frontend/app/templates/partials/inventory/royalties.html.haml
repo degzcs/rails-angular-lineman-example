@@ -1,0 +1,58 @@
+.purchase-container
+  %form.royalties-form{:name => "royaltyForm", "novalidate" => "novalidate"}
+    %div{:layout => 'column'}
+
+      %section.md-padding{flex: "", layout: "row"}
+        %div{flex: ''}
+          %fieldset.elongate-height.standard.tr-fieldset{:layout => "column"}
+            %legend
+              %h3 Presentacion del Mineral
+
+            %div.fieldset-inputs
+              %div{layout: "row"}
+                %md-input-container{flex: ""}
+                  %md-radio-group{"ng-model"=>"mineralPresentation", "name" => "mineralPresentation", required: "" }
+                    %md-radio-button.md-primary{ "value" => "amalgam" } Amalgama
+                    %md-radio-button{ "value" => "jewelry" } Joya
+
+        %div{flex: ''}
+          %fieldset.standard.tr-fieldset{:layout => "column"}
+            %legend
+              %h3 Periodo declarado
+
+            %div.fieldset-inputs
+              %div{layout: "row"}
+                %md-input-container{flex: ""}
+                  %md-select{"ng-model" => "selectedYear", :placeholder => "Seleccione el año a declarar", required: ""}
+                    %md-option{:value => "2016"} 2016
+                    %md-option{:value => "2017"} 2017
+
+                %md-input-container{flex: ""}
+                  %md-radio-group{"ng-model"=>"period", "name" => "period", required: "" }
+                    %md-radio-button.md-primary{ "value" => "1" } Enero - Marzo
+                    %md-radio-button{ "value" => "2" } Abril - Junio
+                    %md-radio-button{ "value" => "3" } Julio - Septiembre
+                    %md-radio-button{ "value" => "4" } Octubre - Diciembre
+
+
+      %section.md-padding{flex: "", layout: "row"}
+        %div{flex: ""}
+          %fieldset.standard.tr-fieldset{:layout => "column"}
+            %legend
+              %h3 Liquidacion de Regalias
+
+            %div.fieldset-inputs
+              %div{layout: "row"}
+                %md-input-container{flex: ""}
+                  %label Precio base de liquidacion
+                  %input{ "type" => "number", "string-to-number"=>"", min: => "1", "ng-model" => "baseLiquidationPrice",  :name => 'baseLiquidationPrice', required: ""}
+
+                %md-input-container{flex: ""}
+                  %label Regalias(%)
+                  %input{"type" => "number", "string-to-number"=>"", min: => "1" , :max =>"100", "ng-model" => "royaltyPercentage",  :name => 'royaltyPercentage', required: ""}
+
+                %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
+                  %md-progress-circular{"md-mode" => "indeterminate"}
+          .button
+      // ---------------------- Generate Origin Certificate button----------------------------------///
+      %md-button.md-primary.md-hue-2{flex: "", "ng-disabled" => 'royaltyForm.$invalid', "ng-click" => "generatePdfFile()"} Generar Documento

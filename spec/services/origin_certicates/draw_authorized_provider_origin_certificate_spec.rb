@@ -17,7 +17,7 @@ describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
     end
 
     it 'test the execution signature' do
-      expected_hash = '294d73a305a70598e8f46240ca026c13567a67fc243670a65deea04553384d46'
+      expected_hash = '5b153dbb0f5ac2e1eec7885a5917833695802cd42bbc0183c591a74a797fa209'
       response = service.call(
         order: purchase_order,
         signature_picture: @signature_picture,
