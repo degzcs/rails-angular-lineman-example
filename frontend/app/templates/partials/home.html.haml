@@ -35,9 +35,10 @@
 
         %md-input-container{"md-no-float" => "", :flex => "40", :style => "margin-top: 25px;"}
           %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
-        %a.a-toolbar{:ng-href => "#sendtoken", "flex" => "20"} ¿Olvidó sus datos?
+      %div{:layout => "row", "layout-align" => "center", "layout-sm" => "column"}
+        %a.a-toolbar{:ng-href => "#sendtoken", "flex" => "100"} ¿Olvidó sus datos?
         
-      %md-button.md-primary.button-black{:flex => "5"}
+      %md-button.md-primary.button-black{:flex => "5", "style" => "margin-top: 30px;"}
         INGRESAR
         %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
       %div{:layout => "row", "layout-align" => "center center", "layout-padding" => ""} 
@@ -54,7 +55,7 @@
           %p.font-oswald.light.yellow-font
             TRAZORO es una plataforma tecnológica que se comporta como oficial de cumplimiento en la comercialización de metales preciosos. 
       
-    %md-button.button-yellow
+    %md-button.button-yellow{"style" => "margin-top: 125px;"}
       DESCUBRIR 
       %md-icon{ "md-svg-icon"=>"/img/icons/landing/icono-apunta-abajo.svg" }
 
@@ -72,7 +73,7 @@
           Simplificamos la comercialización de metales preciosos. Hacemos todo el proceso documental transaccional, en formato digital, organizado y disponible. Integramos con servicio de facturación computarizada. Generamos información para exportación, monetización, contabilidad y reportes a autoridades. 
         
 
-    %div{:layout => "row", "layout-margin" => "", "layout-align" => "center", "layout-sm" => "column" }
+    %div{:layout => "row", "layout-margin" => "", "layout-align" => "center", "layout-sm" => "column", "style" => "padding-bottom: 60px;" }
       
       %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-hojas.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
@@ -81,7 +82,7 @@
             TRANSPARENCIA 
         %md-card-content
           %p.p-small
-            Contamos con altos estándares de seguridad informática para garantizar la integridad de los procesos.
+            Identificación de todos los eslabones de la cadena de comercialización. Productores autorizados identificables con variables biométricas
         / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
         /   %md-button
         /     Action 1
@@ -95,7 +96,7 @@
             TRANQUILIDAD 
         %md-card-content
           %p.p-small
-            Hace toda la cadena de trazabilidad, desde el productor que vende el metal hasta la exportación final. Corrobora que productor sea autorizado, almacena variables biométricas, aumentando garantía de origen legal del producto.
+            Sistema de doble chequeo que no permite realizar operaciones que no cumplan con los parámetros de ley. Genera "huella digital electrónica" de cada transacción, adjudicando responsabilidades precisas a quienes manejan la herramienta.
         / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
         /   %md-button
         /     Action 1
@@ -109,7 +110,8 @@
             TRAZABILIDAD
         %md-card-content
           %p.p-small
-            Sistema de doble chequeo que no permite realizar operaciones que no cumplan con los parámetros de ley. Genera "huella digital electrónica" de cada transacción, adjudicando responsabilidades precisas a quienes manejan la herramienta.
+            Hace toda la cadena de trazabilidad, desde el productor que vende el metal hasta la exportación final. Corrobora que productor sea autorizado, almacena variables biométricas, aumentando garantía de origen legal del producto.
+            
         / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
         /   %md-button
         /     Action 1
@@ -248,10 +250,6 @@
         %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
           %input.main-login-input{"ng-model" => "theMax", :placeholder => "Celular"}
       
-      %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
-        %md-select{"ng-model" => "someVal", :placeholder => "Tipo de solicituds", :flex => "50"}
-          %md-option{:value => "1"} One
-          %md-option{:value => "2"} Two
 
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
         %md-input-container{:flex => "50", "md-no-float" => "", "flex-md" => "90"}
@@ -263,6 +261,10 @@
       
       
 
+  /%div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
+  /%md-select{"ng-model" => "someVal", :placeholder => "Tipo de solicitud", :flex => "50"}
+  /%md-option{:value => "1"} One
+  /%md-option{:value => "2"} Two
 
 
   /%md-content.md-padding.div-trazoro.gold{"ng-controller"=>"SessionsNewCtrl"}
