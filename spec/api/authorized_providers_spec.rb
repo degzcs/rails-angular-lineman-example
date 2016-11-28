@@ -159,7 +159,7 @@ describe 'AuthorizedProviders', type: :request do
 
           # Those are to test the audit actions on users table and you can check out on audits table
           audit_comment = "Updated from API Request by ID: #{user.id}"
-          expect(user.audits.last.user).to eq(user)
+          expect(user.audits[1].user).to eq(user)
           expect(user.audits[1].comment).to eq(audit_comment)
 
           # Those are to test the audit actions on users profile table and you can check out on audits table
