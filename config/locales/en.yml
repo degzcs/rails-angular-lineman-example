@@ -21,6 +21,8 @@
 
 # NOTE: I will use this as a spanish version while I get translate the rest of the application and then I will user the locales/ es.yml file instead this.
 en:
+  amalgam: 'Amalgama'
+  jewelry: 'Joya'
   first_name: 'Nombre'
   last_name: 'Apellido'
   document_number: 'Número de documento'

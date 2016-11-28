@@ -30,7 +30,7 @@ module V1
             current_user: current_user,
             period: params[:period],
             selected_year: params[:selected_year],
-            mineral_presentation: params[:mineral_presentation],
+            mineral_presentation: I18n.t(params[:mineral_presentation]),
             base_liquidation_price: params[:base_liquidation_price],
             royalty_percentage: params[:royalty_percentage]
           )
