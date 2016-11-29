@@ -7,6 +7,7 @@
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}
     %title= "TrazOro"
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
+    %link{"href" => "https://fonts.googleapis.com/css?family=Oswald:300,400,700|Source+Sans+Pro", "rel" => "stylesheet"}
   %body
     .m-app-loading{"ng-animate-children" => ""}
       /
@@ -80,16 +81,19 @@
     /----------------- PAGE CONTENT -------------------------/
     #wrapper
       #header
-        %md-content{ "flex"=>"", "class"=>"", "layout"=>"row" }
-          .mini-top-bar{'flex' => '' }
-            %img.trazoro-icon-small{ :src => "/img/trazoro_icon_small.png" }
+        
         %div{"ui-view" => "top-nav"}
       #content
         %div{:layout => "row", :layout-align => "center center"}
           /#dwtcontrolContainer
         %section{"ui-view" => "content"}
       #footer.div-trazoro.footer
-        %img.logo-bitbang{:src => "/img/logo_bitbang.png"}
+        %img{:src => "/img/icons/landing/logo-trazoro-blanco.svg", "style" => "width: 100px; height: 100px;"}
+        
+        
+        
+          /%md-icon{"md-svg-icon"=>"/img/icons/landing/icono-subir.svg"}
+
 
     //------------------------------------------------ SCANNER DRIVER ALERT  ----------- /
 

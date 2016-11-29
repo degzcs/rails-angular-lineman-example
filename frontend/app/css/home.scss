@@ -1,115 +1,317 @@
 //--------- Home Styles ----------- //
-.div-trazoro.gold{
-  text-align: center;
-  color: rgba(255,255,255,0.87);
-  background: url("/img/background1.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+.home{
 
-.div-trazoro.footer{
-  text-align: center;
-  width: 100%;
-  height: 100px;
-  background: url("/img/footer.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
+  md-toolbar.md-default-theme {
+    background-color: #fff;
+    color: #202020;
 
-.div-trazoro.gray{
+    height: 90px;
+    z-index: 3;
+  }
+  
 
-  background: #ebeae5;
-  text-align: center;
-  padding-bottom: 40px;
-  padding-top: 30px;
-  .text-content{
-    text-align: justify;
-    width: 600px;
+  //
+  // Input styles
+  //#e3cd48 
+
+  md-input-container {
+    .main-login-input{
+      border: 1px solid #000;
+      margin-top: -3px;
+      min-height: 37px;
+      margin-right: 7.5px;
+      margin-left: 7.5px;
+      &::-webkit-input-placeholder {
+        font-size: small;
+        color: black;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .font-oswald.title{
+    font-family: 'oswald', sans-serif;
+    font-weight: 700;
+  }
+
+  .font-oswald.light{
+    font-family: 'oswald', sans-serif;
+    font-weight: 300;
+  }
+
+  .font-oswald.regular{
+    font-family: 'oswald', sans-serif;
+  }
+
+
+  .font-source-sans{
+    font-family: 'Source Sans Pro', sans-serif !important;
+  }
+
+  .yellow-font{
+    color: #eece56 !important;
+  }
+
+  .toolbar-black{
+    background-color: black;
+
+  }
+  
+
+  .button-yellow{
+    color: #1b1b1b;
+    background: #eece56;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 0px;
+    height: 30px !important;
+    font-family: 'Source Sans Pro', sans-serif !important;
+    font-size: 20px !important;
+  }
+
+  .button-black{
+    padding-left: 10px ;
+    padding-right: 10px ;
+    margin-bottom: 0px;
+    background: black ;
+    color: #eece56 !important;
+    
+  }
+
+  .a-toolbar{
+    font-size: small;
+    position: relative;
+    
+  }
+  .a-toolbar-desktop{
+    position: absolute;
+    font-size: x-small;
+    top: 70px;
+    left: 875px;
+  }
+  .div-rectangule{
+   
+    border: 0.5px solid #1b1b1b;
+    background: #eece56 !important;
+    font-family: 'Source Sans Pro', sans-serif !important;
+    width: 500px;
+
+    md-card{
+      min-height: 150px;
+    }
+
+  .div-rectangule-black{
+    background: #1b1b1b;
+    color: white;
+    height: 50px;
+    width: 100% !important;
+  }
+  .p-small{
+    font-size: small !important;
+  }
+  }
+
+  .rectangule-quienes{
+        border: 0.5px solid #edcf36;
+        font-size: x-small !important;
+  }
+
+  .padding-icon-quienes{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 20px;  
+
+    img{
+      height: 150px;
+      width: 150px;
+    }
+  }
+
+  .title-quienes{
+    font-size: large;
+    font-family: 'Source Sans Pro', sans-serif !important;
+    color: #e3cd48 ;
+  }
+
+  .padding-text-quienes{
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+    font-size: small;
+
+  }
+
+  
+  img.icon-rectangule{
+    
+    height: 75px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .text-num{
+    font-size: x-small !important;
+    font-family: 'Source Sans Pro', sans-serif !important;
+  }
+  .title-num{
+    background: #eece56 !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+    font-family: 'oswald', sans-serif;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .icon-toolbar{
+    width: 200px;
+    height: 90px;
+  }
+
+  .img-brightness{
+    -webkit-filter: brightness(50%);
+  }
+
+  .text-contacto{
+    font-family: 'oswald', sans-serif;
+    font-weight: 300;
+
+  }
+
+  .div-trazoro.gold{
+    text-align: center;
+    color: #1b1b1b;
+    background: rgb(238, 206, 86);
+    
+  }
+
+
+  .div-trazoro.footer{
+    text-align: center;
+    width: 100%;
+    background: #1a1a1a;
+    
+  }
+
+  .div-trazoro.golden{
+
+    background: #edcf36;
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 100px !important; 
+    .text-content{
+      padding-top: 100px !important;
+      text-align: justify;  
+      width: 600px;
+      
+    }
+    img{
+      -webkit-filter: brightness(50%) !important;
+    }
+    h1{
+      color: #231f20;
+      text-align: left;
+    }
+    p{
+      color: #8d8e8f;
+    }
+  }
+
+  .div-trazoro.white{
+
+    background: #fff !important;
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 30px;
+    .text-content{
+      text-align: justify;
+      width: 600px;
+      display: inline-block;
+    }
+    h1{
+      color: #231f20;
+      
+    }
+    p{
+      color: #8d8e8f;
+    }
+  }
+
+  .div-trazoro.image-gold{
+    text-align: center;
+    color: rgba(255,255,255,0.87);
+    background: url("/img/goldmines.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: inherit !important;
+    height: 500px !important;
+
+
+  }
+  .div-trazoro.quienes{
+    text-align: center;
+    color: rgba(255,255,255,0.87);
+    background: url("/img/minero.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: inherit !important;
+    
+  }
+
+  .div-trazoro.image-loquehacemos{
+    text-align: center;
+    color: rgba(255,255,255,0.87);
+    background: url("/img/loquehacemos.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 600px;
+  }
+
+  .div-trazoro.beneficios{
+      
+    color: black !important;
+    background:  #fff !important;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    
+    background-size: cover;
+    
+  
+  }
+
+  .login-form{
+    width: 400px;
     display: inline-block;
+    padding-bottom: 40px;
+    padding-top: 40px;
   }
-  h1{
-    color: #231f20;
-    text-align: left;
+  .login-form .remember-password-form{
+    text-align: right!important;
+    a{
+      font-size: 0.8em;
+    }
   }
-  p{
-    color: #8d8e8f;
+
+
+
+  .login-home-button{
+    background: #edb039!important;
+    color: white!important;
+    margin-top: 30px;
+    border: 3px solid #ffcb34!important;
+    text-transform: capitalize!important;
+    font-weight: bold!important;
+    width: 400px;
   }
-}
 
-.div-trazoro.white{
-
-  background: white;
-  text-align: center;
-  padding-bottom: 40px;
-  padding-top: 30px;
-  .text-content{
-    text-align: justify;
-    width: 600px;
-    display: inline-block;
+  .yellow-border{
+    border: 3px solid #ffcb34;
+    padding: 10px;
   }
-  h1{
-    color: #231f20;
-    text-align: left;
-  }
-  p{
-    color: #8d8e8f;
-  }
-}
-
-.div-trazoro.image-gold{
-  text-align: center;
-  color: rgba(255,255,255,0.87);
-  background: url("/img/gold_image.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  width: 100%;
-  height: 300px;
-}
-.div-trazoro.image-barequero{
-  text-align: center;
-  color: rgba(255,255,255,0.87);
-  background: url("/img/barequero.jpg");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  width: 100%;
-  height: 300px;
-}
-
-
-.login-form{
-  width: 400px;
-  display: inline-block;
-  padding-bottom: 40px;
-  padding-top: 40px;
-}
-.login-form .remember-password-form{
-  text-align: right!important;
-  a{
-    font-size: 0.8em;
-  }
-}
-
-
-
-.login-home-button{
-  background: #edb039!important;
-  color: white!important;
-  margin-top: 30px;
-  border: 3px solid #ffcb34!important;
-  text-transform: capitalize!important;
-  font-weight: bold!important;
-  width: 400px;
-}
-
-.yellow-border{
-  border: 3px solid #ffcb34;
-  padding: 10px;
 }

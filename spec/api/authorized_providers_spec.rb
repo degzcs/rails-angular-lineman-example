@@ -27,7 +27,7 @@ describe 'AuthorizedProviders', type: :request do
           end
         end
 
-        context '/by_id_number' do
+        context '/by_id_number, barequero' do
           it 'gets authorized_provider by id' do
             id_number = '15535725'
             params_from_view = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: id_number }

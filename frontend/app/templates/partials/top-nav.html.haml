@@ -1,9 +1,9 @@
 /--------------- NAVBAR ----------------------------/
-%md-content.md-padding.div-trazoro.gold.navigation
+%md-content.md-padding.div-trazoro.gold.navigation{"style"=>"background: url("/img/background1.png");"}
   / .side-button-options{"ng-controller"=>"SidebarCtrl"}
   /   %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
   /     %md-icon{"md-svg-icon"=>"action:reorder"}
-  %section.top-nav-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}
+  %section.top-nav-buttons{:layout => "row", "layout-align" => "center center"}
     .btn-cont
       %md-button.md-fab.top-nav-button{"aria-label" => "dashboard","ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
         %md-icon{"md-svg-icon"=>"action:dashboard"}

@@ -1,227 +1,424 @@
-//--------------------------HOME VIEW-----------------------------//  
-%md-content.md-padding.div-trazoro.gold{"ng-controller"=>"SessionsNewCtrl"}
-  %form.login-form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
-    .yellow-border
-      %md-input-container.md-default-theme{"md-no-float" => ""}
-        %input{"ng-model" => "email", :placeholder => "Email", :type => "email"}
-      %md-input-container.md-default-theme{"md-no-float" => ""}
-        %input.md-input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
-      .remember-password-form
-        %a{:ng-href => "#sendtoken"} Recuperar contraseña
+.home
+  %md-toolbar{:layout => "row", "layout-align" => "center center", "hide-md" => "", "hide-sm" => "", "hide-lg" => ""}
+    %div{:flex => "30"}
+      %md-icon.icon-toolbar{ "md-svg-src" => "/img/logo-trazoro.svg" }
+    
+    %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
+      %div{:layout => "", "layout-align" => "center center"}
+        %a.a-toolbar-desktop{:ng-href => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
+        
 
-    %md-button.login-home-button.md-raised.md-default-theme
-      Iniciar Session
-%md-content.md-padding.div-trazoro.gray.trazoro-padding
-  %h2
-    %img{:src => "/img/trazoro_icon_small.png"}
-  .text-content
-    %h1 
-      %b ¿Que es Trazoro?
-    %p 
-      %b TrazOro 
-      es una 
-      %b herramienta 
-      tecnológica dirigida al cumplimiento 
-      %b normativo 
-      y 
-      %b estandarización 
-      de procesos de la cadena de comercialización de los metales preciosos en Colombia.
-    %p
-      A través del uso de 
-      %b TrazOro se garantiza la 
-      %b trazabilidad total de los metales preciosos desde que son 
-      %b producidos, comercializados y exportados 
-      del país.   
-    %p  
-      La herramienta esta diseñada para que cada compra que ingresa al sistema cuente con 
-      %b todos 
-      los documentos y cumplan todas las condiciones establecidas en el 
-      %b decreto 0276 de 2015.
-    %p  
-      Trazoro es un servicio de Min-Trace Colombia SAS, una empresa dedicada a proveer soluciones a diversas industrias. 
+        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "margin-top: 30px;" }
+          %input.main-login-input{"ng-model" => "email", :placeholder => "Correo:", :type => "email"}
 
-%md-content.md-padding.div-trazoro.image-gold.trazoro-padding
+        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "    margin-top: 30px;"}
+          %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
+        
+        %md-button.md-primary.button-black{:flex => "20"}
+          INGRESAR
+          %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
 
-%md-content.md-padding.div-trazoro.white.trazoro-padding
-  .text-content
-    %h1
-      %b Ventajas
+  //---------- md-toolbar black in movil and tablet device-----------------//
 
-    %p
-      %b Estandariza – 
-      El proceso de ventas para asegurar que siempre se cumpla con la totalidad de requisitos de Ley.
-    %p
-      %b Centraliza – 
-      El proceso documental cada usuario puede ver toda la documentación de cada lote transado y generar cuantas copias se necesite de la documentación
-    %p
-      %b Certifica – 
-      No permite adquirir mineral que no cumpla con todos los pasos documentales o de proveedores no inscritos y activos en el RUCOM. 
-    %p
-      %b Evita Error Humano – 
-      Cada lote que se transporta o vende es acompañado de todos sus certificados de manera organizada con copia digital en PDF generado por el sistema. 
-    %p
-      %b Seguridad – 
-      Todas las comunicaciones son encriptados – Los servidores son de primer nivel con redundancia geográfica.
-    %p
-      %b Agiliza – 
-      Ingresar un lote al inventario es tan sencillo como escanear su código de barras y tu base de datos reflejara toda la información de este lote.
-    %p
-      %b Reportes – 
-      Reportes Contables – Rucom – Regalías 
-    %p
-      %b Auditable – 
-      Al contar con una total trazabilidad las auditorias rutinarias se hacen cada vez mas transparentes.
+  %div.toolbar-black{:layout => "row", "layout-align" => "center", "hide-gt-lg" => ""  }
+    %img{"ng-src"=>"/img/icons/landing/logo-trazoro-blanco.svg", "style" => "heigth: 100px; width: 100px;"}
 
-%md-content.md-padding.div-trazoro.image-barequero.trazoro-padding
+  //--------------Form login in movil and tablet device------------------//
+  
+  %div.div-trazoro.white{ "hide-gt-lg" => "" }
+    %p
+      Inicie Sesión
+    %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
+      %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
+        %md-input-container{"md-no-float" => "", :flex => "40", :style => "margin-top: 25px;"}
+          %input.main-login-input{"ng-model" => "email", :placeholder => "Correo:", :type => "email"}
+
+        %md-input-container{"md-no-float" => "", :flex => "40", :style => "margin-top: 25px;"}
+          %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
+      %div{:layout => "row", "layout-align" => "center", "layout-sm" => "column"}
+        %a.a-toolbar{:ng-href => "#sendtoken", "flex" => "100"} ¿Olvidó sus datos?
+        
+      %md-button.md-primary.button-black{:flex => "5", "style" => "margin-top: 30px;"}
+        INGRESAR
+        %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
+      %div{:layout => "row", "layout-align" => "center center", "layout-padding" => ""} 
+        %img{"ng-src"=>"/img/icons/landing/icono-apunta-abajo.svg", "flex" => "5" }
+    
+  
+
+  //--------------------------HOME VIEW-----------------------------//  
+  %md-content.md-padding.div-trazoro.image-gold{"layout" => "column", "layout-align"=>"center center"}
+    .div{"layout" => "row", "layout-align"=>"center center"}
+
+      .text-content{:flex => "60"}
+        %h2
+          %p.font-oswald.light.yellow-font
+            TRAZORO es una plataforma tecnológica que se comporta como oficial de cumplimiento en la comercialización de metales preciosos. 
+      
+    %md-button.button-yellow{"style" => "margin-top: 125px;"}
+      DESCUBRIR 
+      %md-icon{ "md-svg-icon"=>"/img/icons/landing/icono-apunta-abajo.svg" }
 
 
-%md-content.md-padding.div-trazoro.white.trazoro-padding
-  .text-content
-    %h1 
-      %b Contacto
-    %div
-      %p Si estas interesado en conocer mas o ver como tu empresa puede hacer uso del servicio TrazOro envíanos un correo a 
-      %a{:href => "mailto:contacto@trazoro.co"} contacto@trazoro.co
 
-/ #home
-/   %div{:style => "text-align:justify;"}
-/     %md-content{:style => "padding: 24px;"}
-/       %section
-/         %md-subheader.md-primary
-/           %h1 
-/             %b ¿Que es Trazoro?
-/         %div{:layout => "row"}
-/           %div{:flex => "30"}
-/             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
-/           %div{:flex => "70"}
-/             %p 
-/               %b TrazOro 
-/               es una 
-/               %b herramienta 
-/               tecnológica dirigida al cumplimiento 
-/               %b normativo 
-/               y 
-/               %b estandarización 
-/               de procesos de la cadena de comercialización de los metales preciosos en Colombia.
-/             %p
-/               A través del uso de 
-/               %b TrazOro se garantiza la 
-/               %b trazabilidad total de los metales preciosos desde que son 
-/               %b producidos, comercializados y exportados 
-/               del país.   
-/             %p  
-/               La herramienta esta diseñada para que cada compra que ingresa al sistema cuente con 
-/               %b todos 
-/               los documentos y cumplan todas las condiciones establecidas en el 
-/               %b decreto 0276 de 2015.
-/             %p  
-/               Trazoro es un servicio de Min-Trace Colombia SAS, una empresa dedicada a proveer soluciones a diversas industrias. 
-/     %md-divider
-/     %md-content{:style => "padding: 24px;"}
-/       %section
-/         %md-subheader.md-primary
-/           %h1
-/             %b Ventajas
-/         %div{:layout => "row"}
-/           %div{:flex => "30"}
-/             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
-/           %div{:flex => "70"}
-/             %p
-/               %b Estandariza – 
-/               El proceso de ventas para asegurar que siempre se cumpla con la totalidad de requisitos de Ley.
-/             %p
-/               %b Centraliza – 
-/               El proceso documental cada usuario puede ver toda la documentación de cada lote transado y generar cuantas copias se necesite de la documentación
-/             %p
-/               %b Certifica – 
-/               No permite adquirir mineral que no cumpla con todos los pasos documentales o de proveedores no inscritos y activos en el RUCOM. 
-/             %p
-/               %b Evita Error Humano – 
-/               Cada lote que se transporta o vende es acompañado de todos sus certificados de manera organizada con copia digital en PDF generado por el sistema. 
-/             %p
-/               %b Seguridad – 
-/               Todas las comunicaciones son encriptados – Los servidores son de primer nivel con redundancia geográfica.
-/             %p
-/               %b Agiliza – 
-/               Ingresar un lote al inventario es tan sencillo como escanear su código de barras y tu base de datos reflejara toda la información de este lote.
-/             %p
-/               %b Reportes – 
-/               Reportes Contables – Rucom – Regalías 
-/             %p
-/               %b Auditable – 
-/               Al contar con una total trazabilidad las auditorias rutinarias se hacen cada vez mas transparentes.
-/     %md-divider
-/     %md-content{:style => "padding: 24px;"}
-/       %section
-/         %md-subheader.md-primary
-/           %h1 
-/             %b Seguridad de la Información
-/         %div{:layout => "row"}
-/           %div{:flex => "30"}
-/             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
-/           %div{:flex => "70"}
-/             %p
-/               %b Todas
-/               las comunicaciones entre el usuario y el servidor son 
-/               %b encriptadas con protocolos 
-/               %b SSL.
-/             %p
-/               Toda la información es alojada en la 
-/               %b nube usando servidores de primer nivel de 
-/               %b Microsoft Azure® 
-/               garantizando una disponibilidad de la información del 
-/               %b 99.99% 
-/               del tiempo.
-/             %p
-/               Se garantiza la 
-/               %b persistencia de la información por un periodo no menor a 
-/               %b 10 años.
-/               Toda la información almacenada es 
-/               %b encriptada 
-/               con los mas altos protocolos de 
-/               %b seguridad 
-/               y es confidencial. Gantizando así que únicamente los propietarios de la información tengan acceso a ella.
-/             %p
-/               Cumplimos a cabalidad con la 
-/               %b Ley de Protección de Datos 1581 de 2012.
-/               Estamos en proceso de implementar y certificarnos en 
-/               %b ISO27001 Seguridad Informática.
-/               En caso de perdida o robo del computador toda la información esta almacenada en la nube para acceso desde cualquier parte.
-/     %md-divider        
-/     %md-content{:style => "padding: 24px;"}
-/       %section
-/         %md-subheader.md-primary
-/           %h1 
-/             %b Qué es cumplimiento normativo
-/         %div{:layout => "row"}
-/           %div{:flex => "30"}
-/             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
-/           %div{:flex => "70"}
-/             %p El 
-/               %b artículo 112 de la Ley 1450 de 2012 
-/               (Plan Nacional de Desarrollo) ordena implementar medidas de control a la comercialización de minerales indicando que se debe publicar la lista de los titulares mineros así como la información de los agentes autorizados para comercializar minerales.
-/               %a{:ng-href => "/Laws/Ley1450-2011.pdf"} ( Ver Ley )
-/             %p A fin de reglamentar el tema, se expidió el Decreto 2637 del 17 de diciembre de 2012 que le da vida al Registro Único de Comercializadores de Minerales –RUCOM que, en últimas, busca apoyar la minería legal y controlar adecuadamente la comercialización de minerales. 
-/               %a{:ng-href => "/Laws/2637-2012.pdf"} ( Ver Decreto )
-/             %p
-/               Decreto 0705 del 2013 
-/               %a{:ng-href => "/Laws/0705-2013.pdf"} ( Ver Decreto )
-/             %p
-/               Decreto 035 del 2014 
-/               %a{:ng-href => "/Laws/035-2014.pdf"} ( Ver Decreto )
-/             %p
-/               Decreto 0276 de 2015 
-/               %a{:ng-href => "/Laws/0276-015.pdf"} ( Ver Decreto )    
-/     %md-divider 
-/     %md-content{:style => "padding: 24px;"}
-/       %section
-/         %md-subheader.md-primary
-/           %h1 
-/             %b Contacto
-/         %div{:layout => "row"}
-/           %div{:flex => "30"}
-/             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
-/           %div{:flex => "70"}
-/             %p Si estas interesado en conocer mas o ver como tu empresa puede hacer uso del servicio TrazOro envíanos un correo a 
-/             %a{:href => "mailto:contacto@trazoro.co"} contacto@trazoro.co
-/     
+
+  %md-content.md-padding.div-trazoro.gold{"layout" => "column"}
+    %div{ "layout"=>"column"}
+      
+      %h2
+        %p.font-oswald.title
+          LO QUE HACEMOS
+      .div{"layout" => "row", "layout-align"=>"center center"}    
+        %p.font-source-sans{:flex => "60"}
+          Simplificamos la comercialización de metales preciosos. Hacemos todo el proceso documental transaccional, en formato digital, organizado y disponible. Integramos con servicio de facturación computarizada. Generamos información para exportación, monetización, contabilidad y reportes a autoridades. 
+        
+
+    %div{:layout => "row", "layout-margin" => "", "layout-align" => "center", "layout-sm" => "column", "style" => "padding-bottom: 60px;" }
+      
+      %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+        %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-hojas.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
+        .div-rectangule-black{} 
+          %h2.md-title 
+            TRANSPARENCIA 
+        %md-card-content
+          %p.p-small
+            Identificación de todos los eslabones de la cadena de comercialización. Productores autorizados identificables con variables biométricas
+        / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
+        /   %md-button
+        /     Action 1
+        /   %md-button
+        /     Action 2
+
+      %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+        %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-candado.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
+        .div-rectangule-black 
+          %h2.md-title 
+            TRANQUILIDAD 
+        %md-card-content
+          %p.p-small
+            Sistema de doble chequeo que no permite realizar operaciones que no cumplan con los parámetros de ley. Genera "huella digital electrónica" de cada transacción, adjudicando responsabilidades precisas a quienes manejan la herramienta.
+        / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
+        /   %md-button
+        /     Action 1
+        /   %md-button
+        /     Action 2 
+
+      %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+        %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-grafico.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
+        .div-rectangule-black 
+          %h2.md-title 
+            TRAZABILIDAD
+        %md-card-content
+          %p.p-small
+            Hace toda la cadena de trazabilidad, desde el productor que vende el metal hasta la exportación final. Corrobora que productor sea autorizado, almacena variables biométricas, aumentando garantía de origen legal del producto.
+            
+        / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
+        /   %md-button
+        /     Action 1
+        /   %md-button
+        /     Action 2      
+      
+
+  %md-content.md-padding.div-trazoro.beneficios{ "layout-sm" => "column"}
+    %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
+      %h1..font-oswald.title
+        BENEFICIOS
+
+    %div.div-num{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+        
+      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+        %div{"layout"=>"row", "layout-wrap"}
+          %div{:flex}
+            %img{:src => "/img/icons/landing/1.png"}
+          %div{"layout"=>"column"}
+            %div.title-num{:flex}
+              CONTROL
+            %div.text-num{:flex}
+              Control total sobre la cadena de proveeduría del material.
+          
+    
+      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
+        %div{"layout"=>"row", "layout-wrap"}
+          %div{:flex}
+            %img{:src => "/img/icons/landing/2.png"}
+          %div{"layout"=>"column"}
+            %div.title-num{:flex}
+              ORDEN
+            %div.text-num{:flex}
+              Información organizada cronológicamente de manera digital.
+    
+      %div{:flex  => "20", "flex-sm" => "95", "flex-md" => "30" }
+        %div{"layout"=>"row", "layout-wrap"}
+          %div{:flex }
+            %img{:src => "/img/icons/landing/3.png"}
+          %div{"layout"=>"column"}
+            %div.title-num{:flex}
+              DISPONIBILIDAD
+            %div.text-num{:flex}
+              Información 100% en la nube, accesible en todo momento.
+
+    %div.div-num{"layout"=>"row", "layout-margin" => "","layout-sm"=>"column", "layout-align" => "center center"}
+      
+      %div{:flex  => "20", "flex-sm" => "95", "flex-md" => "30"  }
+        %div{"layout"=>"row", "layout-wrap"}
+          %div{:flex }
+            %img{:src => "/img/icons/landing/4.png"}
+          %div{"layout"=>"column"}
+            %div.title-num{:flex}
+              EFICIENCIA
+            %div.text-num{:flex}
+              Hacer procesos en menor tiempo, más fáciles de validar.
+    
+      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
+        %div{"layout"=>"row", "layout-wrap"}
+          %div{:flex}
+            %img{:src => "/img/icons/landing/5.png"}
+          %div{"layout"=>"column"}
+            %div.title-num{:flex}
+              ROTACION
+            %div.text-num{:flex}
+              A mayor velocidad de evaluación y validación de la información, mayor velocidad de rotación.
+    
+      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
+        %div{"layout"=>"row", "layout-wrap"}
+          %div{:flex }
+            %img{:src => "/img/icons/landing/6.png"}
+          %div{"layout"=>"column"}
+            %div.title-num{:flex}
+              REMOTO
+            %div.text-num{:flex}
+              Permite estar al tanto de todo el negocio en la distancia con la tranquilidad que todos los procesos se ajustan a la normatividad
+
+
+  %md-content.md-padding.div-trazoro.quienes
+    %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
+      %h2.font-oswald.title
+        QUIENES LO PUEDEN USAR
+
+    %div{"layout"=>"row", "layout-margin" => "", "layout-fill" => "","layout-padding" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+
+      %div{:flex => "30", "flex-sm" => "95", "flex-md" => "45" }
+        %div.rectangule-quienes{"layout"=>"column"}
+          %div.padding-icon-quienes{:flex => }
+            %img{:src =>"/img/icons/landing/icono-perfil.svg"}
+          %div.title-quienes
+            %p
+              COMERCIALIZADOR  
+          %div..padding-text-quienes.font-oswald.regular{:flex}
+            %p 
+              Comercializador que compra directamente 
+              los metales en campo a los productores autorizados. 
+          %div{:flex}
+            %md-icon{"md-svg-icon"=>"/img/icons/landing/icono-mas.svg"}
+    
+      %div{:flex => "30", "flex-sm" => "95", "flex-md" => "45" }
+        %div.rectangule-quienes{"layout"=>"column"}
+          %div.padding-icon-quienes{:flex => }
+            %img{:src => "/img/icons/landing/icono-perfil.svg"}
+          %div.title-quienes
+            %p
+              EXPORTADOR
+          %div.padding-text-quienes.font-oswald.regular{:flex}
+            %p 
+              Comercializador que compra el metal precioso a través
+              de otros comercializadores.
+          %div.icon-mas-quienes{:flex}
+            %md-icon{"md-svg-icon"=>"/img/icons/landing/icono-mas.svg"}
+
+
+  %md-content.md-padding.div-trazoro.white{ "layout" => "column" ,"layout-align" => "center"}
+
+    %div{"layout" =>"row", "layout-align" => "center center"}
+      .text-content
+        %h1
+          %b.font-oswald.title
+            CONTACTO
+          
+        %h2.font-oswald.light
+          %p Si esta interesado en conocer más o ver como tu empresa puede hacer uso del servicio TrazOro envíanos un mensaje.
+    
+
+    %form{:name => "userForm"}
+      %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
+        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+          %input.main-login-input{"ng-model" => "user.firstName", :placeholder => "Nombre"}
+        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+          %input.main-login-input{"ng-model" => "theMax", :placeholder => "Apellido"}
+      %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
+        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+          %input.main-login-input{"ng-model" => "user.firstName", :placeholder => "Email"}
+        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+          %input.main-login-input{"ng-model" => "theMax", :placeholder => "Celular"}
+      
+
+      %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
+        %md-input-container{:flex => "50", "md-no-float" => "", "flex-md" => "90"}
+          %textarea.main-login-input{:columns => "1",:row => "5", "ng-model" => "user.biography", :placeholder => "Mensaje" }
+      %md-button.md-primary.button-black{ "aria-label"=>"Custom Icon Button"}
+        Enviar
+        %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
+
+      
+      
+
+  /%div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
+  /%md-select{"ng-model" => "someVal", :placeholder => "Tipo de solicitud", :flex => "50"}
+  /%md-option{:value => "1"} One
+  /%md-option{:value => "2"} Two
+
+
+  /%md-content.md-padding.div-trazoro.gold{"ng-controller"=>"SessionsNewCtrl"}
+
+  /%form.login-form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>""}
+  /.yellow-border
+  /%md-input-container.md-default-theme{"md-no-float" => ""}
+  /%input{"ng-model" => "email", :placeholder => "Email", :type => "email"}
+  /%md-input-container.md-default-theme{"md-no-float" => ""}
+  /%input.md-input{"ng-model" => "password", :placeholder => "Password", :type => "password"}
+  /.remember-password-form
+  /%a{:ng-href => "#sendtoken"} Recuperar contraseña
+
+  /%md-button.login-home-button.md-raised.md-default-theme
+  /Iniciar Session
+  / #home
+  /   %div{:style => "text-align:justify;"}
+  /     %md-content{:style => "padding: 24px;"}
+  /       %section
+  /         %md-subheader.md-primary
+  /           %h1 
+  /             %b ¿Que es Trazoro?
+  /         %div{:layout => "row"}
+  /           %div{:flex => "30"}
+  /             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
+  /           %div{:flex => "70"}
+  /             %p 
+  /               %b TrazOro 
+  /               es una 
+  /               %b herramienta 
+  /               tecnológica dirigida al cumplimiento 
+  /               %b normativo 
+  /               y 
+  /               %b estandarización 
+  /               de procesos de la cadena de comercialización de los metales preciosos en Colombia.
+  /             %p
+  /               A través del uso de 
+  /               %b TrazOro se garantiza la 
+  /               %b trazabilidad total de los metales preciosos desde que son 
+  /               %b producidos, comercializados y exportados 
+  /               del país.   
+  /             %p  
+  /               La herramienta esta diseñada para que cada compra que ingresa al sistema cuente con 
+  /               %b todos 
+  /               los documentos y cumplan todas las condiciones establecidas en el 
+  /               %b decreto 0276 de 2015.
+  /             %p  
+  /               Trazoro es un servicio de Min-Trace Colombia SAS, una empresa dedicada a proveer soluciones a diversas industrias. 
+  /     %md-divider
+  /     %md-content{:style => "padding: 24px;"}
+  /       %section
+  /         %md-subheader.md-primary
+  /           %h1
+  /             %b Ventajas
+  /         %div{:layout => "row"}
+  /           %div{:flex => "30"}
+  /             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
+  /           %div{:flex => "70"}
+  /             %p
+  /               %b Estandariza – 
+  /               El proceso de ventas para asegurar que siempre se cumpla con la totalidad de requisitos de Ley.
+  /             %p
+  /               %b Centraliza – 
+  /               El proceso documental cada usuario puede ver toda la documentación de cada lote transado y generar cuantas copias se necesite de la documentación
+  /             %p
+  /               %b Certifica – 
+  /               No permite adquirir mineral que no cumpla con todos los pasos documentales o de proveedores no inscritos y activos en el RUCOM. 
+  /             %p
+  /               %b Evita Error Humano – 
+  /               Cada lote que se transporta o vende es acompañado de todos sus certificados de manera organizada con copia digital en PDF generado por el sistema. 
+  /             %p
+  /               %b Seguridad – 
+  /               Todas las comunicaciones son encriptados – Los servidores son de primer nivel con redundancia geográfica.
+  /             %p
+  /               %b Agiliza – 
+  /               Ingresar un lote al inventario es tan sencillo como escanear su código de barras y tu base de datos reflejara toda la información de este lote.
+  /             %p
+  /               %b Reportes – 
+  /               Reportes Contables – Rucom – Regalías 
+  /             %p
+  /               %b Auditable – 
+  /               Al contar con una total trazabilidad las auditorias rutinarias se hacen cada vez mas transparentes.
+  /     %md-divider
+  /     %md-content{:style => "padding: 24px;"}
+  /       %section
+  /         %md-subheader.md-primary
+  /           %h1 
+  /             %b Seguridad de la Información
+  /         %div{:layout => "row"}
+  /           %div{:flex => "30"}
+  /             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
+  /           %div{:flex => "70"}
+  /             %p
+  /               %b Todas
+  /               las comunicaciones entre el usuario y el servidor son 
+  /               %b encriptadas con protocolos 
+  /               %b SSL.
+  /             %p
+  /               Toda la información es alojada en la 
+  /               %b nube usando servidores de primer nivel de 
+  /               %b Microsoft Azure® 
+  /               garantizando una disponibilidad de la información del 
+  /               %b 99.99% 
+  /               del tiempo.
+  /             %p
+  /               Se garantiza la 
+  /               %b persistencia de la información por un periodo no menor a 
+  /               %b 10 años.
+  /               Toda la información almacenada es 
+  /               %b encriptada 
+  /               con los mas altos protocolos de 
+  /               %b seguridad 
+  /               y es confidencial. Gantizando así que únicamente los propietarios de la información tengan acceso a ella.
+  /             %p
+  /               Cumplimos a cabalidad con la 
+  /               %b Ley de Protección de Datos 1581 de 2012.
+  /               Estamos en proceso de implementar y certificarnos en 
+  /               %b ISO27001 Seguridad Informática.
+  /               En caso de perdida o robo del computador toda la información esta almacenada en la nube para acceso desde cualquier parte.
+  /     %md-divider        
+  /     %md-content{:style => "padding: 24px;"}
+  /       %section
+  /         %md-subheader.md-primary
+  /           %h1 
+  /             %b Qué es cumplimiento normativo
+  /         %div{:layout => "row"}
+  /           %div{:flex => "30"}
+  /             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
+  /           %div{:flex => "70"}
+  /             %p El 
+  /               %b artículo 112 de la Ley 1450 de 2012 
+  /               (Plan Nacional de Desarrollo) ordena implementar medidas de control a la comercialización de minerales indicando que se debe publicar la lista de los titulares mineros así como la información de los agentes autorizados para comercializar minerales.
+  /               %a{:ng-href => "/Laws/Ley1450-2011.pdf"} ( Ver Ley )
+  /             %p A fin de reglamentar el tema, se expidió el Decreto 2637 del 17 de diciembre de 2012 que le da vida al Registro Único de Comercializadores de Minerales –RUCOM que, en últimas, busca apoyar la minería legal y controlar adecuadamente la comercialización de minerales. 
+  /               %a{:ng-href => "/Laws/2637-2012.pdf"} ( Ver Decreto )
+  /             %p
+  /               Decreto 0705 del 2013 
+  /               %a{:ng-href => "/Laws/0705-2013.pdf"} ( Ver Decreto )
+  /             %p
+  /               Decreto 035 del 2014 
+  /               %a{:ng-href => "/Laws/035-2014.pdf"} ( Ver Decreto )
+  /             %p
+  /               Decreto 0276 de 2015 
+  /               %a{:ng-href => "/Laws/0276-015.pdf"} ( Ver Decreto )    
+  /     %md-divider 
+  /     %md-content{:style => "padding: 24px;"}
+  /       %section
+  /         %md-subheader.md-primary
+  /           %h1 
+  /             %b Contacto
+  /         %div{:layout => "row"}
+  /           %div{:flex => "30"}
+  /             %img{:src => "/img/gold-1765_640.jpg", :style => "max-height:400px;max-width:400px;"}
+  /           %div{:flex => "70"}
+  /             %p Si estas interesado en conocer mas o ver como tu empresa puede hacer uso del servicio TrazOro envíanos un correo a 
+  /             %a{:href => "mailto:contacto@trazoro.co"} contacto@trazoro.co
+  /     

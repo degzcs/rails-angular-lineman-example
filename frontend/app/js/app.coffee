@@ -60,6 +60,7 @@ angular.module("app", [
     .iconSet('notification', 'img/icons/sets/notification-icons.svg', 24)
     .iconSet('social', 'img/icons/sets/social-icons.svg', 24)
     .iconSet('toggle', 'img/icons/sets/toggle-icons.svg', 24)
+    .iconSet('logo_trazoro_black', 'img/icons/landing/logo-trazoro-black.svg', 24)
     .defaultIconSet 'img/icons/sets/core-icons.svg', 24
   return
 
@@ -75,7 +76,9 @@ angular.module("app", [
   $mdThemingProvider.theme('docs-dark', 'default')
     .primaryPalette('yellow')
     .dark();
-
+  $mdThemingProvider.theme('landTheme')
+    .dark();
+# #fff blanco, #edcf36 amarillo, negro opaco #1a1a1a, negro negro #000000
 
 
 # TODO: Check if the http batcher is working!! Im testing with diferent setups buts i dont see any change
