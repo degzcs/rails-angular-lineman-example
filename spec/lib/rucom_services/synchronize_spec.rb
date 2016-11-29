@@ -101,7 +101,7 @@ describe RucomServices::Synchronize do
             expect(@rucom.original_name).to eq 'AMADO  MARULANDA    '
             expect(@rucom.minerals).to eq 'ORO'
             expect(@rucom.status).to eq 'Activo'
-            expect(@rucom.provider_type).to eq 'Barequero'
+            expect(@rucom.provider_type).to eq 'barequero'
             expect(@rucom.rucomeable_type).to eq 'User'
 
             # it 'creates a user profile row in the database'
