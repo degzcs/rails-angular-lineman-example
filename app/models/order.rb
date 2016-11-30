@@ -201,11 +201,7 @@ class Order < ActiveRecord::Base
 
   # TODO: define the Right format to show the sequence number
   def sequence_number
-    if transaction_sequence
-      sprintf '%s-%05d', created_at.year,transaction_sequence
-    else
-      "–"
-    end
+    sprintf '%05d', transaction_sequence.to_i
   end
 
   protected

@@ -89,4 +89,8 @@ class OrderPresenter < BasePresenter
   def real_gold_cost
     total_price - (trazoro_transaction_cost_value + trazoro_transaction_vat)
   end
+
+  def sale_sequence_format
+    sprintf '%05d', transaction_sequence.to_i
+  end
 end

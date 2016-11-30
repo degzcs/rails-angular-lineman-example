@@ -32,6 +32,8 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     # Header
     # move_down 60
     move_cursor_to 764
+    text_box 'Orden#:', :at => [31, cursor], :width => 80, :size => 12, :height =>  12, :overflow => :shrink_to_fit
+    text_box order_presenter.sale_sequence_format, :at => [95, cursor], :width => 80, :size => 12, :height =>  12, :overflow => :shrink_to_fit
     text_box order_presenter.ymd_time, :at => [352, cursor], :width => 80, :size => 11, :height =>  11, :overflow => :shrink_to_fit
     text_box order_presenter.hms_time, :at => [440, cursor], :width => 80, :size => 11, :height =>  11, :overflow => :shrink_to_fit
     text_box '1', :at => [528, cursor], :width => 80, :size => 11, :height =>  11, :overflow => :shrink_to_fit
