@@ -302,6 +302,17 @@ ActiveRecord::Schema.define(version: 20161201171435) do
     t.string   "code"
   end
 
+  create_table "taxes", force: true do |t|
+    t.string   "name"
+    t.string   "initials"
+    t.float    "porcent"
+    t.integer  "puc_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taxes", ["puc_account_id"], name: "index_taxes_on_puc_account_id", using: :btree
+
   create_table "user_settings", force: true do |t|
     t.boolean  "state",                     default: false
     t.string   "alegra_token"
