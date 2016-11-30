@@ -24,4 +24,13 @@ angular.module('app').factory 'CurrentUser', ($http) ->
         items[key]
       clean: ->
         sessionStorage.currentUserSettings = nil
+    can_genearate_royalties_document: (currentUser)->
+      it_can = false
+      if currentUser.legal_representative == true
+        for trazoroService in currentUser.trazoro_services
+          it_can = trazoroService.reference == "generate_royalties"
+          break if it_can == true
+        return it_can
+      else
+        return it_can
   service
