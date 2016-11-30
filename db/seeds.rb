@@ -109,7 +109,11 @@ puts 'Associating user settings to trazoro dcm user legal representative'
 begin
   legal_representative = User.find_by(email: 'dcm@trazoro.co')
   raise 'don\'t create user setting for user dcm legal representative' unless legal_representative
-  FactoryGirl.create(:user_setting, profile_id: legal_representative.profile.id, alegra_token: APP_CONFIG[:ALEGRA_TOKEN])
+  unless legal_representative.setting
+    usr_setting = FactoryGirl.build(:user_setting, profile_id: legal_representative.profile.id)
+    usr_setting.save
+    puts 'user settings associated successfully!'
+  end
 rescue => e
   puts "There is something wrong!!!, without a user setting will be errors in the sale transactions. ERROR: #{ e }"
 end
