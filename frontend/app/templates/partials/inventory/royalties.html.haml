@@ -1,5 +1,5 @@
 .purchase-container
-  %form.royalties-form{:name => "royaltyForm", "novalidate" => "novalidate"}
+  %form.royalties-form{"ng-hide" => "response == false", :name => "royaltyForm", "novalidate" => "novalidate"}
     %div{:layout => 'column'}
 
       %section.md-padding{flex: "", layout: "row"}
@@ -56,3 +56,4 @@
           .button
       // ---------------------- Generate Origin Certificate button----------------------------------///
       %md-button.md-primary.md-hue-2{flex: "", "ng-disabled" => 'royaltyForm.$invalid', "ng-click" => "generatePdfFile()"} Generar Documento
+%h3{"ng-if" => "response == false"} No Tienes El Servicio De Regalias Trazoro
