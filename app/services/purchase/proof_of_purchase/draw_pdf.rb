@@ -31,6 +31,8 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     start_new_page(:template => base_file.path, :template_page => 1)
     # header
     move_cursor_to 762
+    # text_box 'Orden#:', :at => [26, cursor], :width => 80, :size => 12, :height =>  12
+    # text_box order_presenter.sale_sequence_format, :at => [90, cursor], :width => 80, :size => 12, :height =>  12
     text_box order_presenter.ymd_time, :at => [224, cursor], :width => 80, :size => 12, :height =>  12
     text_box order_presenter.hms_time.to_s, :at => [328, cursor], :width => 80, :size => 12, :height =>  12
 
