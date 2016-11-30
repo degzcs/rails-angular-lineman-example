@@ -52,17 +52,18 @@
 
       .text-content{:flex => "60"}
         %h2
-          %p.font-oswald.light.yellow-font
+          %p.font-oswald.light.yellow-font{"style" => "letter-spacing: 4px !important"}
             TRAZORO es una plataforma tecnológica que se comporta como oficial de cumplimiento en la comercialización de metales preciosos. 
       
-    %md-button.button-yellow{"style" => "margin-top: 125px;"}
+    %md-button.button-yellow{"style" => "margin-top: 100px; letter-spacing: 4px;", "ng-click"=>"scrollTo('loquehacemos')"}
       DESCUBRIR 
       %md-icon{ "md-svg-icon"=>"/img/icons/landing/icono-apunta-abajo.svg" }
+    
 
 
 
 
-  %md-content.md-padding.div-trazoro.gold{"layout" => "column"}
+  %md-content.md-padding.div-trazoro.gold{"layout" => "column", "id" => "loquehacemos"}
     %div{ "layout"=>"column"}
       
       %h2
@@ -119,12 +120,13 @@
         /     Action 2      
       
 
-  %md-content.md-padding.div-trazoro.beneficios{ "layout-sm" => "column"}
+  %md-content.md-padding.div-trazoro.beneficios{ "layout-sm" => "column", "id" => "beneficios"}
     %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
-      %h1..font-oswald.title
+      %h1.font-oswald.title{"style" => "letter-spacing: 4px"}
         BENEFICIOS
+      
 
-    %div.div-num{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+    %div{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
         
       %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %div{"layout"=>"row", "layout-wrap"}
@@ -246,9 +248,9 @@
           %input.main-login-input{"ng-model" => "theMax", :placeholder => "Apellido"}
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
         %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
-          %input.main-login-input{"ng-model" => "user.firstName", :placeholder => "Email"}
+          %input.main-login-input{"ng-model" => "user.email", :placeholder => "Email"}
         %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
-          %input.main-login-input{"ng-model" => "theMax", :placeholder => "Celular"}
+          %input.main-login-input{"ng-model" => "user.cel", :placeholder => "Celular"}
       
 
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
