@@ -239,6 +239,16 @@ ActiveRecord::Schema.define(version: 20161201171435) do
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
+  create_table "puc_accounts", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "debit"
+    t.string   "credit"
+    t.string   "account_nature"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
