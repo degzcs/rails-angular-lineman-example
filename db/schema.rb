@@ -300,6 +300,11 @@ ActiveRecord::Schema.define(version: 20161201171435) do
     t.datetime "updated_at"
     t.float    "fine_gram_value"
     t.integer  "last_transaction_sequence", default: 0
+    t.string   "regime_type"
+    t.string   "activity_code"
+    t.string   "scope_of_operation"
+    t.string   "organization_type"
+    t.boolean  "self_holding_agent"
   end
 
   add_index "user_settings", ["profile_id"], name: "index_user_settings_on_profile_id", using: :btree
