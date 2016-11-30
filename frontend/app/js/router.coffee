@@ -475,9 +475,9 @@
   )
 
   .state("new_purchase",
-    url: "/purchases/new",
+    url: "/purchases",
     ncyBreadcrumb:
-      label: 'Nueva Compra'
+      label: 'Compra'
     views:
       'content':
         templateUrl: "partials/purchases/new.html"
@@ -489,6 +489,24 @@
         templateUrl: "partials/flying-navbar.html"
         controller: "SidebarCtrl"
 
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_purchase.purchase_home",
+    url: "/purchases/home",
+    ncyBreadcrumb:
+      label: ''
+    views:
+      'content':
+        templateUrl: "partials/purchases/purchase_home.html"
+        controller: "PurchasesCtrl"
     resolve:
       authenticated: ($q, $location, $auth) ->
         deferred = $q.defer()
