@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201171435) do
+  ActiveRecord::Schema.define(version: 20161201171435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 20161201171435) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "apply_taxes", force: true do |t|
+    t.integer  "tax_id"
+    t.string   "seller_regime"
+    t.string   "buyer_regime"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "apply_taxes", ["tax_id"], name: "index_apply_taxes_on_tax_id", using: :btree
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
