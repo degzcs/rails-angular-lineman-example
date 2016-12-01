@@ -11,6 +11,7 @@
 #  goldomable_type :string(255)
 #  goldomable_id   :integer
 #  sold            :boolean          default(FALSE)
+#  mineral_type    :string(255)
 #
 
 FactoryGirl.define do
