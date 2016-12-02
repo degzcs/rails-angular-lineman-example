@@ -105,6 +105,16 @@
       %p
         {{goldBatch.model.grade}}
 
+  %md-content{"class"=>"", "layout"=>"row"}
+    %h4
+      Mineral Comprado
+  %md-content{"class"=>"", "layout"=>"row"}
+    .purchase-info{'flex' => ''}
+      .row{'layout' => 'row'}
+        .oc-number{'flex' => ''}
+          %p
+            {{goldBatch.model.mineral_type}}
+
   %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
     %h4
       Peso comprado
