@@ -50,6 +50,9 @@ module V1
         expose :sold, documentation: { type: 'boolean', desc: "State to determinate if a gold_batch is sold or not", example: "true"} do|purchase, options|
           purchase.gold_batch.sold
         end
+        expose :mineral_type, documentation: { type: 'string', desc: "type mineral of the purchase", example: "Oro"} do|purchase, options|
+          purchase.gold_batch.mineral_type
+        end
       end
       # TODO: remove this inventory namespace as soon as the frontend being upgrated
       expose :inventory do
