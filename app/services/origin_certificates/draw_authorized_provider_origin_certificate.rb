@@ -74,7 +74,7 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
     # Gold Batch
     gold_batch_presenter = order_presenter.gold_batch_presenter
     move_cursor_to 322
-    text_box 'Oro', :at => [300, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    text_box gold_batch_presenter.mineral_type.to_s, :at => [300, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
     move_cursor_to 294
     text_box gold_batch_presenter.formatted_fine_grams.to_s, :at => [300, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
