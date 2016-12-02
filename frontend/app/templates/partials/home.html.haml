@@ -5,13 +5,13 @@
     
     %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
       %div{:layout => "", "layout-align" => "center center"}
-        %a.a-toolbar-desktop{:ng-href => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
+        %a.a-toolbar-desktop{"ng-href" => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
         
 
         %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "margin-top: 30px;" }
           %input.main-login-input{"ng-model" => "email", :placeholder => "Correo:", :type => "email"}
 
-        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "    margin-top: 30px;"}
+        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "margin-top: 5px;  padding-bottom: 2px;"}
           %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
         
         %md-button.md-primary.button-black{:flex => "20"}
@@ -23,7 +23,7 @@
   %div.toolbar-black{:layout => "row", "layout-align" => "center", "hide-gt-lg" => ""  }
     %img{"ng-src"=>"/img/icons/landing/logo-trazoro-blanco.svg", "style" => "heigth: 100px; width: 100px;"}
 
-  //--------------Form login in movil and tablet device------------------//
+      //--------------Form login in movil and tablet device------------------//
   
   %div.div-trazoro.white{ "hide-gt-lg" => "" }
     %p
