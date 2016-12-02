@@ -5,13 +5,13 @@
     
     %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
       %div{:layout => "", "layout-align" => "center center"}
-        %a.a-toolbar-desktop{:ng-href => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
+        %a.a-toolbar-desktop{"ng-href" => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
         
 
         %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "margin-top: 30px;" }
           %input.main-login-input{"ng-model" => "email", :placeholder => "Correo:", :type => "email"}
 
-        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "    margin-top: 30px;"}
+        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", "style" => "margin-top: 5px;  padding-bottom: 2px;"}
           %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
         
         %md-button.md-primary.button-black{:flex => "20"}
@@ -23,7 +23,7 @@
   %div.toolbar-black{:layout => "row", "layout-align" => "center", "hide-gt-lg" => ""  }
     %img{"ng-src"=>"/img/icons/landing/logo-trazoro-blanco.svg", "style" => "heigth: 100px; width: 100px;"}
 
-  //--------------Form login in movil and tablet device------------------//
+      //--------------Form login in movil and tablet device------------------//
   
   %div.div-trazoro.white{ "hide-gt-lg" => "" }
     %p
@@ -52,17 +52,18 @@
 
       .text-content{:flex => "60"}
         %h2
-          %p.font-oswald.light.yellow-font
+          %p.font-oswald.light.yellow-font{"style" => "letter-spacing: 4px !important"}
             TRAZORO es una plataforma tecnológica que se comporta como oficial de cumplimiento en la comercialización de metales preciosos. 
       
-    %md-button.button-yellow{"style" => "margin-top: 125px;"}
+    %md-button.button-yellow{"style" => "margin-top: 100px; letter-spacing: 4px;", "ng-click"=>"scrollTo('loquehacemos')"}
       DESCUBRIR 
       %md-icon{ "md-svg-icon"=>"/img/icons/landing/icono-apunta-abajo.svg" }
+    
 
 
 
 
-  %md-content.md-padding.div-trazoro.gold{"layout" => "column"}
+  %md-content.md-padding.div-trazoro.gold{"layout" => "column", "id" => "loquehacemos"}
     %div{ "layout"=>"column"}
       
       %h2
@@ -110,7 +111,7 @@
             TRAZABILIDAD
         %md-card-content
           %p.p-small
-            Hace toda la cadena de trazabilidad, desde el productor que vende el metal hasta la exportación final. Corrobora que productor sea autorizado, almacena variables biométricas, aumentando garantía de origen legal del producto.
+            Maneja toda la cadena documental y transaccional de la comercialización del oro, desde el productor hasta el exportador. Donde están los números, de 1 a 6, eso quedo muy pequeño. Hay que aumentarlo para que esa vista haga una pantalla completa.
             
         / %div.md-actions{ "layout" => "row", "layout-align" => "center center"}
         /   %md-button
@@ -119,12 +120,13 @@
         /     Action 2      
       
 
-  %md-content.md-padding.div-trazoro.beneficios{ "layout-sm" => "column"}
+  %md-content.md-padding.div-trazoro.beneficios{ "layout-sm" => "column", "id" => "beneficios"}
     %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
-      %h1..font-oswald.title
+      %h1.font-oswald.title{"style" => "letter-spacing: 4px"}
         BENEFICIOS
+      
 
-    %div.div-num{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
+    %div{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
         
       %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %div{"layout"=>"row", "layout-wrap"}
@@ -187,7 +189,7 @@
             %div.title-num{:flex}
               REMOTO
             %div.text-num{:flex}
-              Permite estar al tanto de todo el negocio en la distancia con la tranquilidad que todos los procesos se ajustan a la normatividad
+              Permite estar al tanto de todo el negocio en la distancia.
 
 
   %md-content.md-padding.div-trazoro.quienes
@@ -246,9 +248,9 @@
           %input.main-login-input{"ng-model" => "theMax", :placeholder => "Apellido"}
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
         %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
-          %input.main-login-input{"ng-model" => "user.firstName", :placeholder => "Email"}
+          %input.main-login-input{"ng-model" => "user.email", :placeholder => "Email"}
         %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
-          %input.main-login-input{"ng-model" => "theMax", :placeholder => "Celular"}
+          %input.main-login-input{"ng-model" => "user.cel", :placeholder => "Celular"}
       
 
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}

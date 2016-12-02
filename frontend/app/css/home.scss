@@ -85,7 +85,7 @@
   }
   .a-toolbar-desktop{
     position: absolute;
-    font-size: x-small;
+    font-size: small;
     top: 70px;
     left: 875px;
   }
@@ -148,8 +148,9 @@
     padding-bottom: 40px !important;
   }
   .text-num{
-    font-size: x-small !important;
+    font-size: medium !important;
     font-family: 'Source Sans Pro', sans-serif !important;
+    height: 100px;
   }
   .title-num{
     background: #eece56 !important;
@@ -160,6 +161,11 @@
     font-family: 'oswald', sans-serif;
     font-weight: 700;
     text-align: center;
+  }
+
+  .div-num{
+    padding-top: 30px;
+    padding-bottom: 100px;
   }
 
   .icon-toolbar{
