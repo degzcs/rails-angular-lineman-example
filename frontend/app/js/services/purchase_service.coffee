@@ -86,6 +86,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           "gold_batch[grade]": gold_batch.grade # < -- This is "la ley" in spanish, used to calculate fine grams from grams, see more in measure_converter_service.coffee file
           "gold_batch[extra_info]": { grams: gold_batch.total_grams, castellanos: gold_batch.castellanos, ozs: gold_batch.ozs, tomines: gold_batch.tomines, reales: gold_batch.reales, granos: gold_batch.granos }
           #"purchase[origin_certificate_sequence]": purchase.origin_certificate_sequence
+          "gold_batch[mineral_type]": gold_batch.mineral_type
         file: files
         fileFormDataName: 'purchase[files][]')
 
