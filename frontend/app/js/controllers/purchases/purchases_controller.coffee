@@ -12,7 +12,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.purchase = PurchaseService
   $scope.goldBatch = GoldBatchService
   $scope.totalGrams = 0
-  $scope.mineralType = 'Oro'
+  # $scope.mineralType = 'Oro'
   $scope.measureUnit = 'Gramos Finos'
   $scope.allsellers  = []
   $scope.searchText = null
@@ -255,7 +255,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     #Price
     $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
     $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999)
-    
+
     #
     # Measures Unit Price
     $scope.gramsUnitPrice = $scope.purchase.model.fine_gram_unit_price_to_buy
@@ -300,6 +300,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       inventory_id: 1
       total_grams: 0
       total_fine_grams: 0
+      mineral_type: ''
 
   #
   # Save values in SessionStorage
