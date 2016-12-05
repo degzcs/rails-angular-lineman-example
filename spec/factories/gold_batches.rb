@@ -18,5 +18,6 @@ FactoryGirl.define do
   factory :gold_batch do
     fine_grams { 100 }
     grade { 850 }
+    mineral_type { 'Oro' }
   end
 end
