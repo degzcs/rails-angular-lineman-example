@@ -27,7 +27,8 @@ describe Purchase::BuyGoldService do
       @gold_batch_hash = {
         'fine_grams' => 1.5,
         'grade' => 999,
-        'extra_info' => { 'grams' => 1.5 }
+        'extra_info' => { 'grams' => 1.5 },
+        'mineral_type' => 'Oro'
       }
       @order_hash = {
         'seller_id' => @seller.id,
