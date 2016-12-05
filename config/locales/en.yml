@@ -23,6 +23,9 @@
 en:
   amalgam: 'Amalgama'
   jewelry: 'Joya'
+  concentrated: 'Concentrado'
+  cyanide: 'Cianurado'
+  metal: 'Metal'
   first_name: 'Nombre'
   last_name: 'Apellido'
   document_number: 'Número de documento'
