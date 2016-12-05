@@ -35,8 +35,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   $scope.clientVerifiedProgress = false
   $scope.saleOrder = saleOrderInfo
 
-  console.log 'saleOrder: '
-  console.log $scope.saleOrder
+  # console.log 'saleOrder: '
+  # console.log $scope.saleOrder
 
 
   CurrentUser.get().success (user) ->
@@ -156,8 +156,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
         $mdDialog.cancel dialog
-        console.log 'Sale Object: '
-        console.log sale
+        # console.log 'Sale Object: '
+        # console.log sale
 
         LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount

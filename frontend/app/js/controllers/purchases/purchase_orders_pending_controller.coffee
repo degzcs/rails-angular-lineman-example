@@ -1,7 +1,7 @@
 angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseService, GoldBatchService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
-  $scope.totalAmount = 0 
+  $scope.totalAmount = 0
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
@@ -30,7 +30,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       name: 'Precio'
       field: 'sale.price'
     }
-  ] 
+  ]
 
   #Variables configuration
   $scope.pages = 0
@@ -46,8 +46,8 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
-    console.log 'sales: '
-    console.log sales
+    # console.log 'sales: '
+    # console.log sales
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
 
@@ -58,7 +58,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   CurrentUser.get().success (data) ->
     $scope.current_user = data
     #$scope.saleService.use_wacom_device = data.use_wacom_device
-    $scope.current_sale_id = null 
+    $scope.current_sale_id = null
 
 
 # when click the button to see the fixed sale agreetment
@@ -75,7 +75,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     .error((error)->
       $scope.showLoading = false
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
-    )  
+    )
 
   $scope.handlerContinue = ->
     res = if $scope.chkAgreetmentActive == true then true else false
@@ -113,7 +113,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       $scope.showLoading = false
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
     )
- 
+
   can_exec_transition = ->
     if  $scope.saleService.transaction_state == 'canceled' || $scope.saleService.transaction_state == 'approved'
       return false
