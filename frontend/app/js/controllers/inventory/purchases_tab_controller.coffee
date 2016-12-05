@@ -1,7 +1,7 @@
 angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state) ->
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
-  $scope.totalAmount = 0 
+  $scope.totalAmount = 0
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
@@ -26,7 +26,11 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
       name: 'Precio'
       field: 'purchase.price'
     }
-  ] 
+    {
+      name: 'Tipo de Mineral'
+      field: 'purchase.gold_batch.mineral_type'
+    }
+  ]
 
   #Variables configuration
   $scope.pages = 0
@@ -50,10 +54,10 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
 
   $scope.toggle = (purchase) ->
     selectedPurchaseId = $scope.selectedPurchases.indexOf(purchase);
-    if ( selectedPurchaseId > -1) 
+    if ( selectedPurchaseId > -1)
       $scope.selectedPurchases.splice( selectedPurchaseId, 1)
       $scope.totalAmount -= purchase.gold_batch.grams
-    else 
+    else
       $scope.selectedPurchases.push(purchase)
       $scope.totalAmount += purchase.gold_batch.grams
 
@@ -62,7 +66,7 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
 
   $scope.liquidateSelectedPurchases = (ev) ->
         confirmLiquidate($scope.totalAmount, ev)
-        
+
   confirmLiquidate = (total_grams,ev)->
       confirm = $mdDialog.confirm()
       .title('Confirmar')
@@ -81,7 +85,7 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
       ), ->
         #If the response in negative sets the checkbox to true again
         return
-      return      
+      return
 
   $scope.showPurchase = (purchase)->
     PurchaseService.model = purchase

@@ -1,7 +1,7 @@
 ActiveAdmin.register AvailableTrazoroService do
   menu priority: 11, label: 'Servicios Trazoro'
 
-  permit_params :name, :credits
+  permit_params :name, :credits, :reference
 
   controller do
     # This code is evaluated within the controller class
@@ -24,6 +24,7 @@ ActiveAdmin.register AvailableTrazoroService do
     id_column
     column :name
     column :credits
+    column :reference
     actions
   end
 
@@ -34,6 +35,7 @@ ActiveAdmin.register AvailableTrazoroService do
     f.inputs 'Detalles Servio Trazoro' do
       f.input :name, label: 'Nombre del Servicio'
       f.input :credits, label: 'Costo en creditos del Servicio'
+      f.input :reference, label: 'referencia'
     end
     f.actions
   end

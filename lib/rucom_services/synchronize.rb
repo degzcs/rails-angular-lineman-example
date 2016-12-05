@@ -65,7 +65,11 @@ module RucomServices
     end
 
     def user_registration_state_completed?
-      @user_profile.user.completed?
+      if @user_profile.user.completed?
+        @rucom = @user_profile.user.rucom unless @user_profile.blank?
+        @user = @user_profile.user
+        @rucom
+      end
     end
 
     def query_rucom_or_create_it

@@ -10,6 +10,7 @@ angular.module('app').controller 'RoyaltiesTabCtrl', ($scope, $mdDialog, Current
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
     useWacomDevice = data.use_wacom_device
+    $scope.response = CurrentUser.can_genearate_royalties_document(data)
 
   $scope.generatePdfFile= () ->
     ReportsService.generateRoyaltiesDocument($scope.signaturePicture, $scope.period, $scope.selectedYear, $scope.mineralPresentation, $scope.baseLiquidationPrice, $scope.royaltyPercentage, useWacomDevice)

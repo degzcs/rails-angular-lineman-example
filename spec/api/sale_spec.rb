@@ -130,6 +130,7 @@ describe 'Sale', type: :request do
               'user_id' => @legal_representative.id,
               'gold_batch_id' => sale.gold_batch.id,
               'fine_grams' => sale.fine_grams,
+              'mineral_type' => sale.gold_batch.mineral_type,
               'code' => sale.code,
               'barcode_html' => sale.barcode_html,
               'shipment' => sale.shipment.as_json,

@@ -48,11 +48,9 @@ describe Company::Registration do
 
   it 'update company and legal_representative' do
     email = company.legal_representative.email
-    user_id = company.legal_representative.id
     company_id = company.id
     @legal_representative_data.delete(:email)
     @legal_representative_data[:email] = email
-    @legal_representative_data[:id] = user_id
 
     @company_data = {
       id: company_id,
@@ -74,9 +72,15 @@ describe Company::Registration do
 
   it 'Company in draft state' do
     compani = create(:company, name: nil, phone_number: nil, email: nil)
+    compani.legal_representative.destroy!
+    compani.update_column(:legal_representative_id, nil)
+    compani.offices[0].destroy!
+    compani.reload
     @company_data = compani.as_json.except!('created_at', 'updated_at')
     response = service.call(legal_representative_data: @legal_representative_data, company_data: @company_data)
     expect(response[:success]).to be true
     expect(service.company.draft?).to eq true
+    expect(service.company.legal_representative.present?).to eq true
+    expect(service.company.legal_representative.email).to eq @legal_representative_data[:email]
   end
 end

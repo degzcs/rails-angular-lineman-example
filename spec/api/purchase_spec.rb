@@ -5,8 +5,9 @@ describe 'Purchase', type: :request do
         @buyer = create :user, :with_profile, :with_company, :with_trader_role
         @legal_representative = @buyer.company.legal_representative
         @legal_representative.profile.update_column :available_credits, 20_000
+        @trazoro_service = create(:available_trazoro_service, credits: 1.0, reference: 'buy_gold')
+        @legal_representative.setting.trazoro_services << @trazoro_service
         @token = @buyer.create_token
-
         seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
         signature_picture_path = "#{Rails.root}/spec/support/images/signature.png"
         seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')

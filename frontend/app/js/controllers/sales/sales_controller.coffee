@@ -1,6 +1,6 @@
 
 angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchService, CameraService, MeasureConverterService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter, AuthorizedProviderService, SignatureService, PurchaseService, LiquidationService) ->
-  
+
   #
   # Instances
   #
@@ -23,7 +23,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     $scope.sale.model.fixed_sale_agreetment = data.fixed_sale_agreetment
   ), (error) ->
     console.log('Error al tratar de Obtener el texto de fijación del Acuerdo')
- 
+
  # Monitoring the Agreetment check
   $scope.handlerContinue =  ->
     # console.log $scope.chkAgreetmentActive
@@ -61,7 +61,11 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
       name: 'Precio'
       field: 'purchase.price'
     }
-  ] 
+    {
+      name: 'Tipo de Mineral'
+      field: 'purchase.gold_batch.mineral_type'
+    }
+  ]
 
   #---------------- Controller methods -----------------//
   # Purchase service call to api to retrieve all Free purchases for current user
@@ -83,10 +87,10 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
 
   $scope.toggle = (purchase) ->
     selectedPurchaseId = $scope.selectedPurchases.indexOf(purchase);
-    if ( selectedPurchaseId > -1) 
+    if ( selectedPurchaseId > -1)
       $scope.selectedPurchases.splice( selectedPurchaseId, 1)
       $scope.totalAmount -= purchase.gold_batch.grams
-    else 
+    else
       $scope.selectedPurchases.push(purchase)
       $scope.totalAmount += purchase.gold_batch.grams
 
@@ -95,7 +99,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
 
   $scope.liquidateSelectedPurchases = (ev) ->
     confirmLiquidate($scope.totalAmount, ev)
-        
+
   confirmLiquidate = (total_grams,ev)->
     if total_grams <= 0
       message = 'Debe seleccionar primero algún Bloque de Oro'

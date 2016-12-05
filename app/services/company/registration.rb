@@ -44,13 +44,11 @@ class Company::Registration
   def create_legal_representative_from(user_data)
     user = User.new(user_data.except(:profile_attributes))
     user.roles << Role.find_by(name: 'trader')
-    user.save!
     user.build_profile(user_data[:profile_attributes])
     user.profile.legal_representative = true
     user_setting = UserSetting.new(fine_gram_value: 0.0)
     user.profile.setting = user_setting
-    user.user_complete?
-    user
+    user.user_complete? ? user : raise('Debe proporciar todos los datos para crear el representante legal de esta empresa')
   end
 
   # @param user [ User ]

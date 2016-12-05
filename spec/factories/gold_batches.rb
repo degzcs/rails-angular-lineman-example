@@ -11,11 +11,13 @@
 #  goldomable_type :string(255)
 #  goldomable_id   :integer
 #  sold            :boolean          default(FALSE)
+#  mineral_type    :string(255)
 #
 
 FactoryGirl.define do
   factory :gold_batch do
     fine_grams { 100 }
     grade { 850 }
+    mineral_type { 'Oro' }
   end
 end

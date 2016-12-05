@@ -14,6 +14,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   $scope.weightedLaw = liquidationInfo.weightedLaw || 0
   $scope.selectedPurchases = liquidationInfo.selectedPurchases
   $scope.totalAmount = liquidationInfo.totalAmount || 1
+  $scope.mineral_type = liquidationInfo.selectedPurchases[0].gold_batch.mineral_type
   $scope.calculateLaw = ->
     $scope.selectedPurchases.forEach( (purchase, index)->
       purchase.gold_batch.percentage = purchase.gold_batch.grams/$scope.totalAmount
@@ -35,8 +36,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   $scope.clientVerifiedProgress = false
   $scope.saleOrder = saleOrderInfo
 
-  console.log 'saleOrder: '
-  console.log $scope.saleOrder
+  # console.log 'saleOrder: '
+  # console.log $scope.saleOrder
 
 
   CurrentUser.get().success (user) ->
@@ -145,6 +146,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
         fine_grams: $scope.totalAmount,
         ##grade: $scope.selectedGrade
         grade: $scope.weightedLaw
+        mineral_type: $scope.mineral_type
       }
 
       sale_params = {
@@ -156,8 +158,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
         $mdDialog.cancel dialog
-        console.log 'Sale Object: '
-        console.log sale
+        # console.log 'Sale Object: '
+        # console.log sale
 
         LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount

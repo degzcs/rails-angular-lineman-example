@@ -7,6 +7,7 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  credits    :float
+#  reference  :string(255)
 #
 
 class AvailableTrazoroService < ActiveRecord::Base
@@ -23,4 +24,5 @@ class AvailableTrazoroService < ActiveRecord::Base
   validates :name, presence: true
   validates :credits, presence: true
   validates :credits, numericality: true
+  validates :reference, presence: true, uniqueness: true
 end

@@ -22,7 +22,11 @@
           %md-input-container
             %label Precio de gramo fino por unidad
             %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => ""}
-
+      %h5 Tipo Mineral
+        %select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
+          %option{:selected => "selected", :value => "Oro"} Oro
+          %option{:value => "Plata"} Plata
+          %option{:value => "Platino"} Platino
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
           %h5 4. Medidas

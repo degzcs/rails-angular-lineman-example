@@ -59,7 +59,7 @@ module V1
       end
       expose :trazoro_services, documentation: { type: "array", desc: "Trazoro Services", example: "Servicio registro barequero" } do |user, options|
         if user.setting
-          user.setting.trazoro_services.as_json(only: [:id, :name]) if user.setting.trazoro_services.present?
+          user.setting.trazoro_services.as_json(only: [:id, :name, :reference]) if user.setting.trazoro_services.present?
         else
           []
         end

@@ -71,6 +71,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       inventory_id: 1
       total_grams: 0
       total_fine_grams: 0
+      mineral_type: ''
 
     console.log 'deleting sessionStorage ...'
 

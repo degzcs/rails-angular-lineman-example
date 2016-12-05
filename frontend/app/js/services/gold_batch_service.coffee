@@ -17,6 +17,7 @@ angular.module('app').factory 'GoldBatchService', ($rootScope)->
       granos: 0
       total_grams: 0
       total_fine_grams: 0
+      mineral_type: ''
 
     #
     # Save and restore model temporal states

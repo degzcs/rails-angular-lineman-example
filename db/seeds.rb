@@ -114,6 +114,9 @@ begin
     usr_setting.save
     puts 'user settings associated successfully!'
   end
+  puts 'Creating Basic Trazoro Service'
+  trazoro_service = FactoryGirl.create(:available_trazoro_service, name: 'Compra de Oro', credits: 1.0, reference: 'buy_gold')
+  legal_representative.setting.trazoro_services << trazoro_service
 rescue => e
   puts "There is something wrong!!!, without a user setting will be errors in the sale transactions. ERROR: #{ e }"
 end

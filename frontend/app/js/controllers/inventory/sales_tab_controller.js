@@ -21,6 +21,9 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
     },{
       name: 'Ganancia',
       field: 'sale.total_gain'
+    },{
+      name: 'Tipo de Mineral',
+      field: 'sale.mineral_type'
     }
   ];
 

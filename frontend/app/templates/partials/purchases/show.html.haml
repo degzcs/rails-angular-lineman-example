@@ -108,6 +108,16 @@
         %div{"ng-bind-html"=>"barcode_html"}
         {{purchase.model.code}}
 
+    %md-content{"class"=>"", "layout"=>"row"}
+      %h4
+        Mineral Comprado
+    %md-content{"class"=>"", "layout"=>"row"}
+      .purchase-info{'flex' => ''}
+        .row{'layout' => 'row'}
+          .oc-number{'flex' => ''}
+            %p
+              {{goldBatch.model.mineral_type}}
+
     %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
       %h4
         Peso comprado
