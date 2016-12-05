@@ -32,7 +32,8 @@ describe Sale::SaleGoldService do
 
       @gold_batch_hash = {
         'fine_grams' => 1.5,
-        'grade' => 1
+        'grade' => 1,
+        'mineral_type' => 'Oro'
       }
 
       @order_hash = {
