@@ -140,7 +140,7 @@ module Sale
         # barequero id OR miner register OR resolution
         files << purchase_order.seller.profile.mining_authorization_file if purchase_order.seller.profile.mining_authorization_file.file.present?
         # RUT
-        files << purchase_order.seller.profile.mining_authorization_file if purchase_order.seller.profile.rut_file.file.present?
+        files << purchase_order.seller.profile.rut_file if purchase_order.seller.profile.rut_file.file.present?
         # purchase_order equivalent document
         files << purchase_order.proof_of_purchase.file
         end

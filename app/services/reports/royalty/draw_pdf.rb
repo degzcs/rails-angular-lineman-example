@@ -83,17 +83,17 @@ module Reports
       #
       move_cursor_to 350
       text_box report.mineral_type, :at => [40, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-      text_box report.fine_grams.to_s, :at => [125, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+      text_box number_format(report.fine_grams.to_s), :at => [125, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
       text_box report.unit, :at => [165, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-      text_box report.base_liquidation_price.to_s, :at => [225, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+      text_box currency_format(report.base_liquidation_price.to_s), :at => [225, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
       text_box report.unit, :at => [300, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
       text_box report.royalty_percentage.to_s, :at => [370, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
-      text_box report.total.to_s, :at => [440, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
+      text_box currency_format(report.total.to_s), :at => [440, cursor + 50], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
       # TODO: What happen here when there are more than 1 destination?????
       text_box report.company.name, :at => [50, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
-      text_box report.total.to_s, :at => [440, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
+      text_box currency_format(report.total.to_s), :at => [440, cursor + 15], :width => 300, :height => 15, :overflow => :shrink_to_fit
 
       #
       # Destination section
@@ -113,6 +113,14 @@ module Reports
       move_cursor_to 220
       image(signature_path, :at => [20, cursor + 10], :fit => [200, 80])
       text_box date.to_s, :at => [325, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
+    end
+
+    def currency_format(number)
+      ApplicationController.helpers.number_to_currency(number)
+    end
+
+    def number_format(number)
+      ApplicationController.helpers.number_with_delimiter(number)
     end
 
     def validate_options(options)
