@@ -19,6 +19,7 @@ module Alegra
       ActiveRecord::Base.transaction do
         if contact_is_synced?
           # update or do somenthing here
+           @response[:success] =  true
         else
           contact = client.contacts.create(user_attributes)
           @response[:success] = user.update_attributes(alegra_id: contact[:id], alegra_sync: true)

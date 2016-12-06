@@ -16,6 +16,7 @@ module Alegra
         @response[:errors] = []
         @seller = options[:seller]
         @buyer = options[:buyer]
+        contact_info_from(buyer)
         @client = Alegra::Client.new(seller.email, seller.profile.setting.alegra_token)
       end
 
@@ -26,9 +27,10 @@ module Alegra
         ActiveRecord::Base.transaction do
           if contact_is_synced?
             # update or do something here
+            @response[:success] =  true
           else
             contact = client.contacts.create(buyer_attributes)
-            @response[:success] = true#seller.contact_infos.new(contact_alegra_id: contact[:id], contact_alegra_sync: true, contact: buyer).save
+            @response[:success] = seller.contact_infos.new(contact_alegra_id: contact[:id], contact_alegra_sync: true, contact: buyer).save!
           end
           @response
         end
@@ -39,13 +41,13 @@ module Alegra
       end
 
       def contact_is_synced?
-        contact_info&.contact_alegra_id.present?
+        contact_info.present?
       end
 
       # @param order [ Order ]
       # @return [ ContactInfo ]
-      def contact_info_from(order)
-        @contact_info = seller.contact_infos.find_by(contact: order.buyer)
+      def contact_info_from(buyer)
+        @contact_info ||= seller.contact_infos.find_by(contact: buyer)
       end
 
       def validate_options(options)

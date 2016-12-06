@@ -34,4 +34,17 @@ describe Alegra::Traders::ContactSynchronize do
       expect(contact_info.contact_alegra_sync).to eq true
     end
   end
+
+  it 'should to update a user in alegra' do
+    VCR.use_cassette('alegra_create_trader_contact') do
+      seller.contact_infos.new(contact_alegra_id: 1, contact_alegra_sync: true, contact: buyer).save!
+      contact_synchronize = Alegra::Traders::ContactSynchronize.new(seller: seller, buyer: buyer)
+      response = contact_synchronize.call
+      expect(response[:errors]).to eq([])
+      expect(response[:success]).to eq(true)
+      contact_info = seller.contact_infos.find_by(contact: buyer)
+      expect(contact_info.contact_alegra_id.present?).to be true
+      expect(contact_info.contact_alegra_sync).to eq true
+    end
+  end
 end
