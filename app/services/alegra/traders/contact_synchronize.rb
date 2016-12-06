@@ -28,7 +28,7 @@ module Alegra
             # update or do something here
           else
             contact = client.contacts.create(buyer_attributes)
-            @response[:success] = seller.contact_infos.new(contact_alegra_id: contact[:id], contact_alegra_sync: true, contact: buyer).save
+            @response[:success] = true#seller.contact_infos.new(contact_alegra_id: contact[:id], contact_alegra_sync: true, contact: buyer).save
           end
           @response
         end
@@ -39,13 +39,13 @@ module Alegra
       end
 
       def contact_is_synced?
-        contact_info.present?
+        contact_info&.contact_alegra_id.present?
       end
 
       # @param order [ Order ]
       # @return [ ContactInfo ]
       def contact_info_from(order)
-        @contact_info ||= seller.contact_infos.find_by(contact: order.buyer)
+        @contact_info = seller.contact_infos.find_by(contact: order.buyer)
       end
 
       def validate_options(options)
