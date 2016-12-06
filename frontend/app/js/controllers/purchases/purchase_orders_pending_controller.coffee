@@ -70,7 +70,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       SaleService.model.id = $scope.current_sale_id
       SaleService.saveModel()
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Acuerdo de Compra recuperado').ariaLabel('Alert Dialog ').ok('ok')
-      $state.go 'new_purchase.orders_pending_agreetment', { id: SaleService.model.id }
+      $state.go 'new_purchase.orders_details_agreetment', { id: SaleService.model.id }
     )
     .error((error)->
       $scope.showLoading = false
@@ -92,13 +92,14 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
           $mdDialog.show(confirm).then (->
             exec_transition(transition)
-            $state.go 'new_purchase.orders_approved'
+            $state.go 'new_purchase.orders_canceled'
+            #'new_purchase.orders_approved'
           ), ->
             console.log 'You decided don\'t change the order state to canceled.'
             return
         else
           exec_transition(transition)
-          $state.go 'new_purchase.orders_canceled'
+          $state.go 'new_purchase.orders_resume'
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
 #

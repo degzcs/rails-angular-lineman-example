@@ -1,0 +1,24 @@
+%section{layout: "column", "layout-align" => "center"}
+  %h2
+    Resumen de la orden de compra
+  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
+    // ---Purchase Type
+    %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
+      %legend
+        %h4
+          Vendedor {{seller.first_name}} {{seller.last_name}}
+
+    %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
+      %legend
+        %h4
+          Detalles de la orden
+
+  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
+    %fieldset.standard.tr-fieldset{:layout => "column", flex: "80"}
+      %legend
+        %h4
+          Lista de producto
+
+  %div.md-padding{flex: "60", :layout => "row", "layout-align" => "center" }
+    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.tab.orders_pending"}
+      Continuar
