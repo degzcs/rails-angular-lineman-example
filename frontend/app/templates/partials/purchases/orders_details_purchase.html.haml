@@ -5,27 +5,96 @@
     // ---Purchase Type
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
       %legend
-        %h4
+        %h3
           Vendedor 
+      %table
+        %tr
+          %td
+            Nombre y apellidos:
+          %td
+            {{saleModel.buyer.first_name}} {{saleModel.buyer.last_name}} 
+        %tr
+          %td
+            Documento de id:
+          %td
+            {{saleModel.buyer.document_number}}
+        %tr
+          %td
+            Email:
+          %td
+            {{saleModel.buyer.email}}
+        %tr
+          %td
+            Teléfono:
+          %td
+            {{saleModel.buyer.phone_number}}
 
-      {{sale.seller.first_name}}
 
 
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
       %legend
-        %h4
+        %h3
           Detalles de la orden
+      %table
+        %tr
+          %td
+            Fecha de creación:
+          %td
+            {{saleModel.created_at}}
+        %tr
+          %td
+            Total Gramos Finos:
+          %td
+            {{saleModel.fine_grams}} gramos
+        %tr
+          %td
+            Tipo de Mineral:
+          %td
+            {{saleModel.mineral_type}}
+        %tr
+          %td
+            Precio total:
+          %td
+            ${{saleModel.price}} COP
 
   %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "80"}
       %legend
-        %h4
-          Lista de producto
+        %h3
+          Listado de lotes
+      %table
+        %tr
+          %td
+            Fecha
+          %td
+            Proveedor
+          %td
+            Gramos finos
+
+        %tr{"ng-repeat" => "associated_purchase in saleModel.associated_purchases"}
+          %td
+            {{associated_purchase.created_at}}
+          %td
+            {{associated_purchase.seller.first_name}} {{associated_purchase.seller.last_name}}
+          %td
+            {{associated_purchase.fine_grams}}
+
+
+  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
+    %fieldset.standard.tr-fieldset{:layout => "column", flex: "80"}
+      %legend
+        %h3
+          Archivos
+      %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
+        %a.md-button{href: "{{saleModel.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+          Documentos de compra adjuntos
+        %a.md-button{href: "{{saleModel.proof_of_sale.file.url}}", :target => "_blank"}
+          Compendio
 
 
 
-  %div.md-padding{flex: "60", :layout => "row", "layout-align" => "end" }
+  %div.md-padding{flex: "80", :layout => "row", "layout-align" => "end" }
     %md-button.md-raised{flex: "10", "ng-click" => "agreeOrCancel('cancel!')"}
       Rechazar
-    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.orders_pending_agreetment"}
+    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.orders_pending_agreetment", "style" => "margin-right: 135px;"}
       Continuar

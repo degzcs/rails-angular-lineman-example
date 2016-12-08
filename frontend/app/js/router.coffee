@@ -449,8 +449,8 @@
         deferred.promise
   )
 
-  .state("new_purchase.orders_approved",
-    url: "/purchases/orders_approved",
+  .state("new_purchase.tab.orders_approved",
+    url: "/orders_approved",
     ncyBreadcrumb:
       label: 'Ordenes de Compra Aprobadas'
     views:

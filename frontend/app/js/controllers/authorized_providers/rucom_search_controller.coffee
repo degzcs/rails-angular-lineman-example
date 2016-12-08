@@ -5,7 +5,7 @@ angular.module('app').controller 'AuthorizedProviderSearchCtrl', ($scope, $state
   #*** Loading Variables **** #
   $scope.showLoading = false
   $scope.loadingMode = "indeterminate"
-  $scope.loadingMessage = "Consultado..."
+  $scope.loadingMessage = "Consultando..."
 
   ##***************************************************************************************************************************##
 

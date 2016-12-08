@@ -1,9 +1,11 @@
 %div
   %md-content.md-padding
-    %md-tabs.origin-certificate-tabs{"md-border-bottom" => "", "md-dynamic-height" => "", "md-selected"=> 'tab'}
+    %md-tabs.origin-certificate-tabs{"md-border-bottom" => "", "md-dynamic-height" => "", "md-selected"=> 'tab', "layout-align" => "center"}
 
-      %md-tab{:label => "Ordenes de Compra Pendientes(0)", "ui-sref"=>"new_purchase.tab.orders_pending"}
+      %md-tab{:label => "Ordenes de Compra Pendientes", "ui-sref"=>"new_purchase.tab.orders_pending"}
       %md-tab{:label => "Ordenes Rechazadas", "ui-sref"=>"new_purchase.tab.orders_canceled"}
+      %md-tab{:label => "Ordenes Aprovadas", "ui-sref" => "new_purchase.tab.orders_approved"}
+
 /.tabs-purchase-container
 /  %div{"ui-view"=>"content"}
 

@@ -16,13 +16,14 @@
               %md-checkbox{ :ng-model => 'chkAgreetmentActive',
                             :required => ''} Acepto los términos y condiciones
 
-  .wizard-buttons{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"end end"}
-    %md-button.btn-save.md-button{ flex: "20",
-                                 "ng-disabled" => "handlerReject()",
-                                 "ng-click" => "agreeOrCancel('cancel!')"}Rechazar
+  .div{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"center center"}
+    / %md-button.btn-save.md-button{ flex: "20",
+    /                              "ng-disabled" => "handlerReject()",
+    /                              "ng-click" => "agreeOrCancel('cancel!')"}Rechazar
 
-
+    %tr-loading-view{ "ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
     %md-button.btn-save.md-button{ flex: "20",
-                                   "ng-show" => "handlerContinue()",
+                                   "ng-disabled" => "handlerContinue()",
+                                   "ng-hide" => "showLoading",
                                    "ng-click" => "agreeOrCancel('agree!')"} Aceptar
 
