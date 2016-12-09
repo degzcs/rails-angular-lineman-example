@@ -570,7 +570,7 @@
   .state("new_purchase.tab",
     url: "/purchases/tab",
     ncyBreadcrumb:
-      label: 'compras'
+      label: 'Ordenes'
     views:
       'content':
         templateUrl: "partials/purchases/purchase_tabs.html"
@@ -1074,7 +1074,7 @@
   .state("new_sale.tab",
     url: "/sales/tab",
     ncyBreadcrumb:
-      label: 'Nueva Venta'
+      label: 'Ordenes'
     views:
       'content':
         templateUrl: "partials/sales/sale_tabs.html"
