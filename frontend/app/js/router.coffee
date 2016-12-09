@@ -1096,6 +1096,56 @@
         deferred.promise
   )
 
+  .state("new_sale.tab.orders_pending_sale",
+    url: "/sales/tab",
+    ncyBreadcrumb:
+      label: 'Ordenes de venta pendientes'
+    views:
+      'content':
+        templateUrl: "partials/sales/orders_pending_sale.html"
+        controller: "SaleOrdersPendingCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_sale.tab.orders_canceled_sale",
+    url: "/sales/tab",
+    ncyBreadcrumb:
+      label: 'Ordenes de venta canceladas'
+    views:
+      'content':
+        templateUrl: "partials/sales/orders_canceled_sale.html"
+        controller: "SaleOrdersCanceledCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
 # Fixed Sale Agreetment
   .state("new_sale.step1",
     url: "/sales/step1",

@@ -1,0 +1,14 @@
+%div
+  %md-content.md-padding
+    %md-tabs.origin-certificate-tabs{"md-border-bottom" => "", "md-dynamic-height" => "", "md-selected"=> 'tab', "layout-align" => "center"}
+
+      %md-tab{:label => "Ordenes Pendientes", "ui-sref" => "new_sale.tab.orders_pending_sale"}
+      %md-tab{:label => "Ordenes Rechazadas", "ui-sref"=>"new_sale.tab.orders_canceled_sale"}
+
+/.tabs-purchase-container
+/  %div{"ui-view"=>"content"}
+
+//inicial
+%div{:layout => "column"}
+  .purchase-container
+    %div{"ui-view"=>"content"}
