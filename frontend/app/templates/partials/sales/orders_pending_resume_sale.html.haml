@@ -1,33 +1,33 @@
 %section{layout: "column", "layout-align" => "center"}
   %h2
-    Detalles de la compra pendiente
+    Resumen de la orden de venta pendiente
   %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
     // ---Purchase Type
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
       %legend
         %h3
-          Vendedor 
+          Comprador 
       %table
         %tr
           %td
             Nombre y apellidos:
           %td
-            {{saleModel.seller.first_name}} {{saleModel.seller.last_name}} 
+            {{saleModel.buyer.first_name}} {{saleModel.buyer.last_name}} 
         %tr
           %td
             Documento de id:
           %td
-            {{saleModel.seller.document_number}}
+            {{saleModel.buyer.document_number}}
         %tr
           %td
             Email:
           %td
-            {{saleModel.seller.email}}
+            {{saleModel.buyer.email}}
         %tr
           %td
             Teléfono:
           %td
-            {{saleModel.seller.phone_number}}
+            {{saleModel.buyer.phone_number}}
 
 
 
@@ -91,10 +91,6 @@
         %a.md-button{href: "{{saleModel.proof_of_sale.file.url}}", :target => "_blank"}
           Compendio
 
-
-
-  %div.md-padding{flex: "80", :layout => "row", "layout-align" => "end" }
-    %md-button.md-raised{flex: "10", "ng-click" => "agreeOrCancel('cancel!')"}
-      Rechazar
-    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.orders_pending_agreetment", "style" => "margin-right: 135px;"}
-      Continuar
+  %div.md-padding{flex: "60", :layout => "row", "layout-align" => "center" }
+    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_sale.tab.orders_pending_sale"}
+      Regresar

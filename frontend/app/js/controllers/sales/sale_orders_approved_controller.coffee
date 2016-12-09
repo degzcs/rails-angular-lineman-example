@@ -1,11 +1,10 @@
-angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
+angular.module('app').controller 'SaleOrdersApprovedCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0 
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
-  # sale.seller.first_name + ' ' + sale.seller.last_name
   $scope.headers = [
     {
       name: 'Estado'
@@ -17,7 +16,7 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
     }
     {
       name: 'Comprador'
-      field: ''
+      field: "sale.buyer.first_name + ' ' + sale.buyer.last_name"
     }
     {
       name: 'Gramos Finos'
@@ -40,16 +39,19 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
   $scope.chkAgreetmentActive = false
   $scope.saleService =  SaleService.model
 
+  $scope.goSaleOrderResume = (saleId) ->
+    SaleService.model = $filter('filter')($scope.sales, {id: saleId})[0]
+    SaleService.saveModel()
+    $state.go 'new_sale.resume_sale_pending'
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.get_all_by_state_as_seller('canceled').success((sales, status, headers, config) ->
+  SaleService.get_all_by_state_as_seller('approved').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
-    console.log sales
   ).error (data, status, headers, config) ->
-    $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra canceladas'
+    $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
 
   $scope.infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')

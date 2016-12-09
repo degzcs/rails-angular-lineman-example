@@ -11,10 +11,6 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
       field: 'sale.transaction_state'
     }
     {
-      name: 'Id'
-      field: 'sale.id'
-    }
-    {
       name: 'Fecha'
       field: 'sale.created_at'
     }
@@ -29,6 +25,10 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
     {
       name: 'Precio'
       field: 'sale.price'
+    }
+    {
+      name: 'Tipo de Mineral'
+      field: 'sale.mineral_type'
     }
   ] 
 

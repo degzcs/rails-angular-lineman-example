@@ -17,7 +17,6 @@ angular.module('app').controller 'SaleOrdersPendingCtrl', ($scope, PurchaseServi
       name: 'Estado'
       field: 'sale.transaction_state'
     }
-    
     {
       name: 'Fecha'
       field: 'sale.created_at'
@@ -51,10 +50,10 @@ angular.module('app').controller 'SaleOrdersPendingCtrl', ($scope, PurchaseServi
 
 
   # console.log $scope.saleModel
-  $scope.goSaleOrder = (saleId) ->
+  $scope.goSaleOrderResume = (saleId) ->
     SaleService.model = $filter('filter')($scope.sales, {id: saleId})[0]
     SaleService.saveModel()
-    $state.go ''
+    $state.go 'new_sale.resume_sale_pending'
 
   # ---------------- Controller methods -----------------//
   # Sale service call to api to retrieve all sales by the state  passed by argument for current user

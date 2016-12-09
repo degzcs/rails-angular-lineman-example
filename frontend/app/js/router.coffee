@@ -552,7 +552,7 @@
   .state("new_purchase.purchase_home",
     url: "/purchases/home",
     ncyBreadcrumb:
-      label: ''
+      label: 'Nueva compra'
     views:
       'content':
         templateUrl: "partials/purchases/purchase_home.html"
@@ -1049,7 +1049,7 @@
   .state("new_sale.sale_home",
     url: "/sales/home",
     ncyBreadcrumb:
-      label: 'Nueva Venta'
+      label: 'Venta'
     views:
       'content':
         templateUrl: "partials/sales/sale_home.html"
@@ -1097,7 +1097,7 @@
   )
 
   .state("new_sale.tab.orders_pending_sale",
-    url: "/sales/tab",
+    url: "/orders_pending_sale",
     ncyBreadcrumb:
       label: 'Ordenes de venta pendientes'
     views:
@@ -1121,8 +1121,33 @@
         deferred.promise
   )
 
+  .state("new_sale.resume_sale_pending",
+    url: "/resume_sale_pending",
+    ncyBreadcrumb:
+      label: 'Resumen de la orden de venta pendiente'
+    views:
+      'content':
+        templateUrl: "partials/sales/orders_pending_resume_sale.html"
+        controller: "SaleOrdersPendingCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   .state("new_sale.tab.orders_canceled_sale",
-    url: "/sales/tab",
+    url: "/orders_canceled_sale",
     ncyBreadcrumb:
       label: 'Ordenes de venta canceladas'
     views:
@@ -1146,6 +1171,30 @@
         deferred.promise
   )
 
+  .state("new_sale.tab.orders_approved_sale",
+    url: "/orders_approved_sale",
+    ncyBreadcrumb:
+      label: 'Ordenes de venta aprovadas'
+    views:
+      'content':
+        templateUrl: "partials/sales/orders_pending_sale.html"
+        controller: "SaleOrdersApprovedCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
 # Fixed Sale Agreetment
   .state("new_sale.step1",
     url: "/sales/step1",

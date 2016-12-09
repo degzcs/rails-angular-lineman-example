@@ -231,7 +231,7 @@ module V1
         # GET by state as seller
         #
 
-        desc 'returns all existent sales by state for the current user', {
+        desc 'returns all existent sales by state for the current user(seller)', {
           entity: V1::Entities::Sale,
           notes: <<-NOTES
             Returns all existent sales by state paginated
