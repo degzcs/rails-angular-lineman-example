@@ -50,7 +50,7 @@ Create the database and run the seeds
 rake db:create
 CREATE_LOCATIONS=yes rake db:setup
 
-solo seed
+# only seed
 CREATE_LOCATIONS=yes rake db:seed
 ```
 
