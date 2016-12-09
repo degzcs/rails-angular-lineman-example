@@ -219,7 +219,7 @@ describe 'Sale', type: :request do
                   current_user_as_seller = sale_first.seller
                   sale_first.send_info!(current_user_as_seller)
                   state = 'dispatched'
-                  dispatched_sales = Order.sales_by_state(sale_first.buyer, state)
+                  dispatched_sales = Order.sales_by_state_as_buyer(sale_first.buyer, state)
 
                   # test  sales_by_state scope
                   expect(dispatched_sales.count).to eq 1

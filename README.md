@@ -49,7 +49,11 @@ Create the database and run the seeds
 ```sh
 rake db:create
 CREATE_LOCATIONS=yes rake db:setup
+
+# only seed
+CREATE_LOCATIONS=yes rake db:seed
 ```
+
 
 ## Front-end
 

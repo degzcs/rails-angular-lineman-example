@@ -210,7 +210,7 @@ module V1
           requires :state, type: String, desc: 'State string to transactions type sale example: dispatched, canceled, approved'
         end
 
-        get '/by_state/:state', http_codes: [
+        get '/by_state_buyer/:state', http_codes: [
             [200, 'Successful'],
             [401, 'Unauthorized'],
             [404, 'Entry not found']
@@ -221,7 +221,40 @@ module V1
           per_page = params[:per_page] || 10
           state = params[:state]
           #legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
-          sales = ::Order.sales_by_state(current_user, state).paginate(:page => page, :per_page => per_page)
+          sales = ::Order.sales_by_state_as_buyer(current_user, state).paginate(:page => page, :per_page => per_page)
+          header 'total_pages', sales.total_pages.to_s
+          present sales, with: V1::Entities::Sale
+        end
+
+
+        #
+        # GET by state as seller
+        #
+
+        desc 'returns all existent sales by state for the current user(seller)', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales by state paginated
+          NOTES
+        }
+
+        params  do
+          use :pagination
+          requires :state, type: String, desc: 'State string to transactions type sale example: dispatched, canceled, approved'
+        end
+
+        get '/by_state_seller/:state', http_codes: [
+            [200, 'Successful'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          state = params[:state]
+          # legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          sales = ::Order.sales_by_state_as_seller(current_user, state).paginate(:page => page, :per_page => per_page)
           header 'total_pages', sales.total_pages.to_s
           present sales, with: V1::Entities::Sale
         end

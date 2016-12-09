@@ -1,10 +1,11 @@
-angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
+angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0 
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
+  # sale.seller.first_name + ' ' + sale.seller.last_name
   $scope.headers = [
     {
       name: 'Estado'
@@ -15,8 +16,8 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
       field: 'sale.created_at'
     }
     {
-      name: 'Vendedor'
-      field: "sale.seller.first_name + ' ' + sale.seller.last_name"
+      name: 'Comprador'
+      field: ''
     }
     {
       name: 'Gramos Finos'
@@ -42,12 +43,13 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.getAllByStateAsBuyer('canceled').success((sales, status, headers, config) ->
+  SaleService.getAllByStateAsSeller('canceled').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
+    console.log sales
   ).error (data, status, headers, config) ->
-    $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
+    $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra canceladas'
 
   $scope.infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')

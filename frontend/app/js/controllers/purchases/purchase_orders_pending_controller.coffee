@@ -2,6 +2,13 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0
+
+
+  #*** Loading Variables **** #
+  $scope.showLoading = false
+  $scope.loadingMode = "indeterminate"
+  $scope.loadingMessage = "Enviando..."
+
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
@@ -10,10 +17,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       name: 'Estado'
       field: 'sale.transaction_state'
     }
-    {
-      name: 'Id'
-      field: 'sale.id'
-    }
+    
     {
       name: 'Fecha'
       field: 'sale.created_at'
@@ -30,6 +34,10 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       name: 'Precio'
       field: 'sale.price'
     }
+    {
+      name: 'Tipo de Mineral'
+      field: 'sale.mineral_type'
+    }
   ]
 
   #Variables configuration
@@ -37,16 +45,25 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   $scope.currentPage = 1
 # wacom device
   $scope.chkAgreetmentActive = false
-  $scope.saleService =  SaleService.model
+  
+  SaleService.restoreModel()
+  $scope.saleModel =  SaleService.model
 
 
-  #---------------- Controller methods -----------------//
-  #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.get_all_by_state('dispatched').success((sales, status, headers, config) ->
+  # console.log $scope.saleModel
+  $scope.goSaleOrder = (saleId) ->
+    SaleService.model = $filter('filter')($scope.sales, {id: saleId})[0]
+    SaleService.saveModel()
+    $state.go 'new_purchase.orders_details_agreetment'
+
+  # ---------------- Controller methods -----------------//
+  # Sale service call to api to retrieve all sales by the state  passed by argument for current user
+  SaleService.getAllByStateAsBuyer('dispatched').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
     # console.log 'sales: '
+    # console.log $scope.saleModel.buyer.first_name + " nombre"
     # console.log sales
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
@@ -57,7 +74,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    #$scope.saleService.use_wacom_device = data.use_wacom_device
+    #$scope.saleModel.use_wacom_device = data.use_wacom_device
     $scope.current_sale_id = null
 
 
@@ -65,12 +82,12 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   $scope.agreetment = (sale_id)->
     $scope.current_sale_id = sale_id
     SaleService.fixed_sale_agreetment().success( (data) ->
-      $scope.saleService.fixed_sale_agreetment = data.fixed_sale_agreetment
+      $scope.saleModel.fixed_sale_agreetment = data.fixed_sale_agreetment
       SaleService.model.fixed_sale_agreetment = data.fixed_sale_agreetment
       SaleService.model.id = $scope.current_sale_id
       SaleService.saveModel()
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Acuerdo de Compra recuperado').ariaLabel('Alert Dialog ').ok('ok')
-      $state.go 'new_purchase.orders_pending_agreetment', { id: SaleService.model.id }
+      $state.go 'new_purchase.orders_details_agreetment', { id: SaleService.model.id }
     )
     .error((error)->
       $scope.showLoading = false
@@ -78,7 +95,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     )
 
   $scope.handlerContinue = ->
-    res = if $scope.chkAgreetmentActive == true then true else false
+    res = if $scope.chkAgreetmentActive == true then false else true
     return res
 
   $scope.handlerReject = ->
@@ -92,21 +109,24 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
           $mdDialog.show(confirm).then (->
             exec_transition(transition)
-            $state.go 'new_purchase.orders_approved'
+            $state.go 'new_purchase.orders_canceled'
+            #'new_purchase.orders_approved'
           ), ->
             console.log 'You decided don\'t change the order state to canceled.'
             return
         else
           exec_transition(transition)
-          $state.go 'new_purchase.orders_canceled'
+          $state.go 'new_purchase.orders_resume'
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
 #
 # This funtion executes the method to call the sale end-point called transition trought the SaleService
 #
   exec_transition = (transition_name)->
-    SaleService.trigger_transition($scope.saleService.id, transition_name).success( (data) ->
-      $scope.saleService.transaction_state = data.transaction_state
+    $scope.showLoading = true
+    SaleService.trigger_transition($scope.saleModel.id, transition_name).success( (data) ->
+      $scope.showLoading = false
+      $scope.saleModel.transaction_state = data.transaction_state
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Ejecución exitosa!').content('Orden Actualizada Exitosamente!').ariaLabel('Alert Dialog ').ok('ok')
     )
     .error((error)->
@@ -115,7 +135,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     )
 
   can_exec_transition = ->
-    if  $scope.saleService.transaction_state == 'canceled' || $scope.saleService.transaction_state == 'approved'
+    if  $scope.saleModel.transaction_state == 'canceled' || $scope.saleModel.transaction_state == 'approved'
       return false
     else
       return true

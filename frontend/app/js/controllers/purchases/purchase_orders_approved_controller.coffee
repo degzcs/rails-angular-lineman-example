@@ -11,10 +11,6 @@ angular.module('app').controller 'PurchaseOrdersApprovedCtrl', ($scope, Purchase
       field: 'sale.transaction_state'
     }
     {
-      name: 'Id'
-      field: 'sale.id'
-    }
-    {
       name: 'Fecha'
       field: 'sale.created_at'
     }
@@ -30,6 +26,10 @@ angular.module('app').controller 'PurchaseOrdersApprovedCtrl', ($scope, Purchase
       name: 'Precio'
       field: 'sale.price'
     }
+    {
+      name: 'Tipo de Mineral'
+      field: 'sale.mineral_type'
+    }
   ] 
 
   #Variables configuration
@@ -42,7 +42,7 @@ angular.module('app').controller 'PurchaseOrdersApprovedCtrl', ($scope, Purchase
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.get_all_by_state('approved').success((sales, status, headers, config) ->
+  SaleService.getAllByStateAsBuyer('approved').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales

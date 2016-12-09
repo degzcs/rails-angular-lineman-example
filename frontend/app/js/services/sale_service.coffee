@@ -70,8 +70,14 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     #
     # Get all sales  by transaction state
     #
-    get_all_by_state: (state) ->
-      return $http.get('api/v1/sales/by_state/'+state)
+    getAllByStateAsBuyer: (state) ->
+      return $http.get('api/v1/sales/by_state_buyer/'+state)
+
+    #
+    # Get all sales by transaction state as seller
+    #
+    getAllByStateAsSeller: (state)->
+      return $http.get('api/v1/sales/by_state_seller/'+state)
 
     #
     # Trigger a transaction on transaction state field by the transition

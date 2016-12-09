@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
+angular.module('app').controller 'SaleOrdersApprovedCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0 
@@ -15,8 +15,8 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
       field: 'sale.created_at'
     }
     {
-      name: 'Vendedor'
-      field: "sale.seller.first_name + ' ' + sale.seller.last_name"
+      name: 'Comprador'
+      field: "sale.buyer.first_name + ' ' + sale.buyer.last_name"
     }
     {
       name: 'Gramos Finos'
@@ -39,10 +39,14 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
   $scope.chkAgreetmentActive = false
   $scope.saleService =  SaleService.model
 
+  $scope.goSaleOrderResume = (saleId) ->
+    SaleService.model = $filter('filter')($scope.sales, {id: saleId})[0]
+    SaleService.saveModel()
+    $state.go 'new_sale.resume_sale_pending'
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.getAllByStateAsBuyer('canceled').success((sales, status, headers, config) ->
+  SaleService.getAllByStateAsSeller('approved').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales

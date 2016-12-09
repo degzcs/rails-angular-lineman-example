@@ -69,8 +69,8 @@ class Order < ActiveRecord::Base
   scope :remaining_amount_for, ->(buyer) { where(buyer_id: buyer.id).joins(:gold_batch).where('gold_batches.sold IS NOT true').sum('gold_batches.fine_grams') }
   scope :purchases, ->(ids) { where(type: 'purchase', id: ids) }
   scope :purchases_free, ->(buyer) { where(type: 'purchase', buyer: buyer).includes(:gold_batch).where(gold_batches: { sold: false }) }
-  scope :sales_by_state, ->(buyer, state) { where(type: 'sale', buyer: buyer, transaction_state: state) }
-
+  scope :sales_by_state_as_buyer, ->(buyer, state) { where(type: 'sale', buyer: buyer, transaction_state: state) }
+  scope :sales_by_state_as_seller, ->(seller, state) { where(type: 'sale', seller: seller, transaction_state: state) }
   #
   # State Machine for transaction_state field
   #
