@@ -70,13 +70,13 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     #
     # Get all sales  by transaction state
     #
-    get_all_by_state: (state) ->
-      return $http.get('api/v1/sales/by_state/'+state)
+    getAllByStateAsBuyer: (state) ->
+      return $http.get('api/v1/sales/by_state_buyer/'+state)
 
     #
     # Get all sales by transaction state as seller
     #
-    get_all_by_state_as_seller: (state)->
+    getAllByStateAsSeller: (state)->
       return $http.get('api/v1/sales/by_state_seller/'+state)
 
     #

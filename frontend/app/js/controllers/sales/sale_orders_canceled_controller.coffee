@@ -43,7 +43,7 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.get_all_by_state_as_seller('canceled').success((sales, status, headers, config) ->
+  SaleService.getAllByStateAsSeller('canceled').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
