@@ -1,1 +1,0 @@
-angular.module('app').controller 'PurchaseOrdersDetailsCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
