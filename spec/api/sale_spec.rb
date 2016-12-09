@@ -224,7 +224,7 @@ describe 'Sale', type: :request do
                   # test  sales_by_state scope
                   expect(dispatched_sales.count).to eq 1
 
-                  get "/api/v1/sales/by_state/#{state}",{}, 'Authorization' => "Barer #{@token}"
+                  get "/api/v1/sales/by_state_buyer/#{state}",{}, 'Authorization' => "Barer #{@token}"
                   expect(response.status).to eq 200
 
                   res = JSON.parse(response.body)
