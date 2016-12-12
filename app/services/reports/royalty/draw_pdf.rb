@@ -110,7 +110,7 @@ module Reports
       #
       service = ::GenerateSignatureWithoutBackground.new
       signature_path = service.call(signature_picture)
-      move_cursor_to 220
+      move_cursor_to 250
       image(signature_path, :at => [20, cursor + 10], :fit => [200, 80])
       text_box date.to_s, :at => [325, cursor], :width => 300, :height => 15, :overflow => :shrink_to_fit
     end
