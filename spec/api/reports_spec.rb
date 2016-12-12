@@ -15,7 +15,7 @@ describe 'Reports', type: :request do
           create(:order,
             seller: seller,
             buyer: buyer,
-            transaction_state: 'completed',
+            transaction_state: 'approved',
             gold_batch: gold_batch,
             payment_date: payment_date + i,
             price: 10_000
