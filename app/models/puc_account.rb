@@ -3,19 +3,6 @@ class PucAccount < ActiveRecord::Base
   has_many :taxes
   has_many :transaction_movements
 
-  validates :code, presence: true
+  validates :code, presence: true, uniqueness: true
   validates :name, presence: true
-  validates :debit, presence: true
-  validates :credit, presence: true
-  validates :account_nature, presence: true
-
-  ACCOUNT_NATURES = {
-    D: 'Dédito',
-    C: 'Crédito'
-  }.freeze
-
-  OPERATIONS = {
-    :'+' => 'Suma',
-    :'-' => 'Resta'
-  }.freeze
 end

@@ -2,6 +2,11 @@
 class TransactionMovement < ActiveRecord::Base
   belongs_to :puc_account
 
+  #
+  # STI config
+  #
+  self.inheritance_column = 'sti_type'
+
   validates :puc_account_id, presence: true
   validates :type, presence: true
   validates :block_name, presence: true
