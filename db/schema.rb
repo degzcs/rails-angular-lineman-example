@@ -325,7 +325,7 @@
 
   create_table "transaction_movements", force: true do |t|
     t.integer  "puc_account_id"
-    t.string   "kind"
+    t.string   "type"
     t.string   "block_name"
     t.datetime "created_at"
     t.datetime "updated_at"
