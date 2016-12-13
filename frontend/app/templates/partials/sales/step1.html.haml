@@ -1,7 +1,7 @@
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
   %section{layout: "row"}
     %div.md-padding{flex: ""}
-      // ---Purchase Type
+      // ---Sale Type
       %fieldset.standard.tr-fieldset{:layout => "column"}
         %legend
           %h3
@@ -9,7 +9,7 @@
         %div.fieldset-inputs
           %md-input-container{class: "md-block", flex: '100' }
             %textarea{:rows => '7', :readOnly => 'true',
-                      "ng-model" => "sale.model.fixed_sale_agreetment",
+                      "ng-model" => "saleModel.fixed_sale_agreetment",
                       :name => 'fix_sale_agreetment'}
           %div{layout: "row"}
             %md-input-container{flex: ""}
