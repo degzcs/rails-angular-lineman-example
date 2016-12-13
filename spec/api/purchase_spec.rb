@@ -151,28 +151,29 @@ describe 'Purchase', type: :request do
         end
 
         context '/free_to_sale' do
-          context 'without purchase_list param' do
-            it 'verifies that response has the elements number specified in per_page param' do
-              per_page = 5
-              get '/api/v1/purchases/free_to_sale', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
+          it 'verifies that response has the elements number specified in per_page param when not is a legal_representative' do
+            per_page = 0
+            get '/api/v1/purchases/free_to_sale', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
 
-              expect(response.status).to eq 200
-              expect(JSON.parse(response.body).count).to eq per_page
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body).count).to eq per_page
 
-              # it 'returns all purchases where its gold batch is not sale (sold == false)'
-              purchases_free = JSON.parse(response.body).select { |p| p['gold_batch']['sold'] == false }
-              expect(purchases_free.count).to eq per_page
-            end
+            # it 'returns all purchases where its gold batch is not sale (sold == false)'
+            purchases_free = JSON.parse(response.body).select { |p| p['gold_batch']['sold'] == false }
+            expect(purchases_free.count).to eq per_page
           end
 
-          context 'whit purchase_list param' do
-            it 'verifies that response has the elements number specified in per_page param' do
-              id_list = [10, 12, 3, 4, 5, 6, 7, 8]
-              get '/api/v1/purchases/free_to_sale', { purchase_list: id_list }, 'Authorization' => "Barer #{@token}"
+          it 'verifies that response has the elements number specified in per_page param when is a legal_representative' do
+            legal_representative_token = @legal_representative.create_token
+            per_page = 5
+            get '/api/v1/purchases/free_to_sale', { per_page: per_page }, 'Authorization' => "Barer #{legal_representative_token}"
 
-              expect(response.status).to eq 200
-              expect(JSON.parse(response.body).count).to eq 8
-            end
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body).count).to eq per_page
+
+            # it 'returns all purchases where its gold batch is not sale (sold == false)'
+            purchases_free = JSON.parse(response.body).select { |p| p['gold_batch']['sold'] == false }
+            expect(purchases_free.count).to eq per_page
           end
         end
       end
