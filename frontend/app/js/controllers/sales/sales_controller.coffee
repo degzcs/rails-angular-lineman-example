@@ -22,8 +22,6 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
 
  # Returns the Fixed Sale Agreetmen from Settings instance
   SaleService.getFixedSaleAgreetment().success ((data)->
-
-    console.log 'OK getFixedSaleAgreetment'
     $scope.saleModel.fixed_sale_agreetment = data.fixed_sale_agreetment
   ), (error) ->
     console.log('Error al tratar de Obtener el texto de fijación del Acuerdo')
