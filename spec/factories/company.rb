@@ -38,7 +38,7 @@ FactoryGirl.define do
     end
 
     after :create do |company, e|
-      company.legal_representative = create(:user, :with_profile, office: company.main_office, legal_representative: true)
+      company.legal_representative = create(:user, :with_profile, :with_trader_role, office: company.main_office, legal_representative: true)
       company.save!
       company.reload
     end
