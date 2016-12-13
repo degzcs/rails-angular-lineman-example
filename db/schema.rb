@@ -242,9 +242,6 @@
   create_table "puc_accounts", force: true do |t|
     t.string   "code"
     t.string   "name"
-    t.string   "debit"
-    t.string   "credit"
-    t.string   "account_nature"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
