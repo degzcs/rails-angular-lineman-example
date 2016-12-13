@@ -314,7 +314,7 @@
 
   create_table "taxes", force: true do |t|
     t.string   "name"
-    t.string   "initials"
+    t.string   "reference"
     t.float    "porcent"
     t.integer  "puc_account_id"
     t.datetime "created_at"
@@ -325,10 +325,11 @@
 
   create_table "transaction_movements", force: true do |t|
     t.integer  "puc_account_id"
-    t.string   "type"
+    t.string   "kind"
     t.string   "block_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "afectation"
   end
 
   add_index "transaction_movements", ["puc_account_id"], name: "index_transaction_movements_on_puc_account_id", using: :btree
