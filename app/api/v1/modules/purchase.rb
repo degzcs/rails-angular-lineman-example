@@ -88,21 +88,20 @@ module V1
 
         params do
           use :pagination
-          optional :purchase_list, type: Array # Array of purchase ids
         end
 
         get '/', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           authorize! :read, ::Order
           content_type 'text/json'
-          if params[:purchase_list]
-            purchases = ::Order.where(id: params[:purchase_list], type: 'purchase')
-          else
-            page = params[:page] || 1
-            per_page = params[:per_page] || 10
-            legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          if legal_representative == current_user
             purchases = legal_representative.purchases.order('id DESC').paginate(page: page, per_page: per_page)
-            header 'total_pages', purchases.total_pages.to_s
+          else
+            purchases = legal_representative.purchases.joins(:audits).where('audits.user_id = ?', current_user.id).order('id DESC').paginate(page: page, per_page: per_page)
           end
+          header 'total_pages', purchases.total_pages.to_s
           present purchases, with: V1::Entities::Purchase
         end
 
