@@ -59,7 +59,7 @@ describe Sale::SaleGoldService do
         expect(response[:success]).to be true
 
         # test the state machine on transaction state
-        sale = Order.last
+        sale = Order.first
         expect(sale.dispatched?).to eq(true)
         expect(sale.transaction_state).to eq('dispatched')
 
