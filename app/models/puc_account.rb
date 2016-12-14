@@ -5,4 +5,8 @@ class PucAccount < ActiveRecord::Base
 
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
+
+  def self.accounts_for_select
+    PucAccount.all.map { |r| ["#{r.code} - #{r.name}", r.id] }
+  end
 end
