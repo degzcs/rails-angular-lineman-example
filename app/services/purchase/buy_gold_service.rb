@@ -80,7 +80,7 @@ module Purchase
       @purchase_order = buyer.purchases.build(order_hash)
       @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
       @purchase_order.end_transaction!(current_user)
-      response[:success] = Order.audit_as(buyer) { @purchase_order.save! }
+      response[:success] = Order.audit_as(current_user) { @purchase_order.save! }
       @purchase_order
     end
 
