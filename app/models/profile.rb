@@ -137,6 +137,10 @@ class Profile < ActiveRecord::Base
     self.id_document_file.url.present?
   end
 
+  def doc_number_and_full_name
+    document_number.to_s + ' - ' + first_name.to_s + ' ' + last_name.to_s
+  end
+
   protected
 
   def init
