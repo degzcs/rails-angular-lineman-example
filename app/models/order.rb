@@ -64,13 +64,14 @@ class Order < ActiveRecord::Base
   #
   # Scopes
   #
-
+  default_scope { order('orders.created_at DESC') }
   scope :fine_grams_sum_by_date, ->(date, seller_id) { where(created_at: (date.beginning_of_month.beginning_of_day .. date.end_of_month.end_of_day)).where(seller_id: seller_id).joins(:gold_batch).sum('gold_batches.fine_grams') }
   scope :remaining_amount_for, ->(buyer) { where(buyer_id: buyer.id).joins(:gold_batch).where('gold_batches.sold IS NOT true').sum('gold_batches.fine_grams') }
   scope :purchases, ->(ids) { where(type: 'purchase', id: ids) }
   scope :purchases_free, ->(buyer) { where(type: 'purchase', buyer: buyer).includes(:gold_batch).where(gold_batches: { sold: false }) }
   scope :sales_by_state_as_buyer, ->(buyer, state) { where(type: 'sale', buyer: buyer, transaction_state: state) }
   scope :sales_by_state_as_seller, ->(seller, state) { where(type: 'sale', seller: seller, transaction_state: state) }
+  scope :purchases_for, ->(legal_representative, current_user) { where(buyer: legal_representative).joins(:audits).where('audits.user_id = ?', current_user.id) }
   #
   # State Machine for transaction_state field
   #
@@ -118,7 +119,7 @@ class Order < ActiveRecord::Base
     documents.where(type: 'purchase_files_collection_with_watermark').first
   end
 
-  # TODO: Change proof_of_sale and proof_of_purchase because is ambiguous, 
+  # TODO: Change proof_of_sale and proof_of_purchase because is ambiguous,
   # in SaleGoldService the document_type should be compendium and the service ProofOfSale should rename to Compendium too
   def compendium
     documents.where(type: 'compendium').first
