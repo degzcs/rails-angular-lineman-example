@@ -97,9 +97,9 @@ module V1
           per_page = params[:per_page] || 10
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           if legal_representative == current_user
-            purchases = legal_representative.purchases.order('id DESC').paginate(page: page, per_page: per_page)
+            purchases = legal_representative.purchases.paginate(page: page, per_page: per_page)
           else
-            purchases = legal_representative.purchases.joins(:audits).where('audits.user_id = ?', current_user.id).order('id DESC').paginate(page: page, per_page: per_page)
+            purchases = Order.purchases_for(legal_representative, current_user).paginate(page: page, per_page: per_page)
           end
           header 'total_pages', purchases.total_pages.to_s
           present purchases, with: V1::Entities::Purchase
@@ -130,7 +130,7 @@ module V1
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           if legal_representative == current_user
             purchases =
-              Order.purchases_free(legal_representative).order('orders.id DESC').paginate(page: page, per_page: per_page)
+              Order.purchases_free(legal_representative).paginate(page: page, per_page: per_page)
             header 'total_pages', purchases.total_pages.to_s
           else
             purchases = []
