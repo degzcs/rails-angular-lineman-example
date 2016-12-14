@@ -61,7 +61,7 @@ describe 'Sale', type: :request do
             expect(JSON.parse(response.body)).to include expected_response
 
             # Validate Sale audit actions on Orders
-            order = Order.last
+            order = Order.first
             expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
             expect(order.audits.first.action).to eq('create')
             expect(order.audits.first.audited_changes['type']).to eq('sale')
@@ -84,14 +84,23 @@ describe 'Sale', type: :request do
 
         context '/' do
           it 'verifies that response has the elements number specified in per_page param' do
+            legal_representative_token = @legal_representative.create_token
             per_page = 5
-            get '/api/v1/sales', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
+            get '/api/v1/sales', { per_page: per_page }, 'Authorization' => "Barer #{legal_representative_token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to eq per_page
           end
 
           it 'should verifies that the elements are corrects in the configuration of entities sale' do
+            legal_representative_token = @legal_representative.create_token
             per_page = 3
+            get '/api/v1/sales', { per_page: per_page }, 'Authorization' => "Barer #{legal_representative_token}"
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body).count).to eq per_page
+          end
+
+          it 'verifies that response has the elements number specified in per_page param when is a buyer(office)' do
+            per_page = 0
             get '/api/v1/sales', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).count).to eq per_page
@@ -206,7 +215,7 @@ describe 'Sale', type: :request do
               @token_to_seller = @current_user_as_seller.create_token
               @legal_representative = @current_user.company.legal_representative
               @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, buyer: @current_user)
-              #@buyer = create(:user, :with_company, :with_trader_role)
+              # @buyer = create(:user, :with_company, :with_trader_role)
             end
             context 'by_state' do
               before :each do

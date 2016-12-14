@@ -41,7 +41,7 @@ module V1
 
         # params :auth do
         #   requires :access_token, type: String, desc: 'Auth token', documentation: { example: '837f6b854fc7802c2800302e' }
-        #end
+        # end
 
       resource :sales do
         #
@@ -120,8 +120,12 @@ module V1
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
-          sales = legal_representative.sales.paginate(:page => page, :per_page => per_page)
-          header 'total_pages', sales.total_pages.to_s
+          if legal_representative == current_user
+            sales = legal_representative.sales.paginate(page: page, per_page: per_page)
+            header 'total_pages', sales.total_pages.to_s
+          else
+            sales = []
+          end
           present sales, with: V1::Entities::Sale
         end
 
@@ -220,7 +224,7 @@ module V1
           page = params[:page] || 1
           per_page = params[:per_page] || 10
           state = params[:state]
-          #legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
+          # legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           sales = ::Order.sales_by_state_as_buyer(current_user, state).paginate(:page => page, :per_page => per_page)
           header 'total_pages', sales.total_pages.to_s
           present sales, with: V1::Entities::Sale
@@ -283,11 +287,10 @@ module V1
           @sale = ::Order.find(params[:id])
           transition = params[:transition].to_sym
           @sale.__send__(transition, current_user)
-          #@sale.save!
-          #header 'total_pages', @sale.total_pages.to_s
+          # @sale.save!
+          # header 'total_pages', @sale.total_pages.to_s
           present @sale, with: V1::Entities::Sale
         end
-
       end
     end
   end
