@@ -274,6 +274,14 @@ describe  User, type: :model do
         expect(user.alegra_sync).to eq true
       end
     end
+    it 'should NOT synchronize an authorized_provider when it is created' do
+      user = create :user, :with_profile, :with_personal_rucom, provider_type: 'Barequero'
+      user.complete!
+      user.save
+      expect(user.completed?).to eq true
+      expect(user.alegra_id).to eq nil
+      expect(user.alegra_sync).to eq false
+    end
   end
 
   context 'Micromachine' do
@@ -301,6 +309,8 @@ describe  User, type: :model do
       expect(user.status.state).to eq('completed')
       expect(user.registration_state).to eq('completed')
       expect(user.completed?).to eq(true)
+      expect(user.alegra_sync).to eq(false)
+      expect(user.alegra_id).to eq(nil)
     end
 
     it 'sets as failure value in registration_state field' do

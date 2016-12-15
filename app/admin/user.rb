@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], setting_attributes: [:alegra_token, :fine_gram_value]
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, :alegra_sync, role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], setting_attributes: [:alegra_token, :fine_gram_value]
 
   config.clear_action_items!
 
@@ -115,6 +115,7 @@ ActiveAdmin.register User do
     column(:legal_representative) do |user|
       user.profile.legal_representative?
     end
+    column :alegra_sync
     column :registration_state
     actions
   end
