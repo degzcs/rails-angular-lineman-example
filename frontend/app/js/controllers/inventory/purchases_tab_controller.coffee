@@ -30,6 +30,10 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
       name: 'Tipo de Mineral'
       field: 'purchase.gold_batch.mineral_type'
     }
+    {
+      name: 'Responsable'
+      field: "purchase.performer.first_name + ' ' + purchase.performer.last_name"
+    }
   ]
 
   #Variables configuration
