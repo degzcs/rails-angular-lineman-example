@@ -112,19 +112,21 @@ describe 'Purchase', type: :request do
                                    :with_origin_certificate_file,
                                    buyer: @buyer.company.legal_representative,
                                    seller_id: seller.id)
+          # this line is for update the field user_id of the audits created
+          Audited.audit_class.update_all(user_id: @buyer.id, user_type: 'User')
         end
 
         context '/' do
           context 'List all purchases corresponding to the user' do
             it 'verifies that response has the elements number specified in per_page param when  is a buyer(office)' do
-              per_page = 0
+              per_page = 5
               get '/api/v1/purchases', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
               expect(response.status).to eq 200
               expect(JSON.parse(response.body).count).to eq per_page
             end
 
             it 'verifies that response has the elements number specified in per_page param when is a legal_representative' do
-              per_page = 5
+              per_page = 8
               legal_representative_token = @legal_representative.create_token
               get '/api/v1/purchases', { per_page: per_page }, 'Authorization' => "Barer #{legal_representative_token}"
               expect(response.status).to eq 200
