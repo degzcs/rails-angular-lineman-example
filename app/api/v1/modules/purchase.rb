@@ -130,7 +130,7 @@ module V1
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           if legal_representative == current_user
             purchases =
-              Order.purchases_free(legal_representative).paginate(page: page, per_page: per_page)
+              Order.free_purchases(legal_representative).paginate(page: page, per_page: per_page)
             header 'total_pages', purchases.total_pages.to_s
           else
             purchases = []
