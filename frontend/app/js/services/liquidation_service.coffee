@@ -1,6 +1,6 @@
 
-angular.module('app').factory 'LiquidationService', ($http)-> 
-  service = 
+angular.module('app').factory 'LiquidationService', ($http)->
+  service =
     model:
       selectedPurchases: null #=>  example: {[purchase_id: 1,amount_picked: 2.3]}
       totalAmount: 0
@@ -8,11 +8,11 @@ angular.module('app').factory 'LiquidationService', ($http)->
       price: 0
       weightedLaw: 0
 
-    
+
     saveState: ->
       sessionStorage.pendingLiquidation = 'true'
       sessionStorage.liquidationService = angular.toJson(service.model)
-      console.log 'liquidation Saved'
+      # console.log 'liquidation Saved'
 
     restoreState: ->
       if(sessionStorage.pendingLiquidation)
