@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   # Calbacks
   #
 
-  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles
+  accepts_nested_attributes_for :purchases, :sales, :credit_billings, :office, :profile, :personal_rucom, :roles, :setting
 
   #
   # Delegates

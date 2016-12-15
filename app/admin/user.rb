@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id]
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], setting_attributes: [:alegra_token, :fine_gram_value]
 
   config.clear_action_items!
 
@@ -21,10 +21,11 @@ ActiveAdmin.register User do
         service_ids = params[:user][:available_trazoro_service_id]
         service_ids.reject!{ |item| item.empty? } if service_ids.present?
         if user.trader? && user.profile.legal_representative? && service_ids.present?
+          user.setting.update_attributes(permitted_params[:user][:setting_attributes])
           user.setting.trazoro_service_ids = service_ids
           user.save!
         end
-        user.update_attributes(permitted_params[:user].except(:profile_attributes))
+        user.update_attributes(permitted_params[:user].except(:profile_attributes, :setting_attributes))
         user.profile.update_attributes(permitted_params[:user][:profile_attributes])
         user.user_complete? unless user.completed?
       end
@@ -85,9 +86,13 @@ ActiveAdmin.register User do
       end
     end
     if params[:action] == 'edit' && user.trader? && user.profile.legal_representative?
-      panel 'Servicios Trazoro' do
-        f.input :trazoro_services, as: :check_boxes, collection: AvailableTrazoroService.all.map { |o| ["#{o.name}", o.id, checked: f.object.setting.trazoro_service_ids.include?(o.id)]}
-      end
+        f.inputs 'Configuración de Usuario' do
+          f.input :trazoro_services, as: :check_boxes, collection: AvailableTrazoroService.all.map { |o| ["#{o.name}", o.id, checked: f.object.setting.trazoro_service_ids.include?(o.id)]}
+          f.has_many :setting, heading: '' do |s|
+            s.input :alegra_token, label: 'Token alegra', hint: 'Este tóken tiene que ser conseguido desde Alegra para la facturación'
+            s.input :fine_gram_value, label: 'Valor del gramo fino', hint: 'Este valor sera tenido encuenta sobre la configuración general'
+          end
+        end
     end
     f.actions
   end
@@ -163,6 +168,12 @@ ActiveAdmin.register User do
           row 'Nombre Servicios' do |p|
             p.setting.trazoro_services.present? ? p.setting.trazoro_services.map(& :name).join(',  ') : 'Este usuario no cuenta aun con servicios trazoro'
           end
+        end
+      end
+      panel 'Configuración de usuario' do
+        attributes_table_for user.setting do
+          row :alegra_token, label: 'Token Alegra'
+          row :fine_gram_value, label: 'Valor gramo fino'
         end
       end
     end
