@@ -30,10 +30,10 @@ module V1
         expose :id, documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
           purchase.seller.id # TODO: change provider for saller in the front end
         end
-        expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
+        expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "nombre" }do|purchase, options|
           purchase.seller.profile.first_name
         end
-        expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
+        expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "apellido" }do|purchase, options|
           purchase.seller.profile.last_name
         end
       end
@@ -61,7 +61,15 @@ module V1
         end
       end
       expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" }
-        # expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
+      # expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
+      expose :performer do
+        expose :first_name, documentation: { type: "string", desc: "first_name of the buyer who buys the gold batch", example: "nombre" }do|purchase, options|
+          purchase.audits.first.user.profile.first_name
+        end
+        expose :last_name, documentation: { type: "string", desc: "last_name of the buyer who buys the gold batch", example: "apellido" }do|purchase, options|
+          purchase.audits.first.user.profile.last_name
+        end
+      end
     end
   end
 end
