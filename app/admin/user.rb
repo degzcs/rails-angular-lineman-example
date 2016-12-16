@@ -132,7 +132,7 @@ ActiveAdmin.register User do
     end
     column :alegra_sync
     column :registration_state
-    actions defaults: true, dropdown: true do |user|
+    actions defaults: true, dropdown: false do |user|
       item 'Sincronizar', synchronize_admin_user_path(user)
     end
   end
