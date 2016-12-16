@@ -36,6 +36,18 @@ module V1
         expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "apellido" }do|purchase, options|
           purchase.seller.profile.last_name
         end
+         expose :document_number, documentation: { type: 'integer', desc: 'document_number of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.profile.document_number
+        end
+        expose :phone_number, documentation: { type: 'integer', desc: 'phone_number of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.profile.phone_number
+        end
+        expose :address, documentation: { type: 'string', desc: 'adress of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.profile.address
+        end
+        expose :email, documentation: { type: 'string', desc: 'email of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.email
+        end
       end
       expose :gold_batch do
         expose :id, documentation: { type: "string", desc: "gold batch id", example: "1" } do|purchase, options|
@@ -52,6 +64,9 @@ module V1
         end
         expose :mineral_type, documentation: { type: 'string', desc: "type mineral of the purchase", example: "Oro"} do|purchase, options|
           purchase.gold_batch.mineral_type
+        end
+        expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' } do |purchase, options|
+          purchase.gold_batch.fine_grams
         end
       end
       # TODO: remove this inventory namespace as soon as the frontend being upgrated
@@ -70,6 +85,7 @@ module V1
           purchase.audits.first.user.profile.last_name
         end
       end
+      expose :transaction_state, documentation: { type: 'string', desc: 'sale state', example: 'pending, dispatched, paid, canceled, approved' }
     end
   end
 end
