@@ -37,7 +37,11 @@ describe 'Purchase', type: :request do
             'seller' => { # TODO: change front end variable name from provider to seller
               'id' => @seller.id,
               'first_name' => @seller.profile.first_name,
-              'last_name' => @seller.profile.last_name
+              'last_name' => @seller.profile.last_name,
+              'address' => @seller.profile.address,
+              'document_number' => @seller.profile.document_number,
+              'phone_number' => @seller.profile.phone_number,
+              'email' => @seller.email
             },
             'price' => 1.5,
             'gold_batch' => {
@@ -176,6 +180,34 @@ describe 'Purchase', type: :request do
             purchases_free = JSON.parse(response.body).select { |p| p['gold_batch']['sold'] == false }
             expect(purchases_free.count).to eq per_page
           end
+        end
+      end
+      context '/by_state' do
+        it 'gets purchases by state' do
+          seller = create(:user, :with_profile, :with_company, :with_trader_role)
+          purchases = create_list(:sale, 2,
+                                   :with_purchase_files_collection_file,
+                                   :with_proof_of_sale_file,
+                                   :with_shipment_file,
+                                   buyer: @buyer.company.legal_representative,
+                                   seller: seller.company.legal_representative)
+
+          Audited.audit_class.update_all(user_id: seller.company.legal_representative.id, user_type: 'User')
+          purchases_first = purchases.first
+          purchases_first.send_info!(purchases_first.seller)
+          state = 'dispatched'
+          token = purchases_first.buyer.create_token
+          dispatched_sales = Order.from_traders.by_state(state).as_buyer(purchases_first.buyer)
+          # test  sales_by_state scope
+          expect(dispatched_sales.count).to eq 1
+
+          get "/api/v1/purchases/by_state/#{state}",{}, 'Authorization' => "Barer #{token}"
+          expect(response.status).to eq 200
+
+          res = JSON.parse(response.body)
+
+          expect(res.count).to eq 1
+          expect(res.first['transaction_state']).to eq state
         end
       end
     end
