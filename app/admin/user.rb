@@ -51,9 +51,14 @@ ActiveAdmin.register User do
     user = ::User.find(params[:id])
     user.syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
     if user.reload.alegra_sync
-      redirect_to admin_users_path, notice: 'Sincronizado!'
+      redirect_to admin_users_path, notice: 'Sincronizado exitosamente!'
     else
-      redirect_to admin_users_path, alert: 'No fue Sincronizado!'
+      message = if user.authorized_provider?
+        'Los usuarios con el rol proveedor autorizado no pueden ser sincronizados'
+      else
+        'No fue Sincronizado, comprube que ALEGRA_SYNC esta activa!'
+      end
+      redirect_to admin_users_path, alert: message
     end
   end
 
