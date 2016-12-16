@@ -64,15 +64,28 @@ class Order < ActiveRecord::Base
   #
   # Scopes
   #
+
   default_scope { order('orders.created_at DESC') }
   scope :fine_grams_sum_by_date, ->(date, seller_id) { where(created_at: (date.beginning_of_month.beginning_of_day .. date.end_of_month.end_of_day)).where(seller_id: seller_id).joins(:gold_batch).sum('gold_batches.fine_grams') }
   scope :remaining_amount_for, ->(buyer) { where(buyer_id: buyer.id).joins(:gold_batch).where('gold_batches.sold IS NOT true').sum('gold_batches.fine_grams') }
-  scope :purchases, ->(ids) { where(type: 'purchase', id: ids) } #TODO: check this scope
+  scope :purchases, ->(ids) { where(type: 'purchase', id: ids) } # TODO: check this scope
+  # NOTE: if you want to selecte all orders buyed from authorized provider and available to sell
+  # you can join the previous scopes as follows: Order.from_authorized_providers.free_purchases(buyer)
   scope :free_purchases, ->(buyer) { where(buyer: buyer).includes(:gold_batch).where(gold_batches: { sold: false }) }
-  scope :free_purchases_from_authorized_providers, ->(buyer) { free_purchases.where(type: 'purchase') }
-  scope :sales_by_state_as_buyer, ->(buyer, state) { where(type: 'sale', buyer: buyer, transaction_state: state) }
-  scope :sales_by_state_as_seller, ->(seller, state) { where(type: 'sale', seller: seller, transaction_state: state) }
+  scope :from_authorized_providers, -> { where(type: 'purchase') }
+  # NOTE: In order to retrieve all BUY orders by state (pending, dispatched, canceled and so on) and
+  # where the passed user acts as a buyer, you can join the previous scopes as follows:
+  # Order.from_traders.by_state(state).as_buyer(buyer)
+  scope :from_traders, -> { where(type: 'sale') }
+  scope :by_state, ->(state) { where(transaction_state: state) }
+  scope :as_buyer, ->(buyer) { where(buyer: buyer) }
+  # NOTE: In order to retrieve all SALE orders by state (pending, dispatched, canceled and so on) and
+  # where the passed user acts as a seller, you can join the previous scopes as follows:
+  # Order.from_traders.by_state(state).as_seller(seller)
+  scope :as_seller, ->(seller) { where(seller: seller) }
+
   scope :purchases_for, ->(legal_representative, current_user) { where(buyer: legal_representative).joins(:audits).where('audits.user_id = ?', current_user.id) }
+
   #
   # State Machine for transaction_state field
   #
