@@ -47,6 +47,16 @@ ActiveAdmin.register User do
     end
   end
 
+  member_action :synchronize do
+    user = ::User.find(params[:id])
+    user.syncronize_with_alegra!(APP_CONFIG[:ALEGRA_SYNC])
+    if user.reload.alegra_sync
+      redirect_to admin_users_path, notice: 'Sincronizado!'
+    else
+      redirect_to admin_users_path, alert: 'No fue Sincronizado!'
+    end
+  end
+
   # new and edit
   form do |f|
     if f.object.errors.size >= 1
@@ -117,7 +127,9 @@ ActiveAdmin.register User do
     end
     column :alegra_sync
     column :registration_state
-    actions
+    actions defaults: true, dropdown: true do |user|
+      item 'Sincronizar', synchronize_admin_user_path(user)
+    end
   end
 
   # filters
