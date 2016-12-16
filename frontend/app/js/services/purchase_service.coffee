@@ -164,7 +164,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       return $http({method: "GET", url: "api/v1/purchases/" + id})
 
     #
-    #Get all purchases
+    # Get all purchases
     #
     get_list: (ids)->
       return $http.get('api/v1/purchases', params:
@@ -175,6 +175,12 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       }
       sessionStorage.removeItem('purchaseService')
       return
+
+    #
+    # Get all Order by transaction state
+    #
+    getAllByState: (state) ->
+      return $http.get('api/v1/purchases/by_state/'+state)
 
   #
   # Set uploadProgress variable
