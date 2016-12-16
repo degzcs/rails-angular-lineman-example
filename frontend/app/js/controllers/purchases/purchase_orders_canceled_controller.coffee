@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
+angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, PurchaseService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0
@@ -37,8 +37,6 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
   $scope.currentPage = 1
   # wacom device
   $scope.chkAgreetmentActive = false
-  $scope.saleService =  SaleService.model
-
 
   #---------------- Controller methods -----------------//
   # purchase service call to api to retrieve all purchase by the state  passed by argument for current user
@@ -55,5 +53,9 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    #$scope.saleService.use_wacom_device = data.use_wacom_device
+    #$scope.purchaseModel.use_wacom_device = data.use_wacom_device
     $scope.current_sale_id = null
+  $scope.showPurchase = (purchaseId) ->
+    # PurchaseService.model = $filter('filter')($scope.purchases, {id: purchaseId})[0]
+    # PurchaseService.saveModel()
+    # $state.go 'show_purchase'
