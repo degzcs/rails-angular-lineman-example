@@ -256,10 +256,6 @@ class User < ActiveRecord::Base
     self.office.present?
   end
 
-  def state_basic?
-    self.registration_state == 'basic' && there_are_unset_attributes
-  end
-
   # Sync this user with Alegra
   # @param sync [ Boolean ] it is false by default to avoid synchroize user when it's not needed
   # @return [ Hash ]
@@ -267,9 +263,12 @@ class User < ActiveRecord::Base
   #           - errors [ Array ]
   def syncronize_with_alegra!(sync=false)
     service = Alegra::ContactSynchronize.new(self)
-    service.call if sync
+    # TODO: when the tax component feature is merged we have to update this condition also based on
+    # the regime type, to be more specific it cannot be occur if user is a simple regimen.
+    # Because we cannot invoice this kind of regime.
+    service.call if !authorized_provider? && sync
     self.errors.add(:alegra_sync, "El comercializador fue guardado pero no se ha sincronizado con Alegra. El error es: #{ service.response[:errors] }" ) if service.response[:errors].present?
-    service.response
+    service.response[:errors].blank?
   end
 
   protected
