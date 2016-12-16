@@ -15,37 +15,36 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   $scope.headers = [
     {
       name: 'Estado'
-      field: 'sale.transaction_state'
+      field: 'purchase.transaction_state'
     }
-    
     {
       name: 'Fecha'
-      field: 'sale.created_at'
+      field: 'purchase.created_at'
     }
     {
       name: 'Vendedor'
-      field: "sale.seller.first_name + ' ' + sale.seller.last_name"
+      field: "purchase.seller.first_name + ' ' + purchase.seller.last_name"
     }
     {
       name: 'Gramos Finos'
-      field: 'sale.fine_grams'
+      field: 'purchase.gold_batch.fine_grams'
     }
     {
       name: 'Precio'
-      field: 'sale.price'
+      field: 'purchase.price'
     }
     {
       name: 'Tipo de Mineral'
-      field: 'sale.mineral_type'
+      field: 'purchase.gold_batch.mineral_type'
     }
   ]
 
-  #Variables configuration
+  # Variables configuration
   $scope.pages = 0
   $scope.currentPage = 1
-# wacom device
+  # wacom device
   $scope.chkAgreetmentActive = false
-  
+
   SaleService.restoreModel()
   $scope.saleModel =  SaleService.model
 
@@ -57,14 +56,14 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     $state.go 'new_purchase.orders_details_agreetment'
 
   # ---------------- Controller methods -----------------//
-  # Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.getAllByStateAsBuyer('dispatched').success((sales, status, headers, config) ->
+  # purchase service call to api to retrieve all purchases by the state  passed by argument for current user
+  PurchaseService.getAllByState('dispatched').success((purchases, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
-    $scope.count = sales.length
-    $scope.sales = sales
-    # console.log 'sales: '
+    $scope.count = purchases.length
+    $scope.purchases = purchases
+    # console.log 'purchases: '
     # console.log $scope.saleModel.buyer.first_name + " nombre"
-    # console.log sales
+    # console.log purchases
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
 
