@@ -67,11 +67,10 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
                  method: "GET"
                  url: "api/v1/sales"
 
-
     #
     # Get all sales by transaction state as seller
     #
-    getAllByStateAsSeller: (state)->
+    getAllByState: (state)->
       return $http.get('api/v1/sales/by_state/'+state)
 
     #

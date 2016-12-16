@@ -1,7 +1,7 @@
 angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
-  $scope.totalAmount = 0 
+  $scope.totalAmount = 0
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
@@ -31,7 +31,7 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
       name: 'Tipo de Mineral'
       field: 'sale.mineral_type'
     }
-  ] 
+  ]
 
   #Variables configuration
   $scope.pages = 0
@@ -43,11 +43,10 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
 
   #---------------- Controller methods -----------------//
   #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.getAllByStateAsSeller('canceled').success((sales, status, headers, config) ->
+  SaleService.getAllByState('canceled').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
-    console.log sales
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra canceladas'
 
@@ -58,4 +57,4 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
   CurrentUser.get().success (data) ->
     $scope.current_user = data
     #$scope.saleService.use_wacom_device = data.use_wacom_device
-    $scope.current_sale_id = null 
+    $scope.current_sale_id = null
