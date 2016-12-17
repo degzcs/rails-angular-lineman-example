@@ -86,13 +86,13 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
         if transition == 'cancel!'
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
           $mdDialog.show(confirm).then (->
-            exec_transition(transition, 'new_purchase')
+            exec_transition(transition, 'new_purchase.purchase_home')
             #'new_purchase.orders_approved'
           ), ->
             #console.log 'You decided don\'t change the order state to canceled.'
             return
         else
-          exec_transition(transition, 'new_purchase')
+          exec_transition(transition, 'new_purchase.purchase_home')
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
 #
