@@ -71,7 +71,7 @@ class Order < ActiveRecord::Base
   scope :purchases, ->(ids) { where(type: 'purchase', id: ids) } # TODO: check this scope
   # NOTE: if you want to selecte all orders buyed from authorized provider and available to sell
   # you can join the previous scopes as follows: Order.from_authorized_providers.free_purchases(buyer)
-  scope :free_purchases, ->(buyer) { where(buyer: buyer).includes(:gold_batch).where(gold_batches: { sold: false }) }
+  scope :free_purchases, ->(buyer) { where(buyer: buyer, transaction_state: ['approved', 'paid']).includes(:gold_batch).where(gold_batches: { sold: false }) }
   scope :from_authorized_providers, -> { where(type: 'purchase') }
   # NOTE: In order to retrieve all BUY orders by state (pending, dispatched, canceled and so on) and
   # where the passed user acts as a buyer, you can join the previous scopes as follows:
