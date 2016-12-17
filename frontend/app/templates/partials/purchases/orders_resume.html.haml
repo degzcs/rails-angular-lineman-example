@@ -6,13 +6,13 @@
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
       %legend
         %h3
-          Vendedor 
+          Vendedor
       %table
         %tr
           %td
             Nombre y apellidos:
           %td
-            {{saleModel.seller.first_name}} {{saleModel.seller.last_name}} 
+            {{saleModel.seller.first_name}} {{saleModel.seller.last_name}}
         %tr
           %td
             Documento de id:
@@ -92,5 +92,5 @@
           Compendio
 
   %div.md-padding{flex: "60", :layout => "row", "layout-align" => "center" }
-    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.tab.orders_approved"}
-      Continuar
+    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.tab.orders_pending"}
+      Volver a ordenes pendientes

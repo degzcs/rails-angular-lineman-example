@@ -6,28 +6,28 @@
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
       %legend
         %h3
-          Vendedor 
+          Vendedor
       %table
         %tr
           %td
             Nombre y apellidos:
           %td
-            {{saleModel.seller.first_name}} {{saleModel.seller.last_name}} 
+            {{purchaseModel.seller.first_name}} {{purchaseModel.seller.last_name}}
         %tr
           %td
             Documento de id:
           %td
-            {{saleModel.seller.document_number}}
+            {{purchaseModel.seller.document_number}}
         %tr
           %td
             Email:
           %td
-            {{saleModel.seller.email}}
+            {{purchaseModel.seller.email}}
         %tr
           %td
             Teléfono:
           %td
-            {{saleModel.seller.phone_number}}
+            {{purchaseModel.seller.phone_number}}
 
 
 
@@ -40,22 +40,22 @@
           %td
             Fecha de creación:
           %td
-            {{saleModel.created_at}}
+            {{purchaseModel.created_at}}
         %tr
           %td
             Total Gramos Finos:
           %td
-            {{saleModel.fine_grams}} gramos
+            {{purchaseModel.gold_batch.fine_grams}} gramos
         %tr
           %td
             Tipo de Mineral:
           %td
-            {{saleModel.mineral_type}}
+            {{purchaseModel.gold_batch.mineral_type}}
         %tr
           %td
             Precio total:
           %td
-            ${{saleModel.price}} COP
+            ${{purchaseModel.price}} COP
 
   %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "80"}
@@ -71,7 +71,7 @@
           %td
             Gramos finos
 
-        %tr{"ng-repeat" => "associated_purchase in saleModel.associated_purchases"}
+        %tr{"ng-repeat" => "associated_purchase in purchaseModel.associated_purchases"}
           %td
             {{associated_purchase.created_at}}
           %td
@@ -86,9 +86,9 @@
         %h3
           Archivos
       %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-        %a.md-button{href: "{{saleModel.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+        %a.md-button{href: "{{purchaseModel.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
           Documentos de compra adjuntos
-        %a.md-button{href: "{{saleModel.proof_of_sale.file.url}}", :target => "_blank"}
+        %a.md-button{href: "{{purchaseModel.proof_of_sale_file_url}}", :target => "_blank"}
           Compendio
 
 

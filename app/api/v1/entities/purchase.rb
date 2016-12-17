@@ -13,6 +13,9 @@ module V1
       expose :proof_of_purchase_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.proof_of_purchase.file.url
       end
+      expose :proof_of_sale_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
+        purchase.proof_of_sale.file.url
+      end
       expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
         purchase.origin_certificate.try(:file).try(:url)
       end

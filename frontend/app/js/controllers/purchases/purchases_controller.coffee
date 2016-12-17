@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProviderService, SignatureService) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProviderService, SignatureService, $rootScope) ->
 
   #*** Loading Variables **** #
   $scope.showLoading = false
@@ -25,6 +25,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.subtotalTomines = 0
   $scope.subtotalReales = 0
   $scope.subtotalGranos = 0
+  $scope.watchMeasurements = false
 
   # if $scope.purchase.model.origin_certificate_file.url
   # $scope.origin_certificate_file_name =$scope.purchase.model.origin_certificate_file.url.split('/').pop()
@@ -238,7 +239,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Setup measures and total price if any of them have changed
-  $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
+  listener = $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -271,6 +272,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.subtotalTomines = $scope.tominesUnitPriceFrom * $scope.goldBatch.model.tomines
     $scope.subtotalReales = $scope.realesUnitPriceFrom * $scope.goldBatch.model.reales
     $scope.subtotalGranos = $scope.granosUnitPriceFrom * $scope.goldBatch.model.granos
+    # TEMPORAL FIX: to avoid use this watcher for each view
+    $rootScope.$on '$viewContentLoading', (event, viewName, viewContent) ->
+      if "partials/purchases/step2.html" != viewName.view.templateUrl
+        listener()
 
   #
   # Flush Data
@@ -307,6 +312,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.saveState= ->
     $scope.purchase.saveState()
     $scope.goldBatch.saveState()
+    listener() # IMPORTANT it Would clear the watch
   #  $scope.purchase.model.seller_photo_file=CameraService.getLastScanImage()
 
   #
@@ -334,6 +340,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   $scope.create = (ev) ->
     PurchaseService.create $scope.purchase.model, $scope.goldBatch.model
     $scope.showUploadingDialog(ev)
+    listener() # IMPORTANT it Would clear the watch
 
   #
   # Show dialog displaying file uploading progress

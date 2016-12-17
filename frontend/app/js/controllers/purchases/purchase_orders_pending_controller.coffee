@@ -45,14 +45,13 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   # wacom device
   $scope.chkAgreetmentActive = false
 
-  SaleService.restoreModel()
-  $scope.saleModel =  SaleService.model
+  #PurchaseService.restoreModel() # TODO: separe this controller for each view
+  $scope.purchaseModel = PurchaseService.model
 
-
-  # console.log $scope.saleModel
-  $scope.goSaleOrder = (saleId) ->
-    SaleService.model = $filter('filter')($scope.sales, {id: saleId})[0]
-    SaleService.saveModel()
+  # console.log $scope.purchaseModel
+  $scope.goPurchaseOrder = (purchaseId) ->
+    PurchaseService.model = $filter('filter')($scope.purchases, {id: purchaseId})[0]
+    PurchaseService.saveState()
     $state.go 'new_purchase.orders_details_agreetment'
 
   # ---------------- Controller methods -----------------//
@@ -61,9 +60,6 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = purchases.length
     $scope.purchases = purchases
-    # console.log 'purchases: '
-    # console.log $scope.saleModel.buyer.first_name + " nombre"
-    # console.log purchases
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
 
@@ -73,25 +69,8 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    #$scope.saleModel.use_wacom_device = data.use_wacom_device
-    $scope.current_sale_id = null
-
-
-# when click the button to see the fixed sale agreetment
-  $scope.agreetment = (sale_id)->
-    $scope.current_sale_id = sale_id
-    SaleService.fixed_sale_agreetment().success( (data) ->
-      $scope.saleModel.fixed_sale_agreetment = data.fixed_sale_agreetment
-      SaleService.model.fixed_sale_agreetment = data.fixed_sale_agreetment
-      SaleService.model.id = $scope.current_sale_id
-      SaleService.saveModel()
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Consulta Exitosa').content('Acuerdo de Compra recuperado').ariaLabel('Alert Dialog ').ok('ok')
-      $state.go 'new_purchase.orders_details_agreetment', { id: SaleService.model.id }
-    )
-    .error((error)->
-      $scope.showLoading = false
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
-    )
+    #$scope.purchaseModel.use_wacom_device = data.use_wacom_device
+    $scope.current_purchase_id = null
 
   $scope.handlerContinue = ->
     res = if $scope.chkAgreetmentActive == true then false else true
@@ -108,7 +87,6 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
           $mdDialog.show(confirm).then (->
             exec_transition(transition)
-            $state.go 'new_purchase.orders_canceled'
             #'new_purchase.orders_approved'
           ), ->
             console.log 'You decided don\'t change the order state to canceled.'
@@ -119,14 +97,15 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
 #
-# This funtion executes the method to call the sale end-point called transition trought the SaleService
+# This funtion executes the method to call the purchase end-point called transition trought the SaleService
 #
   exec_transition = (transition_name)->
     $scope.showLoading = true
-    SaleService.trigger_transition($scope.saleModel.id, transition_name).success( (data) ->
+    SaleService.trigger_transition($scope.purchaseModel.id, transition_name).success( (data) ->
       $scope.showLoading = false
-      $scope.saleModel.transaction_state = data.transaction_state
+      $scope.purchaseModel.transaction_state = data.transaction_state
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Ejecución exitosa!').content('Orden Actualizada Exitosamente!').ariaLabel('Alert Dialog ').ok('ok')
+      $state.go 'new_purchase.orders_canceled'
     )
     .error((error)->
       $scope.showLoading = false
@@ -134,7 +113,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     )
 
   can_exec_transition = ->
-    if  $scope.saleModel.transaction_state == 'canceled' || $scope.saleModel.transaction_state == 'approved'
+    if  $scope.purchaseModel.transaction_state == 'canceled' || $scope.purchaseModel.transaction_state == 'approved'
       return false
     else
       return true
