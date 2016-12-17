@@ -78,7 +78,7 @@ describe 'Sale', type: :request do
           @current_user = create :user, :with_profile, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
-          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative)
+          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative, transaction_state: 'approved')
           @buyer = create(:user, :with_company, :with_trader_role)
         end
 
@@ -150,7 +150,8 @@ describe 'Sale', type: :request do
               'purchase_files_collection' => sale.purchase_files_collection.as_json,
               'purchases_total_value' => sale.purchases_total_value,
               'total_gain' => sale.total_gain,
-              'transaction_state' => sale.transaction_state
+              'transaction_state' => sale.transaction_state,
+              'type' => sale.type
             }.deep_reject_keys!('created_at','updated_at')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200

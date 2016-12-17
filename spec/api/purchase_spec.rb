@@ -115,6 +115,7 @@ describe 'Purchase', type: :request do
                                    :with_proof_of_purchase_file,
                                    :with_origin_certificate_file,
                                    buyer: @buyer.company.legal_representative,
+                                   transaction_state: 'approved',
                                    seller_id: seller.id)
           # this line is for update the field user_id of the audits created
           Audited.audit_class.update_all(user_id: @buyer.id, user_type: 'User')
