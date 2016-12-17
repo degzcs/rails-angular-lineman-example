@@ -7,10 +7,6 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
   # to avoid the metaprogramming stuff bellow.
   $scope.headers = [
     {
-      name: 'Vendido'
-      field: 'purchase.gold_batch.sold'
-    }
-    {
       name: 'Fecha'
       field: 'purchase.created_at'
     }
@@ -29,6 +25,10 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
     {
       name: 'Tipo de Mineral'
       field: 'purchase.gold_batch.mineral_type'
+    }
+    {
+      name: 'Vendido'
+      field: 'purchase.gold_batch.sold'
     }
     {
       name: 'Responsable'

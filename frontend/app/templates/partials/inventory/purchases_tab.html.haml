@@ -1,8 +1,4 @@
-%section{:flex => "", :layout => "column", "layout-fill" => ""}
-  %md-subheader.md-primary.inventory-options-head
-    /%md-button.md-raised.md-primary.btn-save{"ng-click" => "liquidateSelectedPurchases($event)"}
-      Liquidar {{totalAmount}} Gramos
-
+.purchase-container
   %md-content
     .table-container
       %table.md-table.inventory-index-table
@@ -14,6 +10,6 @@
           %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters","ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
-    .md-table-footer{:layout => "row"}
-      %span.md-table-count-info
-        Registros cargados: {{count}}
+      .md-table-footer{:layout => "row"}
+        %span.md-table-count-info
+          Registros cargados: {{count}}

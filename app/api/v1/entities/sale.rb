@@ -100,6 +100,7 @@ module V1
       # expose :access_token, documentation: { type: 'string', desc: 'authentication token', example: 'sjahdkfjhasdfhaskdj' } do |purchase, _options|
       # sale.user.create_token
       # end
+      expose :type, documentation: { type: "String", desc: "useful to knwo if gold came from AProvider or Trader", example: "sale, purchase" }
       expose :transaction_state, documentation: { type: 'string', desc: 'sale state', example: 'pending, dispatched, paid, canceled, approved' }
     end
   end

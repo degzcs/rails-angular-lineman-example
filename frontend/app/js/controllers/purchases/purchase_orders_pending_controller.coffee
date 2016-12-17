@@ -86,26 +86,25 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
         if transition == 'cancel!'
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
           $mdDialog.show(confirm).then (->
-            exec_transition(transition)
+            exec_transition(transition, 'new_purchase')
             #'new_purchase.orders_approved'
           ), ->
-            console.log 'You decided don\'t change the order state to canceled.'
+            #console.log 'You decided don\'t change the order state to canceled.'
             return
         else
-          exec_transition(transition)
-          $state.go 'new_purchase.orders_resume'
+          exec_transition(transition, 'new_purchase')
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
 #
 # This funtion executes the method to call the purchase end-point called transition trought the SaleService
 #
-  exec_transition = (transition_name)->
+  exec_transition = (transition_name, viewToGo)->
     $scope.showLoading = true
     SaleService.trigger_transition($scope.purchaseModel.id, transition_name).success( (data) ->
       $scope.showLoading = false
       $scope.purchaseModel.transaction_state = data.transaction_state
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Ejecución exitosa!').content('Orden Actualizada Exitosamente!').ariaLabel('Alert Dialog ').ok('ok')
-      $state.go 'new_purchase.orders_canceled'
+      $state.go viewToGo
     )
     .error((error)->
       $scope.showLoading = false

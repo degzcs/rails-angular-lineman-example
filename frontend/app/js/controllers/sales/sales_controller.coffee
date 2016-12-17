@@ -74,7 +74,6 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     $scope.count = purchases.length
     $scope.purchases = purchases
   ).error (data, status, headers, config) ->
-    console.log 'error: ' + data
     $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
 
   $scope.infoAlert = (title, content) ->

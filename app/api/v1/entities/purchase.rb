@@ -78,6 +78,7 @@ module V1
           Order.remaining_amount_for(purchase.buyer).round(2)
         end
       end
+      expose :type, documentation: { type: "String", desc: "useful to knwo if gold came from AProvider or Trader", example: "sale, purchase" }
       expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" }
       # expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
       expose :performer do
