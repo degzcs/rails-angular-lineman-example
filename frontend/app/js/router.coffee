@@ -449,31 +449,6 @@
         deferred.promise
   )
 
-  .state("new_purchase.tab.orders_approved",
-    url: "/orders_approved",
-    ncyBreadcrumb:
-      label: 'Ordenes de Compra Aprobadas'
-    views:
-      'content':
-        templateUrl: "partials/purchases/orders_approved.html"
-        controller: "PurchaseOrdersApprovedCtrl"
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
-
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
-
   .state("new_purchase.orders_resume",
     url: "/purchases/orders_resume",
     ncyBreadcrumb:
@@ -505,7 +480,7 @@
       label: 'Ordenes de Compra Rechazadas'
     views:
       'content':
-        templateUrl: "partials/purchases/orders_approved.html"
+        templateUrl: "partials/purchases/orders_canceled.html"
         controller: "PurchaseOrdersCanceledCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
@@ -1171,30 +1146,6 @@
         deferred.promise
   )
 
-  .state("new_sale.tab.orders_approved_sale",
-    url: "/orders_approved_sale",
-    ncyBreadcrumb:
-      label: 'Ordenes de venta aprovadas'
-    views:
-      'content':
-        templateUrl: "partials/sales/orders_pending_sale.html"
-        controller: "SaleOrdersApprovedCtrl"
-      'top-nav':
-        templateUrl: "partials/top-nav.html"
-        controller: "SidebarCtrl"
-      'flying-navbar':
-        templateUrl: "partials/flying-navbar.html"
-        controller: "SidebarCtrl"
-
-    resolve:
-      authenticated: ($q, $location, $auth) ->
-        deferred = $q.defer()
-        unless $auth.isAuthenticated()
-          $location.path "/login"
-        else
-          deferred.resolve()
-        deferred.promise
-  )
 # Fixed Sale Agreetment
   .state("new_sale.step1",
     url: "/sales/step1",

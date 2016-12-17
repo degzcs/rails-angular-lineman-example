@@ -1,51 +1,49 @@
-angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, PurchaseService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
+angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, PurchaseService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter) ->
     # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
-  $scope.totalAmount = 0 
+  $scope.totalAmount = 0
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
   $scope.headers = [
     {
       name: 'Estado'
-      field: 'sale.transaction_state'
+      field: 'purchase.transaction_state'
     }
     {
       name: 'Fecha'
-      field: 'sale.created_at'
+      field: 'purchase.created_at'
     }
     {
       name: 'Vendedor'
-      field: "sale.seller.first_name + ' ' + sale.seller.last_name"
+      field: "purchase.seller.first_name + ' ' + purchase.seller.last_name"
     }
     {
       name: 'Gramos Finos'
-      field: 'sale.fine_grams'
+      field: 'purchase.gold_batch.fine_grams'
     }
     {
       name: 'Precio'
-      field: 'sale.price'
+      field: 'purchase.price'
     }
     {
       name: 'Tipo de Mineral'
-      field: 'sale.mineral_type'
+      field: 'purchase.gold_batch.mineral_type'
     }
-  ] 
+  ]
 
-  #Variables configuration
+  # Variables configuration
   $scope.pages = 0
   $scope.currentPage = 1
-# wacom device
+  # wacom device
   $scope.chkAgreetmentActive = false
-  $scope.saleService =  SaleService.model
-
 
   #---------------- Controller methods -----------------//
-  #Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.getAllByStateAsBuyer('canceled').success((sales, status, headers, config) ->
+  # purchase service call to api to retrieve all purchase by the state  passed by argument for current user
+  PurchaseService.getAllByState('canceled').success((purchases, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
-    $scope.count = sales.length
-    $scope.sales = sales
+    $scope.count = purchases.length
+    $scope.purchases = purchases
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de compra pendientes'
 
@@ -55,5 +53,9 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
 
   CurrentUser.get().success (data) ->
     $scope.current_user = data
-    #$scope.saleService.use_wacom_device = data.use_wacom_device
-    $scope.current_sale_id = null 
+    #$scope.purchaseModel.use_wacom_device = data.use_wacom_device
+    $scope.current_sale_id = null
+  $scope.showPurchase = (purchaseId) ->
+    # PurchaseService.model = $filter('filter')($scope.purchases, {id: purchaseId})[0]
+    # PurchaseService.saveModel()
+    # $state.go 'show_purchase'

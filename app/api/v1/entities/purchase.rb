@@ -13,6 +13,9 @@ module V1
       expose :proof_of_purchase_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.proof_of_purchase.file.url
       end
+      expose :proof_of_sale_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
+        purchase.proof_of_sale.file.url
+      end
       expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
         purchase.origin_certificate.try(:file).try(:url)
       end
@@ -30,11 +33,23 @@ module V1
         expose :id, documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
           purchase.seller.id # TODO: change provider for saller in the front end
         end
-        expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
+        expose :first_name, documentation: { type: "string", desc: "first_name of the provider who buys the gold batch", example: "nombre" }do|purchase, options|
           purchase.seller.profile.first_name
         end
-        expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "1" }do|purchase, options|
+        expose :last_name, documentation: { type: "string", desc: "last_name of the provider who buys the gold batch", example: "apellido" }do|purchase, options|
           purchase.seller.profile.last_name
+        end
+         expose :document_number, documentation: { type: 'integer', desc: 'document_number of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.profile.document_number
+        end
+        expose :phone_number, documentation: { type: 'integer', desc: 'phone_number of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.profile.phone_number
+        end
+        expose :address, documentation: { type: 'string', desc: 'adress of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.profile.address
+        end
+        expose :email, documentation: { type: 'string', desc: 'email of the seller, who buys a gold batch in a new purchase' } do |purchase, _options|
+          purchase.seller.email
         end
       end
       expose :gold_batch do
@@ -53,6 +68,9 @@ module V1
         expose :mineral_type, documentation: { type: 'string', desc: "type mineral of the purchase", example: "Oro"} do|purchase, options|
           purchase.gold_batch.mineral_type
         end
+        expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' } do |purchase, options|
+          purchase.gold_batch.fine_grams
+        end
       end
       # TODO: remove this inventory namespace as soon as the frontend being upgrated
       expose :inventory do
@@ -60,8 +78,18 @@ module V1
           Order.remaining_amount_for(purchase.buyer).round(2)
         end
       end
+      expose :type, documentation: { type: "String", desc: "useful to knwo if gold came from AProvider or Trader", example: "sale, purchase" }
       expose :trazoro, documentation: { type: " boolean", desc: "trazoro", example: "true" }
-        # expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
+      # expose :sale_id, documentation: { type: " integer", desc: "sale_id", example: 1 }
+      expose :performer do
+        expose :first_name, documentation: { type: "string", desc: "first_name of the buyer who buys the gold batch", example: "nombre" }do|purchase, options|
+          purchase.audits.first.user.profile.first_name
+        end
+        expose :last_name, documentation: { type: "string", desc: "last_name of the buyer who buys the gold batch", example: "apellido" }do|purchase, options|
+          purchase.audits.first.user.profile.last_name
+        end
+      end
+      expose :transaction_state, documentation: { type: 'string', desc: 'sale state', example: 'pending, dispatched, paid, canceled, approved' }
     end
   end
 end

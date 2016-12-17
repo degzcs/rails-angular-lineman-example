@@ -78,7 +78,7 @@ describe 'Sale', type: :request do
           @current_user = create :user, :with_profile, :with_company, :with_trader_role
           @token = @current_user.create_token
           @legal_representative = @current_user.company.legal_representative
-          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative)
+          @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, seller: @legal_representative, transaction_state: 'approved')
           @buyer = create(:user, :with_company, :with_trader_role)
         end
 
@@ -150,7 +150,8 @@ describe 'Sale', type: :request do
               'purchase_files_collection' => sale.purchase_files_collection.as_json,
               'purchases_total_value' => sale.purchases_total_value,
               'total_gain' => sale.total_gain,
-              'transaction_state' => sale.transaction_state
+              'transaction_state' => sale.transaction_state,
+              'type' => sale.type
             }.deep_reject_keys!('created_at','updated_at')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
@@ -214,7 +215,7 @@ describe 'Sale', type: :request do
               @current_user_as_seller = create :user, :with_profile, :with_company, :with_trader_role
               @token_to_seller = @current_user_as_seller.create_token
               @legal_representative = @current_user.company.legal_representative
-              @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, buyer: @current_user)
+              @sales = create_list(:sale, 20, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, buyer: @current_user, seller: @current_user_as_seller)
               # @buyer = create(:user, :with_company, :with_trader_role)
             end
             context 'by_state' do
@@ -223,24 +224,20 @@ describe 'Sale', type: :request do
               end
 
               it 'gets sales by state' do
-                VCR.use_cassette('sale_end_point_gets_sales_by_state') do
-                  sale_first = @sales.first
-                  current_user_as_seller = sale_first.seller
-                  sale_first.send_info!(current_user_as_seller)
-                  state = 'dispatched'
-                  dispatched_sales = Order.sales_by_state_as_buyer(sale_first.buyer, state)
+                sale_first = @sales.first
+                sale_first.send_info!(@current_user_as_seller)
+                state = 'dispatched'
+                dispatched_sales = Order.from_traders.by_state(state).as_seller(sale_first.seller)
+                # test  sales_by_state scope
+                expect(dispatched_sales.count).to eq 1
 
-                  # test  sales_by_state scope
-                  expect(dispatched_sales.count).to eq 1
+                get "/api/v1/sales/by_state/#{state}",{}, 'Authorization' => "Barer #{@token_to_seller}"
+                expect(response.status).to eq 200
 
-                  get "/api/v1/sales/by_state_buyer/#{state}",{}, 'Authorization' => "Barer #{@token}"
-                  expect(response.status).to eq 200
+                res = JSON.parse(response.body)
 
-                  res = JSON.parse(response.body)
-
-                  expect(res.count).to eq 1
-                  expect(res.first['transaction_state']).to eq state
-                end
+                expect(res.count).to eq 1
+                expect(res.first['transaction_state']).to eq state
               end
             end
 

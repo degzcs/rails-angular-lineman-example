@@ -47,7 +47,7 @@ module Reports
       # @param period [ Integer ]
       # @param selected_year [ String ]
       def report_for!(period, selected_year)
-        orders = Order.where(seller: seller, transaction_state: 'approved', payment_date: period_range_from(period, selected_year))
+        orders = Order.as_seller(seller).by_state(['approved', 'paid']).where(payment_date: period_range_from(period, selected_year))
         raise 'No hay transacciones para el periodo y año seleccionado' if orders.blank?
         @fine_grams = orders.map(&:fine_grams).sum.round(3)
         @total = (fine_grams*base_liquidation_price*(royalty_percentage/100)).round(3)

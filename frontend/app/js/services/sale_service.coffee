@@ -39,7 +39,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
 
     deleteState: ->
       sessionStorage.pendingLiquidation = 'false'
-      sessionStorage.saleService = null  
+      sessionStorage.saleService = null
 
     get_by_code: (code)->
       return $http.get("api/v1/sales/get_by_code/"+code)
@@ -54,7 +54,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       return $http.get("api/v1/agreetments/fixed_sale")
 
     #
-    # Get all sales paged for the current user  
+    # Get all sales paged for the current user
     #
     all_paged: (page)->
       if page
@@ -68,16 +68,10 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
                  url: "api/v1/sales"
 
     #
-    # Get all sales  by transaction state
-    #
-    getAllByStateAsBuyer: (state) ->
-      return $http.get('api/v1/sales/by_state_buyer/'+state)
-
-    #
     # Get all sales by transaction state as seller
     #
-    getAllByStateAsSeller: (state)->
-      return $http.get('api/v1/sales/by_state_seller/'+state)
+    getAllByState: (state)->
+      return $http.get('api/v1/sales/by_state/'+state)
 
     #
     # Trigger a transaction on transaction state field by the transition
@@ -89,7 +83,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
                   params: transition: transition
 
     #
-    # Get the buy agreetment from settings             
+    # Get the buy agreetment from settings
     #
     fixed_sale_agreetment: (page) ->
       if page
@@ -100,7 +94,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       else
         return $http
                    method: "GET"
-                   url: "api/v1/agreetments/fixed_sale" 
+                   url: "api/v1/agreetments/fixed_sale"
 
 
     #
@@ -109,7 +103,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
     get_list: (ids)->
       return $http.get('api/v1/sales', params:
                 "sales_list[]": ids)
-    
+
     saveModel: ->
       sessionStorage.saleService = angular.toJson(service.model)
 

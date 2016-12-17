@@ -2,42 +2,34 @@
   %md-card.amounts-picked.md-padding{flex: "15"}
     %h3
       Seleccion (Gramos Finos)
-    #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"} 
-    #  {{purchase.gold_batch.grams}} 
+    #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"}
+    #  {{purchase.gold_batch.grams}}
     %div.total_amount
       %strong
-        Gramos Finos Totales: 
+        Gramos Finos Totales:
       {{totalAmount.toFixed(3)}} gr
-     
+
   %md-content
     .table-container
       %table.md-table.inventory-index-table
         %thead
           %tr.md-table-headers-row
             %th.table-checkbox.all-check
-              /%md-button.md-icon-button.launch{"ng-click" => "selectAll(content,grams,selectall,$event)"}
-              /  %md-icon{:alt => "Alarm Icon", "md-svg-icon" => "{{selectall ? 'toggle:check_box' : 'toggle:check_box_outline_blank'}}",  "ng-class"=>"selectall ? 'purchase-selected' : ''","aria-label"=>"selectall"}
             %th.md-table-header
             %th.md-table-header{"ng-repeat" => "h in headers"}
               {{ h.name }}
-
-
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
           %tr.md-table-content-row{"ng-repeat" => "purchase in purchases", "ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
             %td.table-checkbox
-              %md-checkbox{"ng-checked" => "alreadySelected(purchase)", "aria-label" => "none", "ng-click" => "toggle(purchase)" }
-              
+              %md-checkbox{"ng-checked" => "alreadySelected(purchase)", "aria-label" => "none", "ng-click" => "toggle(purchase)", "ng-hide"=>"purchase.type == 'sale'" }
+              // NOTE: this condition is just for avoid sale gold from another trader until we fix the problem with the related documents. Also this is not
               {{purchase.amount_picked}}
-              
-              
             %td
-              .trazoro-state.tag{"ng-if"=>"purchase.trazoro"}
-                Trazoro
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} 
+            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"}
               {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
 
-            
+
 
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info

@@ -44,7 +44,7 @@ angular.module('app').controller 'SaleOrdersPendingCtrl', ($scope, PurchaseServi
   $scope.currentPage = 1
 # wacom device
   $scope.chkAgreetmentActive = false
-  
+
   SaleService.restoreModel()
   $scope.saleModel =  SaleService.model
 
@@ -57,13 +57,10 @@ angular.module('app').controller 'SaleOrdersPendingCtrl', ($scope, PurchaseServi
 
   # ---------------- Controller methods -----------------//
   # Sale service call to api to retrieve all sales by the state  passed by argument for current user
-  SaleService.getAllByStateAsSeller('dispatched').success((sales, status, headers, config) ->
+  SaleService.getAllByState('dispatched').success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales
-    # console.log 'sales: '
-    # console.log $scope.saleModel.buyer.first_name + " nombre"
-    console.log sales
   ).error (data, status, headers, config) ->
     $scope.infoAlert 'ERROR', 'No se pudo recuperar las ordenes de ventas pendientes'
 

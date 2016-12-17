@@ -3,20 +3,17 @@
     %table.md-table.inventory-index-table
       %thead
         %tr.md-table-headers-row
-          
+
           %th.md-table-header
           %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
             {{h.name}}
       %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
 
-        %tr.md-table-content-row{"ng-repeat" => "sale in sales | filter:filters"}
+        %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters"}
           %td
-            .trazoro-state.tag{"ng-if"=>"sale.trazoro"}
-              Trazoro
-            //.wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-            %md-button.btn-save.md-button.md-raised{ "ng-click" => "goSaleOrder(sale.id)"} Ver
-
-          %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "showSale(sale)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
+          %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "goPurchaseOrder(purchase.id)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
+          %td
+            %md-button.btn-save.md-button.md-raised{ "ng-click" => "goPurchaseOrder(purchase.id)"} Ver
 
   .md-table-footer{:layout => "row"}
     %span.md-table-count-info
