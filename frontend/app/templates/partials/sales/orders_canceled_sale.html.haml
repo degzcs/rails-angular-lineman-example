@@ -3,8 +3,6 @@
     %table.md-table.inventory-index-table
       %thead
         %tr.md-table-headers-row
-
-          %th.md-table-header
           %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
             {{h.name}}
       %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
