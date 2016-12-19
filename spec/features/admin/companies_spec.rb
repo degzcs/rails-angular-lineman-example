@@ -136,7 +136,9 @@ describe 'all test the companies view', :js do
     select('Comercializadores', from: 'company_name')
     select('NIT', from: 'company_address')
     fill_in 'company_nit_number', with: expected_response[:nit]
-    click_button('Create Company')
+    VCR.use_cassette('trader_rucom_does_not_exist_query') do
+      click_button('Create Company')
+    end
     expect(page).to have_content "Sincronize.call: error => El rucom no existe con este documento de identidad: #{expected_response[:nit]}"
   end
 
