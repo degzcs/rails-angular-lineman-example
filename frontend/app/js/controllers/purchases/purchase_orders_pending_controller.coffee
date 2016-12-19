@@ -48,7 +48,6 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
   #PurchaseService.restoreModel() # TODO: separe this controller for each view
   $scope.purchaseModel = PurchaseService.model
 
-  # console.log $scope.purchaseModel
   $scope.goPurchaseOrder = (purchaseId) ->
     PurchaseService.model = $filter('filter')($scope.purchases, {id: purchaseId})[0]
     PurchaseService.saveState()
@@ -95,9 +94,10 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
           exec_transition(transition, 'new_purchase.purchase_home')
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
-#
-# This funtion executes the method to call the purchase end-point called transition trought the SaleService
-#
+  #
+  # This function executes the method to call the purchase
+  # end-point called transition trought the SaleService
+  #
   exec_transition = (transition_name, viewToGo)->
     $scope.showLoading = true
     SaleService.trigger_transition($scope.purchaseModel.id, transition_name).success( (data) ->

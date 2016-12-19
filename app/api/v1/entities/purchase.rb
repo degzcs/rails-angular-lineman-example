@@ -1,8 +1,7 @@
 module V1
   module Entities
     class Purchase < Grape::Entity
-      #format_with(:sold_format) { |purchase| purchase.gold_batch.sold? ? 'Vendido' : 'Disponible' }
-
+      # format_with(:sold_format) { |purchase| purchase.gold_batch.sold? ? 'Vendido' : 'Disponible' }
       expose :id, documentation: { type: "string", desc: "id of the purchase", example: '1' }
       expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" } do |purchase, options|
         purchase.buyer.id # TODO: remove this temporal fix
@@ -90,6 +89,19 @@ module V1
         end
       end
       expose :transaction_state, documentation: { type: 'string', desc: 'sale state', example: 'pending, dispatched, paid, canceled, approved' }
+      expose :associated_purchases, documentation: { type: 'file', desc: 'sold_batches', example: 'array sold_batches' } do |sale, _options|
+        sale.batches.map do |batch|
+          purchase = batch.gold_batch.goldomable
+          purchase.as_json.merge(
+            fine_grams: purchase.fine_grams.round(2), # This method is delagated to gold_batch model
+            seller: {
+              first_name: purchase.seller.profile.first_name,
+              last_name: purchase.seller.profile.last_name,
+              provider_type: purchase.seller.provider_type,
+            }
+          )
+        end.as_json
+      end
     end
   end
 end

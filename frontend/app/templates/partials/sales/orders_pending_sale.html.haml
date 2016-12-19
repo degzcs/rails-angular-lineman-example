@@ -3,12 +3,15 @@
     %table.md-table.inventory-index-table
       %thead
         %tr.md-table-headers-row
+
+          %th.md-table-header
           %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
             {{h.name}}
-          %th.md-table-header
       %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
+
         %tr.md-table-content-row{"ng-repeat" => "sale in sales | filter:filters"}
-          %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "showSale(sale)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
+          %td
+          %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
           %td
             %md-button.btn-save.md-button.md-raised{ "ng-click" => "goSaleOrderResume(sale.id)"} Ver
 
