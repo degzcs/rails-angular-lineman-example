@@ -66,7 +66,7 @@ module V1
       expose :mineral_type, documentation: { type: 'string', desc: "type mineral of the purchase", example: "Oro"} do |sale, _options|
         sale.gold_batch.mineral_type
       end
-       expose :associated_purchases, documentation: { type: 'file', desc: 'sold_batches', example: 'array sold_batches' } do |sale, _options|
+      expose :associated_purchases, documentation: { type: 'file', desc: 'sold_batches', example: 'array sold_batches' } do |sale, _options|
         sale.batches.map do |batch|
           purchase = batch.gold_batch.goldomable
           purchase.as_json.merge(
