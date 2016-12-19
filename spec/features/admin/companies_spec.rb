@@ -14,7 +14,9 @@ describe 'all test the companies view', :js do
     select('Comercializadores', from: 'company_name')
     select('NIT', from: 'company_address')
     fill_in 'company_nit_number', with: expected_response[:nit]
-    click_button('Create Company')
+    VCR.use_cassette('create_trader_from_ui') do
+      click_button('Create Company')
+    end
     last_company = Company.order(:created_at).last
     last_rucom = Rucom.order(:created_at).last
     expect(last_company.nit_number).to eq expected_response[:nit]
