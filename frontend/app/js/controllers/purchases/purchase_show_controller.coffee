@@ -73,7 +73,7 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       total_fine_grams: 0
       mineral_type: ''
 
-    console.log 'deleting sessionStorage ...'
+    # console.log 'deleting sessionStorage ...'
 
 
   $scope.DownloadPurchaseFiles =->
