@@ -3,7 +3,7 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
   $scope.toggleSearch = false
   $scope.totalAmount = 0
   #Headers of the table
-  # TODO: made this process more simple, just create a table as people uses to do
+  # TODO: made this process more simple, just create a table as people used to do
   # to avoid the metaprogramming stuff bellow.
   # sale.seller.first_name + ' ' + sale.seller.last_name
   $scope.headers = [
@@ -17,7 +17,7 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
     }
     {
       name: 'Comprador'
-      field: ''
+      field: "sale.buyer.first_name + ' ' + sale.buyer.last_name"
     }
     {
       name: 'Gramos Finos'
@@ -33,10 +33,10 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
     }
   ]
 
-  #Variables configuration
+  # Variables configuration
   $scope.pages = 0
   $scope.currentPage = 1
-# wacom device
+  # wacom device
   $scope.chkAgreetmentActive = false
   $scope.saleService =  SaleService.model
 
