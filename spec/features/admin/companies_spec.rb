@@ -83,7 +83,7 @@ describe 'all test the companies view', :js do
     attach_file('company_legal_representative_attributes_profile_attributes_rut_file', expected_response[:rut_file])
     attach_file('company_legal_representative_attributes_profile_attributes_mining_authorization_file', expected_response[:mining_authorization_file])
     attach_file('company_legal_representative_attributes_profile_attributes_id_document_file', expected_response[:id_document_file])
-    check('company_legal_representative_attributes_profile_attributes_legal_representative')
+    # check('company_legal_representative_attributes_profile_attributes_legal_representative')
     fill_in 'company_legal_representative_attributes_profile_attributes_nit_number', with: expected_response[:nit_number]
     select('MEDELLIN', from: 'company_legal_representative_attributes_profile_attributes_city_id')
 
@@ -189,7 +189,7 @@ describe 'all test the companies view', :js do
     attach_file('company_legal_representative_attributes_profile_attributes_rut_file', expected_response[:rut_file])
     attach_file('company_legal_representative_attributes_profile_attributes_mining_authorization_file', expected_response[:mining_authorization_file])
     attach_file('company_legal_representative_attributes_profile_attributes_id_document_file', expected_response[:id_document_file])
-    check('company_legal_representative_attributes_profile_attributes_legal_representative')
+    # check('company_legal_representative_attributes_profile_attributes_legal_representative')
     fill_in 'company_legal_representative_attributes_profile_attributes_nit_number', with: expected_response[:nit_number]
     select('MEDELLIN', from: 'company_legal_representative_attributes_profile_attributes_city_id')
 
