@@ -16,7 +16,7 @@ module V1
         purchase.proof_of_sale.file.url
       end
       expose :purchase_files_collection, documentation: { type: 'string', desc: 'purchase_files_collection', example: 'id, miner register, purchase files' } do |sale, _options|
-        sale.purchase_files_collection.as_json if sale.purchase_files_collection.file.present?
+        sale.purchase_files_collection.as_json if sale.purchase_files_collection.present?
       end
       expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
         purchase.origin_certificate.try(:file).try(:url)

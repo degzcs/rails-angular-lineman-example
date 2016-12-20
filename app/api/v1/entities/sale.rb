@@ -70,6 +70,7 @@ module V1
         sale.batches.map do |batch|
           purchase = batch.gold_batch.goldomable
           purchase.as_json.merge(
+            created_at: purchase.created_at.in_time_zone("Bogota").strftime("%m/%d/%Y - %I:%M%p"),
             fine_grams: purchase.fine_grams, # This method is delagated to gold_batch model
             seller: {
               first_name: purchase.seller.profile.first_name,
