@@ -15,6 +15,9 @@ module V1
       expose :proof_of_sale_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.proof_of_sale.file.url
       end
+      expose :purchase_files_collection, documentation: { type: 'string', desc: 'purchase_files_collection', example: 'id, miner register, purchase files' } do |sale, _options|
+        sale.purchase_files_collection.as_json if sale.purchase_files_collection.file.present?
+      end
       expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
         purchase.origin_certificate.try(:file).try(:url)
       end
@@ -93,6 +96,7 @@ module V1
         sale.batches.map do |batch|
           purchase = batch.gold_batch.goldomable
           purchase.as_json.merge(
+            created_at: purchase.created_at.in_time_zone("Bogota").strftime("%m/%d/%Y - %I:%M%p"),
             fine_grams: purchase.fine_grams.round(2), # This method is delagated to gold_batch model
             seller: {
               first_name: purchase.seller.profile.first_name,
