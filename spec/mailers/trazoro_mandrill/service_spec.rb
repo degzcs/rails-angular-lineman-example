@@ -65,16 +65,18 @@ describe TrazoroMandrill::Service do
 
   context 'send emails with attachments' do
     it 'shoud to send email with attachments' do
-      sale = create :sale, :with_proof_of_sale_file
-      attachments = []
-      template_name = 'test_template'
-      subject_text = 'test email'
-      merge_vars_mapping = {}
-      emails = [user.email]
-      options = {}
-      attachments << sale.proof_of_sale
-      response = TrazoroMandrill::Service.send_email(template_name, subject_text, merge_vars_mapping, emails, options, attachments)
-      expect(response.last['status']).to eq('queued')
+      VCR.use_cassette 'trazoro_mandrill_response_email_with_attachment' do
+        sale = create :sale, :with_proof_of_sale_file
+        attachments = []
+        template_name = 'test_template'
+        subject_text = 'test email'
+        merge_vars_mapping = {}
+        emails = [user.email]
+        options = {}
+        attachments << sale.proof_of_sale
+        response = TrazoroMandrill::Service.send_email(template_name, subject_text, merge_vars_mapping, emails, options, attachments)
+        expect(response.last['status']).to eq('queued')
+      end
     end
   end
 end
