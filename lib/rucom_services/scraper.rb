@@ -2,7 +2,6 @@ module RucomServices
   #  RucomServices Module Allows to handle all the service to extract the data from de Rucom page.
   class Scraper
     attr_accessor :response, :setting, :data_to_find, :virtus_model, :is_there_rucom
-    VIRTUS_MODELS_TYPES = %i(authorized_provider_response trader_response).freeze
 
     def initialize(data = {})
       self.response = {}

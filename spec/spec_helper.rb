@@ -170,6 +170,9 @@ RSpec.configure do |config|
     Warden.test_reset!
   end
 
-   # Adds to load inside the state machines tests the matchers
+  # StateMachine (Micromachine??)
   config.include StateMachinesRspec::Matchers
+
+  # Custom Helpers
+  config.include CleanMethods
 end
