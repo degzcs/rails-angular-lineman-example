@@ -233,7 +233,7 @@ describe 'all test the companies view', :js do
     expect(company.legal_representative.completed?).to eq true
   end
 
-  it 'When the company can not market oro' do
+  it 'When the company can not trade gold' do
     visit '/admin/companies/new'
     expected_response = {
       nit: '900058021'
@@ -241,7 +241,9 @@ describe 'all test the companies view', :js do
     select('Comercializadores', from: 'company_name')
     select('NIT', from: 'company_address')
     fill_in 'company_nit_number', with: expected_response[:nit]
-    click_button('Create Company')
+    VCR.use_cassette('trader_cannot_trade_gold_query') do
+      click_button('Create Company')
+    end
     expect(page).to have_content 'Sincronize.call: error => Esta compañia no puede comercializar ORO'
   end
 end
