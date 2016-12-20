@@ -42,16 +42,14 @@ describe RucomServices::Scraper, type: :service do
 
     it 'returns a scraper service object whith the response required inside response attribute ' \
       'and whithout errors of any kind' do
-      rs_scraper = RucomServices::Scraper.new(@data)
-      scraper = rs_scraper.call
+      VCR.use_cassette('successful_barequero_rucom_response') do
+        rs_scraper = RucomServices::Scraper.new(@data)
+        scraper = rs_scraper.call
 
-      expect(scraper.setting.success).to be true
+        expect(scraper.setting.success).to be true
 
-      # if scraper.response[:errors].include?('RucomService::Scraper.call: Net::ReadTimeout')
-      #   p 'Timeout error in the conexion, It seems not be enable at this moment this conexion'
-      # else
-      expect(scraper.response[:errors].count).to be(0)
-      # end
+        expect(scraper.response[:errors].count).to be(0)
+      end
     end
 
     context 'When sends a Trader data to search inside Rucom' do
