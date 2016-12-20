@@ -194,6 +194,7 @@ describe RucomServices::Synchronize do
         end
       end
     end
+
     it 'should not create an authorized_provider because he cannot trade gold' do
       VCR.use_cassette('barequero_other_mineral_rucom_response') do
         @data = { rol_name: 'Barequero', id_type: 'CEDULA', id_number: 'xxxxxxxx' }
@@ -207,6 +208,19 @@ describe RucomServices::Synchronize do
 
     context 'chatarrero' do
       it 'should create a chatarrero' do
+        VCR.use_cassette('chatarrero_successful_rucom_response') do
+          @data = { rol_name: 'Chatarrero', id_type: 'CEDULA', id_number: '15535725' }
+          @sync = RucomServices::Synchronize.new(@data).call
+          expect(@sync.response[:errors]).to eq([])
+          expect(@sync.response[:success]).to eq(true)
+          expect(@sync.rucom.blank?).to eq(false)
+          expect(@sync.rucom.name).to eq 'AMADO  MARULANDA'
+          expect(@sync.rucom.original_name).to eq 'AMADO  MARULANDA    '
+          expect(@sync.rucom.minerals).to eq 'ORO'
+          expect(@sync.rucom.status).to eq 'Activo'
+          expect(@sync.rucom.provider_type).to eq 'chatarrero'
+          expect(@sync.rucom.rucomeable_type).to eq 'User'
+        end
       end
     end
   end

@@ -6,7 +6,7 @@ module RucomServices
     YAML_NAME = 'rucom_service.yml'.freeze
     YAML_PATH = Rails.root.join('config')
     attr_accessor :response, :response_class, :page_url, :driver, :browser, :driver_instance,
-                  :table_body_id, :hidden_elements_id, :wait_load, :wait_clic, :barequero, :trader
+                  :table_body_id, :hidden_elements_id, :wait_load, :wait_clic, :barequero, :chatarrero, :trader
     attr_reader :send_data
 
     def initialize
