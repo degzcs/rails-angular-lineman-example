@@ -10,6 +10,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
 
   $scope.toggleSearch = false
   $scope.totalAmount = 0
+  $scope.currentMineralType = null
   #Variables configuration
   $scope.pages = 0
   $scope.currentPage = 1
@@ -74,9 +75,9 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     $scope.count = purchases.length
     $scope.purchases = purchases
   ).error (data, status, headers, config) ->
-    $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
+    infoAlert 'ERROR', 'No se pudo realizar la solicitud'
 
-  $scope.infoAlert = (title, content) ->
+  infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')
     return
 
@@ -89,9 +90,20 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     if ( selectedPurchaseId > -1)
       $scope.selectedPurchases.splice( selectedPurchaseId, 1)
       $scope.totalAmount -= purchase.gold_batch.grams
+      $scope.currentMineralType = null if $scope.selectedPurchases.length == 0
     else
-      $scope.selectedPurchases.push(purchase)
-      $scope.totalAmount += purchase.gold_batch.grams
+      is_valid = validateMineralUniqueness(purchase.gold_batch.mineral_type)
+      if is_valid
+        $scope.selectedPurchases.push(purchase)
+        $scope.totalAmount += purchase.gold_batch.grams
+      else
+        infoAlert('Error Minerales', 'No es posible hacer ventas con diferentes tipos de minerales')
+
+  validateMineralUniqueness = (selectedMineralType) ->
+    if $scope.currentMineralType == null
+      $scope.currentMineralType = selectedMineralType
+      return true
+    return $scope.currentMineralType == selectedMineralType
 
   $scope.alreadySelected = (purchase) ->
     return $scope.selectedPurchases.indexOf(purchase) > -1
