@@ -136,8 +136,8 @@ ActiveAdmin.register Company do
             p.input :photo_file, :as => :file, label: 'Foto Usuario', :hint => image_tag(p.object.photo_file.try(:thumb).try(:url))
             p.input :rut_file, :as => :file, label: 'PDF Rut'
             p.input :mining_authorization_file, :as => :file, label: 'PDF registro minero'
-            p.input :id_document_file, :as => :file, label: 'PDF Document_id'
-            p.input :legal_representative, label: 'Representante Legal'
+            p.input :id_document_file, :as => :file, label: 'PDF Documento de indentidad'
+            p.input :legal_representative, :input_html => { :value => true }, as: :hidden
             p.input :nit_number, label: 'nit_number'
             p.input :city, label: 'Ciudad'
           end
