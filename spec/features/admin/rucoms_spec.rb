@@ -16,7 +16,9 @@ describe 'all test the rucom view', :js do
     select(expected_response[:rol], from: 'rucom_name')
     select(expected_response[:type_identification], from: 'rucom_provider_type')
     fill_in 'rucom_rucom_number', with: expected_response[:identification_number]
-    click_button('Create Rucom')
+    VCR.use_cassette('successful_rucom_creation_from_ui') do
+      click_button('Create Rucom')
+    end
     last_rucom = Rucom.order(:created_at).last.as_json.with_indifferent_access
     last_user = User.order(:created_at).last
     expect(last_rucom[:rucomeable_id]).to eq last_user.id
