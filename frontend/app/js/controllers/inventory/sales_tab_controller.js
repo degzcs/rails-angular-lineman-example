@@ -54,7 +54,6 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
   //-------------------Generate the Transaction Movements File -----------//
   $scope.generateReport = function(sale_id) {
     ReportsService.generateTransactionMovements(sale_id).success( function(data){
-      //window.open(data.url.base_file_url, 'download')
       $scope.report_url = data.base_file_url;
       return infoAlert('El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción');
     }).error( function(data){
