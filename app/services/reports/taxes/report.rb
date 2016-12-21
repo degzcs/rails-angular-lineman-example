@@ -19,7 +19,7 @@ module Reports
 
       def generate!(options)
         @order = options[:order]
-        @movements = TransactionMovement.where(kind: order.type)
+        @movements = TransactionMovement.where(type: @order.type)
         create_report(@movements, @order)
       end
 
@@ -60,7 +60,7 @@ module Reports
       end
 
       def debit?(order_type, puc_account_id, block_name)
-        movement = TransactionMovement.find_by(puc_account_id: puc_account_id, kind: order_type, block_name: block_name)
+        movement = TransactionMovement.find_by(puc_account_id: puc_account_id, type: order_type, block_name: block_name)
         return nil unless movement
         movement.afectation.upcase == 'D' ? true : false
       end
@@ -70,7 +70,7 @@ module Reports
       end
 
       def validate_options(options)
-        raise "You must to provide a report option" if options[:order].blank?
+        raise "You must to provide a order option" if options[:order].blank?
       end
     end
   end

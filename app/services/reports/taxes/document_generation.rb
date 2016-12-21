@@ -21,13 +21,12 @@ module Reports
       def generate!(options)
         report = ::Reports::Taxes::Report.new
         generate_csv = ::Reports::Taxes::GenerateCsv.new
-        @response = generate_csv.call(
+        @csv = generate_csv.call(
           report: report.call(options),
           date: options[:date] || Time.now.strftime("%Y-%m-%d_%H_%M_%S"),
           current_user: options[:current_user],
           order_type: options[:order].type
         )
-        @csv = generate_csv
         @response[:success] = true
         self
       end
@@ -47,7 +46,7 @@ module Reports
       def validate_options(options)
         raise 'You must to provide a current_user option' if options[:current_user].blank?
         raise 'You must to be the legal representative to generate this report' unless options[:current_user]&.profile&.legal_representative?
-        raise 'You must to provied a order option to generate this report' unless options[:order].blank?
+        raise 'You must to provied a order option to generate this report' if options[:order].blank?
         raise "You must to provide a date option" if options[:date].blank?
       end
     end

@@ -1,7 +1,7 @@
 module Reports
   module Taxes
     class GenerateCsv
-      attr_accessor :response
+      attr_accessor :response, :base_file_url, :date
       attr_reader :base_file
 
       def initialize()
@@ -16,23 +16,26 @@ module Reports
 
       def call(options = {})
         validate_options(options)
-        base_dir = options[:file_dir] || "#{ Rails.root }/public/tmp/reports/taxes/#{options[:current_user]}"
+        base_dir = options[:file_dir] || "#{ Rails.root }/public/tmp/reports/taxes/#{options[:current_user].id}"
         create_base_file_dir(base_dir)
-        @base_file = base_dir + "/taxes_#{ options[:date]}.cvs"
-        @response[:success] = generate!(options, @base_file)
-        get_base_file_url
+        @date = options[:date]
+        @base_file = base_dir + "/taxes_#{@date}.cvs"
+        generate!(options, @base_file)
+        base_file_url
+        @response[:success] = true
+        self
       rescue => exception
         @response[:success] = false
         @response[:errors] << exception.message
       end
 
       #returns just the url to frontend path to this report file
-      def get_base_file_url
-        @base_file[/\/tmp\// =~ @base_file + 1, @base_file.size - 1]
+      def base_file_url
+        @base_file_url = @base_file[(/\/tmp\// =~ @base_file) + 1, @base_file.size - 1]
       end
 
       def generate!(options, base_file)
-        csv = CSV.open(base_file,'w+',:col_sep => ';') do |csv|
+        csv = CSV.open(base_file,'w+', :col_sep => ';') do |csv|
           csv << ['Reporte Módulo Tributario', 'Transacción de Tipo: ' + options[:order_type].to_s, '', 'fecha: ' + options[:date].to_s, (print "\n")]
           csv << ['', '', '', '', (print "\n")]
           csv << ['CODIGO', 'CUENTA', 'DEBITO', 'CREDITO', (print "\n")]
