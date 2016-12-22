@@ -67,6 +67,7 @@ describe 'Sale', type: :request do
             expect(order.audits.first.audited_changes['type']).to eq('sale')
             expect(order.audits.first.user).to eq(current_seller)
             expect(order.audits.last.action).to eq('update')
+            expect(order.audits.first.remote_address).to eq('127.0.0.1')
             expect(order.shipment.file.path).to match('shipment.pdf')
             # expect(order.audits.last.user).to eq(current_seller) is pending to add the audit_as
           end

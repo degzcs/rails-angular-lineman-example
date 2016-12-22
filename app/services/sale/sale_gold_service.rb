@@ -3,7 +3,7 @@ module Sale
   # Service SaleGoldService
   class SaleGoldService
     attr_reader :sale_order, :selected_purchase_ids, :seller, :buyer, :order_hash, :gold_batch_hash,
-                :current_user
+                :current_user, :remote_address
     attr_accessor :response
 
     def initialize
@@ -19,6 +19,7 @@ module Sale
       @seller = seller_based_on(@current_user)
       @order_hash = options[:order_hash]
       @gold_batch_hash = options[:gold_batch_hash]
+      @remote_address = options[:remote_address]
       # @buyer= buyer
       @selected_purchase_ids = options[:selected_purchase_ids]
       sale!
@@ -64,6 +65,7 @@ module Sale
       @sale_order = seller.sales.build(order_hash)
       @sale_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
       response[:success] = Order.audit_as(seller) { @sale_order.save_with_sequence(@current_user) } # This save both the new sale and gold_batch
+      @sale_order.update_remote_address!(remote_address)
       @sale_order
     end
 

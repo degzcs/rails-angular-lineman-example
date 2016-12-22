@@ -87,6 +87,7 @@ module V1
               current_user: current_user,
               gold_batch_hash: params[:gold_batch],
               selected_purchase_ids: selected_purchase_ids,
+              remote_address: request.env['REMOTE_ADDR'],
               )
             if response[:success]
               present registration_service.sale_order, with: V1::Entities::Sale

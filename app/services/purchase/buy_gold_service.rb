@@ -8,7 +8,7 @@ module Purchase
   # Service BuyGoldService
   class BuyGoldService
     attr_reader :buyer, :seller, :purchase_order, :order_hash, :gold_batch_hash, :performer_user, :signature_picture, :date,
-                :current_user
+                :current_user, :remote_address
     attr_accessor :response
 
     def initialize
@@ -30,6 +30,7 @@ module Purchase
       @buyer = buyer_from(@current_user)
       @order_hash = options[:order_hash]
       @gold_batch_hash = options[:gold_batch_hash]
+      @remote_address = options[:remote_address]
       @date = options[:date]
       @signature_picture = @order_hash.delete('signature_picture')
       buy!
@@ -81,6 +82,7 @@ module Purchase
       @purchase_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
       @purchase_order.end_transaction!(current_user)
       response[:success] = Order.audit_as(current_user) { @purchase_order.save! }
+      @purchase_order.update_remote_address!(remote_address)
       @purchase_order
     end
 
@@ -118,14 +120,6 @@ module Purchase
       'Usted no puede realizar esta compra, debido a que con esta compra el barequero '\
       'exederia el limite permitido por mes. El total comprado hasta el momento por '\
       "#{seller_name} es: #{already_buyed_gold} gramos finos"
-    end
-
-    # def company_can_buy?(buyer, buyed_fine_grams)
-    #   buyer.company.available_credits >= buyed_fine_grams.to_f
-    # end
-    def discount_credits_to!(buyer, buyed_fine_grams)
-      new_credits = buyer.available_credits - buyed_fine_grams.to_f
-      buyer.profile.update_column(:available_credits, new_credits)
     end
 
     # Validates the params passed to this service
