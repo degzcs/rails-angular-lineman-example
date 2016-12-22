@@ -1,7 +1,9 @@
-angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state) ->
+angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state, ReportsService) ->
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0
+  # $scope.report_url = null;
+
   #Headers of the table
   # TODO: made this process more simple, just create a table as people uses to do
   # to avoid the metaprogramming stuff bellow.
@@ -33,6 +35,10 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
     {
       name: 'Responsable'
       field: "purchase.performer.first_name + ' ' + purchase.performer.last_name"
+    }
+    {
+      name: 'Id'
+      field: "purchase.id"
     }
   ]
 
@@ -95,4 +101,13 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
     PurchaseService.model = purchase
     PurchaseService.saveState()
     $state.go('inventory.purchase_details')
+    return
+
+  #-------------------Generate the Transaction Movements File -----------//
+  $scope.generateReport = (purchase) ->
+    ReportsService.generateTransactionMovements(purchase.id).success((data) ->
+      purchase.report_url = data.base_file_url
+      $scope.infoAlert 'El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción'
+    ).error (data) ->
+      $scope.infoAlert 'ERROR', 'No se pudo generar y descargar el Archivo con los movimientos de la transacción'
     return
