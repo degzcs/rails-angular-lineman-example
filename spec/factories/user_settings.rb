@@ -19,7 +19,7 @@ FactoryGirl.define do
     profile
     fine_gram_value 0.0
     last_transaction_sequence 0
-    regime_type ''
+    regime_type { 'RS' }
     activity_code ''
     scope_of_operation ''
     organization_type ''
