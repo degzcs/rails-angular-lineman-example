@@ -1,7 +1,7 @@
 module Reports
   module Taxes
     class GenerateCsv
-      attr_accessor :response, :base_file_url, :date
+      attr_accessor :response, :base_file_url, :date, :order
       attr_reader :base_file
 
       def initialize()
@@ -19,7 +19,8 @@ module Reports
         base_dir = options[:file_dir] || "#{ Rails.root }/public/tmp/reports/taxes/#{options[:current_user].id}"
         create_base_file_dir(base_dir)
         @date = options[:date]
-        @base_file = base_dir + "/taxes_#{@date}.cvs"
+        @order = options[:order]
+        @base_file = base_dir + "/taxes_#{@order.id}_#{@date}.cvs"
         generate!(options, @base_file)
         base_file_url
         @response[:success] = true
@@ -36,7 +37,7 @@ module Reports
 
       def generate!(options, base_file)
         csv = CSV.open(base_file,'w+', :col_sep => ';') do |csv|
-          csv << ['Reporte Módulo Tributario', 'Transacción de Tipo: ' + options[:order_type].to_s, '', 'fecha: ' + options[:date].to_s, (print "\n")]
+          csv << ['Reporte Módulo Tributario', 'Transacción de Tipo: ' + options[:order].type.to_s, '', 'fecha: ' + options[:date].to_s, (print "\n")]
           csv << ['', '', '', '', (print "\n")]
           csv << ['CODIGO', 'CUENTA', 'DEBITO', 'CREDITO', (print "\n")]
           # by transaction do blocks with
@@ -50,9 +51,11 @@ module Reports
           end
 
           # inventory
-          csv << ['Inventario', '', '', '']
-          options[:report][:inventories].each do |movement|
-            csv << [movement.count, movement.name, movement.debit, movement.credit ]
+          if options[:report][:inventories].present?
+            csv << ['Inventario', '', '', ''] 
+            options[:report][:inventories].each do |movement|
+              csv << [movement.count, movement.name, movement.debit, movement.credit ]
+            end
           end
           # pay
           csv << ['Pago', '', '', '']
@@ -66,7 +69,7 @@ module Reports
         raise "You must to provide a report option" if options[:report].blank?
         raise "You must to provide a date option" if options[:date].blank?
         raise 'You must to provide a current_user option' if options[:current_user].blank?
-        raise 'You must to provide a order_type option' if options[:order_type].blank?
+        raise 'You must to provide a order option' if options[:order].blank?
       end
     end
   end

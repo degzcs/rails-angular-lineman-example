@@ -32,9 +32,11 @@ module Reports
           payments: find_values(movements, order, order.price.round(0), 'payments'),
         }
         report.merge!(inventories: find_values(movements, order, order.purchases_total_value.round(0), 'inventories')) if order.type == 'sale'
+        report
       end
 
       def find_values(movements, order, movement_value, block_name)
+        return [] unless movements.where(block_name: block_name)
         movements.where(block_name: block_name).each_with_object([])  do |movement, array|
           array << 
             OpenStruct.new( 
@@ -48,6 +50,7 @@ module Reports
 
       def get_taxes(seller_regime, buyer_regime, price, order_type)
         tax_rules = TaxRule.where(['seller_regime = ? and buyer_regime = ?', seller_regime, buyer_regime])
+        return [] unless tax_rules
         tax_rules.each_with_object([]) do |tax_rule, array|
           array << 
             OpenStruct.new( 
