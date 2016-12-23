@@ -12,7 +12,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
   def call(options={})
     raise "You must to provide a order_presenter option" if options[:order_presenter].blank?
     order_presenter = options[:order_presenter]
-    @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor', 'pdfs', 'watermark_compendio_trazoro.pdf'))
+    @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor', 'pdfs', 'compendio_trazoro.pdf'))
     draw_file!(order_presenter)
   end
 
