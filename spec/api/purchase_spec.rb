@@ -81,6 +81,7 @@ describe 'Purchase', type: :request do
           expect(order.audits.count).to eq(1)
           expect(order.audits.last.audited_changes['type']).to eq('purchase')
           expect(order.audits.last.user).to eq(@buyer)
+          expect(order.audits.last.remote_address).to eq('127.0.0.1')
           expect(order.buyer).to eq(@legal_representative)
         end
 

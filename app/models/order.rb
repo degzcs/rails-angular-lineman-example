@@ -220,6 +220,16 @@ class Order < ActiveRecord::Base
     sprintf '%05d', transaction_sequence.to_i
   end
 
+  # HACK for update the address where come from the request, it was not possible
+  # to use the standart way (by using a Audited::Sweeper) becuase it was just implemented
+  # to work in end point that inherance from ActionController::Caching::Sweeper
+  # which is not the case of Grape.
+  # @param new_remote_address [ String ]
+  # @return [ Boolean ]
+  def update_remote_address!(new_remote_address=nil)
+    self.audits.last.update_column(:remote_address, new_remote_address)
+  end
+
   protected
 
   # Before the sale is saved generate a barcode and its html representation

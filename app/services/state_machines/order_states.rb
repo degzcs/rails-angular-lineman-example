@@ -73,24 +73,27 @@ module StateMachines
       self.save!
     end
 
-    def agree!(current_user)
+    def agree!(current_user, remote_address=nil)
       raise message[:current_user_not_is_the_buyer] unless self.buyer?(current_user)
       status.trigger!(:agree)
       self.save!
+      self.update_remote_address!(remote_address)
       callbacks(status)
     end
 
-    def send_info!(current_user)
+    def send_info!(current_user, remote_address=nil)
       raise message[:current_user_not_is_the_seller] unless self.seller?(current_user)
       status.trigger!(:send_info)
       self.save!
+      self.update_remote_address!(remote_address)
       callbacks(status)
     end
 
-    def cancel!(current_user)
+    def cancel!(current_user, remote_address=nil)
       raise message[:current_user_not_is_the_buyer] unless self.buyer?(current_user)
       status.trigger!(:cancel)
       self.save!
+      self.update_remote_address!(remote_address)
       callbacks(status)
     end
 

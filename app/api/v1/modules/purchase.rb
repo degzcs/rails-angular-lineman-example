@@ -67,6 +67,7 @@ module V1
             order_hash: new_params[:purchase],
             gold_batch_hash: new_params[:gold_batch],
             current_user: current_user,
+            remote_address: request.env['REMOTE_ADDR'],
             date: date
           )
           if service_response[:success]

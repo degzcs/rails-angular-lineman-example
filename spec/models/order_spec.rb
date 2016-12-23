@@ -36,7 +36,7 @@ RSpec.describe Order, type: :model do
       approved: 'approved',
       canceled: 'canceled'
     }
-    
+
     it '#save_with_sequence' do
       current_user = purchase.buyer
       purchase.save_with_sequence(current_user)
@@ -86,15 +86,15 @@ RSpec.describe Order, type: :model do
         context 'When trigger an event different to end_transaction or crash to purchases transaction' do
           it 'raises an exception and has not changes' do
             message = 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
-            expect { purchase.send_info!(@current_user) }.to raise_error message
+            expect { purchase.send_info!(@current_user, '127.0.0.1') }.to raise_error message
             expect(purchase.status.state).to eq('initialized')
             expect(purchase.dispatched?).to be false
 
-            expect { purchase.agree!(current_user) }.to raise_error "Event 'agree' not valid from state 'initialized'"
+            expect { purchase.agree!(current_user, '127.0.0.1') }.to raise_error "Event 'agree' not valid from state 'initialized'"
             expect(purchase.status.state).to eq('initialized')
             expect(purchase.approved?).not_to eq(true)
 
-            expect {purchase.cancel!(current_user)}.to raise_error "Event 'cancel' not valid from state 'initialized'"
+            expect {purchase.cancel!(current_user, '127.0.0.1')}.to raise_error "Event 'cancel' not valid from state 'initialized'"
             expect(purchase.status.state).to eq('initialized')
             expect(purchase.not_approved?).not_to eq(true)
 
@@ -126,7 +126,7 @@ RSpec.describe Order, type: :model do
         context 'when the current user not is the buyer' do
           it 'raises an error ' do
             message = 'Este usuario no es el comprador, no está autizado para cambiar el estado de la orden'
-            expect{ sale.send_info!(@current_user) }.to raise_error 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
+            expect{ sale.send_info!(@current_user, '127.0.0.1') }.to raise_error 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
             expect{ sale.agree!(@current_user) }.to raise_error message
             expect{ sale.cancel!(@current_user) }.to raise_error message
             expect { sale.end_transaction!(@current_user) }.to raise_error 'Este usuario no está autorizado para finalizar la transacción'
