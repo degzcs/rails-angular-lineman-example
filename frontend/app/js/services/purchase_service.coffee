@@ -109,7 +109,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           $mdDialog.show $mdDialog.alert().title('Felicitaciones').content('la compra ha sido creada').ok('ok')
       )
       .catch (err) ->
-        console.log 'Excedio el limite de creditos' + err
+        # console.log 'Excedio el limite de creditos' + err
         $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
         $state.go('new_purchase.step2')
         service.restoreState()
