@@ -11,7 +11,7 @@
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
             %td
               %md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(purchase)"} Generar Reporte
-              %a.md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url != (null && undefined)', flex: 20, 'href' => '{{purchase.report_url}}', 'download' => 'reporte.csv'} Descargar Reporte
+              %a.md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url != (null && undefined)', flex: 20, 'href' => '{{purchase.report_url}}', 'download' => 'reporte_{{purchase.id}}.csv'} Descargar Reporte
       .md-table-footer{:layout => "row"}
         %span.md-table-count-info
           Registros cargados: {{count}}
