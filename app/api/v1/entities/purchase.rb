@@ -18,6 +18,9 @@ module V1
       expose :purchase_files_collection_with_watermark, documentation: { type: 'string', desc: 'purchase_files_collection_with_watermark', example: 'id, miner register, purchase files' } do |sale, _options|
         sale.purchase_files_collection_with_watermark.as_json if sale.purchase_files_collection_with_watermark.present?
       end
+      expose :purchase_files_collection, documentation: { type: 'string', desc: 'purchase_files_collection', example: 'id, miner register, purchase files' } do |sale, _options|
+        sale.purchase_files_collection.as_json if sale.purchase_files_collection.present?
+      end
       expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
         purchase.origin_certificate.try(:file).try(:url)
       end
