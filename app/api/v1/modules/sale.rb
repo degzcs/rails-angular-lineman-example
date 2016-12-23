@@ -241,7 +241,7 @@ module V1
             Returns the sale with its transaction state field update by the transition
           NOTES
         }
-
+        # TODO: it should be a PUT action
         get '/:id/transition', http_codes: [
             [200, 'Successful'],
             [400, 'Invalid parameter'],
@@ -254,7 +254,7 @@ module V1
           # per_page = params[:per_page] || 10
           @sale = ::Order.find(params[:id])
           transition = params[:transition].to_sym
-          @sale.__send__(transition, current_user)
+          @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'])
           # @sale.save!
           # header 'total_pages', @sale.total_pages.to_s
           present @sale, with: V1::Entities::Sale

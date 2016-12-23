@@ -226,7 +226,7 @@ describe 'Sale', type: :request do
 
               it 'gets sales by state' do
                 sale_first = @sales.first
-                sale_first.send_info!(@current_user_as_seller)
+                sale_first.send_info!(@current_user_as_seller, '127.0.0.1')
                 state = 'dispatched'
                 dispatched_sales = Order.from_traders.by_state(state).as_seller(sale_first.seller)
                 # test  sales_by_state scope
@@ -255,17 +255,20 @@ describe 'Sale', type: :request do
               it 'sets the transaction field with its respective state' do
                 VCR.use_cassette 'sale_order_states_trigger_transitions' do
                   current_user_as_seller = @sale.seller
-                  @sale.send_info!(current_user_as_seller)
+                  @sale.send_info!(current_user_as_seller, '127.0.0.1')
                   get "/api/v1/sales/#{@sale.id}/transition", {transition: 'cancel!'}, 'Authorization' => "Barer #{@token_buyer}"
 
+                  expect(@sale.reload.audits.last.remote_address).to eq '127.0.0.1'
                   expect(response.status).to eq 200
                   expect(JSON.parse(response.body)['transaction_state']).to eq 'canceled'
 
                   @sale.crash!
                   get "/api/v1/sales/#{@sale.id}/transition", {transition: 'agree!'}, 'Authorization' => "Barer #{@token_buyer}"
+                  expect(@sale.reload.audits.last.remote_address).to eq '127.0.0.1'
 
                   expect(response.status).to eq 200
                   expect(JSON.parse(response.body)['transaction_state']).to eq 'approved'
+                  expect(@sale.reload.audits.last.remote_address).to eq '127.0.0.1'
                 end
               end
             end

@@ -227,7 +227,7 @@ class Order < ActiveRecord::Base
   # @param new_remote_address [ String ]
   # @return [ Boolean ]
   def update_remote_address!(new_remote_address=nil)
-    audits.descending.where(action: 'create').last.update_column(:remote_address, new_remote_address)
+    self.audits.last.update_column(:remote_address, new_remote_address)
   end
 
   protected

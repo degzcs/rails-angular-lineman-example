@@ -53,7 +53,7 @@ module Sale
         )
 
         # TODO: send email, sms or other service to buyer
-        response = @sale_order.send_info!(current_user)
+        response = @sale_order.send_info!(current_user, remote_address)
       end
       response
     end
