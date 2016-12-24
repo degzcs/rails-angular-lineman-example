@@ -1,44 +1,30 @@
 /--------------- NAVBAR ----------------------------/
-%md-content.md-padding.div-trazoro.gold.navigation{"style"=>"background: url("/img/background1.png");"}
+%md-content.md-padding.div-trazoro.gold.navigation{"style"=>"background: black;   padding-left: 110px; padding-bottom: 5px; padding-top: 5px;"}
+  %section.top-nav-buttons{:layout => "row", "layout-align" => "start center"}
+
+    %div{:flex => "10"}
+      %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px;"}
+    
+    %md-button.top-nav-button{"aria-label" => "dashboard", "ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"} Inicio
+    
+    %md-button.top-nav-button{"aria-label" => "purchases", "ng-class"=>"getNavigationClass('new_purchase')","ui-sref" => "new_purchase.purchase_home"} Comprar
+    
+    %md-button.top-nav-button{"aria-label" => "sales", "ng-class"=>"getNavigationClass('new_sale')","ui-sref" => "new_sale.sale_home"}Vender
+    
+    %md-button.top-nav-button{"aria-label" => "inventory", "ng-class"=>"getNavigationClass('inventory')", "ui-sref" => "inventory.purchases"}Inventario
+    
+    %md-button.top-nav-button{"aria-label" => "providers", "ng-class"=>"getNavigationClass('index_authorized_provider')","ui-sref" => "index_authorized_provider"}Proveedores
+
+    %md-button.top-nav-button{"aria-label" => "marketplace","ng-class"=>"getNavigationClass('marketplace')","ui-sref" => "marketplace"}Marketplace
+    
+    /%md-button.top-nav-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()"}Cerrar Sesion
+
+.breadcrumb{"flex" => 80, "hide-sm" => "", "layout-align" => "center start"}
+  .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
   / .side-button-options{"ng-controller"=>"SidebarCtrl"}
   /   %md-button{"ng-click" => "toggleLeft()","aria-label"=>"sidebar-button"}
   /     %md-icon{"md-svg-icon"=>"action:reorder"}
-  %section.top-nav-buttons{:layout => "row", "layout-align" => "center center"}
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "dashboard","ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
-        %md-icon{"md-svg-icon"=>"action:dashboard"}
-      %h6 Dashboard
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "purchases","ng-class"=>"getNavigationClass('new_purchase')","ui-sref" => "new_purchase.purchase_home"}
-        %md-icon{"md-svg-icon"=>"action:add_shopping_cart"}
-      %h6 Comprar
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "sales","ng-class"=>"getNavigationClass('new_sale')","ui-sref" => "new_sale.sale_home"}
-        %md-icon{"md-svg-icon"=>"action:add_shopping_cart"}
-      %h6 Vender
-    / NOTE: This feature was disabled because it is not need for the moment.
-    / If this becomes in a new service will be enalbed and fix it.
-    / .btn-cont
-    /   %md-button.md-fab.top-nav-button{"aria-label" => "origin_certificates","ng-class"=>"getNavigationClass('new_origin_certificate')","ui-sref" => "new_origin_certificate.barequero_chatarrero"}
-    /     %md-icon{"md-svg-icon"=>"action:pageview"}
-    /   %h6 Certificados de Origen
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "inventory","ng-class"=>"getNavigationClass('inventory')", "ui-sref" => "inventory.purchases"}
-        %md-icon{"md-svg-icon"=>"action:assignment"}
-      %h6 Inventario
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "providers","ng-class"=>"getNavigationClass('index_authorized_provider')","ui-sref" => "index_authorized_provider"}
-        %md-icon{"md-svg-icon"=>"social:group"}
-      %h6 Proveedores
-    .btn-cont
-      %md-button.md-fab.top-nav-button{"aria-label" => "marketplace","ng-class"=>"getNavigationClass('marketplace')","ui-sref" => "marketplace"}
-        %md-icon{"md-svg-icon"=>"social:group"}
-      %h6 Marketplace
-    .btn-cont{"ng-controller"=>"SidebarCtrl"}
-      %md-button.top-nav-button{"aria-label" => "providers","ng-click"=>"logout()"}
-        %h6 Cerrar Sesión
-.breadcrumb{"flex" => 80, "hide-sm" => "", "layout-align" => "center start"}
-  .breadcrumb-links.md-toolbar-tools{"ncy-breadcrumb"=>""}
+
 
 
 
