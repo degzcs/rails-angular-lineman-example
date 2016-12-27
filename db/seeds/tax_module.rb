@@ -124,7 +124,7 @@ transaction_movement_array = [
   [PucAccount.find_by(code: '23657502').id, "sale", "taxes", 'C'],
   [PucAccount.find_by(code: '23657501').id, "sale", "taxes", 'C'],
   [PucAccount.find_by(code: '413595').id, "sale", "movements", 'C'],
-  [PucAccount.find_by(code: '240804').id, "purchase", "taxes", 'C'],
+  [PucAccount.find_by(code: '240804').id, "sale", "taxes", 'C'],
   [PucAccount.find_by(code: '613516').id, "sale", "inventories", 'D'],
   [PucAccount.find_by(code: '140501').id, "sale", "inventories", 'C'],
   [PucAccount.find_by(code: '111005').id, "sale", "payments", 'D'],
