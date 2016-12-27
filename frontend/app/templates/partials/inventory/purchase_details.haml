@@ -170,5 +170,7 @@
         Documento equivalente
 
     %div{"ng-if"=>"purchase.type == 'sale'"}
-      %a.md-button{"ng-if"=>"purchase.transaction_state == 'approved' || purchase.transaction_state == 'paid'", "target"=> "_blank" , href: "{{purchase.purchase_files_collection.file.url}}"}
+      %a.md-button{"ng-if"=>"purchase.transaction_state == 'approved' || purchase.transaction_state == 'paid'", href: "{{purchase.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
         Archivos adjuntos de compra
+      %a.md-button{"target"=> "_blank", href: "{{purchase.proof_of_sale_file_url}}"}
+        Compendio
