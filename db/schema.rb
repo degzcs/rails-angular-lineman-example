@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213175158) do
+ActiveRecord::Schema.define(version: 20161227132710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,11 @@ ActiveRecord::Schema.define(version: 20161213175158) do
   end
 
   add_index "rucoms", ["rucomeable_id"], name: "index_rucoms_on_rucomeable_id", using: :btree
+
+  create_table "rut_activities", force: true do |t|
+    t.string "code"
+    t.string "name"
+  end
 
   create_table "settings", force: true do |t|
     t.text     "data"
