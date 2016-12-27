@@ -50,16 +50,6 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
   $scope.infoAlert = function(title, content) {
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'));
   };
-
-  //-------------------Generate the Transaction Movements File -----------//
-  // $scope.generateReport = function(sale) {
-  //   ReportsService.generateTransactionMovements(sale.id).success( function(data){
-  //     sale.report_url = data.base_file_url;
-  //     return infoAlert('El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción');
-  //   }).error( function(data){
-  //     return infoAlert('ERROR', 'No se pudo generar y descargar el Archivo con los movimientos de la transacción');
-  //   });
-  // };
   
   $scope.generateReport = function(sale) {
     ReportsService.generateTransactionMovements(sale.id).success(function(data) {
