@@ -10,8 +10,7 @@
           %tr.md-table-content-row{"ng-repeat" => "sale in sales | filter:filters"}
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "showSale(sale)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
             %td
-              %md-button.md-primary.md-raised{'ng-if' => 'report_url === null', flex: 20, "ng-click" => "generateReport(sale.id)"} Generar Reporte
-              %a.md-button.md-primary.md-raised{'ng-if' => 'report_url != null', flex: 20, 'href' => '{{report_url}}', 'download' => 'reporte.csv'} Descargar Reporte
-    .md-table-footer{:layout => "row"}
+              %md-button.md-primary.md-raised{'ng-if' => 'sale.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(sale)"} Generar Reporte
+              %a.md-button.md-primary.md-raised{'ng-if' => 'sale.report_url != (null && undefined)', flex: 20, 'href' => '{{sale.report_url}}', 'download' => 'reporte_{{sale.id}}.csv'} Descargar Reporte
       %span.md-table-count-info
         Registros cargados: {{count}}

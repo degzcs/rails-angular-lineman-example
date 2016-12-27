@@ -1,7 +1,7 @@
 angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, SaleService, $state, ReportsService){
 
 	$scope.toggleSearch = false;
-  $scope.report_url = null;
+  //$scope.report_url = null;
 
 	$scope.headers = [
     {
@@ -47,14 +47,14 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
     $state.go('inventory.sale_details');
     };
 
-  infoAlert = function(title, content) {
+  $scope.infoAlert = function(title, content) {
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'));
   };
 
   //-------------------Generate the Transaction Movements File -----------//
-  $scope.generateReport = function(sale_id) {
-    ReportsService.generateTransactionMovements(sale_id).success( function(data){
-      $scope.report_url = data.base_file_url;
+  $scope.generateReport = function(sale) {
+    ReportsService.generateTransactionMovements(sale.id).success( function(data){
+      sale.report_url = data.base_file_url;
       return infoAlert('El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción');
     }).error( function(data){
       return infoAlert('ERROR', 'No se pudo generar y descargar el Archivo con los movimientos de la transacción');
