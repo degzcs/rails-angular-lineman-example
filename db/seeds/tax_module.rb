@@ -34,10 +34,94 @@ CODE_ACTIVITIES = [
     {code:'42', name: 'Obligado a llevar contabilidad'}
   ]
 
-puts 'Begin to load the Rut activity codes'
+puts '0- Begin to load the Rut activity codes'
 
 CODE_ACTIVITIES.each do |reg|
   RutActivity.where(code: reg[:code], name: reg[:name]).first_or_create
 end
 
-puts 'End to load the Rut activity codes'
+puts 'End to load the Rut activity codes successfully'
+
+puts '1- Create Puc accounts to Tax Module'
+
+puc_array = [
+  ["130505","Clientes Nacionales"],
+  ["135595","ANTICIPO CREE (.40%)"],
+  ["23657501","Autorretención CREE"],
+  ["413595","Ingresos por Venta de Oro"],
+  ["613516","Venta Materias Primas Oro"],
+  ["140501","Materias Primas Oro"],
+  ["111005","Moneda Nacional"],
+  ["240804","Impuesto sobre las ventas por pagar(16%)"],
+  ["135518","ICA retenido (1% Medellín)"],
+  ["135515","Retención en la fuente (2.5%)"],
+  ["240802","Impuesto a las ventas en compras (16%)"],
+  ["236540","Retención en compras (2.5)"],
+  ["236740","IVA retenido en compras (2.4%)"],
+  ["236840","ICA retenido en compras (1% Medellín)"],
+  ["220505","Proveedores Nacionales"],
+  ["135517","IVA retnido (2.4%)"]
+]
+
+puc_array.each do |e|
+  PucAccount.where(
+    code: e[0],
+    name: e[1]
+  ).first_or_create
+end
+
+
+puts '2- Create Taxes to Tax Module'
+
+tax_array = [
+  ["Anticipo CREE", "ANT_CREE", 0.4, PucAccount.find_by(code: '135595').id],
+  ["Autorretención CREE", "AUT_CREE", 0.4, PucAccount.find_by(code: '23657501').id],
+  ["Retención en la Fuente (2.5%)", "RTFE", 2.5, PucAccount.find_by(code: '135515').id]
+]
+
+tax_array.each do |e|
+  Tax.where(
+    name: e[0],
+    reference: e[1],
+    porcent: e[2],
+    puc_account_id: e[3]
+  ).first_or_create
+end
+
+puts '3- Create tax rules'
+
+tax_rules_array = [
+  [Tax.find_by(reference: 'ANT_CREE').id,"RC","GC"],
+  [Tax.find_by(reference: 'AUT_CREE').id,"RC","GC"]
+]
+
+tax_rules_array.each do |e|
+  TaxRule.where(
+    tax_id: e[0],
+    seller_regime: e[1],
+    buyer_regime: e[2],
+  ).first_or_create
+end
+
+puts '4- Create transaction movements to see the sale transaction taxes report'
+
+transaction_movement_array = [
+  [PucAccount.find_by(code: '130505').id, "sale", "movements"],
+  [PucAccount.find_by(code: '135595').id, "sale", "taxes"],
+  [PucAccount.find_by(code: '23657501').id, "sale", "taxes"],
+  [PucAccount.find_by(code: '413595').id, "sale", "movements"],
+  [PucAccount.find_by(code: '613516').id, "sale", "inventories"],
+  [PucAccount.find_by(code: '140501').id, "sale", "inventories"],
+  [PucAccount.find_by(code: '111005').id, "sale", "payments"],
+  [PucAccount.find_by(code: '130505').id, "sale", "payments"]
+]
+
+transaction_movement_array.each do |e|
+  TransactionMovement.where(
+    puc_account_id: e[0],
+    type: e[1],
+    block_name: e[2],
+  ).first_or_create
+end
+
+puts 'Done!'
