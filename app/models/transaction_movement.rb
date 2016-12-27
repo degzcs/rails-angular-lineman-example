@@ -10,6 +10,7 @@ class TransactionMovement < ActiveRecord::Base
   validates :puc_account_id, presence: true
   validates :type, presence: true
   validates :block_name, presence: true
+  validates :afectation, presence: true
 
   TYPES = {
     sale: 'Venta',
