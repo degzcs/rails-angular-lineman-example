@@ -1,5 +1,5 @@
 ActiveAdmin.register UserSetting do
-  menu priority: 12, label: 'Preferencias de usuario'
+  #menu priority: 12, label: 'Preferencias de usuario'
   permit_params :profile_id, :state, :alegra_token, :fine_gram_value, :last_transaction_sequence, :regime_type, :activity_code, :scope_of_operation, :organization_type, :self_holding_agent
 
   index do

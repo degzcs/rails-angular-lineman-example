@@ -115,6 +115,6 @@ class UserSetting < ActiveRecord::Base
   end
 
   def self.code_activities_for_select
-    CODE_ACTIVITIES.collect { |val| [val[1], val[0]] }
+    RutActivity.all.map { |val| [val.code.to_s + ' - ' + val.name.to_s, val.id] }
   end
 end
