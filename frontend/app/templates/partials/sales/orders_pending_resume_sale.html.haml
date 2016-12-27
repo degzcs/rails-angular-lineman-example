@@ -6,13 +6,13 @@
     %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
       %legend
         %h3
-          Comprador 
+          Comprador
       %table
         %tr
           %td
             Nombre y apellidos:
           %td
-            {{saleModel.buyer.first_name}} {{saleModel.buyer.last_name}} 
+            {{saleModel.buyer.first_name}} {{saleModel.buyer.last_name}}
         %tr
           %td
             Documento de id:
@@ -86,7 +86,7 @@
         %h3
           Archivos
       %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-        %a.md-button{href: "{{saleModel.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+        %a.md-button{href: "{{saleModel.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
           Documentos de compra adjuntos
         %a.md-button{href: "{{saleModel.proof_of_sale.file.url}}", :target => "_blank"}
           Compendio

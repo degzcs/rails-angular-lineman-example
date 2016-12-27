@@ -75,7 +75,6 @@ module Sale
         end
       end
 
-
       # @param folder_path [ String ] where the files will be saved temporarily
       # @param temporal_files [ Array ] of Hashes
       # @param final_temporal_file_name [ String ]
@@ -83,16 +82,17 @@ module Sale
       def join_files(folder_path, file_paths, final_temporal_file_name)
         watermark_file_borrador = "#{ Rails.root }/vendor/assets/images/watermark_borrador.png"
         joined_file_paths = file_paths.join(' ')
-        # NOTE: if it is needed you can add  -density 50 to the next command
+        # NOTE: if it is needded you can add  -density 50 to the next command
 
         system <<-COMMAND
           cd #{ folder_path } && convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
         COMMAND
         system <<-COMMAND
-          convert #{ folder_path }/#{ final_temporal_file_name } null: #{ watermark_file_borrador } -gravity SouthWest -compose multiply -layers composite #{ folder_path }/#{ final_temporal_file_name }
+          convert #{ folder_path }/#{ final_temporal_file_name } null: #{ watermark_file_borrador } -gravity Center -compose multiply -layers composite #{ folder_path }/#{ final_temporal_file_name }
         COMMAND
         temporal_file_location = "#{ folder_path }/#{ final_temporal_file_name }"
-
+        # Create watermark with imagemagick
+        # convert -size 840x730 xc:transparent -font Helvetica -pointsize 200 -fill "#585858" -annotate +15+159 'Borrador' watermark.png
       end
 
       # @param folder_path [ String ] where the files will be saved temporarily

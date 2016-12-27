@@ -98,9 +98,9 @@ module V1
           per_page = params[:per_page] || 10
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           if legal_representative == current_user
-            purchases = legal_representative.purchases.by_state(['paid', 'approved', '']).paginate(page: page, per_page: per_page)
+            purchases = legal_representative.purchases.by_state(['paid', 'approved']).paginate(page: page, per_page: per_page)
           else
-            purchases = Order.purchases_for(legal_representative, current_user).by_state(['paid', 'approved', '']).paginate(page: page, per_page: per_page)
+            purchases = Order.purchases_for(legal_representative, current_user).by_state(['paid', 'approved']).paginate(page: page, per_page: per_page)
           end
           header 'total_pages', purchases.total_pages.to_s
           present purchases, with: V1::Entities::Purchase

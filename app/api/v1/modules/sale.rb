@@ -122,7 +122,7 @@ module V1
           per_page = params[:per_page] || 10
           legal_representative = V1::Helpers::UserHelper.legal_representative_from(current_user)
           if legal_representative == current_user
-            sales = legal_representative.sales.by_state(['paid', 'approved', '']).paginate(page: page, per_page: per_page)
+            sales = legal_representative.sales.by_state(['paid', 'approved']).paginate(page: page, per_page: per_page)
             header 'total_pages', sales.total_pages.to_s
           else
             sales = []
