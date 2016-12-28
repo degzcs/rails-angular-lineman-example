@@ -30,12 +30,86 @@ describe Reports::Taxes::Report do
     end
     let(:sale_order) { create(:sale, :with_batches, seller: seller, buyer: buyer) }
     
-    xit '#call' do
-      
+    context '#call' do
+      context 'When there is not tax settings' do
+        it 'returns a hash with arrays empties in each pair value' do
+          repor_expected = {
+            movements: [],
+            taxes: [],
+            payments: [],
+            inventories: []
+          }
+          report_service = Reports::Taxes::Report.new.call(order: sale_order)
+          expect(report_service).to eq repor_expected
+        end
+      end
+      context 'When there are transaction_movements' do
+        it 'returns a hash with an array of OpenStruct objects with its respective structure' do
+          system 'rake db:seed:tax_module RAILS_ENV=test'
+
+          repor_expected = {
+            :movements => [ OpenStruct.new(
+                 :count => "130505",
+                  :name => "Clientes Nacionales",
+                 :debit => 100,
+                :credit => ""
+              ),
+              OpenStruct.new(
+                 :count => "413595",
+                  :name => "Ingresos por Venta de Oro",
+                 :debit => "",
+                :credit => 100
+              )
+            ],
+            :taxes => [
+              OpenStruct.new(
+                 :count => "135595",
+                  :name => "ANTICIPO CREE (.40%)",
+                 :debit => 0,
+                :credit => ""
+              ),
+              OpenStruct.new(
+                 :count => "23657501",
+                  :name => "Autorretención CREE",
+                 :debit => "",
+                :credit => 0
+             )
+            ],
+            :payments => [
+               OpenStruct.new(
+                 :count => "111005",
+                  :name => "Moneda Nacional",
+                 :debit => 100,
+                :credit => ""
+              ),
+              OpenStruct.new(
+                 :count => "130505",
+                  :name => "Clientes Nacionales",
+                 :debit => "",
+                :credit => 100
+             )
+            ],
+            :inventories => [
+               OpenStruct.new(
+                 :count => "613516",
+                  :name => "Venta Materias Primas Oro",
+                 :debit => 3000000,
+                :credit => ""
+              ),
+              OpenStruct.new(
+                 :count => "140501",
+                  :name => "Materias Primas Oro",
+                 :debit => "",
+                :credit => 3000000
+             )
+            ]
+          }
+          report_service = Reports::Taxes::Report.new.call(order: sale_order)
+
+          expect(report_service).to eq repor_expected
+        end
+      end
     end
 
-    it '#create_report' do
-      
-    end
   end
 end
