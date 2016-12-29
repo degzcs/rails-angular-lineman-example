@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: transaction_movements
+#
+#  id             :integer          not null, primary key
+#  puc_account_id :integer
+#  type           :string(255)
+#  block_name     :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  afectation     :string(255)
+#
+
 # TransactionMovement class allows to list the puc_accounts by block names group
 class TransactionMovement < ActiveRecord::Base
   belongs_to :puc_account

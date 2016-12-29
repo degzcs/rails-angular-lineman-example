@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: taxes
+#
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  reference      :string(255)
+#  porcent        :float
+#  puc_account_id :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 # Tax class storage the taxes for the puc accounts
 class Tax < ActiveRecord::Base
   belongs_to :puc_account

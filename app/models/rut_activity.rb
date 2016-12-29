@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: rut_activities
+#
+#  id   :integer          not null, primary key
+#  code :string(255)
+#  name :string(255)
+#
+
 # TaxRule class storage the rules to apply the taxes
 class RutActivity < ActiveRecord::Base
 

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: puc_accounts
+#
+#  id         :integer          not null, primary key
+#  code       :string(255)
+#  name       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # PucAccount class to load the tax module Puc
 class PucAccount < ActiveRecord::Base
   has_many :taxes
