@@ -45,6 +45,9 @@ md-sidenav{
   .md-button{
     background-color: transparent!important;
     color: #e3cd48 !important;
+    font-family: 'oswald';
+    font-weight: 300;
+    letter-spacing: 2px;
   }
   .md-button:hover{
     background-color: black !important;
@@ -58,6 +61,7 @@ md-sidenav{
 .top-nav-button.selected{
   background-color: white;
   color: white !important;
+  font-weight: 700;
 }
 
 .trazoro-icon-small{
