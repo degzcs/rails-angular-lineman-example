@@ -31,18 +31,6 @@ module Reports
         self
       end
 
-      # NOTE: Figure it out how to allow that $upload service in angularjs receive this file. I could not use the usual way
-      # used with $http service.
-      # This method remove the tmp folder in public and generate a file to send to the front end
-      # @param timestamp [ Intenger ]
-      # @return [ String ] with the temporal location of the file generated
-      def pdf_url(timestamp)
-        `rm -rf #{ Rails.root }/public/tmp/`
-        `mkdir -p #{ Rails.root }/public/tmp/royalty`
-        file = pdf.render_file("#{ Rails.root }/public/tmp/royalty/royalty_#{ timestamp }.pdf")
-        "/tmp/royalty/royalty_#{ timestamp }.pdf"
-      end
-
       def validate_options(options)
         raise 'You must to provide a current_user option' if options[:current_user].blank?
         raise 'You must to provied a order option to generate this report' if options[:order].blank?

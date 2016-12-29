@@ -29,7 +29,7 @@ describe Reports::Taxes::Report do
       buyer.setting.regime_type = 'GC'
     end
     let(:sale_order) { create(:sale, :with_batches, seller: seller, buyer: buyer) }
-    
+
     context '#call' do
       context 'When there is not tax settings' do
         it 'returns a hash with arrays empties in each pair value' do
@@ -39,8 +39,8 @@ describe Reports::Taxes::Report do
             payments: [],
             inventories: []
           }
-          report_service = Reports::Taxes::Report.new.call(order: sale_order)
-          expect(report_service).to eq repor_expected
+          response = Reports::Taxes::Report.new.call(order: sale_order)
+          expect(response).to eq repor_expected
         end
       end
       context 'When there are transaction_movements' do
@@ -104,9 +104,9 @@ describe Reports::Taxes::Report do
              )
             ]
           }
-          report_service = Reports::Taxes::Report.new.call(order: sale_order)
+          response = Reports::Taxes::Report.new.call(order: sale_order)
 
-          expect(report_service).to eq repor_expected
+          expect(response).to eq repor_expected
         end
       end
     end
