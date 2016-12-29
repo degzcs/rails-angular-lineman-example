@@ -12,10 +12,6 @@ namespace :fixes do
       end
     end
   end
-
-  desc "TODO"
-  task :not_defined_yet => :environment do
-  end
 end
 
 

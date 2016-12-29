@@ -39,7 +39,7 @@ describe Reports::Taxes::Report do
             payments: [],
             inventories: []
           }
-          response = Reports::Taxes::Report.new.call(order: sale_order)
+          response = service.call(order: sale_order)
           expect(response).to eq repor_expected
         end
       end
@@ -104,8 +104,7 @@ describe Reports::Taxes::Report do
              )
             ]
           }
-          response = Reports::Taxes::Report.new.call(order: sale_order)
-
+          response = service.call(order: sale_order)
           expect(response).to eq repor_expected
         end
       end
