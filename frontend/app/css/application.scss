@@ -160,6 +160,29 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-i
 .loading-dialog{
   padding: 50px;
 }
+.md-tab{
+  border: 2px solid #E3CD4D;
+  font-family: 'Oswald';
+  color: black !important;
+  line-height: 10px;
+}
+
+md-tabs[md-border-bottom] md-tabs-wrapper {
+    border-width: 0 0 0px;
+}
+
+md-tabs.md-default-theme .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-focused {
+    color: #E3CD4D;
+}
+
+md-tabs.md-default-theme md-ink-bar {
+    color: white;
+    background: white;
+}
+
+.md-tab.md-active{
+    background: #E3CD4D;
+}
 
 .md-tabs-content .md-tab-content {
   padding-bottom: 20px;
