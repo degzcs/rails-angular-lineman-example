@@ -1,5 +1,5 @@
 #cssmenu {
-  background: url("/img/background1.png");
+  background: black;
   width: auto;
   display: none;
   width: 100%; 
@@ -34,7 +34,7 @@
   text-align: center;
 }
 #cssmenu ul li a {
-  color: #ffffff;
+  color: #E3CD4D;
   text-decoration: none;
   display: block;
   padding: 15px 25px;
@@ -50,7 +50,7 @@
   transition: color .25s;
 }
 #cssmenu ul li a:hover {
-  color: #333333;
+  color: white !important;
 }
 #cssmenu ul li a:hover:before {
   width: 100%;
@@ -63,7 +63,7 @@
   top: 19px;
   height: 6px;
   width: 6px;
-  background: #ffffff;
+  background: white;
   opacity: .5;
 }
 #cssmenu ul li a:before {
@@ -86,7 +86,7 @@
   display: none;
 }
 #cssmenu ul li.selected a {
-  color: #333333;
+  color: white;
 }
 #cssmenu ul li.selected a:before {
   width: 100%;
