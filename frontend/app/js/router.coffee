@@ -1229,7 +1229,7 @@
   .state("new_sale.step2",
     url: "/sales/step2",
     ncyBreadcrumb:
-      label: 'Aceptación Acuerdo'
+      label: 'Selección de lotes'
     views:
       'content':
         templateUrl: "partials/sales/step2.html"
