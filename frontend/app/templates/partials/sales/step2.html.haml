@@ -29,8 +29,6 @@
               {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
 
-
-
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
         Registros cargados: {{count}}
