@@ -1,25 +1,30 @@
-%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
-  %section{layout: "row"}
-    // ---------------------- seller info ------------------- ///
-    %div.md-padding{flex: ""}
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %h3
-          %legend
-            1. Seleccione el tipo de productor autorizado:
-            %md-radio-group{"ng-model"=>"provider.providerType", "name" => "providerType" }
-              %md-radio-button.md-primary{ "value" => "Barequero" }Barequero
-              %md-radio-button{ "value" => "Chatarrero" } Chatarrero
-              /%span.radioValue{:type => "hidden", "ng-name" => "providerType","ng-model" => "provider.providerType"} {{ provider.providerType }}
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            2. Ingrese el documento del Productor
-        %div.fieldset-inputs.find-provider
-          %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
+%h2
+  COMPRAR
+%p
+  Para iniciar con el proceso de compra es necesario que por favor introduzca el número de documento o identificación del productor al cual desea realizar 
 
-          %md-input-container{"name"=>"idNumber"}
-            %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number"}
-            %md-not-found
+  la compra, sino lo tiene a la mano, le recomendamos revisar el listado proporcionado por el gobierno nacional.
+
+%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
+  %section{layout: "column"}
+    // ---------------------- seller info ------------------- ///
+    .md-subtitle
+      1. Seleccione el tipo de productor autorizado:
+    %hr{ "width"=>"50%", "color"=>"#E3CD48", "align"=>"left"}
+    %md-radio-group{"ng-model"=>"provider.providerType", "name" => "providerType" }
+      %md-radio-button.md-primary{ "value" => "Barequero" }Barequero
+      %md-radio-button{ "value" => "Chatarrero" } Chatarrero
+      /%span.radioValue{:type => "hidden", "ng-name" => "providerType","ng-model" => "provider.providerType"} {{ provider.providerType }}
+    .md-subtitle 
+      2. Ingrese el documento del Productor
+    %hr{ "width"=>"50%", "color"=>"#E3CD48", "align"=>"left"}
+    %div.fieldset-inputs.find-provider
+      %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
+      %md-input-container{"name"=>"idNumber"}
+        %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number"}
+        %md-not-found
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.providerType)"} Consultar
+    %md-button.btn-save.md-button.md-raised{ "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.providerType)"} Consultar  
+      %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
+  
