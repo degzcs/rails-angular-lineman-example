@@ -60,17 +60,7 @@ module V1
             order: order
           )
           if taxes_service.response[:success]
-             #content_type 'text/csv'
-             #env['api.format'] = :text
-             
-             # content_type "application/octet-stream"
-             # header['Content-Disposition'] = "attachment; filename=taxes_#{time}.pdf"
-             # env['api.format'] = :binary
-             # taxes_service.csv.read_base_file
              present taxes_service.csv, with: V1::Entities::Report
-               # :type => 'text/csv; charset=iso-8859-1; header=present',
-               # :disposition => "attachment; filename=taxes_#{time}.csv"
-            #present tax_service.pdf_url(time.to_i)
           else
            error!({ error: 'unexpected error', detail: taxes_service.response[:errors] }, 409)
           end
