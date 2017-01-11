@@ -35,11 +35,11 @@ md-card.seller{
       background-color:#ccc;
       text-align: center;
       position: relative;
-      height: 150px;
-      width: 150px;
+      height: 125px;
+      width: 125px;
       border:none;
       outline: none;
-      border: 1px solid darken(#eee,20%);
+      border: 10px solid #E3CD48;
     }
     .photo-provider-button{
       margin-top: 10px;
@@ -59,6 +59,15 @@ md-card.seller{
 .wizard-buttons{
   margin-top: 0px;
 }
+
+.medidas{
+  
+  height: 70px !important;
+  
+}
+
+
+
 .purchase-container{
   h5{
       text-align: left;
@@ -71,6 +80,17 @@ md-card.seller{
 .md-table-td-more {
    padding: 5px;
 }
+}
+
+.input-num-value{
+  color: rgb(227,205,72) !important;
+  border-color: rgba(0, 0, 0, 0.12);
+  background: white;
+  padding-left: 10px;
+  border: 1px solid #d4d4d4;
+  font-family: 'Oswald';
+  letter-spacing: 2px;
+  font-size: 26px;
 }
 
 /////

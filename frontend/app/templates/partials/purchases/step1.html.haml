@@ -1,54 +1,63 @@
+%h2
+  Nueva Compra
+
+%p
+  Para seguir realizando la compra se debe verificar los datos del productor y tomar una fotografía.
+
+
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
   %section{layout: "row"}
     // ---------------------- seller info ------------------- ///
-    %div.md-padding{flex: ""}
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3{:ng-if => "purchase.model.type == 'seller'"}
-            2. Proveedor
-          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-            2. Ingrese el codigo de barras
-
-        %div.fieldset-inputs
-          %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
-            %md-input-container{flex: ''}
-              %label Numero de codigo de barras de la Venta
-              %input{"ng-model" => "code", :name => 'seller_name'}
-            %md-input-container{flex: 30}
-              %a.md-button.md-raised.md-primary.find-seller-button{:ng-click =>"searchsellerByCode(code)"}  Buscar
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Nombre Proveedor
-              %input{"ng-model" => "purchase.model.seller.name", :required => "", :name => 'seller_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Nombre de la Compania
-              %input{"ng-model" => "purchase.model.seller.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
-          %div{layout: "row"}
-            / %md-input-container{flex: "20"}
-            /   %label tipo doc.
-            /   %input{"ng-model" => "purchase.model.seller.document_type", :required => "", :name => 'seller_document_type', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Numero de Documento
-              %input{"ng-model" => "purchase.model.seller.document_number", :required => "", :name => 'seller_document_number', :readOnly => 'true'}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Registro Rucom
-              %input{"ng-model" => "purchase.model.seller.rucom.rucom_number", :name => 'seller_rucom', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Estado Rucom
-              %input{"ng-model" => "purchase.model.seller.rucom.status", :name => 'seller_rucom_status', :readOnly => 'true'}
-
-          %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
-            %md-progress-circular{"md-mode" => "indeterminate"}
-      /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
     %div{flex: ""}
+      / %fieldset.standard.tr-fieldset{:layout => "column"}
+      /   %legend
+      /     %h3{:ng-if => "purchase.model.type == 'seller'"}
+      /       2. Proveedor
+      /     %h3{:ng-if => "purchase.model.type == 'trazoro'"}
+      /       2. Ingrese el codigo de barras
+      .md-subtitle
+        3. Datos del proveedor
+      %div.fieldset-inputs
+        %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
+          %md-input-container{flex: ''}
+            %label Numero de codigo de barras de la Venta
+            %input{"ng-model" => "code", :name => 'seller_name'}
+          %md-input-container{flex: 30}
+            %a.md-button.md-raised.md-primary.find-seller-button{:ng-click =>"searchsellerByCode(code)"}  Buscar
+        %div{layout: "row"}
+          %md-input-container{flex: ""}
+            %label Nombre Proveedor
+            %input{"ng-model" => "purchase.model.seller.name", :required => "", :name => 'seller_name', :readOnly => 'true'}
+          %md-input-container{flex: ""}
+            %label Nombre de la Compania
+            %input{"ng-model" => "purchase.model.seller.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
+        %div{layout: "row"}
+          / %md-input-container{flex: "20"}
+          /   %label tipo doc.
+          /   %input{"ng-model" => "purchase.model.seller.document_type", :required => "", :name => 'seller_document_type', :readOnly => 'true'}
+          %md-input-container{flex: ""}
+            %label Numero de Documento
+            %input{"ng-model" => "purchase.model.seller.document_number", :required => "", :name => 'seller_document_number', :readOnly => 'true'}
+        %div{layout: "row"}
+          %md-input-container{flex: ""}
+            %label Registro Rucom
+            %input{"ng-model" => "purchase.model.seller.rucom.rucom_number", :name => 'seller_rucom', :readOnly => 'true'}
+          %md-input-container{flex: ""}
+            %label Estado Rucom
+            %input{"ng-model" => "purchase.model.seller.rucom.status", :name => 'seller_rucom_status', :readOnly => 'true'}
+
+        %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
+          %md-progress-circular{"md-mode" => "indeterminate"}
+    /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
+    
+    %div.md-subtitle{flex: "40"}
+      4. Fotografía de proveedor
       // ---------------------- seller photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
-        %legend
-          %h3{:ng-if => "purchase.model.type == 'seller'"}
-            3. Tome una foto al Provedor
-          %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-            3. Tome una foto al Transportador
+        / %legend
+        / %h3{:ng-if => "purchase.model.type == 'seller'"}
+            
+        / %h3{:ng-if => "purchase.model.type == 'trazoro'"}
 
         %md-input-container.row
           .photo
@@ -56,7 +65,9 @@
               %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               /%md-tooltip{'md-direction'=> 'right'}
               /  Tomar Foto
+            %p Capturar foto    
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
     %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step0", "ng-click" => ""} Volver
-    %md-button.btn-save.md-button{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+    %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step2", "ng-click" => "saveState()"} Continuar
+      %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }

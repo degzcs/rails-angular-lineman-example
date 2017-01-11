@@ -95,7 +95,8 @@
           Firma
 
     .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"end end"}
-      %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
-      %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
+      %md-button.btn-next.md-raised.md-primary{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
+      %md-button.btn-next.md-raised.md-primary{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
       %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
-      %md-button.btn-save{ "ng-disabled" => 'originCertificateForm.$invalid', flex: "20", "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
+      %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'originCertificateForm.$invalid', "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
+        %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
