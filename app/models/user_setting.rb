@@ -14,7 +14,6 @@
 
 class UserSetting < ActiveRecord::Base
 
-  #serialize :activity_code, Array
   #
   # Associations
   #

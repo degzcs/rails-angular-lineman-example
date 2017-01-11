@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111193022) do
+ActiveRecord::Schema.define(version: 20170111213637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -353,7 +353,6 @@ ActiveRecord::Schema.define(version: 20170111193022) do
     t.float    "fine_gram_value"
     t.integer  "last_transaction_sequence", default: 0
     t.string   "regime_type"
-    t.string   "activity_code"
     t.string   "scope_of_operation"
     t.string   "organization_type"
     t.boolean  "self_holding_agent"
