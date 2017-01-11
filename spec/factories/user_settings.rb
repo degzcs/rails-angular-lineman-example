@@ -20,7 +20,6 @@ FactoryGirl.define do
     fine_gram_value 0.0
     last_transaction_sequence 0
     regime_type { 'RS' }
-    activity_code {[]}
     scope_of_operation ''
     organization_type ''
     self_holding_agent ''
