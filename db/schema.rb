@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227132710) do
+ActiveRecord::Schema.define(version: 20170111193022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -335,6 +335,14 @@ ActiveRecord::Schema.define(version: 20161227132710) do
   end
 
   add_index "transaction_movements", ["puc_account_id"], name: "index_transaction_movements_on_puc_account_id", using: :btree
+
+  create_table "user_setting_rut_activities", force: true do |t|
+    t.integer "user_setting_id", null: false
+    t.integer "rut_activity_id", null: false
+  end
+
+  add_index "user_setting_rut_activities", ["rut_activity_id"], name: "index_user_setting_rut_activities_on_rut_activity_id", using: :btree
+  add_index "user_setting_rut_activities", ["user_setting_id"], name: "index_user_setting_rut_activities_on_user_setting_id", using: :btree
 
   create_table "user_settings", force: true do |t|
     t.boolean  "state",                     default: false
