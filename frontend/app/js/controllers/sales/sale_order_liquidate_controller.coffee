@@ -3,9 +3,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   # Redirects to The index sale if there is no pendinigs liquidations
   #
 
-
   if sessionStorage.pendingLiquidation == 'false'
-    $state.go "new_sale"
+    $state.go "new_sale.sale_home"
     return
 
   liquidationInfo = LiquidationService.restoreState()
@@ -21,8 +20,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       $scope.weightedLaw += (purchase.gold_batch.grade * purchase.gold_batch.percentage)
     )
 
-  #calculateLaw()
   $scope.selectedGrade = null
+  $scope.selectedSaleType = null
   $scope.selectedWeight  = 0
   $scope.price = 0
   $scope.perUnitValue = null
@@ -35,10 +34,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   $scope.validationMessages = null
   $scope.clientVerifiedProgress = false
   $scope.saleOrder = saleOrderInfo
-
-  # console.log 'saleOrder: '
-  # console.log $scope.saleOrder
-
 
   CurrentUser.get().success (user) ->
    $scope.currentUser = user
@@ -79,29 +74,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       return []
 
   #
-  # Seacrch couriers by id
-  #
-
-  queryForCouriers = (query) ->
-    # perform some asynchronous operation, resolve or reject the promise when appropriate.
-    $q (resolve, reject) ->
-      CourierService.query_by_id(query).success (couriers,config)->
-        resolve couriers
-      return
-
-  $scope.searchCouriers = (query)->
-    if query
-      promise = queryForCouriers(query)
-      promise.then ((couriers) ->
-        return couriers
-
-      ), (reason) ->
-        console.log 'Failed: ' + reason
-        return
-    else
-      return []
-
-  #
   # After select a client from the list clear the search word inside the autocomplete form and waits 400
   # milliseconds to update the client data just for user interaction purposes
   #
@@ -114,20 +86,11 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       return
     ), 400
 
-  # Same for the courier autocomplete field
-  $scope.setSelectedCourier = (selectedCourier)->
-    #$scope.searchCourierText = null
-    $scope.selectedCourier = selectedCourier
-    $scope.courierVerifiedProgress = true
-    $timeout (->
-      $scope.courierVerifiedProgress = false
-      return
-    ), 400
-
   #
   #Submit a sale Order if the sale is valid
   #
   $scope.submitSale = ->
+    #TODO: check wich is the selected saleType and chose the endpoint to be used
     dialog = $mdDialog.alert()
       .title('Generando Certificado ')
       .content('Espere un momento...')
@@ -158,8 +121,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
         $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
         $mdDialog.cancel dialog
-        # console.log 'Sale Object: '
-        # console.log sale
 
         LiquidationService.model.selectedPurchases = $scope.selectedPurchases
         LiquidationService.model.totalAmount = $scope.totalAmount
@@ -173,6 +134,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
         $state.go('new_sale.step4')
       ).error (data, status, headers, config) ->
         $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud')
+    saveState()
 
   $scope.newSaleOrder = ->
     LiquidationService.deleteState()
