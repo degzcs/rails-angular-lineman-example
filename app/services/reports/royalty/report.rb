@@ -51,7 +51,7 @@ module Reports
         raise 'No hay transacciones para el periodo y año seleccionado' if orders.blank?
         @fine_grams = orders.map(&:fine_grams).sum.round(3)
         @total = (fine_grams*base_liquidation_price*(royalty_percentage/100)).round(3)
-        @year = "01/01/#{year}".to_date.strftime("%y")
+        @year = "01/01/#{selected_year}".to_date.strftime("%y")
         @company = seller.company
         @destinations = orders.map{ |order| order.buyer.company }.compact.flatten.uniq
       end

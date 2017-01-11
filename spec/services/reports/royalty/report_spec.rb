@@ -36,7 +36,7 @@ describe Reports::Royalty::DrawPdf do
           royalty_percentage: 4,
           total: 21.33,
           period: 1,
-          year: "01/01/2016".to_date.strftime("%y"), # ex. 16
+          year: '01/01/2016'.to_date.strftime("%y"), # ex. 16
           company: seller.company,
           mineral_presentation: 'Amalgama',
           destinations: [buyer.company],
@@ -80,7 +80,7 @@ describe Reports::Royalty::DrawPdf do
           royalty_percentage: 4,
           total: 21.33,
           period: 2,
-          year: Time.now.strftime("%y"), # ex. 16
+          year: '01/01/2016'.to_date.strftime("%y"), # ex. 16
           company: seller.company,
           mineral_presentation: 'Amalgama',
           destinations: [buyer.company],
@@ -124,7 +124,7 @@ describe Reports::Royalty::DrawPdf do
           royalty_percentage: 4,
           total: 21.33,
           period: 3,
-          year: Time.now.strftime("%y"), # ex. 16
+          year: '01/01/2016'.to_date.strftime("%y"), # ex. 16
           company: seller.company,
           mineral_presentation: 'Amalgama',
           destinations: [buyer.company],
@@ -168,7 +168,7 @@ describe Reports::Royalty::DrawPdf do
           royalty_percentage: 4,
           total: 21.33,
           period: 4,
-          year: Time.now.strftime("%y"), # ex. 16
+          year: '01/01/2016'.to_date.strftime("%y"), # ex. 16
           company: seller.company,
           mineral_presentation: 'Amalgama',
           destinations: [buyer.company],
