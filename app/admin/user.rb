@@ -6,7 +6,7 @@ ActiveAdmin.register User do
                 :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, 
                 :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], 
                 setting_attributes: [:alegra_token, :fine_gram_value, :regime_type,
-                :scope_of_operation, :organization_type, :self_holding_agent, activity_code: []]
+                :scope_of_operation, :organization_type, :self_holding_agent, rut_activity_ids: []]
 
   config.clear_action_items!
 
@@ -26,10 +26,11 @@ ActiveAdmin.register User do
         service_ids = params[:user][:available_trazoro_service_id]
         service_ids.reject!{ |item| item.empty? } if service_ids.present?
         setting_attributes = permitted_params[:user][:setting_attributes]
-        activity_codes = setting_attributes[:activity_code]
-        activity_codes.reject!{ |item| item.empty? } if activity_codes.present?
-        setting_attributes[:activity_code] = activity_codes
+        rut_activity_ids = setting_attributes[:rut_activity_ids]
+        rut_activity_ids.reject!{ |item| item.empty? } if rut_activity_ids.present?
         user.setting.update_attributes(setting_attributes)
+        user.setting.rut_activity_ids = rut_activity_ids
+        user.save!
         if user.trader? && user.profile.legal_representative? && service_ids.present?
           user.setting.trazoro_service_ids = service_ids
           user.save!
@@ -118,7 +119,7 @@ ActiveAdmin.register User do
             s.input :alegra_token, label: 'Token alegra', hint: 'Este tóken tiene que ser conseguido desde Alegra para la facturación'
             s.input :fine_gram_value, label: 'Valor del gramo fino', hint: 'Este valor sera tenido encuenta sobre la configuración general'
             s.input :regime_type, label: 'Tipo de regime', collection: UserSetting.regime_types_for_select
-            s.input :activity_code, label: 'Códigos de Actividad Rut', collection: UserSetting.code_activities_for_select, multiple: true
+            s.input :rut_activities, label: 'Códigos de Actividad Rut', collection: RutActivity.all.map { |o| ["#{o.name}", o.id] }, multiple: true
             s.input :scope_of_operation, label: 'Ambito de Operación', collection: UserSetting.scope_operations_for_select
             s.input :organization_type, label: 'Tipo de Organización'
             s.input :self_holding_agent, label: 'Autorretenedor'
@@ -212,7 +213,7 @@ ActiveAdmin.register User do
           row :alegra_token, label: 'Token Alegra'
           row :fine_gram_value, label: 'Valor gramo fino'
           row :regime_type, label: 'Tipo de regime'
-          row :activity_code, label: 'Código de Actividad Rut'
+          row :rut_activity_ids, label: 'Código de Actividad Rut'
           row :scope_of_operation, label: 'Ambito de Operación'
           row :organization_type, label: 'Tipo de Organización'
           row :self_holding_agent, label: 'Autorretenedor'

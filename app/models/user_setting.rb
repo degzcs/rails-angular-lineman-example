@@ -14,14 +14,14 @@
 
 class UserSetting < ActiveRecord::Base
 
-  serialize :activity_code, Array
+  #serialize :activity_code, Array
   #
   # Associations
   #
 
   belongs_to :profile
   has_and_belongs_to_many :trazoro_services, :join_table => :plans, class_name: 'AvailableTrazoroService'
-  
+  has_and_belongs_to_many :rut_activities, :join_table => :user_setting_rut_activities
   #
   # Validations
   #
