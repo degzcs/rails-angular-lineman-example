@@ -48,6 +48,7 @@ module Marketplace
           current_user: @seller,
           order: sale_order
         )
+        sale_order.published!
       end
       response
     end
@@ -60,7 +61,6 @@ module Marketplace
       @sale_order.build_gold_batch(gold_batch_hash.deep_symbolize_keys)
       response[:success] = Order.audit_as(seller) { @sale_order.save_with_sequence(@current_user) } # This save both the new sale and gold_batch
       @sale_order.update_remote_address!(remote_address)
-      @sale_order.published!
       @sale_order
     end
 
