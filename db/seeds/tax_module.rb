@@ -144,7 +144,7 @@ transaction_movement_array.each do |e|
     puc_account_id: e[0],
     type: e[1],
     block_name: e[2],
-    afectation: e[3]
+    accounting_entry: e[3]
   ).first_or_create
 end
 

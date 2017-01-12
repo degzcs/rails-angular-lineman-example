@@ -65,7 +65,7 @@ module Reports
       def debit?(order_type, puc_account_id, block_name)
         movement = TransactionMovement.find_by(puc_account_id: puc_account_id, type: order_type, block_name: block_name)
         return nil unless movement
-        movement.afectation.upcase == 'D' ? true : false
+        movement.accounting_entry.upcase == 'D' ? true : false
       end
 
       def calc_porcent(rule_tax, price)
