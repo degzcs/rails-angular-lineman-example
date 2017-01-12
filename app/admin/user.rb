@@ -120,7 +120,7 @@ ActiveAdmin.register User do
             s.input :fine_gram_value, label: 'Valor del gramo fino', hint: 'Este valor sera tenido encuenta sobre la configuración general'
             s.input :regime_type, label: 'Tipo de regime', collection: UserSetting.regime_types_for_select
             s.input :rut_activities, label: 'Códigos de Actividad Rut', collection: RutActivity.all.map { |o| ["#{o.name}", o.id] }, multiple: true
-            s.input :scope_of_operation, label: 'Ambito de Operación', collection: UserSetting.scope_operations_for_select
+            s.input :scope_of_operation, label: 'Ambito de Operación', collection: UserSetting.operation_scopes_for_select
             s.input :organization_type, label: 'Tipo de Organización'
             s.input :self_holding_agent, label: 'Autorretenedor'
           end

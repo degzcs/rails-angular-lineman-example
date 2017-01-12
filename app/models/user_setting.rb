@@ -47,7 +47,7 @@ class UserSetting < ActiveRecord::Base
     RE: 'Regimen Especial'
   }
 
-  SCOPE_OPERATIONS = {
+  OPERATION_SCOPES = {
     LC:  'Local',
     RG:  'Regional',
     NAL: 'Nacional',
@@ -70,8 +70,8 @@ class UserSetting < ActiveRecord::Base
     REGIME_TYPES.collect { |val| [val[1], val[0]] }
   end
   
-  def self.scope_operations_for_select
-    SCOPE_OPERATIONS.collect { |val| [val[1], val[0]] }
+  def self.operation_scope_for_select
+    OPERATION_SCOPES.collect { |val| [val[1], val[0]] }
   end
 
   def self.organization_types_for_select
