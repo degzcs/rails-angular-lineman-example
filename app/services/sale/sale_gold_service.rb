@@ -36,7 +36,7 @@ module Sale
         # update_inventories(selected_gold_batches)
         # TODO: raise an error if the user try to sold more gold than it has.
         register_sold_batches(sale_order, selected_gold_batches)
-        response = ::Sale::PurchaseFilesCollection::GenerationWatermark.new.call(sale_order: @sale_order)
+        #response = ::Sale::PurchaseFilesCollection::GenerationWatermark.new.call(sale_order: @sale_order)
         response = ::Alegra::Traders::ContactSynchronize.new(seller: sale_order.seller, buyer: sale_order.buyer).call if APP_CONFIG[:ALEGRA_SYNC]
         pdf_generation_service = ::PdfGeneration.new
         response = pdf_generation_service.call(

@@ -89,6 +89,7 @@ module V1
               selected_purchase_ids: selected_purchase_ids,
               remote_address: request.env['REMOTE_ADDR'],
               )
+            res = GeneratePdfWorker.perform_async(registration_service.sale_order.id)
             if response[:success]
               present registration_service.sale_order, with: V1::Entities::Sale
               Rails.logger.info(response)
