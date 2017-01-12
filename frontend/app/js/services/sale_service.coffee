@@ -24,8 +24,11 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       report_url: null
 
 
-    create: (sale_params, gold_batch_params, selectedPurchases)->
-      return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params,selected_purchases: selectedPurchases})
+    create: (sale_params, gold_batch_params, selectedPurchases, selectedSaleType)->
+      if selectedSaleType == 'directly_buyer'
+        return $http.post("api/v1/sales", {sale: sale_params, gold_batch: gold_batch_params,selected_purchases: selectedPurchases})
+      else if selectedSaleType == 'marketplace'
+        return $http.post("api/v1/sales/marketplace", {sale: sale_params, gold_batch: gold_batch_params, selected_purchases: selectedPurchases})
 
     saveState: ->
       sessionStorage.restoreSale = 'true'

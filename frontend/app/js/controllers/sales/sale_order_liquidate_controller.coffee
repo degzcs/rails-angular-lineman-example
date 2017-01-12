@@ -91,50 +91,52 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   #
   $scope.submitSale = ->
     #TODO: check which is the selected saleType and chose the endpoint to be used
-    $scope.infoAlert('Generando Certificado', 'Espere un momento...')
-    switch selectedSaleType
-     when 'directly_buyer'
-      submitSaleDirectlyToBuyer
-     when 'marketplace'
-    saveState()
+    dialog = $mdDialog.alert()
+      .title('Generando Certificado ')
+      .content('Espere un momento...')
+      duration: 2
+    if validatePresenceOfValues()
+      $mdDialog.show dialog
 
-  submitSaleDirectlyToBuyer = ->
-    if $scope.selectedClient == null # || $scope.selectedCourier == null
-      $scope.infoAlert('Atencion', 'Por favor elija un cliente para su Orden de Venta')
-      return
-    else if $scope.price == 0 || $scope.price == null
-      $scope.infoAlert('Atencion', 'Por favor debe ingresar el precio a Fijar para la orden de Venta')
-      return
-    else
+      sale_params = {}
+      sale_params['price'] = $scope.price
+      sale_params['buyer_id'] = $scope.selectedClient.id if $scope.selectedSaleType == 'directly_buyer'
+
       gold_batch_params = {
         fine_grams: $scope.totalAmount,
-        ##grade: $scope.selectedGrade
         grade: $scope.weightedLaw
         mineral_type: $scope.mineral_type
       }
+      createSale(sale_params, gold_batch_params, dialog)
 
-      sale_params = {
-        #courier_id: $scope.selectedCourier.id,
-        buyer_id: $scope.selectedClient.id,
-        price: $scope.price
-      }
+  # @return [ Boolean ]
+  validatePresenceOfValues = ->
+    if $scope.selectedClient == null && $scope.selectedSaleType == 'directly_buyer'
+      $scope.infoAlert('Atencion', 'Por favor elija un cliente para su Orden de Venta')
+      return false
+    else if $scope.price == 0 || $scope.price == null
+      $scope.infoAlert('Atencion', 'Por favor debe ingresar el precio a Fijar para la orden de Venta')
+      return false
+    return true
 
-      SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
-        $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
-        $mdDialog.cancel dialog
+  # Call the service incharged to create a Sale
+  createSale = (sale_params, gold_batch_params, dialog)->
+    SaleService.create(sale_params, gold_batch_params, $scope.selectedPurchases, $scope.selectedSaleType).success((sale) ->
+      $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
+      $mdDialog.cancel dialog
 
-        LiquidationService.model.selectedPurchases = $scope.selectedPurchases
-        LiquidationService.model.totalAmount = $scope.totalAmount
-        #LiquidationService.model.weightedLaw = $scope.weightedLaw
-        LiquidationService.saveState()
+      LiquidationService.model.selectedPurchases = $scope.selectedPurchases
+      LiquidationService.model.totalAmount = $scope.totalAmount
+      #LiquidationService.model.weightedLaw = $scope.weightedLaw
+      LiquidationService.saveState()
 
-        SaleService.model = sale
-        SaleService.model.weightedLaw = $scope.weightedLaw
-        SaleService.saveState()
+      SaleService.model = sale
+      SaleService.model.weightedLaw = $scope.weightedLaw
+      SaleService.saveState()
 
-        $state.go('new_sale.step4')
-      ).error (data, status, headers, config) ->
-        $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud')
+      $state.go('new_sale.step4')
+    ).error (data, status, headers, config) ->
+      $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud' + data.message)
 
 
   $scope.newSaleOrder = ->
