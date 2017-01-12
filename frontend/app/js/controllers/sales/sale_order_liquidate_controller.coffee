@@ -87,17 +87,18 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
     ), 400
 
   #
-  #Submit a sale Order if the sale is valid
+  # Submit a sale Order if the sale is valid
   #
   $scope.submitSale = ->
-    #TODO: check wich is the selected saleType and chose the endpoint to be used
-    dialog = $mdDialog.alert()
-      .title('Generando Certificado ')
-      .content('Espere un momento...')
-      #.ok('hecho!')
-      duration: 2
+    #TODO: check which is the selected saleType and chose the endpoint to be used
+    $scope.infoAlert('Generando Certificado', 'Espere un momento...')
+    switch selectedSaleType
+     when 'directly_buyer'
+      submitSaleDirectlyToBuyer
+     when 'marketplace'
+    saveState()
 
-    $mdDialog.show dialog
+  submitSaleDirectlyToBuyer = ->
     if $scope.selectedClient == null # || $scope.selectedCourier == null
       $scope.infoAlert('Atencion', 'Por favor elija un cliente para su Orden de Venta')
       return
@@ -134,7 +135,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
         $state.go('new_sale.step4')
       ).error (data, status, headers, config) ->
         $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud')
-    saveState()
+
 
   $scope.newSaleOrder = ->
     LiquidationService.deleteState()
@@ -146,7 +147,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
     $mdDialog.show $mdDialog.alert()
       .title(title)
       .content(content)
-      .ok('hecho!')
+      .ok('Continuar')
       duration: 2
     return
 
