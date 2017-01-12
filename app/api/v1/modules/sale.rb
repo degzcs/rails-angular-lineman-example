@@ -296,6 +296,33 @@ module V1
             error!({error: 'unexpected error', detail: response[:errors] }, 409)
           end
         end
+
+        desc 'Create a purchase request with the passed order(sale)', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTE
+            Create a purchase request with the passed order(sale)
+          NOTE
+        }
+
+        params do
+          requires :sale_id, type: Integer
+        end
+
+        put '/buy_request', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found'],
+          ] do
+          sale = Order.find(params[:sale_id])
+          purchase_request = sale.purchase_requests.new(buyer_id: current_user.id)
+          if purchase_request.save
+            present marketplace_service.sale_order, with: V1::Entities::Sale
+            Rails.logger.info(response)
+          else
+            error!({error: 'unexpected error', detail: purchase_request.errors.full_messages}, 409)
+          end
+        end
       end
     end
   end
