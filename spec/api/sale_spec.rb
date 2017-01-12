@@ -9,20 +9,36 @@ describe 'Sale', type: :request do
       end
 
       context 'POST' do
+        before :each do
+          @current_seller = @current_user.company.legal_representative
+          @current_seller.roles = [Role.find_by(name: 'trader')]
+          @current_seller.save
+          @token_seller = @current_seller.create_token
+
+          purchases = create_list(:purchase, 2,
+                                  :with_origin_certificate_file,
+                                  :with_proof_of_purchase_file,
+                                  buyer: @current_seller)
+          # TODO: change frontend implementation to avoid this.
+          @selected_purchases = purchases.map { |purchase| { id: purchase.id } }
+
+          @new_gold_batch_values = {
+            'fine_grams' => 1.5,
+            'grade' => 1
+          }
+        end
+
         it 'should create one complete sale with trader role (this is the first stage in the trader sale process)' do
           VCR.use_cassette('create_complete_sale_from_endpoint') do
             current_buyer = create(:user, :with_profile, :with_company, :with_trader_role).company.legal_representative
-            current_seller = @current_user.company.legal_representative
-            current_seller.roles = [Role.find_by(name: 'trader')]
-            current_seller.save
-            @token_seller = current_seller.create_token
             courier = create(:courier)
-            purchases = create_list(:purchase, 2,
-                                    :with_origin_certificate_file,
-                                    :with_proof_of_purchase_file,
-                                    buyer: current_seller)
-            # TODO: change frontend implementation to avoid this.
-            selected_purchases = purchases.map { |purchase| { id: purchase.id } }
+
+            new_sale_values = {
+              'courier_id' => courier.id,
+              'buyer_id' => current_buyer.id,
+              'price' => 180
+            }
+
             expected_response = {
               'courier_id' => courier.id,
               'buyer' => {
@@ -34,28 +50,16 @@ describe 'Sale', type: :request do
                 'address' => current_buyer.profile.address,
                 'email' => current_buyer.email
               },
-              'user_id' => current_seller.id, # TODO: upgrade frontend
+              'user_id' => @current_seller.id, # TODO: upgrade frontend
               # 'gold_batch_id' => GoldBatch.last.id + 1,
               'fine_grams' => 1.5,
               # 'performer_id' => current_buyer.id
             }
-
-            new_gold_batch_values = {
-              'fine_grams' => 1.5,
-              'grade' => 1
-            }
-
-            new_sale_values = {
-              'courier_id' => courier.id,
-              'buyer_id' => current_buyer.id,
-              'price' => 180
-            }
-
             post '/api/v1/sales/', {
-              gold_batch: new_gold_batch_values,
+              gold_batch: @new_gold_batch_values,
               sale: new_sale_values,
-              selected_purchases: selected_purchases
-            }, 'Authorization' => "barcode_htmler #{@token_seller}"
+              selected_purchases: @selected_purchases
+            }, 'Authorization' => "Barer #{@token_seller}"
 
             expect(response.status).to eq 201
             expect(JSON.parse(response.body)).to include expected_response
@@ -65,12 +69,47 @@ describe 'Sale', type: :request do
             expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
             expect(order.audits.first.action).to eq('create')
             expect(order.audits.first.audited_changes['type']).to eq('sale')
-            expect(order.audits.first.user).to eq(current_seller)
+            expect(order.audits.first.user).to eq(@current_seller)
             expect(order.audits.last.action).to eq('update')
             expect(order.audits.first.remote_address).to eq('127.0.0.1')
             expect(order.shipment.file.path).to match('shipment.pdf')
-            # expect(order.audits.last.user).to eq(current_seller) is pending to add the audit_as
+            expect(order.proof_of_sale.file.path).to match('equivalent_document.pdf')
+            expect(order.purchase_files_collection_with_watermark.file.path.present?).to eq true
+            # expect(order.audits.last.user).to eq(@current_seller) is pending to add the audit_as
           end
+        end
+        it 'should create one complete sale with trader role for marketplace and leave it in a published state' do
+          new_sale_values = {
+            'price' => 180
+          }
+
+          expected_response = {
+            'user_id' => @current_seller.id, # TODO: upgrade frontend
+            'fine_grams' => 1.5
+          }
+
+          post '/api/v1/sales/marketplace', {
+            gold_batch: @new_gold_batch_values,
+            sale: new_sale_values,
+            selected_purchases: @selected_purchases
+          }, 'Authorization' => "Barer #{@token_seller}"
+
+          expect(response.status).to eq 201
+          expect(JSON.parse(response.body)).to include expected_response
+
+          # Validate Sale audit actions on Orders
+          order = Order.first
+          expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
+          expect(order.audits.first.action).to eq('create')
+          expect(order.audits.first.audited_changes['type']).to eq('sale')
+          expect(order.audits.first.user).to eq(@current_seller)
+          expect(order.audits.last.action).to eq('update')
+          expect(order.audits.first.remote_address).to eq('127.0.0.1')
+          expect(order.shipment.file.path).to match('shipment.pdf')
+          expect(order.proof_of_sale.file.path).to match('equivalent_document.pdf')
+          expect(order.purchase_files_collection_with_watermark.file.path.present?).to eq true
+          expect(order.published?).to eq true
+          expect(order.buyer).to eq nil
         end
       end
 
