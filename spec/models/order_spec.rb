@@ -36,8 +36,7 @@ RSpec.describe Order, type: :model do
       approved: 'approved',
       canceled: 'canceled',
       published: 'published',
-      unpublished: 'unpublished',
-      requested: 'requested'
+      unpublished: 'unpublished'
     }
 
     it '#save_with_sequence' do
