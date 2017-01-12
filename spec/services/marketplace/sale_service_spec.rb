@@ -40,6 +40,7 @@ describe Marketplace::SaleService do
       sale = Order.first
       expect(sale.published?).to eq(true)
       expect(sale.transaction_state).to eq('published')
+      expect(sale.buyer).to eq nil
     end
   end
 end
