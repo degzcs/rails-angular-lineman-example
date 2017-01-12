@@ -30,8 +30,8 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       else if selectedSaleType == 'marketplace'
         return $http.post("api/v1/sales/marketplace", {sale: sale_params, gold_batch: gold_batch_params, selected_purchases: selectedPurchases})
 
-    buyRequest: (sale_id, buyer_id)->
-      return $http.post("api/v1/sales/buy_request", {sale_id: sale_id, buyer_id: buyer_id})
+    buyRequest: (sale_id)->
+      return $http.post("api/v1/sales/buy_request", {sale_id: sale_id})
 
     saveState: ->
       sessionStorage.restoreSale = 'true'

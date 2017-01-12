@@ -24,11 +24,17 @@ angular.module('app').controller 'MarketplaceCtrl', ($scope, $mdDialog, SaleServ
       # process here
       return
 
+  markSalesAsRequested = ->
+    for sale in $scope.sales
+      for buyerIds in sale.buyer_ids when buyerId is $scope.currentUser.id
+        sale.alreadyRequested = true
+    return
+
   doRequest = (sale_id)->
-    SaleService.buyRequest(sale_id, $scope.currentUser.id).success((sales, status, headers, config) ->
+    SaleService.buyRequest(sale_id).success((sale, status, headers, config) ->
       infoAlert 'Feliciataiones', 'Se ha realizada con éxito la petición de compra'
     ).error (data, status, headers, config) ->
-      infoAlert('ERROR', 'No se pudo realizar la petición de compra' + data.message)
+      infoAlert('ERROR', 'No se pudo realizar la petición de compra: ' + data.details)
 
   infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')

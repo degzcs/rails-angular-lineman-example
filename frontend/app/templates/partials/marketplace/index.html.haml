@@ -17,6 +17,8 @@
         %p Creado
         %h3 {{sale.created_at}}
       .md-list-item-inner
-        %md-button.btn-save{'ng-click' => 'sendRequest(sale.id)'}
+        %md-button.btn-save{ 'ng-if' => '!sale.alreadyRequested', 'ng-click' => 'sendRequest(sale.id)'}
           Enviar petición de compra
+        %md-button{ 'ng-if' => 'sale.alreadyRequested', 'ng-disabled' => true}
+          En espera por aprovación
       %md-divider
