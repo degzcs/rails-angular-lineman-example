@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111213637) do
+ActiveRecord::Schema.define(version: 20170112201439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -331,7 +331,7 @@ ActiveRecord::Schema.define(version: 20170111213637) do
     t.string   "block_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "afectation"
+    t.string   "accounting_entry"
   end
 
   add_index "transaction_movements", ["puc_account_id"], name: "index_transaction_movements_on_puc_account_id", using: :btree
