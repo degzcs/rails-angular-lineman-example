@@ -70,7 +70,7 @@ class UserSetting < ActiveRecord::Base
     REGIME_TYPES.collect { |val| [val[1], val[0]] }
   end
   
-  def self.operation_scope_for_select
+  def self.operation_scopes_for_select
     OPERATION_SCOPES.collect { |val| [val[1], val[0]] }
   end
 
