@@ -179,6 +179,8 @@ GEM
     colored (1.2)
     colorize (0.8.1)
     columnize (0.9.0)
+    concurrent-ruby (1.0.4)
+    connection_pool (2.2.1)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     countries (1.2.5)
@@ -526,6 +528,8 @@ GEM
       rack (>= 0.4)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.1.9)
@@ -569,6 +573,7 @@ GEM
       trollop
     rdoc (4.2.2)
       json (~> 1.4)
+    redis (3.3.2)
     reek (3.10.1)
       codeclimate-engine-rb (~> 0.3.1)
       parser (~> 2.3)
@@ -640,6 +645,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.2.8)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.2, >= 3.2.1)
     slop (3.6.0)
     sort_alphabetical (1.0.2)
       unicode_utils (>= 1.2.2)
@@ -780,6 +790,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 2.53)
   shoulda-matchers
+  sidekiq
   spring
   spring-commands-rspec
   state_machines

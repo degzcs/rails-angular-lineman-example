@@ -68,6 +68,7 @@ gem "rails-observers", github: 'rails/rails-observers'
 gem 'alegra', '~> 0.1.2.3'
 gem 'mandrill-api'
 gem 'active_attr'
+gem 'sidekiq'
 
 group :development do
   gem 'quiet_assets'
