@@ -23,14 +23,14 @@ class TransactionMovement < ActiveRecord::Base
   validates :puc_account_id, presence: true
   validates :type, presence: true
   validates :block_name, presence: true
-  validates :afectation, presence: true
+  validates :accounting_entry, presence: true
 
   TYPES = {
     sale: 'Venta',
     purchase: 'Compra'
   }.freeze
 
-  AFECTATIONS = {
+  ACCOUNTING_ENTRIES = {
     D: 'Débito',
     C: 'Crédito'
   }.freeze
@@ -46,8 +46,8 @@ class TransactionMovement < ActiveRecord::Base
     TYPES.collect { |val| [val[1], val[0]] }
   end
 
-  def self.afectations_for_select
-    AFECTATIONS.collect { |val| [val[1], val[0]] }
+  def self.accounting_entries_for_select
+    ACCOUNTING_ENTRIES.collect { |val| [val[1], val[0]] }
   end
 
   def self.block_names_for_select
