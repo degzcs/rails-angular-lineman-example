@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201171435) do
+ActiveRecord::Schema.define(version: 20170112211202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -239,6 +239,20 @@ ActiveRecord::Schema.define(version: 20161201171435) do
   add_index "profiles", ["city_id"], name: "index_profiles_on_city_id", using: :btree
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
+  create_table "puc_accounts", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchase_requests", force: true do |t|
+    t.integer "order_id"
+    t.integer "buyer_id"
+  end
+
+  add_index "purchase_requests", ["order_id", "buyer_id"], name: "index_purchase_requests_on_order_id_and_buyer_id", unique: true, using: :btree
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -268,6 +282,11 @@ ActiveRecord::Schema.define(version: 20161201171435) do
 
   add_index "rucoms", ["rucomeable_id"], name: "index_rucoms_on_rucomeable_id", using: :btree
 
+  create_table "rut_activities", force: true do |t|
+    t.string "code"
+    t.string "name"
+  end
+
   create_table "settings", force: true do |t|
     t.text     "data"
     t.datetime "created_at"
@@ -292,6 +311,38 @@ ActiveRecord::Schema.define(version: 20161201171435) do
     t.string   "code"
   end
 
+  create_table "tax_rules", force: true do |t|
+    t.integer  "tax_id"
+    t.string   "seller_regime"
+    t.string   "buyer_regime"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tax_rules", ["tax_id"], name: "index_tax_rules_on_tax_id", using: :btree
+
+  create_table "taxes", force: true do |t|
+    t.string   "name"
+    t.string   "reference"
+    t.float    "porcent"
+    t.integer  "puc_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taxes", ["puc_account_id"], name: "index_taxes_on_puc_account_id", using: :btree
+
+  create_table "transaction_movements", force: true do |t|
+    t.integer  "puc_account_id"
+    t.string   "type"
+    t.string   "block_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "afectation"
+  end
+
+  add_index "transaction_movements", ["puc_account_id"], name: "index_transaction_movements_on_puc_account_id", using: :btree
+
   create_table "user_settings", force: true do |t|
     t.boolean  "state",                     default: false
     t.string   "alegra_token"
@@ -300,6 +351,11 @@ ActiveRecord::Schema.define(version: 20161201171435) do
     t.datetime "updated_at"
     t.float    "fine_gram_value"
     t.integer  "last_transaction_sequence", default: 0
+    t.string   "regime_type"
+    t.string   "activity_code"
+    t.string   "scope_of_operation"
+    t.string   "organization_type"
+    t.boolean  "self_holding_agent"
   end
 
   add_index "user_settings", ["profile_id"], name: "index_user_settings_on_profile_id", using: :btree
