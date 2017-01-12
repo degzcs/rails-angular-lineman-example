@@ -78,4 +78,13 @@ describe 'Sale' do
       expect(new_sale.code).not_to be_nil
     end
   end
+
+  context 'marketplace' do
+    it 'should validate unique association between order(sale) and user(buyer)' do
+      sale = create(:sale, :with_proof_of_sale_file, :with_purchase_files_collection_file, :with_shipment_file, :with_batches)
+      buyer = create(:user, :with_company, :with_trader_role)
+      sale.buyers << buyer
+      expect { sale.buyers << buyer }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
 end

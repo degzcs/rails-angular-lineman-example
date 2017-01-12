@@ -249,4 +249,7 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+  context 'associations with user(buyer)' do
+    it { should have_many :buyers }
+  end
 end

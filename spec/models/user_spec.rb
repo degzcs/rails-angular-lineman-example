@@ -320,4 +320,17 @@ describe  User, type: :model do
       expect(user.failure?).to eq(true)
     end
   end
+
+  context 'associations with orders' do
+    it { should have_many :orders }
+  end
+
+  context 'marketplace' do
+    it 'should validate unique association between user(buyer) and Order(sale)' do
+      buyer = create(:user, :with_company, :with_trader_role)
+      sale = create(:sale, :with_proof_of_sale_file, :with_purchase_files_collection_file, :with_shipment_file, :with_batches)
+      buyer.orders << sale
+      expect { buyer.orders << sale }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+  end
 end
