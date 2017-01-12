@@ -5,7 +5,7 @@ module V1
     class Sale < Grape::Entity
       expose :id, documentation: { type: 'integer', desc: 'Sale id', example: '1' }
       expose :courier_id, documentation: { type: 'integer', desc: 'courier id', example: '1' }
-      expose :buyer do
+      expose :buyer, if: lambda { |sale, options| sale.buyer.present? } do
         expose :id, documentation: { type: 'integer', desc: 'buyer id' } do |sale, _options|
           sale.buyer.id
         end
