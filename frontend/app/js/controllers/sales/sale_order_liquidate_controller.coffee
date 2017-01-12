@@ -90,7 +90,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   # Submit a sale Order if the sale is valid
   #
   $scope.submitSale = ->
-    #TODO: check which is the selected saleType and chose the endpoint to be used
     dialog = $mdDialog.alert()
       .title('Generando Certificado ')
       .content('Espere un momento...')
@@ -137,7 +136,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       $state.go('new_sale.step4')
     ).error (data, status, headers, config) ->
       $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud' + data.message)
-
 
   $scope.newSaleOrder = ->
     LiquidationService.deleteState()

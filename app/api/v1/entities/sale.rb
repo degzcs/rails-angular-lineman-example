@@ -56,12 +56,24 @@ module V1
         expose :email, documentation: { type: 'string', desc: 'email of the seller, who buys a gold batch in a new sale' } do |sale, _options|
           sale.seller.email
         end
+        expose :photo_file_url, documentation: { type: 'string', desc: 'email of the seller, who buys a gold batch in a new sale' } do |sale, _options|
+          sale.seller.profile.photo_file.url#(:thumb)
+        end
       end
       expose :user_id, documentation: { type: 'integer', desc: 'user id', example: '1' } do |sale, _options|
         sale.seller.id
       end
       expose :gold_batch_id, documentation: { type: 'integer', desc: 'gold batch id', example: '1' } do |sale, _options|
         sale.gold_batch.id
+      end
+
+      expose :gold_batch do
+        expose :grade, documentation: {} do |sale, _options|
+          sale.gold_batch.grade
+        end
+        expose :fine_grams, documentation: {} do |sale, _options|
+          sale.gold_batch.fine_grams
+        end
       end
       expose :mineral_type, documentation: { type: 'string', desc: "type mineral of the purchase", example: "Oro"} do |sale, _options|
         sale.gold_batch.mineral_type
@@ -83,6 +95,7 @@ module V1
       expose :created_at, documentation: { type: 'created at', desc: 'date', example: 'date' } do |purchase, _options|
         purchase.created_at.in_time_zone('Bogota').strftime("%m/%d/%Y - %I:%M%p")
       end
+      expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' }
       expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' }
       expose :code, documentation: { type: 'string', desc: 'barcode', example: '123123asdfdaf' }
       expose :barcode_html, documentation: { type: 'string', desc: 'barcode_html', example: 'TABLE' }
