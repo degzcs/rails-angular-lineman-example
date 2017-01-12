@@ -191,7 +191,8 @@ describe 'Sale', type: :request do
               'purchases_total_value' => sale.purchases_total_value,
               'total_gain' => sale.total_gain,
               'transaction_state' => sale.transaction_state,
-              'type' => sale.type
+              'type' => sale.type,
+              'buyer_ids' => []
             }.deep_reject_keys!('created_at','updated_at')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
