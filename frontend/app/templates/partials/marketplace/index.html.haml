@@ -17,6 +17,6 @@
         %p Creado
         %h3 {{sale.created_at}}
       .md-list-item-inner
-        %md-button.btn-save
+        %md-button.btn-save{'ng-click' => 'sendRequest(sale.id)'}
           Enviar petición de compra
-      %md-divider{"md-inset" => "", "ng-if" => "!$last"}
+      %md-divider
