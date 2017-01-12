@@ -21,6 +21,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       weightedLaw: null
       transaction_state: null
       use_wacom_device: true
+      report_url: null
 
 
     create: (sale_params, gold_batch_params, selectedPurchases)->

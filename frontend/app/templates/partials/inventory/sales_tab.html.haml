@@ -6,10 +6,12 @@
           %tr.md-table-headers-row
             %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
               {{h.name}}
+            %th.md-table-header{} Informe Tributario
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
           %tr.md-table-content-row{"ng-repeat" => "sale in sales | filter:filters"}
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "showSale(sale)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
-
-    .md-table-footer{:layout => "row"}
+            %td
+              %md-button.md-primary.md-raised{'ng-if' => 'sale.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(sale)"} Generar
+              %a.md-button.md-primary.md-raised{'ng-if' => 'sale.report_url != (null && undefined)', flex: 20, 'href' => '{{sale.report_url}}', 'download' => 'reporte_{{sale.id}}.csv'} Descargar
       %span.md-table-count-info
         Registros cargados: {{count}}

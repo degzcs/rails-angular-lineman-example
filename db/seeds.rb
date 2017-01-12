@@ -120,5 +120,3 @@ begin
 rescue => e
   puts "There is something wrong!!!, without a user setting will be errors in the sale transactions. ERROR: #{ e }"
 end
-
-puts 'Done!'

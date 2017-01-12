@@ -59,3 +59,9 @@ angular.module('app').factory 'ReportsService', ($resource, $upload, $http, $mdD
         ).catch (err) ->
           console.log '[SERVICE-ERROR]: image signature failed to load: ' + err
       return
+
+    #
+    # Generate the transaction movements file processed by tax module 
+    #
+    generateTransactionMovements: (transaction_id) ->
+      return $http.get('api/v1/reports/' + transaction_id + '/transaction_movements')

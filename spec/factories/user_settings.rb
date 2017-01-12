@@ -10,6 +10,11 @@
 #  updated_at                :datetime
 #  fine_gram_value           :float
 #  last_transaction_sequence :integer          default(0)
+#  regime_type               :string(255)
+#  activity_code             :string(255)
+#  scope_of_operation        :string(255)
+#  organization_type         :string(255)
+#  self_holding_agent        :boolean
 #
 
 FactoryGirl.define do
@@ -19,6 +24,70 @@ FactoryGirl.define do
     profile
     fine_gram_value 0.0
     last_transaction_sequence 0
+    regime_type { 'RS' }
+    scope_of_operation ''
+    organization_type ''
+    self_holding_agent ''
+
+    trait :with_regime_type_rc_no_self_holding do
+      transient do
+        regime_type { 'RC' }
+        activity_code { '19'}
+        organization_type { 'SAS'}
+        self_holding_agent { false }
+      end
+      before :create do |user_setting, e|
+        user_setting.regime_type = e.regime_type
+        user_setting.activity_code = e.activity_code
+        user_setting.regime_type = e.regime_type
+        user_setting.self_holding_agent = e.self_holding_agent
+      end
+    end
+
+    trait :with_regime_type_rc_and_self_holding do
+      transient do
+        regime_type { 'RC' }
+        activity_code { '19'}
+        organization_type { 'SAS'}
+        self_holding_agent { true }
+      end
+      before :create do |user_setting, e|
+        user_setting.regime_type = e.regime_type
+        user_setting.activity_code = e.activity_code
+        user_setting.regime_type = e.regime_type
+        user_setting.self_holding_agent = e.self_holding_agent
+      end
+    end
+
+    trait :with_regime_type_gc_no_self_holding do
+      transient do
+        regime_type { 'GC' }
+        activity_code { '13'}
+        organization_type { 'CI'}
+        self_holding_agent { false }
+      end
+      before :create do |user_setting, e|
+        user_setting.regime_type = e.regime_type
+        user_setting.activity_code = e.activity_code
+        user_setting.regime_type = e.regime_type
+        user_setting.self_holding_agent = e.self_holding_agent
+      end
+    end
+
+    trait :with_regime_type_gc_and_self_holding do
+      transient do
+        regime_type { 'GC' }
+        activity_code { '13'}
+        organization_type { 'CI'}
+        self_holding_agent { true }
+      end
+      before :create do |user_setting, e|
+        user_setting.regime_type = e.regime_type
+        user_setting.activity_code = e.activity_code
+        user_setting.regime_type = e.regime_type
+        user_setting.self_holding_agent = e.self_holding_agent
+      end
+    end
 
     trait :with_available_trazoro_service do
       transient do

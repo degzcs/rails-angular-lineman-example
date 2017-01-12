@@ -43,6 +43,28 @@ module V1
            error!({ error: 'unexpected error', detail: royalty_service.response[:errors] }, 409)
           end
         end
+
+        params do
+          requires :id, type: Integer, desc: 'Transaction ID', documentation: { example: 'sale_id, purchase_id' }
+        end
+        get '/:id/transaction_movements' , http_codes: [ [200, "Successful"], [401, "Unauthorized"] ] do
+          # values = (JSON.parse env["api.request.body"]).deep_symbolize_keys![:origin_certificate]
+          content_type 'text/json'
+          order = ::Order.find(params[:id])
+
+          time = Time.now
+          taxes_service = ::Reports::Taxes::DocumentGeneration.new
+          taxes_service.call(
+            date: time.strftime("%Y-%m-%d"),
+            current_user: current_user,
+            order: order
+          )
+          if taxes_service.response[:success]
+             present taxes_service.csv, with: V1::Entities::Report
+          else
+           error!({ error: 'unexpected error', detail: taxes_service.response[:errors] }, 409)
+          end
+        end
       end
     end
   end

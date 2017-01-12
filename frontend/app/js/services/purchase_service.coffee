@@ -35,6 +35,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       rucom_id_field: ''
       signature_picture: ''
       use_wacom_device: true
+      report_url: null
 
     #
     # HTTP resquests

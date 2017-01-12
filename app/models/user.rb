@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
 
   scope :traders, -> { joins(:roles).where("roles.name = 'trader'") }
   scope :exclude, -> (user) { where.not(id: user.id) }
-  scope :legal_representatives, -> { joins(:profile).where('profiles.legal_representative = true') }
+  scope :legal_representatives, -> { includes(:profile).joins(:profile).where('profiles.legal_representative = true') }
 
   #
   # Calbacks
@@ -128,6 +128,10 @@ class User < ActiveRecord::Base
   #
   # Instance Methods
   #
+
+  def self.legal_representatives_for_select
+    legal_representatives.collect { |usr| [usr.profile.doc_number_and_full_name, usr.profile.id] }
+  end
 
   # Checks if user can pass to the next state
   def check_if_it_can_be_completed

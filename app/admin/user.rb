@@ -1,7 +1,12 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, :alegra_sync, role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], setting_attributes: [:alegra_token, :fine_gram_value]
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, :alegra_sync, 
+                role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, 
+                :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, 
+                :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], 
+                setting_attributes: [:alegra_token, :fine_gram_value, :regime_type,
+                :scope_of_operation, :organization_type, :self_holding_agent, rut_activity_ids: []]
 
   config.clear_action_items!
 
@@ -20,8 +25,13 @@ ActiveAdmin.register User do
       ActiveRecord::Base.transaction do
         service_ids = params[:user][:available_trazoro_service_id]
         service_ids.reject!{ |item| item.empty? } if service_ids.present?
+        setting_attributes = permitted_params[:user][:setting_attributes]
+        rut_activity_ids = setting_attributes[:rut_activity_ids]
+        rut_activity_ids.reject!{ |item| item.empty? } if rut_activity_ids.present?
+        user.setting.update_attributes(setting_attributes)
+        user.setting.rut_activity_ids = rut_activity_ids
+        user.save!
         if user.trader? && user.profile.legal_representative? && service_ids.present?
-          user.setting.update_attributes(permitted_params[:user][:setting_attributes])
           user.setting.trazoro_service_ids = service_ids
           user.save!
         end
@@ -100,12 +110,19 @@ ActiveAdmin.register User do
         p.input :city, label: 'Ciudad'
       end
     end
-    if params[:action] == 'edit' && user.trader? && user.profile.legal_representative?
+    if params[:action] == 'edit' #&& user.trader? && user.profile.legal_representative?
         f.inputs 'Configuración de Usuario' do
-          f.input :trazoro_services, as: :check_boxes, collection: AvailableTrazoroService.all.map { |o| ["#{o.name}", o.id, checked: f.object.setting.trazoro_service_ids.include?(o.id)]}
+          if user.trader? && user.profile.legal_representative?
+            f.input :trazoro_services, as: :check_boxes, collection: AvailableTrazoroService.all.map { |o| ["#{o.name}", o.id, checked: f.object.setting.trazoro_service_ids.include?(o.id)]}
+          end
           f.has_many :setting, heading: '' do |s|
             s.input :alegra_token, label: 'Token alegra', hint: 'Este tóken tiene que ser conseguido desde Alegra para la facturación'
             s.input :fine_gram_value, label: 'Valor del gramo fino', hint: 'Este valor sera tenido encuenta sobre la configuración general'
+            s.input :regime_type, label: 'Tipo de regime', collection: UserSetting.regime_types_for_select
+            s.input :rut_activities, label: 'Códigos de Actividad Rut', collection: RutActivity.all.map { |o| ["#{o.name}", o.id] }, multiple: true
+            s.input :scope_of_operation, label: 'Ambito de Operación', collection: UserSetting.operation_scopes_for_select
+            s.input :organization_type, label: 'Tipo de Organización'
+            s.input :self_holding_agent, label: 'Autorretenedor'
           end
         end
     end
@@ -132,6 +149,9 @@ ActiveAdmin.register User do
     end
     column :alegra_sync
     column :registration_state
+    column(:regime_type) do |user|
+      user.setting.regime_type if user.setting
+    end
     actions defaults: true, dropdown: false do |user|
       item 'Sincronizar', synchronize_admin_user_path(user)
     end
@@ -192,6 +212,11 @@ ActiveAdmin.register User do
         attributes_table_for user.setting do
           row :alegra_token, label: 'Token Alegra'
           row :fine_gram_value, label: 'Valor gramo fino'
+          row :regime_type, label: 'Tipo de regime'
+          row :rut_activity_ids, label: 'Código de Actividad Rut'
+          row :scope_of_operation, label: 'Ambito de Operación'
+          row :organization_type, label: 'Tipo de Organización'
+          row :self_holding_agent, label: 'Autorretenedor'
         end
       end
     end
