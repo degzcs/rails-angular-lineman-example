@@ -10,6 +10,11 @@
 #  updated_at                :datetime
 #  fine_gram_value           :float
 #  last_transaction_sequence :integer          default(0)
+#  regime_type               :string(255)
+#  activity_code             :string(255)
+#  scope_of_operation        :string(255)
+#  organization_type         :string(255)
+#  self_holding_agent        :boolean
 #
 
 FactoryGirl.define do
