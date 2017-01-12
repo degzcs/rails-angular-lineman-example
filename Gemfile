@@ -69,6 +69,7 @@ gem 'alegra', '~> 0.1.2.3'
 gem 'mandrill-api'
 gem 'active_attr'
 gem 'sidekiq'
+gem 'sinatra', require: false
 
 group :development do
   gem 'quiet_assets'
