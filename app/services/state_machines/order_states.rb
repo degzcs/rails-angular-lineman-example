@@ -8,8 +8,7 @@ module StateMachines
       canceled: 'Rechazado',
       paid: 'Pagado',
       published: 'publicado',
-      unpublished: 'no publicado',
-      requested: 'pedido'
+      unpublished: 'no publicado'
     }
 
     def self.included(base)
@@ -51,10 +50,6 @@ module StateMachines
 
     def unpublished?
       transaction_state == 'unpublished'
-    end
-
-    def requested?
-      transaction_state == 'requested'
     end
 
     def end_transaction!(current_user)
@@ -122,11 +117,6 @@ module StateMachines
       self.save!
     end
 
-    def requested!
-      status.trigger(:requested)
-      self.save!
-    end
-
     # Send emails using the Trazoro Mandrill Service
     # Params:
     # state => String = With the current state name of the state machine
@@ -159,11 +149,9 @@ module StateMachines
                     fsm.when(:agree, 'dispatched' => 'approved', 'failed' => 'approved')
                     fsm.when(:cancel, 'dispatched' => 'canceled', 'failed' => 'canceled')
                     fsm.when(:end_sale, 'approved' => 'paid', 'failed' => 'paid')
-                    fsm.when(:crash, 'initialized' => 'failed', 'dispatched' => 'failed', "approved" => "failed", "canceled" => "failed")
-
+                    fsm.when(:crash, 'initialized' => 'failed', 'dispatched' => 'failed', 'approved' => 'failed', 'canceled' => 'failed')
                     fsm.when(:published, 'initialized' => 'published')
                     fsm.when(:unpublished, 'initialized' => 'unpublished', 'published' => 'unpublished')
-                    fsm.when(:requested, 'published' => 'requested')
 
                     fsm
                   end
