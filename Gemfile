@@ -87,6 +87,7 @@ group :development do
   gem 'rails_best_practices', '~> 1.15.7', require: false
   gem 'inch', '~> 0.7.0', require: false
   gem 'guard-inch', '~> 0.2.0'
+  gem 'rerun'
 end
 
 group :development, :test do
