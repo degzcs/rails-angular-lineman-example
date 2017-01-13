@@ -42,6 +42,9 @@ class Order < ActiveRecord::Base
   has_many :documents, class_name: "Document", as: :documentable, dependent: :destroy
   has_many :batches, class_name: 'SoldBatch' #=> The model is SoldBatch but for legibility purpouses is renamed to batch (batches*)
 
+  has_many :purchase_requests
+  has_many :buyers, through: :purchase_requests
+
   audited associated_with: :buyer
   audited associated_with: :seller
   #

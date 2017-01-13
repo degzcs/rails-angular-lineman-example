@@ -39,6 +39,9 @@ class User < ActiveRecord::Base
   has_one :trazoro_services, through: :setting
   has_and_belongs_to_many :roles
 
+  has_many :purchase_requests, foreign_key: 'buyer_id'
+  has_many :orders, through: :purchase_requests
+
   #
   # Validations
   #

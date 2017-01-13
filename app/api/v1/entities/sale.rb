@@ -31,6 +31,7 @@ module V1
           sale.buyer.email
         end
       end
+      expose :buyer_ids, documentation: { type: 'Array', desc: 'Ids of people who have done a purchase requests' }
       expose :seller do
         expose :id, documentation: { type: 'integer', desc: 'buyer id' } do |sale, _options|
           sale.seller.id
