@@ -152,7 +152,10 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
     return
 
   $scope.DownloadSaleFiles =->
-    window.open($scope.saleOrder.purchase_files_collection.file.url, "_blank")
+    if $scope.saleOrder.purchase_files_collection 
+      window.open($scope.saleOrder.purchase_files_collection.file.url, "_blank")
+    else
+      $scope.infoAlert "Los archivos se estan generando actualmente, si desea verlos puede ir a la opción de inventarios en el menú y descargarlos"
     window.open($scope.saleOrder.proof_of_sale.file.url, "_blank")
     window.open($scope.saleOrder.shipment.file.url, "_blank")
     return true
