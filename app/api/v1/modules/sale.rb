@@ -131,6 +131,31 @@ module V1
         end
 
         #
+        # GET by state published
+        #
+
+        desc 'Returns all sales in published state that have not been created by the current user', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales by state published paginated
+          NOTES
+        }
+
+        get '/marketplace', http_codes: [
+            [200, 'Successful'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          sales_in_state_published = ::Order.from_traders.for_marketplace(current_user.id).paginate(:page => page, :per_page => per_page)
+          header 'total_pages', sales_in_state_published.total_pages.to_s
+          present sales_in_state_published, with: V1::Entities::Sale
+        end
+
+        #
         # GET by code
         #
 
