@@ -147,6 +147,16 @@ describe 'Sale', type: :request do
           end
         end
 
+        context '/marketplace' do
+          it 'should get all the offers in the marketplace that have not been created by the current user' do
+            create(:sale, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, :with_batches, transaction_state: 'published', buyer: nil)
+            per_page = 1
+            get '/api/v1/sales/marketplace', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body).count).to eq per_page
+          end
+        end
+
         context '/:id' do
           it 'gets sale by id with role trader' do
             sale = @sales.last
