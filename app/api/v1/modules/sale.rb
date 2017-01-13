@@ -319,7 +319,6 @@ module V1
           begin
             purchase_request.save!
             present purchase_request.order, with: V1::Entities::Sale
-            Rails.logger.info(response)
           rescue Exception => e
             if e.class == ActiveRecord::RecordNotUnique
               error!({error: 'unexpected error', details: 'Usted ya hizo una peticion por este lote' }, 409)
