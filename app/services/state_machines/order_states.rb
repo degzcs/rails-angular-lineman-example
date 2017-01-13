@@ -174,7 +174,7 @@ module StateMachines
         response = send_mandrill_email(state, [self.buyer.email], {NAME: :name}, [self.proof_of_sale])
 
       when 'approved'
-        response = ::Sale::PurchaseFilesCollection::Generation.new.call(sale_order: self)
+        response = GeneratePdfWorker.perform_async(self.id, 'Generation')
         service = Alegra::Traders::CreateInvoice.new
         response = service.call(order: self, payment_method: 'transfer', payment_date: Time.now )
         response = send_mandrill_email(state, [self.seller.email], {NAME: :name, COMPANY_NAME: :company_name}, [self.proof_of_sale])
