@@ -259,6 +259,74 @@ module V1
           # header 'total_pages', @sale.total_pages.to_s
           present @sale, with: V1::Entities::Sale
         end
+
+        desc 'Creates a sale for the current user in state published', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTE
+            Create a sale by the current user to be published in the marketplace
+          NOTE
+        }
+
+        params do
+          requires :sale, type: Hash
+          requires :gold_batch, type: Hash
+          requires :selected_purchases, type: Array
+        end
+
+        post '/marketplace', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found'],
+          ] do
+          authorize! :create, ::Order
+          selected_purchase_ids = params[:selected_purchases].map { |purchase| purchase[:id] }
+          marketplace_service = ::Marketplace::SaleService.new
+          response = marketplace_service.call(
+            order_hash: params[:sale],
+            current_user: current_user,
+            gold_batch_hash: params[:gold_batch],
+            selected_purchase_ids: selected_purchase_ids,
+            remote_address: request.env['REMOTE_ADDR'],
+          )
+          if response[:success]
+            present marketplace_service.sale_order, with: V1::Entities::Sale
+            Rails.logger.info(response)
+          else
+            error!({error: 'unexpected error', detail: response[:errors] }, 409)
+          end
+        end
+
+        desc 'Create a purchase request with the passed order(sale)', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTE
+            Create a purchase request with the passed order(sale)
+          NOTE
+        }
+
+        params do
+          requires :sale_id, type: Integer
+        end
+
+        put '/buy_request', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found'],
+          ] do
+          sale = Order.find(params[:sale_id])
+          purchase_request = sale.purchase_requests.new(buyer_id: current_user.id)
+          begin
+            purchase_request.save!
+            present purchase_request.order, with: V1::Entities::Sale
+          rescue Exception => e
+            if e.class == ActiveRecord::RecordNotUnique
+              error!({error: 'unexpected error', details: 'Usted ya hizo una peticion por este lote' }, 409)
+            else
+              error!({error: 'unexpected error', details: e.message }, 409)
+            end
+          end
+        end
       end
     end
   end

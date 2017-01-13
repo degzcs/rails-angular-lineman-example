@@ -3,9 +3,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   # Redirects to The index sale if there is no pendinigs liquidations
   #
 
-
   if sessionStorage.pendingLiquidation == 'false'
-    $state.go "new_sale"
+    $state.go "new_sale.sale_home"
     return
 
   liquidationInfo = LiquidationService.restoreState()
@@ -21,8 +20,8 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       $scope.weightedLaw += (purchase.gold_batch.grade * purchase.gold_batch.percentage)
     )
 
-  #calculateLaw()
   $scope.selectedGrade = null
+  $scope.selectedSaleType = null
   $scope.selectedWeight  = 0
   $scope.price = 0
   $scope.perUnitValue = null
@@ -35,10 +34,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
   $scope.validationMessages = null
   $scope.clientVerifiedProgress = false
   $scope.saleOrder = saleOrderInfo
-
-  # console.log 'saleOrder: '
-  # console.log $scope.saleOrder
-
 
   CurrentUser.get().success (user) ->
    $scope.currentUser = user
@@ -79,29 +74,6 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       return []
 
   #
-  # Seacrch couriers by id
-  #
-
-  queryForCouriers = (query) ->
-    # perform some asynchronous operation, resolve or reject the promise when appropriate.
-    $q (resolve, reject) ->
-      CourierService.query_by_id(query).success (couriers,config)->
-        resolve couriers
-      return
-
-  $scope.searchCouriers = (query)->
-    if query
-      promise = queryForCouriers(query)
-      promise.then ((couriers) ->
-        return couriers
-
-      ), (reason) ->
-        console.log 'Failed: ' + reason
-        return
-    else
-      return []
-
-  #
   # After select a client from the list clear the search word inside the autocomplete form and waits 400
   # milliseconds to update the client data just for user interaction purposes
   #
@@ -114,65 +86,56 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       return
     ), 400
 
-  # Same for the courier autocomplete field
-  $scope.setSelectedCourier = (selectedCourier)->
-    #$scope.searchCourierText = null
-    $scope.selectedCourier = selectedCourier
-    $scope.courierVerifiedProgress = true
-    $timeout (->
-      $scope.courierVerifiedProgress = false
-      return
-    ), 400
-
   #
-  #Submit a sale Order if the sale is valid
+  # Submit a sale Order if the sale is valid
   #
   $scope.submitSale = ->
     dialog = $mdDialog.alert()
       .title('Generando Certificado ')
       .content('Espere un momento...')
-      #.ok('hecho!')
       duration: 2
+    if validatePresenceOfValues()
+      $mdDialog.show dialog
 
-    $mdDialog.show dialog
-    if $scope.selectedClient == null # || $scope.selectedCourier == null
-      $scope.infoAlert('Atencion', 'Por favor elija un cliente para su Orden de Venta')
-      return
-    else if $scope.price == 0 || $scope.price == null
-      $scope.infoAlert('Atencion', 'Por favor debe ingresar el precio a Fijar para la orden de Venta')
-      return
-    else
+      sale_params = {}
+      sale_params['price'] = $scope.price
+      sale_params['buyer_id'] = $scope.selectedClient.id if $scope.selectedSaleType == 'directly_buyer'
+
       gold_batch_params = {
         fine_grams: $scope.totalAmount,
-        ##grade: $scope.selectedGrade
         grade: $scope.weightedLaw
         mineral_type: $scope.mineral_type
       }
+      createSale(sale_params, gold_batch_params, dialog)
 
-      sale_params = {
-        #courier_id: $scope.selectedCourier.id,
-        buyer_id: $scope.selectedClient.id,
-        price: $scope.price
-      }
+  # @return [ Boolean ]
+  validatePresenceOfValues = ->
+    if $scope.selectedClient == null && $scope.selectedSaleType == 'directly_buyer'
+      $scope.infoAlert('Atencion', 'Por favor elija un cliente para su Orden de Venta')
+      return false
+    else if $scope.price == 0 || $scope.price == null
+      $scope.infoAlert('Atencion', 'Por favor debe ingresar el precio a Fijar para la orden de Venta')
+      return false
+    return true
 
-      SaleService.create(sale_params,gold_batch_params,$scope.selectedPurchases).success((sale) ->
-        $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
-        $mdDialog.cancel dialog
-        # console.log 'Sale Object: '
-        # console.log sale
+  # Call the service incharged to create a Sale
+  createSale = (sale_params, gold_batch_params, dialog)->
+    SaleService.create(sale_params, gold_batch_params, $scope.selectedPurchases, $scope.selectedSaleType).success((sale) ->
+      $scope.infoAlert('Felicitaciones!', 'La orden de venta ha sido creada')
+      $mdDialog.cancel dialog
 
-        LiquidationService.model.selectedPurchases = $scope.selectedPurchases
-        LiquidationService.model.totalAmount = $scope.totalAmount
-        #LiquidationService.model.weightedLaw = $scope.weightedLaw
-        LiquidationService.saveState()
+      LiquidationService.model.selectedPurchases = $scope.selectedPurchases
+      LiquidationService.model.totalAmount = $scope.totalAmount
+      #LiquidationService.model.weightedLaw = $scope.weightedLaw
+      LiquidationService.saveState()
 
-        SaleService.model = sale
-        SaleService.model.weightedLaw = $scope.weightedLaw
-        SaleService.saveState()
+      SaleService.model = sale
+      SaleService.model.weightedLaw = $scope.weightedLaw
+      SaleService.saveState()
 
-        $state.go('new_sale.step4')
-      ).error (data, status, headers, config) ->
-        $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud')
+      $state.go('new_sale.step4')
+    ).error (data, status, headers, config) ->
+      $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud' + data.message)
 
   $scope.newSaleOrder = ->
     LiquidationService.deleteState()
@@ -184,7 +147,7 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
     $mdDialog.show $mdDialog.alert()
       .title(title)
       .content(content)
-      .ok('hecho!')
+      .ok('Continuar')
       duration: 2
     return
 

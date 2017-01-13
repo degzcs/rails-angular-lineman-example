@@ -34,7 +34,9 @@ RSpec.describe Order, type: :model do
       failed: 'failed',
       dispatched: 'dispatched',
       approved: 'approved',
-      canceled: 'canceled'
+      canceled: 'canceled',
+      published: 'published',
+      unpublished: 'unpublished'
     }
 
     it '#save_with_sequence' do
@@ -53,11 +55,11 @@ RSpec.describe Order, type: :model do
     end
 
     it '#seller?' do
-        current_user = purchase.seller
-        expect(purchase.seller?(current_user)).to be_truthy
+      current_user = purchase.seller
+      expect(purchase.seller?(current_user)).to be_truthy
 
-        current_user = purchase.buyer
-        expect(purchase.seller?(current_user)).to be_falsey
+      current_user = purchase.buyer
+      expect(purchase.seller?(current_user)).to be_falsey
     end
 
     context 'purchase' do
@@ -103,7 +105,6 @@ RSpec.describe Order, type: :model do
           end
         end
       end
-
     end
 
     context 'sale' do
@@ -247,5 +248,8 @@ RSpec.describe Order, type: :model do
         end
       end
     end
+  end
+  context 'associations with user(buyer)' do
+    it { should have_many :buyers }
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112201439) do
+ActiveRecord::Schema.define(version: 20170112211202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,13 @@ ActiveRecord::Schema.define(version: 20170112201439) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "purchase_requests", force: true do |t|
+    t.integer "order_id"
+    t.integer "buyer_id"
+  end
+
+  add_index "purchase_requests", ["order_id", "buyer_id"], name: "index_purchase_requests_on_order_id_and_buyer_id", unique: true, using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
