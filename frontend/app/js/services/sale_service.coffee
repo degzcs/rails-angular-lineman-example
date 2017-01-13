@@ -81,6 +81,12 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       return $http.get('api/v1/sales/by_state/'+state)
 
     #
+    # Get all sales by state published
+    #
+    getAllForMarketplace: ->
+      return $http.get("api/v1/sales/marketplace")
+
+    #
     # Trigger a transaction on transaction state field by the transition
     #
     trigger_transition: (id, transition) ->
