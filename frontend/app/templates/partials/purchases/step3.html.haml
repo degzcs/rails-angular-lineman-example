@@ -1,20 +1,20 @@
 %form.purchase-form{:name => "originCertificateForm", "novalidate" => "novalidate"}
   %div{:layout => "column"}
 
-    %md-content{ "flex"=>"", "class"=>"md-padding", "layout"=>"row"}
+    %md-content{ "flex"=>"", "layout"=>"row"}
       
       %div.md-padding{"layout"=>"column"}
         %label.md-subtitle
           Fecha
       
-        %p
+        %p{"style" => "margin-top: 0px;"}
           {{date}}
 
       
       %div.md-padding{"layout" => "column"}
         %label.md-subtitle
           Ciudad
-        %p
+        %p{"style" => "margin-top: 0px;"}
           {{buyer_data.city}}
 
     %section{flex: "", layout: "row"}
@@ -24,28 +24,40 @@
           Informacion del Productor de Mineral
         %hr{ "width"=>"97%", "color"=>"#E3CD48", "align"=>"left"}
         %div.fieldset-inputs
-          %div{layout: "column"}
+          %div{layout: "row"}
             %md-input-container{flex: ""}
               %md-radio-group{"ng-model" => "purchase.model.seller.provider_type", :required => "", :name => 'provider_type'}
                 %md-radio-button{:value => "Barequero", :readOnly => 'true', 'ng-disabled' => 'true'} Barequero
                 %md-radio-button{:value => "Chatarrero", :readOnly => 'true', 'ng-disabled' => 'true'} Chatarrero
-          %div{layout: "column"}
-            %md-input-container{flex: ""}
-              %label Nombre Proveedor
-              %input{"ng-model" => "purchase.model.seller.first_name",  :name => 'provider_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Tipo de Documento
-              %input{"ng-model" => "purchase.model.seller.document_type",  :name => 'provider_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Numero de Documento
-              %input{"ng-model" => "purchase.model.seller.document_number",  :name => 'provider_name', :readOnly => 'true'}
-          %div{layout: "column"}
-            %md-input-container{flex: ""}
-              %label Departamento
-              %input{"ng-model" => "purchase.model.seller.state.name",  :name => 'provider_name', :readOnly => 'true'}
-            %md-input-container{flex: ""}
-              %label Ciudad
-              %input{"ng-model" => "purchase.model.seller.city.name",  :name => 'provider_name', :readOnly => 'true'}
+            %div.input-containers-false
+              %label.label-container-false
+                Nombre de proveedor
+              %p.text-container-false 
+                {{purchase.model.seller.first_name}} {{purchase.model.seller.last_name}}
+          %div{layout: "row"}
+            %div.input-containers-false
+              %label.label-container-false
+                Tipo de documento
+              %p.text-container-false 
+                {{purchase.model.seller.document_type}}
+            %div.input-containers-false
+              %label.label-container-false
+                Número de documento
+              %p.text-container-false 
+                {{purchase.model.seller.document_number}}
+            
+          %div{layout: "row"}
+            %div.input-containers-false
+              %label.label-container-false
+                Departamento
+              %p.text-container-false 
+                {{purchase.model.seller.state.name}}
+            %div.input-containers-false
+              %label.label-container-false
+                Ciudad
+              %p.text-container-false 
+                {{purchase.model.seller.city.name}}
+            
             %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
               %md-progress-circular{"md-mode" => "indeterminate"}
       
@@ -57,18 +69,23 @@
         %hr{ "width"=>"95%", "color"=>"#E3CD48", "align"=>"left"}
         %div.fieldset-inputs
           %div{layout: "column"}
-            %md-input-container{flex: ""}
-              %label Mineral Extraido y Vendido
-              %input{"ng-model" => "goldBatch.model.mineral_type", "type" => "text", :readOnly=>"true"}
+            %div.input-containers-false
+              %label.label-container-false
+                Mineral Extraido y Vendido
+              %p.text-container-false 
+                {{goldBatch.model.mineral_type}}
+            
+            %div.input-containers-false
+              %label.label-container-false
+                Cantidad
+              %p.text-container-false 
+                {{goldBatch.model.total_fine_grams}}
 
-            %md-input-container{flex: ""}
-              %label Cantidad
-              %input{"ng-model" => "goldBatch.model.total_fine_grams", "type" => "text", :name => 'amount', :readOnly=>"true"}
-
-            %md-input-container{flex: ""}
-              %label Unidad de Medida
-              %input{"ng-model" => "measureUnit", "type" => "text", :readOnly=>"true"}
-
+            %div.input-containers-false
+              %label.label-container-false
+                Unidad de Medida
+              %p.text-container-false 
+                {{measureUnit}}
     ////-----------------------Buyer section ------------------------------////////
     %section.md-padding{flex: "", layout: "row"}
       %div.origin-certificate-padding{flex: ""}
@@ -77,17 +94,25 @@
         %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
         %div.fieldset-inputs
           %div{layout: "row"}
-            %md-input-container{"flex"=>""}
-              %label Nombres y Apellidos o Razon Social
-              %input{"readonly" => "true", "ng-model" => "buyer_data.company_name", "type" => "text"}
 
-            %md-input-container{"flex"=>""}
-              %label Tipo de Documento
-              %input{:readonly => "true", "ng-model" => "buyer_data.document_type", "type" => "text"}
+            %div.input-containers-false{flex: ""}
+              %label.label-container-false
+                Nombres y apellidos o Razón Social
+              %p.text-container-false 
+                {{buyer_data.company_name}}
+           
+            %div.input-containers-false{flex: ""}
+              %label.label-container-false
+                Tipo de documento
+              %p.text-container-false 
+                {{buyer_data.document_type}}
 
-            %md-input-container{"flex"=>""}
-              %label Numero de Indentificacion
-              %input{"readonly" => "true", "ng-model" => "buyer_data.nit", "type" => "text"}
+            %div.input-containers-false{flex: ""}
+              %label.label-container-false
+                Número de identificación
+              %p.text-container-false 
+                {{buyer_data.nit}}
+            
     %section.signature-section.md-padding{flex: '', layout: 'column'}
       %div{flex: '', layout: 'row', "layout-align"=>"center center"}
         %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
@@ -97,7 +122,7 @@
         .signature-text
           Firma
 
-    .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"center clientVerifiedProgressºqa1 "}
+    .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"center"}
       %md-button.btn-next.md-raised.md-primary{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
       %md-button.btn-next.md-raised.md-primary{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
       %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step2"} Volver

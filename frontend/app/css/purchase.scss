@@ -101,7 +101,6 @@ md-card.seller{
   padding-bottom: 8px; }
 
 .purchase-form{
-  margin-top: 40px;
   .photo{
     text-align: center;
     margin-top: 30px;
@@ -190,4 +189,32 @@ md-card.seller{
     padding: 18px 0 0 0;
   }
 }
+
+.input-containers-false{
+  border-radius: 2px; 
+  border: solid 1px #c2c2c2; 
+  padding-top: 5px; 
+  padding-bottom: 5px; 
+  padding-left: 15px; 
+  font-family: 'Source Sans Pro';
+  letter-spacing: 1px;
+  margin-top: 10px;
+  width: 80%;
+  margin-left: 5px;
+  margin-right: 5px;
+  max-height: 62px;
+
+  .label-container-false{
+    color:#e3cd48;
+    font-weight: 700;
+  }
+
+  .text-container-false{
+    font-weight: 500;
+    margin-bottom: 0px; 
+    margin-top: 10px;
+  }
+}
+
+
 
