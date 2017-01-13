@@ -192,11 +192,12 @@ describe 'Sale', type: :request do
               'total_gain' => sale.total_gain,
               'transaction_state' => sale.transaction_state,
               'type' => sale.type,
-              'buyer_ids' => []
-            }.deep_reject_keys!('created_at','updated_at')
+              'buyer_ids' => [],
+              'gold_batch' => {'grade'=> sale.gold_batch.grade, 'fine_grams'=> sale.gold_batch.fine_grams}
+            }.deep_reject_keys!('created_at','updated_at', 'photo_file_url')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
             expect(response.status).to eq 200
-            expect(expected_response).to include JSON.parse(response.body).deep_reject_keys!('created_at','updated_at')
+            expect(expected_response).to include JSON.parse(response.body).deep_reject_keys!('created_at','updated_at', 'photo_file_url')
           end
         end
 
