@@ -25,26 +25,41 @@
           %md-input-container{flex: 30}
             %a.md-button.md-raised.md-primary.find-seller-button{:ng-click =>"searchsellerByCode(code)"}  Buscar
         %div{layout: "row"}
-          %md-input-container{flex: ""}
-            %label Nombre Proveedor
-            %input{"ng-model" => "purchase.model.seller.name", :required => "", :name => 'seller_name', :readOnly => 'true'}
-          %md-input-container{flex: ""}
-            %label Nombre de la Compania
-            %input{"ng-model" => "purchase.model.seller.company_name", :required => "", :name => 'company_name', :readOnly => 'true'}
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Nombre Proveedor
+            %p.text-container-false 
+              {{purchase.model.seller.name}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Nombre Proveedor
+            %p.text-container-false 
+              {{purchase.model.seller.company_name}}
+          
         %div{layout: "row"}
           / %md-input-container{flex: "20"}
           /   %label tipo doc.
           /   %input{"ng-model" => "purchase.model.seller.document_type", :required => "", :name => 'seller_document_type', :readOnly => 'true'}
-          %md-input-container{flex: ""}
-            %label Numero de Documento
-            %input{"ng-model" => "purchase.model.seller.document_number", :required => "", :name => 'seller_document_number', :readOnly => 'true'}
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Número de documento
+            %p.text-container-false 
+              {{purchase.model.seller.document_number}}
+          
         %div{layout: "row"}
-          %md-input-container{flex: ""}
-            %label Registro Rucom
-            %input{"ng-model" => "purchase.model.seller.rucom.rucom_number", :name => 'seller_rucom', :readOnly => 'true'}
-          %md-input-container{flex: ""}
-            %label Estado Rucom
-            %input{"ng-model" => "purchase.model.seller.rucom.status", :name => 'seller_rucom_status', :readOnly => 'true'}
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Registro Rucom
+            %p.text-container-false 
+              {{purchase.model.seller.rucom.rucom_number}}
+          
+          %div{layout: "row"}
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Registro Rucom
+            %p.text-container-false 
+              {{purchase.model.seller.rucom.status}}
 
         %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
           %md-progress-circular{"md-mode" => "indeterminate"}
