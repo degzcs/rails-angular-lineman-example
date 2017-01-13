@@ -316,11 +316,16 @@ module V1
           ] do
           sale = Order.find(params[:sale_id])
           purchase_request = sale.purchase_requests.new(buyer_id: current_user.id)
-          if purchase_request.save
-            present marketplace_service.sale_order, with: V1::Entities::Sale
+          begin
+            purchase_request.save!
+            present purchase_request.order, with: V1::Entities::Sale
             Rails.logger.info(response)
-          else
-            error!({error: 'unexpected error', detail: purchase_request.errors.full_messages}, 409)
+          rescue Exception => e
+            if e.class == ActiveRecord::RecordNotUnique
+              error!({error: 'unexpected error', details: 'Usted ya hizo una peticion por este lote' }, 409)
+            else
+              error!({error: 'unexpected error', details: e.message }, 409)
+            end
           end
         end
       end

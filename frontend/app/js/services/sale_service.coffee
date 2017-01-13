@@ -31,7 +31,7 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
         return $http.post("api/v1/sales/marketplace", {sale: sale_params, gold_batch: gold_batch_params, selected_purchases: selectedPurchases})
 
     buyRequest: (sale_id)->
-      return $http.post("api/v1/sales/buy_request", {sale_id: sale_id})
+      return $http.put("api/v1/sales/buy_request", {sale_id: sale_id})
 
     saveState: ->
       sessionStorage.restoreSale = 'true'
