@@ -52,18 +52,6 @@ module StateMachines
       transaction_state == 'unpublished'
     end
 
-    def end_transaction!(current_user)
-      if self.seller.authorized_provider?
-        raise message[:error_transition] unless initialized? || failed?
-        status.trigger!(:end_purchase)
-      else
-        raise message[:legal_representative] unless self.legal_representative?(current_user)
-        raise message[:trader_seller_approved_failed] unless can_end_transaction?(current_user)
-        status.trigger!(:end_sale)
-        self.save!
-      end
-    end
-
     def can_end_transaction?(current_user)
       self.seller.trader? && self.seller?(current_user) && (approved? || failed?)
     end
@@ -77,6 +65,20 @@ module StateMachines
         current_user_not_is_the_seller: 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden',
         empty_buyer: 'No se ha asignado un comprador a esta orden de venta.',
       }
+    end
+
+    def end_transaction!(current_user, remote_address=nil)
+      if self.seller.authorized_provider?
+        raise message[:error_transition] unless initialized? || failed?
+        self.update_remote_address!(remote_address)
+        status.trigger!(:end_purchase)
+      else
+        raise message[:legal_representative] unless self.legal_representative?(current_user)
+        raise message[:trader_seller_approved_failed] unless can_end_transaction?(current_user)
+        self.update_remote_address!(remote_address)
+        status.trigger!(:end_sale)
+        self.save!
+      end
     end
 
     def crash!
