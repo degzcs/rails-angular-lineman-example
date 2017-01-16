@@ -30,8 +30,20 @@ angular.module('app').factory 'SaleService', ($http, $rootScope)->
       else if selectedSaleType == 'marketplace'
         return $http.post("api/v1/sales/marketplace", {sale: sale_params, gold_batch: gold_batch_params, selected_purchases: selectedPurchases})
 
-    buyRequest: (sale_id)->
-      return $http.put("api/v1/sales/buy_request", {sale_id: sale_id})
+    buyRequest: (saleId)->
+      return $http.put("api/v1/sales/buy_request", {sale_id: saleId})
+
+    rejectBuyer: (saleId, buyerId)->
+      return $http.put("api/v1/sales/reject_buyer", {sale_id: saleId, buyer_id: buyerId})
+
+    # TODO: Change this when is created the PurhcaseRequest state machine
+    acceptBuyer: (saleId, buyerId) ->
+      return $http
+                  method: 'GET'
+                  url: 'api/v1/sales/'+saleId+'/transition'
+                  params:
+                    buyer_id: buyerId
+                    transition: 'send_info!'
 
     saveState: ->
       sessionStorage.restoreSale = 'true'
