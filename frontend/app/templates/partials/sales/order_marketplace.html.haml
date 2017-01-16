@@ -1,4 +1,4 @@
-%section{layout: "column", "layout-align" => "center"}
+%section.marketplace-resume{layout: "column", "layout-align" => "center"}
   %h2
     Resumen de la orden de venta pendiente
   %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
@@ -28,8 +28,8 @@
           %td
             ${{sale.price}} COP
 
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "space-around stretch" }
-    %div{:layout => "column", flex: "", "layout-align" => "space-around stretch"}
+  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "start stretch" }
+    %div{:layout => "column", flex: "", "layout-align" => "start stretch"}
       %h3 Listado de lotes
       %md-content
         .table-container
@@ -54,7 +54,7 @@
   %div.md-padding{flex: "100", :layout => "row", "layout-align" => "space-around stretch" }
     %div{:layout => "column", flex: "", "layout-align" => "space-around stretch"}
       %h3 Compradores
-      %h6 Al aceptar un comprado se inicia el proceso de compra con dicho comercializador. Se le envirá un correo para que revise la documentación en borrador. Cuando él comprador acepte al documentación entonces se generará la factúra y se pondrá a la disposición del mismo la información real del mineral.
+      %h6 Al aceptar a un comprador se inicia el proceso de compra exclusivamente con ese comercializador. Se le envirá un correo para que revise la documentación en borrador. Cuando él comprador acepte al documentación entonces se generará la factúra y se pondrá a la disposición del mismo la información real del mineral.
       %md-content
         .table-container{'ng-if' => 'buyersCount > 0'}
           %table.md-table
