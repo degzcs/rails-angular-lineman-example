@@ -254,7 +254,11 @@ module V1
           # per_page = params[:per_page] || 10
           @sale = ::Order.find(params[:id])
           transition = params[:transition].to_sym
-          @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'])
+          if params[:buyer_id].present? && params[:transition] == 'send_info!'
+            @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'], params[:buyer_id])
+          else
+            @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'])
+          end
           # @sale.save!
           # header 'total_pages', @sale.total_pages.to_s
           present @sale, with: V1::Entities::Sale
