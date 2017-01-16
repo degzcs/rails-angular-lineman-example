@@ -7,7 +7,7 @@ describe TrazoroMandrill::Service do
   context 'send sync emails' do
     context 'single email notification' do
       it 'should check the receipient is ok' do
-        merge_vars_mapping = { A_MERGE_VAR: 'first_name', ANOTHER: 'last_name' }
+        merge_vars_mapping = { A_MERGE_VAR: :first_name, ANOTHER: :last_name }
         response = TrazoroMandrill::Service.recipient_from(user.email, merge_vars_mapping).to_h
         expected_response = {
           to: {
