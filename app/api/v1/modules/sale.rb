@@ -378,7 +378,9 @@ module V1
           ] do
           sale = Order.find(params[:sale_id])
           purchase_requests = sale.purchase_requests.where(buyer_id: params[:buyer_id])
+          buyer = purchase_requests.first.buyer
           if purchase_requests.first.destroy
+            TrazoroMandrill::Service.send_email('purchase_request_reject_template', 'Petición de Compra Rechazada', { NAME: buyer.profile.first_name + ' ' + buyer.profile.last_name, ORDER_CODE: sale.code, FINE_GRAMS: sale.gold_batch.fine_grams, MINERAL_TYPE: sale.gold_batch.mineral_type }, [buyer.email])
             present sale, with: V1::Entities::Sale
           else
             error!({error: 'unexpected error', detail: purchase_requests.errors.full_messages }, 409)

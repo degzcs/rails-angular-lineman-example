@@ -356,17 +356,19 @@ describe 'Sale', type: :request do
         end
         context '/reject_buyer' do
           it 'Should Remove buy request of a buyer specific' do
-            current_seller = @sale.seller
-            token_seller = current_seller.create_token
-            buyer = @current_user.company.legal_representative
-            @sale.buyers << buyer
+            VCR.use_cassette 'purchase_request_reject' do
+              current_seller = @sale.seller
+              token_seller = current_seller.create_token
+              buyer = @current_user.company.legal_representative
+              @sale.buyers << buyer
 
-            put '/api/v1/sales/reject_buyer', { sale_id: @sale.id, buyer_id: buyer.id }, 'Authorization' => "Barer #{token_seller}"
+              put '/api/v1/sales/reject_buyer', { sale_id: @sale.id, buyer_id: buyer.id }, 'Authorization' => "Barer #{token_seller}"
 
-            expect(response.status).to eq 200
-            expect(@sale.reload.buyers.present?).to eq false
-            expect(@sale.purchase_requests.present?).to eq false
-            expect(@sale.published?).to eq true
+              expect(response.status).to eq 200
+              expect(@sale.reload.buyers.present?).to eq false
+              expect(@sale.purchase_requests.present?).to eq false
+              expect(@sale.published?).to eq true
+            end
           end
         end
       end
