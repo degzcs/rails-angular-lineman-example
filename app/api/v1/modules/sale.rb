@@ -131,6 +131,31 @@ module V1
         end
 
         #
+        # GET by state published
+        #
+
+        desc 'Returns all sales in published state that have not been created by the current user', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales by state published paginated
+          NOTES
+        }
+
+        get '/marketplace', http_codes: [
+            [200, 'Successful'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          sales_in_state_published = ::Order.from_traders.for_marketplace(current_user.id).paginate(:page => page, :per_page => per_page)
+          header 'total_pages', sales_in_state_published.total_pages.to_s
+          present sales_in_state_published, with: V1::Entities::Sale
+        end
+
+        #
         # GET by code
         #
 
@@ -322,6 +347,7 @@ module V1
           purchase_request = sale.purchase_requests.new(buyer_id: current_user.id)
           begin
             purchase_request.save!
+            TrazoroMandrill::Service.send_email('purchase_request_template', 'Nueva Petición de Compra', { NAME: sale.seller.profile.first_name + ' ' + sale.seller.profile.last_name, ORDER_CODE: sale.code, FINE_GRAMS: sale.gold_batch.fine_grams, MINERAL_TYPE: sale.gold_batch.mineral_type }, [sale.seller.email])
             present purchase_request.order, with: V1::Entities::Sale
           rescue Exception => e
             if e.class == ActiveRecord::RecordNotUnique
@@ -329,6 +355,33 @@ module V1
             else
               error!({error: 'unexpected error', details: e.message }, 409)
             end
+          end
+        end
+
+        desc 'Remove buy request of a buyer specific', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTE
+            Remove buy request of a buyer specific
+          NOTE
+        }
+
+        params do
+          requires :buyer_id, type: Integer
+          requires :sale_id, type: Integer
+        end
+
+        put '/reject_buyer', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found'],
+          ] do
+          sale = Order.find(params[:sale_id])
+          purchase_requests = sale.purchase_requests.where(buyer_id: params[:buyer_id])
+          if purchase_requests.first.destroy
+            present sale, with: V1::Entities::Sale
+          else
+            error!({error: 'unexpected error', detail: purchase_requests.errors.full_messages }, 409)
           end
         end
       end

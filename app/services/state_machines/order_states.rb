@@ -111,14 +111,16 @@ module StateMachines
       callbacks(status)
     end
 
-    def published!
+    def published!(remote_address = nil)
       status.trigger(:published)
       self.save!
+      self.update_remote_address!(remote_address)
     end
 
-    def unpublished!
+    def unpublished!(remote_address = nil)
       status.trigger(:unpublished)
       self.save!
+      self.update_remote_address!(remote_address)
     end
 
     # Send emails using the Trazoro Mandrill Service

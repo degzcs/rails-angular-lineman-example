@@ -147,6 +147,16 @@ describe 'Sale', type: :request do
           end
         end
 
+        context '/marketplace' do
+          it 'should get all the offers in the marketplace that have not been created by the current user' do
+            create(:sale, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, :with_batches, transaction_state: 'published', buyer: nil)
+            per_page = 1
+            get '/api/v1/sales/marketplace', { per_page: per_page }, 'Authorization' => "Barer #{@token}"
+            expect(response.status).to eq 200
+            expect(JSON.parse(response.body).count).to eq per_page
+          end
+        end
+
         context '/:id' do
           it 'gets sale by id with role trader' do
             sale = @sales.last
@@ -314,6 +324,49 @@ describe 'Sale', type: :request do
                 end
               end
             end
+          end
+        end
+      end
+      context 'PUT' do
+        before :each do
+          @sale = create(:sale, :with_purchase_files_collection_file, :with_proof_of_sale_file, :with_shipment_file, :with_batches, transaction_state: 'published', buyer: nil)
+        end
+        context '/buy_request' do
+          it 'Should add purchase request to sale' do
+            VCR.use_cassette 'purchase_request' do
+              current_buyer = @current_user.company.legal_representative
+              @token_buyer = current_buyer.create_token
+
+              put '/api/v1/sales/buy_request', { sale_id: @sale.id }, 'Authorization' => "Barer #{@token_buyer}"
+
+              expected_response = {
+                'price' => @sale.price,
+                'fine_grams' => @sale.gold_batch.fine_grams,
+                'transaction_state' => 'published'
+              }
+
+              expect(response.status).to eq 200
+              expect(JSON.parse(response.body)).to include expected_response
+
+              expect(@sale.buyers.first).to match(current_buyer)
+              expect(@sale.published?).to eq true
+              expect(@sale.buyer).to eq nil
+            end
+          end
+        end
+        context '/reject_buyer' do
+          it 'Should Remove buy request of a buyer specific' do
+            current_seller = @sale.seller
+            token_seller = current_seller.create_token
+            buyer = @current_user.company.legal_representative
+            @sale.buyers << buyer
+
+            put '/api/v1/sales/reject_buyer', { sale_id: @sale.id, buyer_id: buyer.id }, 'Authorization' => "Barer #{token_seller}"
+
+            expect(response.status).to eq 200
+            expect(@sale.reload.buyers.present?).to eq false
+            expect(@sale.purchase_requests.present?).to eq false
+            expect(@sale.published?).to eq true
           end
         end
       end
