@@ -343,6 +343,7 @@ module V1
           purchase_request = sale.purchase_requests.new(buyer_id: current_user.id)
           begin
             purchase_request.save!
+            TrazoroMandrill::Service.send_email('purchase_request_template', 'Nueva Petición de Compra', { NAME: sale.seller.profile.first_name + ' ' + sale.seller.profile.last_name, ORDER_CODE: sale.code, FINE_GRAMS: sale.gold_batch.fine_grams, MINERAL_TYPE: sale.gold_batch.mineral_type }, [sale.seller.email])
             present purchase_request.order, with: V1::Entities::Sale
           rescue Exception => e
             if e.class == ActiveRecord::RecordNotUnique
