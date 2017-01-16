@@ -365,6 +365,7 @@ describe 'Sale', type: :request do
             expect(response.status).to eq 200
             expect(@sale.reload.buyers.present?).to eq false
             expect(@sale.purchase_requests.present?).to eq false
+            expect(@sale.published?).to eq true
           end
         end
       end
