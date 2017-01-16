@@ -2,6 +2,7 @@ angular.module('app').controller 'SaleOrderMarketplaceCtrl', ($scope, $mdDialog,
 
   SaleService.get($stateParams.id).success((sale, status, headers, config) ->
     $scope.sale = sale
+    $scope.buyersCount = sale.buyers.length
   ).error (data, status, headers, config) ->
     infoAlert 'ERROR', 'No se pudo recuperar la venta'
 
