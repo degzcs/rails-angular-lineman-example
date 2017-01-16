@@ -193,6 +193,7 @@ describe 'Sale', type: :request do
               'transaction_state' => sale.transaction_state,
               'type' => sale.type,
               'buyer_ids' => [],
+              'buyers' => [],
               'gold_batch' => {'grade'=> sale.gold_batch.grade, 'fine_grams'=> sale.gold_batch.fine_grams}
             }.deep_reject_keys!('created_at','updated_at', 'photo_file_url')
             get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
