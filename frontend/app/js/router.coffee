@@ -1121,6 +1121,59 @@
         deferred.promise
   )
 
+  .state("new_sale.tab.orders_marketplace",
+    url: "/orders_marketplace",
+    ncyBreadcrumb:
+      label: 'Ordenes de Venta Marketplace'
+    views:
+      'content':
+        templateUrl: "partials/sales/orders_marketplace.html"
+        controller: "SaleOrdersMarketplaceCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
+  .state("new_sale.order_marketplace",
+    url: "/order_marketplace",
+    params: {
+          id: null
+      },
+    ncyBreadcrumb:
+      label: 'Ordene de Venta Marketplace'
+    views:
+      'content':
+        templateUrl: "partials/sales/order_marketplace.html"
+        controller: "SaleOrderMarketplaceCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+
   .state("new_sale.tab.orders_canceled_sale",
     url: "/orders_canceled_sale",
     ncyBreadcrumb:
