@@ -353,6 +353,33 @@ module V1
             end
           end
         end
+
+        desc 'Remove buy request of a buyer specific', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTE
+            Remove buy request of a buyer specific
+          NOTE
+        }
+
+        params do
+          requires :buyer_id, type: Integer
+          requires :sale_id, type: Integer
+        end
+
+        put '/reject_buyer', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found'],
+          ] do
+          sale = Order.find(params[:sale_id])
+          purchase_requests = sale.purchase_requests.where(buyer_id: params[:buyer_id])
+          if purchase_requests.first.destroy
+            present sale, with: V1::Entities::Sale
+          else
+            error!({error: 'unexpected error', detail: purchase_requests.errors.full_messages }, 409)
+          end
+        end
       end
     end
   end
