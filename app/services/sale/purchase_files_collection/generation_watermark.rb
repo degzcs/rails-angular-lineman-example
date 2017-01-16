@@ -50,10 +50,16 @@ module Sale
         folder_path = "#{ Rails.root }/tmp/purchase_files_collection_with_watermark/#{ timestamp }"
 
         if create_temporal_folder(folder_path)
-          join_files(folder_path, file_paths, final_temporal_file_name)
+          join_files(extract_relative_path(folder_path), file_paths, final_temporal_file_name)
         else
           raise 'The folder was not created!'
         end
+      end
+
+      def extract_relative_path(folder_path)
+        raise 'current_folder_relative_path: Error, no se envió la cadena correspondiente al path' unless folder_path.present?
+        ini = (folder_path =~ /tmp/).to_i
+        folder_path[ini..-1]
       end
 
       # Makes the whole process will files saved in WAS S3
@@ -69,7 +75,7 @@ module Sale
         if create_temporal_folder(folder_path)
           temporal_files = download_files!(folder_path, files)
           file_paths = temporal_files.map{ |file| file[:filename] }
-          join_files(folder_path, file_paths, final_temporal_file_name)
+          join_files(extract_relative_path(folder_path), file_paths, final_temporal_file_name)
         else
           raise 'The folder was not creted!'
         end
@@ -80,16 +86,19 @@ module Sale
       # @param final_temporal_file_name [ String ]
       # @return [ String ] with the temporal file location
       def join_files(folder_path, file_paths, final_temporal_file_name)
-        watermark_file_borrador = "#{ Rails.root }/vendor/assets/images/watermark_borrador.png"
+        watermark_file_borrador = "#{Rails.root}/vendor/assets/images/watermark_borrador.png"
         joined_file_paths = file_paths.join(' ')
         # NOTE: if it is needded you can add  -density 50 to the next command
-
-        system <<-COMMAND
-          cd #{ folder_path } && convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
-        COMMAND
-        system <<-COMMAND
-          convert #{ folder_path }/#{ final_temporal_file_name } null: #{ watermark_file_borrador } -gravity Center -compose multiply -layers composite #{ folder_path }/#{ final_temporal_file_name }
-        COMMAND
+        Dir.chdir(folder_path) do
+          system <<-COMMAND
+            convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
+          COMMAND
+        end
+        Dir.chdir(folder_path) do
+          system <<-COMMAND
+            convert #{ final_temporal_file_name } null: #{ watermark_file_borrador } -gravity Center -compose multiply -layers composite #{ final_temporal_file_name }
+          COMMAND
+        end
         temporal_file_location = "#{ folder_path }/#{ final_temporal_file_name }"
         # Create watermark with imagemagick
         # convert -size 840x730 xc:transparent -font Helvetica -pointsize 200 -fill "#585858" -annotate +15+159 'Borrador' watermark.png
