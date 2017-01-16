@@ -1,4 +1,3 @@
-
 angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchService, CameraService, MeasureConverterService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter, AuthorizedProviderService, SignatureService, PurchaseService, LiquidationService) ->
 
   #
