@@ -46,8 +46,9 @@ puts '1- Create Puc accounts to Tax Module'
 
 puc_array = [
   ["130505","Clientes Nacionales"],
-  ["135595","ANTICIPO CREE (.40%)"],
-  ["23657501","Autorretención CREE"],
+  # desaparace para 2017 de acuerdo a la reforma tributaria
+  # ["135595","ANTICIPO CREE (.40%)"],
+  # ["23657501","Autorretención CREE"],
   ["23657502","Autorretención RTFTE (2.5%)"],
   ["413595","Ingresos por Venta de Oro"],
   ["613516","Venta Materias Primas Oro"],
@@ -82,7 +83,9 @@ tax_array = [
   ["Autorretención CREE", "AUT_CREE", 0.4, PucAccount.find_by(code: '23657501').id],
   ["Retención en la Fuente (2.5%)", "RTFTE_2.5", 2.5, PucAccount.find_by(code: '135515').id],
   ["Regalias (4%)", "REGALIAS", 4, PucAccount.find_by(code: '429515').id],
-  ["IVA entre RS y RC (2.4%)", "IVA_2.4", 2.4, PucAccount.find_by(code: '240804').id],
+  #["IVA entre RS y RC (2.4%)", "IVA_2.4", 2.4, PucAccount.find_by(code: '240804').id],
+  # debido a la reforma tributaria esta línea cambió y está por confirmarse el valor del porcentaje
+  ["IVA entre RS y RC (19%)", "IVA_19", 19, PucAccount.find_by(code: '240804').id],
   ["ICA entre RS y GC (1%)", "ICA_1", 1, PucAccount.find_by(code: '511505').id],
   ["Impuestos retención en la fuente RS y GC (3.5%)", "RTFTE_3.5", 3.5, PucAccount.find_by(code: '511505').id]
 ]
@@ -101,7 +104,8 @@ puts '3- Create tax rules'
 tax_rules_array = [
   [Tax.find_by(reference: 'ANT_CREE').id,"RC","GC"],
   [Tax.find_by(reference: 'AUT_CREE').id,"RC","GC"],
-  [Tax.find_by(reference: 'IVA_2.4').id,"RS","RC"],
+  #[Tax.find_by(reference: 'IVA_2.4').id,"RS","RC"],
+  [Tax.find_by(reference: 'IVA_19').id,"RS","RC"],
   [Tax.find_by(reference: 'REGALIAS').id,"RS","RC"],
   [Tax.find_by(reference: 'RTFTE_3.5').id,"RS","GC"],
   [Tax.find_by(reference: 'ICA_1').id,"RS","GC"]
