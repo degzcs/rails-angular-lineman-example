@@ -1,6 +1,6 @@
 .purchase-container
   %md-content.marketplace
-    %md-list
+    %md-list{'ng-if' => 'count > 0'}
       %md-list-item.md-3-line.marketplace-card{"ng-repeat" => "sale in sales"}
         %img.face.seller-img{:alt => "{{sale.seller.first_name}}", "ng-src" => "{{sale.seller.photo_file_url}}?{{$index}}"}
         .md-list-item-text
@@ -23,3 +23,5 @@
           %md-button{ 'ng-if' => 'sale.alreadyRequested', 'ng-disabled' => true}
             En espera por aprovación
         %md-divider
+    .empty-list{'ng-if' => 'count == 0', 'layout' => 'row', 'layout-align' => 'center center'}
+      %p No hay ofertas disponibles
