@@ -1,4 +1,5 @@
-angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService, $mdDialog, CurrentUser, LiquidationService, User, CourierService, PurchaseService,$sce) ->
+# NOTE: This file is not used any more, but it could be used instead step 4
+angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatchService, $mdDialog, CurrentUser, LiquidationService, User, PurchaseService,$sce) ->
   #
   # Deletes the last liquidation
   LiquidationService.deleteState()
@@ -10,7 +11,6 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   $scope.barcode_html = $sce.trustAsHtml($scope.currentSale.barcode_html)
   $scope.currentBuyer = null
   $scope.currentUser = null
-  $scope.currentCourier = null
 
   #
   # get Client (buyer)
@@ -21,10 +21,6 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   # get current user info
   CurrentUser.get().success (user) ->
     $scope.currentUser = user
-  #
-  # get Courier
-  CourierService.retrieveCourierById($scope.currentSale.courier_id).success (courier)->
-    $scope.currentCourier = courier
 
   $scope.getSalePDF = ->
     console.log "Generar pdf"
