@@ -143,9 +143,8 @@
           %tr.md-table-headers-row
             %th.md-table-header
               Medida / Cantidad
-
             %th.md-table-header
-              Precio
+              Precio  
             %th.md-table-header
               Total gramos
             %th.md-table-header
@@ -160,7 +159,6 @@
                   Gramo(s)
                 %p.text-container-false
                   {{goldBatch.model.grams  | number:2}}
-
             %td.md-table-td-more
               %md-input-container
                 $ {{purchase.model.fine_gram_unit_price | number:2}}
@@ -180,7 +178,6 @@
                   Castellano(s)
                 %p.text-container-false
                   {{goldBatch.model.castellanos}}
-
           %tr
             %td.md-table-td-more
               %div.input-containers-false
@@ -203,6 +200,23 @@
                 %p.text-container-false
                   {{goldBatch.model.reales}}
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
-      %md-button.btn-save{  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
-      %md-button.btn-save{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
-      %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"new_purchase.step0", "ng-click" => 'flushData()'} Nueva compra
+
+
+      %div{"layout"=>"column", "layout-align" => "center end"}
+        .icon{"flex" => ""}
+          %md-icon{"md-svg-src" => "/img/icons/purchase/documents.svg"}
+        .button{"flex" => ""}
+          %md-button.btn-save{  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
+
+      %div{"layout"=>"column", "layout-align" => "center end"}
+        .icon{"flex" => ""}
+        .button{"flex" => ""}
+          %md-button.md-primary.md-raised.md-accent{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
+
+      %div{"layout"=>"column", "layout-align" => "center end"}
+
+        .icon{"flex" => ""}
+          %md-icon{"md-svg-src" => "/img/icons/purchase/documents.svg"}
+        .button{"flex" => ""}
+          %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"new_purchase.step0", "ng-click" => 'flushData()'} Nueva compra
+
