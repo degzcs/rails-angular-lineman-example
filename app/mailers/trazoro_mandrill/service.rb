@@ -95,11 +95,24 @@ module TrazoroMandrill
       # @return [ Array ] with hashes in the form:
       # { name: <MERGE_VAR_NAME_AS_A_SYMBOL>, content: <value> }
       def vars_from(user, merge_vars)
-        merge_vars.map do |var_name, method|
+        merge_vars.map do |var_name, value|
           {
             name: var_name.to_s.upcase.to_sym,
-            content: user.send(method)
+            content: merge_var_content_for(value, user)
           }
+        end
+      end
+
+      # Gets the correct value to send. In case that it is a symbol, it will get the value from
+      # the UserPresenter class in other cases it will use the value sent as parameter.
+      # @param value [ Symbol or Any]
+      # @param user [ User ]
+      # @return [ String ]
+      def merge_var_content_for(value, user)
+        if value.is_a? Symbol
+          user.send(value)
+        else
+          value.to_s
         end
       end
 

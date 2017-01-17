@@ -52,18 +52,6 @@ module StateMachines
       transaction_state == 'unpublished'
     end
 
-    def end_transaction!(current_user)
-      if self.seller.authorized_provider?
-        raise message[:error_transition] unless initialized? || failed?
-        status.trigger!(:end_purchase)
-      else
-        raise message[:legal_representative] unless self.legal_representative?(current_user)
-        raise message[:trader_seller_approved_failed] unless can_end_transaction?(current_user)
-        status.trigger!(:end_sale)
-        self.save!
-      end
-    end
-
     def can_end_transaction?(current_user)
       self.seller.trader? && self.seller?(current_user) && (approved? || failed?)
     end
@@ -74,8 +62,22 @@ module StateMachines
         legal_representative: 'Este usuario no está autorizado para finalizar la transacción',
         trader_seller_approved_failed: 'Verifique que el usuario puede terminar la transacción y que la transacción esté en estado aprobado o fallido',
         current_user_not_is_the_buyer: 'Este usuario no es el comprador, no está autizado para cambiar el estado de la orden',
-        current_user_not_is_the_seller: 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden'
+        current_user_not_is_the_seller: 'Este usuario no es el vendedor, no está autizado para cambiar el estado de la orden',
+        empty_buyer: 'No se ha asignado un comprador a esta orden de venta.',
       }
+    end
+
+    def end_transaction!(current_user, remote_address=nil)
+      if self.seller.authorized_provider?
+        raise message[:error_transition] unless initialized? || failed?
+        status.trigger!(:end_purchase)
+      else
+        raise message[:legal_representative] unless self.legal_representative?(current_user)
+        raise message[:trader_seller_approved_failed] unless can_end_transaction?(current_user)
+        self.update_remote_address!(remote_address)
+        status.trigger!(:end_sale)
+        self.save!
+      end
     end
 
     def crash!
@@ -91,8 +93,11 @@ module StateMachines
       callbacks(status)
     end
 
-    def send_info!(current_user, remote_address=nil)
+    # TODO: create a new state machine for Purchase Request in order to avoud this complex method and flow
+    def send_info!(current_user, remote_address=nil, buyer_id=nil)
       raise message[:current_user_not_is_the_seller] unless self.seller?(current_user)
+      self.buyer = User.find(buyer_id) if buyer_id.present?
+      raise message[:empty_buyer] unless self.buyer.present?
       status.trigger!(:send_info)
       self.save!
       self.update_remote_address!(remote_address)
@@ -107,14 +112,16 @@ module StateMachines
       callbacks(status)
     end
 
-    def published!
+    def published!(remote_address = nil)
       status.trigger(:published)
       self.save!
+      self.update_remote_address!(remote_address)
     end
 
-    def unpublished!
+    def unpublished!(remote_address = nil)
       status.trigger(:unpublished)
       self.save!
+      self.update_remote_address!(remote_address)
     end
 
     # Send emails using the Trazoro Mandrill Service
@@ -145,7 +152,7 @@ module StateMachines
                     fsm.when(:end_purchase, 'initialized' => 'paid', 'failed' => 'paid')
 
                     # sales transaction states
-                    fsm.when(:send_info, 'initialized' => 'dispatched', 'failed' => 'dispatched')
+                    fsm.when(:send_info, 'initialized' => 'dispatched', 'published' => 'dispatched', 'failed' => 'dispatched')
                     fsm.when(:agree, 'dispatched' => 'approved', 'failed' => 'approved')
                     fsm.when(:cancel, 'dispatched' => 'canceled', 'failed' => 'canceled')
                     fsm.when(:end_sale, 'approved' => 'paid', 'failed' => 'paid')

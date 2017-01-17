@@ -4,7 +4,7 @@ angular.module('app').controller 'MarketplaceCtrl', ($scope, $mdDialog, SaleServ
   CurrentUser.get().success (data) ->
     $scope.currentUser = data
 
-  SaleService.getAllByState('published').success((sales, status, headers, config) ->
+  SaleService.getAllForMarketplace().success((sales, status, headers, config) ->
     $scope.pages = parseInt(headers().total_pages)
     $scope.count = sales.length
     $scope.sales = sales

@@ -2,7 +2,7 @@ angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, GoldBa
   #
   # Deletes the last liquidation
   LiquidationService.deleteState()
-  
+
   #
   #
   #Get info
@@ -25,3 +25,19 @@ angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, GoldBa
   # get Courier
   CourierService.retrieveCourierById($scope.currentSale.courier_id).success (courier)->
     $scope.currentCourier = courier
+
+  $scope.markAsPaid = ->
+    confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea MARCAR COMO PAGADA su orden?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
+    $mdDialog.show(confirm).then (->
+      SaleService.trigger_transition($scope.currentSale.id, 'end_transaction!').success( (sale) ->
+        $scope.currentSale = sale
+        $mdDialog.show $mdDialog.alert().title('Ejecución exitosa!').content('La orden ha sido marcada como pagada exitosamente!').ok('ok')
+        $state.go 'inventory.sales'
+      )
+      .error((error)->
+        $scope.showLoading = false
+        $mdDialog.show $mdDialog.alert().title('Hubo un problema').content(error.detail).ok('ok')
+      )
+    ), ->
+      # cancel process
+      return

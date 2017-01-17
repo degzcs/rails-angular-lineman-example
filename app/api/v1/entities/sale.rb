@@ -32,6 +32,16 @@ module V1
         end
       end
       expose :buyer_ids, documentation: { type: 'Array', desc: 'Ids of people who have done a purchase requests' }
+      expose :buyers do |sale, _options|
+        sale.buyers.map do |buyer|
+          buyer_presenter =  UserPresenter.new(buyer, nil)
+          {
+            id: buyer_presenter.id,
+            name: buyer_presenter.name,
+            nit_number: buyer_presenter.nit_number,
+          }
+        end.as_json
+      end
       expose :seller do
         expose :id, documentation: { type: 'integer', desc: 'buyer id' } do |sale, _options|
           sale.seller.id

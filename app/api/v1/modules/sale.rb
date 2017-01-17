@@ -131,6 +131,31 @@ module V1
         end
 
         #
+        # GET by state published
+        #
+
+        desc 'Returns all sales in published state that have not been created by the current user', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTES
+            Returns all existent sales by state published paginated
+          NOTES
+        }
+
+        get '/marketplace', http_codes: [
+            [200, 'Successful'],
+            [401, 'Unauthorized'],
+            [404, 'Entry not found']
+          ] do
+          authorize! :read, ::Order
+          content_type 'text/json'
+          page = params[:page] || 1
+          per_page = params[:per_page] || 10
+          sales_in_state_published = ::Order.from_traders.for_marketplace(current_user.id).paginate(:page => page, :per_page => per_page)
+          header 'total_pages', sales_in_state_published.total_pages.to_s
+          present sales_in_state_published, with: V1::Entities::Sale
+        end
+
+        #
         # GET by code
         #
 
@@ -254,7 +279,11 @@ module V1
           # per_page = params[:per_page] || 10
           @sale = ::Order.find(params[:id])
           transition = params[:transition].to_sym
-          @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'])
+          if params[:buyer_id].present? && params[:transition] == 'send_info!'
+            @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'], params[:buyer_id])
+          else
+            @sale.__send__(transition, current_user, request.env['REMOTE_ADDR'])
+          end
           # @sale.save!
           # header 'total_pages', @sale.total_pages.to_s
           present @sale, with: V1::Entities::Sale
@@ -318,6 +347,7 @@ module V1
           purchase_request = sale.purchase_requests.new(buyer_id: current_user.id)
           begin
             purchase_request.save!
+            TrazoroMandrill::Service.send_email('purchase_request_template', 'Nueva Petición de Compra', { NAME: sale.seller.profile.first_name + ' ' + sale.seller.profile.last_name, ORDER_CODE: sale.code, FINE_GRAMS: sale.gold_batch.fine_grams, MINERAL_TYPE: sale.gold_batch.mineral_type }, [sale.seller.email])
             present purchase_request.order, with: V1::Entities::Sale
           rescue Exception => e
             if e.class == ActiveRecord::RecordNotUnique
@@ -325,6 +355,35 @@ module V1
             else
               error!({error: 'unexpected error', details: e.message }, 409)
             end
+          end
+        end
+
+        desc 'Remove buy request of a buyer specific', {
+          entity: V1::Entities::Sale,
+          notes: <<-NOTE
+            Remove buy request of a buyer specific
+          NOTE
+        }
+
+        params do
+          requires :buyer_id, type: Integer
+          requires :sale_id, type: Integer
+        end
+
+        put '/reject_buyer', http_codes: [
+          [200, 'Successful'],
+          [400, 'Invalid parameter'],
+          [401, 'Unauthorized'],
+          [404, 'Entry not found'],
+          ] do
+          sale = Order.find(params[:sale_id])
+          purchase_requests = sale.purchase_requests.where(buyer_id: params[:buyer_id])
+          buyer = purchase_requests.first.buyer
+          if purchase_requests.first.destroy
+            TrazoroMandrill::Service.send_email('purchase_request_reject_template', 'Petición de Compra Rechazada', { NAME: buyer.profile.first_name + ' ' + buyer.profile.last_name, ORDER_CODE: sale.code, FINE_GRAMS: sale.gold_batch.fine_grams, MINERAL_TYPE: sale.gold_batch.mineral_type }, [buyer.email])
+            present sale, with: V1::Entities::Sale
+          else
+            error!({error: 'unexpected error', detail: purchase_requests.errors.full_messages }, 409)
           end
         end
       end

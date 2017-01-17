@@ -81,26 +81,26 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
 
   $scope.agreeOrCancel = (transition)->
     if transition == 'cancel!' || 'agree!'
-      if can_exec_transition()
+      if canExecTransition()
         if transition == 'cancel!'
           confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea realmente Rechazar su orden de Compra?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
           $mdDialog.show(confirm).then (->
-            exec_transition(transition, 'new_purchase.purchase_home')
+            execTransition(transition, 'new_purchase.purchase_home')
             #'new_purchase.orders_approved'
           ), ->
             #console.log 'You decided don\'t change the order state to canceled.'
             return
         else
-          exec_transition(transition, 'new_purchase.purchase_home')
+          execTransition(transition, 'new_purchase.purchase_home')
       else
         $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Alerta!').content('Su Orden ya se encuentra Actualizada!').ariaLabel('Alert Dialog ').ok('ok')
   #
   # This function executes the method to call the purchase
   # end-point called transition trought the SaleService
   #
-  exec_transition = (transition_name, viewToGo)->
+  execTransition = (transitionName, viewToGo)->
     $scope.showLoading = true
-    SaleService.trigger_transition($scope.purchaseModel.id, transition_name).success( (data) ->
+    SaleService.trigger_transition($scope.purchaseModel.id, transitionName).success( (data) ->
       $scope.showLoading = false
       $scope.purchaseModel.transaction_state = data.transaction_state
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Ejecución exitosa!').content('Orden Actualizada Exitosamente!').ariaLabel('Alert Dialog ').ok('ok')
@@ -111,7 +111,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(error.detail).ariaLabel('Alert Dialog ').ok('ok')
     )
 
-  can_exec_transition = ->
+  canExecTransition = ->
     if  $scope.purchaseModel.transaction_state == 'canceled' || $scope.purchaseModel.transaction_state == 'approved'
       return false
     else
