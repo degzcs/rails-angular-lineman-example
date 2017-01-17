@@ -70,7 +70,6 @@ module StateMachines
     def end_transaction!(current_user, remote_address=nil)
       if self.seller.authorized_provider?
         raise message[:error_transition] unless initialized? || failed?
-        self.update_remote_address!(remote_address)
         status.trigger!(:end_purchase)
       else
         raise message[:legal_representative] unless self.legal_representative?(current_user)
