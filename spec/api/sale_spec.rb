@@ -66,7 +66,7 @@ describe 'Sale', type: :request do
 
             # Validate Sale audit actions on Orders
             order = Order.first
-            expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
+            expect(order.audits.count).to eq(2) # because it makes 2 actions (create and update)
             expect(order.audits.first.action).to eq('create')
             expect(order.audits.first.audited_changes['type']).to eq('sale')
             expect(order.audits.first.user).to eq(@current_seller)
@@ -99,7 +99,7 @@ describe 'Sale', type: :request do
 
           # Validate Sale audit actions on Orders
           order = Order.first
-          expect(order.audits.count).to eq(3) # because it makes 2 actions (create and update)
+          expect(order.audits.count).to eq(2) # because it makes 2 actions (create and update)
           expect(order.audits.first.action).to eq('create')
           expect(order.audits.first.audited_changes['type']).to eq('sale')
           expect(order.audits.first.user).to eq(@current_seller)
