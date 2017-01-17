@@ -33,11 +33,9 @@ module Sale
         sale_order = setup_sale_order!
         selected_gold_batches = find_gold_batches_from(selected_purchase_ids)
         mark_as_sold!(selected_gold_batches)
-        # update_inventories(selected_gold_batches)
-        # TODO: raise an error if the user try to sold more gold than it has.
         register_sold_batches(sale_order, selected_gold_batches)
-        #response = ::Sale::PurchaseFilesCollection::GenerationWatermark.new.call(sale_order: @sale_order)
         response = ::Alegra::Traders::ContactSynchronize.new(seller: sale_order.seller, buyer: sale_order.buyer).call if APP_CONFIG[:ALEGRA_SYNC]
+
         pdf_generation_service = ::PdfGeneration.new
         response = pdf_generation_service.call(
           order: sale_order,
@@ -46,14 +44,17 @@ module Sale
           document_type: 'equivalent_document' # TODO: invoice here
         )
 
-        shipment_service = Shipment::ShipmentService.new
-        response = shipment_service.call(
-          current_user: @seller,
-          order: sale_order
-        )
+        # NOTE: This feature was Deprecated
+        # shipment_service = Shipment::ShipmentService.new
+        # response = shipment_service.call(
+        #   current_user: @seller,
+        #   order: sale_order
+        # )
 
         # TODO: send email, sms or other service to buyer
         response = @sale_order.send_info!(current_user, remote_address)
+        # NOTE: the next process will be generated in a background job
+        worker_id = GeneratePdfWorker.perform_async(sale_order.id)
       end
       response
     end

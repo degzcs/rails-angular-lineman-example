@@ -182,6 +182,9 @@ module StateMachines
       when 'canceled'
         response  = send_mandrill_email(state, [self.buyer.email])
 
+      when 'paid'
+        # TODO: send emails to notify this
+
       else
         # Don't do anything!
       end
