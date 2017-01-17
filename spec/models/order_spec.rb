@@ -176,7 +176,7 @@ RSpec.describe Order, type: :model do
           end
 
           it 'has all the order states required to handle purchase and sale transactions' do
-            expect(sale.status.states).to eq(states.keys.map(&:to_s))
+            expect(sale.status.states.sort).to eq(states.keys.map(&:to_s).sort)
           end
 
           it 'sets as initialized state the \'initialized\' value in transaction_state field' do
