@@ -1,13 +1,13 @@
 %section{:flex => "", :layout => "column", "layout-fill" => ""}
-  %md-card.amounts-picked.md-padding{flex: "15"}
-    %h3
-      Seleccion (Gramos Finos)
-    #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"}
-    #  {{purchase.gold_batch.grams}}
-    %div.total_amount
-      %strong
-        Gramos Finos Totales:
-      {{totalAmount.toFixed(3)}} gr
+  
+  %h2
+    SELECCION DE GRAMOS FINOS
+  #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"}
+  #  {{purchase.gold_batch.grams}}
+  %div.total_amount
+    %strong
+      Gramos Finos Totales:
+    {{totalAmount.toFixed(3)}} gr
 
   %md-content
     .table-container
