@@ -331,3 +331,11 @@ md-input-container {
 .elongate-height{
   min-height: 100%;
 }
+
+a.md-button.md-default-theme.md-accent, .md-button.md-default-theme.md-accent {
+  color: rgb(227,205,72);
+}
+
+a.md-button.md-default-theme.md-accent:not([disabled]) md-icon, .md-button.md-default-theme.md-accent:not([disabled]) md-icon {
+    color: #e3cd48;
+}

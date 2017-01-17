@@ -15,6 +15,7 @@
 }
 .camera-selector{
   margin-top: 0;
+
 }
 .camera-container{
   position: relative;
@@ -65,5 +66,6 @@ canvas.taken-photo{
 .camera-selector{
   md-select{
     display: inline-block;
+    margin-left: 500px;
   }
 }

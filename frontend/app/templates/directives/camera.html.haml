@@ -2,14 +2,16 @@
   %h3.camera-selector
     %md-select.camera-selector{:placeholder => "Selecciona una cámara", :ng-model => "optionSelected"}
       %md-option{:ng-value => "options.value", :ng-repeat => "options in optionsSource",:ng-click => "changeCamera(options.value)"} {{options.text}}
+
   %section.camera-layout
+    
     .camera-container
       %video{:autoplay => ""}
       %canvas.taken-photo{"ng-class"=> "{{photoTaken ? 'show' : ''}}"}
       .camera-options.show{layout: "row"}
         %button.md-button.btn-save.md-raised{"ng-disabled" => "!optionSelected", "ng-click" => "takeSnapshot()",flex:""}
           Capturar
-          %md-icon{"md-svg-icon"=>"image:camera_alt"}
+          //%md-icon{"md-svg-icon"=>"image:camera_alt"}
       .camera-options-final
         %div{layout: "row"}
           .option-camera{flex: ""}
@@ -19,8 +21,8 @@
           .option-camera{flex: ""}
             %md-button.btn-save{"ng-click" => "comeBack()"}
               Seleccionar
-              %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
+              
   .camera-back-options
-    %md-button.btn-save{"ng-click" => "comeBack()"}
+    %md-button.btn-cancel{"ng-click" => "comeBack()"}
       Cancelar
-      %md-icon{"md-svg-icon"=>"navigation:arrow_back"}
+      
