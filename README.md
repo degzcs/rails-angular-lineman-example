@@ -15,16 +15,16 @@ This is the repository for Trazoro web app. In this repository you will find bot
 - Redis 3.2.6
 
 NOTE: We used to use rbenv, nodenv and phantomenv to install dependencies.
+NOTE: It is recommended to use `zsh` shell with `oh-my-zshell` plugin to this enviroment, it is very useful and handy.
 
 ## Phantonjs 1.9.8
 
-we use version phantonjs 1.9.8 because from version 2.0.0 onwards
-not support upload files with capybara test.
+We are using the phantonjs 1.9.8 version because it library from version 2.0.0 onwards
+does not support upload files with capybara.
 
 ## Development
 
 Once you have installed all dependecies you have to run the rails server to run the back-end and lineman for the front-end.
-NOTE: It is recommended to use `zsh` shell with `oh-my-zshell` plugin to this enviroment, it is very useful and handy.
 
 ## Back-end
 
@@ -77,7 +77,9 @@ Go to frontend folder and install node dependencies and run lineman command, as 
  npm install
  lineman run
 ```
+
 then copy&paste the basic config, as follows:
+
 ```sh
 cp frontend/config/application.coffee.example frontend/config/application.coffee
 ```
@@ -89,6 +91,7 @@ Prepare test environment, as follows:
 ```sh
 RAILS_ENV=test CREATE_LOCATIONS=yes rake db:setup
 ```
+
 and then run
 
 ```sh
@@ -102,6 +105,7 @@ cap production deploy
 ```
 
 ## Issues
+
 We have some problems with Selenium Webdriver and VCR, this problemas were re the dynamic port that it is using with phantomjs. So, to fix it we make a mokey patch for test environment, please check this file for more information `service/support/helper/phantomjs_fix_for_test.rb`
 
 ##Issues (Mac OSX 10.11.3)
@@ -147,6 +151,7 @@ I have to install qt and its dependencies
 ```sh
 sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 ```
+
 ## Contributors
 
 - Diego Gomez
