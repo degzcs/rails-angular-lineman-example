@@ -1,122 +1,176 @@
 %div{:layout => "column"}
   .purchase-container
-    %md-content{ "flex"=>"", "class"=>"", "layout"=>"row"}
-      %md-content{"flex"=> "40", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"start start"}
-        %h5{"flex"=> "10"}
-          Comprador
-        %table.md-table{"flex"=> ""}
-          // TODO: add conditionals to show up, as a buyer, either the natural or legal person information
-          %tbody
-            %tr
-              %td.md-table-td-more
-                Razon social:
-              %td.md-table-td-more.value
-                {{buyer_data.company_name}}
-            %tr
-              %td.md-table-td-more
-                Nit:
-              %td.md-table-td-more.value
-                {{buyer_data.nit}}
-            %tr
-              %td.md-table-td-more
-                Rucom:
-              %td.md-table-td-more.value
-                {{buyer_data.rucom_number}}
-            %tr
-              %td.md-table-td-more
-                Nombre de usuario:
-              %td.md-table-td-more
-                {{buyer_data.first_name}} {{buyer_data.last_name}}
-            %tr
-              %td.md-table-td-more
-                Sucursal:
-              %td.md-table-td-more
-                {{buyer_data.office}}
-            %tr
-              %td.md-table-td-more
-                Direccion:
-              %td.md-table-td-more.value
-                {{buyer_data.address}}
-            %tr
-              %td.md-table-td-more
-                Telefono:
-              %td.md-table-td-more.value
-                {{buyer_data.phone}}
-      %md-content{"flex"=> "", "class"=>"", "layout"=>"row", "layout-align"=>"center start"}
-        %md-content{"flex"=> "", "class"=>"md-padding autocomplete", "layout"=>"column", "layout-align"=>"center start"}
-          %h5{"flex"=> ""}
-            Proveedor
-          %table.md-table{'flex' => ''}
-            %tbody
-              %tr.row
-                %td.md-table-td-more
-                  Razon social:
-                %td.md-table-td-more.value
-                  {{purchase.model.seller.company_name}}
-              %tr
-                %td.md-table-td-more
-                  Nit:
-                %td.md-table-td-more.value
-                  {{purchase.model.seller.nit}}
-              %tr
-                %td.md-table-td-more
-                  Rucom:
-                %td.md-table-td-more.value
-                  {{purchase.model.seller.rucom.rucom_number}}
-              %tr
-                %td.md-table-td-more
-                  Nombre de usuario
-                %td.md-table-td-more
-                  {{purchase.model.seller.name}}
-              %tr
-                %td.md-table-td-more
-                  Cedula
-                %td.md-table-td-more
-                  {{purchase.model.seller.document_number}}
-              %tr
-                %td.md-table-td-more
-                  Direccion:
-                %td.md-table-td-more.value
-                  {{purchase.model.seller.address}}
-              %tr
-                %td.md-table-td-more
-                  Telefono:
-                %td.md-table-td-more.value
-                  {{purchase.model.seller.phone_number}}
-        %md-content{"flex"=> "30", "class"=>"md-padding autocomplete", "layout"=>"row", "layout-align"=>"center start"}
+    
+    %md-content{ "flex"=>"30", "class"=>"", "layout"=>"row"}
+      %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
+        %div.md-subtitle{"flex"=> ""}
+          COMPRADOR
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Razón Social
+          %p.text-container-false 
+            {{buyer_data.company_name}} 
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Nit
+          %p.text-container-false 
+            {{buyer_data.nit}}  
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Rucom
+          %p.text-container-false 
+            {{buyer_data.rucom_number}}
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Nombre de usuario
+          %p.text-container-false 
+            {{buyer_data.first_name}} {{buyer_data.last_name}}
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Sucursal
+          %p.text-container-false 
+            {{buyer_data.office}}
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Direccion
+          %p.text-container-false 
+            {{buyer_data.address}}
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Telefono
+          %p.text-container-false 
+            {{buyer_data.phone}}
+
+        / %table.md-table{"flex"=> ""}
+        /   // TODO: add conditionals to show up, as a buyer, either the natural or legal person information
+        /   %tbody
+        /     %tr
+        /       %td.md-table-td-more
+        /         Razon social:
+        /       %td.md-table-td-more.value
+        /         {{buyer_data.company_name}}
+        /     %tr
+        /       %td.md-table-td-more
+        /         Nit:
+        /       %td.md-table-td-more.value
+        /         {{buyer_data.nit}}
+        /     %tr
+        /       %td.md-table-td-more
+        /         Rucom:
+        /       %td.md-table-td-more.value
+        /         {{buyer_data.rucom_number}}
+        /     %tr
+        /       %td.md-table-td-more
+        /         Nombre de usuario:
+        /       %td.md-table-td-more
+        /         {{buyer_data.first_name}} {{buyer_data.last_name}}
+        /     %tr
+        /       %td.md-table-td-more
+        /         Sucursal:
+        /       %td.md-table-td-more
+        /         {{buyer_data.office}}
+        /     %tr
+        /       %td.md-table-td-more
+        /         Direccion:
+        /       %td.md-table-td-more.value
+        /         {{buyer_data.address}}
+        /     %tr
+        /       %td.md-table-td-more
+        /         Telefono:
+        /       %td.md-table-td-more.value
+        /         {{buyer_data.phone}}
+      %md-content{"flex"=> "30", "class"=>"", "layout"=>"row"}
+        %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
+          %div.md-subtitle{"flex"=> ""}
+            PROVEEDOR
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Razón Social
+            %p.text-container-false 
+              {{purchase.model.seller.company_name}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Nit
+            %p.text-container-false 
+              {{purchase.model.seller.nit}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Rucom
+            %p.text-container-false 
+              {{purchase.model.seller.rucom.rucom_number}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Nombre de usuario
+            %p.text-container-false 
+              {{purchase.model.seller.name}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Cedula
+            %p.text-container-false 
+              {{purchase.model.seller.document_number}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Direccion
+            %p.text-container-false 
+              {{purchase.model.seller.address}}
+
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Telefono
+            %p.text-container-false 
+              {{purchase.model.seller.phone_number}}
+
+      %md-content{"flex"=> "40", "class"=>"", "layout"=>"row"}  
+        %md-content{"flex"=> "", "class"=>"", "layout"=>"column", "layout-align" => "center center"}
+          %div.md-subtitle{"flex"=> ""}
+            FOTO DEL PROVEEDOR
           .image.row
             .photo
               %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture}}"}
 
+          .reference-code{'flex' => ''}
+            %div{"ng-bind-html"=>"barcode_html"}
+              {{purchase.model.code}}
+
     %md-content{"class"=>"", "layout"=>"row"}
-      %h4
-        Datos de la Compra
+      %h3
+        DATOS DE LA COMPRA
     %md-content{"class"=>"", "layout"=>"row"}
       .purchase-info{'flex' => ''}
         .row{'layout' => 'row'}
           .oc-number{'flex' => ''}
-            %p
+            %p.md-subtitle
               Numero de Certificado de Origen
             %p
               {{purchase.model.origin_certificate_sequence}}
       .select-law{'flex' => ''}
-        %p
+        %p.md-subtitle
           Ley
         %p
           {{goldBatch.model.grade}}
-      .reference-code{'flex' => ''}
-        %div{"ng-bind-html"=>"barcode_html"}
-        {{purchase.model.code}}
+     
+      .select-law{'flex' => ''}
+        %p.md-subtitle
+          Mineral Comprado
 
-    %md-content{"class"=>"", "layout"=>"row"}
-      %h4
-        Mineral Comprado
+        %p
+          {{goldBatch.model.mineral_type}}
     %md-content{"class"=>"", "layout"=>"row"}
       .purchase-info{'flex' => ''}
-        .row{'layout' => 'row'}
-          .oc-number{'flex' => ''}
-            %p
-              {{goldBatch.model.mineral_type}}
+        
 
     %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
       %h4
