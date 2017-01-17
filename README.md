@@ -12,6 +12,7 @@ This is the repository for Trazoro web app. In this repository you will find bot
 - phantomjs 1.9.8
 - image-magic 6.9.0
 - Ghostscript
+- Redis 3.2.6
 
 NOTE: We used to use rbenv, nodenv and phantomenv to install dependencies.
 
@@ -22,8 +23,8 @@ not support upload files with capybara test.
 
 ## Development
 
-Once you have installed all dependecies you have to run the rails server to run the back-end and lineman for the fron-end.
-NOTE: It is recommended to use zsh with oh-my-zshell to this enviroment, because it is very useful.
+Once you have installed all dependecies you have to run the rails server to run the back-end and lineman for the front-end.
+NOTE: It is recommended to use `zsh` shell with `oh-my-zshell` plugin to this enviroment, it is very useful and handy.
 
 ## Back-end
 
@@ -44,16 +45,28 @@ cp config/app_config.yml.example config/app_config.yml
 cp config/rucom_service.yml.example config/rucom_service.yml
 
 ```
+
 Create the database and run the seeds
 
 ```sh
 rake db:create
 CREATE_LOCATIONS=yes rake db:setup
 
-# only seed
+# Standard Seed
 CREATE_LOCATIONS=yes rake db:seed
+
+# Tax Module seed
+rake db:seed:tax_module
 ```
 
+NOTE: The `CREATE_LOCATIONS` variable is only necessary the first time that is run these tasks.
+
+### Background Jobs
+These jobs are handled by Sidekiq, that is why you have to preinstall redis. After that, you have to run the next command in order to exec those processes that are not in the main thread, like pdf generation.
+
+```sh
+bundle exec rerun --background --dir app,db,lib --pattern '{**/*.rb}' -- bundle exec sidekiq --verbose
+```
 
 ## Front-end
 
@@ -68,6 +81,7 @@ then copy&paste the basic config, as follows:
 ```sh
 cp frontend/config/application.coffee.example frontend/config/application.coffee
 ```
+
 ## Tests
 
 Prepare test environment, as follows:
