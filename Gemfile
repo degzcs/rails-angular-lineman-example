@@ -68,6 +68,8 @@ gem "rails-observers", github: 'rails/rails-observers'
 gem 'alegra', '~> 0.1.2.3'
 gem 'mandrill-api'
 gem 'active_attr'
+gem 'sidekiq'
+gem 'sinatra', require: false
 
 group :development do
   gem 'quiet_assets'
@@ -85,6 +87,7 @@ group :development do
   gem 'rails_best_practices', '~> 1.15.7', require: false
   gem 'inch', '~> 0.7.0', require: false
   gem 'guard-inch', '~> 0.2.0'
+  gem 'rerun'
 end
 
 group :development, :test do

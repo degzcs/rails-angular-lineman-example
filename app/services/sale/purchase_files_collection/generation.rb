@@ -47,10 +47,16 @@ module Sale
         folder_path = "#{ Rails.root }/tmp/purchase_files_collection/#{ timestamp }"
 
         if create_temporal_folder(folder_path)
-          join_files(folder_path, file_paths, final_temporal_file_name)
+          join_files(extract_relative_path(folder_path), file_paths, final_temporal_file_name)
         else
           raise 'The folder was not created!'
         end
+      end
+
+      def extract_relative_path(folder_path)
+        raise 'current_folder_relative_path: Error, no se envió la cadena correspondiente al path' unless folder_path.present?
+        ini = (folder_path =~ /tmp/).to_i
+        folder_path[ini..-1]
       end
 
       # Makes the whole process will files saved in WAS S3
@@ -66,7 +72,7 @@ module Sale
         if create_temporal_folder(folder_path)
           temporal_files = download_files!(folder_path, files)
           file_paths = temporal_files.map{ |file| file[:filename] }
-          join_files(folder_path, file_paths, final_temporal_file_name)
+          join_files(extract_relative_path(folder_path), file_paths, final_temporal_file_name)
         else
           raise 'The folder was not creted!'
         end
@@ -80,10 +86,11 @@ module Sale
       def join_files(folder_path, file_paths, final_temporal_file_name)
         joined_file_paths = file_paths.join(' ')
         # NOTE: if it is needed you can add  -density 50 to the next command
-
-        system <<-COMMAND
-          cd #{ folder_path } && convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
-        COMMAND
+        Dir.chdir(folder_path) do
+          system <<-COMMAND
+            convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
+          COMMAND
+        end
         temporal_file_location = "#{ folder_path }/#{ final_temporal_file_name }"
       end
 
@@ -131,6 +138,7 @@ module Sale
       # @param purchase_orders [ Array ] with all Purchase related with the current sale
       # @return [ Array ] with all documents (ActiveRecord) belonging to the  given purchase
       def purchase_files_from_aws_s3(purchase_orders)
+        binding.pry
         files = []
         purchase_orders.each do |purchase_order|
         # Origin certificate

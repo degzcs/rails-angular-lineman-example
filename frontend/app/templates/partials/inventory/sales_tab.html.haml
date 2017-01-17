@@ -7,11 +7,16 @@
             %th.md-table-header{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"}
               {{h.name}}
             %th.md-table-header{} Informe Tributario
+            %th.md-table-header{} Archivos de la Venta
         %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
           %tr.md-table-content-row{"ng-repeat" => "sale in sales | filter:filters"}
             %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs","ng-click" => "showSale(sale)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
             %td
               %md-button.md-primary.md-raised{'ng-if' => 'sale.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(sale)"} Generar
               %a.md-button.md-primary.md-raised{'ng-if' => 'sale.report_url != (null && undefined)', flex: 20, 'href' => '{{sale.report_url}}', 'download' => 'reporte_{{sale.id}}.csv'} Descargar
+            %td
+              %md-button.md-primary.md-raised{'ng-if' => 'sale.purchase_files_collection === (null || undefined)', flex: 20, "ng-click" => "generateReport(sale)"} Generandose
+              %a.md-button.md-primary.md-raised{'ng-if' => 'sale.purchase_files_collection != (null && undefined)', flex: 20, 'href' => '{{sale.report_url}}', 'download' => 'reporte_{{sale.id}}.csv'} Descargar
+      
       %span.md-table-count-info
         Registros cargados: {{count}}

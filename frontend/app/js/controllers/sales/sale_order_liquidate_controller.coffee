@@ -151,8 +151,5 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
       duration: 2
     return
 
-  $scope.DownloadSaleFiles =->
-    window.open($scope.saleOrder.purchase_files_collection.file.url, "_blank")
-    window.open($scope.saleOrder.proof_of_sale.file.url, "_blank")
-    window.open($scope.saleOrder.shipment.file.url, "_blank")
-    return true
+  $scope.downloadSaleFilesDialog =->
+    $scope.infoAlert "Los archivos se estan generando actualmente, si desea verlos puede ir a la pestañas de ORDERNES DE VENTA PENDIENTES/ORDENES MARKETPLACE en la seccion de VENTAS"

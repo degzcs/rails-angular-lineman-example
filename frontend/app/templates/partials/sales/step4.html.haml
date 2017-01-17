@@ -1,6 +1,6 @@
 %md-content.md-padding.sale-show-content
 
-  %div{layout: "row"}
+  %div{layout: "row", 'ng-if' => 'saleOrder.buyer !== null'}
     /------------------------ CLIENT CARD ---------------------/
     %md-card.sell-card-info{flex:""}
       %md-toolbar
@@ -35,39 +35,6 @@
               %label Correo
               %input{:disabled => "disabled", "ng-model" => "saleOrder.buyer.email"}
 
-    /------------------------ COURIER CARD ---------------------/
-    / %md-card.sell-card-info{flex: ""}
-    /   %md-toolbar
-    /     .md-toolbar-tools
-    /       %h3
-    /         %span Datos Transportador
-    /   %md-card-content
-    /     .card-inputs
-    /       %div{layout: "row"}
-    /         %md-input-container{flex: ""}
-    /           %label Cedula
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.id_document_number"}
-    /       %div{layout: "row"}
-    /         %md-input-container{flex: ""}
-    /           %label Nombre
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.first_name"}
-    /         %md-input-container{flex: ""}
-    /           %label Apellido
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.last_name"}
-    /       %div{layout: "row"}
-    /         %md-input-container{flex: ""}
-    /           %label Telefono
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.phone_number"}
-    /         %md-input-container{flex: ""}
-    /           %label Direccion
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.address"}
-    /       %div{layout: "row"}
-    /         %md-input-container{flex: ""}
-    /           %label Compañia
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.company_name"}
-    /         %md-input-container{flex: ""}
-    /           %label Placas/Numero de Vuelo
-    /           %input{:disabled => "disabled", "ng-model" => "currentCourier.nit_company_number"}
   %div{layout: "row"}
     /------------------------ USER CARD ---------------------/
     %md-card.sell-card-info{flex: ""}
@@ -141,7 +108,9 @@
               %td {{associatedPurchase.fine_grams}}
               %td
   %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"end end"}
-    %a.md-button{href: "{{saleOrder.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
+    %a.md-button{'ng-if' => 'saleOrder.purchase_files_collection_with_watermark === null', 'ng-click'=> 'downloadSaleFilesDialog()'}
+      Generando documentación ...
+    %a.md-button{href: "{{saleOrder.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf", 'ng-if' => 'saleOrder.purchase_files_collection_with_watermark !== null'}
       Documentos de compra adjuntos
     %a.md-button{href: "{{saleOrder.proof_of_sale.file.url}}", :target => "_blank"}
       Compendio
