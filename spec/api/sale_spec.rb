@@ -72,12 +72,17 @@ describe 'Sale', type: :request do
             expect(order.audits.first.user).to eq(@current_seller)
             expect(order.audits.last.action).to eq('update')
             expect(order.audits.first.remote_address).to eq('127.0.0.1')
-            expect(order.shipment.file.path).to match('shipment.pdf')
+            # expect(order.shipment.file.path).to match('shipment.pdf')
             expect(order.proof_of_sale.file.path).to match('equivalent_document.pdf')
-            expect(order.purchase_files_collection_with_watermark.file.path.present?).to eq true
+            # NOTE: the next file will be generated for a background job
+            expect(order.purchase_files_collection_with_watermark.present?).to eq false
             # expect(order.audits.last.user).to eq(@current_seller) is pending to add the audit_as
+            assert_equal 1, GeneratePdfWorker.jobs.size
+            expect(GeneratePdfWorker.jobs.first['class']).to eq 'GeneratePdfWorker'
+            expect(GeneratePdfWorker.jobs.first['args'].first).to eq order.id
           end
         end
+
         it 'should create one complete sale with trader role for marketplace and leave it in a published state' do
           new_sale_values = {
             'price' => 180
@@ -105,9 +110,13 @@ describe 'Sale', type: :request do
           expect(order.audits.first.user).to eq(@current_seller)
           expect(order.audits.last.action).to eq('update')
           expect(order.audits.first.remote_address).to eq('127.0.0.1')
-          expect(order.shipment.file.path).to match('shipment.pdf')
+          # expect(order.shipment.file.path).to match('shipment.pdf')
           expect(order.proof_of_sale.file.path).to match('equivalent_document.pdf')
-          expect(order.purchase_files_collection_with_watermark.file.path.present?).to eq true
+          # NOTE: the next file will be generated for a background job
+          expect(order.purchase_files_collection_with_watermark.present?).to eq false
+          assert_equal 1, GeneratePdfWorker.jobs.size
+          expect(GeneratePdfWorker.jobs.first['class']).to eq 'GeneratePdfWorker'
+          expect(GeneratePdfWorker.jobs.first['args'].first).to eq order.id
           expect(order.published?).to eq true
           expect(order.buyer).to eq nil
         end
