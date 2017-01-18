@@ -15,6 +15,8 @@ set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:
 set :nodenv_map_bins, %w{node npm lineman}
 set :nodenv_roles, :all # default value
 set :keep_releases, '5'
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+set :pty, false
 
 # set :stages, %w[staging production]
 # set :default_stage, 'staging'

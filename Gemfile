@@ -83,6 +83,7 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano3-nginx', '~> 2.0'
   gem 'capistrano-nodenv', '~> 1.1.0'
+  gem 'capistrano-sidekiq'
   gem 'rubycritic', '~> 2.7.0', require: false
   gem 'rails_best_practices', '~> 1.15.7', require: false
   gem 'inch', '~> 0.7.0', require: false
