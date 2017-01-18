@@ -15,6 +15,8 @@ require 'vcr'
 require 'webmock/rspec'
 require 'rspec/retry'
 require 'state_machines/core'
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!
 
 # include seeds
 require "#{Rails.root}/db/seeds.rb"
@@ -123,6 +125,7 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation, { except: static_info_tables }
     else
       DatabaseCleaner.strategy = :transaction
+      Sidekiq::Worker.clear_all
     end
     DatabaseCleaner.start
   end
