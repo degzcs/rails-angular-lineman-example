@@ -22,13 +22,13 @@ describe Reports::Taxes::Report do
           transaction_state: 'paid',
           gold_batch: gold_batch,
           payment_date: payment_date + i,
-          price: 10_000
+          price: 1_000_000
         )
       end
       seller.setting.regime_type = 'RC'
       buyer.setting.regime_type = 'GC'
     end
-    let(:sale_order) { create(:sale, :with_batches, seller: seller, buyer: buyer) }
+    let(:sale_order) { create(:sale, :with_batches, seller: seller, buyer: buyer, price: 4_000_000) }
 
     context '#call' do
       context 'When there is not tax settings' do
@@ -51,42 +51,42 @@ describe Reports::Taxes::Report do
             :movements => [ OpenStruct.new(
                  :count => "130505",
                   :name => "Clientes Nacionales",
-                 :debit => 100,
+                 :debit => 4000000,
                 :credit => ""
               ),
               OpenStruct.new(
                  :count => "413595",
                   :name => "Ingresos por Venta de Oro",
                  :debit => "",
-                :credit => 100
+                :credit => 4000000
               )
             ],
             :taxes => [
-              OpenStruct.new(
-                 :count => "135595",
-                  :name => "ANTICIPO CREE (.40%)",
-                 :debit => 0,
-                :credit => ""
-              ),
-              OpenStruct.new(
-                 :count => "23657501",
-                  :name => "Autorretención CREE",
-                 :debit => "",
-                :credit => 0
-             )
+             #  OpenStruct.new(
+             #     :count => "135595",
+             #      :name => "ANTICIPO CREE (.40%)",
+             #     :debit => 0,
+             #    :credit => ""
+             #  ),
+             #  OpenStruct.new(
+             #     :count => "23657501",
+             #      :name => "Autorretención CREE",
+             #     :debit => "",
+             #    :credit => 0
+             # )
             ],
             :payments => [
                OpenStruct.new(
                  :count => "111005",
                   :name => "Moneda Nacional",
-                 :debit => 100,
+                 :debit => 4000000,
                 :credit => ""
               ),
               OpenStruct.new(
                  :count => "130505",
                   :name => "Clientes Nacionales",
                  :debit => "",
-                :credit => 100
+                :credit => 4000000
              )
             ],
             :inventories => [
