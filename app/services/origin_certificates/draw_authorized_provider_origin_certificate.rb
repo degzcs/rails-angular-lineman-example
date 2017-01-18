@@ -28,7 +28,7 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
     self
   end
 
-  # Generar certificado para barequeros y chatarreros
+  # generate certificate for authorized provider
   def generate_certificate(order_presenter, signature_picture, date_to_day)
     file = File.open(File.join(Rails.root, 'vendor', 'pdfs', 'formato_certificado_origen_barequero_chatarrero.pdf'))
     start_new_page({:template => "#{file.path}", :template_page => 1})
