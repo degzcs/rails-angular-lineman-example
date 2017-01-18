@@ -139,6 +139,7 @@ RSpec.configure do |config|
     `rm -rf #{Rails.root}/tmp/origin_certificates`
     `rm -rf #{Rails.root}/tmp/shipment`
     `rm -rf #{Rails.root}/tmp/royalty`
+    `rm -rf #{Rails.root}/tmp/uiaf_report`
     `rm -rf #{Rails.root}/public/test`
   end
 
