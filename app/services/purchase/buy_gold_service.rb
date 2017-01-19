@@ -66,6 +66,14 @@ module Purchase
                        document_type: 'origin_certificate',
                        date: date
                      )
+          if purchase_order.price > 2_000_000
+            response = pdf_generation_service.call(
+              order: purchase_order,
+              draw_pdf_service: ::UiafReport::DrawUiafReport,
+              document_type: 'uiaf_report'
+            )
+          end
+          response
         end
       end
     rescue StandardError => e
