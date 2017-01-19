@@ -13,7 +13,7 @@
           %td
           %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
           %td
-            %md-button.btn-save.md-button.md-raised{ "ng-click" => "goSaleOrderResume(sale.id)"} Ver
+            %md-button.btn-cancel{"style"=> "width:0px;", "ng-click" => "goSaleOrderResume(sale.id)"} Ver
 
   .md-table-footer{:layout => "row"}
     %span.md-table-count-info

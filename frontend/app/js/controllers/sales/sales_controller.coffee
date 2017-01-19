@@ -27,7 +27,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
  # Monitoring the Agreetment check
   $scope.handlerContinue =  ->
     # console.log $scope.chkAgreetmentActive
-    res = if $scope.chkAgreetmentActive == true then true else false
+    res = if $scope.chkAgreetmentActive == true then false else true
     # console.log 'res: ' + res
     return res
 # --------------End Step1 ---------------------------------
