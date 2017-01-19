@@ -150,6 +150,11 @@ class Order < ActiveRecord::Base
     documents.where(type: 'shipment').first
   end
 
+  # @return [ Document ]
+  def uiaf_report
+    documents.where(type: 'uiaf_report').first
+  end
+
   def barcode_html
     barcode = Barby::EAN13.new(self.code)
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
