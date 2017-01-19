@@ -1,110 +1,153 @@
-%md-content.md-padding.sale-show-content
+%md-content.md-padding.sale-show-content.purchase-container
 
-  %div{layout: "row"}
+  %p.md-subtitle
+    Informacion del Cliente
+  %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
+  %div{layout: "column", 'ng-if' => 'saleOrder.buyer !== null'}
     /------------------------ CLIENT CARD ---------------------/
-    %md-card.sell-card-info{flex:""}
-      %md-toolbar
-        .md-toolbar-tools
-          %h3
-            %span Datos Comprador
-      %md-card-content
-        .card-inputs
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Tipo
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.rucom.provider_type"}
-            %md-input-container{flex: ""}
-              %label Cedula
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.document_number"}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Nombre
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.first_name"}
-            %md-input-container{flex: ""}
-              %label Apellido
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.last_name"}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Telefono
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.phone_number"}
-            %md-input-container{flex: ""}
-              %label Direccion
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.address"}
-          %div{layout: "row"}
-            %md-input-container{flex: "50"}
-              %label Correo
-              %input{:disabled => "disabled", "ng-model" => "currentBuyer.email"}
+    
+    %div{layout: "row"}
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Tipo
+        %p.text-container-false 
+          {{currentBuyer.rucom.provider_type}}
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Nombre
+        %p.text-container-false  
+          {{currentBuyer.first_name}}
 
-  %div{layout: "row"}
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Apellido
+        %p.text-container-false  
+          {{currentBuyer.last_name}}
+            
+    %div{layout: "row"}
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Cédula
+        %p.text-container-false  
+          {{currentBuyer.document_number}}
+            
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Telefono
+        %p.text-container-false  
+          {{currentBuyer.phone_number}}
+
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Dirección
+        %p.text-container-false  
+          {{currentBuyer.address}}      
+        
+        
+    %div{layout: "row"}
+      %div.input-containers-false{flex: ""}
+        %label.label-container-false
+          Correo
+        %p.text-container-false  
+          {{currentBuyer.email}}
+
+  %p.md-subtitle
+    Datos Vendedor
+  %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
+  %div{layout: "column"}
     /------------------------ USER CARD ---------------------/
-    %md-card.sell-card-info{flex: ""}
-      %md-toolbar
-        .md-toolbar-tools
-          %h3
-            %span Datos Vendedor
-      %md-card-content
-        .card-inputs
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Tipo
-              %input{:disabled => "disabled",  "ng-model" => "currentUser.rucom.provider_type"}
-            %md-input-container{flex: ""}
-              %label Cedula
-              %input{:disabled => "disabled", "ng-model" => "currentUser.document_number"}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Nombre
-              %input{:disabled => "disabled", "ng-model" => "currentUser.first_name"}
-            %md-input-container{flex: ""}
-              %label Apellido
-              %input{:disabled => "disabled", "ng-model" => "currentUser.last_name"}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Telefono
-              %input{:disabled => "disabled", "ng-model" => "currentUser.phone_number"}
-            %md-input-container{flex: ""}
-              %label Direccion
-              %input{:disabled => "disabled", "ng-model" => "currentUser.address"}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %label Email
-              %input{:disabled => "disabled", "ng-model" => "currentUser.email"}
+    %md-content{flex: ""}
+      %div{layout: "row"}
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Tipo
+          %p.text-container-false
+            {{currentUser.rucom.provider_type}}
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Cedula
+          %p.text-container-false
+            {{currentUser.document_number}}
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Gramos totales
+          %p.text-container-false
+            {{currentSale.fine_grams}} grs
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Precio Total
+          %p.text-container-false
+            ${{currentSale.price}}
+
+      %div{layout: "row"}
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Nombre
+          %p.text-container-false 
+            {{currentUser.first_name}}
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Apellido
+          %p.text-container-false 
+            {{currentUser.last_name}}
+          
+      %div{layout: "row"}
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Teléfono
+          %p.text-container-false 
+            {{currentUser.phone_number}}
+        
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Dirección
+          %p.text-container-false 
+            {{currentUser.address}}
+
+      %div{layout: "row"}
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Correo
+          %p.text-container-false 
+            {{currentUser.email}}
           /------------------------ PURCHASES CARD ---------------------/
-    %md-card.sell-card-info{flex: ""}
-      %md-toolbar
-        .md-toolbar-tools
-          %h3
-            %span Lotes Seleccionados
-      %md-card-content
-        .card-inputs
-          %table.sale-table
-            %tr.table-head
-              %th Fecha Compra
-              %th Nombre Proveedor
-              %th Tipo Proveedor
-              %th Gramos (Finos)
-            %tr.stripped{"ng-repeat" => "associatedPurchase in currentSale.associated_purchases"}
-              %th {{associatedPurchase.created_at}}
-              %td {{associatedPurchase.seller.first_name}} {{associatedPurchase.seller.last_name}}
-              %td {{associatedPurchase.seller.provider_type}}
-              %td {{associatedPurchase.fine_grams}}
-            %tr.table-last{ layout: "row", layout-align: "end end" }
-              %td
-                %h2
-                  %strong
-                    Gramos Totales:
+  %div.sell-card-info{flex: ""}
+    %p.md-subtitle
+      Lotes Seleccionados
+    %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
+    %md-content
+      .card-inputs
+        %table.sale-table
+          %tr.table-head
+            %th Fecha Compra
+            %th Nombre Proveedor
+            %th Tipo Proveedor
+            %th Gramos (Finos)
+          %tr.stripped{"ng-repeat" => "associatedPurchase in currentSale.associated_purchases"}
+            %th {{associatedPurchase.created_at}}
+            %td {{associatedPurchase.seller.first_name}} {{associatedPurchase.seller.last_name}}
+            %td {{associatedPurchase.seller.provider_type}}
+            %td {{associatedPurchase.fine_grams}}
+          / %tr.table-last{ layout: "row", layout-align: "end end" }
+          /   %td
+          /     %h2
+          /       %strong
+          /         Gramos Totales:
 
-                    {{currentSale.fine_grams}} grs
-              %td
-                %h2
-                  %strong
-                    Precio Total:
+          /         {{currentSale.fine_grams}} grs
+          /   %td
+          /     %h2
+          /       %strong
+          /         Precio Total:
 
-                    ${{currentSale.price}}
-  .wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"end end"}
-    %a.md-button{href: "{{currentSale.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+          /         ${{currentSale.price}}
+  .wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
+    %md-button.btn-cancel{ flex: "30",href: "{{currentSale.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
       Documentos de compra adjuntos
-    %a.md-button{href: "{{currentSale.proof_of_sale.file.url}}", :target => "_blank"}
+    %md-button.btn-cancel{ flex: "20",href: "{{currentSale.proof_of_sale.file.url}}", :target => "_blank"}
       Compendio
-    %a.md-button{'ng-click' => 'markAsPaid()'}
+    %md-button.btn-cancel{ flex: "20",'ng-click' => 'markAsPaid()'}
       Marcar como pagado

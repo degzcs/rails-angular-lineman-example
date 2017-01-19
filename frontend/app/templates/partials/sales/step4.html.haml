@@ -115,7 +115,7 @@
     
 
   %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-    %md-button.btn-cancel{ flex: "20",'ng-if' => 'saleOrder.purchase_files_collection_with_watermark === null', 'ng-click'=> 'downloadSaleFilesDialog()'}
+    %md-button.btn-cancel{ flex: "30",'ng-if' => 'saleOrder.purchase_files_collection_with_watermark === null', 'ng-click'=> 'downloadSaleFilesDialog()'}
       Generando documentación...
     %md-button.btn-cancel{ flex: "20",href: "{{saleOrder.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf", 'ng-if' => 'saleOrder.purchase_files_collection_with_watermark !== null'}
       Documentos de compra adjuntos

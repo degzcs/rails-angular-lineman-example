@@ -26,11 +26,14 @@
             %label 
             %input.input-num-value{"type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => "", "placeholder"=>"Precio de gramo fino por unidad"}
 
-      .md-subtitle 4. Tipo Mineral
-        %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
-          %md-option{:selected => "selected", :value => "Oro"} Oro
-          %md-option{:value => "Plata"} Plata
-          %md-option{:value => "Platino"} Platino
+      %div{:layout => "", "layout-sm" => "column", "style" => "margin-bottom: 80px;"}
+        .md-subtitle 4. Tipo Mineral
+          %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
+            %md-option{:selected => "selected", :value => "Oro"} Oro
+            %md-option{:value => "Plata"} Plata
+            %md-option{:value => "Platino"} Platino
+      
+
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
           .md-subtitle 5. Medidas
