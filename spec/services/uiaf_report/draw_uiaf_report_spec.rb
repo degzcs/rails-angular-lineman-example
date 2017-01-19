@@ -1,10 +1,13 @@
 describe UiafReport::DrawUiafReport do
   subject(:service) { UiafReport::DrawUiafReport.new }
 
+  let(:seller) { create :user, :with_profile, :with_personal_rucom, provider_type: 'Barequero', first_name: 'Alam', last_name: 'Agudelo' }
+  let(:purchase_order) { create :purchase, seller: seller }
+
   it 'check consistency of the pdf' do
-    expected_hash = '8a2dec5318793d415decc6d21bef7a809f61e840f372172e7948866190578346'
+    expected_hash = '45fc7e97a1d6793f0d1cd839cab250dcd6d708f360bdb522f69394f4b197bfde'
     response = service.call(
-      test: 'HOLA MUNDO'
+      order: purchase_order
     )
 
     system "mkdir -p #{ Rails.root }/tmp/uiaf_report"
