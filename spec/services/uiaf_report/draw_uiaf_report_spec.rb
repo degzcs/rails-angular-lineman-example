@@ -6,8 +6,9 @@ describe UiafReport::DrawUiafReport do
 
   it 'check consistency of the pdf' do
     expected_hash = '45fc7e97a1d6793f0d1cd839cab250dcd6d708f360bdb522f69394f4b197bfde'
+    order_presenter = OrderPresenter.new(purchase_order, nil)
     response = service.call(
-      order: purchase_order
+      order_presenter: order_presenter
     )
 
     system "mkdir -p #{ Rails.root }/tmp/uiaf_report"

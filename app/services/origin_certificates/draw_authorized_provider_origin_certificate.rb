@@ -7,10 +7,10 @@ class OriginCertificates::DrawAuthorizedProviderOriginCertificate < Prawn::Docum
 
   # @return [ Hash ] with the success or errors
   def call(options={})
-    raise 'You must to provide a order option' if options[:order].blank?
+    raise 'You must to provide a order option' if options[:order_presenter].blank?
     raise 'You must to provide a signature_picture option' if options[:signature_picture].blank?
     raise 'You must to provide a purchase option' if options[:date].blank?
-    order_presenter = OrderPresenter.new(options[:order], nil)
+    order_presenter = options[:order_presenter]
     date_to_day = options[:date]
     signature_picture = options[:signature_picture]
     begin

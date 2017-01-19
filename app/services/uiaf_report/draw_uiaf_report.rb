@@ -7,8 +7,8 @@ class UiafReport::DrawUiafReport < Prawn::Document
 
   # @return [ Hash ] with the success or errors
   def call(options = {})
-    raise 'You must to provide a test option' if options[:order].blank?
-    order_presenter = OrderPresenter.new(options[:order], nil)
+    raise 'You must to provide a test option' if options[:order_presenter].blank?
+    order_presenter = options[:order_presenter]
     begin
       generate_uiaf_report(order_presenter)
       @response[:success] = true
