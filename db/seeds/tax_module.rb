@@ -85,8 +85,10 @@ tax_array = [
   ["Regalias (4%)", "REGALIAS", 4, PucAccount.find_by(code: '429515').id],
   #["IVA entre RS y RC (2.4%)", "IVA_2.4", 2.4, PucAccount.find_by(code: '240804').id],
   # debido a la reforma tributaria esta línea cambió y está por confirmarse el valor del porcentaje
-  ["IVA entre RS y RC (19%)", "IVA_19", 19, PucAccount.find_by(code: '240804').id],
+  ["IVA compras entre RS y RC (19%)", "IVA_19", 19, PucAccount.find_by(code: '236740').id],
   ["ICA entre RS y GC (1%)", "ICA_1", 1, PucAccount.find_by(code: '511505').id],
+  ["ICA entre RS y RC (1%)", "ICA_1_RS&RC", 1, PucAccount.find_by(code: '236840').id],
+  ["Impuestos retención en la fuente RS y RC (3.5%)", "RTFTE_3.5_RS&RC", 3.5, PucAccount.find_by(code: '236540').id],
   ["Impuestos retención en la fuente RS y GC (3.5%)", "RTFTE_3.5", 3.5, PucAccount.find_by(code: '511505').id]
 ]
 
@@ -106,7 +108,9 @@ tax_rules_array = [
   # [Tax.find_by(reference: 'AUT_CREE').id,"RC","GC"],
   #[Tax.find_by(reference: 'IVA_2.4').id,"RS","RC"],
   [Tax.find_by(reference: 'IVA_19').id,"RS","RC"],
-  [Tax.find_by(reference: 'REGALIAS').id,"RS","RC"],
+  [Tax.find_by(reference: 'ICA_1_RS&RC').id,"RS","RC"],
+  #[Tax.find_by(reference: 'REGALIAS').id,"RS","RC"],
+  [Tax.find_by(reference: 'RTFTE_3.5_RS&RC').id,"RS","RC"],
   [Tax.find_by(reference: 'RTFTE_3.5').id,"RS","GC"],
   [Tax.find_by(reference: 'ICA_1').id,"RS","GC"]
 ]
@@ -135,9 +139,10 @@ transaction_movement_array = [
   [PucAccount.find_by(code: '130505').id, "sale", "payments", 'C'],
 
   [PucAccount.find_by(code: '140501').id, "purchase", "movements", 'D'],
-  [PucAccount.find_by(code: '240802').id, "purchase", "taxes", 'D'],
+  #[PucAccount.find_by(code: '240802').id, "purchase", "taxes", 'D'],
   [PucAccount.find_by(code: '236540').id, "purchase", "taxes", 'C'],
   [PucAccount.find_by(code: '236740').id, "purchase", "taxes", 'C'],
+  [PucAccount.find_by(code: '236840').id, "purchase", "taxes", 'C'],
   [PucAccount.find_by(code: '220505').id, "purchase", "movements", 'C'],
   [PucAccount.find_by(code: '220505').id, "purchase", "payments", 'D'],
   [PucAccount.find_by(code: '111005').id, "purchase", "payments", 'C']

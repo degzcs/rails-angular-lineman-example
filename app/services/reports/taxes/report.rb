@@ -25,9 +25,9 @@ module Reports
 
       def create_report(movements, order)
         report = {}
-        seller_regime = order.seller.setting.regime_type
-        buyer_regime  = order.buyer.setting.regime_type
-        
+        seller_regime = regime(order).seller #order.seller.setting.regime_type
+        buyer_regime  = regime(order).buyer #order.buyer.setting.regime_type
+
         report[:movements] = find_values(movements, order, order.price.round(0), 'movements')
         report[:taxes] =  get_taxes(seller_regime, buyer_regime, order.price.round(0), order.type)
         movement = report[:movements].present? ? calc_efective_payment_value(report, order) : {}
@@ -38,6 +38,11 @@ module Reports
         report
       end
 
+      def regime(order)
+        raise 'regime: Error, no se envió la orden como parámetro' unless order
+        OpenStruct.new( buyer: order.buyer.setting.regime_type , seller: order.seller.setting.regime_type )
+      end
+
       # param report as an array of OpenStruct elements (count: '', name: '', debit: 0, credit: 0)
       # param movement as hash {value: 100000, count: '112345', accounting_entry: 'D'}
       # return report modified
@@ -45,7 +50,7 @@ module Reports
         return [] unless movement.present?
         if movement[:accounting_entry] == 'D'
           report.select {|obj| obj if obj.count == movement[:count]}.first.debit = movement[:value]
-        elsif accounting_entry == 'C'
+        elsif movement[:accounting_entry] == 'C'
           report.select {|obj| obj if obj.count == movement[:count]}.first.credit = movement[:value]
         else
           nil
@@ -62,9 +67,9 @@ module Reports
           debit  = calc_subtotal_movements_value(report, 'D', '130505')
           { value: (credit - debit).round(0), count: '130505', accounting_entry: 'D' }
         else
-          credit = calc_subtotal_movements_value(report, 'C', '')
-          debit  = calc_subtotal_movements_value(report, 'D', '220505')
-          { value: (debit - credit).round(0), count: '220505', accounting_entry: 'D' }
+          debit = calc_subtotal_movements_value(report, 'D', '')
+          credit = calc_subtotal_movements_value(report, 'C', '220505')
+          { value: (debit - credit).round(0), count: '220505', accounting_entry: 'C' }
         end
       end
 
