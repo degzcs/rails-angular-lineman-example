@@ -19,7 +19,7 @@ describe Purchase::BuyGoldService do
       @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero')
 
       seller_picture_path = "#{Rails.root}/spec/support/images/seller_picture.png"
-      seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
+      @seller_picture = Rack::Test::UploadedFile.new(seller_picture_path, 'image/jpeg')
 
       signature_picture_path = "#{Rails.root}/spec/support/images/signature.jpg"
       @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
@@ -33,7 +33,7 @@ describe Purchase::BuyGoldService do
       @order_hash = {
         'seller_id' => @seller.id,
         'price' => 1.5,
-        'seller_picture' => seller_picture,
+        'seller_picture' => @seller_picture,
         'trazoro' => false,
         'signature_picture' => @signature_picture
       }
@@ -54,6 +54,36 @@ describe Purchase::BuyGoldService do
       expect(response[:success]).to be true
       expect(service.purchase_order.persisted?).to be true
       expect(company.reload.available_credits).to eq expected_credits
+      expect(service.purchase_order.origin_certificate.present?).to be true
+      expect(service.purchase_order.proof_of_purchase.present?).to be true
+    end
+
+    it 'should to make a purchase order and discount credits from company and generate uiaf_report pdf' do
+      trazoro_service = create(:available_trazoro_service, credits: 1.0, reference: 'buy_gold')
+      res = @gold_batch_hash['fine_grams'] * trazoro_service.credits
+      expected_credits = @initial_credits - res
+
+      order_hash = {
+        'seller_id' => @seller.id,
+        'price' => 2200000,
+        'seller_picture' => @seller_picture,
+        'trazoro' => false,
+        'signature_picture' => @signature_picture
+      }
+
+      legal_representative.setting.trazoro_services << trazoro_service
+      response = service.call(
+        order_hash: order_hash,
+        gold_batch_hash: @gold_batch_hash,
+        current_user: legal_representative, # TODO: worker
+        date: Date.today
+      )
+      expect(response[:success]).to be true
+      expect(service.purchase_order.persisted?).to be true
+      expect(company.reload.available_credits).to eq expected_credits
+      expect(service.purchase_order.origin_certificate.present?).to be true
+      expect(service.purchase_order.proof_of_purchase.present?).to be true
+      expect(service.purchase_order.uiaf_report.present?).to eq true
     end
 
     it 'should show message error When the buyer i do not have trazoro_services' do
