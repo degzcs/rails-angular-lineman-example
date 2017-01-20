@@ -174,10 +174,11 @@
                 %span {{goldBatch.model.tomines}}
           %tr
             %td.md-table-td-more
-              Rial(es)
+              Real(es)
             %td.md-table-td-more{colspan: 5}
               %md-input-container
                 %span {{goldBatch.model.reales}}
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
       %md-button.md-primary.md-raised.md-accent{ flex: "20", "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
+      %md-button.md-primary.md-raised.md-accent{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
       %md-button.md-primary.md-raised.md-accent{ flex: "20", "ui-sref"=>"new_purchase.step0", "ng-click" => 'flushData()'} Nueva compra
