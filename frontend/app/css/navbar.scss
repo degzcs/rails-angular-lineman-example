@@ -27,3 +27,37 @@ tr-nav-button .md-button.active{
     margin: 10px 0 0px 10px;
   }
 }
+
+.menu-top-nav{
+  ul{
+    list-style: none;
+  }
+
+  // #menu>li>ul{
+  // display: none;
+  // }
+
+  #menu>li:hover>ul {
+  display:block;
+  }
+
+  #menu li>a{
+  color: #E3CD48;
+  text-decoration: none;
+  background-color: black;
+  display: block;
+  padding: 10px;
+  min-width: 100px;
+
+  }
+
+  #menu li>a:hover{
+  color: white;
+  background-color: #333333;
+  }
+
+  #menu>li{
+  float: left;
+  text-align:center
+  }
+}

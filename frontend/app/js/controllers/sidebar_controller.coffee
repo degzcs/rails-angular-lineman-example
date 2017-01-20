@@ -1,4 +1,4 @@
-angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $auth, $state, $mdDialog) ->
+angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $auth, $state, $mdDialog, $log) ->
   #  Here just add the sidebar navigation options with their state
   $scope.options = [
     {name: "Dashboard", state: "dashboard", icon: 'action:dashboard'}
@@ -10,6 +10,8 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     # {name: "Cerrar Sesi" , state: "index_external_user", icon: 'social:people'}
     # {name: "Transportadores", state: "new_courier", icon: 'maps:local_shipping'}
   ]
+
+  $scope.toggleRight = buildToggler('right')
 
   $scope.allowSidebar= ->
       unless $state.current.name == "home" || $state.current.name == "new_session"

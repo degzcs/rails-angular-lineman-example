@@ -16,6 +16,46 @@
     %md-button.top-nav-button{"aria-label" => "providers", "ng-class"=>"getNavigationClass('index_authorized_provider')","ui-sref" => "index_authorized_provider"}Proveedores
 
     %md-button.top-nav-button{"aria-label" => "marketplace","ng-class"=>"getNavigationClass('marketplace')","ui-sref" => "marketplace"}Marketplace
+
+    %div{:flex => '10', "layout" => "row", "layout-align" => "end"}
+      
+      %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
+
+    %md-button.top-nav-button{ "ng-click"=>"toggleRight()"}
+      Diego Caicedo
+
+%md-sidenav.md-sidenav-right.md-whiteframe-z2{ "md-component-id"=>"right"}
+  %md-toolbar.md-theme-light
+    %h1.md-toolbar-tools
+      Sidenav Right
+  %md-content{ "ng-controller"=>"RightCtrl", "layout-padding"}
+    %form
+      %md-input-container
+        %label
+          lo que sea
+        %input
+          akaa
+      
+    %md-button.md-primary{ "ng-click"=>"close()" }
+      Close Sidenav Right
+        
+
+      / %ul{"id" => "menu"}
+      /   %li
+      /     %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
+          
+      /   %li
+      /     %a{"href" => ""}
+      /       Cursos
+      /       %ul
+      /         %li
+      /           %a{ "href"=>""}Frontend
+      /         %li
+      /           %a{ "href"=>""}Backend
+      /         %li
+      /           %a{ "href" => ""}Mobi
+
+      / %md-icon{"md-svg-src" => "/img/icons/landing/icono-apunta-avajo-amarillo.svg"}
     
     /%md-button.top-nav-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()"}Cerrar Sesion
 
