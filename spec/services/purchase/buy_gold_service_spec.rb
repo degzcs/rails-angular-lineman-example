@@ -13,7 +13,7 @@ describe Purchase::BuyGoldService do
   context 'Buy directly from an authorized provider (no trader)' do
     before :each do
       settings = Settings.instance
-      settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16 }
+      settings.data = { monthly_threshold: 30, fine_gram_value: 1000, vat_percentage: 16, ros_threshold: 2000000 }
       settings.save!
       @initial_credits = 100
       @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'Barequero')
