@@ -14,6 +14,7 @@ module Purchase
     def initialize
       @response = {}
       @response[:errors] = []
+      @settings ||= Settings.instance
     end
 
     #
@@ -66,7 +67,7 @@ module Purchase
                        document_type: 'origin_certificate',
                        date: date
                      )
-          if purchase_order.price > 2_000_000
+          if purchase_order.price > @settings.data[:ros_threshold].to_i
             response = pdf_generation_service.call(
               order: purchase_order,
               draw_pdf_service: ::UiafReport::DrawUiafReport,
@@ -118,7 +119,7 @@ module Purchase
     # @return [ Boolean ]
     def under_monthly_thershold?(seller, buyed_fine_grams)
       already_buyed_gold = Order.fine_grams_sum_by_date(Time.now, seller.id)
-      response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= Settings.instance.monthly_threshold.to_f)
+      response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= @settings.data[:monthly_threshold].to_f)
       seller_name = UserPresenter.new(seller, self).name unless response[:success]
       raise error_message(seller_name, already_buyed_gold) unless response[:success]
       response[:success]
