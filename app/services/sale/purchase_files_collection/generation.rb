@@ -138,7 +138,6 @@ module Sale
       # @param purchase_orders [ Array ] with all Purchase related with the current sale
       # @return [ Array ] with all documents (ActiveRecord) belonging to the  given purchase
       def purchase_files_from_aws_s3(purchase_orders)
-        binding.pry
         files = []
         purchase_orders.each do |purchase_order|
         # Origin certificate
