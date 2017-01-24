@@ -118,17 +118,17 @@ module Purchase
     # @param buyed_fine_grams [ String ]
     # @return [ Boolean ]
     def under_monthly_thershold?(seller, buyed_fine_grams)
-      already_buyed_gold = Order.fine_grams_sum_by_date(Time.now, seller.id)
-      response[:success] = ((already_buyed_gold + buyed_fine_grams.to_f) <= @settings.data[:monthly_threshold].to_f)
+      already_buyed_mineral = Order.fine_grams_sum_by_date(Time.now, seller.id, gold_batch_hash['mineral_type'])
+      response[:success] = ((already_buyed_mineral + buyed_fine_grams.to_f) <= @settings.data[:monthly_threshold].to_f)
       seller_name = UserPresenter.new(seller, self).name unless response[:success]
-      raise error_message(seller_name, already_buyed_gold) unless response[:success]
+      raise error_message(seller_name, already_buyed_mineral) unless response[:success]
       response[:success]
     end
 
-    def error_message(seller_name, already_buyed_gold)
+    def error_message(seller_name, already_buyed_mineral)
       'Usted no puede realizar esta compra, debido a que con esta compra el barequero '\
       'exederia el limite permitido por mes. El total comprado hasta el momento por '\
-      "#{seller_name} es: #{already_buyed_gold} gramos finos"
+      "#{seller_name} es: #{already_buyed_mineral} gramos finos"
     end
 
     # Validates the params passed to this service
