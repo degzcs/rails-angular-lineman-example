@@ -1,90 +1,90 @@
 /------------------- DASHBOARD VIEW -------------------/
 %div{"ng-hide"=>"showLoading"}
+.general-container
+  %div{layout: "row", "layout-margin", "layout-fill", "layout-padding"}
+    %div{layout: "column", flex: "30"}
+      .dashboard-user-info{ }
+        %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
+      .dashboard-user-utilities{layout: "column"}
+        Facturación y documento 
+        %br Editar información
+        %md-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()", "target"=>"_blank"}Cerrar Sesión
+    %div{layout: "column", flex: "50"}
+      .dashboard-user-utilities
+        %h3{"style" => "margin: 0px;"}
+          BIENVENIDO
+        %h4{ "style" => "text-transform: uppercase; margin: 0px; font-weight: 300;"}
+          {{currentUser.first_name}} {{currentUser.last_name}}
 
-%div{layout: "row", "layout-margin", "layout-fill", "layout-padding", "layout-align" => "center"}
-  %div{layout: "column", flex: "25"}
-    .dashboard-user-info{ }
-      %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
-    .dashboard-user-utilities{layout: "column"}
-      Facturación y documento 
-      %br Editar información
-      %md-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()", "target"=>"_blank"}Cerrar Sesión
-  %div{layout: "column", flex: "40"}
-    .dashboard-user-utilities
-      %h3{"style" => "margin: 0px;"}
-        BIENVENIDO
-      %h4{ "style" => "text-transform: uppercase; margin: 0px; font-weight: 300;"}
-        {{currentUser.first_name}} {{currentUser.last_name}}
+        %br
+        Comprador
 
-      %br
-      Comprador
+        %br
+        Documento de Trazoro: {{currentUser.document_number}}
 
-      %br
-      Documento de Trazoro: {{currentUser.document_number}}
+        %br
+        Correo electrónico: {{currentUser.email}}
 
-      %br
-      Correo electrónico: {{currentUser.email}}
+        %h4{"style" => "margin-bottom: 0px; font-weight: 300;"}
+          Servicios Adquiridos:
+        %hr{"width"=> "80%", "color"=>"#E3CD48","align"=>"left"}
+        %md-content
+          %md-list
+            %h3{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
+            %md-list-item{"ng-repeat" => "services in currentUser.trazoro_services"}
+              .md-list-item-text
+                {{services.name}}
+              %md-divider{"ng-if" => "!$last"}
 
-      %h4{"style" => "margin-bottom: 0px; font-weight: 300;"}
-        Servicios Adquiridos:
-      %hr{"width"=> "80%", "color"=>"#E3CD48","align"=>"left"}
-      %md-content
-        %md-list
-          %h3{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
-          %md-list-item{"ng-repeat" => "services in currentUser.trazoro_services"}
-            .md-list-item-text
-              {{services.name}}
-            %md-divider{"ng-if" => "!$last"}
-
-  .dashboard-credit-info{layout: "column", flex: "20"}
-    %span.subtitle{}
-      CRÉDITOS RESTANTES
-    %br{}
-      %span.num-credits{}
-        {{available_credits}}
-    %md-button.md-raised.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
-      Comprar Créditos
+    .dashboard-credit-info{layout: "column", flex: "20"}
+      %span.subtitle{}
+        CRÉDITOS RESTANTES
+      %br{}
+        %span.num-credits{}
+          {{available_credits}}
+      %md-button.md-raised.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
+        Comprar Créditos
 
 
 
-/ .dashboard-user-info{layout: "column", "flex" => "20" }
+  / .dashboard-user-info{layout: "column", "flex" => "20" }
 
-/   %div
-/     %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
-/   .info-container
-/     %h4
-/       Nombre:
-/       .info
-/         {{currentUser.first_name}} {{currentUser.last_name}}
-/     %h4
-/       Numero de Documento:
-/       .info
-/         {{currentUser.document_number}}
-/     %h4
-/       Email:
-/       .info
-/         {{currentUser.email}}
-/ %div{}
-/ %div{"ng-hide" => "!currentUser.legal_representative", layout: "column", "flex" => "20"}
-/   /.credits{}
-/   %h3
-/     %span Servicios Adquiridos
-/   %md-content
-/     %md-list
-/       %h3{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
-/       %md-list-item.md-3-line{"ng-repeat" => "services in currentUser.trazoro_services"}
-/         .md-list-item-text
-/           %h3 {{services.name}}
-/         %md-divider{"ng-if" => "!$last"}
-/ .dashboard-credit-info.md-padding{layout: "column", "flex" => "10" , "layout-align" => "start center"}
-/   /.credits
-/   %h3
-/     Creditos Restantes
-/   .value
-/     {{available_credits}}
-/   %md-button.md-raised.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
-/     Comprar Créditos
-%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+  /   %div
+  /     %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
+  /   .info-container
+  /     %h4
+  /       Nombre:
+  /       .info
+  /         {{currentUser.first_name}} {{currentUser.last_name}}
+  /     %h4
+  /       Numero de Documento:
+  /       .info
+  /         {{currentUser.document_number}}
+  /     %h4
+  /       Email:
+  /       .info
+  /         {{currentUser.email}}
+  / %div{}
+  / %div{"ng-hide" => "!currentUser.legal_representative", layout: "column", "flex" => "20"}
+  /   /.credits{}
+  /   %h3
+  /     %span Servicios Adquiridos
+  /   %md-content
+  /     %md-list
+  /       %h3{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
+  /       %md-list-item.md-3-line{"ng-repeat" => "services in currentUser.trazoro_services"}
+  /         .md-list-item-text
+  /           %h3 {{services.name}}
+  /         %md-divider{"ng-if" => "!$last"}
+  / .dashboard-credit-info.md-padding{layout: "column", "flex" => "10" , "layout-align" => "start center"}
+  /   /.credits
+  /   %h3
+  /     Creditos Restantes
+  /   .value
+  /     {{available_credits}}
+  /   %md-button.md-raised.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
+  /     Comprar Créditos
+  %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 
 -#  %h3 Options
 -#  %section.dashboard-buttons{:layout => "row", "layout-align" => "center center", "layout-sm" => "column"}

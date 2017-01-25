@@ -1,6 +1,7 @@
 /--------------- NAVBAR ----------------------------/
+.general-container
 %md-content.md-padding.div-trazoro.gold.navigation{"style"=>"background: black;   padding-left: 110px; padding-bottom: 5px; padding-top: 5px;"}
-  %section.top-nav-buttons{:layout => "row", "layout-align" => "start center"}
+  %section.top-nav-buttons{:layout => "row", "layout-align" => "center center"}
 
     %div{:flex => "10"}
       %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px;"}
@@ -17,28 +18,16 @@
 
     %md-button.top-nav-button{"aria-label" => "marketplace","ng-class"=>"getNavigationClass('marketplace')","ui-sref" => "marketplace"}Marketplace
 
-    %div{:flex => '10', "layout" => "row", "layout-align" => "end"}
+    %div{:flex => '10', "layout" => "row", "layout-align" => "end center", "ng-controller" => "DashboardCtrl", "style" => "margin-right: 110px;"}
       
       %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
 
-    %md-button.top-nav-button{ "ng-click"=>"toggleRight()"}
-      Diego Caicedo
-
-%md-sidenav.md-sidenav-right.md-whiteframe-z2{ "md-component-id"=>"right"}
-  %md-toolbar.md-theme-light
-    %h1.md-toolbar-tools
-      Sidenav Right
-  %md-content{ "ng-controller"=>"RightCtrl", "layout-padding"}
-    %form
-      %md-input-container
-        %label
-          lo que sea
-        %input
-          akaa
-      
-    %md-button.md-primary{ "ng-click"=>"close()" }
-      Close Sidenav Right
+      %label.top-nav-button{ "style" => "color:white; margin-left: 10px; font-family: 'oswald'; letter-spacing: 1px;"}
+        {{currentUser.first_name}} {{currentUser.last_name}}
         
+
+
+          
 
       / %ul{"id" => "menu"}
       /   %li
