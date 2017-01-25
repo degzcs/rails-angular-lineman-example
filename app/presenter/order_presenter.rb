@@ -93,4 +93,8 @@ class OrderPresenter < BasePresenter
   def sale_sequence_format
     sprintf '%05d', transaction_sequence.to_i
   end
+
+  def total_fine_grams
+    fine_grams.present? ? "#{ fine_grams.round(3) } Gramos" : raise('fine grams cannot be blank!!')
+  end
 end

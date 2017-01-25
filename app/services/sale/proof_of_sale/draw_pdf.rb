@@ -123,7 +123,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
       # text_box seller_presenter.id.to_s , :at => [130,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
       text_box seller_presenter.company_name, :at => [33, cursor], :width => 120, :size => 10, :height =>  10, :overflow => :shrink_to_fit
       # text_box gold_batch_presenter.origin_certificate_number, :at => [392,cursor], :width => 70 , :size => 10, :height =>  10, :overflow => :shrink_to_fit
-      text_box gold_batch_presenter.fine_grams.to_s, :at => [253, cursor], :width => 70, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+      text_box gold_batch_presenter.total_fine_grams.to_s, :at => [253, cursor], :width => 70, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
       text_box seller_presenter.rucom_number.to_s, :at => [463, cursor], :width => 70, :size => 10, :height =>  10, :overflow => :shrink_to_fit
       move_down 20
@@ -131,7 +131,7 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
 
     # Totals
     move_cursor_to 148
-    text_box order_presenter.fine_grams.to_s, :at => [120, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.total_fine_grams.to_s, :at => [120, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     # move_cursor_to 215
     # text_box order_presenter.grams.to_s, :at => [465,cursor], :width => 90 , :size => 10 , :height =>  10, :overflow => :shrink_to_fit
 
