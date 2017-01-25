@@ -107,7 +107,6 @@ module V1
         purchase.created_at.in_time_zone('Bogota').strftime("%m/%d/%Y - %I:%M%p")
       end
       expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' }
-      expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' }
       expose :code, documentation: { type: 'string', desc: 'barcode', example: '123123asdfdaf' }
       expose :barcode_html, documentation: { type: 'string', desc: 'barcode_html', example: 'TABLE' }
       expose :purchase_files_collection, documentation: { type: 'file', desc: 'purchase_files_collection', example: 'id, miner register, purchase files' } do |sale, _options|
