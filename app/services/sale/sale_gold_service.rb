@@ -53,9 +53,9 @@ module Sale
 
         # TODO: send email, sms or other service to buyer
         response = @sale_order.send_info!(current_user, remote_address)
-        # NOTE: the next process will be generated in a background job
-        worker_id = GeneratePdfWorker.perform_async(sale_order.id)
       end
+      # NOTE: the next process will be generated in a background job
+      worker_id = GeneratePdfWorker.perform_async(@sale_order.id) unless response[:errors].present?
       response
     end
 
