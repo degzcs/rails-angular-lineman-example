@@ -20,7 +20,7 @@ angular.module('app').controller 'PurchaseOrdersCanceledCtrl', ($scope, Purchase
     }
     {
       name: 'Gramos Finos'
-      field: 'purchase.gold_batch.fine_grams'
+      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'

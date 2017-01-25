@@ -27,7 +27,7 @@ angular.module('app').controller 'SaleOrdersPendingCtrl', ($scope, PurchaseServi
     }
     {
       name: 'Gramos Finos'
-      field: 'sale.fine_grams'
+      field: 'sale.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'

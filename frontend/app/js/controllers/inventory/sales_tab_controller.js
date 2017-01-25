@@ -12,7 +12,7 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
       field: "sale.buyer.first_name + ' ' + sale.buyer.last_name"
     }, {
       name: 'Total Gramos Finos',
-      field: 'sale.fine_grams'
+      field: 'sale.fine_grams.toFixed(3)'
     }, {
       name: 'Precio venta',
       field: 'sale.price'
@@ -50,7 +50,7 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
   $scope.infoAlert = function(title, content) {
     $mdDialog.show($mdDialog.alert().title(title).content(content).ok('OK'));
   };
-  
+
   $scope.generateReport = function(sale) {
     ReportsService.generateTransactionMovements(sale.id).success(function(data) {
       sale.report_url = data.base_file_url;

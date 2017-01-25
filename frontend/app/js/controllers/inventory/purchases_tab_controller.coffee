@@ -18,7 +18,7 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
     }
     {
       name: 'Gramos Finos'
-      field: 'purchase.gold_batch.grams'
+      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'

@@ -21,7 +21,7 @@ angular.module('app').controller 'SaleOrdersCanceledCtrl', ($scope, PurchaseServ
     }
     {
       name: 'Gramos Finos'
-      field: 'sale.fine_grams'
+      field: 'sale.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'

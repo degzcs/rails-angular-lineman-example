@@ -55,7 +55,7 @@ angular.module('app').controller 'SalesCtrl', ($scope, SaleService, GoldBatchSer
     }
     {
       name: 'Gramos Finos'
-      field: 'purchase.gold_batch.grams'
+      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'
