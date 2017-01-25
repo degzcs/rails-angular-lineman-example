@@ -30,6 +30,19 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   def draw_file!(order_presenter, signature_picture)
     start_new_page(:template => base_file.path, :template_page => 1)
     # header
+    seller_picture = order_presenter.seller_picture.file.path
+    image_width = 90
+    image_x = 430
+    image_y = 826
+
+    save_graphics_state do
+      soft_mask do
+        fill_color 0, 0, 0, 0
+        fill_circle [image_x + image_width / 2, image_y - image_width / 2], image_width / 2
+      end
+      image seller_picture, at: [image_x, image_y], width: image_width, height: image_width
+    end
+
     move_cursor_to 762
     # text_box 'Orden#:', :at => [26, cursor], :width => 80, :size => 12, :height =>  12
     # text_box order_presenter.sale_sequence_format, :at => [90, cursor], :width => 80, :size => 12, :height =>  12
@@ -124,7 +137,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     # Costo del oro
     move_cursor_to 166
     text_box order_presenter.real_gold_cost.to_s, :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    
+
     # valor total
     move_cursor_to 88
     text_box order_presenter.total_price.to_s, :at => [410, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
