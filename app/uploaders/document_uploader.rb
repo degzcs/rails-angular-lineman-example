@@ -1,6 +1,19 @@
 # encoding: utf-8
 require 'carrierwave/processing/mime_types'
 
+module CarrierWave
+  module MiniMagick
+    def quality(percentage)
+      manipulate! do |img|
+        img.quality(percentage.to_s)
+        img = yield(img) if block_given?
+        img
+      end
+    end
+  end
+end
+
+
 class DocumentUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::RMagick
@@ -19,8 +32,13 @@ class DocumentUploader < CarrierWave::Uploader::Base
   #
 
   process :set_content_type
-  process :preview
 
+  # Versions
+  version :preview, if: :is_image_extension?
+  version :thumb,   if: :is_image_extension?
+  version :medium,  if: :is_image_extension?
+
+  # Callbacks
   after :remove, :delete_empty_upstream_dirs
 
   def set_content_type
@@ -45,9 +63,35 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   version :preview do
+    #return  nil unless :has_image_extension
     process :convert => :jpg
     process :cover
-    process :resize_to_fill => [310, 200]
+    #process :resize_to_fill => [310, 200]
+    process :resize_to_fit => [310, 200]
+
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.jpg'
+    end
+  end
+
+  version :thumb do
+    #return  nil unless :has_image_extension
+    process :convert => :jpg
+    process :cover
+    process :resize_to_fit => [50, 50]
+    process :quality => 100 
+
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.jpg'
+    end
+  end
+
+  version :medium do
+    #return  nil unless :has_image_extension
+    process :convert => :jpg
+    process :cover
+    process :resize_to_fit => [300, 300]
+    process :quality => 85 
 
     def full_filename (for_file = model.source.file)
       super.chomp(File.extname(super)) + '.jpg'
@@ -78,6 +122,10 @@ class DocumentUploader < CarrierWave::Uploader::Base
   # For images you might use something like this:
   def extension_white_list
     %w(jpg jpeg png pdf svg)
+  end
+
+  def is_image_extension? photo_file
+    extension_white_list.reject {|x| x == 'pdf'}.include? File.extname(photo_file.filename)
   end
 
   # Override the filename of the uploaded files:
