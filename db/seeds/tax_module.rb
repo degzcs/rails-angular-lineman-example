@@ -107,12 +107,12 @@ tax_rules_array = [
   # [Tax.find_by(reference: 'ANT_CREE').id,"RC","GC"],
   # [Tax.find_by(reference: 'AUT_CREE').id,"RC","GC"],
   #[Tax.find_by(reference: 'IVA_2.4').id,"RS","RC"],
-  [Tax.find_by(reference: 'IVA_19').id,"RS","RC"],
-  [Tax.find_by(reference: 'ICA_1_RS&RC').id,"RS","RC"],
+  [Tax.find_by(reference: 'IVA_19').id,"RS","RC", 'purchase'],
+  [Tax.find_by(reference: 'ICA_1_RS&RC').id,"RS","RC",'purchase'],
   #[Tax.find_by(reference: 'REGALIAS').id,"RS","RC"],
-  [Tax.find_by(reference: 'RTFTE_3.5_RS&RC').id,"RS","RC"],
-  [Tax.find_by(reference: 'RTFTE_3.5').id,"RS","GC"],
-  [Tax.find_by(reference: 'ICA_1').id,"RS","GC"]
+  [Tax.find_by(reference: 'RTFTE_3.5_RS&RC').id,"RS","RC", 'purchase'],
+  [Tax.find_by(reference: 'RTFTE_3.5').id,"RS","GC", 'purchase'],
+  [Tax.find_by(reference: 'ICA_1').id,"RS","GC", 'purchase']
 ]
 
 tax_rules_array.each do |e|
@@ -120,6 +120,7 @@ tax_rules_array.each do |e|
     tax_id: e[0],
     seller_regime: e[1],
     buyer_regime: e[2],
+    transaction_type: e[3]
   ).first_or_create
 end
 
