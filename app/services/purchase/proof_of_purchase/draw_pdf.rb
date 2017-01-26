@@ -119,11 +119,11 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     # # 1.costo trazoro
     move_cursor_to 147
-    text_box order_presenter.trazoro_transaction_cost.to_s, :at => [110, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    text_box order_presenter.currency_format(order_presenter.trazoro_transaction_cost), :at => [110, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
 
     # # 2. IVA
     move_cursor_to 127
-    text_box order_presenter.trazoro_transaction_vat.to_s, :at => [110, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
+    text_box order_presenter.currency_format(order_presenter.trazoro_transaction_vat), :at => [110, cursor], :with => 100, :size => 10, :height => 10, :overflow => :shrink_to_fit
 
     # # 3. costo trazoro total
     # move_cursor_to 311
@@ -136,11 +136,11 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     # Costo del oro
     move_cursor_to 166
-    text_box order_presenter.real_gold_cost.to_s, :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.currency_format(order_presenter.real_gold_cost), :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     # valor total
     move_cursor_to 88
-    text_box order_presenter.total_price.to_s, :at => [410, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.currency_format(order_presenter.total_price), :at => [410, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to -5
     barcode = Barby::EAN13.new(order_presenter.code)

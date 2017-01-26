@@ -138,6 +138,6 @@ class Sale::ProofOfSale::DrawPDF < Prawn::Document
     move_cursor_to 105
     text_box order_presenter.grade.to_s, :at => [86, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
     move_cursor_to 85
-    text_box order_presenter.total_price.to_s, :at => [86, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+    text_box order_presenter.currency_format(order_presenter.total_price), :at => [86, cursor], :width => 90, :size => 10, :height =>  10, :overflow => :shrink_to_fit
   end
 end
