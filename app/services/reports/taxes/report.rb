@@ -27,7 +27,6 @@ module Reports
         report = {}
         seller_regime = regime(order).seller #order.seller.setting.regime_type
         buyer_regime  = regime(order).buyer #order.buyer.setting.regime_type
-
         report[:movements] = find_values(movements, order, order.price.round(0), 'movements')
         report[:taxes] =  get_taxes(seller_regime, buyer_regime, order.price.round(0), order.type)
         movement = report[:movements].present? ? calc_efective_payment_value(report, order) : {}
@@ -98,7 +97,7 @@ module Reports
       end
 
       def get_taxes(seller_regime, buyer_regime, price, order_type)
-        tax_rules = TaxRule.where(['seller_regime = ? and buyer_regime = ?', seller_regime, buyer_regime])
+        tax_rules = TaxRule.where(['transaction_type = ? and seller_regime = ? and buyer_regime = ?', order_type, seller_regime, buyer_regime])
         return [] unless tax_rules
         tax_rules.each_with_object([]) do |tax_rule, array|
           array << 
