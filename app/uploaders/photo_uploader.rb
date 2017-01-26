@@ -1,9 +1,23 @@
 # encoding: utf-8
+require 'carrierwave/processing/mime_types'
+
+module CarrierWave
+  module MiniMagick
+    def quality(percentage)
+      manipulate! do |img|
+        img.quality(percentage.to_s)
+        img = yield(img) if block_given?
+        img
+      end
+    end
+  end
+end
 
 class PhotoUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::RMagick
   include CarrierWave::CleanUpFolders
+  include CarrierWave::MimeTypes
 
   # Choose what kind of storage to use for this uploader:
   if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
@@ -12,7 +26,20 @@ class PhotoUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
+  # Process
+  process :set_content_type
+
+
+  # Versions
+  process :thumb
+  process :medium
+
+  # Callbacks
   after :remove, :delete_empty_upstream_dirs
+  
+  def set_content_type
+    super
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -24,6 +51,27 @@ class PhotoUploader < CarrierWave::Uploader::Base
     "uploads/photos/#{model.class.to_s.underscore}"
   end
 
+  version :thumb do
+    #process enable_processing: true
+    process :convert => :jpg
+    process resize_to_fit: [50, 50]
+    process :quality => 100 
+
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.jpg'
+    end    
+  end
+ 
+  version :medium do
+    #process enable_processing: true
+    process :convert => :jpg
+    process resize_to_fit: [300, 300]
+    process :quality => 85
+
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.jpg'
+    end
+  end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -50,11 +98,6 @@ class PhotoUploader < CarrierWave::Uploader::Base
   def extension_white_list
     %w(jpg jpeg png pdf svg)
   end
-
-  version :thumb do
-    process resize_to_fill: [200,200]
-  end
-
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
