@@ -24,7 +24,7 @@
         %input{"ng-model"=>"provider.idNumber","name"=>"idNumber", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number"}
         %md-not-found
 
-  .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
+  .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
     %md-button.btn-save{ "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.providerType)"} Consultar  
       %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
   
