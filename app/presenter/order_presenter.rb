@@ -97,4 +97,8 @@ class OrderPresenter < BasePresenter
   def total_fine_grams
     fine_grams.present? ? "#{ fine_grams.round(3) } Gramos" : raise('fine grams cannot be blank!!')
   end
+
+  def currency_format(number)
+    ApplicationController.helpers.number_to_currency(number, precision: 0, unit: 'COP$', delimiter: '.')
+  end
 end
