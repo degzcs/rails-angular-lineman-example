@@ -90,7 +90,7 @@ class Order < ActiveRecord::Base
   scope :purchases_for, ->(legal_representative, current_user) { where(buyer: legal_representative).joins(:audits).where('audits.user_id = ?', current_user.id) }
 
   scope :for_marketplace, ->(current_user) { where(transaction_state: 'published').where('seller_id != ?', current_user) }
-
+  scope :by_types, -> { unscoped.select(:type).distinct.pluck(:type)}
   #
   # State Machine for transaction_state field
   #
