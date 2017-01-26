@@ -16,7 +16,7 @@ end
 
 class DocumentUploader < CarrierWave::Uploader::Base
 
-  include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
   include CarrierWave::CleanUpFolders
   include CarrierWave::MimeTypes
 
@@ -34,34 +34,7 @@ class DocumentUploader < CarrierWave::Uploader::Base
   process :set_content_type
 
   # Versions
-  version :preview, if: :is_image_extension?
-  version :thumb,   if: :is_image_extension?
-  version :medium,  if: :is_image_extension?
-
-  # Callbacks
-  after :remove, :delete_empty_upstream_dirs
-
-  def set_content_type
-    super
-  end
-
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-    "#{base_store_dir}/#{mounted_as[0,5]}/#{model.id}"
-  end
-
-  def base_store_dir
-    "uploads/documents/#{model.class.to_s.underscore}"
-  end
-
-  def cover
-    manipulate! do |frame, index|
-      frame if index.try(:zero?) # take only the first page of the file
-    end
-  end
-
-  version :preview do
+  version :preview, :if => :is_image_extension? do
     process :convert => :jpg
     process :cover
     #process :resize_to_fill => [310, 200]
@@ -72,47 +45,46 @@ class DocumentUploader < CarrierWave::Uploader::Base
     end
   end
 
-  version :thumb do
+  version :thumb, :if => :is_image_extension? do
     process :convert => :jpg
     process :cover
     process :resize_to_fit => [50, 50]
-    process :quality => 100 
+    process :quality => 100
 
     def full_filename (for_file = model.source.file)
       super.chomp(File.extname(super)) + '.jpg'
     end
   end
 
-  version :medium do
+  version :medium, :if => :is_image_extension? do
     process :convert => :jpg
     process :cover
     process :resize_to_fit => [300, 300]
-    process :quality => 85 
+    process :quality => 85
 
     def full_filename (for_file = model.source.file)
       super.chomp(File.extname(super)) + '.jpg'
     end
   end
 
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
+  # Callbacks
+  after :remove, :delete_empty_upstream_dirs
 
-  # Process files as they are uploaded:
-  # process :scale => [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
 
-  # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :resize_to_fit => [50, 50]
-  # end
+  # Override the directory where uploaded files will be stored.
+  def store_dir
+    "#{ base_store_dir }/#{ mounted_as }/#{ model.id }"
+  end
+
+  def base_store_dir
+    "#{ Rails.root }/public/#{ Rails.env }/uploads/documents/#{model.class.to_s.underscore}"
+  end
+
+  def cover
+    manipulate! do |frame, index|
+      frame if index.try(:zero?) # take only the first page of the file
+    end
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -120,14 +92,8 @@ class DocumentUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg png pdf svg)
   end
 
-  def is_image_extension? photo_file
-    extension_white_list.reject {|x| x == 'pdf'}.include? File.extname(photo_file.filename)
+  # NOTE: This will never work for :version look at the https://github.com/carrierwaveuploader/carrierwave/blob/master/lib/carrierwave/uploader/versions.rb line 158, in that place is the only part where is used the :if condition but the version is built already in the previous method. For me it does not make sense.
+  def is_image_extension?(new_file)
+    new_file.content_type.start_with? 'image'
   end
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
-
 end
