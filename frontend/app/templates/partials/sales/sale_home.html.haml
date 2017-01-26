@@ -1,25 +1,26 @@
 %div
   %md-content.md-padding{"layout" => "row", "layout-align" => "center"}
-    %md-card{"flex" => "40"}
-      %h2.md-title{}
+    %div{"flex" => "40"}
+      %h2{}
         Vender
-      %md-card-content{ "style" => "text-align: center;" }
-        %img{ "ng-src"=>"/img/icons/sale/vender_carrito.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
+      %md-content{ "style" => "text-align: center;" }
+        %img{ "ng-src"=>"/img/icons/sale/VENDER.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
         %p
           En esta sección podrá vender el mineral con las compras previamente hechas a proveedores autorizados a otros comercializadores.
       %div.md-actions{"layout"=>"row", "layout-align"=>"center center"}
         %md-button.md-primary.md-raised{"ui-sref" => "new_sale.step1"}
           SEGUIR
 
+    %hr{"style" => "height: 300px; ", "color" => "black"}
 
-    %md-card{"flex" => "40"}
-      %h2.md-title{}
+    %div{"flex" => "40"}
+      %h2{}
         Ordenes de Venta
       
-      %md-card-content{ "style" => "text-align: center;" }
-        %img{ "ng-src"=>"/img/icons/purchase/ordenes_compras.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
+      %md-content{ "style" => "text-align: center;" }
+        %img{ "ng-src"=>"/img/icons/purchase/ordenes_compraventa.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
         %p
-          Aqui podra visualizar las ordenes pendientes de venta que ha enviado por a comercializador atravez de la plataforma.
+          Aqui podra visualizar las ordenes pendientes de venta que ha enviado un comercializador atravez de la plataforma de proveedores autorizados.
       %div.md-actions{"layout"=>"row", "layout-align"=>"center center"}
         %md-button.md-primary.md-raised{"ui-sref" => "new_sale.tab.orders_pending_sale"}
           SEGUIR   
