@@ -32,7 +32,7 @@ describe Purchase::BuyGoldService do
       }
       @order_hash = {
         'seller_id' => @seller.id,
-        'price' => 1.5,
+        'price' => 90000,
         'seller_picture' => @seller_picture,
         'trazoro' => false,
         'signature_picture' => @signature_picture
