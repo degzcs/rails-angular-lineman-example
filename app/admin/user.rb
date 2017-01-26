@@ -193,10 +193,10 @@ ActiveAdmin.register User do
         row :address, label: 'Direccion'
         row :city, label: 'Ciudad'
         row :photo_file, label: 'Foto usuario' do |u|
-          image_tag u.photo_file.try(:thumb).try(:url), class: 'photo-user'
+          image_tag u.photo_file.try(:url), class: 'photo-user'
         end
         row :rut_file, label: 'PDF Rut' do |u|
-          link_to(image_tag(u.rut_file.try(:preview).try(:url)), u.rut_file.url, :target => '_blank') if u.rut_file
+          link_to(image_tag(u.rut_file.try(:url)), u.rut_file.url, :target => '_blank') if u.rut_file
         end
       end
     end
