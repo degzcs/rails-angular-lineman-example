@@ -55,7 +55,6 @@ class DocumentUploader < CarrierWave::Uploader::Base
     "uploads/documents/#{model.class.to_s.underscore}"
   end
 
-
   def cover
     manipulate! do |frame, index|
       frame if index.try(:zero?) # take only the first page of the file
@@ -63,7 +62,6 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   version :preview do
-    #return  nil unless :has_image_extension
     process :convert => :jpg
     process :cover
     #process :resize_to_fill => [310, 200]
@@ -75,7 +73,6 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb do
-    #return  nil unless :has_image_extension
     process :convert => :jpg
     process :cover
     process :resize_to_fit => [50, 50]
@@ -87,7 +84,6 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   version :medium do
-    #return  nil unless :has_image_extension
     process :convert => :jpg
     process :cover
     process :resize_to_fit => [300, 300]
