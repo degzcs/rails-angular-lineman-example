@@ -114,4 +114,5 @@ group :test do
   gem 'vcr', '~> 3.0.3', require: false
   gem 'webmock', '~> 2.1.0', require: false
   gem 'state_machines_rspec'
+  gem 'timecop'
 end
