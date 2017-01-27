@@ -216,7 +216,6 @@ describe Reports::Taxes::Report do
               ]
             }
             response = service.call(order: sale_order)
-            binding.pry
             expect(response).to eq repor_expected
           end
         end
