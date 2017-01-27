@@ -30,7 +30,7 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   def draw_file!(order_presenter, signature_picture)
     start_new_page(:template => base_file.path, :template_page => 1)
     # header
-    seller_picture = order_presenter.seller_picture.file.path
+    seller_picture = order_presenter.seller_picture.medium.file.path
     image_width = 90
     image_x = 430
     image_y = 826
