@@ -5,7 +5,7 @@
   #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"}
   #  {{purchase.gold_batch.grams}}
   %div.total_amount
-    %strong
+    %p.md-subtitle
       Gramos Finos Totales:
     {{totalAmount.toFixed(3)}} gr
 
@@ -34,4 +34,6 @@
         Registros cargados: {{count}}
 
 .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
-  %md-button.btn-save{"ng-click" => "liquidateSelectedPurchases($event)"} Continuar
+  %md-button.btn-next.md-raised.md-primary{"ng-click" => "liquidateSelectedPurchases($event)"} 
+    Continuar
+    %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }

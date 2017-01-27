@@ -6,48 +6,53 @@
       .dashboard-user-info{ }
         %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
       .dashboard-user-utilities{layout: "column"}
-        Facturación y documento 
-        %br Editar información
-        %md-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()", "target"=>"_blank"}Cerrar Sesión
+        %md-button{}
+          %md-icon{"md-svg-icon"=>"editor:insert_drive_file"}
+          Facturación y documento
+        %md-button{}
+          %md-icon{"md-svg-icon"=>"editor:mode_edit"}
+          Editar información
+        %md-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()", "target"=>"_blank"}
+          %md-icon{"md-svg-icon"=>"action:exit_to_app"}
+          Cerrar Sesión
     %div{layout: "column", flex: "50"}
       .dashboard-user-utilities
-        %h3{"style" => "margin: 0px;"}
+        %h2{}
           BIENVENIDO
-        %h4{ "style" => "text-transform: uppercase; margin: 0px; font-weight: 300;"}
+        %h2.username{}
           {{currentUser.first_name}} {{currentUser.last_name}}
 
         .md-subtitle
           Comprador
 
-        %br
-          %b.title-dash Documento de Trazoro: 
-        %span.content-dash{}
-          {{currentUser.document_number}}
+        .user-info
+          %b.title-dash Documento: 
+          %span.content-dash{}
+            {{currentUser.document_number}}
 
-        %br
-          %b.title-dash Correo electrónico: 
-        %span.content-dash
-          {{currentUser.email}}
+          %br
+            %b.title-dash Correo electrónico: 
+          %span.content-dash
+            {{currentUser.email}}
 
-        %h5{"style" => "margin-bottom: 0px; font-weight: 300;"}
-          Servicios Adquiridos:
+        %h4
+          Servicios Adquiridos
         %hr{"width"=> "80%", "color"=>"#E3CD48","align"=>"left"}
         %md-content
-          %md-list
+          %md-list.content-dash
             .md-list-item-text.content-dash{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
             %md-list-item{"ng-repeat" => "services in currentUser.trazoro_services"}
-              .md-list-item-text.content-dash
+              .md-list-item-text
                 {{services.name}}
               %md-divider{"ng-if" => "!$last"}
 
     .dashboard-credit-info{layout: "column", flex: "20"}
       %span.subtitle{}
         CRÉDITOS RESTANTES
-      %br{}
         %span.num-credits{}
           {{available_credits}}
-      %md-button.md-raised.bt-buy-credits{"ng-click"=>"showCreditBillingForm($event)"}
-        Comprar Créditos
+      %md-button.btn-save{"ng-click"=>"showCreditBillingForm($event)"}
+        Comprar Créditos $
 
 
 

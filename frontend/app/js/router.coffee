@@ -112,7 +112,7 @@
   .state "dashboard",
     url: "/dashboard"
     ncyBreadcrumb:
-      label: 'Dashboard'
+      label: 'Inicio'
     views:
       'content':
         templateUrl: "partials/dashboard.html"

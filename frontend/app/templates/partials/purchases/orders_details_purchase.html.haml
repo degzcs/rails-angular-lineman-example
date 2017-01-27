@@ -1,33 +1,41 @@
-%section{layout: "column", "layout-align" => "center"}
-  %h2
-    Detalles de la compra pendiente
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
-    // ---Purchase Type
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
-      %legend
-        %h3
-          Vendedor
-      %table
-        %tr
-          %td
-            Nombre y apellidos:
-          %td
+%div{:layout => "column"}
+  .general-container
+    %h3
+      DETALLES DE LA COMPRA PENDIENTE
+    %md-content{ "flex"=>"30", "class"=>"", "layout"=>"row"}
+      %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
+        %div.md-subtitle{"flex"=> ""}
+          VENDEDOR
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Nombre y Apellido
+          %p.text-container-false 
             {{purchaseModel.seller.first_name}} {{purchaseModel.seller.last_name}}
-        %tr
-          %td
-            Documento de id:
-          %td
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Num. de identificación
+          %p.text-container-false 
             {{purchaseModel.seller.document_number}}
-        %tr
-          %td
-            Email:
-          %td
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Email
+          %p.text-container-false 
             {{purchaseModel.seller.email}}
-        %tr
-          %td
-            Teléfono:
-          %td
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Telefono
+          %p.text-container-false 
             {{purchaseModel.seller.phone_number}}
+      %md-content{"flex"=> "30", "class"=>"", "layout"=>"row"}
+        %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
+          %div.md-subtitle{"flex"=> ""}
+            DETALLES DE LA ORDEN
+   
+    
 
 
 
@@ -93,8 +101,8 @@
 
 
 
-  %div.md-padding{flex: "80", :layout => "row", "layout-align" => "end" }
-    %md-button.md-raised{flex: "10", "ng-click" => "agreeOrCancel('cancel!')"}
+  %div.md-padding{flex: "80", :layout => "row", "layout-align" => "center" }
+    %md-button.btn-save{"ng-click" => "agreeOrCancel('cancel!')"}
       Rechazar
-    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.orders_pending_agreetment", "style" => "margin-right: 135px;"}
+    %md-button.btn-next.md-raised.md-primary{ "ui-sref" => "new_purchase.orders_pending_agreetment"}
       Continuar

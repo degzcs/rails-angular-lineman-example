@@ -18,6 +18,7 @@ body {
   width: 100%;
   display: inline-block;
   margin-bottom: 40px;
+  letter-spacing: 1px;
 }
 #footer {
   width:100%;
@@ -33,9 +34,10 @@ h1,h2,h3,h4,h5 {
   font-family: 'Oswald';
   font-weight: 700;
   letter-spacing: 2px;
- 
-
-  color: #E3CD48
+  text-transform: uppercase;
+  color: #E3CD48;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 p{
@@ -215,7 +217,7 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-i
   border-bottom: 2px solid #e3cd48;
   text-transform: uppercase;
   font-family: 'Oswald';
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .md-table-content{
@@ -301,12 +303,11 @@ md-tabs.md-default-theme md-ink-bar {
 .md-subtitle{
   font-family: 'Oswald';
   font-weight: 500;
-  font-size: 16px;
+  font-size: 19px;
   color: #000000;
   letter-spacing: 1px;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  max-height: 20px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .loading-gif{
@@ -340,3 +341,81 @@ a.md-button.md-default-theme.md-accent, .md-button.md-default-theme.md-accent {
 a.md-button.md-default-theme.md-accent:not([disabled]) md-icon, .md-button.md-default-theme.md-accent:not([disabled]) md-icon {
     color: #e3cd48;
 }
+
+//buttons
+
+
+//btn yellow with arrow
+.btn-next{
+  font-weight: 100;
+  min-height: 40px !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Oswald';
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+
+//button black with arrow(steps)
+.btn-back-black{
+  font-weight: 100;
+  min-height: 40px !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Oswald';
+  letter-spacing: 1px;
+  font-size: 18px;
+  background: #000000;
+  color: #E3CD48;
+
+  span{
+    margin-left: 45px;
+  }
+
+}
+
+//Button grey with arrow
+.btn-back-grey{
+
+}
+
+.btn-next:hover{
+  background: #ebdc7f
+  //lighten(#edb039, 3%)!important;
+}
+
+//Button grey without arrow
+.btn-cancel{
+  width: 200px;
+  background: #e0e0e0;
+  font-family: 'Oswald';
+  font-weight: 100;
+  letter-spacing: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 18px;
+  min-height: 40px !important;
+}
+
+.btn-save{
+  min-height: 40px !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Oswald';
+  letter-spacing: 1px;
+  font-size: 18px;
+  background: #000000;
+  font-weight: 500;
+  color: #E3CD48 !important;
+}
+
+
+//Button black with arrow
+.btn-save:enabled{
+  
+} 
+
+a.md-button.md-default-theme[disabled], .md-button.md-default-theme[disabled] {
+    background-color: rgba(0, 0, 0, 0.42);
+}
+

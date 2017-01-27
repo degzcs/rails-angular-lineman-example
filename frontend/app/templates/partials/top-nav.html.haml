@@ -4,7 +4,9 @@
   %section.top-nav-buttons{:layout => "row", "layout-align" => "center center"}
 
     %div{:flex => "10"}
-      %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px;"}
+      %md-button{"ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
+        %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px;"}
+
     
     %md-button.top-nav-button{"aria-label" => "dashboard", "ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"} Inicio
     

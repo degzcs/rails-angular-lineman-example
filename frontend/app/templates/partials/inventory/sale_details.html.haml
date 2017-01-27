@@ -145,9 +145,10 @@
 
           /         ${{currentSale.price}}
   .wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-    %md-button.btn-cancel{ flex: "30",href: "{{currentSale.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+
+    %md-button.btn-save{ href: "{{currentSale.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
       Documentos de compra adjuntos
-    %md-button.btn-cancel{ flex: "20",href: "{{currentSale.proof_of_sale.file.url}}", :target => "_blank"}
+    %md-button.btn-save{ href: "{{currentSale.proof_of_sale.file.url}}", :target => "_blank"}
       Compendio
-    %md-button.btn-cancel{ flex: "20",'ng-click' => 'markAsPaid()'}
+    %md-button.btn-next.md-raised.md-primary{ 'ng-click' => 'markAsPaid()'}
       Marcar como pagado
