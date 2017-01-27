@@ -46,18 +46,15 @@ puts '1- Create Puc accounts to Tax Module'
 
 puc_array = [
   ["130505","Clientes Nacionales"],
-  # desaparace para 2017 de acuerdo a la reforma tributaria
-  # ["135595","ANTICIPO CREE (.40%)"],
-  # ["23657501","Autorretención CREE"],
   ["23657502","Autorretención RTFTE (2.5%)"],
   ["413595","Ingresos por Venta de Oro"],
   ["613516","Venta Materias Primas Oro"],
   ["140501","Materias Primas Oro"],
   ["111005","Moneda Nacional"],
-  ["240804","Impuesto sobre las ventas por pagar(16%)"],
+  ["240804","Impuesto sobre las ventas por pagar(19%)"],
   ["135518","ICA retenido (1% Medellín)"],
   ["135515","Retención en la fuente (2.5%)"],
-  ["240802","Impuesto a las ventas en compras (16%)"],
+  ["240802","Impuesto a las ventas en compras (19%)"],
   ["236540","Retención en compras (2.5)"],
   ["236740","IVA retenido en compras (2.4%)"],
   ["236840","ICA retenido en compras (1% Medellín)"],
@@ -65,7 +62,9 @@ puc_array = [
   ["135517","IVA retnido (2.4%)"],
   ["429515","Regalias (4%)"],
   ["511595","Impuestos retención en la fuente (3.5%)"],
-  ["511505","Impuesto ICA retenido (1% Medellín)"]
+  ["511505","Impuesto ICA retenido (1% Medellín)"],
+  ["135505","Anticipo de impuesto en Rentas (3%)"], #-> (ventas) va en el débito 
+  ["23657503", "Autorretención en Rentas (3%)"] #-> (ventas) va en el crédito
 ]
 
 puc_array.each do |e|
@@ -79,17 +78,16 @@ end
 puts '2- Create Taxes to Tax Module'
 
 tax_array = [
-  # ["Anticipo CREE", "ANT_CREE", 0.4, PucAccount.find_by(code: '135595').id],
-  # ["Autorretención CREE", "AUT_CREE", 0.4, PucAccount.find_by(code: '23657501').id],
   ["Retención en la Fuente (2.5%)", "RTFTE_2.5", 2.5, PucAccount.find_by(code: '135515').id],
   ["Regalias (4%)", "REGALIAS", 4, PucAccount.find_by(code: '429515').id],
-  #["IVA entre RS y RC (2.4%)", "IVA_2.4", 2.4, PucAccount.find_by(code: '240804').id],
-  # debido a la reforma tributaria esta línea cambió y está por confirmarse el valor del porcentaje
   ["IVA compras entre RS y RC (19%)", "IVA_19", 19, PucAccount.find_by(code: '236740').id],
+  ["IVA compras entre RS y GC, RC y GC (2.4%)", "IVA_2.4_RSRC&GC", 2.4, PucAccount.find_by(code: '236740').id],
   ["ICA entre RS y GC (1%)", "ICA_1", 1, PucAccount.find_by(code: '511505').id],
   ["ICA entre RS y RC (1%)", "ICA_1_RS&RC", 1, PucAccount.find_by(code: '236840').id],
   ["Impuestos retención en la fuente RS y RC (3.5%)", "RTFTE_3.5_RS&RC", 3.5, PucAccount.find_by(code: '236540').id],
-  ["Impuestos retención en la fuente RS y GC (3.5%)", "RTFTE_3.5", 3.5, PucAccount.find_by(code: '511505').id]
+  ["Impuestos retención en la fuente RS y GC (3.5%)", "RTFTE_3.5", 3.5, PucAccount.find_by(code: '511505').id],
+  ["Anticipo de impuesto a la renta en ventas 3%", "ANT_3_D", 3, PucAccount.find_by(code: '135505')],
+  ["Anticipo de impuesto a la renta en ventas 3%", "ANT_3_C", 3, PucAccount.find_by(code: '23657503')],
 ]
 
 tax_array.each do |e|
@@ -104,16 +102,26 @@ end
 puts '3- Create tax rules'
 
 tax_rules_array = [
-  # [Tax.find_by(reference: 'ANT_CREE').id,"RC","GC"],
-  # [Tax.find_by(reference: 'AUT_CREE').id,"RC","GC"],
-  #[Tax.find_by(reference: 'IVA_2.4').id,"RS","RC"],
-  [Tax.find_by(reference: 'IVA_19').id,"RS","RC", 'purchase'],
+  #[Tax.find_by(reference: 'IVA_19').id,"RS","RC", 'purchase'],
+  [Tax.find_by(reference: 'IVA_2.4_RSRC&GC').id,"RC","GC", "purchase"],
   [Tax.find_by(reference: 'ICA_1_RS&RC').id,"RS","RC",'purchase'],
-  #[Tax.find_by(reference: 'REGALIAS').id,"RS","RC"],
   [Tax.find_by(reference: 'RTFTE_3.5_RS&RC').id,"RS","RC", 'purchase'],
   [Tax.find_by(reference: 'RTFTE_3.5').id,"RS","GC", 'purchase'],
-  [Tax.find_by(reference: 'ICA_1').id,"RS","GC", 'purchase']
+  [Tax.find_by(reference: 'IVA_2.4_RSRC&GC').id,"RS","RC", "purchase"],
+  [Tax.find_by(reference: 'ICA_1').id,"RS","GC", 'purchase'],
+  [Tax.find_by(reference: 'IVA_2.4_RSRC&GC').id,"RS","GC", "purchase"],
+  [Tax.find_by(reference: 'ANT_3_D').id, "RC","RC","sale"],
+  [Tax.find_by(reference: 'ANT_3_C').id, "RC","RC","sale"],
+  [Tax.find_by(reference: 'ANT_3_D').id, "RC","GC","sale"],
+  [Tax.find_by(reference: 'ANT_3_C').id, "RC","GC","sale"],
+  [Tax.find_by(reference: 'ICA_1').id,"RC","GC", 'sale'],
+  [Tax.find_by(reference: 'RTFTE_2.5').id,"RC","GC", 'sale'],
 ]
+
+# GC retiene %2.4 a RC y RS en compras -> cuenta 236740
+# RC retiene %2.4 a RS en compras -> cuenta 236740
+# anticipo de impuesto en rentas del 3% se aplica a las ventas de todos los regimenes menos del RS
+# regalias no se configuran porq es el ente extractor quien debe facturarlas por eso no aparece el documento tributario
 
 tax_rules_array.each do |e|
   TaxRule.where(
@@ -129,18 +137,17 @@ puts '4- Create transaction movements to see the sale transaction taxes report'
 transaction_movement_array = [
   [PucAccount.find_by(code: '130505').id, "sale", "movements", 'D'],
   [PucAccount.find_by(code: '135515').id, "sale", "taxes", 'D'],
-  #[PucAccount.find_by(code: '135595').id, "sale", "taxes", 'D'],
   [PucAccount.find_by(code: '23657502').id, "sale", "taxes", 'C'],
-  #[PucAccount.find_by(code: '23657501').id, "sale", "taxes", 'C'],
-  [PucAccount.find_by(code: '413595').id, "sale", "movements", 'C'],
   [PucAccount.find_by(code: '240804').id, "sale", "taxes", 'C'],
+  [PucAccount.find_by(code: '135505').id, "sale", "taxes", 'D'],
+  [PucAccount.find_by(code: '23657503').id, "sale", "taxes", 'C'],
+  [PucAccount.find_by(code: '413595').id, "sale", "movements", 'C'],
   [PucAccount.find_by(code: '613516').id, "sale", "inventories", 'D'],
   [PucAccount.find_by(code: '140501').id, "sale", "inventories", 'C'],
   [PucAccount.find_by(code: '111005').id, "sale", "payments", 'D'],
   [PucAccount.find_by(code: '130505').id, "sale", "payments", 'C'],
 
   [PucAccount.find_by(code: '140501').id, "purchase", "movements", 'D'],
-  #[PucAccount.find_by(code: '240802').id, "purchase", "taxes", 'D'],
   [PucAccount.find_by(code: '236540').id, "purchase", "taxes", 'C'],
   [PucAccount.find_by(code: '236740').id, "purchase", "taxes", 'C'],
   [PucAccount.find_by(code: '236840').id, "purchase", "taxes", 'C'],

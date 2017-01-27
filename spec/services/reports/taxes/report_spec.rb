@@ -57,16 +57,16 @@ describe Reports::Taxes::Report do
                    :count => "220505",
                     :name => "Proveedores Nacionales",
                    :debit => "",
-                  :credit => 765000
+                  :credit => 931000 #765000
                 )
               ],
               :taxes => [
-                OpenStruct.new(
-                   :count => "236740",
-                    :name => "IVA retenido en compras (2.4%)",
-                   :debit => "",
-                  :credit => 190000
-                ),
+                # OpenStruct.new(
+                #    :count => "236740",
+                #     :name => "IVA retenido en compras (2.4%)",
+                #    :debit => "",
+                #   :credit => 190000
+                # ),
                 OpenStruct.new(
                    :count => "236840",
                     :name => "ICA retenido en compras (1% Medellín)",
@@ -78,20 +78,26 @@ describe Reports::Taxes::Report do
                     :name => "Retención en compras (2.5)",
                    :debit => "",
                   :credit => 35000
-               )
+                ),
+                OpenStruct.new(
+                   :count => "236740",
+                    :name => "IVA retenido en compras (2.4%)",
+                   :debit => "",
+                  :credit => 24000
+                )
               ],
               :payments => [
                  OpenStruct.new(
                    :count => "220505",
                     :name => "Proveedores Nacionales",
-                   :debit => 765000,
+                   :debit => 931000, #765000,
                   :credit => ""
                 ),
                 OpenStruct.new(
                    :count => "111005",
                     :name => "Moneda Nacional",
                    :debit => "",
-                  :credit => 765000
+                  :credit => 931000 #765000
                )
               ]
             }
@@ -144,7 +150,7 @@ describe Reports::Taxes::Report do
               :movements => [ OpenStruct.new(
                    :count => "130505",
                     :name => "Clientes Nacionales",
-                   :debit => 4000000,
+                   :debit => 3940000,
                   :credit => ""
                 ),
                 OpenStruct.new(
@@ -155,31 +161,43 @@ describe Reports::Taxes::Report do
                 )
               ],
               :taxes => [
-               #  OpenStruct.new(
-               #     :count => "135595",
-               #      :name => "ANTICIPO CREE (.40%)",
-               #     :debit => 0,
-               #    :credit => ""
-               #  ),
-               #  OpenStruct.new(
-               #     :count => "23657501",
-               #      :name => "Autorretención CREE",
-               #     :debit => "",
-               #    :credit => 0
-               # )
+                OpenStruct.new(
+                   :count => "135505",
+                    :name => "Anticipo de impuesto en Rentas (3%)",
+                   :debit => 120000,
+                  :credit => ""
+                ),
+                OpenStruct.new(
+                   :count => "23657503",
+                    :name => "Autorretención en Rentas (3%)",
+                   :debit => "",
+                  :credit => 120000
+               ),
+               OpenStruct.new(
+                 :count => "511505",
+                  :name => "Impuesto ICA retenido (1% Medellín)",
+                 :debit => "",
+                :credit => 40000
+               ),
+               OpenStruct.new(
+                 :count => "135515",
+                  :name => "Retención en la fuente (2.5%)",
+                 :debit => 100000,
+                :credit => ""
+               ) 
               ],
               :payments => [
                  OpenStruct.new(
                    :count => "111005",
                     :name => "Moneda Nacional",
-                   :debit => 4000000,
+                   :debit => 3940000,
                   :credit => ""
                 ),
                 OpenStruct.new(
                    :count => "130505",
                     :name => "Clientes Nacionales",
                    :debit => "",
-                  :credit => 4000000
+                  :credit => 3940000
                )
               ],
               :inventories => [
@@ -198,6 +216,7 @@ describe Reports::Taxes::Report do
               ]
             }
             response = service.call(order: sale_order)
+            binding.pry
             expect(response).to eq repor_expected
           end
         end
