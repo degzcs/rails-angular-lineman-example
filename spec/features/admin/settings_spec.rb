@@ -16,16 +16,25 @@ describe 'all test the settings view', :js do
     expected_response = {
       monthly_threshold: '20',
       fine_gram_value: '1000',
-      vat_percentage: '16'
+      vat_percentage: '16',
+      fixed_sale_agreetment: 'fixed sale agreetment text',
+      habeas_data_agreetment: 'habeas agreetment text',
+      ros_threshold: '2000000'
     }
     fill_in 'settings_monthly_threshold', with: expected_response[:monthly_threshold]
     fill_in 'settings_vat_percentage', with: expected_response[:vat_percentage]
     fill_in 'settings_fine_gram_value', with: expected_response[:fine_gram_value]
+    fill_in 'settings_fixed_sale_agreetment', with: expected_response[:fixed_sale_agreetment]
+    fill_in 'settings_habeas_data_agreetment', with: expected_response[:habeas_data_agreetment]
+    fill_in 'settings_ros_threshold', with: expected_response[:ros_threshold]
     click_button('Create Settings')
     last_setting = Settings.order(:created_at).last.as_json.with_indifferent_access
     expect(last_setting[:data][:monthly_threshold]).to eq expected_response[:monthly_threshold]
     expect(last_setting[:data][:fine_gram_value]).to eq expected_response[:fine_gram_value]
     expect(last_setting[:data][:vat_percentage]).to eq expected_response[:vat_percentage]
+    expect(last_setting[:data][:fixed_sale_agreetment]).to eq expected_response[:fixed_sale_agreetment]
+    expect(last_setting[:data][:habeas_data_agreetment]).to eq expected_response[:habeas_data_agreetment]
+    expect(last_setting[:data][:ros_threshold]).to eq expected_response[:ros_threshold]
     expect(page).to have_content 'Settings was successfully created.'
   end
 

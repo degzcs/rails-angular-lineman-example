@@ -23,6 +23,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
       origin_certificate_sequence: ''
       origin_certificate_file_url: ''
       proof_of_purchase_file_url: ''
+      uiaf_report_file_url: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
       fine_gram_unit_price_to_buy: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
@@ -104,6 +105,7 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
           model.code = data.code
           model.proof_of_purchase_file_url = data.proof_of_purchase_file_url
           model.origin_certificate_file_url = data.origin_certificate_file_url
+          model.uiaf_report_file_url = data.uiaf_report_file_url
           sessionStorage.purchaseService = angular.toJson(model)
           service.model = model
           $location.path('/purchases/show')

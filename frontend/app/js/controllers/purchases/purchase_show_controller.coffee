@@ -52,8 +52,9 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
       seller_picture: ''
       seller: {}
       origin_certificate_sequence: ''
-      origin_certificate_file: ''
+      origin_certificate_file_url: ''
       proof_of_purchase_file_url: ''
+      uiaf_report_file_url: ''
       fine_gram_unit_price: 0 # this is set up for current buyer (currently logged user )
       reference_code: ''
       barcode_html: ''

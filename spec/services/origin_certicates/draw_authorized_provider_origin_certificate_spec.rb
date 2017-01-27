@@ -18,10 +18,11 @@ describe OriginCertificates::DrawAuthorizedProviderOriginCertificate do
 
     it 'test the execution signature' do
       expected_hash = '5b153dbb0f5ac2e1eec7885a5917833695802cd42bbc0183c591a74a797fa209'
+      order_presenter = OrderPresenter.new(purchase_order, nil)
       response = service.call(
-        order: purchase_order,
+        order_presenter: order_presenter,
         signature_picture: @signature_picture,
-        date: '2016/07/15'.to_date,
+        date: '2016/07/15'.to_date
       )
 
       system "mkdir -p #{ Rails.root }/tmp/origin_certificates"
