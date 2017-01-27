@@ -22,6 +22,9 @@
       
       %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
 
+      / %md-select{"placeholder"=>"{{currentUser.first_name}} {{currentUser.last_name}}", "ng-model"=>""}
+      /   %md-option{ "value"=>"Cerrar sesion"}Cerrar sesion
+      /   %md-option{"value"=>"Cerrar sesion"}Cerrar sesion
       %label.top-nav-button{ "style" => "color:white; margin-left: 10px; font-family: 'oswald'; letter-spacing: 1px;"}
         {{currentUser.first_name}} {{currentUser.last_name}}
         

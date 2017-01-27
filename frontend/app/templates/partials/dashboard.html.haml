@@ -16,23 +16,27 @@
         %h4{ "style" => "text-transform: uppercase; margin: 0px; font-weight: 300;"}
           {{currentUser.first_name}} {{currentUser.last_name}}
 
-        %br
-        Comprador
+        .md-subtitle
+          Comprador
 
         %br
-        Documento de Trazoro: {{currentUser.document_number}}
+          %b.title-dash Documento de Trazoro: 
+        %span.content-dash{}
+          {{currentUser.document_number}}
 
         %br
-        Correo electrónico: {{currentUser.email}}
+          %b.title-dash Correo electrónico: 
+        %span.content-dash
+          {{currentUser.email}}
 
-        %h4{"style" => "margin-bottom: 0px; font-weight: 300;"}
+        %h5{"style" => "margin-bottom: 0px; font-weight: 300;"}
           Servicios Adquiridos:
         %hr{"width"=> "80%", "color"=>"#E3CD48","align"=>"left"}
         %md-content
           %md-list
-            %h3{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
+            .md-list-item-text.content-dash{"ng-if" => "!currentUser.trazoro_services.length"} No hay servicios trazoro
             %md-list-item{"ng-repeat" => "services in currentUser.trazoro_services"}
-              .md-list-item-text
+              .md-list-item-text.content-dash
                 {{services.name}}
               %md-divider{"ng-if" => "!$last"}
 
