@@ -1,12 +1,20 @@
 describe UiafReport::DrawUiafReport do
   subject(:service) { UiafReport::DrawUiafReport.new }
 
-  let(:seller) { create :user, :with_profile, :with_personal_rucom, provider_type: 'Barequero', first_name: 'Alam', last_name: 'Agudelo' }
-  let(:purchase_order) { create :purchase, seller: seller }
+  before :each do
+    @buyer = create(:user, :with_profile, :with_company, first_name: 'Alam', last_name: 'Agudelo')
+    Timecop.freeze(2008, 9, 1, 10, 5, 0)
+    @purchase_order = create(:purchase, buyer: @buyer)
+  end
+
+  after :each do
+    Timecop.return
+  end
 
   it 'check consistency of the pdf' do
-    expected_hash = '45fc7e97a1d6793f0d1cd839cab250dcd6d708f360bdb522f69394f4b197bfde'
-    order_presenter = OrderPresenter.new(purchase_order, nil)
+    expected_hash = '2d6ee6dd0e8e53fb04e81bef9f114f5a607a6c07f23b1dfd847509efaf1b7cb8'
+    # @purchase_order.buyer.company.name
+    order_presenter = OrderPresenter.new(@purchase_order, nil)
     response = service.call(
       order_presenter: order_presenter
     )
