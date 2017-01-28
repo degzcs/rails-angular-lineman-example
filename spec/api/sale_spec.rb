@@ -258,7 +258,7 @@ describe 'Sale', type: :request do
         end
 
         context '/:id/batches' do
-          it 'verifies that response has the elements number specified in per_page param' do
+          xit 'verifies that response has the elements number specified in per_page param' do
             order = Order.last
             total_sold_batches = 30
             create_list(:sold_batch, total_sold_batches, order_id: order.id)

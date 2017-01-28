@@ -4,7 +4,7 @@
   %div{layout: "row", "layout-margin", "layout-fill", "layout-padding"}
     %div{layout: "column", flex: "30"}
       .dashboard-user-info{ }
-        %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}"}
+        %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.url || 'img/default-user.png'}}"}
       .dashboard-user-utilities{layout: "column"}
         %md-button{}
           %md-icon{"md-svg-icon"=>"editor:insert_drive_file"}
@@ -26,12 +26,12 @@
           Comprador
 
         .user-info
-          %b.title-dash Documento: 
+          %b.title-dash Documento:
           %span.content-dash{}
             {{currentUser.document_number}}
 
           %br
-            %b.title-dash Correo electrónico: 
+            %b.title-dash Correo electrónico:
           %span.content-dash
             {{currentUser.email}}
 
