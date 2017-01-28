@@ -12,9 +12,9 @@ module Reports
       def call(options = {})
         validate_options(options)
         generate!(options)
-      rescue => exception
-        @response[:success] = false
-        @response[:errors] << exception.message
+      # rescue => exception
+      #   @response[:success] = false
+      #   @response[:errors] << exception.message
       end
 
       def generate!(options)
@@ -32,7 +32,7 @@ module Reports
         movement = report[:movements].present? ? calc_efective_payment_value(report, order) : {}
         report[:movements] = assigne_value_to_count(report[:movements], movement)
         report[:payments] = find_values(movements, order, movement.fetch(:value, nil) , 'payments')
-        
+
         report.merge!(inventories: find_values(movements, order, order.purchases_total_value.round(0), 'inventories')) if order.type == 'sale'
         report
       end
@@ -86,8 +86,8 @@ module Reports
       def find_values(movements, order, movement_value, block_name)
         return [] unless movements.where(block_name: block_name)
         movements.where(block_name: block_name).each_with_object([])  do |movement, array|
-          array << 
-            OpenStruct.new( 
+          array <<
+            OpenStruct.new(
               count:  movement.puc_account.code.to_s,
               name:   movement.puc_account.name.to_s,
               debit:  debit?(order.type, movement.puc_account_id, block_name) ?  movement_value : '',
@@ -100,8 +100,8 @@ module Reports
         tax_rules = TaxRule.where(['transaction_type = ? and seller_regime = ? and buyer_regime = ?', order_type, seller_regime, buyer_regime])
         return [] unless tax_rules
         tax_rules.each_with_object([]) do |tax_rule, array|
-          array << 
-            OpenStruct.new( 
+          array <<
+            OpenStruct.new(
               count:  tax_rule.tax.puc_account.code.to_s,
               name:   tax_rule.tax.puc_account.name.to_s,
               debit:  debit?(order_type, tax_rule.tax.puc_account_id, 'taxes') ? calc_porcent(tax_rule, price) : '',

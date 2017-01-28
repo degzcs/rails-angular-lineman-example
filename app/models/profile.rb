@@ -34,6 +34,7 @@ class Profile < ActiveRecord::Base
   belongs_to :user
   belongs_to :city
   has_one :setting, class_name: 'UserSetting', dependent: :destroy
+  accepts_nested_attributes_for :setting
 
   #
   # Audit Class
