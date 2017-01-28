@@ -113,12 +113,23 @@ a.md-button.md-default-theme.md-primary.md-raised:not([disabled]):hover, a.md-bu
   background-color: #ebdc7f;
 }
 
+//button disabled
+a.md-button.md-default-theme.md-raised[disabled]{
+  background-color: rgba(0,0,0,0.12) !important;
+}
+
+ .md-button.md-default-theme[disabled], .md-button.md-default-theme.md-raised[disabled]{
+  background-color: rgba(0,0,0,0.12) !important;
+ }
+
 a.md-button.md-default-theme.md-primary.md-raised, a.md-button.md-default-theme.md-primary.md-fab, .md-button.md-default-theme.md-primary.md-raised, .md-button.md-default-theme.md-primary.md-fab {
   background-color: #E3CD48;
   font-family: 'Oswald';
   font-weight: 100;
     letter-spacing: 2px;
 }
+
+
 
 a.md-button.md-default-theme, .md-button.md-default-theme {
     border-radius: 0px;
@@ -306,8 +317,8 @@ md-tabs.md-default-theme md-ink-bar {
   font-size: 19px;
   color: #000000;
   letter-spacing: 1px;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .loading-gif{
@@ -419,3 +430,10 @@ a.md-button.md-default-theme[disabled], .md-button.md-default-theme[disabled] {
     background-color: rgba(0, 0, 0, 0.42);
 }
 
+.home{
+  h2.center{
+    text-align: center;
+    padding-bottom: 30px;
+    
+  }
+}

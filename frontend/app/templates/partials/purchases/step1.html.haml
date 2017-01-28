@@ -16,7 +16,7 @@
       /     %h3{:ng-if => "purchase.model.type == 'trazoro'"}
       /       2. Ingrese el codigo de barras
       .md-subtitle
-        3. Datos del proveedor
+        Datos del proveedor
       %div.fieldset-inputs
         %div{layout: "row", :ng-if => "purchase.model.type == 'trazoro'"}
           %md-input-container{flex: ''}
@@ -66,7 +66,7 @@
     /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
     
     %div.md-subtitle{flex: "40"}
-      4. Fotografía de proveedor
+      Fotografía de proveedor
       // ---------------------- seller photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
         / %legend
@@ -77,7 +77,7 @@
         %md-input-container.row
           .photo
             %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-              %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
+              %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               /%md-tooltip{'md-direction'=> 'right'}
               /  Tomar Foto
             %p Capturar foto    

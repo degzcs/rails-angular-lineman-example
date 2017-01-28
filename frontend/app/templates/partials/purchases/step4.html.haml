@@ -172,7 +172,7 @@
       %h3
         PESO COMPRADO
     %md-content{"class"=>"", "layout"=>"row", 'layout-align' => 'center'}
-      %table{'flex' => '80', 'style' => 'width: 150%'}
+      %table{'flex' => '100', 'style' => 'width: 150%'}
         %thead
           %tr.md-table-headers-row
             %th.md-table-header
@@ -238,9 +238,13 @@
     .error-message{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
       %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'"}
         El usario no tiene suficientes creditos para realizar esta compra!
-    .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-      %md-button.btn-cancel{ "ui-sref"=>"new_purchase.step3"} Volver
-      %md-button.btn-save{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'", flex: "20", "ng-click" => "showConfirm($event)"} Realizar la Compra
+    .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
+      %md-button.btn-back-black{ "ui-sref"=>"new_purchase.step3"}
+        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" } 
+        Volver
+      %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'", flex: "20", "ng-click" => "showConfirm($event)"}
+
+        Realizar la Compra
 
 
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

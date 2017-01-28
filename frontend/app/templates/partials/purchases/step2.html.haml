@@ -4,39 +4,46 @@
     .seller
       .row{:layout => "", "layout-sm" => "column"}
         .select-law{'flex' => ''}
-          .md-subtitle 1. Ley
+          .md-subtitle Ley
           %md-input-container
             
             %input{ "type" => "number", "string-to-number"=>"", min: => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre', "placeholder" => "Digite el numero de ley"}
             %div{"ng-messages" => "purchaseForm.degre.$error"}
               /%div{"ng-message" => "required"} * Este campo es requerido.
         .fine-gram-unit-price{'flex' => ''}
-          .md-subtitle 2. Valor gramo fino de vender en COP
+          .md-subtitle Valor gramo fino
           %md-input-container
             
             %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1", "placeholder" => "Precio de gramo fino por unidad"}
             %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
               /%div{"ng-message" => "required"} * Este campo es requerido.
+        
+
+
+
+      %div{:layout => "", "layout-sm" => "column", "layout-align" => "center", "layout-margin"}
+        
+        .price-to-buy{ 'flex' => ''}
+          .md-subtitle Tipo Mineral
+            %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
+              %md-option{:selected => "selected", :value => "Oro"} Oro
+              %md-option{:value => "Plata"} Plata
+              %md-option{:value => "Platino"} Platino
+
+
         .price-to-buy{ 'flex' => ''}
           .md-subtitle
-            3. Valor gramo fino de comprar en COP
+            Valor gramo fino de compra
           %div.input-containers-fine-gram-to-buy
-            {{purchase.model.fine_gram_unit_price_to_buy | number:2}}
+            $ {{purchase.model.fine_gram_unit_price_to_buy | number:2}} COP
           %md-input-container{"ng-hide"=> "true"}
             %label 
             %input.input-num-value{"type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => "", "placeholder"=>"Precio de gramo fino por unidad"}
-
-      %div{:layout => "", "layout-sm" => "column", "style" => "margin-bottom: 80px;"}
-        .md-subtitle 4. Tipo Mineral
-          %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
-            %md-option{:selected => "selected", :value => "Oro"} Oro
-            %md-option{:value => "Plata"} Plata
-            %md-option{:value => "Platino"} Platino
       
 
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
-          .md-subtitle 5. Medidas
+          .md-subtitle Medidas
           %table.md-table
             %thead
               %tr.md-table-headers-row

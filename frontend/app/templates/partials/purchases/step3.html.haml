@@ -25,15 +25,19 @@
         %hr{ "width"=>"97%", "color"=>"#E3CD48", "align"=>"left"}
         %div.fieldset-inputs
           %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %md-radio-group{"ng-model" => "purchase.model.seller.provider_type", :required => "", :name => 'provider_type'}
-                %md-radio-button{:value => "Barequero", :readOnly => 'true', 'ng-disabled' => 'true'} Barequero
-                %md-radio-button{:value => "Chatarrero", :readOnly => 'true', 'ng-disabled' => 'true'} Chatarrero
+
+            %div.input-containers-false
+              %label.label-container-false
+                Tipo de Proveedor
+              %p.text-container-false 
+                {{purchase.model.seller.provider_type}}
+            
             %div.input-containers-false
               %label.label-container-false
                 Nombre de proveedor
               %p.text-container-false 
                 {{purchase.model.seller.first_name}} {{purchase.model.seller.last_name}}
+
           %div{layout: "row"}
             %div.input-containers-false
               %label.label-container-false
@@ -79,7 +83,7 @@
               %label.label-container-false
                 Cantidad
               %p.text-container-false 
-                {{goldBatch.model.total_fine_grams}}
+                {{goldBatch.model.total_fine_grams | number:2}}
 
             %div.input-containers-false
               %label.label-container-false
@@ -125,6 +129,8 @@
     .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"center"}
       %md-button.btn-next.md-raised.md-primary{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
       %md-button.btn-next.md-raised.md-primary{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
-      %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step2"} Volver
+      %md-button..btn-back-black{ "ui-sref"=>"new_purchase.step2"} 
+        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+        Volver
       %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'originCertificateForm.$invalid', "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
         %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }

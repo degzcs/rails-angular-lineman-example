@@ -15,6 +15,7 @@
 }
 .camera-selector{
   margin-top: 0;
+  text-align: center;
 
 }
 .camera-container{
@@ -66,6 +67,5 @@ canvas.taken-photo{
 .camera-selector{
   md-select{
     display: inline-block;
-    margin-left: 500px;
   }
 }

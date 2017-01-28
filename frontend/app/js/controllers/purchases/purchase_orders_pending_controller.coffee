@@ -37,6 +37,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       name: 'Tipo de Mineral'
       field: 'purchase.gold_batch.mineral_type'
     }
+    
   ]
 
   # Variables configuration

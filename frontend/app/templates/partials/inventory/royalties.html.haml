@@ -4,9 +4,11 @@
 
       %section.md-padding{flex: "", layout: "row"}
         %div{flex: ''}
-          %fieldset.elongate-height.standard.tr-fieldset{:layout => "column"}
-            %legend
-              %h3 Presentacion del Mineral
+          %div{:layout => "column"}
+            
+            %p.md-subtitle
+              Presentacion del Mineral
+            %hr{ "width"=>"80%", "color"=>"#E3CD48", "align"=>"left"}
 
             %div.fieldset-inputs
               %div{layout: "row"}
@@ -19,9 +21,12 @@
                     %md-radio-button{ "value" => "cyanide" } Cianurado
 
         %div{flex: ''}
-          %fieldset.standard.tr-fieldset{:layout => "column"}
-            %legend
-              %h3 Periodo declarado
+          %div{:layout => "column"}
+            
+            %p.md-subtitle
+              Periodo declarado
+
+            %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
 
             %div.fieldset-inputs
               %div{layout: "row"}
@@ -40,9 +45,13 @@
 
       %section.md-padding{flex: "", layout: "row"}
         %div{flex: ""}
-          %fieldset.standard.tr-fieldset{:layout => "column"}
-            %legend
-              %h3 Liquidacion de Regalias
+          %div{:layout => "column"}
+            
+          %p.md-subtitle
+            Liquidacion de Regalias
+          %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
+
+          
 
             %div.fieldset-inputs
               %div{layout: "row"}
@@ -65,8 +74,8 @@
         %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
           .signature-text
             Firma
-      .wizard-buttons.md-padding{layout: "row", "layout-align"=>"end end"}
-        %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
-        %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
-        %md-button.md-primary.md-hue-2{flex: "20", "ng-disabled" => 'royaltyForm.$invalid', "ng-click" => "generatePdfFile()"} Generar Documento
+      .wizard-buttons.md-padding{layout: "row", "layout-align"=>"center"}
+        %md-button.btn-save{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
+        %md-button.btn-save{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
+        %md-button.btn-next.md-raised.md-primary{flex: "20", "ng-disabled" => 'royaltyForm.$invalid', "ng-click" => "generatePdfFile()"} Generar Documento
 %h3{"ng-if" => "response == false"} No Tienes El Servicio De Regalias Trazoro

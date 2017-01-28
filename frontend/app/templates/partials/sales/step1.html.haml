@@ -17,7 +17,7 @@
               %p{"style" => "margin-left: 10px;"} Acepto los términos y condiciones
 
   .wizard-buttons{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"end end"}
-    %md-button.md-primary.md-raised.md-accent{"ng-disabled" => "                             handlerContinue()",
+    %md-button.btn-next.md-raised.md-primary{"ng-disabled" => "                             handlerContinue()",
                                    "ui-sref"=> "new_sale.step2",
                                    "ng-click" => "saveState()"} Continuar
       %md-icon{"md-svg-icon"=>"/img/icons/landing/flecha-negra.svg"}
