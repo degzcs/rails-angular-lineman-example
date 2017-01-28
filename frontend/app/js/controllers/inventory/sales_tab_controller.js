@@ -38,7 +38,7 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
     $scope.count = sales.length;
     return $scope.sales = sales;
   }).error(function(data, status, headers, config) {
-    return infoAlert('ERROR', 'No se pudo realizar la solicitud');
+    return $scope.infoAlert('ERROR', 'No se pudo realizar la solicitud');
   });
 
   $scope.showSale = function(sale) {
@@ -54,7 +54,7 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
   $scope.generateReport = function(sale) {
     ReportsService.generateTransactionMovements(sale.id).success(function(data) {
       sale.report_url = data.base_file_url;
-      return $scope.infoAlert('El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción');
+      return $scope.infoAlert('Reporte Tributario', 'El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción');
     }).error(function(data) {
       return $scope.infoAlert('ERROR', 'No se pudo generar y descargar el Archivo con los movimientos de la transacción');
     });
