@@ -1,24 +1,25 @@
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
   %section{layout: "row"}
     %div.md-padding{flex: ""}
-      // ---Purchase Type
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            Por favor leea con atención la aceptación del Acuerdo.
-        %div.fieldset-inputs
-          %md-input-container{class: "md-block", flex: '100' }
-            %textarea{:rows => '7', :readOnly => 'true',
-                      "ng-model" => "sale.model.fixed_sale_agreetment",
-                      :name => 'fix_sale_agreetment'}
-          %div{layout: "row"}
-            %md-input-container{flex: ""}
-              %md-checkbox{ :ng-model => 'chkAgreetmentActive',
-                            :required => ''} Acepto los términos y condiciones
+      // ---Sale Type
+      
+      %h3
+        POR FAVOR LEA CON ATENCION LA ACEPTACION DEL ACUERDO.
+      %div.fieldset-inputs
+        %md-input-container{class: "md-block", flex: '100' }
+          %textarea{:rows => '7', :readOnly => 'true',
+                    "ng-model" => "saleModel.fixed_sale_agreetment",
+                    :name => 'fix_sale_agreetment'}
+        %div{layout: "row"}
+          %md-input-container{flex: ""}
+            %md-checkbox{ :ng-model => 'chkAgreetmentActive',
+                          :required => ''} 
+              %p{"style" => "margin-left: 10px;"} Acepto los términos y condiciones
 
   .wizard-buttons{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"end end"}
-    %md-button.btn-save.md-button{ flex: "20",
-                                   "ng-show" => "handlerContinue()",
+    %md-button.btn-next.md-raised.md-primary{"ng-disabled" => "                             handlerContinue()",
                                    "ui-sref"=> "new_sale.step2",
                                    "ng-click" => "saveState()"} Continuar
+      %md-icon{"md-svg-icon"=>"/img/icons/landing/flecha-negra.svg"}
+      
 

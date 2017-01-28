@@ -12,7 +12,7 @@ img.face {
 }
 
 pre {
-  font-family: RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
+  font-family: RobotoDraft, Roboto, 'Helvetica Neue', 'Source Sans Pro';
 }
 
 .provider-info{
@@ -29,33 +29,3 @@ pre {
   }
 }
 
-.btn-next{
-  background: #edb039;
-  border: 4px solid #ffcb34;
-  color: white!important;
-  font-weight: bold;
-  width: 200px;
-}
-
-.btn-next:hover{
-  background: lighten(#edb039, 3%)!important;
-}
-
-.btn-cancel{
-  width: 200px;
-  border: 4px solid transparent;
-}
-
-.btn-save{
-  min-width: 200px!important;
-}
-
-.btn-save:enabled{
-  background: #edb039!important;
-  border: 4px solid #ffcb34;
-  font-weight: bold;
-} 
-
-.btn-save:disabled{
-  border: 4px solid transparent;
-}

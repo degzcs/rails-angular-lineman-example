@@ -35,12 +35,18 @@ md-card.seller{
       background-color:#ccc;
       text-align: center;
       position: relative;
-      height: 150px;
-      width: 150px;
+      height: 200px;
+      width: 200px;
       border:none;
       outline: none;
-      border: 1px solid darken(#eee,20%);
+      border: 6px solid #E3CD48;
     }
+
+    img.face.cam.step1{
+      height: 120px;
+      width: 120px;
+    }
+
     .photo-provider-button{
       margin-top: 10px;
       margin-bottom: 10px;
@@ -56,10 +62,23 @@ md-card.seller{
     margin: 100px 0;
   }
 }
+
 .wizard-buttons{
+  margin-top: 90px;
+}
+
+.medidas{
+  
+  height: 70px !important;
+  
+}
+
+.reference-code{
+  max-width: 350px;
   margin-top: 50px;
 }
-.purchase-container{
+
+.general-container{
   h5{
       text-align: left;
   }
@@ -73,6 +92,17 @@ md-card.seller{
 }
 }
 
+.input-num-value{
+  color: rgb(227,205,72) !important;
+  border-color: rgba(0, 0, 0, 0.12);
+  background: white;
+  padding-left: 10px;
+  border: 1px solid #d4d4d4;
+  font-family: 'Oswald';
+  letter-spacing: 2px;
+  font-size: 26px;
+}
+
 /////
 .chipsdemoContactChips md-content.autocomplete {
   min-height: 250px; }
@@ -81,7 +111,6 @@ md-card.seller{
   padding-bottom: 8px; }
 
 .purchase-form{
-  margin-top: 40px;
   .photo{
     text-align: center;
     margin-top: 30px;
@@ -170,4 +199,43 @@ md-card.seller{
     padding: 18px 0 0 0;
   }
 }
+
+.input-containers-false{
+  border-radius: 2px; 
+  border: solid 1px #c2c2c2; 
+  padding-top: 5px; 
+  padding-bottom: 5px; 
+  padding-left: 15px; 
+  font-family: 'Source Sans Pro';
+  letter-spacing: 1px;
+  margin-top: 10px;
+  width: 80%;
+  margin-left: 5px;
+  margin-right: 5px;
+  max-height: 62px;
+  min-height: 62px;
+
+  .label-container-false{
+    color:#e3cd48;
+    font-weight: 700;
+  }
+
+  .text-container-false{
+    font-weight: 500;
+    margin-bottom: 0px; 
+    margin-top: 10px;
+  }
+}
+
+.input-containers-fine-gram-to-buy{
+  border: solid 1px #d4d4d4; 
+  max-height: 40px; 
+  min-height: 50px; 
+  text-align: center; 
+  font-size: 30px; 
+  font-family: 'oswald'; 
+  color: #E3CD48;
+}
+
+
 

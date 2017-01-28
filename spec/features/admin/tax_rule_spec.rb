@@ -6,6 +6,7 @@ describe 'all test the tax_rules view', :js do
     login_as(admin_user, scope: :admin_user)
     puc_account = PucAccount.create(code: '135595', name: 'ANTICIPO CREE (.40%)')
     tax = Tax.create(name: 'ANTICIPO CREE (.40%)', reference: 'ANT_CREE', porcent: 0.40 , puc_account_id: puc_account.id)
+    create :sale
   end
 
   after :each do
@@ -18,15 +19,18 @@ describe 'all test the tax_rules view', :js do
     expected_response = {
       tax: {id: Tax.taxes_for_select.last[1], select_name: Tax.taxes_for_select.last[0]},
       seller_regime: { value: 'RC', select_name: UserSetting::REGIME_TYPES[:RC] },
-      buyer_regime: { value: 'GC', select_name: UserSetting::REGIME_TYPES[:GC] }
+      buyer_regime: { value: 'GC', select_name: UserSetting::REGIME_TYPES[:GC] },
+      transaction_type: {value: 'sale', select_name: "sale"}
     }
-   
+    
+    select(expected_response[:transaction_type][:select_name], from: 'tax_rule_transaction_type')
     select(expected_response[:seller_regime][:select_name], from: 'tax_rule_seller_regime')
     select(expected_response[:buyer_regime][:select_name], from: 'tax_rule_buyer_regime')
     select(expected_response[:tax][:select_name], from: 'tax_rule_tax_id')
     click_button('Create Tax rule')
     last_tax_rule = TaxRule.order(:created_at).last.as_json.with_indifferent_access
 
+    expect(last_tax_rule[:transaction_type]).to eq expected_response[:transaction_type][:value]
     expect(last_tax_rule[:seller_regime]).to eq expected_response[:seller_regime][:value]
     expect(last_tax_rule[:buyer_regime]).to eq expected_response[:buyer_regime][:value]
     expect(last_tax_rule[:tax_id]).to eq expected_response[:tax][:id]
@@ -37,7 +41,7 @@ describe 'all test the tax_rules view', :js do
     expected_response = {
       seller_regime: { value: 'RS', select_name: UserSetting::REGIME_TYPES[:RS] },
     }
-    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC')
+    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC', transaction_type: 'sale')
     visit '/admin/tax_rules'
     within("#tax_rule_#{tax_rule.id}") do
       click_link('Edit')
@@ -49,7 +53,7 @@ describe 'all test the tax_rules view', :js do
   end
 
   it 'Show TaxRule' do
-    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC')
+    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC', transaction_type: 'sale')
     visit '/admin/tax_rules'
     within("#tax_rule_#{tax_rule.id}") do
       click_link('View')
@@ -58,7 +62,7 @@ describe 'all test the tax_rules view', :js do
   end
 
   it 'Destroy TaxRule' do
-    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC')
+    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC', transaction_type: 'sale')
     visit '/admin/tax_rules'
     within("#tax_rule_#{tax_rule.id}") do
       click_link('Delete')
@@ -67,7 +71,7 @@ describe 'all test the tax_rules view', :js do
   end
 
   it 'Test button Batch Actions' do
-    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC')
+    tax_rule = TaxRule.create(tax_id: Tax.last.id , seller_regime: 'RC', buyer_regime: 'GC', transaction_type: 'sale')
     visit '/admin/tax_rules/'
     check("batch_action_item_#{tax_rule.id}")
     click_on('Batch Actions')

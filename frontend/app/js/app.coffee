@@ -66,7 +66,7 @@ angular.module("app", [
 
 .config ($mdThemingProvider) ->
   goldYellow = $mdThemingProvider.extendPalette('yellow', {
-    '500': 'edb039'
+    '500': 'E3CD48'
   });
   $mdThemingProvider.definePalette('goldYellow', goldYellow);
 

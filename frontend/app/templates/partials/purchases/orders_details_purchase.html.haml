@@ -1,100 +1,108 @@
-%section{layout: "column", "layout-align" => "center"}
-  %h2
-    Detalles de la compra pendiente
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
-    // ---Purchase Type
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
-      %legend
-        %h3
-          Vendedor
-      %table
-        %tr
-          %td
-            Nombre y apellidos:
-          %td
+%div{:layout => "column"}
+  .general-container
+    %h2
+      DETALLES DE LA COMPRA PENDIENTE
+    %md-content{ "flex"=>"30", "class"=>"", "layout"=>"row"}
+      %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
+        %div.md-subtitle{"flex"=> ""}
+          VENDEDOR
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Nombre y Apellido
+          %p.text-container-false 
             {{purchaseModel.seller.first_name}} {{purchaseModel.seller.last_name}}
-        %tr
-          %td
-            Documento de id:
-          %td
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Num. de identificación
+          %p.text-container-false 
             {{purchaseModel.seller.document_number}}
-        %tr
-          %td
-            Email:
-          %td
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Email
+          %p.text-container-false 
             {{purchaseModel.seller.email}}
-        %tr
-          %td
-            Teléfono:
-          %td
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Telefono
+          %p.text-container-false 
             {{purchaseModel.seller.phone_number}}
+      %md-content{"flex"=> "30", "class"=>"", "layout"=>"row"}
+        %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
+          %div.md-subtitle{"flex"=> ""}
+            DETALLES DE LA ORDEN
+   
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Fecha de creación
+            %p.text-container-false 
+              {{purchaseModel.created_at}}
+          
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Total Gramos Finos
+            %p.text-container-false 
+              {{purchaseModel.gold_batch.fine_grams}} gramos
+             
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Tipo de Mineral
+            %p.text-container-false 
+              {{purchaseModel.gold_batch.mineral_type}}
+              
+          %div.input-containers-false{flex: ""}
+            %label.label-container-false
+              Precio total
+            %p.text-container-false 
+              ${{purchaseModel.price}} COP
+            
+        
+
+    %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
+      %p.md-subtitle
+        LISTADO DE LOTES
+    %md-content{"class"=>"", "layout"=>"row", 'layout-align' => 'center'}
+      %table{'flex' => '100', 'style' => 'width: 150%'}
+        %thead
+          %tr.md-table-headers-row
+            %th.md-table-header
+              FECHA
+            %th.md-table-header
+              PROVEEDOR
+            %th.md-table-header
+              GRAMOS FINOS
+          
+        %tbody
+          %tr{"ng-repeat" => "associated_purchase in purchaseModel.associated_purchases"}
+            %td.md-table-td-more
+              {{associated_purchase.created_at}}
+            %td.md-table-td-more
+              {{associated_purchase.seller.first_name}} {{associated_purchase.seller.last_name}}
+            %td.md-table-td-more
+              {{associated_purchase.fine_grams}}
+
+
+  
+  %p.md-subtitle
+    ARCHIVOS
+  %div.md-padding{ :layout => "row", "layout-align" => "center" }
+    %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
+      %md-button.btn-save{ flex: "",href: "{{purchaseModel.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
+        Documentos de compras
+      %md-button.btn-save{ flex: "30",href: "{{purchaseModel.proof_of_sale_file_url}}", :target => "_blank"}
+        Compendio
 
 
 
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: "40"}
-      %legend
-        %h3
-          Detalles de la orden
-      %table
-        %tr
-          %td
-            Fecha de creación:
-          %td
-            {{purchaseModel.created_at}}
-        %tr
-          %td
-            Total Gramos Finos:
-          %td
-            {{purchaseModel.gold_batch.fine_grams}} gramos
-        %tr
-          %td
-            Tipo de Mineral:
-          %td
-            {{purchaseModel.gold_batch.mineral_type}}
-        %tr
-          %td
-            Precio total:
-          %td
-            ${{purchaseModel.price}} COP
-
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: "80"}
-      %legend
-        %h3
-          Listado de lotes
-      %table
-        %tr
-          %td
-            Fecha
-          %td
-            Proveedor
-          %td
-            Gramos finos
-
-        %tr{"ng-repeat" => "associated_purchase in purchaseModel.associated_purchases"}
-          %td
-            {{associated_purchase.created_at}}
-          %td
-            {{associated_purchase.seller.first_name}} {{associated_purchase.seller.last_name}}
-          %td
-            {{associated_purchase.fine_grams}}
-
-
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: "80"}
-      %legend
-        %h3
-          Archivos
-      %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-        %a.md-button{href: "{{purchaseModel.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
-          Documentos de compra adjuntos
-        %a.md-button{href: "{{purchaseModel.proof_of_sale_file_url}}", :target => "_blank"}
-          Compendio
-
-
-
-  %div.md-padding{flex: "80", :layout => "row", "layout-align" => "end" }
-    %md-button.md-raised{flex: "10", "ng-click" => "agreeOrCancel('cancel!')"}
+  %div.md-padding{flex: "80", :layout => "row", "layout-align" => "center" }
+    %md-button.btn-back-black{"ui-sref"=>"new_purchase.tab.orders_pending", "ng-click" => ""}
+      %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+      Volver
+    %md-button.btn-save{"ng-click" => "agreeOrCancel('cancel!')"}
       Rechazar
-    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_purchase.orders_pending_agreetment", "style" => "margin-right: 135px;"}
+    %md-button.btn-next.md-raised.md-primary{ "ui-sref" => "new_purchase.orders_pending_agreetment"}
       Continuar
+      %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }

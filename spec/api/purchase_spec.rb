@@ -18,7 +18,8 @@ describe 'Purchase', type: :request do
         @new_gold_batch_values = {
           'fine_grams' => 1.5,
           'grade' => 1,
-          'extra_info' => { 'grams' => 1.5 }.to_json
+          'extra_info' => { 'grams' => 1.5 }.to_json,
+          'mineral_type' => 'Oro'
         }
 
         @seller = create(:user, :with_profile, :with_personal_rucom, :with_authorized_provider_role, provider_type: 'barequero')
@@ -52,7 +53,8 @@ describe 'Purchase', type: :request do
           }
 
           expected_files = {
-            'seller_picture' => 'seller_picture.png'
+            'proof_of_purchase_file_url' => 'equivalent_document.pdf',
+            'origin_certificate_file_url' => 'origin_certificate.pdf'
           }
           post '/api/v1/purchases/', {
             gold_batch: @new_gold_batch_values,
@@ -69,9 +71,10 @@ describe 'Purchase', type: :request do
           end
 
           expected_files.each do |key, value|
-            expect(JSON.parse(response.body)[key]['url']).to match value
+            expect(JSON.parse(response.body)[key]).to match value
           end
 
+          expect(JSON.parse(response.body)['seller_picture']['url']).to match 'seller_picture.png'
           order = Order.last
 
           # validate the transaction state after is saved

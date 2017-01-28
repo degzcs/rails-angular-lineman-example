@@ -5,7 +5,7 @@
     background-color: #fff;
     color: #202020;
 
-    height: 90px;
+    height: 95px;
     z-index: 3;
   }
   
@@ -85,9 +85,10 @@
   }
   .a-toolbar-desktop{
     position: absolute;
-    font-size: small;
+    font-size: 10px;
     top: 70px;
-    left: 875px;
+    left: 770px;
+    letter-spacing: 1px;
   }
   .div-rectangule{
    

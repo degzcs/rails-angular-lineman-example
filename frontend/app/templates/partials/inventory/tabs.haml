@@ -1,10 +1,11 @@
-%div
-  %md-content.md-padding
+%div.general-container
+  %md-content
     %md-tabs.origin-certificate-tabs{"md-border-bottom" => "", "md-dynamic-height" => "", "md-selected"=> 'tab'}
       %md-tab{:label => "Inventario de Compras", "ui-sref"=>"inventory.purchases"}
 
       %md-tab{:label => "Inventario de Ventas", "ui-sref"=>"inventory.sales"}
 
       %md-tab{"ng-disabled" => "response == false", :label => "Regalias", "ui-sref"=>"inventory.royalties"}
+
 .tabs-inventory-container
   %div{"ui-view"=>"content"}

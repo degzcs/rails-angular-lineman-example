@@ -1,54 +1,63 @@
 //---------------------- Purchase TAB ---------------------------------------
 %form{:name => "purchaseForm"}
-  %section{"class"=>"md-padding autocomplete"}
+  %section{"class"=>"autocomplete"}
     .seller
       .row{:layout => "", "layout-sm" => "column"}
         .select-law{'flex' => ''}
-          %h5 1. Digite el numero de ley
+          .md-subtitle Ley
           %md-input-container
-            %label Ley
-            %input{ "type" => "number", "string-to-number"=>"", min: => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre'}
+            
+            %input{ "type" => "number", "string-to-number"=>"", min: => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre', "placeholder" => "Digite el numero de ley"}
             %div{"ng-messages" => "purchaseForm.degre.$error"}
-              %div{"ng-message" => "required"} * Este campo es requerido.
+              /%div{"ng-message" => "required"} * Este campo es requerido.
         .fine-gram-unit-price{'flex' => ''}
-          %h5 2. Valor gramo fino de vender en COP
+          .md-subtitle Valor gramo fino
           %md-input-container
-            %label Precio de gramo fino por unidad
-            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1"}
+            
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1", "placeholder" => "Precio de gramo fino por unidad"}
             %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
-              %div{"ng-message" => "required"} * Este campo es requerido.
+              /%div{"ng-message" => "required"} * Este campo es requerido.
+        
+
+
+
+      %div{:layout => "", "layout-sm" => "column", "layout-align" => "center", "layout-margin"}
+        
         .price-to-buy{ 'flex' => ''}
-          %h5 3. Valor gramo fino de comprar en COP
-          %md-input-container
-            %label Precio de gramo fino por unidad
-            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => ""}
-      %h5 Tipo Mineral
-        %select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
-          %option{:selected => "selected", :value => "Oro"} Oro
-          %option{:value => "Plata"} Plata
-          %option{:value => "Platino"} Platino
+          .md-subtitle Tipo Mineral
+            %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
+              %md-option{:selected => "selected", :value => "Oro"} Oro
+              %md-option{:value => "Plata"} Plata
+              %md-option{:value => "Platino"} Platino
+
+
+        .price-to-buy{ 'flex' => ''}
+          .md-subtitle
+            Valor gramo fino de compra
+          %div.input-containers-fine-gram-to-buy
+            $ {{purchase.model.fine_gram_unit_price_to_buy | number:2}} COP
+          %md-input-container{"ng-hide"=> "true"}
+            %label 
+            %input.input-num-value{"type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => "", "placeholder"=>"Precio de gramo fino por unidad"}
+      
+
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
-          %h5 4. Medidas
+          .md-subtitle Medidas
           %table.md-table
             %thead
               %tr.md-table-headers-row
                 %th.md-table-header
-                  Medida
-                %th.md-table-header
-                  Cantidad
+                  Medida / Cantidad
                 %th.md-table-header
                   Precio Unitario
                 %th.md-table-header
                   Precio Total
             %tbody
-              %tr
-                %td.md-table-td-more
-                  %p Gramo(s)
+              %tr.medidas
                 %td.md-table-td-more
                   %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "min" => "0"}
+                    %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Gramo(s)"}
                 %td.md-table-td-more
                   {{ gramsUnitPrice | number:2 }}
                 %td.md-table-td-more
@@ -65,60 +74,51 @@
                 / %td.md-table-td-more
                 /   %md-input-container
                 /     {{   | number:2 }}
-              %tr
-                %td.md-table-td-more
-                  Castellano(s)
+              %tr.medidas
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "min" => "0"}
+                    %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Castellano(s)"}
                 %td.md-table-td-more
                   {{ castellanosUnitPrice | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalCastellano | number:2}}
-              %tr
-                %td.md-table-td-more
-                  Tomine(s)
+              %tr.medidas
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "min" => "0"}
+                    %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Tomine(s)"}
                 %td.md-table-td-more
                   {{ tominesUnitPriceFrom | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalTomines | number:2}}
-              %tr
-                %td.md-table-td-more
-                  Real(es)
+              %tr.medidas
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "0"}
+                    %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Real(es)"}
                 %td.md-table-td-more
                   {{ realesUnitPriceFrom | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalReales | number:2}}
-              %tr
-                %td.md-table-td-more
-                  Grano(s)
+              %tr.medidas
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
-                    %label
-                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>"", "min" => "0"}
+                    %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Grano(s)"}
                 %td.md-table-td-more
                   {{ granosUnitPriceFrom | number:2}}
                 %td.md-table-td-more
                   {{ subtotalGranos | number:2}}
               %tr
-                %td.md-table-td-more{colspan: 2}
+                %td.md-table-td-more{colspan: 1}
                 %td.md-table-td-more{"layout-align"=>"end end"}
                   %h3 TOTAL:
                 %td.md-table-td-more
-                  $ {{ purchase.model.price | number:2}}
+                  %h2
+                    $ {{ purchase.model.price | number:2}}
 
-  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-    %md-button.btn-cancel{ flex: "20", "ui-sref"=>"new_purchase.step1", "ng-click" => "removeWatchers()"} Volver
-    %md-button.btn-save{ "ng-disabled" => 'purchaseForm.$invalid', flex: "20", "ui-sref"=>"new_purchase.step3", "ng-click" => "removeWatchers(); saveState()"} Continuar
-
+  .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
+    %md-button.btn-back-black{  "ui-sref"=>"new_purchase.step1", "ng-click" => "removeWatchers()"}
+      %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+      Volver
+    %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "removeWatchers(); saveState()"} Continuar
+      %md-icon{"md-svg-icon"=>"/img/icons/landing/flecha-negra.svg"}
 
 

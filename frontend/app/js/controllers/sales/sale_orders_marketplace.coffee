@@ -17,7 +17,7 @@ angular.module('app').controller 'SaleOrdersMarketplaceCtrl', ($scope, $state, S
     }
     {
       name: 'Gramos Finos'
-      field: 'sale.fine_grams'
+      field: 'sale.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'

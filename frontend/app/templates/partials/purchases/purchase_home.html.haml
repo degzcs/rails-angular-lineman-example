@@ -1,25 +1,26 @@
-%div
+%div.home
   %md-content.md-padding{"layout" => "row", "layout-align" => "center"}
-    %md-card{"flex" => "40"}
-      %h2.md-title{}
+    %div{"flex" => "40"}
+      %h2.center{}
         Comprar
-      %md-card-content{ "style" => "text-align: center;" }
-        %img{ "ng-src"=>"/img/icons/purchase/icon_comprar.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
+      %md-content{ "style" => "text-align: center;" }
+        %img{ "ng-src"=>"/img/icons/purchase/COMPRAR.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
         %p
           En esta sección podrá comprar oro, plata o platino directamente desde los proveedores autorizados en el rucom, barequeros y/o chatarreros
       %div.md-actions{"layout"=>"row", "layout-align"=>"center center"}
         %md-button.md-primary.md-raised{"ui-sref" => "new_purchase.step0"}
           SEGUIR
 
+    %hr{"style" => "height: 300px; ", "color" => "black"}
 
-    %md-card{"flex" => "40"}
-      %h2.md-title{}
+    %div{"flex" => "40"}
+      %h2.center{}
         Ordenes de compra
       
-      %md-card-content{ "style" => "text-align: center;" }
-        %img{ "ng-src"=>"/img/icons/purchase/ordenes_compras.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
+      %md-content{ "style" => "text-align: center;" }
+        %img{ "ng-src"=>"/img/icons/purchase/ordenes_compraventa.svg", "class"=>"md-card-image", "alt"=>"Washed Out", "style" => "width: 100px; height: 100px;" }
         %p
           Aqui podra aceptar o rechazar las ordenes pendientes de compra que han sido enviadas por otro comercializador atravez de la plataforma.
       %div.md-actions{"layout"=>"row", "layout-align"=>"center center"}
         %md-button.md-primary.md-raised{"ui-sref" => "new_purchase.tab.orders_pending"}
-          SEGUIR       
+          SEGUIR 

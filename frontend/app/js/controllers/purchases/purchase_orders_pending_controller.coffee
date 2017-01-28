@@ -27,7 +27,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
     }
     {
       name: 'Gramos Finos'
-      field: 'purchase.gold_batch.fine_grams'
+      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'
@@ -37,6 +37,7 @@ angular.module('app').controller 'PurchaseOrdersPendingCtrl', ($scope, PurchaseS
       name: 'Tipo de Mineral'
       field: 'purchase.gold_batch.mineral_type'
     }
+    
   ]
 
   # Variables configuration

@@ -25,9 +25,9 @@ module Reports
         base_file_url
         @response[:success] = true
         self
-      rescue => exception
-        @response[:success] = false
-        @response[:errors] << exception.message
+      # rescue => exception
+      #   @response[:success] = false
+      #   @response[:errors] << exception.message
       end
 
       #returns just the url to frontend path to this report file
@@ -52,7 +52,7 @@ module Reports
 
           # inventory
           if options[:report][:inventories].present?
-            csv << ['Inventario', '', '', ''] 
+            csv << ['Inventario', '', '', '']
             options[:report][:inventories].each do |movement|
               csv << [movement.count, movement.name, movement.debit, movement.credit ]
             end

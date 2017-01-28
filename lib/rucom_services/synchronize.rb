@@ -144,11 +144,27 @@ module RucomServices
     end
 
     def create_user_and_profile
-      profile_arguments = { document_number: @data[:id_number], first_name: @scraper.virtus_model.rucom.name }
+      # NOTE: regimen simplificado, it could change in backend if this user exceed the regime threshold allowed by the Goverment.
+      # TODO: update activity_code in frontend to be saved here.
+      setting_arguments = {
+        alegra_token: 'NA',
+        fine_gram_value: 0.0,
+        last_transaction_sequence: 'NA',
+        regime_type: 'RS',
+        scope_of_operation: '',
+        organization_type: '',
+        self_holding_agent: false,
+      }
+      profile_arguments = {
+        document_number: @data[:id_number],
+        first_name: @scraper.virtus_model.rucom.name,
+      }
       # @user_profile = User.new({ profile_attributes: profile_arguments }, personal_rucom: @rucom)
       @user = User.new(profile_attributes: profile_arguments)
       @user.roles << Role.find_by(name: 'authorized_provider')
       @user.save!(validate: false)
+      @user.profile.create_setting(setting_arguments)
+
       @user_profile = @user.profile
       @user.personal_rucom = @rucom
       @user.present? && @user_profile.present?

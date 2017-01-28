@@ -18,7 +18,7 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
     }
     {
       name: 'Gramos Finos'
-      field: 'purchase.gold_batch.grams'
+      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
     }
     {
       name: 'Precio'
@@ -107,7 +107,7 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
   $scope.generateReport = (purchase) ->
     ReportsService.generateTransactionMovements(purchase.id).success((data) ->
       purchase.report_url = data.base_file_url
-      $scope.infoAlert 'El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción'
+      $scope.infoAlert 'Reporte Tributario', 'El archivo plano CSV se generó satisfactoriamente con los movimientos contables de la transacción'
     ).error (data) ->
       $scope.infoAlert 'ERROR', 'No se pudo generar y descargar el Archivo con los movimientos de la transacción'
     return

@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe Sale::SaleGoldService do
-
   subject(:service) { Sale::SaleGoldService.new }
 
   context 'a current user (trader) which is the legal_representative' do
     before :each do
       current_buyer = create(:user, :with_company, :with_trader_role).company.legal_representative
-    	@current_seller = create(:user, :with_company, :with_trader_role).company.legal_representative
+      @current_seller = create(:user, :with_company, :with_trader_role).company.legal_representative
       # Add Alegra credentials to sync the buyer in his Alegra contacts
       @current_seller.update_column(:email, 'ejemploapi@dayrep.com')
       @current_seller.profile.setting.update_column(:alegra_token, '066b3ab09e72d4548e88')
@@ -32,14 +31,14 @@ describe Sale::SaleGoldService do
 
       @gold_batch_hash = {
         'fine_grams' => 1.5,
-        'grade' => 1,
+        'grade' => 900,
         'mineral_type' => 'Oro'
       }
 
       @order_hash = {
         'courier_id' => courier.id,
         'buyer_id' => current_buyer.id,
-        'price' => 180
+        'price' => 180000
       }
       APP_CONFIG[:ALEGRA_SYNC] = true
     end

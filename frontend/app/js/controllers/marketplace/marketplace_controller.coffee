@@ -1,14 +1,14 @@
 angular.module('app').controller 'MarketplaceCtrl', ($scope, $mdDialog, SaleService, CurrentUser) ->
   # send a buyer request to a specific sale order
 
-  CurrentUser.get().success (data) ->
-    $scope.currentUser = data
 
   SaleService.getAllForMarketplace().success((sales, status, headers, config) ->
-    $scope.pages = parseInt(headers().total_pages)
-    $scope.count = sales.length
-    $scope.sales = sales
-    markSalesAsRequested(null, null)
+    CurrentUser.get().success (data) ->
+      $scope.currentUser = data
+      $scope.pages = parseInt(headers().total_pages)
+      $scope.count = sales.length
+      $scope.sales = sales
+      markSalesAsRequested(null, null)
   ).error (data, status, headers, config) ->
     infoAlert 'ERROR', 'No se pudo recuperar las ordenes de ventas publicadas'
 

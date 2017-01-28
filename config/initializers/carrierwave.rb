@@ -15,26 +15,5 @@ if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
   end
 
 else
-
-  CarrierWave.configure do |config|
-    config.storage = :file
-    config.enable_processing = false
-    config.base_path = ''
-  end
-
-  class DocumentUploader < CarrierWave::Uploader::Base
-    storage :file
-    def store_dir
-      "#{Rails.root}/public/#{ Rails.env }/uploads/documents/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-    end
-  end
-
-  class PhotoUploader < CarrierWave::Uploader::Base
-    storage :file
-
-    def store_dir
-      "#{Rails.root}/public/#{ Rails.env }/uploads/photos/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-    end
-  end
-
+  # NOTE: This process is make it by Uploaders
 end

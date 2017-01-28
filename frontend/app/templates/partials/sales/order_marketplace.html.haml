@@ -16,7 +16,7 @@
           %td
             Total Gramos Finos:
           %td
-            {{sale.fine_grams}} gramos
+            {{sale.fine_grams | number:3}} gramos
         %tr
           %td
             Tipo de Mineral:
@@ -49,7 +49,7 @@
                 %td
                   {{associated_purchase.seller.first_name}} {{associated_purchase.seller.last_name}}
                 %td
-                  {{associated_purchase.fine_grams}}
+                  {{associated_purchase.fine_grams | number:3}}
 
   %div.md-padding{flex: "100", :layout => "row", "layout-align" => "space-around stretch" }
     %div{:layout => "column", flex: "", "layout-align" => "space-around stretch"}
@@ -90,6 +90,6 @@
         %a.md-button{href: "{{sale.proof_of_sale.file.url}}", :target => "_blank"}
           Compendio
 
-  %div.md-padding{flex: "60", :layout => "row", "layout-align" => "end end" }
-    %md-button.md-raised.md-primary{flex: "10", "ui-sref" => "new_sale.tab.orders_marketplace"}
+  %div.md-padding{flex: "60", :layout => "row", "layout-align" => "center" }
+    %md-button.btn-next.md-raised.md-primary{flex: "10", "ui-sref" => "new_sale.tab.orders_marketplace"}
       Regresar

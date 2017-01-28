@@ -1,13 +1,13 @@
 %section{:flex => "", :layout => "column", "layout-fill" => ""}
-  %md-card.amounts-picked.md-padding{flex: "15"}
-    %h3
-      Seleccion (Gramos Finos)
-    #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"}
-    #  {{purchase.gold_batch.grams}}
-    %div.total_amount
-      %strong
-        Gramos Finos Totales:
-      {{totalAmount.toFixed(3)}} gr
+  
+  %h2
+    SELECCION DE GRAMOS FINOS
+  #%div.selected_amount{"ng-repeat"=> "purchase in selectedPurchases"}
+  #  {{purchase.gold_batch.grams}}
+  %div.total_amount
+    %p.md-subtitle
+      Gramos Finos Totales:
+    {{totalAmount.toFixed(3)}} gr
 
   %md-content
     .table-container
@@ -29,11 +29,11 @@
               {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
 
 
-
-
     .md-table-footer{:layout => "row"}
       %span.md-table-count-info
         Registros cargados: {{count}}
 
-.wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
-  %md-button.btn-save{ flex: "20", "ng-click" => "liquidateSelectedPurchases($event)"} Continuar
+.wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
+  %md-button.btn-next.md-raised.md-primary{"ng-click" => "liquidateSelectedPurchases($event)"} 
+    Continuar
+    %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }

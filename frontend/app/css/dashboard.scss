@@ -47,16 +47,68 @@
   }
 }
 
+.title-dash{
+  letter-spacing: 1.5px;
+  font-family: 'Source Sans pro';
+font-size: 15px;
+
+}
+
+
+.content-dash{
+font-family: 'Source Sans pro';
+letter-spacing: 1px;
+font-size: 14px;
+
+  md-list-item.md-no-proxy, md-list-item .md-no-style {
+    padding: 0px 0px;
+  }
+
+}
+
 .credits_buy_button{
   width: 100%;
 }
 
 .dashboard-user-info .user-photo{
-  width: 120px;
-  height: 120px;
-  border: 2px solid #ffcb34;
+  width: 140px;
+  height: 140px;
+  border: 10px solid #e3cd48;
   border-radius: 50%;
   padding: 5px;
+}
+
+
+.dashboard-user-utilities{
+  font-family: 'oswald', sans-serif;
+  font-weight: 300;
+  font-size: 22px;
+  .user-info{
+    margin-top: 30px;
+    margin-bottom: 40px; 
+  }
+  h2{
+    margin: 0px; 
+  }
+  h2.username{
+    font-weight: 400;
+  }
+  .md-button{
+    padding: 0px;
+    text-transform: initial;
+    font-size: 22px;
+    text-align: left;
+    border: 0;
+    font-weight: 300;
+    margin: 0px;
+    font-weight: 300;
+    font-size: initial;
+    letter-spacing: 1px;
+      
+      md-icon.md-default-theme {
+      color: #e3cd48;
+    }
+  }
 }
 
 .dashboard-content{
@@ -64,7 +116,7 @@
 }
 .dashboard-user-info{
   display: inline-block;
-  margin: 40px;
+  margin: 10px;
 }
 .dashboard-user-info .info-container{
   margin-left: 20px;
@@ -87,7 +139,7 @@
 
 .dashboard-credit-info{
   width: 100%;
-  text-align: center;
+  text-align: right;
   .credits{
     display: inline-block;
     width: 400px;
@@ -98,21 +150,35 @@
     color: #8d8e8f;
     font-weight: 600;
   }
-  .credits .value{
+  .value{
+    text-align: right;
     color: #231f20;
     font-weight: 900;
-    font-size: 30px;
+    font-size: 37px;
+  }
+
+  .subtitle{
+    font-weight: 300;
+    font-family: 'oswald';
+    font-size: 22px;
+  }
+
+  .num-credits{
+    font-family:'oswald';
+    font-weight: 700;
+    font-size: 50px;
+    color: #e3cd48;
+    text-align: right;
   }
 
   .bt-buy-credits{
-    margin-top: 15px;
-    background: transparent!important;
-    color: #8d8e8f!important;
-    margin-top: 20px;
-    border: 3px solid #ffcb34!important;
-    text-transform: capitalize!important;
+    color: #e3cd48!important;
     font-weight: bold!important;
-    width: 400px;
+    background-color: black !important;
+    font-size: 22px !important;
+    font-family: 'oswald'!important;
+    margin: 0px !important;
+
   }
 
 }

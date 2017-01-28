@@ -65,7 +65,7 @@ module V1
           purchase.gold_batch.id
         end
         expose :grams, documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
-          purchase.gold_batch.fine_grams.round(2)
+          purchase.gold_batch.fine_grams
         end
         expose :grade, documentation: { type: "float", desc: "gold batch total grams", example: "2.5" } do|purchase, options|
           purchase.gold_batch.grade
@@ -83,7 +83,7 @@ module V1
       # TODO: remove this inventory namespace as soon as the frontend being upgrated
       expose :inventory do
         expose :remaining_amount, documentation: { type: "string", desc: "inventory remaining_amount", example: "123456789" } do|purchase, options|
-          Order.remaining_amount_for(purchase.buyer).round(2)
+          Order.remaining_amount_for(purchase.buyer)
         end
       end
       expose :type, documentation: { type: "String", desc: "useful to knwo if gold came from AProvider or Trader", example: "sale, purchase" }
@@ -103,7 +103,7 @@ module V1
           purchase = batch.gold_batch.goldomable
           purchase.as_json.merge(
             created_at: purchase.created_at.in_time_zone("Bogota").strftime("%m/%d/%Y - %I:%M%p"),
-            fine_grams: purchase.fine_grams.round(2), # This method is delagated to gold_batch model
+            fine_grams: purchase.fine_grams, # This method is delagated to gold_batch model
             seller: {
               first_name: purchase.seller.profile.first_name,
               last_name: purchase.seller.profile.last_name,
