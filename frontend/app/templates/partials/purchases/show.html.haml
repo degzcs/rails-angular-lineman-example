@@ -207,10 +207,10 @@
         .button{"flex" => ""}
           %md-button.btn-save{  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
 
-      %div{"layout"=>"column", "layout-align" => "center end"}
+      
         .icon{"flex" => ""}
         .button{"flex" => ""}
-          %md-button.md-primary.md-raised.md-accent{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
+          %md-button.btn-save{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
 
       %div{"layout"=>"column", "layout-align" => "center end"}
 

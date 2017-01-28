@@ -7,27 +7,29 @@
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Nombre y apellido
-            %p.text-container-false
+            %p.text-container-false 
               {{sale.seller.first_name}} {{sale.seller.last_name}}
-
+          
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Mineral
-            %p.text-container-false
+            %p.text-container-false 
               {{sale.mineral_type}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Gramos finos
-            %p.text-container-false
+            %p.text-container-false 
               {{sale.gold_batch.fine_grams}}
 
+          
+          
         .md-list-item-text
-
+          
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Ley
-            %p.text-container-false
+            %p.text-container-false 
               {{sale.gold_batch.grade}}
 
           %div.input-containers-false{flex: ""}
@@ -35,17 +37,17 @@
               Precio
             %p.text-container-false
               {{sale.price}}
-
+          
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Fecha de creación
-            %p.text-container-false
+            %p.text-container-false 
               {{sale.created_at}}
-
+         
         .md-list-item-inner
           %md-button.btn-next.md-raised.md-primary{ 'ng-if' => '!sale.alreadyRequested', 'ng-click' => 'sendRequest(sale)'}
             Enviar petición de compra
-          %md-button.md-raised{ 'ng-if' => 'sale.alreadyRequested', 'ng-disabled' => true}
+          %md-button.btn-next.md-raised.md-primary{ 'ng-if' => 'sale.alreadyRequested', 'ng-disabled' => true}
             En espera por aprovación
         %md-divider
     .empty-list{'ng-if' => 'count == 0', 'layout' => 'row', 'layout-align' => 'center center'}
