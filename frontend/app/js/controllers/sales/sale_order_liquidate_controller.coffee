@@ -152,4 +152,4 @@ angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService,
     return
 
   $scope.downloadSaleFilesDialog =->
-    $scope.infoAlert "Los archivos se estan generando actualmente, si desea verlos puede ir a la pestañas de ORDERNES DE VENTA PENDIENTES/ORDENES MARKETPLACE en la seccion de VENTAS"
+    $scope.infoAlert "Procesando", "Los archivos se estan generando actualmente, si desea verlos puede ir a la pestañas de ORDERNES DE VENTA PENDIENTES/ORDENES MARKETPLACE en la seccion de VENTAS"
