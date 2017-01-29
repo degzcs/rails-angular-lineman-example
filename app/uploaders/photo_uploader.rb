@@ -58,7 +58,8 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   # Override the directory where uploaded files will be stored.
   def store_dir
-    "#{ base_store_dir }/#{ mounted_as }/#{ model.id }"
+    tmp_base_path = (APP_CONFIG[:USE_AWS_S3] || Rails.env.production?) ? "/uploads/photos/#{model.class.to_s.underscore}" : base_store_dir
+    "#{ tmp_base_path }/#{ mounted_as }/#{ model.id }"
   end
 
   def base_store_dir
