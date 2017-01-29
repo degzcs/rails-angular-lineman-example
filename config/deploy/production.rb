@@ -24,7 +24,7 @@ set :ssh_options, {
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '52.9.190.76', user: 'ec2-user', roles: %w{web app db}, my_property: :my_value
+server '52.9.190.76', user: 'ec2-user', roles: %w{web app db}
 
 
 namespace :deploy do
@@ -33,6 +33,20 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  desc ' Restart frontend (pending)'
+  task :frontend do
+    on roles(:web) do
+      # Here we can do anything such as:
+      within "#{current_path}/frontend" do
+        execute :npm, "install"
+        execute :bundle, "install"
+        execute :lineman, "build"
+        execute "rm -rf #{current_path}/public/css #{current_path}/public/js #{current_path}/public/img #{current_path}/public/fonts"
+        execute  "mv -f #{current_path}/frontend/dist/* #{current_path}/public"
+      end
     end
   end
 

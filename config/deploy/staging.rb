@@ -35,8 +35,8 @@ namespace :deploy do
     end
 
     on roles(fetch(:passenger_roles)), in: fetch(:passenger_restart_runner), wait: fetch(:passenger_restart_wait), limit: fetch(:passenger_restart_limit) do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
+        execute :touch, release_path.join('tmp/restart.txt')
+      end
     end
 
     after :restart, :deploy_frontend do
