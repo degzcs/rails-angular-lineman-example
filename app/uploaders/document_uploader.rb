@@ -82,9 +82,10 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   def cover
-    manipulate! do |frame, index|
-      frame if index.try(:zero?) # take only the first page of the file
-    end
+    # TODO: check what is happening with this in dev and production
+    # manipulate! do |frame, index|
+    #   frame if index.try(:zero?) # take only the first page of the file
+    # end
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
