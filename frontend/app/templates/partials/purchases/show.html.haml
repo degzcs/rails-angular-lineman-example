@@ -199,6 +199,7 @@
                 %p.text-container-false
                   {{goldBatch.model.reales}}
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
+      %md-button.md-primary.md-raised.md-accent{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
 
 
       %div{"layout"=>"column", "layout-align" => "center end"}
