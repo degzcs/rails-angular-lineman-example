@@ -77,10 +77,10 @@ module Purchase
           response
         end
       end
-    # rescue StandardError => e
-    #   response[:errors] << e.message
-    #   response[:success] = false
-    #   response
+    rescue StandardError => e
+      response[:errors] << e.message
+      response[:success] = false
+      response
     end
 
     # Creates a basic purchase order with the correct values
