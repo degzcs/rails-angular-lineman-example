@@ -32,12 +32,12 @@ class UserSetting < ActiveRecord::Base
 
   validates :state, inclusion: { in: [true, false] }
   validates :profile, presence: true, uniqueness: true
-  validates_uniqueness_of :alegra_token
+  validates_uniqueness_of :alegra_token, unless: Proc.new { |user_setting| user_setting.alegra_token == 'NA'}
   validates :fine_gram_value, numericality: true
 
   #
   # Constants
-  # 
+  #
   REGIME_TYPES = {
     RS: 'Regimen Simplificado o Persona Natural',
     RC: 'Regimen Común',
@@ -69,7 +69,7 @@ class UserSetting < ActiveRecord::Base
   def self.regime_types_for_select
     REGIME_TYPES.collect { |val| [val[1], val[0]] }
   end
-  
+
   def self.operation_scopes_for_select
     OPERATION_SCOPES.collect { |val| [val[1], val[0]] }
   end
