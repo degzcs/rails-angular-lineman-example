@@ -1,3 +1,4 @@
+
 describe 'Purchase', type: :request do
   describe :v1 do
     context '#purchases (buyer is not necessary the company legal representative)' do

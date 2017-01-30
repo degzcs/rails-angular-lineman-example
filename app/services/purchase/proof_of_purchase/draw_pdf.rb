@@ -1,6 +1,7 @@
 require 'barby'
 require 'barby/barcode/ean_13'
 require 'barby/outputter/prawn_outputter'
+require "open-uri"
 
 class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   attr_accessor :base_file
@@ -30,7 +31,12 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
   def draw_file!(order_presenter, signature_picture)
     start_new_page(:template => base_file.path, :template_page => 1)
     # header
-    seller_picture = order_presenter.seller_picture.medium.file.path
+    seller_picture = if APP_CONFIG[:USE_AWS_S3] || Rails.env.production?
+      open(order_presenter.seller_picture.medium.file.url)
+    else
+      order_presenter.seller_picture.medium.file.path
+    end
+
     image_width = 90
     image_x = 430
     image_y = 826
