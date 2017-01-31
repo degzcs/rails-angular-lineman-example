@@ -141,7 +141,7 @@ a{
 
 .trazoro-padding{
   padding-left: 250px!important;
-  padding-right: 250px!important; 
+  padding-right: 250px!important;
 }
 
 md-input-container.md-default-theme .md-input {
@@ -416,15 +416,15 @@ a.md-button.md-default-theme.md-accent:not([disabled]) md-icon, .md-button.md-de
   letter-spacing: 1px;
   font-size: 18px;
   background: #000000;
-  font-weight: 500;
+  font-weight: 300;
   color: #E3CD48 !important;
 }
 
 
 //Button black with arrow
 .btn-save:enabled{
-  
-} 
+
+}
 
 a.md-button.md-default-theme[disabled], .md-button.md-default-theme[disabled] {
     background-color: rgba(0, 0, 0, 0.42);
@@ -434,6 +434,6 @@ a.md-button.md-default-theme[disabled], .md-button.md-default-theme[disabled] {
   h2.center{
     text-align: center;
     padding-bottom: 30px;
-    
+
   }
 }
