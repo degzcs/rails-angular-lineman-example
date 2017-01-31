@@ -11,14 +11,14 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Gramos finos totales
-          %p.text-container-false 
+          %p.text-container-false
             {{totalAmount}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Ley Resultante
-          %p.text-container-false 
+          %p.text-container-false
             {{weightedLaw}}
-        
+
         %md-input-container{flex: ''}
           %label Precio Gramo
           %input{'name'=>'perUnitValue','ng-model' => 'perUnitValue', required: '','type' => 'number', 'step'=>'any','ng-change'=>'calculatePrice()' }
@@ -56,25 +56,25 @@
 
                   %div.input-containers-false{flex: ""}
                     %label.label-container-false
-                      Nombre 
-                    %p.text-container-false 
+                      Nombre
+                    %p.text-container-false
                       {{selectedClient.first_name}}
 
                   %div.input-containers-false{flex: ""}
                     %label.label-container-false
                       Apellido
-                    %p.text-container-false 
+                    %p.text-container-false
                       {{selectedClient.last_name}}
-                  
+
                 %div.inventory-client-names{layout: 'row'}
-                  
+
                   %div.input-containers-false{flex: ""}
                     %label.label-container-false
                       Cedula
-                    %p.text-container-false 
+                    %p.text-container-false
                       {{selectedClient.document_number}}
 
-                  
+
                 %div.progress-fieldset{:layout => 'row', 'layout-align' => 'space-around', 'layout-sm' => 'column','ng-if'=>'clientVerifiedProgress'}
                   %md-progress-circular{'md-mode' => 'indeterminate'}
             %br
@@ -85,10 +85,10 @@
             %md-content{'flex'=> '30', 'class'=>'md-padding autocomplete', 'layout'=>'row', 'layout-align'=>'center start'}
               .image.row
                 .photo
-                  %img.face.cam{'alt'=>'Foto Vendedor {{client.photo_file.url}}', 'ng-src' => '{{selectedClient.photo_file.url}}'}
+                  %img.face.cam{'alt'=>'Foto Vendedor {{client.photo_file.medium.url}}', 'ng-src' => '{{selectedClient.photo_file.url}}'}
 
 .wizard-buttons{layout: 'row', 'class'=>'md-padding autocomplete',  'layout-align'=>'end end'}
-  %md-button.btn-save{'ui-sref'=> 'new_sale.step2', 'ng-click' => 'saveState()'} 
+  %md-button.btn-save{'ui-sref'=> 'new_sale.step2', 'ng-click' => 'saveState()'}
     %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
     Volver
   %md-button.btn-next.md-raised.md-primary{ 'ng-desabled' => 'ingotsForm.$invalid','ng-click' => 'submitSale()'} Generar Orden
