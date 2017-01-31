@@ -5,50 +5,50 @@
   %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
   %div{layout: "column", 'ng-if' => 'saleOrder.buyer !== null'}
     /------------------------ CLIENT CARD ---------------------/
-    
+
     %div{layout: "row"}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Tipo
-        %p.text-container-false 
+        %p.text-container-false
           {{currentBuyer.rucom.provider_type}}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Nombre
-        %p.text-container-false  
+        %p.text-container-false
           {{currentBuyer.first_name}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Apellido
-        %p.text-container-false  
+        %p.text-container-false
           {{currentBuyer.last_name}}
-            
+
     %div{layout: "row"}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Cédula
-        %p.text-container-false  
+        %p.text-container-false
           {{currentBuyer.document_number}}
-            
+
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Telefono
-        %p.text-container-false  
+        %p.text-container-false
           {{currentBuyer.phone_number}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Dirección
-        %p.text-container-false  
-          {{currentBuyer.address}}      
-        
-        
+        %p.text-container-false
+          {{currentBuyer.address}}
+
+
     %div{layout: "row"}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Correo
-        %p.text-container-false  
+        %p.text-container-false
           {{currentBuyer.email}}
 
   %p.md-subtitle
@@ -86,32 +86,32 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nombre
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.first_name}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Apellido
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.last_name}}
-          
+
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Teléfono
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.phone_number}}
-        
+
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Dirección
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.address}}
 
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Tipo
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.rucom.provider_type}}
           /------------------------ PURCHASES CARD ---------------------/
   %div.sell-card-info{flex: ""}
@@ -150,5 +150,5 @@
       Documentos de compra adjuntos
     %md-button.btn-save{ href: "{{currentSale.proof_of_sale.file.url}}", :target => "_blank"}
       Compendio
-    %md-button.btn-next.md-raised.md-primary{ 'ng-click' => 'markAsPaid()'}
+    %md-button.btn-next.md-raised.md-primary{ 'ng-disabled' => "currentSale.transation_state == 'paid'", 'ng-click' => 'markAsPaid()'}
       Marcar como pagado

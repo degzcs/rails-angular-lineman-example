@@ -11,7 +11,7 @@
       %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
 
         %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters"}
-          %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
+          %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs", "ng-click" => "goPurchaseOrder(purchase.id)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
           %td
             %md-button.btn-next.md-raised.md-primary{ "ng-click" => "goPurchaseOrder(purchase.id)"} Ver
 

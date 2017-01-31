@@ -22,7 +22,7 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
     }
     {
       name: 'Precio'
-      field: 'purchase.price'
+      field: 'purchase.price.toFixed(3)'
     }
     {
       name: 'Tipo de Mineral'
@@ -37,8 +37,8 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
       field: "purchase.performer.first_name + ' ' + purchase.performer.last_name"
     }
     {
-      name: 'Id'
-      field: "purchase.id"
+      name: 'Estado'
+      field: "purchase.transaction_state"
     }
   ]
 

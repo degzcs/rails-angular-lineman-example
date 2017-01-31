@@ -15,16 +15,19 @@ angular.module('app').controller('SalesTabCtrl', function($scope, $mdDialog, Sal
       field: 'sale.fine_grams.toFixed(3)'
     }, {
       name: 'Precio venta',
-      field: 'sale.price'
+      field: 'sale.price.toFixed(3)'
     }, {
       name: 'Precio compra',
-      field: 'sale.purchases_total_value'
+      field: 'sale.purchases_total_value.toFixed(3)'
     },{
       name: 'Ganancia',
-      field: 'sale.total_gain'
+      field: 'sale.total_gain.toFixed(3)'
     },{
       name: 'Tipo de Mineral',
       field: 'sale.mineral_type'
+    },{
+      name: 'Estado',
+      field: 'sale.transaction_state'
     }
   ];
 
