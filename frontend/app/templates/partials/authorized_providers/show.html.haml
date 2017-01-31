@@ -3,65 +3,65 @@
     /********************************************** PERSONAL DATA ******************************************************/
     %md-tab{"label"=>"Datos Personales"}
       .provider-info
-        
+
         %div{layout: 'row'}
           .photo-container{flex: '30'}
             %div{layout: 'row', "layout-align" => "center start"}
               %h2
                 DATOS PERSONALES
-            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.url}}"}
+            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.medium.url}}"}
             %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_authorized_provider({ id: currentAuthorizedProvider.id })"} Editar Información
 
           .fields-container{flex: '70'}
-            
+
 
             %div{layout: "row"}
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Nombre Proveedor
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.first_name}}
 
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Apellido
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.last_name}}
             %div{layout: 'row'}
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Número de identificación
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.document_number}}
-              
-              
+
+
             %div{layout: 'row'}
 
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Teléfono
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.phone_number}}
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Dirección
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.address}}
-            
+
             %div{layout: 'row'}
 
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Email
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.email}}
 
             %div{layout: 'row'}
-              
+
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Número Rucom
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.rucom.rucom_number}}
 
 
@@ -69,27 +69,27 @@
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Tipo
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.rucom.provider_type}}
 
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Estado
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.rucom.status ? currentAuthorizedProvider.rucom.status : 'Inscrito'}}
-              
+
             %div{layout: 'row'}
 
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Ciudad
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.city.name}}
 
               %div.input-containers-false{flex: ""}
                 %label.label-container-false
                   Departamento
-                %p.text-container-false 
+                %p.text-container-false
                   {{currentAuthorizedProvider.state.name}}
 
             %div.external-user-map{"ng-bind-html"=>"map_iframe"}
