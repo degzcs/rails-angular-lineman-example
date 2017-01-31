@@ -1,11 +1,10 @@
-%form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
-  %section{layout: "row"}
-    %div.md-padding{flex: ""}
-      // ---Purchase Type
-      %fieldset.standard.tr-fieldset{:layout => "column"}
-        %legend
-          %h3
-            Por favor lea con atención la aceptación del Acuerdo.
+.general-container
+  %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
+    %section{layout: "row"}
+      %div.md-padding{flex: ""}
+        // ---Purchase Type
+        %h3
+          Por favor lea con atención la aceptación del Acuerdo.
         %div.fieldset-inputs
           %md-input-container{class: "md-block", flex: '100' }
             %textarea{:rows => '7', :readOnly => 'true',
@@ -17,21 +16,25 @@
                             :required => ''} Acepto los términos y condiciones
 
 
-      %section.signature-section.md-padding{flex: '', layout: 'column'}
-        %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-          %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
-        %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-          #imageBox{  flex: ''}
-        %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
-          .signature-text
-            Firma
+        %section.signature-section.md-padding{flex: '', layout: 'column'}
+          %div{flex: '', layout: 'row', "layout-align"=>"center center"}
+            %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
+          %div{flex: '', layout: 'row', "layout-align"=>"center center"}
+            #imageBox{  flex: ''}
+          %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
+            .signature-text
+              Firma
 
-      .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"end end"}
-        %md-button.btn-cancel{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
-        %md-button.btn-cancel{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
+        .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"center"}
+          %md-button.btn-save{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
+          %md-button.btn-save{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
 
-  .wizard-buttons{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"end end"}
-    %md-button.btn-save.md-button{ flex: "20",
-                                   "ng-show" => "handlerContinue()",
-                                   "ng-click" => "continue()"} Continuar
+          %md-button.btn-back-black{ "ui-sref" => "index_authorized_provider"}
+            %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+            Volver
+
+          %md-button.btn-next.md-raised.md-primary{"ng-click" => "continue()"} Continuar
+            %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
+
+        
 
