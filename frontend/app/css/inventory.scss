@@ -14,7 +14,7 @@
     width: 100px!important;
     padding-left: 0px;
     padding-right: 0px;
-  } 
+  }
   .md-table-content{
     text-align: left!important;
     width: 100px!important;
@@ -42,7 +42,7 @@
   }
   tbody tr:last-child{
     margin-bottom: 20px;
-    
+
   }
   .row-selected{
     background-color: green;
@@ -64,7 +64,7 @@
 }
 
 .inventory-options-head{
-  //border-bottom: 1px solid #eee; 
+  //border-bottom: 1px solid #eee;
   .md-button{
     width: 250px;
   }
@@ -115,7 +115,7 @@
     overflow-x: visible!important;
   }
   md-input-container.md-docs-dark-theme label, md-input-container.md-docs-dark-theme .md-placeholder {
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.4), -1px -1px 0px rgba(0,0,0,0.4); 
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.4), -1px -1px 0px rgba(0,0,0,0.4);
     color: rgba(255,255,255,0.6);
   }
   h3{
@@ -214,12 +214,15 @@
 }
 
 .purchase-empty{
-  background: lighten(red, 30%);
+  background: #E0E0E0;
 }
 
 .inventory-index-table{
   tbody tr{
     border-bottom: 1px solid #eee;
+  }
+  .md-button {
+    margin-left: 0px;
   }
 }
 
