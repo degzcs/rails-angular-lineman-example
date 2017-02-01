@@ -189,15 +189,15 @@
                 %md-input-container
                   {{batch.grams_picked}} gr
 
-    %div.md-padding{"ng-if"=>"purchase.type == 'purchase'",'layout' => 'row', "layout-align" => 'center'}
-      %md-button.btn-save{ flex: "30","target"=> "_blank", href: "{{purchase.origin_certificate_file_url}}"}
+    %div.wizard-buttons.md-padding{"ng-if"=>"purchase.type == 'purchase'",'layout' => 'row', "layout-align" => 'center'}
+      %md-button.btn-save{ "target"=> "_blank", href: "{{purchase.origin_certificate_file_url}}"}
         Certificado de origen
-      %md-button.btn-save{ flex: "30","target"=> "_blank", href: "{{purchase.proof_of_purchase_file_url}}"}
+      %md-button.btn-save{ "target"=> "_blank", href: "{{purchase.proof_of_purchase_file_url}}"}
         Documento equivalente
       %md-button.btn-save{"ng-if"=>"purchase.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.uiaf_report_file_url}}"}
         Descargar Reporte UIAF
 
-    %div{"ng-if"=>"purchase.type == 'sale'"}
+    %div.wizard-buttons.md-padding{"ng-if"=>"purchase.type == 'sale'",'layout' => 'row', "layout-align" => 'center'}
       
       %md-button.btn-save{ flex: "30", "ng-if"=>"purchase.transaction_state == 'approved' || purchase.transaction_state == 'paid'", href: "{{purchase.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
         Archivos adjuntos de compra
