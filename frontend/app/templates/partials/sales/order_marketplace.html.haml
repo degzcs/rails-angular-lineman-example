@@ -1,39 +1,52 @@
-%section.marketplace-resume{layout: "column", "layout-align" => "center"}
-  %h2
-    Resumen de la orden de venta pendiente
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: ""}
-      %legend
-        %h3
-          Detalles de la orden
-      %table
-        %tr
-          %td
-            Fecha de creación:
-          %td
+.general-container  
+  %section.marketplace-resume{layout: "column", "layout-align" => "center"}
+    %h2
+      Resumen de la orden de venta pendiente
+    %div.md-padding{flex: "100", :layout => "column", "layout-align" => "center" }
+      
+      %p.md-subtitle
+        Detalles de la orden
+      %div.md-padding{:layout => "row", "layout-align" => "center" }
+      
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Fecha de creación
+          %p.text-container-false 
             {{sale.created_at}}
-        %tr
-          %td
-            Total Gramos Finos:
-          %td
-            {{sale.fine_grams | number:3}} gramos
-        %tr
-          %td
-            Tipo de Mineral:
-          %td
-            {{sale.mineral_type}}
-        %tr
-          %td
-            Precio total:
-          %td
-            ${{sale.price}} COP
 
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "start stretch" }
-    %div{:layout => "column", flex: "", "layout-align" => "start stretch"}
-      %h3 Listado de lotes
-      %md-content
-        .table-container
-          %table.md-table
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Total Gramos Finos
+          %p.text-container-false 
+            {{sale.fine_grams | number:3}} gramos
+      %div.md-padding{:layout => "row", "layout-align" => "center" }
+
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Tipo de Mineral
+          %p.text-container-false 
+            {{sale.mineral_type}}      
+      
+        %div.input-containers-false{flex: ""}
+          %label.label-container-false
+            Precio total
+          %p.text-container-false 
+            ${{sale.price}} COP
+    %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
+      %div{:layout => "column", flex: ""}
+       
+        %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
+          %md-button.btn-save{href: "{{sale.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
+            Documentos de compra adjuntos
+          %md-button.btn-save{href: "{{sale.proof_of_sale.file.url}}", :target => "_blank"}
+            Compendio
+          
+         
+    %div.md-padding{flex: "100", :layout => "row", "layout-align" => "start stretch" }
+      %div{:layout => "column", flex: "", "layout-align" => "start stretch"}
+        %p.md-subtitle Listado de lotes
+        %md-content{"class"=>"", "layout"=>"row", 'layout-align' => 'center'}
+          %table{'flex' => '100', 'style' => 'width: 150%'}
             %thead
               %tr.md-table-headers-row
                 %th.md-table-header
@@ -43,53 +56,46 @@
                 %th.md-table-header
                   Gramos finos
             %tbody
-              %tr.md-table-content-row{"ng-repeat" => "associated_purchase in sale.associated_purchases"}
-                %td
+              %tr{"ng-repeat" => "associated_purchase in sale.associated_purchases"}
+                %td.md-table-td-more
                   {{associated_purchase.created_at}}
-                %td
+                %td.md-table-td-more
                   {{associated_purchase.seller.first_name}} {{associated_purchase.seller.last_name}}
-                %td
+                %td.md-table-td-more
                   {{associated_purchase.fine_grams | number:3}}
 
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "space-around stretch" }
-    %div{:layout => "column", flex: "", "layout-align" => "space-around stretch"}
-      %h3 Compradores
-      %h6 Al aceptar a un comprador se inicia el proceso de compra exclusivamente con ese comercializador. Se le envirá un correo para que revise la documentación en borrador. Cuando él comprador acepte al documentación entonces se generará la factúra y se pondrá a la disposición del mismo la información real del mineral.
-      %md-content
-        .table-container{'ng-if' => 'buyersCount > 0'}
-          %table.md-table
-            %thead
-              %tr.md-table-headers-row
-                %th.md-table-header
-                  Nombre
-                %th.md-table-header
-                  Nit
-                %th.md-table-header
-            %tbody
-              %tr.md-table-content-row{"ng-repeat" => "buyer in sale.buyers"}
-                %td
-                  {{buyer.name}}
-                %td
-                  {{buyer.nit_number}}
-                %td
-                  %md-button.md-primary.md-raised{ 'ng-click' => 'acceptRequest(buyer)'}
-                    Aceptar
-                  %md-button.md-primary{ 'ng-click' => 'rejectRequest(buyer)'}
-                    Rechazar
-        .empty-buyers{'ng-if' => 'buyersCount == 0'}
-          %p Aún no hay existen peticiones de comprar
 
-  %div.md-padding{flex: "100", :layout => "row", "layout-align" => "end end" }
-    %fieldset.standard.tr-fieldset{:layout => "column", flex: ""}
-      %legend
-        %h3
-          Archivos
-      %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"end end"}
-        %a.md-button{href: "{{sale.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
-          Documentos de compra adjuntos
-        %a.md-button{href: "{{sale.proof_of_sale.file.url}}", :target => "_blank"}
-          Compendio
+    %div.md-padding{flex: "100", :layout => "row", "layout-align" => "space-around stretch" }
+      %div{:layout => "column", flex: "", "layout-align" => "space-around stretch"}
+        %h3 Compradores
+        %p Al aceptar a un comprador se inicia el proceso de compra exclusivamente con ese comercializador. Se le envirá un correo para que revise la documentación en borrador. Cuando él comprador acepte al documentación entonces se generará la factúra y se pondrá a la disposición del mismo la información real del mineral.
+        %md-content
+          .table-container{'ng-if' => 'buyersCount > 0'}
+            %table.md-table
+              %thead
+                %tr.md-table-headers-row
+                  %th.md-table-header
+                    Nombre
+                  %th.md-table-header
+                    Nit
+                  %th.md-table-header
+                    Opciones
+              %tbody
+                %tr.md-table-content-row{"ng-repeat" => "buyer in sale.buyers"}
+                  %td
+                    {{buyer.name}}
+                  %td
+                    {{buyer.nit_number}}
+                  %td
+                    %md-button.btn-next.md-primary.md-raised{ 'ng-click' => 'acceptRequest(buyer)'}
+                      Aceptar
+                    %md-button.btn-save{ 'ng-click' => 'rejectRequest(buyer)'}
+                      Rechazar
+          .empty-buyers{'ng-if' => 'buyersCount == 0'}
+            %p Aún no hay existen peticiones de comprar
 
-  %div.md-padding{flex: "60", :layout => "row", "layout-align" => "center" }
-    %md-button.btn-next.md-raised.md-primary{flex: "10", "ui-sref" => "new_sale.tab.orders_marketplace"}
-      Regresar
+
+    %div.md-padding{:layout => "row", "layout-align" => "center" }
+      %md-button.btn-back-black{ "ui-sref" => "new_sale.tab.orders_marketplace"}
+        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+        Regresar

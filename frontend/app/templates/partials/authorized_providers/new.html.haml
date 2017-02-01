@@ -1,71 +1,87 @@
-%div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
-  %form.external-user-form{:name => "providerEditionForm", "novalidate" => "novalidate"}
-    %h2 Registro de Proveedor
+.general-container 
+  %div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
+    %form.external-user-form{:name => "providerEditionForm", "novalidate" => "novalidate"}
+      %h2 Registro de Proveedor
 
-      /****************************   PERSONAL DATA ***********************************/
+        /****************************   PERSONAL DATA ***********************************/
 
-    %md-tabs.external-user-tab{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>""}
-      %md-tab{"aria-controls" => "tab1-content", label: "Paso 1: Datos Personales", "ng-click"=>"validatePersonalFields()"}
-        %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
-          %fieldset.standard.photo-fieldset
-            %legend
-              %h5 Tome una foto al proveedor
-            %md-input-container.row{"layout-align" => "center center"}
-              .photo{:style => "max-width:150px;"}
-                %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
-                  %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{currentAuthorizedProvider.photo_file || 'img/default-user.png'}}", "ng-model" => "currentAuthorizedProvider.photo_file", required: ""}
-                  /%md-tooltip{'md-direction'=> 'bottom'}
-                  /  Tomar Foto
-          %fieldset.standard.fieldset-information{:flex => ""}
-            %legend
-              %h3 Información
-            %md-content.md-padding{:layout => "", "layout-sm" => "column", :style => "font-size:1.2em"}
-              %md-input-container{:flex => ""}
-                %label Nombre
-                %input{:name => "first_name", "ng-model" => "currentAuthorizedProvider.first_name", :required => "" }
-                %div{"ng-messages" => "providerEditionForm.first_name.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.
-              %md-input-container{:flex => ""}
-                %label Apellido
-                %input{:name => "last_name", "ng-model" => "currentAuthorizedProvider.last_name", :required => ""}
-                %div{"ng-messages" => "providerEditionForm.last_name.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.
-              %md-input-container{:flex => ""}
-                %label Número de Identificación
-                %input{:readonly => "true", :name => "document_number", "ng-model" => "currentAuthorizedProvider.document_number", :required => "", :ng-value => "content.document_number || arrayValueid" }
-                %div{"ng-messages" => "providerEditionForm.document_number.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.
+      %md-tabs.external-user-tab{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>""}
+        %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales", "ng-click"=>"validatePersonalFields()"}
+          
 
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-              %md-input-container{:flex => ""}
-                %label Número de RUCOM
-                %input{:name => "rucom_number","ng-model" => "currentAuthorizedProvider.rucom.rucom_number", :ng-value => "content.rucom.rucom_number"}
-                /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"}
-                /  %span.ion-android-checkmark-circle &nbsp;válido
-              %md-input-container{:flex => ""}
-                %label Tipo de Proveedor
-                %input{:readonly => true, :name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
-            %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-              %md-input-container{:flex => ""}
-                %label Teléfono
-                %input{:name => "phone_number", "ng-model" => "currentAuthorizedProvider.phone_number", :required => ""}
-                %div{"ng-messages" => "providerEditionForm.phone_number.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.
-              %md-input-container{:flex => ""}
-                %label Email
-                %input{:name => "email", "ng-model" => "currentAuthorizedProvider.email", :type => "email", :required => ""}
-                %div{"ng-messages" => "providerEditionForm.email.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.
-                  %div{"ng-message" => "email"} Ingrese un e-mail válido.
-              %md-input-container{:flex => ""}
-                %label Dirección
-                %input{:name => "address", "ng-model" => "currentAuthorizedProvider.address", :required => ""}
-                %div{"ng-messages" => "providerEditionForm.address.$error"}
-                  %div{"ng-message" => "required"} Este campo es requerido.
-            / TODO: fix this: These select inputs produce an error when they are empty. This is the error: Cannot read property 'length' of undefined
-            / NOTE: This error came from the library. Perhaps when we upgrade the version this will be fixed.
-            .location-selection
-              %h2.md-subhead Ubicacion:
+
+
+
+          %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
+          
+            %div{:flex => "30"} 
+              %p.md-subtitle
+                Tomar foto
+              %hr{ "width"=>"90%", "color"=>"#E3CD48", "align"=>"left"}
+                %div.row{:layout => "row", "layout-align" => "center center"}
+                  .photo{:style => "max-width:150px;"}
+                    %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
+                      %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{currentAuthorizedProvider.photo_file || 'img/default-user.png'}}", "ng-model" => "currentAuthorizedProvider.photo_file", required: ""}
+                      /%md-tooltip{'md-direction'=> 'bottom'}
+                      /  Tomar Foto
+            %div.info{:flex => "70"}
+              %p.md-subtitle
+                Información
+              %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
+              %div{:layout => "row", "layout-sm" => "column"}
+                
+                / %md-input-container{"name"=>"idNumber"}
+                /   %input{"ng-model"=>"currentAuthorizedProvider.first_name","name"=>"idNumber", "placeholder"=>"Nombre"}
+                %md-input-container{:flex => ""}
+                  %label Nombre
+                  %input{:name => "first_name", "ng-model" => "currentAuthorizedProvider.first_name", :required => "" }
+                  %div{"ng-messages" => "providerEditionForm.first_name.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+                %md-input-container{:flex => ""}
+                  %label Apellido
+                  %input{:name => "last_name", "ng-model" => "currentAuthorizedProvider.last_name", :required => ""}
+                  %div{"ng-messages" => "providerEditionForm.last_name.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+
+                %md-input-container{:flex => ""}
+                  %label Número de Identificación
+                  %input{:readonly => "true", :name => "document_number", "ng-model" => "currentAuthorizedProvider.document_number", :required => "", :ng-value => "content.document_number || arrayValueid" }
+                  %div{"ng-messages" => "providerEditionForm.document_number.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+
+              %div{:layout => "row", "layout-sm" => "column"}
+                %md-input-container{:flex => ""}
+                  %label Número de RUCOM
+                  %input{:name => "rucom_number","ng-model" => "currentAuthorizedProvider.rucom.rucom_number", :ng-value => "content.rucom.rucom_number"}
+                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"}
+                  /  %span.ion-android-checkmark-circle &nbsp;válido
+                %md-input-container{:flex => ""}
+                  %label Tipo de Proveedor
+                  %input{:readonly => true, :name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
+              
+              %div{:layout => "row", "layout-sm" => "column"}
+                %md-input-container{:flex => ""}
+                  %label Teléfono
+                  %input{:name => "phone_number", "ng-model" => "currentAuthorizedProvider.phone_number", :required => ""}
+                  %div{"ng-messages" => "providerEditionForm.phone_number.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+                %md-input-container{:flex => ""}
+                  %label Email
+                  %input{:name => "email", "ng-model" => "currentAuthorizedProvider.email", :type => "email", :required => ""}
+                  %div{"ng-messages" => "providerEditionForm.email.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+                    %div{"ng-message" => "email"} Ingrese un e-mail válido.
+                %md-input-container{:flex => ""}
+                  %label Dirección
+                  %input{:name => "address", "ng-model" => "currentAuthorizedProvider.address", :required => ""}
+                  %div{"ng-messages" => "providerEditionForm.address.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+                  / TODO: fix this: These select inputs produce an error when they are empty. This is the error: Cannot read property 'length' of undefined
+                  / NOTE: This error came from the library. Perhaps when we upgrade the version this will be fixed.
+              %div{:layout => "row", "layout-sm" => "column"}
+                %p.md-subtitle
+                  Ubicación
+                
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchStateText)", "md-no-cache" => "true", "md-search-text" => "searchStateText", "md-search-text-change" => "searchTextStateChange(searchStateText)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
                   %span{"md-highlight-text" => "searchStateText"} {{state.name}}
@@ -73,87 +89,94 @@
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCityText)", "md-no-cache" => "true", "md-search-text" => "searchCityText", "md-search-text-change" => "searchTextCityChange(searchCityText)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
                 %span{"md-highlight-text" => "searchCityText"} {{city.name}}
 
-              / end error
-            .rucom-selection
-              %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-                %fieldset.standard.fieldset-information{:flex => "100"}
-                  %legend
-                    %h3 Lector de codigo de barras
-                  %div{:layout => "row", "layout-align" => "start center", "layout-sm" => "column", :style => "padding: 1px;"}
-                    %h2 Activar/desactivar:
-                    %md-switch.md-primary{ "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"}
-                    %md-button.md-primary.md-raised{"ng-click" => "copyDataFromIdDocument()", "ng-disabled" => "captureDisable"} Capturar
-              %md-content.md-padding{:layout => "", "layout-sm" => "column"}
-                %md-button.btn-save.md-raised.btn-rucom-selection{'ng-click'=>"validatePersonalFields()"} Continuar
-                %md-button.md-primary{"ng-click" => "cancel()"} Cancelar
+                / end error
+              %div{:layout => "row", "layout-sm" => "column"}
+                %md-input-container{flex: ""}
+                  %md-checkbox{ :ng-model => 'chkActive',
+                            :required => ''} 
+                    %p.md-subtitle{"style" => "padding-left: 10px;"}
+                      Usar Lector de codigo de barras
+                  
+              %div{:layout => "row", "layout-sm" => "column"}
+                  
+                %h4{"ng-show" => "chkActive"} Activar/desactivar:
+                %md-switch.md-primary{"ng-show" => "chkActive", "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"}
+                %md-button.md-primary.md-raised{"ng-show" => "chkActive", "ng-click" => "copyDataFromIdDocument()", "ng-disabled" => "captureDisable"} Capturar
+              
+          %div.info-buttons{:layout => "row", "layout-sm" => "column", "layout-align" => "center"}
+            %md-button.btn-back-black{"ng-click" => "cancel()"}
+              %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+              Cancelar
+            %md-button.btn-next.md-raised.md-primary{'ng-click'=>"validatePersonalFields()"} 
+              Continuar
+              %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
 
-      /****************************   DOCUMENTATION ***********************************/
-      %h2 Paso 2: Ingrese Documentacion
-      %md-tab{"aria-controls" => "tab3-content", label: "Paso 2: Documentacion", "ng-disabled"=>"!validPersonalData", "ng-click"=>"validatePersonalFields()"}
-        %md-contentmd.md-padding
-          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{flex: '30'}
-              %h4 Subir documento de identificación
-              %md-select.uploader-selector{"ng-model" => "id_document_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
-                %md-option{:value => "by_upload"} Desde el PC
-                %md-option{:value => "by_scan"} Por Escaner
-                %md-option{:value => "by_photo"} por Camara
-            %div{flex: ''}
-              .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'id_document_upload_type'}
-                  %md-input-container
-                    %label Nombre del archivo
-                    %input{"ng-model" => "currentAuthorizedProvider.id_document_file[0].name", :readOnly => 'true', :required => "", :name => 'id_document_number'}
-                    %div{"ng-messages" => "providerEditionForm.id_document_number.$error"}
-                      %div{"ng-message" => "required"} * Debe seleccionar el documento de identificación
+        /****************************   DOCUMENTATION ***********************************/
+        %h2 Paso 2: Ingrese Documentacion
+        %md-tab{"aria-controls" => "tab3-content", label: "2. Documentacion", "ng-disabled"=>"!validPersonalData", "ng-click"=>"validatePersonalFields()"}
+          %md-contentmd.md-padding
+            %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+              %div{flex: '30'}
+                %p.md-subtitle Subir documento de identificación
+                %md-select.uploader-selector{"ng-model" => "id_document_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
+                  %md-option{:value => "by_upload"} Desde el PC
+                  %md-option{:value => "by_scan"} Por Escaner
+                  %md-option{:value => "by_photo"} por Camara
+              %div{flex: ''}
+                .upload-oc{:flex => ''}
+                  .button-action.md-padding{:ng-switch => '', :on => 'id_document_upload_type'}
+                    %md-input-container
+                      %label Nombre del archivo
+                      %input{"ng-model" => "currentAuthorizedProvider.id_document_file[0].name", :readOnly => 'true', :required => "", :name => 'id_document_number'}
+                      %div{"ng-messages" => "providerEditionForm.id_document_number.$error"}
+                        
 
-                  .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_file', name: 'id_document_file'}
-                      Subir desde PC
-                      %md-icon{"md-svg-icon"=>"file:file_upload"}
+                    .by_upload{"ng-switch-when" =>'by_upload'}
+                      %md-button.btn-next.md-raised.md-primary{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_file', name: 'id_document_file'}
+                        Subir desde PC
+                        
 
-                  .by_scan{"ng-switch-when" =>'by_scan'}
-                    %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
-                      Escanear
-                      %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
+                    .by_scan{"ng-switch-when" =>'by_scan'}
+                      %md-button.btn-next.md-raised.md-primary{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
+                        Escanear
+                        
 
-                  .by_photo{"ng-switch-when" =>'by_photo'}
-                    .md-tile-left.cam
-                      %md-button.btn-save{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
-                        Escanear con camara
-                        %md-icon{"md-svg-icon" => "image:camera_alt"}
+                    .by_photo{"ng-switch-when" =>'by_photo'}
+                      .md-tile-left.cam
+                        %md-button.btn-next.md-raised.md-primary{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
+                          Escanear con camara
+                          
+            %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
+              %div{flex: '30'}
+                %p.md-subtitle Subir la RUT
+                %md-select.uploader-selector{"ng-model" => "rut_uplaod_type", :placeholder => "Cargar Documento RUT"}
+                  %md-option{:value => "by_upload"} Desde el PC
+                  %md-option{:value => "by_scan"} Por Escaner
+                  %md-option{:value => "by_photo"} por Camara
+              %div{flex: ''}
+                .upload-oc{:flex => ''}
+                  .button-action.md-padding{:ng-switch => '', :on => 'rut_uplaod_type'}
+                    %md-input-container
+                      %label Nombre del archivo
+                      %input{"ng-model" => "currentAuthorizedProvider.rut_file[0].name", :readOnly => 'true', :name => 'rut'}
 
-          %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
-            %div{flex: '30'}
-              %h4 Subir la RUT
-              %md-select.uploader-selector{"ng-model" => "rut_uplaod_type", :placeholder => "Cargar Documento RUT"}
-                %md-option{:value => "by_upload"} Desde el PC
-                %md-option{:value => "by_scan"} Por Escaner
-                %md-option{:value => "by_photo"} por Camara
-            %div{flex: ''}
-              .upload-oc{:flex => ''}
-                .button-action.md-padding{:ng-switch => '', :on => 'rut_uplaod_type'}
-                  %md-input-container
-                    %label Nombre del archivo
-                    %input{"ng-model" => "currentAuthorizedProvider.rut_file[0].name", :readOnly => 'true', :name => 'rut'}
+                    .by_upload{"ng-switch-when" =>'by_upload'}
+                      %md-button.btn-next.md-raised.md-primary{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.rut_file', name: 'rut_file'}
+                        Subir desde PC
+                        
 
-                  .by_upload{"ng-switch-when" =>'by_upload'}
-                    %md-button.btn-save{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.rut_file', name: 'rut_file'}
-                      Subir desde PC
-                      %md-icon{"md-svg-icon"=>"file:file_upload"}
+                    .by_scan{"ng-switch-when" =>'by_scan'}
+                      %md-button.btn-next.md-raised.md-primary{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
+                        Escanear
+                        
 
-                  .by_scan{"ng-switch-when" =>'by_scan'}
-                    %md-button.btn-save{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
-                      Escanear
-                      %md-icon{"md-svg-icon"=>"maps:local_print_shop"}
+                    .by_photo{"ng-switch-when" =>'by_photo'}
+                      .md-tile-left.cam
+                        %md-button.btn-next.md-raised.md-primary{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
+                          Escanear con camara
+                          
 
-                  .by_photo{"ng-switch-when" =>'by_photo'}
-                    .md-tile-left.cam
-                      %md-button.btn-save{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
-                        Escanear con camara
-                        %md-icon{"md-svg-icon" => "image:camera_alt"}
+          %div.info-buttons{layout: 'row', "layout-align"=> "center"}
+            %md-button.btn-next.md-raised.md-primary{:class => "md-raised md-accent", "ng-click" => "updateAuthorizedProvider($event)", "ng-disabled"=>"sendingPost"} Actualizar Proveedor
 
-        %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-          %md-button.btn-save{:class => "md-raised md-accent", "ng-click" => "updateAuthorizedProvider($event)", "ng-disabled"=>"sendingPost"} Actualizar Proveedor
-
-%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+  %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

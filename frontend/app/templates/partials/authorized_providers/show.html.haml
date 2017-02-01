@@ -9,8 +9,9 @@
             %div{layout: 'row', "layout-align" => "center start"}
               %h2
                 DATOS PERSONALES
-            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.medium.url}}"}
-            %md-button.md-button.btn-save.btn-extenal-user-update{"ui-sref"=>"edit_authorized_provider({ id: currentAuthorizedProvider.id })"} Editar Información
+
+            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.url}}"}
+            %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"edit_authorized_provider({ id: currentAuthorizedProvider.id })"} Editar Información
 
           .fields-container{flex: '70'}
 
