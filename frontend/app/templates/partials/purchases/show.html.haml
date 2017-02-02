@@ -204,13 +204,13 @@
       
       %div{layout: "column", "layout-align"=>"center"}
         
-        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/documents.svg" }
+        %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/documents.svg" }
 
         %md-button.btn-save{flex: "30",  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
       
       %div{layout: "column", "layout-align"=>"center"}
 
-        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/single_document.svg" }
+        %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/single_document.svg" }
 
         %md-button.btn-save{flex: "30", "ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
 
