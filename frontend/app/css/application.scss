@@ -418,8 +418,14 @@ a.md-button.md-default-theme.md-accent:not([disabled]) md-icon, .md-button.md-de
   background: #000000;
   font-weight: 300;
   color: #E3CD48 !important;
+  max-height: 40px !important;
 }
 
+
+.img-buttons-above{
+  width: 200px;
+  height: 200px;
+}
 
 //Button black with arrow
 .btn-save:enabled{

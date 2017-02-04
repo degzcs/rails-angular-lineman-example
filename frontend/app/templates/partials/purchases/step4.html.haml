@@ -9,8 +9,8 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Razón Social
-          %p.text-container-false
-            {{buyer_data.company_name}}
+          %p.text-container-false 
+            {{buyer_data.company_name}} 
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
@@ -21,13 +21,13 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Rucom
-          %p.text-container-false
+          %p.text-container-false 
             {{buyer_data.rucom_number}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nombre de usuario
-          %p.text-container-false
+          %p.text-container-false 
             {{buyer_data.first_name}} {{buyer_data.last_name}}
 
         %div.input-containers-false{flex: ""}
@@ -39,13 +39,13 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Direccion
-          %p.text-container-false
+          %p.text-container-false 
             {{buyer_data.address}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Telefono
-          %p.text-container-false
+          %p.text-container-false 
             {{buyer_data.phone}}
 
         / %table.md-table{"flex"=> ""}
@@ -94,37 +94,37 @@
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Razón Social
-            %p.text-container-false
+            %p.text-container-false 
               {{purchase.model.seller.company_name}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Nit
-            %p.text-container-false
+            %p.text-container-false 
               {{purchase.model.seller.nit}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Rucom
-            %p.text-container-false
+            %p.text-container-false 
               {{purchase.model.seller.rucom.rucom_number}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Nombre de usuario
-            %p.text-container-false
+            %p.text-container-false 
               {{purchase.model.seller.name}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Cedula
-            %p.text-container-false
+            %p.text-container-false 
               {{purchase.model.seller.document_number}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Direccion
-            %p.text-container-false
+            %p.text-container-false 
               {{purchase.model.seller.address}}
 
           %div.input-containers-false{flex: ""}
@@ -133,7 +133,8 @@
             %p.text-container-false
               {{purchase.model.seller.phone_number}}
 
-      %md-content{"flex"=> "40", "class"=>"", "layout"=>"row"}
+
+      %md-content{"flex"=> "40", "class"=>"", "layout"=>"row"}  
         %md-content{"flex"=> "", "class"=>"", "layout"=>"column", "layout-align" => "center center"}
           %div.md-subtitle{"flex"=> ""}
             FOTO DEL PROVEEDOR
@@ -161,7 +162,7 @@
           Ley
         %p
           {{goldBatch.model.grade}}
-
+     
       .select-law{'flex' => ''}
         %p.md-subtitle
           Mineral Comprado
@@ -176,7 +177,6 @@
           %tr.md-table-headers-row
             %th.md-table-header
               Medida / Cantidad
-
             %th.md-table-header
               Precio
             %th.md-table-header
@@ -199,13 +199,13 @@
                 $ {{purchase.model.fine_gram_unit_price | number:2}}
             %td.md-table-td-more
               %md-input-container
-                {{goldBatch.model.total_grams | number:2}}
+                {{ goldBatch.model.total_grams | number:2}}
             %td.md-table-td-more
               %md-input-container
-                {{goldBatch.model.total_fine_grams | number:3}}
+                {{ goldBatch.model.total_fine_grams | number:3}}
             %td.md-table-td-more
               %md-input-container
-                ${{purchase.model.price | number:2}}
+                $ {{ purchase.model.price | number:2}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
@@ -213,7 +213,13 @@
                   Castellano(s)
                 %p.text-container-false
                   {{goldBatch.model.castellanos}}
-
+          %tr
+            %td.md-table-td-more
+              %div.input-containers-false
+                %label.label-container-false
+                  Onza(s)
+                %p.text-container-false
+                  {{goldBatch.model.ozs}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
@@ -233,7 +239,7 @@
         El usario no tiene suficientes creditos para realizar esta compra!
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
       %md-button.btn-back-black{ "ui-sref"=>"new_purchase.step3"}
-        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+        %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" } 
         Volver
       %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'", flex: "20", "ng-click" => "showConfirm($event)"}
         Realizar la Compra

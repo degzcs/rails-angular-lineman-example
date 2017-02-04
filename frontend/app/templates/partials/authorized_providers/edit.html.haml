@@ -5,7 +5,8 @@
         .photo-container{flex: '30'}
           %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.url}}"}
         .fields-container{flex: '70'}
-          %h3{style: "text-align: left;"} Datos personales:
+          %h3
+            Datos personales:
           %div{layout: 'row'}
             %md-input-container{:flex => ""}
               %label Nombre
@@ -53,8 +54,10 @@
             %md-input-container{:flex => ""}
               %label Municipio
               %input{:readonly => "true", "ng-model" => "currentAuthorizedProvider.city.name"}
-          %div.info-buttons{layout: 'row', "layout-align"=> "end center"}
-            %md-button.btn-cancel{:class => "md-raised", "ng-click" => "back()"} Volver
-            %md-button.btn-save{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", :class => "md-raised md-warn", "ng-click" => "save()"} Guardar Cambios
+          %div.info-buttons{layout: 'row', "layout-align"=> "center"}
+            %md-button.btn-back-black{"ng-click" => "back()"} 
+              %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
+              Volver
+            %md-button.btn-next.md-raised.md-primary{"ng-disabled" => "!providerEditionForm.$valid || !saveBtnEnabled", "ng-click" => "save()"} Guardar Cambios
 
 %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

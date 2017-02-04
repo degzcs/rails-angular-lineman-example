@@ -5,7 +5,7 @@
 
     %div{:flex => "10"}
       %md-button{"ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
-        %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px;"}
+        %img.icon-toolbar{ "ng-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px; margin-top:10px;"}
 
     
     %md-button.top-nav-button{"aria-label" => "dashboard", "ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"} Inicio
@@ -22,7 +22,7 @@
 
     %div{:flex => '20', "layout" => "row", "layout-align" => "end center", "ng-controller" => "DashboardCtrl", "style" => "margin-right: 110px;"}
       
-      %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
+      %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
 
       / %md-select{"placeholder"=>"{{currentUser.first_name}} {{currentUser.last_name}}", "ng-model"=>""}
       /   %md-option{ "value"=>"Cerrar sesion"}Cerrar sesion

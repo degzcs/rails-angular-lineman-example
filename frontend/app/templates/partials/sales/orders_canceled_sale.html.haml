@@ -13,6 +13,6 @@
           %td
           %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
 
-  .md-table-footer{:layout => "row"}
-    %span.md-table-count-info
-      Registros cargados: {{count}}
+  
+  %span.md-table-count-info
+    Registros cargados: {{count}}

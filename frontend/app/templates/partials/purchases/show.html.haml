@@ -14,9 +14,9 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nit
-          %p.text-container-false
-            {{buyer_data.nit}}
-
+          %p.text-container-false 
+            {{buyer_data.nit}}  
+ 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Rucom
@@ -46,7 +46,6 @@
             Telefono
           %p.text-container-false
             {{buyer_data.phone}}
-
 
       %md-content{"flex"=> "30", "class"=>"", "layout"=>"row"}
         %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
@@ -143,9 +142,8 @@
           %tr.md-table-headers-row
             %th.md-table-header
               Medida / Cantidad
-
             %th.md-table-header
-              Precio
+              Precio  
             %th.md-table-header
               Total gramos
             %th.md-table-header
@@ -160,7 +158,6 @@
                   Gramo(s)
                 %p.text-container-false
                   {{goldBatch.model.grams  | number:2}}
-
             %td.md-table-td-more
               %md-input-container
                 $ {{purchase.model.fine_gram_unit_price | number:2}}
@@ -180,7 +177,6 @@
                   Castellano(s)
                 %p.text-container-false
                   {{goldBatch.model.castellanos}}
-
           %tr
             %td.md-table-td-more
               %div.input-containers-false
@@ -202,7 +198,22 @@
                   Real(es)
                 %p.text-container-false
                   {{goldBatch.model.reales}}
+    
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
-      %md-button.btn-save{  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
-      %md-button.btn-save{"ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
+      
+      
+      %div{layout: "column", "layout-align"=>"center"}
+        
+        %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/documents.svg" }
+
+        %md-button.btn-save{flex: "30",  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
+      
+      %div{layout: "column", "layout-align"=>"center"}
+
+        %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/single_document.svg" }
+
+        %md-button.btn-save{flex: "30", "ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
+
+    %div{layout: "row", "layout-align"=>"center"}
       %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"new_purchase.step0", "ng-click" => 'flushData()'} Nueva compra
+
