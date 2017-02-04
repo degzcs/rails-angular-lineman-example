@@ -10,7 +10,7 @@
               %h2
                 DATOS PERSONALES
 
-            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.url}}"}
+            %img.face{:alt => "", "ng-src" => "{{currentAuthorizedProvider.photo_file.medium.url}}"}
             %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"edit_authorized_provider({ id: currentAuthorizedProvider.id })"} Editar Información
 
           .fields-container{flex: '70'}
