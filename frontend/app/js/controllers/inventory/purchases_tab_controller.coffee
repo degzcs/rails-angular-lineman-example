@@ -100,8 +100,12 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
   $scope.showPurchase = (purchase)->
     PurchaseService.model = purchase
     PurchaseService.saveState()
+    # TODO: create a generic way to reuse sale details view.
+    #if purchase.type == 'purchase'
     $state.go('inventory.purchase_details')
-    return
+    #else
+    #  $state.go('inventory.sale_details')
+    #return
 
   #-------------------Generate the Transaction Movements File -----------//
   $scope.generateReport = (purchase) ->
