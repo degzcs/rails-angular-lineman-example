@@ -1,4 +1,4 @@
-.general-container 
+.general-container
   %div{:layout => "column", "ng-if"=>"currentAuthorizedProvider","ng-hide"=>"showLoading"}
     %form.external-user-form{:name => "providerEditionForm", "novalidate" => "novalidate"}
       %h2 Registro de Proveedor
@@ -7,14 +7,10 @@
 
       %md-tabs.external-user-tab{"md-selected"=>"tabIndex.selectedIndex","md-dynamic-height"=>"","md-align-tabs"=>""}
         %md-tab{"aria-controls" => "tab1-content", label: "1. Datos Personales", "ng-click"=>"validatePersonalFields()"}
-          
-
-
-
 
           %md-content.md-padding.external-user-form-info{:layout => "row", "layout-sm" => "column", "md-theme" => "default"}
-          
-            %div{:flex => "30"} 
+
+            %div{:flex => "30"}
               %p.md-subtitle
                 Tomar foto
               %hr{ "width"=>"90%", "color"=>"#E3CD48", "align"=>"left"}
@@ -29,7 +25,7 @@
                 Información
               %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
               %div{:layout => "row", "layout-sm" => "column"}
-                
+
                 / %md-input-container{"name"=>"idNumber"}
                 /   %input{"ng-model"=>"currentAuthorizedProvider.first_name","name"=>"idNumber", "placeholder"=>"Nombre"}
                 %md-input-container{:flex => ""}
@@ -58,7 +54,7 @@
                 %md-input-container{:flex => ""}
                   %label Tipo de Proveedor
                   %input{:readonly => true, :name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
-              
+
               %div{:layout => "row", "layout-sm" => "column"}
                 %md-input-container{:flex => ""}
                   %label Teléfono
@@ -81,33 +77,33 @@
               %div{:layout => "row", "layout-sm" => "column"}
                 %p.md-subtitle
                   Ubicación
-                
+
               %div{:layout => "row", "layout-align" => "space-between start", "layout-sm" => "column", :style => "padding: 16px;"}
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "state.name", "md-items" => "state in stateSearch(searchStateText)", "md-no-cache" => "true", "md-search-text" => "searchStateText", "md-search-text-change" => "searchTextStateChange(searchStateText)", "md-selected-item" => "selectedState", "md-selected-item-change" => "selectedStateChange(state)", :placeholder => "Departamento"}
                   %span{"md-highlight-text" => "searchStateText"} {{state.name}}
 
                 %md-autocomplete{:required => "true", :flex => "50", "md-item-text" => "city.name", "md-items" => "city in citySearch(searchCityText)", "md-no-cache" => "true", "md-search-text" => "searchCityText", "md-search-text-change" => "searchTextCityChange(searchCityText)", "md-selected-item" => "selectedCity", "md-selected-item-change" => "selectedCityChange(city)", "ng-disabled" => "cityDisabled", :placeholder => "Municipio"}
-                %span{"md-highlight-text" => "searchCityText"} {{city.name}}
+                  %span{"md-highlight-text" => "searchCityText"} {{city.name}}
 
                 / end error
               %div{:layout => "row", "layout-sm" => "column"}
                 %md-input-container{flex: ""}
                   %md-checkbox{ :ng-model => 'chkActive',
-                            :required => ''} 
+                            :required => ''}
                     %p.md-subtitle{"style" => "padding-left: 10px;"}
                       Usar Lector de codigo de barras
-                  
+
               %div{:layout => "row", "layout-sm" => "column"}
-                  
+
                 %h4{"ng-show" => "chkActive"} Activar/desactivar:
                 %md-switch.md-primary{"ng-show" => "chkActive", "ng-model" => "toggleOff", "ng-change" => "onChange(toggleOff)", "aria-label" => "switch 1"}
                 %md-button.md-primary.md-raised{"ng-show" => "chkActive", "ng-click" => "copyDataFromIdDocument()", "ng-disabled" => "captureDisable"} Capturar
-              
+
           %div.info-buttons{:layout => "row", "layout-sm" => "column", "layout-align" => "center"}
             %md-button.btn-back-black{"ng-click" => "cancel()"}
               %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
               Cancelar
-            %md-button.btn-next.md-raised.md-primary{'ng-click'=>"validatePersonalFields()"} 
+            %md-button.btn-next.md-raised.md-primary{'ng-click'=>"validatePersonalFields()"}
               Continuar
               %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
 
@@ -129,23 +125,23 @@
                       %label Nombre del archivo
                       %input{"ng-model" => "currentAuthorizedProvider.id_document_file[0].name", :readOnly => 'true', :required => "", :name => 'id_document_number'}
                       %div{"ng-messages" => "providerEditionForm.id_document_number.$error"}
-                        
+
 
                     .by_upload{"ng-switch-when" =>'by_upload'}
                       %md-button.btn-next.md-raised.md-primary{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_file', name: 'id_document_file'}
                         Subir desde PC
-                        
+
 
                     .by_scan{"ng-switch-when" =>'by_scan'}
                       %md-button.btn-next.md-raised.md-primary{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
                         Escanear
-                        
+
 
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
                         %md-button.btn-next.md-raised.md-primary{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
                           Escanear con camara
-                          
+
             %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
               %div{flex: '30'}
                 %p.md-subtitle Subir la RUT
@@ -163,18 +159,18 @@
                     .by_upload{"ng-switch-when" =>'by_upload'}
                       %md-button.btn-next.md-raised.md-primary{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.rut_file', name: 'rut_file'}
                         Subir desde PC
-                        
+
 
                     .by_scan{"ng-switch-when" =>'by_scan'}
                       %md-button.btn-next.md-raised.md-primary{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
                         Escanear
-                        
+
 
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
                         %md-button.btn-next.md-raised.md-primary{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
                           Escanear con camara
-                          
+
 
           %div.info-buttons{layout: 'row', "layout-align"=> "center"}
             %md-button.btn-next.md-raised.md-primary{:class => "md-raised md-accent", "ng-click" => "updateAuthorizedProvider($event)", "ng-disabled"=>"sendingPost"} Actualizar Proveedor
