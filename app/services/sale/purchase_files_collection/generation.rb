@@ -88,7 +88,7 @@ module Sale
         # NOTE: if it is needed you can add  -density 50 to the next command
         Dir.chdir(folder_path) do
           system <<-COMMAND
-            convert -format pdf #{ joined_file_paths } #{ final_temporal_file_name }
+            gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=#{ final_temporal_file_name } #{ joined_file_paths }
           COMMAND
         end
         temporal_file_location = "#{ folder_path }/#{ final_temporal_file_name }"
