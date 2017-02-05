@@ -5,14 +5,14 @@
   %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
   %div{layout: "column", 'ng-if' => 'saleOrder.buyer !== null'}
     /------------------------ CLIENT CARD ---------------------/
-    
+
     %div{layout: "row"}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Nombre
-        %p.text-container-false 
+        %p.text-container-false
           {{saleOrder.buyer.first_name}}
-          
+
           / %md-input-container{flex: ""}
           /   %label Cedula
           /   %input{:disabled => "disabled", "ng-model" => "saleOrder.buyer.document_number"}
@@ -20,35 +20,35 @@
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Apellido
-        %p.text-container-false 
+        %p.text-container-false
           {{saleOrder.buyer.last_name}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Cédula
-        %p.text-container-false 
+        %p.text-container-false
           {{saleOrder.buyer.document_number}}
 
-      
+
     %div{layout: "row"}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Teléfono
-        %p.text-container-false 
+        %p.text-container-false
           {{saleOrder.buyer.phone_number}}
-      
+
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Dirección
-        %p.text-container-false 
+        %p.text-container-false
           {{saleOrder.buyer.address}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Correo
-        %p.text-container-false 
+        %p.text-container-false
           {{saleOrder.buyer.email}}
-     
+
   %p.md-subtitle
     Datos Vendedor
   %hr{ "width"=>"100%", "color"=>"#E3CD48", "align"=>"left"}
@@ -59,24 +59,24 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Tipo
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.rucom.provider_type}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Cédula
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.document_number}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Gramos totales
-          %p.text-container-false 
+          %p.text-container-false
             {{totalAmount | number: 2}} grs
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Precio Total
-          %p.text-container-false 
+          %p.text-container-false
             {{saleOrder.price | currency}}
 
 
@@ -84,42 +84,40 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nombre
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.first_name}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Apellido
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.last_name}}
-       
+
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Teléfono
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.phone_number}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Dirección
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.address}}
 
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Email
-          %p.text-container-false 
+          %p.text-container-false
             {{currentUser.email}}
-        
+
           /------------------------ PURCHASES CARD ---------------------/
-    
+
 
   %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-    %md-button.btn-back-black{ flex: "30",'ng-if' => 'saleOrder.purchase_files_collection_with_watermark === null', 'ng-click'=> 'downloadSaleFilesDialog()'}
+    %md-button.btn-back-black{ flex: "30",'ng-if' => 'saleOrder.purchase_files_collection_with_watermark_file_url === null', 'ng-click'=> 'downloadSaleFilesDialog()'}
       Generando documentación...
-    %md-button.btn-back-black{ flex: "20",href: "{{saleOrder.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf", 'ng-if' => 'saleOrder.purchase_files_collection_with_watermark !== null'}
-      Documentos de compra adjuntos
-    %md-button.btn-back-black{ flex: "20",href: "{{saleOrder.proof_of_sale.file.url}}", :target => "_blank"}
+    %md-button.btn-back-black{ flex: "20",href: "{{saleOrder.proof_of_sale_file_url}}", :target => "_blank"}
       Compendio
     %md-button.btn-next.md-raised.md-primary{ flex: "20", "ng-click" => "newSaleOrder();"}
       Nueva Venta

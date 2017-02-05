@@ -21,7 +21,3 @@ angular.module('app').controller 'SaleShowCtrl', ($scope, SaleService, GoldBatch
   # get current user info
   CurrentUser.get().success (user) ->
     $scope.currentUser = user
-
-  $scope.getSalePDF = ->
-    console.log "Generar pdf"
-    PdfService.createSaleInvoice(currentSale.id)

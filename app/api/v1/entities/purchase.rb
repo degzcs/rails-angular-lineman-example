@@ -23,11 +23,11 @@ module V1
       expose :uiaf_report_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.uiaf_report.file.url if purchase.uiaf_report.present?
       end
-      expose :purchase_files_collection_with_watermark, documentation: { type: 'file', desc: 'file', example: '...' } do |sale, _options|
-        sale.purchase_files_collection_with_watermark.as_json if sale.purchase_files_collection_with_watermark.present?
+      expose :purchase_files_collection_with_watermark_file_url, documentation: { type: 'file', desc: 'file', example: '...' } do |sale, _options|
+        sale.purchase_files_collection_with_watermark.try(:file).try(:url)
       end
-      expose :purchase_files_collection, documentation: { type: 'file', desc: 'file', example: '...' } do |sale, _options|
-        sale.purchase_files_collection.as_json if sale.purchase_files_collection.present?
+      expose :purchase_files_collection_file_url, documentation: { type: 'file', desc: 'file', example: '...' } do |sale, _options|
+        sale.purchase_files_collection.try(:file).try(:url)
       end
       expose :origin_certificate_file_url, documentation: { type: "file", desc: "file", example: "..." } do |purchase, options|
         purchase.origin_certificate.try(:file).try(:url)

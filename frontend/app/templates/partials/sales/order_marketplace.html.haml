@@ -1,47 +1,39 @@
-.general-container  
+.general-container
   %section.marketplace-resume{layout: "column", "layout-align" => "center"}
     %h2
       Resumen de la orden de venta pendiente
     %div.md-padding{flex: "100", :layout => "column", "layout-align" => "center" }
-      
+
       %p.md-subtitle
         Detalles de la orden
       %div.md-padding{:layout => "row", "layout-align" => "center" }
-      
+
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Fecha de creación
-          %p.text-container-false 
+          %p.text-container-false
             {{sale.created_at}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Total Gramos Finos
-          %p.text-container-false 
+          %p.text-container-false
             {{sale.fine_grams | number:3}} gramos
       %div.md-padding{:layout => "row", "layout-align" => "center" }
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Tipo de Mineral
-          %p.text-container-false 
-            {{sale.mineral_type}}      
-      
+          %p.text-container-false
+            {{sale.mineral_type}}
+
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Precio total
-          %p.text-container-false 
+          %p.text-container-false
             ${{sale.price}} COP
-    %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
-      %div{:layout => "column", flex: ""}
-       
-        %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-          %md-button.btn-save{href: "{{sale.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
-            Documentos de compra adjuntos
-          %md-button.btn-save{href: "{{sale.proof_of_sale.file.url}}", :target => "_blank"}
-            Compendio
-          
-         
+
+
     %div.md-padding{flex: "100", :layout => "row", "layout-align" => "start stretch" }
       %div{:layout => "column", flex: "", "layout-align" => "start stretch"}
         %p.md-subtitle Listado de lotes
@@ -94,6 +86,14 @@
           .empty-buyers{'ng-if' => 'buyersCount == 0'}
             %p Aún no hay existen peticiones de comprar
 
+    %div.md-padding{flex: "100", :layout => "row", "layout-align" => "center" }
+      %div{:layout => "column", flex: ""}
+
+        %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
+          %md-button.btn-save{href: "{{sale.purchase_files_collection_with_watermark_file_url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
+            Documentos de compra adjuntos
+          %md-button.btn-save{href: "{{sale.proof_of_sale_file_url}}", :target => "_blank"}
+            Compendio
 
     %div.md-padding{:layout => "row", "layout-align" => "center" }
       %md-button.btn-back-black{ "ui-sref" => "new_sale.tab.orders_marketplace"}

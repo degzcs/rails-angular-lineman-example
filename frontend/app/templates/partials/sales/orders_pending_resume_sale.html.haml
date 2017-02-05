@@ -7,29 +7,29 @@
         %div.md-subtitle{"flex"=> ""}
           Comprador
 
-      
+
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nombre y Apellido
-          %p.text-container-false 
+          %p.text-container-false
             {{saleModel.buyer.first_name}} {{saleModel.buyer.last_name}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Num. de identificación
-          %p.text-container-false 
+          %p.text-container-false
             {{saleModel.buyer.document_number}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Email
-          %p.text-container-false 
+          %p.text-container-false
             {{saleModel.buyer.email}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Telefono
-          %p.text-container-false 
+          %p.text-container-false
             {{saleModel.buyer.phone_number}}
 
       %md-content{"flex"=> "30", "class"=>"", "layout"=>"row"}
@@ -91,9 +91,9 @@
     ARCHIVOS
   %div.md-padding{ :layout => "row", "layout-align" => "center" }
     %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-      %md-button.btn-save{flex: "", href: "{{saleModel.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
+      %md-button.btn-save{flex: "", href: "{{saleModel.purchase_files_collection_with_watermark_file_url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
         Documentos de compra
-      %md-button.btn-save{flex: "30", href: "{{saleModel.proof_of_sale.file.url}}", :target => "_blank"}
+      %md-button.btn-save{flex: "30", href: "{{saleModel.proof_of_sale_file_url}}", :target => "_blank"}
         Compendio
 
 

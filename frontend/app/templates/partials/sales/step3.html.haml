@@ -12,12 +12,12 @@
           %label.label-container-false
             Gramos finos totales
           %p.text-container-false
-            {{totalAmount}}
+            {{totalAmount | number:3}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Ley Resultante
           %p.text-container-false
-            {{weightedLaw}}
+            {{weightedLaw | number:3}}
 
         %md-input-container{flex: ''}
           %label Precio Gramo
@@ -28,7 +28,7 @@
         %p.md-subtitle{ 'style' => 'font-weight: 700;', flex: ''}
           PESO TOTAL:
           %h3{flex: ''}
-            {{selectedWeight}} gr
+            {{selectedWeight | number:3}} gr
         %p.md-subtitle{'style' => 'font-weight: 700;', flex: ''}
           PRECIO TOTAL:
           %h3{flex: ''}

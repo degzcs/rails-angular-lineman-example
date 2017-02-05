@@ -133,9 +133,9 @@
             %td {{associatedPurchase.fine_grams | number:3}}
   .wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
 
-    %md-button.btn-save{ href: "{{order.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+    %md-button.btn-save{ href: "{{order.purchase_files_collection_file_url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
       Documentos de compra adjuntos
-    %md-button.btn-save{ href: "{{order.proof_of_sale.file.url}}", :target => "_blank"}
+    %md-button.btn-save{ href: "{{order.proof_of_sale_file_url}}", :target => "_blank"}
       Compendio
-    %md-button.btn-next.md-raised.md-primary{ 'ng-disabled' => "order.transation_state == 'paid'", 'ng-click' => 'markAsPaid()'}
+    %md-button.btn-next.md-raised.md-primary{ 'ng-disabled' => "order.transaction_state == 'paid'", 'ng-click' => 'markAsPaid()'}
       Marcar como pagado

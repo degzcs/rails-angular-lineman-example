@@ -1,4 +1,4 @@
-angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, $mdDialog, User, $sce, $stateParams, LiquidationService) ->
+angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, $mdDialog, User, $sce, $stateParams, LiquidationService, $state) ->
   #
   # Deletes the last liquidation
   LiquidationService.deleteState()

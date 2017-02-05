@@ -10,56 +10,56 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nombre y Apellido
-          %p.text-container-false 
+          %p.text-container-false
             {{purchaseModel.seller.first_name}} {{purchaseModel.seller.last_name}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Num. de identificación
-          %p.text-container-false 
+          %p.text-container-false
             {{purchaseModel.seller.document_number}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Email
-          %p.text-container-false 
+          %p.text-container-false
             {{purchaseModel.seller.email}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Telefono
-          %p.text-container-false 
+          %p.text-container-false
             {{purchaseModel.seller.phone_number}}
       %md-content{"flex"=> "30", "class"=>"", "layout"=>"row"}
         %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
           %div.md-subtitle{"flex"=> ""}
             DETALLES DE LA ORDEN
-   
+
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Fecha de creación
-            %p.text-container-false 
+            %p.text-container-false
               {{purchaseModel.created_at}}
-          
+
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Total Gramos Finos
-            %p.text-container-false 
+            %p.text-container-false
               {{purchaseModel.gold_batch.fine_grams}} gramos
-             
+
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Tipo de Mineral
-            %p.text-container-false 
+            %p.text-container-false
               {{purchaseModel.gold_batch.mineral_type}}
-              
+
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Precio total
-            %p.text-container-false 
+            %p.text-container-false
               ${{purchaseModel.price}} COP
-            
-        
+
+
 
     %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
       %p.md-subtitle
@@ -74,7 +74,7 @@
               PROVEEDOR
             %th.md-table-header
               GRAMOS FINOS
-          
+
         %tbody
           %tr{"ng-repeat" => "associated_purchase in purchaseModel.associated_purchases"}
             %td.md-table-td-more
@@ -85,12 +85,12 @@
               {{associated_purchase.fine_grams}}
 
 
-  
+
   %p.md-subtitle
     ARCHIVOS
   %div.md-padding{ :layout => "row", "layout-align" => "center" }
     %wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
-      %md-button.btn-save{ flex: "",href: "{{purchaseModel.purchase_files_collection_with_watermark.file.url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
+      %md-button.btn-save{ flex: "",href: "{{purchaseModel.purchase_files_collection_with_watermark_file_url}}", :target => "_self", "download"=>"purchase_files_collection_with_watermark.pdf"}
         Documentos de compras
       %md-button.btn-save{ flex: "30",href: "{{purchaseModel.proof_of_sale_file_url}}", :target => "_blank"}
         Compendio

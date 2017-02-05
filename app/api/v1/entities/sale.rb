@@ -109,14 +109,14 @@ module V1
       expose :fine_grams, documentation: { type: 'float', desc: 'grams', example: '239923' }
       expose :code, documentation: { type: 'string', desc: 'barcode', example: '123123asdfdaf' }
       expose :barcode_html, documentation: { type: 'string', desc: 'barcode_html', example: 'TABLE' }
-      expose :purchase_files_collection, documentation: { type: 'file', desc: 'purchase_files_collection', example: 'id, miner register, purchase files' } do |sale, _options|
-        sale.try(:purchase_files_collection).try(:as_json)
+      expose :purchase_files_collection_file_url, documentation: { type: 'file', desc: 'purchase_files_collection', example: 'id, miner register, purchase files' } do |sale, _options|
+        sale.try(:purchase_files_collection).try(:file).try(:url)
       end
-      expose :purchase_files_collection_with_watermark, documentation: { type: 'file', desc: 'purchase_files_collection_with_watermark', example: 'id, miner register, purchase files' } do |sale, _options|
-        sale.try(:purchase_files_collection_with_watermark).try(:as_json)
+      expose :purchase_files_collection_with_watermark_file_url, documentation: { type: 'file', desc: 'purchase_files_collection_with_watermark', example: 'id, miner register, purchase files' } do |sale, _options|
+        sale.try(:purchase_files_collection_with_watermark).try(:file).try(:url)
       end
-      expose :proof_of_sale, documentation: { type: 'file', desc: 'proof_of_sale', example: 'document_equivalent.pdf' } do |sale, _options|
-        sale.proof_of_sale.as_json
+      expose :proof_of_sale_file_url, documentation: { type: 'file', desc: 'proof_of_sale', example: 'document_equivalent.pdf' } do |sale, _options|
+        sale.proof_of_sale.try(:file).try(:url)
       end
       expose :shipment, documentation: { type: 'file', desc: 'This file was deprecated', example: '...' } do |sale, _options|
         sale.try(:shipment).try(:as_json)

@@ -102,7 +102,7 @@
               %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{order.seller_picture.medium.url}}"}
           .reference-code{'flex' => ''}
             %div{"ng-bind-html"=>"barcodeHtml"}
-              {{purchase.code}}
+              {{order.code}}
 
     %md-content{"class"=>"", "layout"=>"row"}
       %h3
@@ -158,17 +158,10 @@
                 $ {{ order.price | number:3}}
 
 
-    %div.wizard-buttons.md-padding{"ng-if"=>"purchase.type == 'purchase'",'layout' => 'row', "layout-align" => 'center'}
-      %md-button.btn-save{ "target"=> "_blank", href: "{{purchase.origin_certificate_file_url}}"}
+    %div.wizard-buttons.md-padding{'layout' => 'row', "layout-align" => 'center'}
+      %md-button.btn-save{ "target"=> "_blank", href: "{{order.origin_certificate_file_url}}"}
         Certificado de origen
-      %md-button.btn-save{ "target"=> "_blank", href: "{{purchase.proof_of_purchase_file_url}}"}
+      %md-button.btn-save{ "target"=> "_blank", href: "{{order.proof_of_purchase_file_url}}"}
         Documento equivalente
-      %md-button.btn-save{"ng-if"=>"purchase.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.uiaf_report_file_url}}"}
+      %md-button.btn-save{"ng-if"=>"order.uiaf_report_file_url.length", "target"=> "_blank", href: "{{order.uiaf_report_file_url}}"}
         Descargar Reporte UIAF
-
-    %div.wizard-buttons.md-padding{"ng-if"=>"purchase.type == 'sale'",'layout' => 'row', "layout-align" => 'center'}
-
-      %md-button.btn-save{ flex: "30", "ng-if"=>"purchase.transaction_state == 'approved' || purchase.transaction_state == 'paid'", href: "{{purchase.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
-        Archivos adjuntos de compra
-      %md-button.btn-save{ flex: "30", "target"=> "_blank", href: "{{purchase.proof_of_sale_file_url}}"}
-        Compendio
