@@ -1,36 +1,22 @@
-angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, GoldBatchService, $mdDialog, CurrentUser, LiquidationService, User, CourierService, PurchaseService, $sce) ->
+angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, $mdDialog, User, $sce, $stateParams, LiquidationService) ->
   #
   # Deletes the last liquidation
   LiquidationService.deleteState()
 
-  #
-  #
-  #Get info
-  $scope.currentSale = SaleService.restoreState()
-  $scope.barcode_html = $sce.trustAsHtml($scope.currentSale.barcode_html)
-  $scope.currentBuyer = null
-  $scope.currentUser = null
-  $scope.currentCourier = null
+  SaleService.get($stateParams.id).success((order, status, headers, config) ->
+    $scope.order = order
+    $scope.barcodeHtml = $sce.trustAsHtml($scope.order.barcode_html)
+    getBuyer($scope.order.buyer.id)
+    getSeller($scope.order.seller.id)
 
-  #
-  # get Client (buyer)
-  User.get($scope.currentSale.buyer.id).success (buyer)->
-    $scope.currentBuyer = buyer
-
-  #
-  # get current user info
-  CurrentUser.get().success (user) ->
-    $scope.currentUser = user
-  #
-  # get Courier
-  CourierService.retrieveCourierById($scope.currentSale.courier_id).success (courier)->
-    $scope.currentCourier = courier
+  ).error (data, status, headers, config) ->
+    infoAlert 'ERROR', 'No se pudo recuperar la orden: ' + data.error
 
   $scope.markAsPaid = ->
     confirm = $mdDialog.confirm().parent(angular.element(document.body)).title('Operación de Cuidado, no tiene reversa!').content('Está seguro que desea MARCAR COMO PAGADA su orden?').ariaLabel('Alert Dialog ').ok('Si').cancel('No')
     $mdDialog.show(confirm).then (->
-      SaleService.trigger_transition($scope.currentSale.id, 'end_transaction!').success( (sale) ->
-        $scope.currentSale = sale
+      SaleService.trigger_transition($scope.order.id, 'end_transaction!').success( (sale) ->
+        $scope.order = sale
         $mdDialog.show $mdDialog.alert().title('Ejecución exitosa!').content('La orden ha sido marcada como pagada exitosamente!').ok('ok')
         $state.go 'inventory.sales'
       )
@@ -41,3 +27,15 @@ angular.module('app').controller 'SaleDetailsCtrl', ($scope, SaleService, GoldBa
     ), ->
       # cancel process
       return
+
+  getBuyer = (buyerId) ->
+    User.get(buyerId).success (buyer)->
+      $scope.buyer = buyer
+
+  getSeller = (sellerId)->
+    User.get(sellerId).success (seller)->
+      $scope.seller = seller
+
+  infoAlert = (title, content) ->
+    $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')
+    return

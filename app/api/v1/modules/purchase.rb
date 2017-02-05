@@ -15,6 +15,10 @@ module V1
         end
       end
 
+      rescue_from ::CanCan::AccessDenied do
+        error!('403 Forbidden', 403)
+      end
+
       format :json
       content_type :json, 'application/json'
 
@@ -188,7 +192,8 @@ module V1
         get '/:id', http_codes: [[200, 'Successful'], [401, 'Unauthorized']] do
           authorize! :read, ::Order
           content_type 'text/json'
-          purchase = ::Order.where(id: params[:id], type: 'purchase').last
+          purchase = ::Order.where(id: params[:id]).last
+          # binding.pry
           authorize! :read, purchase
           present purchase, with: V1::Entities::Purchase
         end

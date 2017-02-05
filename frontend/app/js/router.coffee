@@ -848,9 +848,39 @@
     url: "/purchase/details",
     ncyBreadcrumb:
       label: 'Detalle de compra'
+    params: {
+          id: null
+      },
     views:
       'content':
         templateUrl: "partials/inventory/purchase_details.html"
+        controller: "PurchaseDetailsCtrl"
+      'top-nav':
+        templateUrl: "partials/top-nav.html"
+        controller: "SidebarCtrl"
+      'flying-navbar':
+        templateUrl: "partials/flying-navbar.html"
+        controller: "SidebarCtrl"
+
+    resolve:
+      authenticated: ($q, $location, $auth) ->
+        deferred = $q.defer()
+        unless $auth.isAuthenticated()
+          $location.path "/login"
+        else
+          deferred.resolve()
+        deferred.promise
+  )
+  .state("inventory.purchase_from_trader_details",
+    url: "/purchase/details",
+    ncyBreadcrumb:
+      label: 'Detalle de compra'
+    params: {
+          id: null
+      },
+    views:
+      'content':
+        templateUrl: "partials/inventory/sale_details.html"
         controller: "PurchaseDetailsCtrl"
       'top-nav':
         templateUrl: "partials/top-nav.html"
@@ -896,6 +926,9 @@
     url: "/sale/details",
     ncyBreadcrumb:
       label: 'Detalle de venta'
+    params: {
+          id: null
+      },
     views:
       'content':
         templateUrl:'partials/inventory/sale_details.html'

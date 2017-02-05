@@ -6,6 +6,11 @@ module V1
       expose :user_id, documentation: { type: "string", desc: "id of the purchaser who buys the gold batch", example: "1" } do |purchase, options|
         purchase.buyer.id # TODO: remove this temporal fix
       end
+      expose :buyer do
+        expose :id, documentation: { type: "string", desc: "id of the seller who buys the gold batch", example: "1" }do|purchase, options|
+          purchase.buyer.id # TODO: change provider for saller in the front end
+        end
+      end
       expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do |purchase, options|
         purchase.price.round(2)
       end

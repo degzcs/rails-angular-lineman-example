@@ -11,37 +11,37 @@
         %label.label-container-false
           Tipo
         %p.text-container-false
-          {{currentBuyer.rucom.provider_type}}
+          {{buyer.rucom.provider_type}}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Nombre
         %p.text-container-false
-          {{currentBuyer.first_name}}
+          {{buyer.first_name}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Apellido
         %p.text-container-false
-          {{currentBuyer.last_name}}
+          {{buyer.last_name}}
 
     %div{layout: "row"}
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Cédula
         %p.text-container-false
-          {{currentBuyer.document_number}}
+          {{buyer.document_number}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Telefono
         %p.text-container-false
-          {{currentBuyer.phone_number}}
+          {{buyer.phone_number}}
 
       %div.input-containers-false{flex: ""}
         %label.label-container-false
           Dirección
         %p.text-container-false
-          {{currentBuyer.address}}
+          {{buyer.address}}
 
 
     %div{layout: "row"}
@@ -49,7 +49,7 @@
         %label.label-container-false
           Correo
         %p.text-container-false
-          {{currentBuyer.email}}
+          {{buyer.email}}
 
   %p.md-subtitle
     Vendedor
@@ -62,57 +62,57 @@
           %label.label-container-false
             Correo
           %p.text-container-false
-            {{currentUser.email}}
+            {{seller.email}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Cedula
           %p.text-container-false
-            {{currentUser.document_number}}
+            {{seller.document_number}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Gramos totales
           %p.text-container-false
-            {{currentSale.fine_grams}} grs
+            {{order.fine_grams | number:3 }} grs
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Precio Total
           %p.text-container-false
-            ${{currentSale.price}}
+            ${{order.price | number:3}}
 
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nombre
           %p.text-container-false
-            {{currentUser.first_name}}
+            {{seller.first_name}}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Apellido
           %p.text-container-false
-            {{currentUser.last_name}}
+            {{seller.last_name}}
 
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Teléfono
           %p.text-container-false
-            {{currentUser.phone_number}}
+            {{seller.phone_number}}
 
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Dirección
           %p.text-container-false
-            {{currentUser.address}}
+            {{seller.address}}
 
       %div{layout: "row"}
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Tipo
           %p.text-container-false
-            {{currentUser.rucom.provider_type}}
+            {{seller.rucom.provider_type}}
           /------------------------ PURCHASES CARD ---------------------/
   %div.sell-card-info{flex: ""}
     %p.md-subtitle
@@ -126,29 +126,16 @@
             %th Nombre Proveedor
             %th Tipo Proveedor
             %th Gramos (Finos)
-          %tr.stripped{"ng-repeat" => "associatedPurchase in currentSale.associated_purchases"}
+          %tr.stripped{"ng-repeat" => "associatedPurchase in order.associated_purchases"}
             %th {{associatedPurchase.created_at}}
             %td {{associatedPurchase.seller.first_name}} {{associatedPurchase.seller.last_name}}
             %td {{associatedPurchase.seller.provider_type}}
-            %td {{associatedPurchase.fine_grams}}
-          / %tr.table-last{ layout: "row", layout-align: "end end" }
-          /   %td
-          /     %h2
-          /       %strong
-          /         Gramos Totales:
-
-          /         {{currentSale.fine_grams}} grs
-          /   %td
-          /     %h2
-          /       %strong
-          /         Precio Total:
-
-          /         ${{currentSale.price}}
+            %td {{associatedPurchase.fine_grams | number:3}}
   .wizard-buttons.md-padding{:layout => 'row', "layout-align"=>"center"}
 
-    %md-button.btn-save{ href: "{{currentSale.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
+    %md-button.btn-save{ href: "{{order.purchase_files_collection.file.url}}", :target => "_self", "download"=>"purchase_files_collection.pdf"}
       Documentos de compra adjuntos
-    %md-button.btn-save{ href: "{{currentSale.proof_of_sale.file.url}}", :target => "_blank"}
+    %md-button.btn-save{ href: "{{order.proof_of_sale.file.url}}", :target => "_blank"}
       Compendio
-    %md-button.btn-next.md-raised.md-primary{ 'ng-disabled' => "currentSale.transation_state == 'paid'", 'ng-click' => 'markAsPaid()'}
+    %md-button.btn-next.md-raised.md-primary{ 'ng-disabled' => "order.transation_state == 'paid'", 'ng-click' => 'markAsPaid()'}
       Marcar como pagado
