@@ -2,7 +2,7 @@
   Nueva Compra
 
 %p
-  Para seguir realizando la compra se debe verificar los datos del productor y tomar una fotografía.
+  Para seguir realizando la compra se debe verificar los datos del productor y tomar una fotografía (haz click sobre la imagen para tomar la foto).
 
 
 %form.purchase-form{:name => "purchaseForm", "novalidate" => "novalidate"}
@@ -28,15 +28,15 @@
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Nombre Proveedor
-            %p.text-container-false 
+            %p.text-container-false
               {{purchase.model.seller.name}}
 
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Nombre Proveedor
-            %p.text-container-false 
+            %p.text-container-false
               {{purchase.model.seller.company_name}}
-          
+
         %div{layout: "row"}
           / %md-input-container{flex: "20"}
           /   %label tipo doc.
@@ -44,34 +44,35 @@
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Número de documento
-            %p.text-container-false 
+            %p.text-container-false
               {{purchase.model.seller.document_number}}
-          
+
         %div{layout: "row"}
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Registro Rucom
-            %p.text-container-false 
+            %p.text-container-false
               {{purchase.model.seller.rucom.rucom_number}}
-          
+
           %div{layout: "row"}
           %div.input-containers-false{flex: ""}
             %label.label-container-false
               Registro Rucom
-            %p.text-container-false 
+            %p.text-container-false
               {{purchase.model.seller.rucom.status}}
 
         %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
           %md-progress-circular{"md-mode" => "indeterminate"}
     /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
-    
-    %div.md-subtitle{flex: "40"}
-      Fotografía de proveedor
+
+    .photo-container.step1{flex: "40"}
+      .md-subtitle
+        Fotografía de proveedor
       // ---------------------- seller photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
         / %legend
         / %h3{:ng-if => "purchase.model.type == 'seller'"}
-            
+
         / %h3{:ng-if => "purchase.model.type == 'trazoro'"}
 
         %md-input-container.row
@@ -80,7 +81,7 @@
               %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               /%md-tooltip{'md-direction'=> 'right'}
               /  Tomar Foto
-            %p Capturar foto    
+            %p Capturar foto
 
   .wizard-buttons{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
     %md-button.btn-back-black{  "ui-sref"=>"new_purchase.step0", "ng-click" => ""}

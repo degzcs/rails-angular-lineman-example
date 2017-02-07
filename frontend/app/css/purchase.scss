@@ -111,15 +111,18 @@ md-card.seller{
   padding-bottom: 8px; }
 
 .purchase-form{
-  .photo{
-    text-align: center;
-    margin-top: 30px;
-  }
-  fieldset{
-    margin: 15px!important;
-  }
-  fieldset.photo-fieldset{
-    height: 247.5px;
+  .photo-container.step1{
+    margin: 10px;
+    text-align: left;
+    .photo{
+      text-align: center;
+      margin-top: 30px;
+    }
+    fieldset{
+    }
+    fieldset.photo-fieldset{
+      height: 247.5px;
+    }
   }
 }
 .create-provider-button{
