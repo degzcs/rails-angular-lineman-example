@@ -15,11 +15,12 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
     if !$auth.isAuthenticated()
       return
     $auth.logout().then ->
-      $mdDialog.show $mdDialog.alert()
-        .title('Logout')
-        .content('Adios!')
-        .ok('Adios!!')
-        duration: 2
+      # NOTE: this dialog is annoying but it could be actived if it is needed
+      # $mdDialog.show $mdDialog.alert()
+      #   .title('Logout')
+      #   .content('Adios!')
+      #   .ok('Adios!!')
+      #   duration: 2
       return
 
    $scope.activateNewPassword = ->
@@ -53,11 +54,12 @@ angular.module('app').controller 'SessionsNewCtrl', ($scope, $alert, $auth,$mdDi
     $auth.login(
       email: $scope.email
       password: $scope.password).then(->
-      $mdDialog.show $mdDialog.alert()
-        .title('Login')
-        .content('Bienvenido!')
-        .ok('hecho!')
-        duration: 2
+      # NOTE: this dialog is annoying but it could be actived if it is needed
+      # $mdDialog.show $mdDialog.alert()
+      #   .title('Login')
+      #   .content('Bienvenido!')
+      #   .ok('hecho!')
+      #   duration: 2
       return
 
     ).catch (response) ->
