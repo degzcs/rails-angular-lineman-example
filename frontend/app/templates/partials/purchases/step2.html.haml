@@ -9,7 +9,7 @@
 
             %input{ "type" => "number", "string-to-number"=>"", min: => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre', "placeholder" => "Digite el numero de ley"}
             %div{"ng-messages" => "purchaseForm.degre.$error"}
-              /%div{"ng-message" => "required"} * Este campo es requerido.
+              /%div{"ng-message" => "required"} * Este campo es requerido y debe estar entre 1 y 999.
         .fine-gram-unit-price{'flex' => ''}
           .md-subtitle Valor gramo fino
           %md-input-container
@@ -23,8 +23,6 @@
 
             %input{ "type" => "number", "string-to-number"=>"",'min' => "0", "max"=>"5",'ng-model' => 'purchase.model.decrease', :required=>"", :name => 'decrease', "placeholder" => "Porcentaje de la merma"}
             %div{"ng-messages" => "purchaseForm.decrease.$error"}
-
-
 
       %div{:layout => "", "layout-sm" => "column", "layout-align" => "center", "layout-margin"}
 
@@ -139,7 +137,7 @@
     %md-button.btn-back-black{  "ui-sref"=>"new_purchase.step1", "ng-click" => "removeWatchers()"}
       %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
       Volver
-    %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "removeWatchers(); saveState()"} Continuar
+    %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'purchaseForm.$invalid || goldBatch.model.total_fine_grams < 1', "ui-sref"=>"new_purchase.step3", "ng-click" => "removeWatchers(); saveState()"} Continuar
       %md-icon{"md-svg-icon"=>"/img/icons/landing/flecha-negra.svg"}
 
 
