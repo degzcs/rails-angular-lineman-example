@@ -41,10 +41,9 @@
             Valor gramo fino de compra
           %div.input-containers-fine-gram-to-buy
             $ {{purchase.model.fine_gram_unit_price_to_buy | number:2}} COP
-          %md-input-container{"ng-hide"=> "true"}
-            %label
-            %input.input-num-value{"type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => "", "placeholder"=>"Precio de gramo fino por unidad"}
-
+          /%md-input-container{"ng-hide"=> "true"}
+          /  %label
+          /  %input.input-num-value{"type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => "", "placeholder"=>"Precio de gramo fino por unidad"}
 
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
@@ -53,9 +52,11 @@
             %thead
               %tr.md-table-headers-row
                 %th.md-table-header
-                  Medida / Cantidad
+                  Medida En Bruto
                 %th.md-table-header
                   Precio Unitario
+                %th.md-table-header
+                  Gramos Finos
                 %th.md-table-header
                   Precio Total
             %tbody
@@ -65,6 +66,8 @@
                     %input{"ng-model" => "goldBatch.model.grams", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Gramo(s)"}
                 %td.md-table-td-more
                   {{ gramsUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ gramsFineGrams | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalGrams | number:2}}
                 / %td.md-table-td-more.total-grams
@@ -86,13 +89,17 @@
                 %td.md-table-td-more
                   {{ castellanosUnitPrice | number:2 }}
                 %td.md-table-td-more
+                  {{ castellanosFineGrams | number:2 }}
+                %td.md-table-td-more
                   {{ subtotalCastellano | number:2}}
               %tr.medidas
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %input{"ng-model" => "goldBatch.model.tomines", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Tomine(s)"}
                 %td.md-table-td-more
-                  {{ tominesUnitPriceFrom | number:2 }}
+                  {{ tominesUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ tominesFineGrams | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalTomines | number:2}}
               %tr.medidas
@@ -100,7 +107,9 @@
                   %md-input-container
                     %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Real(es)"}
                 %td.md-table-td-more
-                  {{ realesUnitPriceFrom | number:2 }}
+                  {{ realesUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ realesFineGrams | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalReales | number:2}}
               %tr.medidas
@@ -108,16 +117,20 @@
                   %md-input-container
                     %input{"ng-model" => "goldBatch.model.granos", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Grano(s)"}
                 %td.md-table-td-more
-                  {{ granosUnitPriceFrom | number:2}}
+                  {{ granosUnitPrice | number:2}}
+                %td.md-table-td-more
+                  {{ granosFineGrams | number:2}}
                 %td.md-table-td-more
                   {{ subtotalGranos | number:2}}
               %tr
-                %td.md-table-td-more{colspan: 1}
-                %td.md-table-td-more{"layout-align"=>"end end"}
+                %td.md-table-td-more{colspan: 2}
                   %h3 TOTAL:
+                %td.md-table-td-more{"layout-align"=>"end end"}
+                  %h2
+                    ${{goldBatch.model.total_fine_grams| number:2}}
                 %td.md-table-td-more
                   %h2
-                    $ {{ purchase.model.price | number:2}}
+                    ${{ purchase.model.price | number:2}}
 
   .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
     %md-button.btn-back-black{  "ui-sref"=>"new_purchase.step1", "ng-click" => "removeWatchers()"}

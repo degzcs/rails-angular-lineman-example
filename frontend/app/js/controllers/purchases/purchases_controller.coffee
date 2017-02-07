@@ -248,13 +248,18 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.realesToGrams = MeasureConverterService.realesToGrams($scope.goldBatch.model.reales)
     $scope.granosToGrams = MeasureConverterService.granosToGrams($scope.goldBatch.model.granos)
 
+    # Raw grams
     $scope.grams = $scope.goldBatch.model.grams
     $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.realesToGrams + $scope.granosToGrams + $scope.grams
 
-    # cover grams to fineGrams
+    # Convert grams to fineGrams
+    $scope.gramsFineGrams = MeasureConverterService.gramsToFineGrams($scope.grams, $scope.goldBatch.model.grade)
+    $scope.castellanosFineGrams = MeasureConverterService.gramsToFineGrams($scope.castellanosToGrams, $scope.goldBatch.model.grade)
+    $scope.tominesFineGrams = MeasureConverterService.gramsToFineGrams($scope.tominesToGrams, $scope.goldBatch.model.grade)
+    $scope.realesFineGrams = MeasureConverterService.gramsToFineGrams($scope.realesToGrams, $scope.goldBatch.model.grade)
+    $scope.granosFineGrams = MeasureConverterService.gramsToFineGrams($scope.granosToGrams, $scope.goldBatch.model.grade)
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
-    #Price
-    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
+
     if $scope.purchase.model.decrease > 0
       $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999) * (1 - $scope.purchase.model.decrease/100)
     else
@@ -264,17 +269,20 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     # Measures Unit Price
     $scope.gramsUnitPrice = $scope.purchase.model.fine_gram_unit_price_to_buy
     $scope.castellanosUnitPrice = MeasureConverterService.castellanosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
-    $scope.tominesUnitPriceFrom = MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
-    $scope.realesUnitPriceFrom = MeasureConverterService.realesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
-    $scope.granosUnitPriceFrom = MeasureConverterService.granosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+    $scope.tominesUnitPrice = MeasureConverterService.tominesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+    $scope.realesUnitPrice = MeasureConverterService.realesUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+    $scope.granosUnitPrice = MeasureConverterService.granosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
+
+    # Total Price
+    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price_to_buy
 
     #
     #subtotals
-    $scope.subtotalGrams = $scope.gramsUnitPrice * $scope.goldBatch.model.grams
-    $scope.subtotalCastellano = $scope.castellanosUnitPrice * $scope.goldBatch.model.castellanos
-    $scope.subtotalTomines = $scope.tominesUnitPriceFrom * $scope.goldBatch.model.tomines
-    $scope.subtotalReales = $scope.realesUnitPriceFrom * $scope.goldBatch.model.reales
-    $scope.subtotalGranos = $scope.granosUnitPriceFrom * $scope.goldBatch.model.granos
+    $scope.subtotalGrams = $scope.gramsUnitPrice * $scope.gramsFineGrams
+    $scope.subtotalCastellano = $scope.castellanosUnitPrice * $scope.castellanosFineGrams
+    $scope.subtotalTomines = $scope.tominesUnitPrice * $scope.tominesFineGrams
+    $scope.subtotalReales = $scope.realesUnitPrice * $scope.realesFineGrams
+    $scope.subtotalGranos = $scope.granosUnitPrice * $scope.granosFineGrams
     # TEMPORAL FIX: to avoid use this watcher for each view
     $rootScope.$on '$viewContentLoading', (event, viewName, viewContent) ->
       if "partials/purchases/step2.html" != viewName.view.templateUrl
