@@ -524,6 +524,16 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   #
   # Puts it in a img tag
   $scope.saveSignature = ->
-    $scope.purchase.model.signature_picture = document.getElementById('purchase_signature').src
+    if $scope.purchase.model.use_wacom_device
+      $scope.purchase.model.signature_picture = document.getElementById('purchase_signature').src
+
+  #
+  # Check if it is needed the signature
+  # @return [ Boolean ]
+  $scope.invalidateSignatureStep  = ->
+    if $scope.purchase.model.use_wacom_device
+      typeof($scope.purchase.model.signature_picture) == 'undefined'
+    else
+      false
 
 

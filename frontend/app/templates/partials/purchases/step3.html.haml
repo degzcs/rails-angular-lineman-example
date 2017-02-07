@@ -2,15 +2,15 @@
   %div{:layout => "column"}
 
     %md-content{ "flex"=>"", "layout"=>"row"}
-      
+
       %div.md-padding{"layout"=>"column"}
         %label.md-subtitle
           Fecha
-      
+
         %p{"style" => "margin-top: 0px;"}
           {{date}}
 
-      
+
       %div.md-padding{"layout" => "column"}
         %label.md-subtitle
           Ciudad
@@ -29,42 +29,42 @@
             %div.input-containers-false
               %label.label-container-false
                 Tipo de Proveedor
-              %p.text-container-false 
+              %p.text-container-false
                 {{purchase.model.seller.provider_type}}
-            
+
             %div.input-containers-false
               %label.label-container-false
                 Nombre de proveedor
-              %p.text-container-false 
+              %p.text-container-false
                 {{purchase.model.seller.first_name}} {{purchase.model.seller.last_name}}
 
           %div{layout: "row"}
             %div.input-containers-false
               %label.label-container-false
                 Tipo de documento
-              %p.text-container-false 
+              %p.text-container-false
                 {{purchase.model.seller.document_type}}
             %div.input-containers-false
               %label.label-container-false
                 Número de documento
-              %p.text-container-false 
+              %p.text-container-false
                 {{purchase.model.seller.document_number}}
-            
+
           %div{layout: "row"}
             %div.input-containers-false
               %label.label-container-false
                 Departamento
-              %p.text-container-false 
+              %p.text-container-false
                 {{purchase.model.seller.state.name}}
             %div.input-containers-false
               %label.label-container-false
                 Ciudad
-              %p.text-container-false 
+              %p.text-container-false
                 {{purchase.model.seller.city.name}}
-            
+
             %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
               %md-progress-circular{"md-mode" => "indeterminate"}
-      
+
         /%a.md-button.create-provider-button{'ng-click' => "createProvider()"}  crear proveedor
       ////-----------------------Mineral section ------------------------------////////
       %div.md-padding.origin-certificate-padding{flex: "30"}
@@ -76,19 +76,19 @@
             %div.input-containers-false
               %label.label-container-false
                 Mineral Extraido y Vendido
-              %p.text-container-false 
+              %p.text-container-false
                 {{goldBatch.model.mineral_type}}
-            
+
             %div.input-containers-false
               %label.label-container-false
                 Cantidad
-              %p.text-container-false 
+              %p.text-container-false
                 {{goldBatch.model.total_fine_grams | number:2}}
 
             %div.input-containers-false
               %label.label-container-false
                 Unidad de Medida
-              %p.text-container-false 
+              %p.text-container-false
                 {{measureUnit}}
     ////-----------------------Buyer section ------------------------------////////
     %section.md-padding{flex: "", layout: "row"}
@@ -102,21 +102,21 @@
             %div.input-containers-false{flex: ""}
               %label.label-container-false
                 Nombres y apellidos o Razón Social
-              %p.text-container-false 
+              %p.text-container-false
                 {{buyer_data.company_name}}
-           
+
             %div.input-containers-false{flex: ""}
               %label.label-container-false
                 Tipo de documento
-              %p.text-container-false 
+              %p.text-container-false
                 {{buyer_data.document_type}}
 
             %div.input-containers-false{flex: ""}
               %label.label-container-false
                 Número de identificación
-              %p.text-container-false 
+              %p.text-container-false
                 {{buyer_data.nit}}
-            
+
     %section.signature-section.md-padding{flex: '', layout: 'column'}
       %div{flex: '', layout: 'row', "layout-align"=>"center center"}
         %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
@@ -129,8 +129,8 @@
     .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"center"}
       %md-button.btn-next.md-raised.md-primary{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
       %md-button.btn-next.md-raised.md-primary{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
-      %md-button..btn-back-black{ "ui-sref"=>"new_purchase.step2"} 
+      %md-button..btn-back-black{ "ui-sref"=>"new_purchase.step2"}
         %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
         Volver
-      %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'originCertificateForm.$invalid', "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
+      %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'originCertificateForm.$invalid || invalidateSignatureStep()', "ng-click" => "saveSignature(); saveState()", "ui-sref"=>"new_purchase.step4"} Continuar
         %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
