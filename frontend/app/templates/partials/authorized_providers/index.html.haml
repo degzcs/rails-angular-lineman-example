@@ -2,22 +2,22 @@
   %md-content.general-container
     %div{:layout => "column"}
       %div.search-tool-header{:layout => "row"}
-        
+
         %div{flex: "50"}
-          %md-button.btn-next.md-raised.md-primary{"aria-label" => "New", "ng-click" => "newAuthorizedProvider($event)"} 
+          %md-button.btn-next.md-raised.md-primary{"aria-label" => "New", "ng-click" => "newAuthorizedProvider($event)"}
             %md-icon{"md-svg-icon"=>"/img/icons/sets/add-plus.svg"}
             Agregar Proveedor
-        
+
         %md-input-container{:flex => "", "md-no-float"=>""}
           %input{"ng-model" => "queryName", :type => "text", :placeholder => "Filtrar por nombre"}
             %md-icon.search{"md-svg-icon"=>"action:search"}
-       
+
         %md-input-container{:flex => "","md-no-float"=>""}
           %input{"ng-model" => "queryId", :type => "text", :placeholder => "Filtrar por num. documento"}
             %md-icon.search{"md-svg-icon"=>"action:search"}
-      
+
       %md-content{:flex => "flex", :layout => "column", "ng-click" => "toggleSearch=false"}
 
         %md-table-provider{:headers => "headers", :content => "content", :pages => "pages", :sortable => "sortable", :filters => "search", "custom-class" => "custom", :thumbs => "thumbs", :count => "count", "query-name" => "queryName", "query-id" => "queryId", "query-focus" => "queryFocus"}
 
-%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+%tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

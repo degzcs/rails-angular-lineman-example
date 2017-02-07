@@ -224,4 +224,4 @@
       %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'", flex: "20", "ng-click" => "showConfirm($event)"}
         Realizar la Compra
 
-%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+%tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
