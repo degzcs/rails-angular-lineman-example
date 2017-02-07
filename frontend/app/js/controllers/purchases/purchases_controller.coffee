@@ -239,7 +239,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
   #
   # Setup measures and total price if any of them have changed
-  listener = $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy]', ->
+  listener = $scope.$watch '[goldBatch.model.grade, goldBatch.model.castellanos, goldBatch.model.tomines, goldBatch.model.reales, goldBatch.model.granos, goldBatch.model.grams, purchase.model.fine_gram_unit_price, purchase.model.fine_gram_unit_price_to_buy, purchase.model.decrease]', ->
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
@@ -255,7 +255,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
     #Price
     $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price
-    $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999)
+    if $scope.purchase.model.decrease > 0
+      $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999) * (1 - $scope.purchase.model.decrease/100)
+    else
+      $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999)
 
     #
     # Measures Unit Price
@@ -298,6 +301,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       grade: 1
       grams: 0 # the introduced grams  by the seller or seller
       castellanos: 0
+      decrease: 0
       ozs: 0
       tomines: 0
       reales: 0

@@ -6,29 +6,34 @@
         .select-law{'flex' => ''}
           .md-subtitle Ley
           %md-input-container
-            
+
             %input{ "type" => "number", "string-to-number"=>"", min: => "1" , "max"=>"999" ,'ng-model' => 'goldBatch.model.grade', :required=>"", :name => 'degre', "placeholder" => "Digite el numero de ley"}
             %div{"ng-messages" => "purchaseForm.degre.$error"}
               /%div{"ng-message" => "required"} * Este campo es requerido.
         .fine-gram-unit-price{'flex' => ''}
           .md-subtitle Valor gramo fino
           %md-input-container
-            
+
             %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price', :required=>"", :name => 'fine_gram', :min => "1", "placeholder" => "Precio de gramo fino por unidad"}
             %div{"ng-messages" => "purchaseForm.fine_gram.$error"}
               /%div{"ng-message" => "required"} * Este campo es requerido.
-        
+        .price-to-buy{ 'flex' => ''}
+          .md-subtitle Merma (%)
+          %md-input-container
+
+            %input{ "type" => "number", "string-to-number"=>"",'min' => "0", "max"=>"5",'ng-model' => 'purchase.model.decrease', :required=>"", :name => 'decrease', "placeholder" => "Porcentaje de la merma"}
+            %div{"ng-messages" => "purchaseForm.decrease.$error"}
 
 
 
       %div{:layout => "", "layout-sm" => "column", "layout-align" => "center", "layout-margin"}
-        
+
         .price-to-buy{ 'flex' => ''}
           .md-subtitle Tipo Mineral
-            %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
-              %md-option{:selected => "selected", :value => "Oro"} Oro
-              %md-option{:value => "Plata"} Plata
-              %md-option{:value => "Platino"} Platino
+          %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
+            %md-option{:selected => "selected", :value => "Oro"} Oro
+            %md-option{:value => "Plata"} Plata
+            %md-option{:value => "Platino"} Platino
 
 
         .price-to-buy{ 'flex' => ''}
@@ -37,9 +42,9 @@
           %div.input-containers-fine-gram-to-buy
             $ {{purchase.model.fine_gram_unit_price_to_buy | number:2}} COP
           %md-input-container{"ng-hide"=> "true"}
-            %label 
+            %label
             %input.input-num-value{"type" => "number", "string-to-number"=>"",'ng-model' => 'purchase.model.fine_gram_unit_price_to_buy', :required=>"", :name => 'fine_gram_to_buy', :min => "1", "readonly" => "", "placeholder"=>"Precio de gramo fino por unidad"}
-      
+
 
       .row{:layout => "", "layout-sm" => "column"}
         .convertion-section{'flex' => ''}
