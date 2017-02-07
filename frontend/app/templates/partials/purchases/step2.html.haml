@@ -56,6 +56,8 @@
                 %th.md-table-header
                   Precio Unitario
                 %th.md-table-header
+                  Gramos Brutos
+                %th.md-table-header
                   Gramos Finos
                 %th.md-table-header
                   Precio Total
@@ -67,27 +69,19 @@
                 %td.md-table-td-more
                   {{ gramsUnitPrice | number:2 }}
                 %td.md-table-td-more
+                  {{ grams | number:2 }}
+                %td.md-table-td-more
                   {{ gramsFineGrams | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalGrams | number:2}}
-                / %td.md-table-td-more.total-grams
-                /   %md-input-container
-                /     %label
-                /     %input{"ng-model" => "goldBatch.model.total_grams",  :min => "1", :requiered => '', :readOnly => 'true', "type" => "number", "string-to-number"=>"", "min" => "1", :name => 'total_grams'}
-                /     %div{"ng-messages" => "purchaseForm.total_grams.$error"}
-                /       %div{"ng-message" => "required"} * Tiene que seleccionar la cantidad de oro a facturar mayor a 1 gramo.
-                / %td.md-table-td-more.total-fine-grams
-                /   %md-input-container
-                /     {{ goldBatch.model.total_fine_grams | number:3}}
-                / %td.md-table-td-more
-                /   %md-input-container
-                /     {{   | number:2 }}
               %tr.medidas
                 %td.md-table-td-more{colspan: 1}
                   %md-input-container
                     %input{"ng-model" => "goldBatch.model.castellanos", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Castellano(s)"}
                 %td.md-table-td-more
                   {{ castellanosUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ castellanosToGrams | number:2 }}
                 %td.md-table-td-more
                   {{ castellanosFineGrams | number:2 }}
                 %td.md-table-td-more
@@ -99,6 +93,8 @@
                 %td.md-table-td-more
                   {{ tominesUnitPrice | number:2 }}
                 %td.md-table-td-more
+                  {{ tominesToGrams | number:2 }}
+                %td.md-table-td-more
                   {{ tominesFineGrams | number:2 }}
                 %td.md-table-td-more
                   {{ subtotalTomines | number:2}}
@@ -108,6 +104,8 @@
                     %input{"ng-model" => "goldBatch.model.reales", "type" => "number", "string-to-number"=>"", "min" => "0", "placeholder" => "Real(es)"}
                 %td.md-table-td-more
                   {{ realesUnitPrice | number:2 }}
+                %td.md-table-td-more
+                  {{ realesToGrams | number:2 }}
                 %td.md-table-td-more
                   {{ realesFineGrams | number:2 }}
                 %td.md-table-td-more
@@ -119,15 +117,20 @@
                 %td.md-table-td-more
                   {{ granosUnitPrice | number:2}}
                 %td.md-table-td-more
+                  {{ granosToGrams | number:2}}
+                %td.md-table-td-more
                   {{ granosFineGrams | number:2}}
                 %td.md-table-td-more
                   {{ subtotalGranos | number:2}}
               %tr
                 %td.md-table-td-more{colspan: 2}
                   %h3 TOTAL:
+                %td.md-table-td-more
+                  %h2
+                    {{goldBatch.model.total_grams| number:2}}
                 %td.md-table-td-more{"layout-align"=>"end end"}
                   %h2
-                    ${{goldBatch.model.total_fine_grams| number:2}}
+                    {{goldBatch.model.total_fine_grams| number:2}}
                 %td.md-table-td-more
                   %h2
                     ${{ purchase.model.price | number:2}}

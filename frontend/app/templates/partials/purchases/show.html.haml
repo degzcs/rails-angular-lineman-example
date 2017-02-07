@@ -14,9 +14,9 @@
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Nit
-          %p.text-container-false 
-            {{buyer_data.nit}}  
- 
+          %p.text-container-false
+            {{buyer_data.nit}}
+
         %div.input-containers-false{flex: ""}
           %label.label-container-false
             Rucom
@@ -143,7 +143,7 @@
             %th.md-table-header
               Medida / Cantidad
             %th.md-table-header
-              Precio  
+              Precio
             %th.md-table-header
               Total gramos
             %th.md-table-header
@@ -163,10 +163,10 @@
                 $ {{purchase.model.fine_gram_unit_price | number:2}}
             %td.md-table-td-more
               %md-input-container
-                {{ goldBatch.model.total_grams | number:3}}
+                {{ goldBatch.model.total_grams | number:2}}
             %td.md-table-td-more
               %md-input-container
-                {{ goldBatch.model.total_fine_grams | number:3}}
+                {{ goldBatch.model.total_fine_grams | number:2}}
             %td.md-table-td-more
               %md-input-container
                 $ {{ purchase.model.price | number:2}}
@@ -176,38 +176,31 @@
                 %label.label-container-false
                   Castellano(s)
                 %p.text-container-false
-                  {{goldBatch.model.castellanos}}
-          %tr
-            %td.md-table-td-more
-              %div.input-containers-false
-                %label.label-container-false
-                  Onza(s)
-                %p.text-container-false
-                  {{goldBatch.model.ozs}}
+                  {{goldBatch.model.castellanos | number:2}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
                 %label.label-container-false
                   Tomin(es)
                 %p.text-container-false
-                  {{goldBatch.model.tomines }}
+                  {{goldBatch.model.tomines | number:2}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
                 %label.label-container-false
                   Real(es)
                 %p.text-container-false
-                  {{goldBatch.model.reales}}
-    
+                  {{goldBatch.model.reales | number:2}}
+
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
-      
-      
+
+
       %div{layout: "column", "layout-align"=>"center"}
-        
+
         %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/documents.svg" }
 
         %md-button.btn-save{flex: "30",  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
-      
+
       %div{layout: "column", "layout-align"=>"center"}
 
         %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/single_document.svg" }

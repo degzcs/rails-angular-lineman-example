@@ -243,14 +243,13 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
     #Convertions
     $scope.castellanosToGrams = MeasureConverterService.castellanosToGrams($scope.goldBatch.model.castellanos)
-    $scope.ozsToGrams = MeasureConverterService.ozsToGrams($scope.goldBatch.model.ozs)
     $scope.tominesToGrams = MeasureConverterService.tominesToGrams($scope.goldBatch.model.tomines)
     $scope.realesToGrams = MeasureConverterService.realesToGrams($scope.goldBatch.model.reales)
     $scope.granosToGrams = MeasureConverterService.granosToGrams($scope.goldBatch.model.granos)
 
     # Raw grams
     $scope.grams = $scope.goldBatch.model.grams
-    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.ozsToGrams + $scope.tominesToGrams + $scope.realesToGrams + $scope.granosToGrams + $scope.grams
+    $scope.goldBatch.model.total_grams = $scope.castellanosToGrams + $scope.tominesToGrams + $scope.realesToGrams + $scope.granosToGrams + $scope.grams
 
     # Convert grams to fineGrams
     $scope.gramsFineGrams = MeasureConverterService.gramsToFineGrams($scope.grams, $scope.goldBatch.model.grade)
@@ -279,10 +278,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     #
     #subtotals
     $scope.subtotalGrams = $scope.gramsUnitPrice * $scope.gramsFineGrams
-    $scope.subtotalCastellano = $scope.castellanosUnitPrice * $scope.castellanosFineGrams
-    $scope.subtotalTomines = $scope.tominesUnitPrice * $scope.tominesFineGrams
-    $scope.subtotalReales = $scope.realesUnitPrice * $scope.realesFineGrams
-    $scope.subtotalGranos = $scope.granosUnitPrice * $scope.granosFineGrams
+    $scope.subtotalCastellano = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.castellanosFineGrams
+    $scope.subtotalTomines = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.tominesFineGrams
+    $scope.subtotalReales = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.realesFineGrams
+    $scope.subtotalGranos = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.granosFineGrams
     # TEMPORAL FIX: to avoid use this watcher for each view
     $rootScope.$on '$viewContentLoading', (event, viewName, viewContent) ->
       if "partials/purchases/step2.html" != viewName.view.templateUrl

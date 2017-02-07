@@ -112,19 +112,16 @@
       %h3
         DATOS DE LA COMPRA
     %md-content{"class"=>"", "layout"=>"row"}
-      .purchase-info{'flex' => ''}
-        .row{'layout' => 'row'}
-          .oc-number{'flex' => ''}
-            %p.md-subtitle
-              Numero de Certificado de Origen
-            %p
-              {{purchase.model.origin_certificate_sequence}}
       .select-law{'flex' => ''}
         %p.md-subtitle
           Ley
         %p
           {{goldBatch.model.grade}}
-
+      .select-law{'flex' => ''}
+        %p.md-subtitle
+          Merma
+        %p
+          {{purchase.model.decrease}}%
       .select-law{'flex' => ''}
         %p.md-subtitle
           Mineral Comprado
@@ -134,61 +131,89 @@
       %h3
         PESO COMPRADO
     %md-content{"class"=>"", "layout"=>"row", 'layout-align' => 'center'}
-      %table{'flex' => '100', 'style' => 'width: 150%'}
-        %thead
-          %tr.md-table-headers-row
-            %th.md-table-header
-              Medida / Cantidad
-            %th.md-table-header
-              Precio
-            %th.md-table-header
-              Total gramos
-            %th.md-table-header
-              Total gramos finos
-            %th.md-table-header
-              Precio Total
-        %tbody
-          %tr
-            %td.md-table-td-more
-              %div.input-containers-false
-                %label.label-container-false
-                  Gramo(s)
-                %p.text-container-false
-                  {{goldBatch.model.grams  | number:2}}
-
-            %td.md-table-td-more
-              %md-input-container
-                $ {{purchase.model.fine_gram_unit_price | number:2}}
-            %td.md-table-td-more
-              %md-input-container
-                {{ goldBatch.model.total_grams | number:2}}
-            %td.md-table-td-more
-              %md-input-container
-                {{ goldBatch.model.total_fine_grams | number:3}}
-            %td.md-table-td-more
-              %md-input-container
-                $ {{ purchase.model.price | number:2}}
-          %tr
-            %td.md-table-td-more
-              %div.input-containers-false
-                %label.label-container-false
-                  Castellano(s)
-                %p.text-container-false
-                  {{goldBatch.model.castellanos}}
-          %tr
-            %td.md-table-td-more
-              %div.input-containers-false
-                %label.label-container-false
-                  Tomin(es)
-                %p.text-container-false
-                  {{goldBatch.model.tomines}}
-          %tr
-            %td.md-table-td-more
-              %div.input-containers-false
-                %label.label-container-false
-                  Real(es)
-                %p.text-container-false
-                  {{goldBatch.model.reales}}
+      .convertion-section{'flex' => ''}
+        .md-subtitle Medidas
+        %table.md-table
+          %thead
+            %tr.md-table-headers-row
+              %th.md-table-header
+                Medida En Bruto
+              %th.md-table-header
+                Precio Unitario
+              %th.md-table-header
+                Gramos Brutos
+              %th.md-table-header
+                Gramos Finos
+              %th.md-table-header
+                Precio Total
+          %tbody
+            %tr.medidas
+              %td.md-table-td-more
+                {{ goldBatch.model.grams }}
+              %td.md-table-td-more
+                {{ gramsUnitPrice | number:2 }}
+              %td.md-table-td-more
+                {{ grams | number:2 }}
+              %td.md-table-td-more
+                {{ gramsFineGrams | number:2 }}
+              %td.md-table-td-more
+                {{ subtotalGrams | number:2}}
+            %tr.medidas
+              %td.md-table-td-more{colspan: 1}
+                {{ goldBatch.model.castellanos}}
+              %td.md-table-td-more
+                {{ castellanosUnitPrice | number:2 }}
+              %td.md-table-td-more
+                {{ castellanosToGrams | number:2 }}
+              %td.md-table-td-more
+                {{ castellanosFineGrams | number:2 }}
+              %td.md-table-td-more
+                {{ subtotalCastellano | number:2}}
+            %tr.medidas
+              %td.md-table-td-more{colspan: 1}
+                {{ goldBatch.model.tomines}}
+              %td.md-table-td-more
+                {{ tominesUnitPrice | number:2 }}
+              %td.md-table-td-more
+                {{ tominesToGrams | number:2 }}
+              %td.md-table-td-more
+                {{ tominesFineGrams | number:2 }}
+              %td.md-table-td-more
+                {{ subtotalTomines | number:2}}
+            %tr.medidas
+              %td.md-table-td-more{colspan: 1}
+                {{ goldBatch.model.reales }}
+              %td.md-table-td-more
+                {{ realesUnitPrice | number:2 }}
+              %td.md-table-td-more
+                {{ realesToGrams | number:2 }}
+              %td.md-table-td-more
+                {{ realesFineGrams | number:2 }}
+              %td.md-table-td-more
+                {{ subtotalReales | number:2}}
+            %tr.medidas
+              %td.md-table-td-more{colspan: 1}
+                {{ goldBatch.model.granos }}
+              %td.md-table-td-more
+                {{ granosUnitPrice | number:2}}
+              %td.md-table-td-more
+                {{ granosToGrams | number:2}}
+              %td.md-table-td-more
+                {{ granosFineGrams | number:2}}
+              %td.md-table-td-more
+                {{ subtotalGranos | number:2}}
+            %tr
+              %td.md-table-td-more{colspan: 2}
+                %h3 TOTAL:
+              %td.md-table-td-more
+                %h2
+                  {{goldBatch.model.total_grams| number:2}}
+              %td.md-table-td-more{"layout-align"=>"end end"}
+                %h2
+                  {{goldBatch.model.total_fine_grams| number:2}}
+              %td.md-table-td-more
+                %h2
+                  ${{ purchase.model.price | number:2}}
     .error-message{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"end end"}
       %p.red-text{:ng-if => "(current_user.available_credits < goldBatch.model.total_fine_grams) && purchase.model.type == 'seller'"}
         El usario no tiene suficientes creditos para realizar esta compra!
