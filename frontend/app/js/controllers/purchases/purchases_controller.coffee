@@ -441,7 +441,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       $scope.saveState()
       $state.go 'new_purchase.step3'
     else
-      $scope.infoAlert('ERROR', 'Este usuario no cuenta con los suficientes creditos para hacer esta transaccion. Tu puedes comprar como maximo '+$scope.current_user.available_credits.toFixed(2) + ' gramos finos' )
+      $scope.infoAlert('ERROR', 'Este usuario no cuenta con los suficientes creditos para hacer esta transaccion. Tu puedes comprar como maximo '+$scope.current_user.available_credits.toFixed(2) + ' gramos finos. Para comprar una cantidad superior a esta se debe comprar mas creditos trazoro.' )
 
   #
   # Formatted the provider data returned from ProviderService
