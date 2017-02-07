@@ -423,10 +423,25 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     ).error ()->
 
   #
+  # Checks if the amount of fine grams is ok to continue to the next step
+  # @return [ Boolean ]
+  $scope.validateFineGramsAmount = ->
+    $scope.goldBatch.model.total_fine_grams < 1
+
+  #
   # Validates if the current user has enought Credits to buy
   # @return [ Boolean ]
   $scope.userHasEnoughCredits = ->
-    $scope.current_user.available_credits >= $scope.purchase.model.price
+    $scope.current_user.available_credits >= $scope.goldBatch.model.total_fine_grams
+
+  #
+  # Checks if user has enought credits to do this transaction and shows a popup if not
+  $scope.continueFromMeasurementsStep = ->
+    if $scope.userHasEnoughCredits()
+      $scope.saveState()
+      $state.go 'new_purchase.step3'
+    else
+      $scope.infoAlert('ERROR', 'Este usuario no cuenta con los suficientes creditos para hacer esta transaccion. Tu puedes comprar como maximo '+$scope.current_user.available_credits.toFixed(2) + ' gramos finos' )
 
   #
   # Formatted the provider data returned from ProviderService
