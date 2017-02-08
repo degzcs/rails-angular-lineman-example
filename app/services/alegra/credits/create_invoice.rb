@@ -81,7 +81,7 @@ module Alegra
             description: 'Créditos para usar los servicios Trazoro.',
             tax: [
                     {
-                      id: 3, #TODO: create iva id on alegra
+                      id: 4, #TODO: create iva id on alegra
                     }
                  ],
           }
