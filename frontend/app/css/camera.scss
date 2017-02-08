@@ -36,7 +36,7 @@
   width: 400px;
   margin-bottom: 20px;
   display: none;
-  
+
 }
 
 .camera-options-final{
@@ -68,4 +68,35 @@ canvas.taken-photo{
   md-select{
     display: inline-block;
   }
+}
+.md-tile-left.cam {
+    margin:0px;
+}
+.md-button.cam{
+  display:block;
+  height:56px;
+  padding:16px;
+}
+img.face.cam{
+  width: 57px;
+  heigth:57px;
+  margin: 0px;
+  z-index:-5;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.fieldset-information{
+  min-width: 900px;
+}
+
+.dwt-button{
+  background-color: darkgoldenrod;
+  font-size: 16px;
+      height: 50px !important;
+      width: 310px !important;
+}
+.dwt-button:after {
+   content: "Instalar Herramienta de Scanner ";
 }
