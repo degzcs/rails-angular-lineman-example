@@ -34,11 +34,11 @@ angular.module('app').controller 'SidebarCtrl', ($scope, $timeout, $mdSidenav, $
     if !$auth.isAuthenticated()
       return
     $auth.logout().then ->
-      $mdDialog.show $mdDialog.alert()
-        .title('Logout')
-        .content('Adios!')
-        .ok('Adios!!')
-        duration: 2
+      # $mdDialog.show $mdDialog.alert()
+      #   .title('Logout')
+      #   .content('Adios!')
+      #   .ok('Adios!!')
+      #   duration: 2
       return
   $scope.getNavigationClass = (button)->
     if $state.current.name.indexOf(button)> -1

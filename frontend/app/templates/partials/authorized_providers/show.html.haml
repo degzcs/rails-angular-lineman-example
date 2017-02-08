@@ -108,5 +108,5 @@
             %p Registro Minero del Usuario
             %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentAuthorizedProvider.mining_authorization_file.preview.url || 'img/pdf.png'}}"}
 
-%tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+%tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 
