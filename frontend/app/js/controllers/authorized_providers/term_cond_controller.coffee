@@ -51,7 +51,7 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     # @return [ Boolean ]
     $scope.invalidateSignatureStep  = ->
       if $scope.authorizedProvider.use_wacom_device
-        ($scope.authorizedProvider.signature_picture == null) && ($scope.chkAgreetmentActive != true)
+        ($scope.authorizedProvider.signature_picture == null) || ($scope.chkAgreetmentActive != true)
       else
         ($scope.chkAgreetmentActive != true)
 
