@@ -18,6 +18,11 @@ class Ability
      order.seller_id == @user.id || order.buyer_id == @user.id
     end
 
+    # Allow office read their own orders
+    can [:read], Order do |order, remote_ip|
+     order.audits.where(action: 'create').first.user_id == @user.id
+    end
+
     can :read, User
     can :read, Settings
   end
