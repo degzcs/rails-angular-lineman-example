@@ -6,10 +6,10 @@
       .dashboard-user-info{ }
         %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.url || 'img/default-user.png'}}"}
       .dashboard-user-utilities{layout: "column"}
-        %md-button{}
+        %md-button{'aria-label' =>''}
           %md-icon{"md-svg-icon"=>"editor:insert_drive_file"}
           Facturación y documento
-        %md-button{}
+        %md-button{'aria-label' =>''}
           %md-icon{"md-svg-icon"=>"editor:mode_edit"}
           Editar información
         %md-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()", "target"=>"_blank"}
@@ -51,7 +51,7 @@
         CRÉDITOS RESTANTES
         %span.num-credits{}
           {{available_credits}}
-      %md-button.btn-save{"ng-click"=>"showCreditBillingForm($event)"}
+      %md-button.btn-save{"ng-click"=>"showCreditBillingForm($event)", 'aria-label' =>''}
         Comprar Créditos $
 
   %tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

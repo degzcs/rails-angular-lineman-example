@@ -5,22 +5,22 @@
         // ---------------------- seller info ------------------- ///
         %div.md-padding{flex: ""}
           %div{:layout => "column"}
-            
-            
-            
+
+
+
             %md-radio-group{"ng-model"=>"provider.providerType", "name" => "providerType", :required => "", "ng-disabled" => "showLoading" }
               %md-radio-button.md-primary{ "value" => "Barequero" }Barequero
               %md-radio-button{ "value" => "Chatarrero" } Chatarrero
 
           %div{:layout => "column"}
-            
+
             %div.fieldset-inputs.find-provider
               %div{layout: "row"}
 
-              
+
               %md-input-container{"name"=>"idNumber"}
                 %input{"ng-model"=>"provider.idNumber", "name"=>"idNumber", :required => "", "ng-minlength"=>"7", "placeholder"=>"Ingrese la cédula sin puntos", "type"=>"Number", "ng-disabled" => "showLoading"}
-                
+
                 //%span{"md-highlight-flags" => "^i", "md-highlight-text" => "searchText"} 155357
                 %md-not-found
 
@@ -31,15 +31,15 @@
         %p{"color"=>"red", :ng-if=> "anyErrors()"} No se encontró el proveedor
 
       %div.md-padding{:layout => 'row', , "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
-        %md-button.btn-back-black{"ng-click" => "cancel()"}
+        %md-button.btn-back-black{"ng-click" => "cancel()", "ng-hide" => "showLoading"}
           %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
           Volver
-        %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.providerType)", "ng-hide" => "showLoading"} 
+        %md-button.btn-next.md-raised.md-primary{ "ng-disabled" => 'authorizedProviderForm.$invalid', "ng-click" => "queryRucomByIdNumber($event, provider.idNumber, provider.providerType)", "ng-hide" => "showLoading"}
           Consultar
           %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
 
-        %md-button.btn-next.md-raised.md-primary{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"} 
+        %md-button.btn-next.md-raised.md-primary{ :ng-if => "purchase.model.type == 'trazoro'","ng-disabled" => 'purchaseForm.$invalid', "ui-sref"=>"new_purchase.step3", "ng-click" => "saveState()"}
           Continuar
           %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
 
-    
+

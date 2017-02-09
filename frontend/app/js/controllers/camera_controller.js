@@ -92,7 +92,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     // Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm().title('Agregar página')
                       .content('Está seguro de agregar al archivo?')
-                      .ariaLabel('Lucky day')
+                      .ariaLabel('camara')
                       .ok('Aceptar')
                       .cancel('Cancelar')
                       .targetEvent(ev);
@@ -103,7 +103,7 @@ angular.module('app').controller('CameraController',  ['$scope','$q','$timeout',
                     var confirm = $mdDialog.confirm()
                       .title('Remover paǵina')
                       .content('Está seguro de eliminar el archivo?')
-                      .ariaLabel('Lucky day')
+                      .ariaLabel('camara')
                       .ok('Please do it!')
                       .cancel('No please')
                       .targetEvent(ev);

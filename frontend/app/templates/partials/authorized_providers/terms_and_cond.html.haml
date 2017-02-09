@@ -9,7 +9,7 @@
           %md-input-container{class: "md-block", flex: '100' }
             %textarea{:rows => '7', :readOnly => 'true',
                       "ng-model" => "authorizedProvider.habeas_data_agreetment",
-                      :name => 'habeas_data_agreetment'}
+                      :name => 'habeas_data_agreetment', 'aria-label'=>'text'}
           %div{layout: "row"}
             %md-input-container{flex: ""}
               %md-checkbox{ :ng-model => 'chkAgreetmentActive',
@@ -18,7 +18,7 @@
 
         %section.signature-section.md-padding{flex: '', layout: 'column'}
           %div{flex: '', layout: 'row', "layout-align"=>"center center"}
-            %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;'}
+            %textarea{ cols: "50", rows: "4", id: "txtDisplay", style: 'visibility-fake: hidden;', 'aria-label'=>'text'}
           %div{flex: '', layout: 'row', "layout-align"=>"center center"}
             #imageBox{  flex: ''}
           %div.signature-text-wrapper{flex: '', layout: 'row', "layout-align"=>"center center"}
@@ -26,15 +26,15 @@
               Firma
 
         .wizard-buttons.md-padding.autocomplete{layout: "row", "layout-align"=>"center"}
-          %md-button.btn-save{  flex: "20", 'ng-click' => 'restartSessionDevice()'} Iniciar Dispositivo
-          %md-button.btn-save{ flex: "20", 'ng-click' => 'captureSignature()'} Firmar
+          %md-button.btn-save{  flex: "20", 'ng-click' => 'restartSessionDevice()', 'aria-label'=>'start'} Iniciar Dispositivo
+          %md-button.btn-save{ flex: "20", 'ng-click' => 'captureSignature()', , 'aria-label'=>'capture'} Firmar
 
-          %md-button.btn-back-black{ "ui-sref" => "index_authorized_provider"}
+          %md-button.btn-back-black{ "ui-sref" => "index_authorized_provider", , 'aria-label'=>'back'}
             %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
             Volver
 
-          %md-button.btn-next.md-raised.md-primary{"ng-click" => "continue()"} Continuar
+          %md-button.btn-next.md-raised.md-primary{'ng-disabled' => 'invalidateSignatureStep()', "ng-click" => "continue()", , 'aria-label'=>'next'} Continuar
             %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-negra.svg" }
 
-        
+
 

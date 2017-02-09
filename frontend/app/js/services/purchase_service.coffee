@@ -60,14 +60,14 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
             files = [seller_picture_blob, signature_picture_blob]
             service.uploadFiles(files, purchase, gold_batch)
           ).catch (err) ->
-            console.log '[SERVICE-ERROR]: image signature failed to load!!'
+            #console.log '[SERVICE-ERROR]: image signature failed to load!!'
             location.path('/purchases/new/purchases/step4')
             $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
             $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
             service.restoreState()
       )
       .catch (err) ->
-        console.log '[SERVICE-ERROR]: image seller_picture failed to load!!' + err
+        #console.log '[SERVICE-ERROR]: image seller_picture failed to load!!' + err
         $location.path('/purchases/new/purchases/step4')
         $mdDialog.show $mdDialog.alert().title('Error').content(err).ok('ok')
         $mdDialog.show $mdDialog.alert().title('Error').content(err.data.detail[0]).ok('ok')
@@ -92,12 +92,12 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
 
       .progress(
         (evt) ->
-          console.log 'progress: ' + service.impl.uploadProgress + '% ' + evt.config.file
+          #console.log 'progress: ' + service.impl.uploadProgress + '% ' + evt.config.file
           service.impl.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
       )
       .success(
         (data, status, headers, config) ->
-          console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
+          #console.log '[SERVICE-LOG]: uploaded file !!!!' ##+ config.file.name + ' uploaded. Response: ' + data
           model = angular.fromJson(sessionStorage.purchaseService)
           model.barcode_html = data.barcode_html
           model.code = data.code

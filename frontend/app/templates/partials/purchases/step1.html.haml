@@ -9,12 +9,6 @@
   %section{layout: "row"}
     // ---------------------- seller info ------------------- ///
     %div{flex: ""}
-      / %fieldset.standard.tr-fieldset{:layout => "column"}
-      /   %legend
-      /     %h3{:ng-if => "purchase.model.type == 'seller'"}
-      /       2. Proveedor
-      /     %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-      /       2. Ingrese el codigo de barras
       .md-subtitle
         Datos del proveedor
       %div.fieldset-inputs
@@ -63,21 +57,15 @@
 
         %div.progress-fieldset{:layout => "row", "layout-align" => "space-around", "layout-sm" => "column","ng-if"=>"clientVerifiedProgress"}
           %md-progress-circular{"md-mode" => "indeterminate"}
-    /%a.md-button.create-seller-button{:ng-if => "purchase.model.type == 'seller'", "ng-click"=>"createseller()"}  crear proveedor
 
     .photo-container.step1{flex: "40"}
       .md-subtitle
         Fotografía de proveedor
       // ---------------------- seller photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
-        / %legend
-        / %h3{:ng-if => "purchase.model.type == 'seller'"}
-
-        / %h3{:ng-if => "purchase.model.type == 'trazoro'"}
-
         %md-input-container.row
           .photo
-            %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
+            %a.image-container{'ng-href' => "#camera",'ng-click' => "setCamaraFileType(1)"}
               %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}
               /%md-tooltip{'md-direction'=> 'right'}
               /  Tomar Foto

@@ -102,11 +102,11 @@
         %div{:layout => "row", "layout-align" => "space-around center", "layout-margin" => "", "layout-sm" => "column"}
           %md-button{:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.id_document_file.url}}", :target => "_blank"}
             %p Cédula de Ciudadanía
-            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentAuthorizedProvider.id_document_file.preview.url || 'img/pdf.png'}}"}
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "img/pdf.png"}
 
-          %md-button{"ng-if"=>"currentAuthorizedProvider.mining_authorization_file.url",:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.mining_authorization_file.url}}", :target => "_blank"}
-            %p Registro Minero del Usuario
-            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "{{currentAuthorizedProvider.mining_authorization_file.preview.url || 'img/pdf.png'}}"}
+          %md-button{"ng-if"=>"currentAuthorizedProvider.rut_file.url",:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.rut_file.url}}", :target => "_blank"}
+            %p RUT
+            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "img/pdf.png"}
 
 %tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 

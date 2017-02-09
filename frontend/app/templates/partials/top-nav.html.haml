@@ -4,24 +4,24 @@
   %section.top-nav-buttons{:layout => "row", "layout-align" => "center center"}
 
     %div{:flex => "10"}
-      %md-button{"ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"}
+      %md-button{"ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard",'aria-label' =>'logo'}
         %img.icon-toolbar{ "ng-src" => "/img/icons/landing/logo-trazoro-blanco.svg" , "style" => "width: 100px; margin-top:10px;"}
 
-    
+
     %md-button.top-nav-button{"aria-label" => "dashboard", "ng-class"=>"getNavigationClass('dashboard')","ui-sref" => "dashboard"} Inicio
-    
+
     %md-button.top-nav-button{"aria-label" => "purchases", "ng-class"=>"getNavigationClass('new_purchase')","ui-sref" => "new_purchase.purchase_home"} Comprar
-    
+
     %md-button.top-nav-button{"aria-label" => "sales", "ng-class"=>"getNavigationClass('new_sale')","ui-sref" => "new_sale.sale_home"}Vender
-    
+
     %md-button.top-nav-button{"aria-label" => "inventory", "ng-class"=>"getNavigationClass('inventory')", "ui-sref" => "inventory.purchases"}Inventario
-    
+
     %md-button.top-nav-button{"aria-label" => "providers", "ng-class"=>"getNavigationClass('index_authorized_provider')","ui-sref" => "index_authorized_provider"}Proveedores
 
     %md-button.top-nav-button{"aria-label" => "marketplace","ng-class"=>"getNavigationClass('marketplace')","ui-sref" => "marketplace"}Marketplace
 
     %div{:flex => '20', "layout" => "row", "layout-align" => "end center", "ng-controller" => "DashboardCtrl", "style" => "margin-right: 110px;"}
-      
+
       %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
 
       / %md-select{"placeholder"=>"{{currentUser.first_name}} {{currentUser.last_name}}", "ng-model"=>""}
@@ -29,15 +29,15 @@
       /   %md-option{"value"=>"Cerrar sesion"}Cerrar sesion
       %label.top-nav-button{ "style" => "color:white; margin-left: 10px; font-family: 'oswald'; letter-spacing: 1px;"}
         {{currentUser.first_name}} {{currentUser.last_name}}
-        
 
 
-          
+
+
 
       / %ul{"id" => "menu"}
       /   %li
       /     %img.user-photo{alt:"user-photo", "ng-src" => "{{currentUser.photo_file.thumb.url || 'img/default-user.png'}}", "style" => "width: 30px; height: 30px;"}
-          
+
       /   %li
       /     %a{"href" => ""}
       /       Cursos
@@ -50,7 +50,7 @@
       /           %a{ "href" => ""}Mobi
 
       / %md-icon{"md-svg-src" => "/img/icons/landing/icono-apunta-avajo-amarillo.svg"}
-    
+
     /%md-button.top-nav-button{"ng-controller"=>"SidebarCtrl", "aria-label" => "providers","ng-click"=>"logout()"}Cerrar Sesion
 
 .breadcrumb{"flex" => 80, "hide-sm" => "", "layout-align" => "center start"}

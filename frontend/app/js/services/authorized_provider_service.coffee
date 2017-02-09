@@ -89,9 +89,9 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
             blobFiles.photoFile = photoFileBlob
             convertAndUploadFiles(filesToUpload, blobFiles)
           ).catch (err) ->
-            console.log '[SERVICE-ERROR]: image signature failed to load: ' + err
+            #console.log '[SERVICE-ERROR]: image signature failed to load: ' + err
       ).catch (err) ->
-        console.log '[SERVICE-ERROR]: image photo failed to load: ' + err
+        #console.log '[SERVICE-ERROR]: image photo failed to load: ' + err
 #------------------------------------------------------------
       #
       # Funtion to convert the files
@@ -201,7 +201,7 @@ angular.module('app').factory 'AuthorizedProviderService', ($resource, $upload, 
           file: files
           fileFormDataName: 'files[]')
         .progress((evt) ->
-          console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
+          #console.log 'progress: ' + service.uploadProgress + '% ' + evt.config.file
           service.uploadProgress = parseInt(100.0 * evt.loaded / evt.total)
           return
         ).success( (data, status, headers, config)->

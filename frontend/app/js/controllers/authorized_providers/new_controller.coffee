@@ -1,4 +1,4 @@
-angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $document, $stateParams, $window, LocationService, $mdDialog, $mdToast,CameraService, ScannerService, AuthorizedProviderService) ->
+angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $document, $stateParams, $window, LocationService, $mdDialog, $mdToast,CameraService, AuthorizedProviderService) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -96,22 +96,12 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
     return
 
-     #$scope.$watch 'currentAuthorizedProvider.document_number', (oldVal, newVal) ->
-     # if oldVal and newVal != oldVal
-      #  console.log "alerta!"
-      #else
-       # console.log "no hay problema"
-
-
   # ********* Scanner variables and methods *********** #
   # This have to be executed before retrieve the AuthorizedProviderService model to check for pendind scaned files
 
   $scope.photo = CameraService.getLastScanImage()
-  if CameraService.getJoinedFile() and CameraService.getJoinedFile().length > 0
-    $scope.file = CameraService.getJoinedFile()
-
-  else if ScannerService.getScanFiles() and ScannerService.getScanFiles().length > 0
-    $scope.file = ScannerService.getScanFiles()
+  if(CameraService.getJoinedFile() && CameraService.getJoinedFile().length>0)
+    $scope.file= CameraService.getJoinedFile()
 
   if $scope.photo and CameraService.getTypeFile() == 1
     $scope.currentAuthorizedProvider.photo_file = $scope.photo
@@ -129,24 +119,9 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       # AuthorizedProviderService.saveModel()
       goToDocumentation()
 
-    if CameraService.getTypeFile() == 4
-      $scope.currentAuthorizedProvider.rut_file = $scope.file
-      # AuthorizedProviderService.saveModel()
-      goToDocumentation()
-
-    if CameraService.getTypeFile() == 5
-      $scope.currentAuthorizedProvider.chamber_of_commerce_file = $scope.file
-      # AuthorizedProviderService.saveModel()
-      goToDocumentation()
-
-    if CameraService.getTypeFile() == 6
-      $scope.currentAuthorizedProvider.rut_file = $scope.file
-      goToDocumentation()
-    #AuthorizedProviderService.saveModel()
     CameraService.clearData()
-    ScannerService.clearData()
 
-  $scope.scanner = (type) ->
+  $scope.setCamaraFileType = (type) ->
     CameraService.setTypeFile type
     $scope.currentAuthorizedProvider = AuthorizedProviderService.model
     AuthorizedProviderService.saveModel()
@@ -231,6 +206,8 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.back = ->
     $window.history.back()
     return
+  $scope.cancel = ->
+    $state.go 'index_authorized_provider'
 
 #------------Validations -----------------#
   # Validates if the fiels are fill up or not

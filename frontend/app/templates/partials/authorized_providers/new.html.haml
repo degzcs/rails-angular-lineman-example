@@ -16,7 +16,7 @@
               %hr{ "width"=>"90%", "color"=>"#E3CD48", "align"=>"left"}
                 %div.row{:layout => "row", "layout-align" => "center center"}
                   .photo{:style => "max-width:150px;"}
-                    %a.image-container{'ng-href' => "#camera",'ng-click' => "scanner(1)"}
+                    %a.image-container{'ng-href' => "#camera",'ng-click' => "setCamaraFileType(1)"}
                       %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{currentAuthorizedProvider.photo_file || 'img/default-user.png'}}", "ng-model" => "currentAuthorizedProvider.photo_file", required: ""}
                       /%md-tooltip{'md-direction'=> 'bottom'}
                       /  Tomar Foto
@@ -116,7 +116,6 @@
                 %p.md-subtitle Subir documento de identificación
                 %md-select.uploader-selector{"ng-model" => "id_document_upload_type", :placeholder => "Cargar Documento de Identificación", :required => ''}
                   %md-option{:value => "by_upload"} Desde el PC
-                  %md-option{:value => "by_scan"} Por Escaner
                   %md-option{:value => "by_photo"} por Camara
               %div{flex: ''}
                 .upload-oc{:flex => ''}
@@ -131,15 +130,9 @@
                       %md-button.btn-next.md-raised.md-primary{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.id_document_file', name: 'id_document_file'}
                         Subir desde PC
 
-
-                    .by_scan{"ng-switch-when" =>'by_scan'}
-                      %md-button.btn-next.md-raised.md-primary{'ng-href' => "#scanner1",'ng-click' => "scanner(2)"}
-                        Escanear
-
-
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
-                        %md-button.btn-next.md-raised.md-primary{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(2)"}
+                        %md-button.btn-next.md-raised.md-primary{"aria-label" => "Número de Identificación", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "setCamaraFileType(2)"}
                           Escanear con camara
 
             %div.uploader-certificate-tab{:layout => "row", "layout-align" => "space-between center", "layout-margin" => "", "layout-sm" => "column"}
@@ -147,7 +140,6 @@
                 %p.md-subtitle Subir la RUT
                 %md-select.uploader-selector{"ng-model" => "rut_uplaod_type", :placeholder => "Cargar Documento RUT"}
                   %md-option{:value => "by_upload"} Desde el PC
-                  %md-option{:value => "by_scan"} Por Escaner
                   %md-option{:value => "by_photo"} por Camara
               %div{flex: ''}
                 .upload-oc{:flex => ''}
@@ -160,19 +152,13 @@
                       %md-button.btn-next.md-raised.md-primary{'ng-file-select' => '', 'ng-model' => 'currentAuthorizedProvider.rut_file', name: 'rut_file'}
                         Subir desde PC
 
-
-                    .by_scan{"ng-switch-when" =>'by_scan'}
-                      %md-button.btn-next.md-raised.md-primary{'ng-href' => "#scanner1",'ng-click' => "scanner(6)"}
-                        Escanear
-
-
                     .by_photo{"ng-switch-when" =>'by_photo'}
                       .md-tile-left.cam
-                        %md-button.btn-next.md-raised.md-primary{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "scanner(6)"}
+                        %md-button.btn-next.md-raised.md-primary{"aria-label" => "RUT", "md-ripple-size" => "partial","ng-href" => "#scanner",'ng-click' => "setCamaraFileType(3)"}
                           Escanear con camara
 
 
           %div.info-buttons{layout: 'row', "layout-align"=> "center"}
             %md-button.btn-next.md-raised.md-primary{:class => "md-raised md-accent", "ng-click" => "updateAuthorizedProvider($event)", "ng-disabled"=>"sendingPost"} Actualizar Proveedor
 
-  %tr-loading-view{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
+  %tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}

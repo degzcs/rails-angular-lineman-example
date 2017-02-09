@@ -1,4 +1,4 @@
-angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService, PurchaseService,CourierService, $timeout, $mdDialog, $state, LiquidationService,   CurrentUser,User, $q) ->
+angular.module('app').controller 'SaleOrderLiquidateCtrl', ($scope, SaleService, PurchaseService, $timeout, $mdDialog, $state, LiquidationService,   CurrentUser,User, $q) ->
   #
   # Redirects to The index sale if there is no pendinigs liquidations
   #

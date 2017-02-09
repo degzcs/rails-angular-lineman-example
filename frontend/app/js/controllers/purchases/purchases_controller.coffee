@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, ScannerService, $location,$state, $filter, AuthorizedProviderService, SignatureService, $rootScope) ->
+angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, GoldBatchService, CameraService, MeasureConverterService, SaleService, $timeout, $q, $mdDialog, CurrentUser, $location,$state, $filter, AuthorizedProviderService, SignatureService, $rootScope) ->
 
   #*** Loading Variables **** #
   $scope.showLoading = false
@@ -215,9 +215,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
   # Set the last picture that was took
   $scope.photo= CameraService.getLastScanImage()
   # Set the last certificate file that was
-  if(ScannerService.getScanFiles() and ScannerService.getScanFiles().length>0)
-    $scope.file= ScannerService.getScanFiles()
-  else if(CameraService.getJoinedFile() and CameraService.getJoinedFile().length>0)
+  if(CameraService.getJoinedFile() && CameraService.getJoinedFile().length>0)
     $scope.file= CameraService.getJoinedFile()
 
   if($scope.photo and CameraService.getTypeFile() == 1)
@@ -229,7 +227,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     CameraService.clearData()
     ScannerService.clearData()
 
-  $scope.scanner = (type) ->
+  $scope.setCamaraFileType = (type) ->
     $scope.saveState()
     CameraService.setTypeFile(type)
 

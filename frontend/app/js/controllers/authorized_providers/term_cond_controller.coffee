@@ -5,7 +5,7 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
     $scope.chkAgreetmentActive = false
 
     $scope.authorizedProvider = AuthorizedProviderService.restoreModel()
-    
+
     CurrentUser.get().success (data) ->
       $scope.authorizedProvider.use_wacom_device = data.use_wacom_device
 
@@ -45,5 +45,14 @@ angular.module('app').controller 'AuthorizedProviderTermCondCtrl',
         $scope.authorizedProvider.signature_picture = null
       else
         $scope.authorizedProvider.signature_picture = document.getElementById('authorized_provider_signature').src
+
+    #
+    # Check if it is needed the signature
+    # @return [ Boolean ]
+    $scope.invalidateSignatureStep  = ->
+      if $scope.authorizedProvider.use_wacom_device
+        ($scope.authorizedProvider.signature_picture == null) && ($scope.chkAgreetmentActive != true)
+      else
+        ($scope.chkAgreetmentActive != true)
 
 
