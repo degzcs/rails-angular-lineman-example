@@ -4,13 +4,19 @@
   }
 }
 .rucom-box{
-   position: relative;
+  position: relative;
+  font-size: 14px;
   input{
-    display: block; border: 1px solid #d7d6d6; background: #fff;
-    padding: 20px 10px 10px 80px !important;
+    display: block;
+    border: 1px solid #d7d6d6; background: #fff;
+    padding: 20px 10px 10px 70px !important;
     width: 195px;
   }
   .rucom-prefix{
-    position: absolute; display: block; left: 5px; top: 44px; z-index: 9;
+    position: absolute;
+    display: block;
+    left: 5px;
+    top: 44px;
+    z-index: 9;
   }
 }
