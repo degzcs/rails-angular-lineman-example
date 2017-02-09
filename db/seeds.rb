@@ -108,7 +108,9 @@ begin
   end
   puts 'Creating Basic Trazoro Service'
   trazoro_service = FactoryGirl.create(:available_trazoro_service, name: 'Compra de Oro', credits: 1.0, reference: 'buy_gold')
+  trazoro_service2 = FactoryGirl.create(:available_trazoro_service, name: 'Generacion de Regalias', credits: 1.0, reference: 'generate_royalties')
   legal_representative.setting.trazoro_services << trazoro_service
+  legal_representative.setting.trazoro_services << trazoro_service2
 rescue => e
   puts "There is something wrong!!!, without a user setting will be errors in the sale transactions. ERROR: #{ e }"
 end
