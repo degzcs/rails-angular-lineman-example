@@ -234,7 +234,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else if frm.last_name == '' || frm.last_name == undefined
     else if frm.document_number == '' || frm.rucom.rucom_number == undefined
     else if frm.rucom.rucom_number == '' || frm.rucom.rucom_number == undefined
-    else if frm.email == '' || frm.email == undefined
+    #else if frm.email == '' || frm.email == undefined
     else if frm.document_number == '' || frm.document_number == undefined
     else if frm.phone_number == '' || frm.phone_number == undefined
     else if frm.address == '' || frm.address == undefined
@@ -253,6 +253,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else
       $scope.sendingPost = true
       AuthorizedProviderService.model = $scope.currentAuthorizedProvider
+      AuthorizedProviderService.model.rucom.rucom_number = 'RUCOM-'+$scope.currentAuthorizedProvider.rucom.rucom_number
       AuthorizedProviderService.saveModel()
       AuthorizedProviderService.update($scope.currentAuthorizedProvider.id)
       $scope.showUploadingDialog()
