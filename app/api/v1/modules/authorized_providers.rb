@@ -78,13 +78,13 @@ module V1
           query_rucomid = params[:query_rucomid]
           authorized_providers =
             if query_name
-              ::User.authorized_providers.order_by_id.find_by_name(query_name).paginate(page: page, per_page: per_page)
+              ::User.authorized_providers.completed.order_by_id.find_by_name(query_name).paginate(page: page, per_page: per_page)
             elsif query_id
-              ::User.authorized_providers.order_by_id.find_by_document_number(query_id).paginate(page: page, per_page: per_page)
+              ::User.authorized_providers.completed.order_by_id.find_by_document_number(query_id).paginate(page: page, per_page: per_page)
             elsif query_rucomid
-              ::User.authorized_providers.order_by_id.where('rucom_id = :rucom_id', rucom_id: query_rucomid).paginate(page: page, per_page: per_page)
+              ::User.authorized_providers.completed.order_by_id.where('rucom_id = :rucom_id', rucom_id: query_rucomid).paginate(page: page, per_page: per_page)
             else
-              ::User.authorized_providers.order_by_id.paginate(page: page, per_page: per_page)
+              ::User.authorized_providers.completed.order_by_id.paginate(page: page, per_page: per_page)
             end
           # binding.pry
           header 'total_pages', authorized_providers.total_pages.to_s

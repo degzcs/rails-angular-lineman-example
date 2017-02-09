@@ -97,6 +97,7 @@ class User < ActiveRecord::Base
   scope :traders, -> { joins(:roles).where("roles.name = 'trader'") }
   scope :exclude, -> (user) { where.not(id: user.id) }
   scope :legal_representatives, -> { includes(:profile).joins(:profile).where('profiles.legal_representative = true') }
+  scope :completed, -> { (where(registration_state: 'completed')) }
 
   #
   # Calbacks
