@@ -44,7 +44,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
         else
           e.preventDefault()
           rawDataFromDocument.push ','
-          console.log rawDataFromDocument.push ','
+          #console.log rawDataFromDocument.push ','
  #------------- Switch variables----------------
 
   $scope.onChange = (toggleState) ->
@@ -53,7 +53,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
       $mdToast.show $mdToast.simple().content('Lector de barras activado')
       $scope.captureDisable = false
     else
-      console.log "false"
+      #console.log "false"
       window.defaultStatus = "Default status bar message."
       $mdToast.show $mdToast.simple().content('Lector de barras desactivado')
       $scope.captureDisable = true
@@ -63,7 +63,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.copyDataFromIdDocument = ->
     rawDataFromDocumentString = rawDataFromDocument.join('').replace(/,,/g, ',') # It joins all character into a string.
     dataFromDocument = rawDataFromDocumentString.split(",")
-    console.log detectOS()
+    #console.log detectOS()
 
     if OSName == "Windows"
       idDocumentNumber = dataFromDocument[0].toString()

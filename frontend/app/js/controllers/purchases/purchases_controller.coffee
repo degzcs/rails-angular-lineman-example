@@ -479,17 +479,21 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
       AuthorizedProviderService.byIdNumber(idNumber, providerType)
       .success((data, status, headers) ->
         $scope.showLoading = false
-        $scope.current_user = data
-        $scope.purchase.model.seller = data
-        $scope.purchase.model.seller.provider_type = providerType
-        $scope.purchase.model.seller.document_type = 'CEDULA'
-        $scope.purchase.model.seller.name = fullName($scope.current_user)
-        $scope.purchase.model.seller.company_name = "NA"
-        $scope.buyer_data = buyerDataFrom($scope.current_user)
-        $scope.prov = formattedContent(data)
-        $scope.purchase.model.seller.name = fullName($scope.current_user)
-        $scope.purchase.model.seller.company_name = "NA"
-        $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
+        if data.registration_state == 'completed'
+          $scope.current_user = data
+          $scope.purchase.model.seller = data
+          $scope.purchase.model.seller.provider_type = providerType
+          $scope.purchase.model.seller.document_type = 'CEDULA'
+          $scope.purchase.model.seller.name = fullName($scope.current_user)
+          $scope.purchase.model.seller.company_name = "NA"
+          $scope.buyer_data = buyerDataFrom($scope.current_user)
+          $scope.prov = formattedContent(data)
+          $scope.purchase.model.seller.name = fullName($scope.current_user)
+          $scope.purchase.model.seller.company_name = "NA"
+          $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
+        else
+          $state.go 'index_authorized_provider'
+          $scope.infoAlert('No registrado', 'Este usuario fue encontrado en el RUCOM, pero no ha sido correctamente registrado en TRAZORO. Para realizar este registro dirijase a Proveedores y haga click en el boton +AGREGAR PROVEEDOR')
       )
       .error((error)->
         $scope.prov = error
