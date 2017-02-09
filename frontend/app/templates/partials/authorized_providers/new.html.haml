@@ -46,11 +46,13 @@
                     %div{"ng-message" => "required"} Este campo es requerido.
 
               %div{:layout => "row", "layout-sm" => "column"}
-                %md-input-container{:flex => ""}
+                %md-input-container.rucom-box{:flex => ""}
                   %label Número de RUCOM
-                  %input{:name => "rucom_number","ng-model" => "currentAuthorizedProvider.rucom.rucom_number", :ng-value => "content.rucom.rucom_number"}
-                  /%md-tooltip{"md-direction" => "botton", "md-visible" => "true"}
-                  /  %span.ion-android-checkmark-circle &nbsp;válido
+                  %input{:name => "rucom_number","ng-model" => "currentAuthorizedProvider.rucom.rucom_number", :required => ""}
+                  %span.rucom-prefix RUCOM-
+                  %div{"ng-messages" => "providerEditionForm.rucom_number.$error"}
+                    %div{"ng-message" => "required"} Este campo es requerido.
+
                 %md-input-container{:flex => ""}
                   %label Tipo de Proveedor
                   %input{:readonly => true, :name => "provider_type", "ng-model" => "currentAuthorizedProvider.rucom.provider_type", :ng-value => "currentAuthorizedProvider.rucom.provider_type"}
@@ -63,7 +65,7 @@
                     %div{"ng-message" => "required"} Este campo es requerido.
                 %md-input-container{:flex => ""}
                   %label Email
-                  %input{:name => "email", "ng-model" => "currentAuthorizedProvider.email", :type => "email", :required => ""}
+                  %input{:name => "email", "ng-model" => "currentAuthorizedProvider.email", :type => "email"}
                   %div{"ng-messages" => "providerEditionForm.email.$error"}
                     %div{"ng-message" => "required"} Este campo es requerido.
                     %div{"ng-message" => "email"} Ingrese un e-mail válido.
