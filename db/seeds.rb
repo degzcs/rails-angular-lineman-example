@@ -30,10 +30,10 @@ begin
                               )
   legal_representative = FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Diego',
-        last_name: 'Caicedo',
-        email: 'dcm@trazoro.co',
-        password: 'A7l(?/]03tal9-%g4',
-        password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        last_name: 'Pardo',
+        email: 'dgomez@trazoro.co',
+        password: 'Tr7l(?/]03tal9oro-%g4',
+        password_confirmation: 'Tr7l(?/]03tal9oro-%g4' ,
         city: city,
         office: company.main_office,
         legal_representative: true)
@@ -55,16 +55,16 @@ puts 'Creating basic users ...'
 begin
   AdminUser.create(
     email:'soporte@trazoro.co',
-    password: 'A7l(?/]03tal9-%g4',
-    password_confirmation: 'A7l(?/]03tal9-%g4',
+    password: 'Tr7l(?/]03tal9oro-%g4',
+    password_confirmation: 'Tr7l(?/]03tal9oro-%g4',
     )
 
   FactoryGirl.create(:user, :with_profile, :with_trader_role,
         first_name: 'Tech',
         last_name: 'Trazoro',
         email: 'tech@trazoro.co',
-        password: 'A7l(?/]03tal9-%g4',
-        password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        password: 'Tr7l(?/]03tal9oro-%g4',
+        password_confirmation: 'Tr7l(?/]03tal9oro-%g4' ,
         city: city,
         office: office,)
 
@@ -72,19 +72,11 @@ begin
         first_name: 'Diego',
         last_name: 'Gomez',
         email: 'diego.gomez@trazoro.co',
-        password: 'A7l(?/]03tal9-%g4',
-        password_confirmation: 'A7l(?/]03tal9-%g4' ,
+        password: 'Tr7l(?/]03tal9oro-%g4',
+        password_confirmation: 'Tr7l(?/]03tal9oro-%g4' ,
         city: city,
         office: office,)
 
-  FactoryGirl.create(:user, :with_profile, :with_trader_role,
-        first_name: 'Santiago',
-        last_name: 'Lopez',
-        email: 'santiago.lopez@trazoro.co',
-        password: 'A7l(?/]03tal9-%g4',
-        password_confirmation: 'A7l(?/]03tal9-%g4',
-        city: city,
-        office: office,)
 rescue => e
   puts "There is something wrong!!!, perhaps the users were already created. ERROR: #{ e }"
 end
@@ -119,4 +111,8 @@ begin
   legal_representative.setting.trazoro_services << trazoro_service
 rescue => e
   puts "There is something wrong!!!, without a user setting will be errors in the sale transactions. ERROR: #{ e }"
+end
+
+if ENV['TAX_MODULE_SEED'] == 'yes'
+  `rake db:seed:tax_module`
 end
