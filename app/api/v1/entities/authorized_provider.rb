@@ -44,6 +44,7 @@ module V1
         user.rucom.as_json
       end
       expose :provider_type, documentation: { type: 'string', desc: 'provider_type', example: '' }
+      expose :registration_state, documentation: { type: 'string', desc: 'registration state', example: 'completed, initialized ...' }
     end
   end
 end

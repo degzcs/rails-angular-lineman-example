@@ -114,7 +114,7 @@ angular.module('app').controller 'AuthorizedProviderIndexCtrl', ($scope, Authori
     $scope.pages = parseInt(headers().total_pages)
   )
   .error (data, status, headers, config)->
-    $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(data).ariaLabel('Alert Dialog ').ok('ok')
+    $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(data).ariaLabel('index').ok('ok')
     return
 
 
@@ -129,7 +129,7 @@ angular.module('app').controller 'AuthorizedProviderIndexCtrl', ($scope, Authori
         $scope.pages = parseInt(headers().total_pages)
       )
       .error (data, status, headers, config)->
-      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(data).ariaLabel('Alert Dialog ').ok('ok')
+      $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(data).ariaLabel('index').ok('ok')
       return
 
   # objectEquality = true
@@ -142,7 +142,7 @@ angular.module('app').controller 'AuthorizedProviderIndexCtrl', ($scope, Authori
         $scope.pages = parseInt(headers().total_pages)
       )
       .error (data, status, headers, config)->
-        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(data).ariaLabel('Alert Dialog ').ok('ok')
+        $mdDialog.show $mdDialog.alert().parent(angular.element(document.body)).title('Hubo un problema').content(data).ariaLabel('index').ok('ok')
         return
 
   # Launch External user type selection
