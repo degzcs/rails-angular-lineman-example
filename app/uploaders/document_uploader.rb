@@ -10,6 +10,26 @@ module CarrierWave
         img
       end
     end
+
+    def convert_pdf
+      # binding.pry
+        output = "#{current_path.split('.').first}.pdf"
+        manipulate! do |img|
+          ::MiniMagick::Tool::Convert.new do |convert|
+            convert << current_path
+            convert.merge! ["-format", "pdf"]
+            convert << output
+          end
+          # binding.pry
+          ::MiniMagick::Image.open(output)
+        end
+        # current_path = output
+        # file= CarrierWave::SanitizedFile.new File.open(current_path)
+        # img = ::MiniMagick::Image.open(current_path)
+        # img.write(current_path)
+        # img.run_command("identify", current_path)
+        # img
+    end
   end
 end
 
@@ -32,35 +52,22 @@ class DocumentUploader < CarrierWave::Uploader::Base
   #
 
   process :set_content_type
+  # process :resize_to_fit => [310, 200]
 
   # Versions
-  version :preview, :if => :is_image_extension? do
+  version :pdf do
+    process :convert_pdf
+
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.pdf'
+    end
+  end
+
+  version :preview do
     process :convert => :jpg
     process :cover
     #process :resize_to_fill => [310, 200]
     process :resize_to_fit => [310, 200]
-
-    def full_filename (for_file = model.source.file)
-      super.chomp(File.extname(super)) + '.jpg'
-    end
-  end
-
-  version :thumb, :if => :is_image_extension? do
-    process :convert => :jpg
-    process :cover
-    process :resize_to_fit => [50, 50]
-    process :quality => 100
-
-    def full_filename (for_file = model.source.file)
-      super.chomp(File.extname(super)) + '.jpg'
-    end
-  end
-
-  version :medium, :if => :is_image_extension? do
-    process :convert => :jpg
-    process :cover
-    process :resize_to_fit => [300, 300]
-    process :quality => 85
 
     def full_filename (for_file = model.source.file)
       super.chomp(File.extname(super)) + '.jpg'
