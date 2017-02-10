@@ -206,6 +206,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.back = ->
     $window.history.back()
     return
+
   $scope.cancel = ->
     $state.go 'index_authorized_provider'
 
@@ -230,15 +231,15 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
   $scope.isEmptyOrUndefinedAnyField = ()->
     isOk = false
     frm = $scope.currentAuthorizedProvider
-    if frm.first_name == '' || frm.first_name == undefined
-    else if frm.last_name == '' || frm.last_name == undefined
-    else if frm.document_number == '' || frm.rucom.rucom_number == undefined
-    else if frm.rucom.rucom_number == '' || frm.rucom.rucom_number == undefined
-    #else if frm.email == '' || frm.email == undefined
-    else if frm.document_number == '' || frm.document_number == undefined
-    else if frm.phone_number == '' || frm.phone_number == undefined
-    else if frm.address == '' || frm.address == undefined
-    else if frm.photo_file == '' || frm.photo_file == undefined
+    if frm.first_name == '' || frm.first_name == undefined || frm.first_name == null
+    else if frm.last_name == '' || frm.last_name == undefined ||  frm.last_name == null
+    else if frm.rucom.rucom_number == '' || frm.rucom.rucom_number == undefined ||  frm.rucom.rucom_number == null
+    #else if frm.email == '' || frm.email == undefined ||  frm.email == null
+    else if frm.document_number == '' || frm.document_number == undefined ||  frm.document_number == null
+    else if frm.phone_number == '' || frm.phone_number == undefined ||  frm.phone_number == null
+    else if frm.address == '' || frm.address == undefined ||  frm.address == null
+    else if frm.photo_file == '' || frm.photo_file == undefined || frm.photo_file == null
+    else if frm.city_id == '' || frm.city_id == undefined || frm.city_id == null
     else
       isOk = true
     return isOk
@@ -249,7 +250,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
 
   validateDocumentationAndUpdate =  ()->
     if $scope.currentAuthorizedProvider.id_document_file == '' || $scope.currentAuthorizedProvider.rut_file == ''
-      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('Alert Dialog Demo').ok('ok')
+      $mdDialog.show $mdDialog.alert().title('Formulario Incompleto').content('Debe subir toda la documentacion necesaria').ariaLabel('authorized_provider').ok('ok')
     else
       $scope.sendingPost = true
       AuthorizedProviderService.model = $scope.currentAuthorizedProvider
