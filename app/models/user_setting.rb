@@ -66,6 +66,14 @@ class UserSetting < ActiveRecord::Base
     'f': 'No'
   }
 
+  def unit_price
+    if self.fine_gram_value&. > 0
+      self.fine_gram_value
+    else
+      Settings.instance.fine_gram_value
+    end
+  end
+
   def self.regime_types_for_select
     REGIME_TYPES.collect { |val| [val[1], val[0]] }
   end

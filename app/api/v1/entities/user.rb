@@ -54,8 +54,8 @@ module V1
       expose :use_wacom_device, documentation: { type: 'string', desc: 'enviroment', example: 'true, false' } do |user, _options|
         APP_CONFIG[:USE_WACOM_DEVICE]
       end
-      expose :unit_price, documentation: {} do |_user, _options|
-        Settings.instance.fine_gram_value
+      expose :unit_price, documentation: {} do |user, _options|
+        user.setting.unit_price
       end
       expose :trazoro_services, documentation: { type: "array", desc: "Trazoro Services", example: "Servicio registro barequero" } do |user, options|
         if user.setting
