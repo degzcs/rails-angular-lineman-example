@@ -1,10 +1,10 @@
 ActiveAdmin.register User do
   menu priority: 6, label: 'Usuarios'
 
-  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, :alegra_sync, 
-                role_ids: [], profile_attributes: [:first_name, :last_name, :document_number, 
-                :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file, 
-                :id_document_file, :legal_representative, :nit_number, :city_id, :user_id], 
+  permit_params :id, :email, :office_id, :password, :password_confirmation, :rucom, :alegra_sync,
+                role_ids: [], profile_attributes: [:first_name, :last_name, :document_number,
+                :phone_number, :address, :rut_file, :photo_file, :mining_authorization_file,
+                :id_document_file, :legal_representative, :nit_number, :city_id, :user_id],
                 setting_attributes: [:alegra_token, :fine_gram_value, :regime_type,
                 :scope_of_operation, :organization_type, :self_holding_agent, rut_activity_ids: []]
 
@@ -25,13 +25,13 @@ ActiveAdmin.register User do
       ActiveRecord::Base.transaction do
         service_ids = params[:user][:available_trazoro_service_id]
         service_ids.reject!{ |item| item.empty? } if service_ids.present?
-        setting_attributes = permitted_params[:user][:setting_attributes]
-        rut_activity_ids = setting_attributes[:rut_activity_ids]
-        rut_activity_ids.reject!{ |item| item.empty? } if rut_activity_ids.present?
-        user.setting.update_attributes(setting_attributes)
-        user.setting.rut_activity_ids = rut_activity_ids
-        user.save!
         if user.trader? && user.profile.legal_representative? && service_ids.present?
+          setting_attributes = permitted_params[:user][:setting_attributes]
+          rut_activity_ids = setting_attributes[:rut_activity_ids]
+          rut_activity_ids.reject!{ |item| item.empty? } if rut_activity_ids.present?
+          user.setting.update_attributes(setting_attributes)
+          user.setting.rut_activity_ids = rut_activity_ids
+          user.save!
           user.setting.trazoro_service_ids = service_ids
           user.save!
         end
