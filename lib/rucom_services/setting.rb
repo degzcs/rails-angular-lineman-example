@@ -79,7 +79,7 @@ module RucomServices
     def driver_instance
       @driver_instance ||=
         if driver && browser
-          driver.constantize.for browser
+          driver.constantize.for(browser, {args: ['--ssl-protocol=any','--ignore-ssl-errors=true',  '--web-security=no', '--webdriver-loglevel=DEBUG', '--debug=true'] })
         else
           @response[:errors] << 'driver_instance: Should setting up the driver and browser'
           nil
