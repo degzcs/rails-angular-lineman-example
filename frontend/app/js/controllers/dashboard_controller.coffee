@@ -1,4 +1,4 @@
-angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, CurrentUser, CreditBilling, $mdDialog, $log) ->
+angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, CurrentUser, CreditBilling, $mdDialog, $log, $filter) ->
   #*** Loading Variables **** #
   $scope.showLoading = true
   $scope.loadingMode = "indeterminate"
@@ -31,9 +31,11 @@ angular.module('app').controller 'DashboardCtrl', ($scope, $alert, $auth, Curren
   $scope.confirmCreditBilling = ->
     if($scope.quantity != null && $scope.unit_price != null)
       price = $scope.quantity * $scope.unit_price
+      formatted_quantity = $filter('number')($scope.quantity, 0)
+      formatted_price = $filter('currency')(price, '$', 2)
       confirm = $mdDialog.confirm()
         .title('Confirmacion solicitud de creditos')
-        .content("Esta seguro de comprar #{$scope.quantity} por un total de $#{price.formatMoney(2)} COP")
+        .content("Esta seguro de comprar #{formatted_quantity} por un total de #{formatted_price} COP")
         .ariaLabel('Lucky day').ok('Solicitar Factura').cancel('Cancelar')
 
       $mdDialog.show(confirm).then (->

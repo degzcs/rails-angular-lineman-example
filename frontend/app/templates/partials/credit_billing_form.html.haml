@@ -4,20 +4,11 @@
     .dialog-content
       %form{:name => "creditBillingForm","ng-submit"=> "confirmCreditBilling()"}
         %md-content.md-padding
-          %md-select.credits_select_bar{"ng-model" => "quantity", :placeholder => "Creditos Solicitados"}
-            %md-option{:value => "1000"} 1000
-            %md-option{:value => "2000"} 2000
-            %md-option{:value => "3000"} 3000
-            %md-option{:value => "4000"} 4000
-            %md-option{:value => "5000"} 5000
-            %md-option{:value => "6000"} 6000
-            %md-option{:value => "7000"} 7000
-            %md-option{:value => "8000"} 8000
-            %md-option{:value => "9000"} 9000
-            %md-option{:value => "10000"} 10000
+          %md-input-container
+            %input{ "type" => "number", "string-to-number"=>"",'ng-model' => 'quantity', :required=>"", :name => 'quantity', :min => "1", "placeholder" => "Creditos Solicitados"}
           %br
           %div{layout: "row", "layout-align" => "center"}
-            %md-button.btn-back-black{"ng-click"=>"cancel()"} 
+            %md-button.btn-back-black{"ng-click"=>"cancel()"}
               %md-icon{ "md-svg-icon"=>"/img/icons/purchase/back-flecha-yellow.svg" }
               Volver
 
