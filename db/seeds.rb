@@ -83,7 +83,7 @@ end
 
 puts 'Associating trazoro users ...'
 # Add to the trazoro Office
-trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'tech@trazoro.co', 'dcm@trazoro.co', 'santiago.lopez@trazoro.co'])
+trazoro_users = User.where(email: ['diego.gomez@trazoro.co', 'tech@trazoro.co', 'dcomez@trazoro.co', 'santiago.lopez@trazoro.co'])
 trazoro_users.update_all(office_id: office.id)
 
 puts 'Setting user roles ...'
@@ -99,7 +99,7 @@ end
 
 puts 'Associating user settings to trazoro dcm user legal representative'
 begin
-  legal_representative = User.find_by(email: 'dcm@trazoro.co')
+  legal_representative = User.find_by(email: 'dcomez@trazoro.co')
   raise 'don\'t create user setting for user dcm legal representative' unless legal_representative
   unless legal_representative.setting
     usr_setting = FactoryGirl.build(:user_setting, profile_id: legal_representative.profile.id)
