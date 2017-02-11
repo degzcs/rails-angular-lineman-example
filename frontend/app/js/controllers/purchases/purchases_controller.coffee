@@ -258,9 +258,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.goldBatch.model.total_fine_grams = MeasureConverterService.gramsToFineGrams($scope.goldBatch.model.total_grams, $scope.goldBatch.model.grade)
 
     if $scope.purchase.model.decrease > 0
-      $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999) * (1 - $scope.purchase.model.decrease/100)
+      $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 1000) * (1 - $scope.purchase.model.decrease/100)
     else
-      $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 999)
+      $scope.purchase.model.fine_gram_unit_price_to_buy = (($scope.purchase.model.fine_gram_unit_price * $scope.goldBatch.model.grade) / 1000)
 
     #
     # Measures Unit Price
@@ -275,11 +275,11 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
 
     #
     #subtotals
-    $scope.subtotalGrams = $scope.gramsUnitPrice * $scope.gramsFineGrams
-    $scope.subtotalCastellano = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.castellanosFineGrams
-    $scope.subtotalTomines = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.tominesFineGrams
-    $scope.subtotalReales = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.realesFineGrams
-    $scope.subtotalGranos = $scope.purchase.model.fine_gram_unit_price_to_buy * $scope.granosFineGrams
+    $scope.subtotalGrams = $scope.gramsUnitPrice * $scope.goldBatch.model.grams
+    $scope.subtotalCastellano = $scope.castellanosUnitPrice * $scope.goldBatch.model.castellanos
+    $scope.subtotalTomines = $scope.tominesUnitPrice * $scope.goldBatch.model.tomines
+    $scope.subtotalReales = $scope.realesUnitPrice * $scope.goldBatch.model.reales
+    $scope.subtotalGranos = $scope.granosUnitPrice * $scope.goldBatch.model.granos
     # TEMPORAL FIX: to avoid use this watcher for each view
     $rootScope.$on '$viewContentLoading', (event, viewName, viewContent) ->
       if "partials/purchases/step2.html" != viewName.view.templateUrl

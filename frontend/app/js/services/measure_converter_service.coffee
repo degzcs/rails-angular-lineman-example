@@ -100,13 +100,13 @@ angular.module('app').factory 'MeasureConverterService', ()->
     # Fine-Grams to Real-Grams
     #
     gramsToFineGrams: (grams, grade)->
-      (grams*grade)/999
+      (grams*grade)/1000
 
     #
     #
     #
     fineGramsToGrams: (fine_grams, grade)->
-        (999*fine_grams)/grade
+        (1000*fine_grams)/grade
 
 
 
