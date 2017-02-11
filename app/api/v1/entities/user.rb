@@ -55,7 +55,7 @@ module V1
         APP_CONFIG[:USE_WACOM_DEVICE]
       end
       expose :unit_price, documentation: {} do |user, _options|
-        user.setting.unit_price
+        user.try(:setting).try(:unit_price) || 0.0 # NOTE: the 0.0 case is for offices
       end
       expose :trazoro_services, documentation: { type: "array", desc: "Trazoro Services", example: "Servicio registro barequero" } do |user, options|
         if user.setting
