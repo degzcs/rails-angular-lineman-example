@@ -14,15 +14,10 @@ class TermsAndConditions::DrawPdf < Prawn::Document
   raise "You must to provide a authorize_provider presenter option" if options[:authorized_provider_presenter].blank?
   raise "You must to provide a signature picture option" if options[:signature_picture].blank?
     @base_file = options[:base_file] || File.open(File.join(Rails.root, 'vendor','pdfs','acuerdo_de_habeas_data.pdf'))
-    begin
-      authorized_provider_presenter = options[:authorized_provider_presenter]
-      signature_picture = options[:signature_picture]
-      draw_file!(authorized_provider_presenter, signature_picture)
-      @response[:success] = true
-    rescue => exception
-      @response[:success] = false
-      @response[:errors] << exception.message
-    end
+    authorized_provider_presenter = options[:authorized_provider_presenter]
+    signature_picture = options[:signature_picture]
+    draw_file!(authorized_provider_presenter, signature_picture)
+    @response[:success] = true
     @response
   end
 

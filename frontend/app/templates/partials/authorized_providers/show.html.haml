@@ -106,7 +106,11 @@
 
           %md-button{"ng-if"=>"currentAuthorizedProvider.rut_file.url",:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.rut_file.url}}", :target => "_blank"}
             %p RUT
-            %img.md-card-image.pdf-preview{:alt => "Cédula", "ng-src" => "img/pdf.png"}
+            %img.md-card-image.pdf-preview{:alt => "RUT", "ng-src" => "img/pdf.png"}
+
+          %md-button{"ng-if"=>"currentAuthorizedProvider.habeas_data_agreetment_file.url",:class => "md-raised", :flex => "15", "ng-href" => "{{currentAuthorizedProvider.habeas_data_agreetment_file.url}}", :target => "_blank"}
+            %p Acuerdo HABEAS DATA
+            %img.md-card-image.pdf-preview{:alt => "Acuerdo HABEAS", "ng-src" => "img/pdf.png"}
 
 %tr-loading-view.wait-for{"ng-show"=>"showLoading","mode"=>"loadingMode","progress"=>"loadingProgress", "message"=>"loadingMessage"}
 

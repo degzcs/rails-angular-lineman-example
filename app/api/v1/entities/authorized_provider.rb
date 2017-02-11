@@ -24,6 +24,9 @@ module V1
       expose :rut_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.rut_file
       end
+      expose :habeas_data_agreetment_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
+        user.profile.habeas_data_agreetment_file
+      end
       expose :photo_file, safe: true, documentation: { type: 'file', desc: 'file', example: '...' } do |user, _options|
         user.profile.photo_file
       end

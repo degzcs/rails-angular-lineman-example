@@ -21,6 +21,9 @@ module TermsAndConditions
       @response[:success] = @authorized_provider.save!
       @response[:errors] << @authorized_provider.errors.full_messages
       @response
+    rescue => exception
+      @response[:success] = false
+      @response[:errors] << exception.message
     end
 
     private
