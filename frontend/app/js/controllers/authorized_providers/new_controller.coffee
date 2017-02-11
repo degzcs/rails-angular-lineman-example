@@ -233,7 +233,7 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     frm = $scope.currentAuthorizedProvider
     if frm.first_name == '' || frm.first_name == undefined || frm.first_name == null
     else if frm.last_name == '' || frm.last_name == undefined ||  frm.last_name == null
-    else if frm.rucom.rucom_number == '' || frm.rucom.rucom_number == undefined ||  frm.rucom.rucom_number == null
+    # else if frm.rucom.rucom_number == '' || frm.rucom.rucom_number == undefined ||  frm.rucom.rucom_number == null
     #else if frm.email == '' || frm.email == undefined ||  frm.email == null
     else if frm.document_number == '' || frm.document_number == undefined ||  frm.document_number == null
     else if frm.phone_number == '' || frm.phone_number == undefined ||  frm.phone_number == null
