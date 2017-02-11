@@ -271,7 +271,9 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.granosUnitPrice = MeasureConverterService.granosUnitPriceFrom($scope.purchase.model.fine_gram_unit_price_to_buy)
 
     # Total Price
-    $scope.purchase.model.price = $scope.goldBatch.model.total_fine_grams * $scope.purchase.model.fine_gram_unit_price_to_buy
+    # here is take total grams because the discount and all operations are made it over the price
+    # if I put the total-fine-grams here I wil do the same operation twice
+    $scope.purchase.model.price = $scope.goldBatch.model.total_grams * $scope.purchase.model.fine_gram_unit_price_to_buy
 
     #
     #subtotals

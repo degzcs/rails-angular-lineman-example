@@ -54,9 +54,7 @@
                 %th.md-table-header
                   Precio Unitario
                 %th.md-table-header
-                  Gramos Brutos
-                %th.md-table-header
-                  Gramos Finos
+                  Gramos
                 %th.md-table-header
                   Precio Total
             %tbody
@@ -69,8 +67,6 @@
                 %td.md-table-td-more
                   {{ grams | number:3 }}
                 %td.md-table-td-more
-                  {{ gramsFineGrams | number:3 }}
-                %td.md-table-td-more
                   {{ subtotalGrams | number:3}}
               %tr.medidas
                 %td.md-table-td-more{colspan: 1}
@@ -80,8 +76,6 @@
                   {{ castellanosUnitPrice | number:3 }}
                 %td.md-table-td-more
                   {{ castellanosToGrams | number:3 }}
-                %td.md-table-td-more
-                  {{ castellanosFineGrams | number:3 }}
                 %td.md-table-td-more
                   {{ subtotalCastellano | number:3}}
               %tr.medidas
@@ -93,8 +87,6 @@
                 %td.md-table-td-more
                   {{ tominesToGrams | number:3 }}
                 %td.md-table-td-more
-                  {{ tominesFineGrams | number:3 }}
-                %td.md-table-td-more
                   {{ subtotalTomines | number:3}}
               %tr.medidas
                 %td.md-table-td-more{colspan: 1}
@@ -104,8 +96,6 @@
                   {{ realesUnitPrice | number:3 }}
                 %td.md-table-td-more
                   {{ realesToGrams | number:3 }}
-                %td.md-table-td-more
-                  {{ realesFineGrams | number:3 }}
                 %td.md-table-td-more
                   {{ subtotalReales | number:3}}
               %tr.medidas
@@ -117,8 +107,6 @@
                 %td.md-table-td-more
                   {{ granosToGrams | number:3}}
                 %td.md-table-td-more
-                  {{ granosFineGrams | number:3}}
-                %td.md-table-td-more
                   {{ subtotalGranos | number:3}}
               %tr
                 %td.md-table-td-more{colspan: 2}
@@ -126,9 +114,6 @@
                 %td.md-table-td-more
                   %h2
                     {{goldBatch.model.total_grams| number:3}}
-                %td.md-table-td-more{"layout-align"=>"end end"}
-                  %h2
-                    {{goldBatch.model.total_fine_grams| number:3}}
                 %td.md-table-td-more
                   %h2
                     ${{ purchase.model.price | number:3}}
