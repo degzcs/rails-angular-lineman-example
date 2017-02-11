@@ -254,7 +254,8 @@ angular.module('app').controller 'AuthorizedProviderNewCtrl', ($scope, $state, $
     else
       $scope.sendingPost = true
       AuthorizedProviderService.model = $scope.currentAuthorizedProvider
-      AuthorizedProviderService.model.rucom.rucom_number = 'RUCOM-'+$scope.currentAuthorizedProvider.rucom.rucom_number
+      # AuthorizedProviderService.model.rucom.rucom_number = 'RUCOM-'+$scope.currentAuthorizedProvider.rucom.rucom_number
+      AuthorizedProviderService.model.rucom.rucom_number = 'RUCOM'
       AuthorizedProviderService.saveModel()
       AuthorizedProviderService.update($scope.currentAuthorizedProvider.id)
       $scope.showUploadingDialog()
