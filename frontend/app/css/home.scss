@@ -1,6 +1,10 @@
 //--------- Home Styles ----------- //
 .home{
 
+  h1,h2,h3,h4,h5 {
+    text-align: center;
+  }
+
   md-toolbar.md-default-theme {
     background-color: #fff;
     color: #202020;
@@ -73,14 +77,14 @@
     margin-bottom: 0px;
     background: black ;
     color: #eece56 !important;
-
   }
 
   .a-toolbar{
     font-size: small;
     position: relative;
-
+    margin-top: 5px;
   }
+
   .a-toolbar-desktop{
     position: absolute;
     font-size: 10px;
@@ -329,8 +333,6 @@
     }
   }
 
-
-
   .login-home-button{
     background: #edb039!important;
     color: white!important;
@@ -344,5 +346,22 @@
   .yellow-border{
     border: 3px solid #ffcb34;
     padding: 10px;
+  }
+
+  .main-banner{
+    p{
+      letter-spacing: 4px !important;
+      @media screen
+        and (min-device-width: 1200px)
+        and (-webkit-min-device-pixel-ratio: 1) {
+        font-size: 30px;
+      }
+      line-height: 1.5;
+    }
+  }
+  .gold{
+    h1{
+      color: #000000;
+    }
   }
 }
