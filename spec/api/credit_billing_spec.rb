@@ -9,18 +9,18 @@ describe 'Credit Billing', :type => :request do
       context 'POST' do
         context 'with company info' do
           it 'returns a representation of the new credit billing created and code 201' do
-            unit_price = Settings.instance.fine_gram_value
+            unit_price = Settings.instance.fine_gram_value.to_f
             new_values = {
               user_id: @user.id,
               quantity: 200
             }
 
             expected_response = {
-              quantity: 200,
+              quantity: 200.0,
               unit_price: unit_price,
-              vat: 200 * unit_price * 0.16,
+              vat: 200.0 * unit_price * 0.19,
               discount: 0.0,
-              total_amount: 200 * unit_price,
+              total_amount: 200.0 * unit_price,
               paid: false,
               payment_date: nil,
               discount_percentage: 0.0
@@ -109,18 +109,18 @@ describe 'Credit Billing', :type => :request do
       context 'POST' do
         context 'with company info' do
           it 'returns a representation of the new credit billing created and code 201' do
-            unit_price = Settings.instance.fine_gram_value
+            unit_price = Settings.instance.fine_gram_value.to_f
             new_values = {
               user_id: @user.id,
               quantity: 200
             }
 
             expected_response = {
-              quantity: 200,
+              quantity: 200.0,
               unit_price: unit_price,
-              vat: 200 * unit_price * 0.16,
+              vat: 200.0 * unit_price * 0.19,
               discount: 0.0,
-              total_amount: 200 * unit_price,
+              total_amount: 200.0 * unit_price,
               paid: false,
               payment_date: nil,
               discount_percentage: 0.0

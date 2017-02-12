@@ -47,7 +47,7 @@ class CreditBilling < ActiveRecord::Base
 
   def init
     self.discount_percentage ||= 0.0
-    self.unit_price ||= self.user.setting.unit_price
+    self.unit_price ||= self.user.try(:setting).try(:unit_price)
   end
 
   def vat
