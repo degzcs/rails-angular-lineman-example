@@ -25,14 +25,14 @@ describe Purchase::BuyGoldService do
       @signature_picture = Rack::Test::UploadedFile.new(signature_picture_path, 'image/jpeg')
 
       @gold_batch_hash = {
-        'fine_grams' => 1.5,
-        'grade' => 999,
-        'extra_info' => { 'grams' => 1.5 },
+        'fine_grams' => 11.3517,
+        'grade' => 900,
+        'extra_info' => { 'grams' => 1.520, 'castellanos' => 9.706, 'tomines' => 0.966, 'reales' => 0.304, 'granos' => 0.117  },
         'mineral_type' => 'Oro'
       }
       @order_hash = {
         'seller_id' => @seller.id,
-        'price' => 90000,
+        'price' => 1_112_449_328,
         'seller_picture' => @seller_picture,
         'trazoro' => false,
         'signature_picture' => @signature_picture

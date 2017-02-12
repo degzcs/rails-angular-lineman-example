@@ -102,23 +102,39 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
     # Gold batch section
     gold_batch_presenter = order_presenter.gold_batch_presenter
 
+    # NOTE: Temporal fix to remove this header
+    move_cursor_to 395
+    bounding_box([450, cursor], :width => 100, :height => 25) do
+        stroke_color 'FFFFFF'
+        stroke_bounds
+        stroke do
+            stroke_color 'FFFFFF'
+            fill_color 'FFFFFF'
+            fill_and_stroke_rounded_rectangle [0, cursor], 100, 25, 10
+            fill_color '000000'
+        end
+    end
+
     move_cursor_to 366
+    fill_color '000000'
     text_box gold_batch_presenter.rounded_castellanos.to_s, :at => [186, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    # text_box "#{values[:gold_batch_presenter][:castellanos][:grams]} grs", :at => [480 , cursor], :width => 100
+
+    text_box gold_batch_presenter.grade.to_s, :at => [290, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
+
+    text_box gold_batch_presenter.mineral_type.to_s, :at => [395, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to 346
     text_box gold_batch_presenter.rounded_tomines.to_s, :at => [186, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    # text_box "#{values[:gold_batch_presenter][:tomines][:grams]} grs", :at => [480 , cursor], :width => 100
 
     move_cursor_to 326
     text_box gold_batch_presenter.rounded_reales.to_s, :at => [186, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    # text_box "#{values[:gold_batch_presenter][:riales][:grams]} grs", :at => [480 , cursor], :width => 100
+
+    move_cursor_to 306
+    text_box gold_batch_presenter.rounded_granos.to_s, :at => [186, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to 286
     text_box gold_batch_presenter.rounded_grams.to_s, :at => [186, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
-    move_cursor_to 285
-    text_box gold_batch_presenter.grade.to_s, :at => [295, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
 
     move_cursor_to 268
     text_box gold_batch_presenter.total_fine_grams.to_s, :at => [447, cursor], :width => 125, :size => 10, :height =>  10, :overflow => :shrink_to_fit
@@ -138,10 +154,21 @@ class Purchase::ProofOfPurchase::DrawPDF < Prawn::Document
 
     # move_cursor_to 286
     # text_box order_presenter.fine_gram_price.to_s, :at => [140, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
-    # move_cursor_to 286
+
+    # NOTE: Temporal fix to remove this header
+    # fill_color '000000'
     move_cursor_to 200
-    fill_color 'ffffff'
-    rectangle [0, cursor], 550, 25
+    bounding_box([0, cursor], :width => 550, :height => 25) do
+        stroke_color 'FFFFFF'
+        stroke_bounds
+        stroke do
+            stroke_color 'FFFFFF'
+            fill_color 'FFFFFF'
+            fill_and_stroke_rounded_rectangle [0,cursor], 550, 25, 10
+            fill_color '000000'
+        end
+    end
+
     # Costo del oro
     move_cursor_to 166
     text_box order_presenter.currency_format(order_presenter.real_gold_cost), :at => [110, cursor], :width => 100, :size => 10, :height =>  10, :overflow => :shrink_to_fit
