@@ -169,6 +169,7 @@ describe 'Sale', type: :request do
         context '/:id' do
           it 'gets sale by id with role trader' do
             sale = @sales.last
+            legal_representative_token = @legal_representative.create_token
 
             expected_buyer = {
               'id' => sale.buyer.id,
@@ -187,7 +188,8 @@ describe 'Sale', type: :request do
               'document_number' => sale.seller.profile.document_number,
               'phone_number' => sale.seller.profile.phone_number,
               'address' => sale.seller.profile.address,
-              'email' => sale.seller.email
+              'email' => sale.seller.email,
+              'photo_file_url' => sale.seller.profile.photo_file.url
             }
 
             expected_response = {
@@ -201,12 +203,11 @@ describe 'Sale', type: :request do
               'mineral_type' => sale.gold_batch.mineral_type,
               'code' => sale.code,
               'barcode_html' => sale.barcode_html,
-              'shipment' => sale.shipment.as_json,
               'buyer' => expected_buyer,
               'seller' => expected_seller,
               'price' => sale.price,
-              'proof_of_sale' => sale.proof_of_sale.as_json,
-              'purchase_files_collection' => sale.purchase_files_collection.as_json,
+              'proof_of_sale_file_url' => sale.proof_of_sale.file.url,
+              'purchase_files_collection_file_url' => sale.purchase_files_collection.file.url,
               'purchases_total_value' => sale.purchases_total_value,
               'total_gain' => sale.total_gain,
               'transaction_state' => sale.transaction_state,
@@ -214,10 +215,10 @@ describe 'Sale', type: :request do
               'buyer_ids' => [],
               'buyers' => [],
               'gold_batch' => {'grade'=> sale.gold_batch.grade, 'fine_grams'=> sale.gold_batch.fine_grams}
-            }.deep_reject_keys!('created_at','updated_at', 'photo_file_url')
-            get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{@token}"
+            }.deep_reject_keys!('created_at','updated_at')
+            get "/api/v1/sales/#{sale.id}", {}, 'Authorization' => "Barer #{legal_representative_token}"
+            expect(JSON.parse(response.body).deep_reject_keys!('created_at','updated_at')).to include expected_response
             expect(response.status).to eq 200
-            expect(expected_response).to include JSON.parse(response.body).deep_reject_keys!('created_at','updated_at', 'photo_file_url')
           end
         end
 
@@ -246,8 +247,11 @@ describe 'Sale', type: :request do
               gold_batch_id: @sale.gold_batch.id,
               fine_grams: @sale.fine_grams,
               code: @sale.code,
+              fine_gram_unit_price: (@sale.price/@sale.fine_grams),
+              grade: @sale.gold_batch.grade,
               provider: seller_expected_response.stringify_keys,
-              origin_certificate_file: { 'url' => "/test/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/compendio_trazoro.pdf" }
+              # origin_certificate_file: { 'url' => "/test/uploads/documents/document/file/#{@sale.purchase_files_collection.id}/compendio_trazoro.pdf" }
+              origin_certificate_file: generate_document_urls_from(@sale.purchase_files_collection.id, 'compendio_trazoro', 'file', 'document')
             }
             # TODO: upgrade Front end with proof_of_sale and purchase_files_collections files
 

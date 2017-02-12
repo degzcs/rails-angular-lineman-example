@@ -118,9 +118,6 @@ module V1
       expose :proof_of_sale_file_url, documentation: { type: 'file', desc: 'proof_of_sale', example: 'document_equivalent.pdf' } do |sale, _options|
         sale.proof_of_sale.try(:file).try(:url)
       end
-      expose :shipment, documentation: { type: 'file', desc: 'This file was deprecated', example: '...' } do |sale, _options|
-        sale.try(:shipment).try(:as_json)
-      end
       expose :price, documentation: { type: 'float', desc: 'price', example: '123399' }
       expose :purchases_total_value, documentation: { type: 'float', desc: 'purchases_total_value', example: '3000.0' }
       expose :total_gain, documentation: { type: 'float', desc: 'total_gain', example: '-40' }
