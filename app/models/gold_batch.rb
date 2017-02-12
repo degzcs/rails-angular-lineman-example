@@ -78,7 +78,7 @@ class GoldBatch < ActiveRecord::Base
   end
 
   def granos
-    entra_data.granos
+    extra_data.granos
   end
 
   def grams?
