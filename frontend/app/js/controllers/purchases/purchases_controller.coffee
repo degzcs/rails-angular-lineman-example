@@ -492,6 +492,7 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
           $scope.prov = formattedContent(data)
           $scope.purchase.model.seller.name = fullName($scope.current_user)
           $scope.purchase.model.seller.company_name = "NA"
+          $scope.saveState()
           $state.go 'new_purchase.step1', { id: $scope.prov.id, content: $scope.prov}
         else
           $state.go 'index_authorized_provider'

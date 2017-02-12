@@ -33,7 +33,7 @@
     width: 200px;
     margin: 20px;
     padding: 20px;
-    
+
   }
 }
 
@@ -73,9 +73,9 @@ font-size: 14px;
 .dashboard-user-info .user-photo{
   width: 140px;
   height: 140px;
-  border: 10px solid #e3cd48;
+  border: 5px solid #e3cd48;
   border-radius: 50%;
-  padding: 5px;
+  padding: 1px;
 }
 
 
@@ -85,10 +85,10 @@ font-size: 14px;
   font-size: 22px;
   .user-info{
     margin-top: 30px;
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
   }
   h2{
-    margin: 0px; 
+    margin: 0px;
   }
   h2.username{
     font-weight: 400;
@@ -104,7 +104,7 @@ font-size: 14px;
     font-weight: 300;
     font-size: initial;
     letter-spacing: 1px;
-      
+
       md-icon.md-default-theme {
       color: #e3cd48;
     }
