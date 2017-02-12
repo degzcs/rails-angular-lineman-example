@@ -66,7 +66,7 @@ class OrderPresenter < BasePresenter
 
   # C. trazoro total = Costo trazoro + IVA
   def trazoro_transaction_total_cost
-    "$#{ (trazoro_transaction_cost.to_f + trazoro_transaction_vat.to_f).round(2) }"
+    (trazoro_transaction_cost.to_f + trazoro_transaction_vat.to_f).round(2)
   end
 
   def grams
@@ -95,10 +95,10 @@ class OrderPresenter < BasePresenter
   end
 
   def total_fine_grams
-    fine_grams.present? ? "#{ fine_grams.round(3) } Gramos" : raise('fine grams cannot be blank!!')
+    fine_grams.present? ? "#{ fine_grams.round(3) } gr" : raise('fine grams cannot be blank!!')
   end
 
   def currency_format(number)
-    ApplicationController.helpers.number_to_currency(number, precision: 0, unit: 'COP$', delimiter: '.')
+    ApplicationController.helpers.number_to_currency(number, precision: 2, unit: 'COP$', delimiter: '.')
   end
 end
