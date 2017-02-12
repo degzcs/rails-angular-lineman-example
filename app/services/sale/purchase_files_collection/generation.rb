@@ -143,11 +143,11 @@ module Sale
         # Origin certificate
         files << purchase_order.origin_certificate.file
         # ID
-        files << purchase_order.seller.profile.id_document_file
+        files << purchase_order.seller.profile.id_document_file.pdf
         # barequero id OR miner register OR resolution
-        files << purchase_order.seller.profile.mining_authorization_file if purchase_order.seller.profile.mining_authorization_file.file.present?
+        files << purchase_order.seller.profile.mining_authorization_file.pdf if purchase_order.seller.profile.mining_authorization_file.pdf.file.present?
         # RUT
-        files << purchase_order.seller.profile.rut_file if purchase_order.seller.profile.rut_file.file.present?
+        files << purchase_order.seller.profile.rut_file.pdf if purchase_order.seller.profile.rut_file.pdf.file.present?
         # purchase_order equivalent document
         files << purchase_order.proof_of_purchase.file
         end
@@ -162,11 +162,11 @@ module Sale
         # Origin certificate
         file_paths << Rails.root.join(purchase_order.origin_certificate.file.path)
         # ID
-        file_paths << Rails.root.join(purchase_order.seller.profile.id_document_file.path)
+        file_paths << Rails.root.join(purchase_order.seller.profile.id_document_pdf.path)
         # barequero id OR miner register OR resolution
-        file_paths << Rails.root.join(purchase_order.seller.profile.mining_authorization_file.path) if purchase_order.seller.profile.mining_authorization_file.file.present?
+        file_paths << Rails.root.join(purchase_order.seller.profile.mining_authorization_pdf.path) if purchase_order.seller.profile.mining_authorization_file.pdf.file.present?
         # RUT
-        file_paths << Rails.root.join(purchase_order.seller.profile.rut_file.path) if purchase_order.seller.profile.rut_file.file.present?
+        file_paths << Rails.root.join(purchase_order.seller.profile.rut_file.pdf.path) if purchase_order.seller.profile.rut_file.pdf.file.present?
         # purchase_order equivalent document
         file_paths << Rails.root.join(purchase_order.proof_of_purchase.file.path)
         end
