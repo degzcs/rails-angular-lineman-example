@@ -44,14 +44,15 @@ describe 'AuthorizedProviders', type: :request do
               'last_name' => user.profile.last_name,
               'phone_number' => user.profile.phone_number,
               'address' => user.profile.address,
-              'id_document_file' => { 'url' => nil },
-              'rut_file' => { 'url' => nil },
-              'signature_picture' => { 'url' => nil },
-              'photo_file' => { 'url' => nil },
+              'id_document_file' => {"url"=>nil, "preview"=>{"url"=>nil}, "thumb"=>{"url"=>nil}, "medium"=>{"url"=>nil}},
+              'rut_file' => {"url"=>nil, "preview"=>{"url"=>nil}, "thumb"=>{"url"=>nil}, "medium"=>{"url"=>nil}},
+              'photo_file' => {"url"=>nil, "thumb"=>{"url"=>nil}, "medium"=>{"url"=>nil}},
+              'habeas_data_agreetment_file' => {"url"=>nil, "preview"=>{"url"=>nil}, "thumb"=>{"url"=>nil}, "medium"=>{"url"=>nil}},
               'email' => user.email,
               'city' => nil,
               'state' => nil,
               'company' => nil,
+              'registration_state' => 'initialized',
               'rucom' => {
                 'id' => user.rucom.id,
                 'rucom_number' => user.rucom.rucom_number,
@@ -97,11 +98,6 @@ describe 'AuthorizedProviders', type: :request do
 
           city = City.find_by(name: 'RIONEGRO')
 
-          url_base = '/test/uploads'
-          id_document_file_url = "/documents/profile/id_document_file/#{user.profile.id}/id_document_file.pdf"
-          rut_file_url = "/documents/profile/rut_file/#{user.profile.id}/rut_file.pdf"
-          photo_file = "/photos/profile/photo_file/#{user.profile.id}/photo_file.png"
-          habeas_data_agreetment_file_url = "/documents/profile/habeas_data_agreetment_file/#{user.profile.id}/habeas_data_agreetment.pdf"
           expected_response = {
             'id' => user.id,
             'document_number' => user.profile.document_number,
@@ -109,14 +105,15 @@ describe 'AuthorizedProviders', type: :request do
             'last_name' => 'PRUEBA1 MARULO',
             'phone_number' => '2334455',
             'address' => 'Calle 45 # 34b-56',
-            'id_document_file' => { 'url' => url_base + id_document_file_url },
-            'rut_file' => { 'url' => url_base + rut_file_url },
-            'photo_file' => { 'url' => url_base + photo_file },
-            'signature_picture' => { 'url' => url_base + habeas_data_agreetment_file_url },
+            'id_document_file' => generate_document_urls_from(user.profile.id, 'id_document_file'),
+            'rut_file' => generate_document_urls_from(user.profile.id, 'rut_file'),
+            'photo_file' => generate_photo_urls_from(user.profile.id, 'photo_file'),
+            'habeas_data_agreetment_file' => generate_document_urls_from(user.profile.id, 'habeas_data_agreetment', 'habeas_data_agreetment_file'),
             'email' => 'amado.prueba1@barequero.co',
             'city' => JSON.parse(city.to_json).except('created_at', 'updated_at'),
             'state' => JSON.parse(city.state.to_json).except('created_at', 'updated_at'),
             'company' => nil,
+            "registration_state" => "completed",
             'rucom' => {
               'id' => user.rucom.id,
               'rucom_number' => '987654321',

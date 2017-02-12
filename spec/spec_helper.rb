@@ -179,4 +179,7 @@ RSpec.configure do |config|
 
   # Custom Helpers
   config.include CleanMethods
+
+  # Helper for match with hashes
+  config.include MatchHashHelper
 end

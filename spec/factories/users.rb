@@ -46,7 +46,7 @@ FactoryGirl.define do
         legal_representative { false }
         id_document_file do
           Rack::Test::UploadedFile
-            .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'document_number_file.pdf'), 'application/pdf')
+            .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'id_document_file.pdf'), 'application/pdf')
         end
         habeas_data_agreetment do
           Rack::Test::UploadedFile
