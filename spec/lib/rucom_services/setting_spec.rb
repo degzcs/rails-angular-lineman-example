@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe RucomServices::Setting, type: :service do
   subject(:rs_setting) { RucomServices::Setting.new }
-  page = 'http://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf'
+  page = 'https://tramites.anm.gov.co/Portal/pages/consultaListados/anonimoListados.jsf'
   let(:file_name) { 'rucom_service.yml' }
   let(:rucom_page_url) { page }
 

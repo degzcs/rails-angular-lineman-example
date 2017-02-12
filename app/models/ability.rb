@@ -20,7 +20,7 @@ class Ability
 
     # Allow office read their own orders
     can [:read], Order do |order, remote_ip|
-     order.audits.where(action: 'create').first.user_id == @user.id
+     order.audits.where(action: 'create').try(:first).try(:user_id) == @user.id
     end
 
     can :read, User

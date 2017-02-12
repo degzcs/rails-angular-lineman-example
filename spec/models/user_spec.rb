@@ -212,13 +212,14 @@ describe  User, type: :model do
   context 'abilities' do
     context 'trader abilities' do
       before :each do
-        trader_user = create :user, :with_company, :with_profile, :with_personal_rucom, :with_trader_role
-        @abilities = Ability.new(trader_user)
+        @trader_user = create :user, :with_company, :with_profile, :with_personal_rucom, :with_trader_role
+        @abilities = Ability.new(@trader_user)
       end
 
       it 'should valid if the user has the trader abilities' do
-        expect(@abilities).to be_able_to(:read, Order.new)
-        expect(@abilities).to be_able_to(:create, Order.new)
+        order = create(:sale, buyer: @trader_user)
+        expect(@abilities).to be_able_to(:read, order)
+        expect(@abilities).to be_able_to(:create, order)
       end
     end
   end
