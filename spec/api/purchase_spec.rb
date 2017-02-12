@@ -90,8 +90,8 @@ describe 'Purchase', type: :request do
         end
 
         it 'POST buy threshold error' do
-          # Create a purchase with 30 fine grams for the current seller
-          gold_batch = create :gold_batch, fine_grams: 30
+          # Create a purchase with 35 fine grams for the current seller
+          gold_batch = create :gold_batch, fine_grams: 35
           create :purchase, seller: @seller, gold_batch: gold_batch
           seller_name = UserPresenter.new(@seller, self).name
 
@@ -100,7 +100,7 @@ describe 'Purchase', type: :request do
             'detail' => [
               'Usted no puede realizar esta compra, debido a que con esta compra el barequero exederia' \
               " el limite permitido por mes. El total comprado hasta el momento por #{seller_name} " \
-              'es: 30.0 gramos finos'
+              'es: 35.0 gramos finos'
             ]
           }
           post '/api/v1/purchases/', {
