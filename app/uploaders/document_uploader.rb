@@ -13,7 +13,7 @@ module CarrierWave
 
     def convert_pdf
         manipulate! do |img|
-          img.format('pdf', 0, {density: '300', quality: '100'}) do |convert|
+          img.format('pdf', 0) do |convert|
             convert << "-format"
             convert << "pdf"
           end
