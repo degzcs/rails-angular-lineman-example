@@ -49,8 +49,7 @@ FactoryGirl.define do
             .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'id_document_file.pdf'), 'application/pdf')
         end
         habeas_data_agreetment do
-          Rack::Test::UploadedFile
-            .new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'habeas_data_agreetment.pdf'), 'application/pdf')
+          Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'pdfs', 'habeas_data_agreetment.pdf'), 'application/pdf')
         end
 
         signature_picture_file do

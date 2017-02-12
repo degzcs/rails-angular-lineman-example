@@ -35,8 +35,8 @@ ActiveAdmin.register User do
           user.setting.trazoro_service_ids = service_ids
           user.save!
         end
-        user.update_attributes(permitted_params[:user].except(:profile_attributes, :setting_attributes))
-        user.profile.update_attributes(permitted_params[:user][:profile_attributes])
+        user_response = user.update_attributes(permitted_params[:user].except(:profile_attributes, :setting_attributes))
+        profile_response = user.profile.update_attributes(permitted_params[:user][:profile_attributes])
         user.user_complete? unless user.completed?
       end
       redirect_to admin_user_path(user)

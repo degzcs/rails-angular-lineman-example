@@ -12,23 +12,16 @@ module CarrierWave
     end
 
     def convert_pdf
-      # binding.pry
-        output = "#{current_path.split('.').first}.pdf"
         manipulate! do |img|
-          ::MiniMagick::Tool::Convert.new do |convert|
-            convert << current_path
-            convert.merge! ["-format", "pdf"]
-            convert << output
+          img.format('pdf', 0, {density: '300', quality: '100'}) do |convert|
+            convert << "-format"
+            convert << "pdf"
           end
-          # binding.pry
-          ::MiniMagick::Image.open(output)
+          img
         end
-        # current_path = output
-        # file= CarrierWave::SanitizedFile.new File.open(current_path)
-        # img = ::MiniMagick::Image.open(current_path)
-        # img.write(current_path)
-        # img.run_command("identify", current_path)
-        # img
+        # NOTE: force and override the content type. Becuase this when a images is upload
+        # to amazon this produce a corruption in the PDF file.
+        file.content_type='application/pdf'
     end
   end
 end
@@ -52,21 +45,10 @@ class DocumentUploader < CarrierWave::Uploader::Base
   #
 
   process :set_content_type
-  # process :resize_to_fit => [310, 200]
 
   # Versions
-  version :pdf do
-    process :convert_pdf
-
-    def full_filename (for_file = model.source.file)
-      super.chomp(File.extname(super)) + '.pdf'
-    end
-  end
-
-  version :preview do
+    version :preview do
     process :convert => :jpg
-    process :cover
-    #process :resize_to_fill => [310, 200]
     process :resize_to_fit => [310, 200]
 
     def full_filename (for_file = model.source.file)
@@ -74,25 +56,34 @@ class DocumentUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :pdf do
+    process :convert_pdf
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.pdf'
+    end
+  end
+
+
   # Callbacks
   after :remove, :delete_empty_upstream_dirs
 
 
   # Override the directory where uploaded files will be stored.
-  def store_dir
-    tmp_base_path = (APP_CONFIG[:USE_AWS_S3] || Rails.env.production?) ? "/uploads/photos/#{model.class.to_s.underscore}" : base_store_dir
-    "#{ tmp_base_path }/#{ mounted_as }/#{ model.id }"
-  end
-
   def base_store_dir
     "#{ Rails.root }/public/#{ Rails.env }/uploads/documents/#{model.class.to_s.underscore}"
   end
 
-  def cover
-    # TODO: check what is happening with this in dev and production
-    # manipulate! do |frame, index|
-    #   frame if index.try(:zero?) # take only the first page of the file
-    # end
+  def store_dir
+    tmp_base_path =  if (APP_CONFIG[:USE_AWS_S3] || Rails.env.production?)
+        "/uploads/photos/#{model.class.to_s.underscore}"
+      else
+        base_store_dir
+      end
+    "#{ tmp_base_path }/#{ mounted_as }/#{ model.id }"
+  end
+
+  def cache_dir
+    "#{Rails.root}/tmp/documents"
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
