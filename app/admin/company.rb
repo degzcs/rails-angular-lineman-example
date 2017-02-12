@@ -116,9 +116,9 @@ ActiveAdmin.register Company do
         f.input :email, label: 'Email compañia'
         f.input :phone_number, label: 'Telefono'
         f.input :address, label: 'Direccion'
-        f.input :chamber_of_commerce_file, :as => :file, label: 'PDF Camara de comercio', :hint => link_to(image_tag(f.object.chamber_of_commerce_file.try(:preview).try(:url)), f.object.chamber_of_commerce_file.url, :target => '_blank')
-        f.input :rut_file, :as => :file, label: 'PDF RUT', :hint => link_to(image_tag(f.object.rut_file.try(:preview).try(:url)), f.object.rut_file.url, :target => '_blank')
-        f.input :mining_register_file, :as => :file, label: 'PDF Registro minero', :hint => link_to(image_tag(f.object.mining_register_file.try(:preview).try(:url)), f.object.mining_register_file.url,:target => '_blank')
+        f.input :chamber_of_commerce_file, :as => :file, label: 'PDF Camara de comercio', :hint => f.object.chamber_of_commerce_file.try(:filename)
+        f.input :rut_file, :as => :file, label: 'PDF RUT', :hint => f.object.rut_file.try(:filename)
+        f.input :mining_register_file, :as => :file, label: 'PDF Registro minero', :hint => f.object.mining_register_file.try(:filename)
       end
       f.inputs 'Informacion Representante legal' do
         user = f.object.legal_representative || User.new
