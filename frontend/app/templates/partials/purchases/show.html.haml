@@ -205,7 +205,7 @@
 
         %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/single_document.svg" }
 
-        %md-button.btn-save{flex: "30", "ng-if"=>"purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
+        %md-button.btn-save{flex: "30", "ng-disabled"=>"!purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
 
     %div{layout: "row", "layout-align"=>"center"}
       %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"new_purchase.step0", "ng-click" => 'flushData()'} Nueva compra
