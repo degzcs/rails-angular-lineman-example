@@ -8,7 +8,7 @@ module MatchHashHelper
     }
   end
 
-  def generate_photo_urls_from(id, original_name, folder_name=original_name)
+  def generate_photo_urls_from(id, original_name, folder_name=original_name, model='profile')
     {
       'url' => "/test/uploads/photos/#{model}/#{folder_name}/#{id}/#{original_name}.png",
       'thumb' => {'url' => "/test/uploads/photos/#{model}/#{folder_name}/#{id}/thumb_#{original_name}.jpg"},
