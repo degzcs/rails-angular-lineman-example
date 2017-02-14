@@ -12,7 +12,7 @@ set :rbenv_roles, :all # default value
 set :nodenv_type, :user # or :system, depends on your nodenv setup
 set :nodenv_node, File.read('.node-version').strip
 set :nodenv_prefix, "NODENV_ROOT=#{fetch(:nodenv_path)} NODENV_VERSION=#{fetch(:nodenv_node)} #{fetch(:nodenv_path)}/bin/nodenv exec"
-set :nodenv_map_bins, %w{node npm lineman}
+set :nodenv_map_bins, %w{node npm lineman bower}
 set :nodenv_roles, :all # default value
 set :keep_releases, '5'
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
