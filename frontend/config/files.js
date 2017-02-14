@@ -15,7 +15,7 @@ module.exports = function(lineman) {
         "bower_components/angular-animate/angular-animate.js",
         "bower_components/angular-aria/angular-aria.js",
         "bower_components/angular-breadcrumb/dist/angular-breadcrumb.js",
-        "bower_components/angular-file-upload/dist/angular-file-upload.js",
+        "bower_components/ng-file-upload/angular-file-upload-all.js",
         "bower_components/angular-material/angular-material.js",
         "bower_components/angular-material-mocks/angular-material-mocks.js",
         "bower_components/angular-messages/angular-messages.js",
