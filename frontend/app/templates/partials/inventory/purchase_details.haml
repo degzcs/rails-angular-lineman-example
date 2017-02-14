@@ -1,6 +1,6 @@
 %div{:layout => "column"}
   .general-container
-    %md-content{ "flex"=>"30", "class"=>"", "layout"=>"row"}
+    %md-content{"layout"=>"row"}
       %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
         %div.md-subtitle{"flex"=> ""}
           COMPRADOR
@@ -102,7 +102,7 @@
               %img.face.cam{'alt'=>'Foto Proveedor', 'ng-src' => "{{order.seller_picture.medium.url}}"}
           .reference-code{'flex' => ''}
             %div{"ng-bind-html"=>"barcodeHtml"}
-              {{order.code}}
+            {{order.code}}
 
     %md-content{"class"=>"", "layout"=>"row"}
       %h3
