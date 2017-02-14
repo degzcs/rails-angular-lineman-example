@@ -11,7 +11,7 @@
 // }
 
 md-input-container {
-  .md-input, &.md-icon-float, &.md-input-focused {
+  .md-input, &.md-icon-float, &.md-input-focused, &.md-input-has-value {
     // color: rgba(0, 0, 0, 0.87);
     // padding-left: 10px;
     border-color: rgba(0, 0, 0, 0.12);
@@ -20,7 +20,7 @@ md-input-container {
     height: 50px;
     min-width: 300px;
   }
-  .md-input{
+  .md-input, .md-select-value{
     height: 50px;
     border: 0;
   }
@@ -37,7 +37,6 @@ md-input-container {
         right: auto;
     }
   }
-
 }
 
 // md-input-container .md-input:read-only{
@@ -49,39 +48,15 @@ md-input-container {
 //   padding-left: 10px;
 // }
 
-// // Radio Inputs
-// md-radio-button, .md-switch-thumb {
-//   letter-spacing: 1px;
-//   font-family: 'Source Sans Pro';
-//   font-weight: 700;
-// }
+// Radio Inputs
+md-radio-button, .md-switch-thumb {
+  letter-spacing: 1px;
+  font-family: 'Source Sans Pro';
+  font-weight: 700;
+}
 
-// // Radio buttons
-// md-radio-button .md-on {
-//     background-color: #E3CD48;
-// }
-
-// button:not([disabled]).md-primary.md-checked .md-off{
-//     background-color: #E3CD48;
-// }
-
-// md-radio-button.md-checked .md-off {
-//     border-color: #E3CD48;
-// }
-
-// //Radio groups
-// md-radio-group:not([disabled]) .md-primary .md-on, md-radio-group:not([disabled]).md-primary .md-on, md-radio-button:not([disabled]) .md-primary .md-on, md-radio-button:not([disabled]).md-primary .md-on {
-//     background-color: #E3CD48;
-// }
-
-
-// md-radio-group:not([disabled]) .md-primary .md-checked .md-off, md-radio-group:not([disabled]) .md-primary.md-checked .md-off, md-radio-group:not([disabled]).md-primary .md-checked .md-off, md-radio-group:not([disabled]).md-primary.md-checked .md-off, md-radio-button:not([disabled]) .md-primary .md-checked .md-off, md-radio-button:not([disabled]) .md-primary.md-checked .md-off, md-radio-button:not([disabled]).md-primary .md-checked .md-off, md-radio-button:not([disabled]).md-primary.md-checked .md-off {
-//     border-color: #E3CD48;
-// }
-
-
-// // Checkbox input
-// md-checkbox.md-checked .md-icon{
-//   background-color: #e3cd48;
-// }
+// Checkbox input
+md-checkbox.md-checked .md-icon{
+  background-color: #e3cd48;
+}
 

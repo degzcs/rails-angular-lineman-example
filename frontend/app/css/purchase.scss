@@ -121,6 +121,7 @@ md-card.seller{
     fieldset{
     }
     fieldset.photo-fieldset{
+      text-align: center;
       height: 247.5px;
     }
   }
@@ -231,10 +232,10 @@ md-card.seller{
 }
 
 .input-containers-fine-gram-to-buy{
-  margin-right: 20px;
+  margin: 34px;
   border: solid 1px #d4d4d4;
   max-height: 40px;
-  min-height: 50px;
+  min-height: 56px;
   text-align: center;
   font-size: 30px;
   font-family: 'oswald';
