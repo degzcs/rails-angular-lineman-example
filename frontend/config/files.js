@@ -34,6 +34,11 @@ module.exports = function(lineman) {
         "app/js/**/*.js"
       ]
     },
+    css: {
+      bower: [
+        "bower_components/angular-material/angular-material.css"
+      ]
+    },
     webfonts: {
       "root": "fonts"
     },
