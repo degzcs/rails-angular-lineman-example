@@ -13,8 +13,8 @@
         %tr.md-table-content-row{"ng-repeat" => "sale in sales | filter:filters"}
           %td.md-table-content{"ng-repeat" => "h in headers", "ng-if" => "h.field != thumbs", "ng-click" => "goSaleOrderResume(sale.id)"} {{h.field.indexOf('date') > 0 ? ($parent.$eval(h.field) | date) : $parent.$eval(h.field)}}
           %td
-            %md-button.btn-next.md-raised.md-primary{"style"=> "width:0px;", "ng-click" => "goSaleOrderResume(sale.id)"} Ver
+            %md-button.md-raised.md-primary{"style"=> "width:0px;", "ng-click" => "goSaleOrderResume(sale.id)"} Ver
 
-  
+
   %span.md-table-count-info
     Registros cargados: {{count}}

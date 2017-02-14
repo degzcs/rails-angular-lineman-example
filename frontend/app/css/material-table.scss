@@ -20,18 +20,25 @@ i {
   padding-left:88px;
 }
 
-.JCLRgrip:first-child {
-  left:105px!important;
-  display: none!important;
-}
-
-.JColResizer th:first-child {
-  width: 105px!important;
-}
-
 .md-table {
   min-width: 100%;
   border-collapse: collapse;
+  tr{
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+    &:hover{
+      background: rgba(#ebdc7f, 0.5) !important;
+    }
+  }
+  td{
+    max-width: 150px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    border-bottom: 1px solid #e3cd48;
+    font-family: 'Source Sans Pro';
+    font-weight: 300;
+    text-transform: uppercase;
+  }
 }
 
 .md-table tbody tr:hover, .md-table tbody tr:focus {
@@ -40,24 +47,25 @@ i {
 }
 
 .md-table-header {
-  border-bottom: 1px solid rgb(230,230,230);
-  color: rgb(130,130,130);
+  color: rgba(0,0,0,0.87) ;
+  border-bottom: 2px solid #e3cd48;
   text-align: left;
+  text-transform: uppercase;
+  font-family: 'Oswald';
   font-size: 0.75em;
-  font-weight: 700;
+  font-weight: 500;
   padding: 16px 16px 16px 0;
-}
-
-.md-table-header a{
-  text-decoration: none;
-  color: inherit;
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .md-table-content {
   white-space: nowrap;
   font-size: 0.8em;
   padding: 16px 16px 16px 0;
-  height: 72px;
+  height: 50px;
 }
 
 .md-table-td-more {
@@ -71,18 +79,17 @@ i {
   width: 104px;
   padding: 10px 10px;
   text-align: center;
-}
-
-.md-table-thumbs div {
-  display: inline-block;
-  overflow:hidden;
-  width: 40px;
-  height:40px;
-  border-radius:20px;
-  border: 1px solid rgba(0,0,0,0.2);
-  background-size:cover;
-  box-shadow: 0 8px 10px rgba(0,0,0,.3);
-  -webkit-box-shadow: 0 8px 10px rgba(0,0,0,.1);
+  div {
+    display: inline-block;
+    overflow:hidden;
+    width: 40px;
+    height:40px;
+    border-radius:20px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-size:cover;
+    box-shadow: 0 8px 10px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 8px 10px rgba(0,0,0,.1);
+  }
 }
 
 .md-table-footer {
@@ -106,14 +113,6 @@ i {
   font-weight: 700;
 }
 
-.bold {
-  font-weight: 700;
-}
-
-.grey {
-  color: grey;
-}
-
 input#search-prov-name {
   color: white !important;
   border-color: white !important;
@@ -132,4 +131,16 @@ input#search-prov-id {
 
 #search-prov-id + div.md-placeholder {
   color:rgba(255,255,255,0.7) !important;
+}
+
+.pdf-preview{
+  width: 100%;
+}
+
+.md-table-count-info {
+  line-height: 40px;
+  font-size: .75em;
+  text-transform: uppercase;
+  font-family: 'Oswald';
+  font-weight: 700;
 }

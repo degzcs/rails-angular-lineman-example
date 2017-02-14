@@ -1,0 +1,28 @@
+.md-tab{
+  border: 1px solid #E3CD4D;
+  font-family: 'Oswald';
+  padding: 18px 24px;
+  color: black !important;
+  line-height: 10px;
+}
+
+md-tabs[md-border-bottom] md-tabs-wrapper {
+    border-width: 0 0 0px;
+}
+
+md-tabs.md-default-theme .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-focused {
+    color: #E3CD48;
+}
+
+md-tabs.md-default-theme md-ink-bar {
+    color: white;
+    background: white;
+}
+
+.md-tab.md-active{
+    background: #E3CD48;
+}
+
+.md-tabs-content .md-tab-content {
+  padding-bottom: 20px;
+}

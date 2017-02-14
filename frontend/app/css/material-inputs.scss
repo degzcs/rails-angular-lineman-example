@@ -1,0 +1,87 @@
+// md-input-container.md-icon-float > label {
+//     pointer-events: none;
+//     position: absolute;
+//     margin-left: 5px;
+//     margin-top: 15px;
+// }
+
+// md-input-container label {
+//     position: relative;
+//     top: -10px;
+// }
+
+md-input-container {
+  .md-input, &.md-icon-float, &.md-input-focused {
+    // color: rgba(0, 0, 0, 0.87);
+    // padding-left: 10px;
+    border-color: rgba(0, 0, 0, 0.12);
+    background: white;
+    border: 1px solid darken(#eee, 10%);
+    height: 50px;
+    min-width: 300px;
+  }
+  .md-input{
+    height: 50px;
+    border: 0;
+  }
+  &.md-input-invalid{
+    border: 1px solid red;
+  }
+  label{
+    height: 50px;
+    &:not(.md-container-ignore){
+        position: absolute;
+        bottom: 0;
+        top: -21px;
+        left: 0;
+        right: auto;
+    }
+  }
+
+}
+
+// md-input-container .md-input:read-only{
+//   background: #eee!important;
+// }
+
+
+// md-input-container label:not(.md-no-float), md-input-container .md-placeholder {
+//   padding-left: 10px;
+// }
+
+// // Radio Inputs
+// md-radio-button, .md-switch-thumb {
+//   letter-spacing: 1px;
+//   font-family: 'Source Sans Pro';
+//   font-weight: 700;
+// }
+
+// // Radio buttons
+// md-radio-button .md-on {
+//     background-color: #E3CD48;
+// }
+
+// button:not([disabled]).md-primary.md-checked .md-off{
+//     background-color: #E3CD48;
+// }
+
+// md-radio-button.md-checked .md-off {
+//     border-color: #E3CD48;
+// }
+
+// //Radio groups
+// md-radio-group:not([disabled]) .md-primary .md-on, md-radio-group:not([disabled]).md-primary .md-on, md-radio-button:not([disabled]) .md-primary .md-on, md-radio-button:not([disabled]).md-primary .md-on {
+//     background-color: #E3CD48;
+// }
+
+
+// md-radio-group:not([disabled]) .md-primary .md-checked .md-off, md-radio-group:not([disabled]) .md-primary.md-checked .md-off, md-radio-group:not([disabled]).md-primary .md-checked .md-off, md-radio-group:not([disabled]).md-primary.md-checked .md-off, md-radio-button:not([disabled]) .md-primary .md-checked .md-off, md-radio-button:not([disabled]) .md-primary.md-checked .md-off, md-radio-button:not([disabled]).md-primary .md-checked .md-off, md-radio-button:not([disabled]).md-primary.md-checked .md-off {
+//     border-color: #E3CD48;
+// }
+
+
+// // Checkbox input
+// md-checkbox.md-checked .md-icon{
+//   background-color: #e3cd48;
+// }
+
