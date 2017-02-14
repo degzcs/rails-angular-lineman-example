@@ -8,6 +8,7 @@ This is the repository for Trazoro web app. In this repository you will find bot
 - rails 4.1.9
 - ruby 2.3.0
 - nodejs 5.7.1
+- bower
 - [linemanjs] (http://linemanjs.com)
 - phantomjs 1.9.8
 - image-magic 6.9.0
