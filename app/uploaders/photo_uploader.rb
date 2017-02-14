@@ -66,6 +66,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
     "#{ tmp_base_path }/#{ mounted_as }/#{ model.id }"
   end
 
+  def cache_dir
+    "#{Rails.root}/tmp/photos"
+  end
+
+
   def base_store_dir
     "#{ Rails.root }/public/#{ Rails.env }/uploads/photos/#{model.class.to_s.underscore}"
   end

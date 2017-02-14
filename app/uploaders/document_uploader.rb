@@ -69,9 +69,6 @@ class DocumentUploader < CarrierWave::Uploader::Base
 
 
   # Override the directory where uploaded files will be stored.
-  def base_store_dir
-    "#{ Rails.root }/public/#{ Rails.env }/uploads/documents/#{model.class.to_s.underscore}"
-  end
 
   def store_dir
     tmp_base_path =  if(APP_CONFIG[:USE_AWS_S3] || Rails.env.production?)
@@ -86,6 +83,9 @@ class DocumentUploader < CarrierWave::Uploader::Base
     "#{Rails.root}/tmp/documents"
   end
 
+  def base_store_dir
+    "#{ Rails.root }/public/#{ Rails.env }/uploads/documents/#{model.class.to_s.underscore}"
+  end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list

@@ -102,9 +102,9 @@ ActiveAdmin.register User do
         p.input :phone_number, label: 'Numero telefonico'
         p.input :address, label: 'Direccion'
         p.input :photo_file, :as => :file, label: 'Foto Usuario', :hint => image_tag(p.object.photo_file.try(:thumb).try(:url))
-        p.input :rut_file, :as => :file, label: 'PDF Rut'
-        p.input :mining_authorization_file, :as => :file, label: 'PDF registro minero'
-        p.input :id_document_file, :as => :file, label: 'PDF Document_id'
+        p.input :rut_file, :as => :file, label: 'PDF Rut', :hint => p.object.rut_file.try(:file).try(:filename)
+        p.input :id_document_file, :as => :file, label: 'PDF Document_id', :hint => p.object.id_document_file.try(:file).try(:filename)
+        p.input :mining_authorization_file, :as => :file, label: 'PDF registro minero', :hint => p.object.mining_authorization_file.try(:file).try(:filename)
         # p.input :legal_representative, label: 'Representante Legal' # This is obsolete for the moment
         p.input :nit_number, label: 'nit_number'
         p.input :city, label: 'Ciudad'
