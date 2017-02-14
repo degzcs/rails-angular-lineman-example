@@ -75,6 +75,7 @@ Go to frontend folder and install node dependencies and run lineman command, as 
 ```sh
  cd path/project/trazoro-web/frontend/
  npm install
+ bower install
  lineman run
 ```
 
@@ -83,7 +84,7 @@ then copy&paste the basic config, as follows:
 ```sh
 cp frontend/config/application.coffee.example frontend/config/application.coffee
 ```
-
+NOTE: if you add a new library to use in the frontend make sure to update `/frontend/config/files.js` file with the correct path of the new library
 ## Tests
 
 Prepare test environment, as follows:
