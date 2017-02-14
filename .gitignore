@@ -31,6 +31,7 @@ config/database.drone.yml
 
 #ignore node_modules, as the node project is not "deployed" per se: http://www.mikealrogers.com/posts/nodemodules-in-git.html
 frontend/node_modules
+frontend/bower_components
 
 frontend/dist
 frontend/generated/*

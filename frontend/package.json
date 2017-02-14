@@ -1,11 +1,11 @@
 {
   "name": "trazoro",
-  "title": "An HTML/JS/CSS app using Angular.JS",
+  "title": "Trazoro",
   "version": "0.0.1",
   "private": true,
   "author": {
     "name": "Diego Gomez",
-    "company": "ACME, Inc."
+    "company": "MinTrace Colombia SAS"
   },
   "devDependencies": {
     "coffee-script": "^1.6.3",
