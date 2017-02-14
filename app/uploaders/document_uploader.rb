@@ -74,8 +74,8 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    tmp_base_path =  if (APP_CONFIG[:USE_AWS_S3] || Rails.env.production?)
-        "/uploads/photos/#{model.class.to_s.underscore}"
+    tmp_base_path =  if(APP_CONFIG[:USE_AWS_S3] || Rails.env.production?)
+        "uploads/documents/#{model.class.to_s.underscore}"
       else
         base_store_dir
       end
