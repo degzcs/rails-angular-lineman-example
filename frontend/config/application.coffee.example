@@ -44,12 +44,14 @@ module.exports = (lineman) ->
     sass: options: bundleExec: false
     concat_sourcemap:
       js: src: [
+        '<%= files.js.bower %>'
         '<%= files.js.vendor %>'
         '<%= files.coffee.generated %>'
         '<%= files.js.app %>'
         '<%= files.ngtemplates.dest %>'
       ]
       css: src: [
+        '<%= files.css.bower %>'
         '<%= files.less.generated %>'
         '<%= files.sass.generatedVendor %>'
         '<%= files.css.vendor %>'
