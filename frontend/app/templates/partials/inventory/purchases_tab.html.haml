@@ -1,21 +1,34 @@
 .general-container
   %md-content
-    .table-container
-      %table.md-table.inventory-index-table
-        %thead
-          %tr.md-table-headers-row
-            %th.md-table-header{"ng-repeat" => "h in headers"}
-              {{ h.name }}
-            %th.md-table-header{} Informe Tributario
-            %th.md-table-header{} Opciones
-        %tbody{"infinite-scroll"=>"loadMore()", "style" => "overflow: hidden"}
-          %tr.md-table-content-row{"ng-repeat" => "purchase in purchases | filter:filters","ng-class"=>"{'purchase-empty': purchase.inventory.remaining_amount == 0}"}
-            %td.md-table-content{"ng-repeat" => "h in headers", "ng-click" => "showPurchase(purchase)"} {{h.field.indexOf('date') > 0 ? (purchase[h.field] | date) : $parent.$eval(h.field)}}
-            %td
-              %md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(purchase)"} Generar
-              %a.md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url != (null && undefined)', flex: 20, 'href' => '{{purchase.report_url}}', 'download' => 'reporte_{{purchase.id}}.csv'} Descargar
-            %td
-              %md-button.btn-next.md-raised.md-primary{ "ng-click" => "showSale(sale)"} Ver
+    %md-table-pagination{"md-limit" => "query.limit", "md-limit-options" => "query.limitOptions", "md-on-paginate" => "getPurchases", "md-page" => "query.page", "md-page-select" => "", "md-total" => "{{pages}}"}
+    %md-table-container
+      %table.md-table.inventory-index-table{"md-progress" => "promise", "md-table" => "", :multiple => "multiple"}
+        %thead.md-head{"md-order"=>"query.order", "md-on-reorder"=>"getPurchases"}
+          %tr.md-row.md-table-headers-row
+            %th.md-column.md-table-header Fecha
+            %th.md-column.md-table-header Vendedor
+            %th.md-column.md-numeric.md-table-header Gramos Finos
+            %th.md-column.md-table-header Responsable
+            %th.md-column.md-table-header Informe Tributario
+            %th.md-column.md-table-header Opciones
+        %tbody.md-body
+          %tr.md-row.md-table-content-row{"md-row" => "","ng-repeat" => "purchase in purchases" }
+            %td.md-cell.md-table-content{'md-truncate'=>''}
+              {{purchase.created_at}}
+            %td.md-cell.md-table-content{'md-truncate'=>''}
+              {{purchase.seller.first_name + ' ' + purchase.seller.last_name}}
+            %td.md-cell.md-table-content{'md-truncate'=>''}
+              {{purchase.gold_batch.fine_grams.toFixed(3)}}
+            %td.md-cell.md-table-content{'md-truncate'=>''}
+              {{purchase.performer.first_name + ' ' + purchase.performer.last_name}}
+            %td.md-cell
+              %md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(purchase)"}
+                Generar
+              %a.md-button.md-primary.md-raised{'ng-if' => 'purchase.report_url != (null && undefined)', flex: 20, 'href' => '{{purchase.report_url}}', 'download' => 'reporte_{{purchase.id}}.csv'}
+                Descargar
+            %td.md-cell
+              %md-button.md-raised.md-primary{ "ng-click" => "showPurchase(purchase)"}
+                Ver
 
-      %span.md-table-count-info
-        Registros cargados: {{count}}
+    %md-table-pagination{"md-limit" => "query.limit", "md-limit-options" => "query.limitOptions", "md-on-paginate" => "getPurchases", "md-page" => "query.page", "md-page-select" => "", "md-total" => "{{pages}}"}
+

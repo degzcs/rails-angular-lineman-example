@@ -283,9 +283,10 @@ angular.module('app').controller 'PurchasesCtrl', ($scope, PurchaseService, Gold
     $scope.subtotalReales = $scope.realesUnitPrice * $scope.goldBatch.model.reales
     $scope.subtotalGranos = $scope.granosUnitPrice * $scope.goldBatch.model.granos
     # TEMPORAL FIX: to avoid use this watcher for each view
-    $rootScope.$on '$viewContentLoading', (event, viewName, viewContent) ->
-      if "partials/purchases/step2.html" != viewName.view.templateUrl
-        listener()
+    #
+    # $rootScope.$on '$viewContentLoading', (event, viewName, viewContent) ->
+    #   if "partials/purchases/step2.html" != viewName.view.templateUrl
+    #     listener()
 
   #
   # Flush Data

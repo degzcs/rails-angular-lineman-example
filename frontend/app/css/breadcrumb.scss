@@ -1,15 +1,16 @@
 //----- Breadcrumb Styles-----//
-
 .breadcrumb{
     list-style-type: none;
-    padding-left: 60px;
+    padding: 20px 0;
+    margin-left: -5px;
+    font-weight: bold;
     background: #ffffff;
     color: darken(#8d8e8f, 10%);
     ol{
       display: inline-block;
       padding: 5px;
       max-height: 30px!important;
-    
+
     }
     li{
       display: inline-block;

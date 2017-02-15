@@ -3,7 +3,7 @@
     %div{:flex => "30"}
       %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-black.svg" }
 
-    %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
+    %form{:name => "loginForm", "novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
       %div{:layout => "", "layout-align" => "center center"}
         %a.a-toolbar-desktop{"ng-href" => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
 
@@ -14,7 +14,7 @@
         %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70"}
           %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
 
-        %md-button.md-primary.button-black{:flex => "20"}
+        %md-button.md-primary.button-black{type: "button" , :flex => "20", 'ng-click' => 'login()'}
           INGRESAR
           %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
 
@@ -28,7 +28,7 @@
   %div.div-trazoro.white{ "hide-gt-lg" => "" }
     %p
       Inicie Sesión
-    %form{:name => "loginForm", "ng-submit"=> "login()","novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
+    %form{:name => "loginForm", "novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
         %md-input-container{"md-no-float" => "", :flex => "40", :style => "margin-top: 25px;"}
           %input.main-login-input{"ng-model" => "email", :placeholder => "Correo:", :type => "email"}
@@ -38,7 +38,7 @@
       %div{:layout => "row", "layout-align" => "center", "layout-sm" => "column"}
         %a.a-toolbar{:ng-href => "#sendtoken", "flex" => "100"} ¿Olvidó sus datos?
 
-      %md-button.md-primary.button-black{:flex => "5", "style" => "margin-top: 30px;"}
+      %md-button.md-primary.button-black{type: 'button', :flex => "5", "style" => "margin-top: 30px;", 'ng-click' => 'login()'}
         INGRESAR
         %md-icon{ "md-svg-icon"=>"/img/icons/landing/flecha-amarilla.svg" }
       %div{:layout => "row", "layout-align" => "center center", "layout-padding" => ""}

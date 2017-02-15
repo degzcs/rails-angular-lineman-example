@@ -15,7 +15,7 @@
               %md-button.md-primary.md-raised{'ng-if' => 'sale.report_url === (null || undefined)', flex: 20, "ng-click" => "generateReport(sale)"} Generar
               %a.md-button.md-primary.md-raised{'ng-if' => 'sale.report_url != (null && undefined)', flex: 20, 'href' => '{{sale.report_url}}', 'download' => 'reporte_{{sale.id}}.csv'} Descargar
             %td
-              %md-button.btn-next.md-raised.md-primary{ "ng-click" => "goOrderDetails(sale.id)"} Ver
+              %md-button.md-raised.md-primary{ "ng-click" => "goOrderDetails(sale.id)"} Ver
 
       %span.md-table-count-info
         Registros cargados: {{count}}

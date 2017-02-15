@@ -133,12 +133,14 @@ angular.module('app').factory 'PurchaseService', ($location, $rootScope, $upload
     #
     # Get all paginated purchases for the current user
     #
-    all: (page)->
+    all: (page, limit)->
       if page
         return $http
                  method: "GET"
                  url: "api/v1/purchases"
-                 params: page: page
+                 params:
+                   page: page
+                   per_page: limit
       else
         return $http
                  method: "GET"

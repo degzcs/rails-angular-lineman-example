@@ -6,15 +6,15 @@
       %h3
         POR FAVOR LEA CON ATENCION LA ACEPTACION DEL ACUERDO.
       %div.fieldset-inputs
-        %md-input-container{class: "md-block", flex: '100' }
+        %md-input-container.textarea{class: "md-block", flex: '100' }
           %textarea{:rows => '7', :readOnly => 'true',
                     "ng-model" => "saleModel.fixed_sale_agreetment",
                     :name => 'fix_sale_agreetment', 'aria-label' => 'text'}
         %div{layout: "row"}
-          %md-input-container{flex: ""}
+          %md-input-container.not-border{flex: ""}
             %md-checkbox{ :ng-model => 'chkAgreetmentActive',
                           :required => ''}
-              %p{"style" => "margin-left: 10px;"} Acepto los términos y condiciones
+              %p Acepto los términos y condiciones
 
   .wizard-buttons{:layout => 'row', "class"=>"md-padding autocomplete", "layout-align"=>"end end"}
     %md-button.btn-next.md-raised.md-primary{"ng-disabled" => "handlerContinue()", "ui-sref"=> "new_sale.step2", "ng-click" => "saveState()", 'aria-label' => 'next'}

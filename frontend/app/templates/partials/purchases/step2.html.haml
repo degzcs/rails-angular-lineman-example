@@ -28,10 +28,11 @@
 
         .price-to-buy{ 'flex' => ''}
           .md-subtitle Tipo Mineral
-          %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>""}
-            %md-option{:selected => "selected", :value => "Oro"} Oro
-            %md-option{:value => "Plata"} Plata
-            %md-option{:value => "Platino"} Platino
+          %md-input-container
+            %md-select{"ng-model" => "goldBatch.model.mineral_type", :required=>"", :placeholder => 'Seleccione el tipo mineral'}
+              %md-option{:selected => "selected", :value => "Oro"} Oro
+              %md-option{:value => "Plata"} Plata
+              %md-option{:value => "Platino"} Platino
 
 
         .price-to-buy{ 'flex' => ''}

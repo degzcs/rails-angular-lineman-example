@@ -46,35 +46,19 @@ h1,h2,h3,h4,h5 {
 }
 p{
   font-family: 'Source Sans Pro';
-
 }
 
 
-md-input-container.md-icon-float > label {
-    pointer-events: none;
-    position: absolute;
-    margin-left: 5px;
-    margin-top: 15px;
-}
-
-
-md-input-container label {
-    position: relative;
-    top: -10px;
-}
-
-md-radio-button, .md-switch-thumb {
-  letter-spacing: 1px;
-  font-family: 'Source Sans Pro';
+.bold {
   font-weight: 700;
+}
+
+.grey {
+  color: grey;
 }
 
 .md-shadow-bottom-z-1, .md-button.md-raised:not([disabled]), .md-button.md-fab, .md-button.md-raised.md-focused:not([disabled]), .md-button.md-fab.md-focused:not([disabled]) {
     box-shadow: none;
-}
-
-md-checkbox.md-default-theme.md-checked .md-icon{
-  background-color: #e3cd48;
 }
 
 .md-card-login .login-button{
@@ -85,11 +69,9 @@ md-checkbox.md-default-theme.md-checked .md-icon{
   padding: 10px;
 }
 
-
 .margined{
   margin: 5px;
 }
-
 
 // -------- COMMON STYLES ---------- //
 md-toolbar.md-default-theme {
@@ -101,16 +83,6 @@ md-toolbar.md-default-theme {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-md-input-container.md-default-theme .md-input {
-  color: rgba(0,0,0,0.87);
-  border-color: rgba(0,0,0,0.12);
-  background: white;
-  padding-left: 10px;
-}
-md-input-container.md-default-theme .md-input:read-only{
-  background: #eee!important;
 }
 
 a.md-button.md-default-theme.md-primary.md-raised:not([disabled]):hover, a.md-button.md-default-theme.md-primary.md-fab:not([disabled]):hover, .md-button.md-default-theme.md-primary.md-raised:not([disabled]):hover, .md-button.md-default-theme.md-primary.md-fab:not([disabled]):hover {
@@ -148,19 +120,6 @@ a{
   padding-right: 250px!important;
 }
 
-md-input-container.md-default-theme .md-input {
-  color: rgba(0, 0, 0, 0.87);
-  border-color: rgba(0, 0, 0, 0.12);
-  background: white;
-  padding-left: 10px;
-  border: 1px solid darken(#eee, 10%);
-}
-
-
-md-input-container label:not(.md-no-float), md-input-container .md-placeholder {
-  padding-left: 10px;
-}
-
 .search-tool-header{
   padding: 10px 0px 0 0px;
 
@@ -173,30 +132,6 @@ md-input-container label:not(.md-no-float), md-input-container .md-placeholder {
   }
 }
 
-
-// Radio buttons
-md-radio-button.md-default-theme .md-on {
-    background-color: #E3CD48;
-}
-
-button.md-default-theme:not([disabled]).md-primary.md-checked .md-off{
-    background-color: #E3CD48;
-}
-
-md-radio-button.md-default-theme.md-checked .md-off {
-    border-color: #E3CD48;
-}
-
-//Radio groups
-md-radio-group.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-group.md-default-theme:not([disabled]).md-primary .md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-button.md-default-theme:not([disabled]).md-primary .md-on {
-    background-color: #E3CD48;
-}
-
-
-md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-group.md-default-theme:not([disabled]).md-primary .md-checked .md-off, md-radio-group.md-default-theme:not([disabled]).md-primary.md-checked .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-button.md-default-theme:not([disabled]).md-primary .md-checked .md-off, md-radio-button.md-default-theme:not([disabled]).md-primary.md-checked .md-off {
-    border-color: #E3CD48;
-}
-
 input[disabled]{
   background-image: none!important;
 }
@@ -207,39 +142,6 @@ input[disabled]{
 
 md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-icon {
   fill: #E3CD48 !important;
-}
-
-
-
-.md-table tr:hover{
-  background: rgba(#ebdc7f, 0.5) !important;
-}
-.md-table tr{
-  padding-top: 0!important;
-  padding-bottom: 0!important;
-}
-.md-table td{
-  padding-top: 0px!important;
-  padding-bottom: 0px!important;
-  border-bottom: 1px solid #e3cd48;
-  font-family: 'Source Sans Pro';
-  font-weight: 300;
-  text-transform: uppercase;
-}
-
-.md-table-header{
-  color: rgba(0,0,0,0.87) ;
-  border-bottom: 2px solid #e3cd48;
-  text-transform: uppercase;
-  font-family: 'Oswald';
-  font-weight: 500;
-}
-
-.md-table-content{
-  height: 50px;
-}
-.pdf-preview{
-  width: 100%;
 }
 
 .fields-container{
@@ -255,38 +157,9 @@ md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused md-i
   padding: 50px;
 }
 
-
 md-icon.md-default-theme {
-    color: rgba(0,0,0,0.54);
-    margin-bottom: 2px;
-}
-
-.md-tab{
-  border: 1px solid #E3CD4D;
-  font-family: 'Oswald';
-  color: black !important;
-  line-height: 10px;
-}
-
-md-tabs[md-border-bottom] md-tabs-wrapper {
-    border-width: 0 0 0px;
-}
-
-md-tabs.md-default-theme .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-focused {
-    color: #E3CD48;
-}
-
-md-tabs.md-default-theme md-ink-bar {
-    color: white;
-    background: white;
-}
-
-.md-tab.md-active{
-    background: #E3CD48;
-}
-
-.md-tabs-content .md-tab-content {
-  padding-bottom: 20px;
+  color: rgba(0,0,0,0.54);
+  margin-bottom: 2px;
 }
 
 .loading-view-message{
@@ -307,13 +180,6 @@ md-tabs.md-default-theme md-ink-bar {
   font-weight: 500;
 }
 
-.md-table-count-info {
-  line-height: 40px;
-  font-size: .75em;
-  text-transform: uppercase;
-  font-family: 'Oswald';
-  font-weight: 700;
-}
 
 .md-subtitle{
   font-family: 'Oswald';
@@ -325,26 +191,10 @@ md-tabs.md-default-theme md-ink-bar {
   margin-top: 15px;
 }
 
-.loading-gif{
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  background: url("/img/ajax-loader.gif");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
 .tr-fieldset md-input-container {
   padding-bottom: none!important;
 }
 
-md-input-container {
-    padding-right: 20px;
-    padding-bottom: 0px;
-    margin-top: 10px;
-}
 .elongate-height{
   min-height: 100%;
 }
@@ -356,9 +206,6 @@ a.md-button.md-default-theme.md-accent, .md-button.md-default-theme.md-accent {
 a.md-button.md-default-theme.md-accent:not([disabled]) md-icon, .md-button.md-default-theme.md-accent:not([disabled]) md-icon {
     color: #e3cd48;
 }
-
-//buttons
-
 
 //btn yellow with arrow
 .btn-next{

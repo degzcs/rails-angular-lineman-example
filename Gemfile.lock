@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/degzcs/rails-lineman.git
-  revision: 603095097b6374a712ad4a8ec112a43df215647c
+  revision: 486482bd3c13f62955a0a17a641707b7288ec827
   specs:
     rails-lineman (0.3.1)
       rake
@@ -561,7 +561,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
-    rake (11.2.2)
+    rake (11.3.0)
     ransack (1.8.1)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
@@ -822,4 +822,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.1
+   1.13.2

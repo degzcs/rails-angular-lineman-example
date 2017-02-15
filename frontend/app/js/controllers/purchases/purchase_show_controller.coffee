@@ -78,8 +78,8 @@ angular.module('app').controller 'PurchasesShowCtrl', ($scope, PurchaseService, 
 
 
   $scope.DownloadPurchaseFiles =->
-    window.open($scope.purchase.model.proof_of_purchase_file_url, "_blank")
     window.open($scope.purchase.model.origin_certificate_file_url, "_blank")
+    window.open($scope.purchase.model.proof_of_purchase_file_url, "_blank")
     return true
 
 

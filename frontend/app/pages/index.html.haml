@@ -9,9 +9,10 @@
     %link{"href" => "/css/app.css", "media" => "all", "rel" => "stylesheet", "type" => "text/css"}
     %link{"href" => "https://fonts.googleapis.com/css?family=Oswald:300,400,700|Source+Sans+Pro", "rel" => "stylesheet"}
   %body
-    .m-app-loading{"ng-animate-children" => ""}
-      %div{:layout => "row", "layout-align" => "center center", "style" => "padding-top: 200px" }
-        %md-progress-circular.md-accent{"md-mode" => "indeterminate"}
+    / FIX: this loading directive to work with angularjs 1.4.9
+    /.m-app-loading{"ng-animate-children" => ""}
+    /  %div{:layout => "row", "layout-align" => "center center", "style" => "padding-top: 200px" }
+    /    %md-progress-circular.md-accent{"md-mode" => "indeterminate"}
     #wrapper
       #header
         %div{"ui-view" => "top-nav"}

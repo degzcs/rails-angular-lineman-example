@@ -1,101 +1,27 @@
-angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state, ReportsService) ->
-  # ------------ Table directive configuration ----------- //
-  $scope.toggleSearch = false
-  $scope.totalAmount = 0
-  # $scope.report_url = null;
-
-  #Headers of the table
-  # TODO: made this process more simple, just create a table as people uses to do
-  # to avoid the metaprogramming stuff bellow.
-  $scope.headers = [
-    {
-      name: 'Fecha'
-      field: 'purchase.created_at'
-    }
-    {
-      name: 'Vendedor'
-      field: "purchase.seller.first_name + ' ' + purchase.seller.last_name"
-    }
-    {
-      name: 'Gramos Finos'
-      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
-    }
-    {
-      name: 'Precio'
-      field: 'purchase.price.toFixed(3)'
-    }
-    {
-      name: 'Tipo de Mineral'
-      field: 'purchase.gold_batch.mineral_type'
-    }
-    {
-      name: 'Vendido'
-      field: 'purchase.gold_batch.sold'
-    }
-    {
-      name: 'Responsable'
-      field: "purchase.performer.first_name + ' ' + purchase.performer.last_name"
-    }
-    {
-      name: 'Estado'
-      field: "purchase.transaction_state"
-    }
-  ]
+angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, $filter, $window, $state, ReportsService) ->
 
   #Variables configuration
-  $scope.pages = 0
-  $scope.currentPage = 1
-  #---------------- Controller methods -----------------//
-  #Purchase service call to api to retrieve all purchases for current user
-  PurchaseService.all().success((purchases, status, headers, config) ->
-    $scope.pages = parseInt(headers().total_pages)
-    $scope.count = purchases.length
-    $scope.purchases = purchases
-  ).error (data, status, headers, config) ->
-    $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
+  $scope.query = {
+    order: 'created_at',
+    limit: 5,
+    page: 1
+    limitOptions: [2 , 5, 10, 15]
+  }
+
+  $scope.getPurchases = (page, limit)->
+    response = PurchaseService.all(page, limit).success((purchases, status, headers, config) ->
+      $scope.purchases = purchases
+      $scope.pages = parseInt(headers().total_pages) + 10
+      console.log $scope.pages
+    ).error (data, status, headers, config) ->
+      $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
+    return response.$promise
+
+  $scope.getPurchases($scope.query.page, $scope.query.limit)
 
   $scope.infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')
     return
-
-    ##Checkboxes behavior #####
-
-  $scope.selectedPurchases = []
-
-  $scope.toggle = (purchase) ->
-    selectedPurchaseId = $scope.selectedPurchases.indexOf(purchase);
-    if ( selectedPurchaseId > -1)
-      $scope.selectedPurchases.splice( selectedPurchaseId, 1)
-      $scope.totalAmount -= purchase.gold_batch.grams
-    else
-      $scope.selectedPurchases.push(purchase)
-      $scope.totalAmount += purchase.gold_batch.grams
-
-  $scope.alreadySelected = (purchase) ->
-    return $scope.selectedPurchases.indexOf(purchase) > -1
-
-  $scope.liquidateSelectedPurchases = (ev) ->
-        confirmLiquidate($scope.totalAmount, ev)
-
-  confirmLiquidate = (total_grams,ev)->
-      confirm = $mdDialog.confirm()
-      .title('Confirmar')
-      .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
-      .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
-      .targetEvent(ev)
-
-      $mdDialog.show(confirm).then (->
-        LiquidationService.model.selectedPurchases = $scope.selectedPurchases
-        LiquidationService.model.totalAmount = $scope.totalAmount
-        LiquidationService.model.ingotsNumber = 1
-        LiquidationService.saveState()
-
-        $state.go 'liquidate_inventory'
-        return
-      ), ->
-        #If the response in negative sets the checkbox to true again
-        return
-      return
 
   $scope.showPurchase = (purchase)->
     if purchase.type == 'purchase'
