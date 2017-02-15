@@ -1,10 +1,9 @@
 .general-container
   %md-content
     %md-table-container
-      %table.md-table.inventory-index-table{"md-progress" => "promise", "md-row-select" => "", "md-table" => "", :multiple => "multiple", "ng-model" => "selected"}
+      %table.md-table.inventory-index-table{"md-progress" => "promise", "md-table" => "", :multiple => "multiple"}
         %thead.md-head{"md-order"=>"query.order", "md-on-reorder"=>"getPurchases"}
           %tr.md-row.md-table-headers-row
-            %th.md-column.md-table-header
             %th.md-column.md-table-header Fecha
             %th.md-column.md-table-header Vendedor
             %th.md-column.md-numeric.md-table-header Gramos Finos
@@ -30,5 +29,5 @@
               %md-button.md-raised.md-primary{ "ng-click" => "showPurchase(purchase)"}
                 Ver
 
-    %md-table-pagination{"md-limit" => "query.limit", "md-limit-options" => "[2, 5, 10, 15]", "md-on-paginate" => "getPurchases", "md-page" => "query.page", "md-page-select" => "", "md-total" => "{{pages}}"}
+    %md-table-pagination{"md-limit" => "query.limit", "md-limit-options" => "query.limitOptions", "md-on-paginate" => "getPurchases", "md-page" => "query.page", "md-page-select" => "", "md-total" => "{{pages}}"}
 

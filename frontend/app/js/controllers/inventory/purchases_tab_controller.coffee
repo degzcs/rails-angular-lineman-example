@@ -1,26 +1,23 @@
 angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, $filter, $window, $state, ReportsService) ->
-  # ------------ Table directive configuration ----------- //
-  $scope.toggleSearch = false
-  $scope.totalAmount = 0
 
   #Variables configuration
-  $scope.selected = [];
   $scope.query = {
     order: 'created_at',
     limit: 5,
     page: 1
+    limitOptions: [2 , 5, 10, 15]
   }
 
-  $scope.getPurchases = (page)->
-    response = PurchaseService.all($scope.query).success((purchases, status, headers, config) ->
-      $scope.pages = parseInt(headers().total_pages)
-      $scope.count = purchases.length
+  $scope.getPurchases = (page, limit)->
+    response = PurchaseService.all(page, limit).success((purchases, status, headers, config) ->
       $scope.purchases = purchases
+      $scope.pages = parseInt(headers().total_pages) + 10
+      console.log $scope.pages
     ).error (data, status, headers, config) ->
       $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
     return response.$promise
 
-  $scope.getPurchases()
+  $scope.getPurchases($scope.query.page, $scope.query.limit)
 
   $scope.infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')
