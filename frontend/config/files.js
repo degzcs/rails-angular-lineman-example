@@ -25,6 +25,7 @@ module.exports = function(lineman) {
         "bower_components/angular-ui-router/release/angular-ui-router.js",
         "bower_components/satellizer/satellizer.js",
         "bower_components/undescore/undescore.js",
+        "bower_components/angular-material-data-table/dist/md-data-table.js"
       ],
       vendor: [
         "vendor/js/**/*.js"
@@ -36,7 +37,8 @@ module.exports = function(lineman) {
     },
     css: {
       bower: [
-        "bower_components/angular-material/angular-material.css"
+        "bower_components/angular-material/angular-material.css",
+        "bower_components/angular-material-data-table/dist/md-data-table.css"
       ]
     },
     webfonts: {

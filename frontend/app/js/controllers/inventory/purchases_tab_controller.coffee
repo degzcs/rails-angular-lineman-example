@@ -2,57 +2,27 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0
-  # $scope.report_url = null;
-
-  #Headers of the table
-  # TODO: made this process more simple, just create a table as people uses to do
-  # to avoid the metaprogramming stuff bellow.
-  $scope.headers = [
-    {
-      name: 'Fecha'
-      field: 'purchase.created_at'
-    }
-    {
-      name: 'Vendedor'
-      field: "purchase.seller.first_name + ' ' + purchase.seller.last_name"
-    }
-    {
-      name: 'Gramos Finos'
-      field: 'purchase.gold_batch.fine_grams.toFixed(3)'
-    }
-    {
-      name: 'Precio'
-      field: 'purchase.price.toFixed(3)'
-    }
-    {
-      name: 'Tipo de Mineral'
-      field: 'purchase.gold_batch.mineral_type'
-    }
-    {
-      name: 'Vendido'
-      field: 'purchase.gold_batch.sold'
-    }
-    {
-      name: 'Responsable'
-      field: "purchase.performer.first_name + ' ' + purchase.performer.last_name"
-    }
-    {
-      name: 'Estado'
-      field: "purchase.transaction_state"
-    }
-  ]
 
   #Variables configuration
-  $scope.pages = 0
-  $scope.currentPage = 1
+  $scope.selected = [];
+  $scope.query = {
+    order: 'created_at',
+    limit: 10,
+    page: 1
+  }
   #---------------- Controller methods -----------------//
   #Purchase service call to api to retrieve all purchases for current user
-  PurchaseService.all().success((purchases, status, headers, config) ->
-    $scope.pages = parseInt(headers().total_pages)
-    $scope.count = purchases.length
-    $scope.purchases = purchases
-  ).error (data, status, headers, config) ->
-    $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
+
+  $scope.getPurchases = ->
+    response = PurchaseService.all().success((purchases, status, headers, config) ->
+      $scope.pages = parseInt(headers().total_pages)
+      $scope.count = purchases.length
+      $scope.purchases = purchases
+    ).error (data, status, headers, config) ->
+      $scope.infoAlert 'ERROR', 'No se pudo realizar la solicitud'
+    return response.$promise
+
+  $scope.getPurchases()
 
   $scope.infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')

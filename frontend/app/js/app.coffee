@@ -6,6 +6,7 @@ angular.module("app", [
   "mgcrea.ngStrap"
   "satellizer"
   "ngMaterial"
+  'md.data.table'
   'ncy-angular-breadcrumb'
   'angularFileUpload'
 ]).run ($rootScope) ->
