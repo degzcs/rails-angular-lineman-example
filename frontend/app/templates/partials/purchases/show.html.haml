@@ -153,40 +153,47 @@
                 %label.label-container-false
                   Gramo(s)
                 %p.text-container-false
-                  {{goldBatch.model.grams  | number:2}}
+                  {{goldBatch.model.grams  | number:3}}
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
-                $ {{purchase.model.fine_gram_unit_price | number:2}}
+                $ {{purchase.model.fine_gram_unit_price_to_buy | number:3}}
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
-                {{ goldBatch.model.total_grams | number:2}}
+                {{ goldBatch.model.total_grams | number:3}}
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
-                {{ goldBatch.model.total_fine_grams | number:2}}
+                {{ goldBatch.model.total_fine_grams | number:3}}
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
-                $ {{ purchase.model.price | number:2}}
+                $ {{ purchase.model.price | number:3}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
                 %label.label-container-false
                   Castellano(s)
                 %p.text-container-false
-                  {{goldBatch.model.castellanos | number:2}}
+                  {{goldBatch.model.castellanos | number:3}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
                 %label.label-container-false
                   Tomin(es)
                 %p.text-container-false
-                  {{goldBatch.model.tomines | number:2}}
+                  {{goldBatch.model.tomines | number:3}}
           %tr
             %td.md-table-td-more
               %div.input-containers-false
                 %label.label-container-false
                   Real(es)
                 %p.text-container-false
-                  {{goldBatch.model.reales | number:2}}
+                  {{goldBatch.model.reales | number:3}}
+          %tr
+            %td.md-table-td-more
+              %div.input-containers-false
+                %label.label-container-false
+                  Grano(s)
+                %p.text-container-false
+                  {{goldBatch.model.granos | number:3}}
 
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
       %div{layout: "column", "layout-align"=>"center"}

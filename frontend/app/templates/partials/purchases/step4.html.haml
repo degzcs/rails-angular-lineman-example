@@ -149,9 +149,9 @@
           %tbody
             %tr.medidas
               %td.md-table-td-more
-                {{ goldBatch.model.grams }}
+                {{ goldBatch.model.grams }} gramo(s)
               %td.md-table-td-more
-                {{ gramsUnitPrice | number:3 }}
+                ${{ gramsUnitPrice | number:3 }}
               %td.md-table-td-more
                 {{ grams | number:3 }}
               %td.md-table-td-more
@@ -160,9 +160,9 @@
                 {{ subtotalGrams | number:3}}
             %tr.medidas
               %td.md-table-td-more{colspan: 1}
-                {{ goldBatch.model.castellanos}}
+                {{ goldBatch.model.castellanos}} Castellano(s)
               %td.md-table-td-more
-                {{ castellanosUnitPrice | number:3 }}
+                ${{ castellanosUnitPrice | number:3 }}
               %td.md-table-td-more
                 {{ castellanosToGrams | number:3 }}
               %td.md-table-td-more
@@ -171,9 +171,9 @@
                 {{ subtotalCastellano | number:3}}
             %tr.medidas
               %td.md-table-td-more{colspan: 1}
-                {{ goldBatch.model.tomines}}
+                {{ goldBatch.model.tomines}} tomine(s)
               %td.md-table-td-more
-                {{ tominesUnitPrice | number:3 }}
+                ${{ tominesUnitPrice | number:3 }}
               %td.md-table-td-more
                 {{ tominesToGrams | number:3 }}
               %td.md-table-td-more
@@ -182,9 +182,9 @@
                 {{ subtotalTomines | number:3}}
             %tr.medidas
               %td.md-table-td-more{colspan: 1}
-                {{ goldBatch.model.reales }}
+                {{ goldBatch.model.reales }} real(es)
               %td.md-table-td-more
-                {{ realesUnitPrice | number:3 }}
+                ${{ realesUnitPrice | number:3 }}
               %td.md-table-td-more
                 {{ realesToGrams | number:3 }}
               %td.md-table-td-more
@@ -193,9 +193,9 @@
                 {{ subtotalReales | number:3}}
             %tr.medidas
               %td.md-table-td-more{colspan: 1}
-                {{ goldBatch.model.granos }}
+                {{ goldBatch.model.granos }} grano(s)
               %td.md-table-td-more
-                {{ granosUnitPrice | number:3}}
+                ${{ granosUnitPrice | number:3}}
               %td.md-table-td-more
                 {{ granosToGrams | number:3}}
               %td.md-table-td-more
