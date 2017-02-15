@@ -1,5 +1,5 @@
 .home
-  %md-toolbar{:layout => "row", "layout-align" => "center center", "hide-md" => "", "hide-sm" => "", "hide-lg" => ""}
+  %md-toolbar{:layout => "row", "layout-align" => "center center", "hide-md" => "", "hide-sm" => ""}
     %div{:flex => "30"}
       %md-icon.icon-toolbar{ "md-svg-src" => "/img/icons/landing/logo-trazoro-black.svg" }
 
@@ -8,11 +8,11 @@
         %a.a-toolbar-desktop{"ng-href" => "#sendtoken", "flex" => "10"} ¿Olvidó sus datos?
 
 
-        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70", }
+        %md-input-container.not-border{"md-no-float" => "", :flex => "5", "flex-sm" => "70", }
           %input.main-login-input{"ng-model" => "email", :placeholder => "correo:", :type => "email"}
 
-        %md-input-container{"md-no-float" => "", :flex => "5", "flex-sm" => "70"}
-          %input.main-login-input{ "placeholder" => "Contraseña:", "ng-model" => "password", :type => "password" }
+        %md-input-container.not-border{"md-no-float" => "", :flex => "5", "flex-sm" => "70"}
+          %input.main-login-input{ "placeholder" => "contraseña:", "ng-model" => "password", :type => "password" }
 
         %md-button.md-primary.button-black{type: "button" , :flex => "20", 'ng-click' => 'login()'}
           INGRESAR
@@ -20,12 +20,12 @@
 
   //---------- md-toolbar black in movil and tablet device-----------------//
 
-  %div.toolbar-black{:layout => "row", "layout-align" => "center", "hide-gt-lg" => ""  }
+  %div.toolbar-black{:layout => "row", "layout-align" => "center", "hide-lg" => "", "hide-gt-lg" => ""  }
     %img{"ng-src"=>"/img/icons/landing/logo-trazoro-blanco.svg", "style" => "heigth: 100px; width: 100px;"}
 
       //--------------Form login in movil and tablet device------------------//
 
-  %div.div-trazoro.white{ "hide-gt-lg" => "" }
+  %div.div-trazoro.white{ "hide-gt-lg" => "", "hide-lg" => "" }
     %p
       Inicie Sesión
     %form{:name => "loginForm", "novalidation"=>"", "ng-controller"=>"SessionsNewCtrl" }
@@ -121,69 +121,74 @@
 
     %div{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
 
-      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
-        %div{"layout"=>"row", "layout-wrap"}
-          %div{:flex}
+      .num-card{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+        %div{"layout"=>"row", "layout-align"=> 'center'}
+          .num{:flex => ''}
             %img{:src => "/img/icons/landing/1.png"}
-          %div{"layout"=>"column"}
-            %div.title-num{:flex}
-              CONTROL
-            %div.text-num{:flex}
-              Control total sobre la cadena de proveeduría del material.
+          .num-content{:flex => ''}
+            %div{"layout"=>"column"}
+              .title-num{:flex => ''}
+                CONTROL
+              %div.text-num{:flex => ''}
+                Control total sobre la cadena de proveeduría del material.
 
 
       %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
-          %div{:flex}
+          .num{:flex}
             %img{:src => "/img/icons/landing/2.png"}
-          %div{"layout"=>"column"}
-            %div.title-num{:flex}
-              ORDEN
-            %div.text-num{:flex}
-              Información organizada cronológicamente de manera digital.
+          .num-content{:flex => ''}
+            %div{"layout"=>"column"}
+              .title-num{:flex}
+                ORDEN
+              .text-num{:flex}
+                Información organizada cronológicamente de manera digital.
 
       %div{:flex  => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
-          %div{:flex }
+          .num{:flex }
             %img{:src => "/img/icons/landing/3.png"}
-          %div{"layout"=>"column"}
-            %div.title-num{:flex}
-              DISPONIBILIDAD
-            %div.text-num{:flex}
-              Información 100% en la nube, accesible en todo momento.
+          .num-content{:flex}
+            %div{"layout"=>"column"}
+              .title-num{:flex}
+                DISPONIBILIDAD
+              .text-num{:flex}
+                Información 100% en la nube, accesible en todo momento.
 
     %div.div-num{"layout"=>"row", "layout-margin" => "","layout-sm"=>"column", "layout-align" => "center center"}
 
       %div{:flex  => "20", "flex-sm" => "95", "flex-md" => "30"  }
         %div{"layout"=>"row", "layout-wrap"}
-          %div{:flex }
+          .num{:flex }
             %img{:src => "/img/icons/landing/4.png"}
-          %div{"layout"=>"column"}
-            %div.title-num{:flex}
-              EFICIENCIA
-            %div.text-num{:flex}
-              Hacer procesos en menor tiempo, más fáciles de validar.
+          .num-content{:flex}
+            %div{"layout"=>"column"}
+              .title-num{:flex}
+                EFICIENCIA
+              .text-num{:flex}
+                Hacer procesos en menor tiempo, más fáciles de validar.
 
       %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
-          %div{:flex}
+          .numv{:flex}
             %img{:src => "/img/icons/landing/5.png"}
-          %div{"layout"=>"column"}
-            %div.title-num{:flex}
-              ROTACION
-            %div.text-num{:flex}
-              A mayor velocidad de evaluación y validación de la información, mayor velocidad de rotación.
+          .num-content{:flex}
+            %div{"layout"=>"column"}
+              .title-num{:flex}
+                ROTACION
+              .text-num{:flex}
+                A mayor velocidad de evaluación y validación de la información, mayor velocidad de rotación.
 
       %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
-          %div{:flex }
+          .num{:flex }
             %img{:src => "/img/icons/landing/6.png"}
-          %div{"layout"=>"column"}
-            %div.title-num{:flex}
-              REMOTO
-            %div.text-num{:flex}
-              Permite estar al tanto de todo el negocio en la distancia.
-
+          .num-content{:flex}
+            %div{"layout"=>"column"}
+              .title-num{:flex}
+                REMOTO
+              .text-num{:flex}
+                Permite estar al tanto de todo el negocio en la distancia.
 
   %md-content.md-padding.div-trazoro.quienes
     %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
@@ -235,19 +240,19 @@
 
     %form{:name => "userForm"}
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
-        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+        %md-input-container.not-border{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
           %input.main-login-input{"ng-model" => "user.firstName", :placeholder => "Nombre"}
-        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+        %md-input-container.not-border{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
           %input.main-login-input{"ng-model" => "theMax", :placeholder => "Apellido"}
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
-        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+        %md-input-container.not-border{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
           %input.main-login-input{"ng-model" => "user.email", :placeholder => "Email"}
-        %md-input-container{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
+        %md-input-container.not-border{:flex => "25", "md-no-float" => "", "flex-md" => "45"}
           %input.main-login-input{"ng-model" => "user.cel", :placeholder => "Celular"}
 
 
       %div{:layout => "", "layout-align" => "center", "layout-sm" => "column"}
-        %md-input-container{:flex => "50", "md-no-float" => "", "flex-md" => "90"}
+        %md-input-container.not-border{:flex => "50", "md-no-float" => "", "flex-md" => "90"}
           %textarea.main-login-input{:columns => "1",:row => "5", "ng-model" => "user.biography", :placeholder => "Mensaje" }
       %md-button.md-primary.button-black{ "aria-label"=>"Custom Icon Button"}
         Enviar
