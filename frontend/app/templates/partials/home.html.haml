@@ -47,10 +47,10 @@
 
 
   //--------------------------HOME VIEW-----------------------------//
-  %md-content.md-padding.div-trazoro.image-gold{"layout" => "column", "layout-align"=>"center center"}
+  %md-content.md-padding.div-trazoro.image-gold.main-banner{"layout" => "column", "layout-align"=>"center center"}
     .div{"layout" => "row", "layout-align"=>"center center"}
 
-      .text-content.main-banner{:flex => "60"}
+      .text-content{:flex => "60"}
         %h2
           %p.font-oswald.light.yellow-font{}
             TRAZORO es una plataforma tecnológica que se comporta como oficial de cumplimiento en la comercialización de metales preciosos.
@@ -70,9 +70,9 @@
 
     %div{:layout => "row", "layout-margin" => "", "layout-align" => "center", "layout-sm" => "column", "style" => "padding-bottom: 60px;" }
 
-      %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+      %md-card.what-we-do{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-hojas.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
-        .div-rectangule-black{}
+        .what-we-do-black{}
           %h2.md-title{"style" => "text-align: center;"}
             TRANSPARENCIA
         %md-card-content
@@ -84,9 +84,9 @@
         /   %md-button
         /     Action 2
 
-      %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+      %md-card.what-we-do{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-candado.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
-        .div-rectangule-black
+        .what-we-do-black
           %h2.md-title{"style" => "text-align: center;"}
             TRANQUILIDAD
         %md-card-content
@@ -98,9 +98,9 @@
         /   %md-button
         /     Action 2
 
-      %md-card.div-rectangule{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+      %md-card.what-we-do{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %img.icon-rectangule{"ng-src"=>"/img/icons/landing/icono-grafico.svg", "class"=>"md-card-image", "alt"=>"Washed Out"}
-        .div-rectangule-black
+        .what-we-do-black
           %h2.md-title{"style" => "text-align: center;"}
             TRAZABILIDAD
         %md-card-content
@@ -114,14 +114,14 @@
         /     Action 2
 
 
-  %md-content.md-padding.div-trazoro.beneficios{ "layout-sm" => "column", "id" => "beneficios"}
+  %md-content.md-padding.div-trazoro.benefits{ "layout-sm" => "column", "id" => "beneficios"}
     %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
       %h1.font-oswald.title{"style" => "letter-spacing: 4px"}
         BENEFICIOS
 
     %div{"layout"=>"row", "layout-margin" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
 
-      .num-card{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
+      .benefit-card{:flex => "20", "flex-sm" => "95", "flex-md" => "30"}
         %div{"layout"=>"row", "layout-align"=> 'center'}
           .num{:flex => ''}
             %img{:src => "/img/icons/landing/1.png"}
@@ -133,7 +133,7 @@
                 Control total sobre la cadena de proveeduría del material.
 
 
-      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
+      .benefit-card{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
           .num{:flex}
             %img{:src => "/img/icons/landing/2.png"}
@@ -144,7 +144,7 @@
               .text-num{:flex}
                 Información organizada cronológicamente de manera digital.
 
-      %div{:flex  => "20", "flex-sm" => "95", "flex-md" => "30" }
+      .benefit-card{:flex  => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
           .num{:flex }
             %img{:src => "/img/icons/landing/3.png"}
@@ -155,7 +155,7 @@
               .text-num{:flex}
                 Información 100% en la nube, accesible en todo momento.
 
-    %div.div-num{"layout"=>"row", "layout-margin" => "","layout-sm"=>"column", "layout-align" => "center center"}
+    .benefit-card.div-num{"layout"=>"row", "layout-margin" => "","layout-sm"=>"column", "layout-align" => "center center"}
 
       %div{:flex  => "20", "flex-sm" => "95", "flex-md" => "30"  }
         %div{"layout"=>"row", "layout-wrap"}
@@ -168,7 +168,7 @@
               .text-num{:flex}
                 Hacer procesos en menor tiempo, más fáciles de validar.
 
-      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
+      .benefit-card{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
           .numv{:flex}
             %img{:src => "/img/icons/landing/5.png"}
@@ -179,7 +179,7 @@
               .text-num{:flex}
                 A mayor velocidad de evaluación y validación de la información, mayor velocidad de rotación.
 
-      %div{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
+      .benefit-card{:flex => "20", "flex-sm" => "95", "flex-md" => "30" }
         %div{"layout"=>"row", "layout-wrap"}
           .num{:flex }
             %img{:src => "/img/icons/landing/6.png"}
@@ -190,7 +190,7 @@
               .text-num{:flex}
                 Permite estar al tanto de todo el negocio en la distancia.
 
-  %md-content.md-padding.div-trazoro.quienes
+  %md-content.md-padding.div-trazoro.clients
     %div{"layout"=>"row", "layout-margin" => "", "layout-padding" ,"layout-sm"=>"column", "layout-align" => "center center"}
       %h2.font-oswald.title
         QUIENES LO PUEDEN USAR
@@ -198,35 +198,35 @@
     %div.{"layout"=>"row", "layout-margin" => "", "layout-fill" => "","layout-padding" => "" ,"layout-sm"=>"column", "layout-align" => "center center"}
 
       %div{:flex => "30", "flex-sm" => "95", "flex-md" => "45" }
-        %div.rectangule-quienes{"layout"=>"column"}
-          %div.padding-icon-quienes{:flex => }
+        %div.client-box{"layout"=>"column"}
+          .client-icon{:flex => }
             %img{:src =>"/img/icons/landing/icono-perfil.svg"}
-          %div.title-quienes
+          .client-title{:flex}
             %p
               COMERCIALIZADOR
-          %div..padding-text-quienes.font-oswald.regular{:flex}
+          .client-text.font-oswald.regular{:flex}
             %p
               Comercializador que compra directamente
               los metales en campo a los productores autorizados.
-          %div{:flex}
+          .client-plus-icon{:flex}
             %md-icon{"md-svg-icon"=>"/img/icons/landing/icono-mas.svg"}
 
       %div{:flex => "30", "flex-sm" => "95", "flex-md" => "45" }
-        %div.rectangule-quienes{"layout"=>"column"}
-          %div.padding-icon-quienes{:flex => }
+        %div.client-box{"layout"=>"column"}
+          .client-icon{:flex => }
             %img{:src => "/img/icons/landing/icono-perfil.svg"}
-          %div.title-quienes
+          .client-title{:flex}
             %p
               EXPORTADOR
-          %div.padding-text-quienes.font-oswald.regular{:flex}
+          .client-text.font-oswald.regular{:flex}
             %p
               Comercializador que compra el metal precioso a través
               de otros comercializadores.
-          %div.icon-mas-quienes{:flex}
+          .client-plus-icon{:flex}
             %md-icon{"md-svg-icon"=>"/img/icons/landing/icono-mas.svg"}
 
 
-  %md-content.md-padding.div-trazoro.white{ "layout" => "column" ,"layout-align" => "center"}
+  %md-content.md-padding.div-trazoro.white.contact-us{ "layout" => "column" ,"layout-align" => "center"}
 
     %div{"layout" =>"row", "layout-align" => "center center"}
       .text-content
@@ -235,7 +235,7 @@
             CONTACTO
 
         %h2.font-oswald.light
-          %p Si está interesado en conocer más o ver como tu empresa puede hacer uso del servicio TrazOro envíanos un mensaje.
+          %p.contact-text Si está interesado en conocer más o ver como tu empresa puede hacer uso del servicio TrazOro envíanos un mensaje.
 
 
     %form{:name => "userForm"}
