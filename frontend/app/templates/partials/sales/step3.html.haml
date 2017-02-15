@@ -37,7 +37,7 @@
       .sale-type-container{layout: 'column'}
         %p.md-subtitle
           2. Seleccione el tipo venta a realizar:
-        %md-input-container.md-padding{flex: ''}
+        %md-input-container.not-border.md-padding{flex: ''}
           %md-radio-group{'ng-model'=>'selectedSaleType', 'name' => 'selectedSaleType' }
             %md-radio-button.md-primary{ 'value' => 'directly_buyer' } Directamente a comprador
             %md-radio-button{ 'value' => 'marketplace' } Marketplace
@@ -82,7 +82,7 @@
           /--------------------------- Client Photo  -----------------------/
           %div{flex: ''}
             // ---------------------- seller photo ------------------- //
-            %md-content{'flex'=> '30', 'class'=>'md-padding autocomplete', 'layout'=>'row', 'layout-align'=>'center start'}
+            %md-content{'class'=>'md-padding autocomplete', 'layout'=>'row', 'layout-align'=>'center start'}
               .image.row
                 .photo
                   %img.face.cam{'alt'=>'Foto Vendedor {{client.photo_file.medium.url}}', 'ng-src' => '{{selectedClient.photo_file.url}}'}

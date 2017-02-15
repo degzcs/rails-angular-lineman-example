@@ -63,7 +63,7 @@
         Fotografía de proveedor
       // ---------------------- seller photo ------------------- //
       %fieldset.standard.tr-fieldset.photo-fieldset
-        %md-input-container.row
+        %md-input-container.not-border.row
           .photo
             %a.image-container{'ng-href' => "#camera",'ng-click' => "setCamaraFileType(1)"}
               %img.face.cam.step1{'alt'=>'Foto Proveedor', 'ng-src' => "{{purchase.model.seller_picture || 'img/default-user.png' }}","ng-model" => "purchase.model.seller_picture",  "check-image" => '', required: ""}

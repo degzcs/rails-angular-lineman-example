@@ -1,5 +1,5 @@
-%div{:layout => "column"}
-  .general-container
+.general-container
+  %div{:layout => "column", 'layout-align' => 'start stretch'}
     %md-content{"layout"=>"row"}
       %md-content{"flex"=> "", "class"=>"", "layout"=>"column"}
         %div.md-subtitle{"flex"=> ""}
@@ -130,14 +130,10 @@
         %p
           {{goldBatch.model.mineral_type}}
 
-    %md-content{"class"=>"", "layout"=>"row"}
-      .purchase-info{'flex' => ''}
-
-    %md-content{"class"=>"", "layout"=>"column", "layout-align"=>"center start"}
-      %h3
-        PESO COMPRADO
-    %md-content{"class"=>"", "layout"=>"row", 'layout-align' => 'center'}
-      %table{'flex' => '100', 'style' => 'width: 150%'}
+    %h3{'flex' => ''}
+      PESO COMPRADO
+    %md-content{"layout"=>"column", 'layout-align' => 'start stretch'}
+      %table.md-table
         %thead
           %tr.md-table-headers-row
             %th.md-table-header
@@ -159,16 +155,16 @@
                 %p.text-container-false
                   {{goldBatch.model.grams  | number:2}}
             %td.md-table-td-more
-              %md-input-container
+              %md-input-container.not-border.without-min-width
                 $ {{purchase.model.fine_gram_unit_price | number:2}}
             %td.md-table-td-more
-              %md-input-container
+              %md-input-container.not-border.without-min-width
                 {{ goldBatch.model.total_grams | number:2}}
             %td.md-table-td-more
-              %md-input-container
+              %md-input-container.not-border.without-min-width
                 {{ goldBatch.model.total_fine_grams | number:2}}
             %td.md-table-td-more
-              %md-input-container
+              %md-input-container.not-border.without-min-width
                 $ {{ purchase.model.price | number:2}}
           %tr
             %td.md-table-td-more
@@ -193,20 +189,14 @@
                   {{goldBatch.model.reales | number:2}}
 
     .wizard-buttons{layout: "row", "class"=>"md-padding autocomplete",  "layout-align"=>"center"}
-
-
       %div{layout: "column", "layout-align"=>"center"}
-
         %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/documents.svg" }
-
-        %md-button.btn-save{flex: "30",  "ng-click" => 'DownloadPurchaseFiles()', 'target' => '_blank' } Descargar Archivos
-
+        %md-button.btn-save{flex: "30",  href: "{{purchase.model.origin_certificate_file_url}}" , 'target' => '_blank' } Certificado de Origen
       %div{layout: "column", "layout-align"=>"center"}
-
+        %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/documents.svg" }
+        %md-button.btn-save{flex: "30", href: "{{purchase.model.proof_of_purchase_file_url}}", 'target' => '_blank' } Documento Equivalente
+      %div{layout: "column", "layout-align"=>"center"}
         %md-icon.img-buttons-above{ "md-svg-icon"=>"/img/icons/purchase/single_document.svg" }
-
         %md-button.btn-save{flex: "30", "ng-disabled"=>"!purchase.model.uiaf_report_file_url.length", "target"=> "_blank", href: "{{purchase.model.uiaf_report_file_url}}" } Descargar Reporte UIAF
-
     %div{layout: "row", "layout-align"=>"center"}
       %md-button.btn-next.md-raised.md-primary{"ui-sref"=>"new_purchase.step0", "ng-click" => 'flushData()'} Nueva compra
-

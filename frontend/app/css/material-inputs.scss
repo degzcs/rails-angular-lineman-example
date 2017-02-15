@@ -1,24 +1,19 @@
-// md-input-container.md-icon-float > label {
-//     pointer-events: none;
-//     position: absolute;
-//     margin-left: 5px;
-//     margin-top: 15px;
-// }
-
-// md-input-container label {
-//     position: relative;
-//     top: -10px;
-// }
-
 md-input-container {
-  .md-input, &.md-icon-float, &.md-input-focused, &.md-input-has-value {
+  // .md-input, &.md-icon-float, &.md-input-focused, &.md-input-has-value {
     // color: rgba(0, 0, 0, 0.87);
     // padding-left: 10px;
-    border-color: rgba(0, 0, 0, 0.12);
-    background: white;
-    border: 1px solid darken(#eee, 10%);
-    height: 50px;
-    min-width: 300px;
+  // }
+  border-color: rgba(0, 0, 0, 0.12);
+  background: white;
+  border: 1px solid darken(#eee, 10%);
+  height: 50px;
+  min-width: 300px;
+  &.md-input-has-value.textarea{
+    height: 100%;
+    textarea{
+      padding: 10px;
+      background-color: rgb(200, 200, 200);
+    }
   }
   .md-input, .md-select-value{
     height: 50px;
@@ -36,6 +31,12 @@ md-input-container {
         left: 0;
         right: auto;
     }
+  }
+  &.not-border{
+     border: 0px;
+  }
+  &.without-min-width{
+    min-width: 0px;
   }
 }
 
