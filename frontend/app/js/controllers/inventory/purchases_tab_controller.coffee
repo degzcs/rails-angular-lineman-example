@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, LiquidationService, $filter, $window, $state, ReportsService) ->
+angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, PurchaseService, $filter, $window, $state, ReportsService) ->
   # ------------ Table directive configuration ----------- //
   $scope.toggleSearch = false
   $scope.totalAmount = 0
@@ -7,14 +7,12 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
   $scope.selected = [];
   $scope.query = {
     order: 'created_at',
-    limit: 10,
+    limit: 5,
     page: 1
   }
-  #---------------- Controller methods -----------------//
-  #Purchase service call to api to retrieve all purchases for current user
 
-  $scope.getPurchases = ->
-    response = PurchaseService.all().success((purchases, status, headers, config) ->
+  $scope.getPurchases = (page)->
+    response = PurchaseService.all($scope.query).success((purchases, status, headers, config) ->
       $scope.pages = parseInt(headers().total_pages)
       $scope.count = purchases.length
       $scope.purchases = purchases
@@ -27,45 +25,6 @@ angular.module('app').controller 'PurchasesTabCtrl', ($scope, $mdDialog, Purchas
   $scope.infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')
     return
-
-    ##Checkboxes behavior #####
-
-  $scope.selectedPurchases = []
-
-  $scope.toggle = (purchase) ->
-    selectedPurchaseId = $scope.selectedPurchases.indexOf(purchase);
-    if ( selectedPurchaseId > -1)
-      $scope.selectedPurchases.splice( selectedPurchaseId, 1)
-      $scope.totalAmount -= purchase.gold_batch.grams
-    else
-      $scope.selectedPurchases.push(purchase)
-      $scope.totalAmount += purchase.gold_batch.grams
-
-  $scope.alreadySelected = (purchase) ->
-    return $scope.selectedPurchases.indexOf(purchase) > -1
-
-  $scope.liquidateSelectedPurchases = (ev) ->
-        confirmLiquidate($scope.totalAmount, ev)
-
-  confirmLiquidate = (total_grams,ev)->
-      confirm = $mdDialog.confirm()
-      .title('Confirmar')
-      .content('Esta seguro de liquidar ' +total_grams + ' gramos?')
-      .ariaLabel('Lucky day').ok('Confirmar').cancel('Cancelar')
-      .targetEvent(ev)
-
-      $mdDialog.show(confirm).then (->
-        LiquidationService.model.selectedPurchases = $scope.selectedPurchases
-        LiquidationService.model.totalAmount = $scope.totalAmount
-        LiquidationService.model.ingotsNumber = 1
-        LiquidationService.saveState()
-
-        $state.go 'liquidate_inventory'
-        return
-      ), ->
-        #If the response in negative sets the checkbox to true again
-        return
-      return
 
   $scope.showPurchase = (purchase)->
     if purchase.type == 'purchase'
