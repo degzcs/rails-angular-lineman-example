@@ -1,4 +1,4 @@
-angular.module('app').controller 'PurchaseDetailsCtrl', ($scope, PurchaseService, $sce, User, $stateParams, $mdDialog) ->
+angular.module('app').controller 'PurchaseDetailsCtrl', ($scope, PurchaseService, $sce, User, $stateParams, $mdDialog, $window) ->
 
   PurchaseService.get($stateParams.id).success((order, status, headers, config) ->
     $scope.order = order
@@ -20,5 +20,9 @@ angular.module('app').controller 'PurchaseDetailsCtrl', ($scope, PurchaseService
 
   infoAlert = (title, content) ->
     $mdDialog.show $mdDialog.alert().title(title).content(content).ok('OK')
+    return
+
+  $scope.back = ->
+    $window.history.back()
     return
 
