@@ -5,8 +5,6 @@ angular.module('app').controller 'PurchaseDetailsCtrl', ($scope, PurchaseService
     $scope.barcodeHtml = $sce.trustAsHtml($scope.order.barcode_html)
     getBuyer($scope.order.buyer.id)
     getSeller($scope.order.seller.id)
-    $scope.fineGramUnitPrice =  $scope.order.price / $scope.order.gold_batch.fine_grams
-
   ).error (data, status, headers, config) ->
     infoAlert 'ERROR', 'No se pudo recuperar la orden: ' + data.error
 

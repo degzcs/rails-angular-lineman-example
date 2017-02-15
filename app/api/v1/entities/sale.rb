@@ -126,6 +126,8 @@ module V1
       # end
       expose :type, documentation: { type: "String", desc: "useful to knwo if gold came from AProvider or Trader", example: "sale, purchase" }
       expose :transaction_state, documentation: { type: 'string', desc: 'sale state', example: 'pending, dispatched, paid, canceled, approved' }
+      expose :fine_gram_unit_price, documentation: { type: "float", desc: "trade fine grams", example: "20000.25" }
+      expose :raw_grams, documentation: { type: "float", desc: "raw grams", example: "20000.25" }
     end
   end
 end

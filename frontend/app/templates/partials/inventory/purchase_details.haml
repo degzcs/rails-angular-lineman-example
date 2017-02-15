@@ -112,9 +112,9 @@
         .row{'layout' => 'row'}
           .oc-number{'flex' => ''}
             %p.md-subtitle
-              Numero de Certificado de Origen
+              Gramos Finos
             %p
-              {{order.origin_certificate_sequence}}
+              {{order.gold_batch.fine_grams | number:3}}
       .select-law{'flex' => ''}
         %p.md-subtitle
           Ley
@@ -139,9 +139,9 @@
         %thead
           %tr.md-table-headers-row
             %th.md-table-header
-              TOTAL GRAMOS FINOS
+              TOTAL GRAMOS
             %th.md-table-header
-              PRECIO POR GRAMO FINO
+              PRECIO POR GRAMO
             %th.md-table-header
               PRECIO TOTAL
 
@@ -149,10 +149,10 @@
           %tr
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
-                {{ order.gold_batch.fine_grams | number:3}}
+                {{ order.raw_grams | number:3}}
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
-                $ {{ fineGramUnitPrice | number:3}}
+                $ {{ order.fine_gram_unit_price | number:3}}
             %td.md-table-td-more
               %md-input-container.not-border.without-min-width
                 $ {{ order.price | number:3}}

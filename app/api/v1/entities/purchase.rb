@@ -11,9 +11,11 @@ module V1
           purchase.buyer.id # TODO: change provider for saller in the front end
         end
       end
-      expose :price, documentation: { type: "float", desc: "price payed for the gold", example: "20000.25" } do |purchase, options|
-        purchase.price.round(2)
+      expose :price, documentation: { type: "float", desc: "paid price for the gold", example: "20000.25" } do |purchase, options|
+        purchase.price
       end
+      expose :fine_gram_unit_price, documentation: { type: "float", desc: "trade fine grams", example: "20000.25" }
+      expose :raw_grams, documentation: { type: "float", desc: "raw grams", example: "20000.25" }
       expose :proof_of_purchase_file_url, documentation: { type: "file", desc: "file", example: '...' } do |purchase, options|
         purchase.proof_of_purchase.file.url
       end

@@ -160,6 +160,7 @@ class Order < ActiveRecord::Base
     barcode_html = Barby::HtmlOutputter.new(barcode).to_html
   end
 
+  # Calculated value for the commercialized gold batch
   def fine_grams
     gold_batch.fine_grams
   end
@@ -168,8 +169,16 @@ class Order < ActiveRecord::Base
     gold_batch.grade
   end
 
+  # Raw weighted mineral that was commercialized
+  # @return [ Float ]
+  def raw_grams
+    fine_grams*1000/grade
+  end
+
+  # Value paid for this gold batch without trazoro discount
+  # @return [ Float ]
   def fine_gram_unit_price
-    (price / fine_grams)
+    ((price*grade) / (1000*fine_grams))
   end
 
   def purchases_total_value
