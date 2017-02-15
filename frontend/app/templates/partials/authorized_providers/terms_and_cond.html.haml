@@ -6,12 +6,12 @@
         %h3
           Por favor lea con atención la aceptación del Acuerdo.
         %div.fieldset-inputs
-          %md-input-container{class: "md-block", flex: '100' }
+          %md-input-container.textarea{class: "md-block", flex: '100' }
             %textarea{:rows => '7', :readOnly => 'true',
                       "ng-model" => "authorizedProvider.habeas_data_agreetment",
                       :name => 'habeas_data_agreetment', 'aria-label'=>'text'}
           %div{layout: "row"}
-            %md-input-container{flex: ""}
+            %md-input-container.not-border{flex: ""}
               %md-checkbox{ :ng-model => 'chkAgreetmentActive',
                             :required => ''} Acepto los términos y condiciones
 
