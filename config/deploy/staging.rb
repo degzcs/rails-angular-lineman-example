@@ -1,5 +1,3 @@
-# require 'capistrano/passenger'
-# require 'capistrano/nginx'
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group
@@ -16,7 +14,7 @@ set :deploy_to, '/home/ec2-user/code/trazoro'
 set :ssh_options, {
   user: "ec2-user",
   keys: %w(~/.ssh/trazpro-key-pair-uswest-calfornia.pem),
-  forward_agent: false,
+  forward_agent: true,
 }
 
 
