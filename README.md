@@ -6,7 +6,7 @@ This is the repository for Trazoro web app. In this repository you will find bot
 ## Dependencies
 
 - rails 4.1.9
-- ruby 2.3.0
+- ruby 2.3.1
 - nodejs 5.7.1
 - bower
 - [linemanjs] (http://linemanjs.com)
